@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://buns43sl7chej"]
+
+[ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/resource_sprites.png" id="1_lmyok"]
+
+[node name="ResourcesUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1152.0
+offset_bottom = -648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_lmyok")

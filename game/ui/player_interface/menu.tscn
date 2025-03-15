@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpveqnitfylgn"]
+
+[ext_resource type="PackedScene" uid="uid://dwyhak12pdjyv" path="res://ui/player_interface/menus/tree_menu.tscn" id="1_bb7ga"]
+[ext_resource type="Script" uid="uid://dhqoiddma2o7m" path="res://ui/player_interface/menu.gd" id="1_bq8en"]
+[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/player_interface/menus/tech_menu.tscn" id="2_v5h4j"]
+[ext_resource type="PackedScene" uid="uid://cnkikqyrui6rg" path="res://ui/player_interface/menus/settings.tscn" id="3_73fpc"]
+
+[node name="Menu" type="Control" node_paths=PackedStringArray("tree_menu", "tech_menu", "settings_menu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_top = 450.0
+offset_right = 1.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bq8en")
+tree_menu = NodePath("TreeMenu")
+tech_menu = NodePath("TechMenu")
+settings_menu = NodePath("Settings")
+
+[node name="MenuButtons" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -39.0
+offset_right = 510.0
+offset_bottom = 1.0
+theme_override_constants/separation = 0
+
+[node name="Trees" type="Button" parent="MenuButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Trees"
+
+[node name="Technology" type="Button" parent="MenuButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Technology"
+
+[node name="Settings" type="Button" parent="MenuButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+text = "Settings
+"
+
+[node name="TreeMenu" parent="." instance=ExtResource("1_bb7ga")]
+
+[node name="TechMenu" parent="." instance=ExtResource("2_v5h4j")]
+
+[node name="Settings" parent="." instance=ExtResource("3_73fpc")]
+
+[connection signal="pressed" from="MenuButtons/Trees" to="." method="_on_trees_pressed"]
+[connection signal="pressed" from="MenuButtons/Technology" to="." method="_on_technology_pressed"]
+[connection signal="pressed" from="MenuButtons/Settings" to="." method="_on_settings_pressed"]
