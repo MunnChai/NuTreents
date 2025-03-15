@@ -1,8 +1,26 @@
 extends TileMapLayer
 
-const MAP_SIZE: Vector2i = Vector2i(50, 50)
+@onready var test_image: TextureRect = $CanvasLayer/TextureRect
+
 const SOURCE_ID: int = 1
 
+enum TILE_TYPE {
+	DIRT = 0,
+	GRASS = DIRT + 1,
+	CEMENT = GRASS + 1,
+}
+
+const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
+	TILE_TYPE.DIRT: Vector2i(0, 0),
+	TILE_TYPE.GRASS: Vector2i(0, 2),
+	TILE_TYPE.CEMENT: Vector2i(0, 4),
+}
+
+const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
+	TILE_TYPE.DIRT: 2,
+	TILE_TYPE.GRASS: 3,
+	TILE_TYPE.CEMENT: 6,
+}
 
 func _ready() -> void:
 	generate_map()
@@ -10,14 +28,8 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	
-	if (event is InputEventMouseButton):
-		var map_coords: Vector2i = local_to_map(get_mouse_coords())
-		
-		var source_id: int = 1
-		var atlas_coords: Vector2i = Vector2i(0, 0)
-		var alt_id: int = 0
-		
-		set_cell(map_coords, SOURCE_ID, atlas_coords, alt_id)
+	if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		generate_map()
 
 func get_mouse_coords() -> Vector2:
 	var mouse_screen_pos: Vector2 = get_viewport().get_mouse_position()
@@ -27,11 +39,71 @@ func get_mouse_coords() -> Vector2:
 
 
 func generate_map() -> void:
+	print("Generating map...")
 	
-	for x in range(-MAP_SIZE.x / 2, MAP_SIZE.x / 2):
-		for y in range(-MAP_SIZE.y / 2, MAP_SIZE.y / 2):
-			
+	var biome_noise := FastNoiseLite.new()
+	
+	biome_noise.noise_type = FastNoiseLite.TYPE_CELLULAR
+	biome_noise.seed = randi()
+	biome_noise.frequency = 0.025
+	
+	biome_noise.fractal_octaves = 4
+	biome_noise.fractal_lacunarity = 2
+	biome_noise.fractal_gain = 0.5
+	
+	var image_texture := ImageTexture.new()
+	image_texture.set_image(biome_noise.get_image(Constants.MAP_SIZE.x, Constants.MAP_SIZE.y))
+	test_image.texture = image_texture
+	
+	test_image.scale = Vector2(4, 4)
+	test_image.rotation_degrees = 45
+	test_image.position = Vector2(200, 100)
+	
+	for x in range(0, Constants.MAP_SIZE.x):
+		for y in range(0, Constants.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
-			var atlas_coords: Vector2i = Vector2i(0, 0)
 			
+			# Some value between 0.0 and 1.0
+			var noise_value: float = clamp((biome_noise.get_noise_2dv(map_coords) + 1), 0, 1)
+			
+			var scaled_value: float = noise_value * TILE_ATLAS_COORDS.size()
+			
+			var tile_type: int = floor(scaled_value)
+			
+			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
+			
+			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+			
+			var tile_data: TileData = get_cell_tile_data(map_coords)
+			
+			tile_data.set_custom_data("biome", tile_type)
+	
+	var noise: FastNoiseLite = FastNoiseLite.new()
+	
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.seed = randi()
+	noise.frequency = 0.05
+	
+	noise.fractal_octaves = 4
+	noise.fractal_lacunarity = 2
+	noise.fractal_gain = 0.5
+	
+	for x in range(0, Constants.MAP_SIZE.x):
+		for y in range(0, Constants.MAP_SIZE.y):
+			var map_coords: Vector2i = Vector2i(x ,y)
+			
+			var tile_data: TileData = get_cell_tile_data(map_coords)
+			
+			var biome: int = tile_data.get_custom_data("biome")
+			
+			# Some value between 0.0 and 1.0
+			var noise_value: float = clamp((noise.get_noise_2dv(map_coords) + 1), 0, 1)
+			print(noise_value)
+			
+			var scaled_value: float = noise_value * (TILE_TYPE_VARIATIONS[biome] - 1)
+			
+			var modifier: int = floor(scaled_value)
+			
+			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
+			#print(atlas_coords)
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
