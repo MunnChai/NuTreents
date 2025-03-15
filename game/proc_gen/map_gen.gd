@@ -1,7 +1,7 @@
+class_name TerrainMap
 extends TileMapLayer
 
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
-@onready var highlight: Sprite2D = $Highlight
 
 const SOURCE_ID: int = 1
 
@@ -27,8 +27,7 @@ func _ready() -> void:
 	generate_map()
 
 func _process(delta: float) -> void:
-	
-	update_highlight()
+	pass
 
 func _input(event: InputEvent) -> void:
 	
@@ -44,17 +43,6 @@ func _input(event: InputEvent) -> void:
 		var map_coords: Vector2i = local_to_map(get_mouse_coords())
 		
 		remove_cell(map_coords)
-
-func update_highlight() -> void:
-	var map_coords: Vector2i = local_to_map(get_mouse_coords())
-	
-	var tile_data: TileData = get_cell_tile_data(map_coords)
-	
-	if (tile_data == null):
-		highlight.visible = false
-	else:
-		highlight.visible = true
-		highlight.position = map_to_local(map_coords)
 
 func add_cell(map_coords: Vector2i) -> bool:
 	

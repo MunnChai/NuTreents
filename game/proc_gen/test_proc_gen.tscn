@@ -1,5 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://csdqqfvopxl7j"]
+[gd_scene load_steps=11 format=3 uid="uid://csdqqfvopxl7j"]
 
+[ext_resource type="Script" uid="uid://hso34fixdouo" path="res://proc_gen/building_manager.gd" id="1_56hbk"]
+[ext_resource type="Texture2D" uid="uid://p5141fumd1kg" path="res://proc_gen/test_stuff.png" id="1_hsbd7"]
 [ext_resource type="Texture2D" uid="uid://2mmhuluw3t40" path="res://proc_gen/TileSheet1.png" id="1_pl6tw"]
 [ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://proc_gen/map_gen.gd" id="2_yi2m7"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://proc_gen/highlight.png" id="3_sjv4q"]
@@ -41,19 +43,45 @@ custom_data_layer_0/name = "biome"
 custom_data_layer_0/type = 2
 sources/1 = SubResource("TileSetAtlasSource_sjv4q")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_56hbk"]
+texture = ExtResource("1_hsbd7")
+texture_region_size = Vector2i(32, 16)
+0:1/size_in_atlas = Vector2i(1, 2)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 8)
+1:1/size_in_atlas = Vector2i(1, 2)
+1:1/0 = 0
+1:1/0/texture_origin = Vector2i(0, 8)
+2:0/size_in_atlas = Vector2i(1, 3)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 16)
+
+[sub_resource type="TileSet" id="TileSet_sjv4q"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+sources/0 = SubResource("TileSetAtlasSource_56hbk")
+
 [node name="TestProcGen" type="Node2D"]
 
-[node name="GroundLayer" type="TileMapLayer" parent="."]
+[node name="BuildingManager" type="Node2D" parent="."]
+script = ExtResource("1_56hbk")
+
+[node name="GroundLayer" type="TileMapLayer" parent="BuildingManager"]
 tile_set = SubResource("TileSet_ag0jr")
 script = ExtResource("2_yi2m7")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="GroundLayer"]
+[node name="CanvasLayer" type="CanvasLayer" parent="BuildingManager/GroundLayer"]
 
-[node name="TextureRect" type="TextureRect" parent="GroundLayer/CanvasLayer"]
+[node name="TextureRect" type="TextureRect" parent="BuildingManager/GroundLayer/CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
-[node name="Highlight" type="Sprite2D" parent="GroundLayer"]
+[node name="BuildingLayer" type="TileMapLayer" parent="BuildingManager"]
+tile_set = SubResource("TileSet_sjv4q")
+
+[node name="Highlight" type="Sprite2D" parent="BuildingManager"]
 modulate = Color(1, 0, 0, 0.392157)
 texture = ExtResource("3_sjv4q")
 
