@@ -4,24 +4,24 @@ extends TileMapLayer
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
 const SOURCE_ID: int = 0
-const BIOME_FALLOFF = 1
+const BIOME_FALLOFF = 4
 
 enum TILE_TYPE {
 	GRASS = 0,
 	DIRT = GRASS + 1,
-	CEMENT = DIRT + 1,
+	CITY = DIRT + 1,
 }
 
 const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
 	TILE_TYPE.GRASS: Vector2i(0, 0),
 	TILE_TYPE.DIRT: Vector2i(0, 2),
-	TILE_TYPE.CEMENT: Vector2i(0, 4),
+	TILE_TYPE.CITY: Vector2i(0, 4),
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
 	TILE_TYPE.GRASS: 4,
 	TILE_TYPE.DIRT: 4,
-	TILE_TYPE.CEMENT: 4,
+	TILE_TYPE.CITY: 4,
 }
 
 func _ready() -> void:
@@ -83,7 +83,11 @@ func generate_map() -> void:
 			
 			var scaled_value: float = noise_clamped * TILE_ATLAS_COORDS.size()
 			
-			var tile_type: int = floor(scaled_value)
+			var tile_type: int = TILE_TYPE.GRASS
+			if (scaled_value > 0.7):
+				tile_type = TILE_TYPE.DIRT
+			if (scaled_value > 0.9):
+				tile_type = TILE_TYPE.CITY
 			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
 			
