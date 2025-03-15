@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://csdqqfvopxl7j"]
+[gd_scene load_steps=7 format=3 uid="uid://csdqqfvopxl7j"]
 
 [ext_resource type="Texture2D" uid="uid://2mmhuluw3t40" path="res://proc_gen/TileSheet1.png" id="1_pl6tw"]
 [ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://proc_gen/map_gen.gd" id="2_yi2m7"]
+[ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://proc_gen/highlight.png" id="3_sjv4q"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://proc_gen/camera_controller.gd" id="3_yi2m7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sjv4q"]
@@ -51,6 +52,10 @@ script = ExtResource("2_yi2m7")
 [node name="TextureRect" type="TextureRect" parent="GroundLayer/CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="Highlight" type="Sprite2D" parent="GroundLayer"]
+modulate = Color(1, 0, 0, 0.392157)
+texture = ExtResource("3_sjv4q")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

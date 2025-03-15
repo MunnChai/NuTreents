@@ -1,7 +1,7 @@
 extends Camera2D
 
 # Camera move constants
-const MOUSE_DRAG_STRENGTH: float = 100
+const MOUSE_DRAG_STRENGTH: float = 125
 
 # Camera zoom constants
 const FIXED_ZOOM_SIZES: Array[float] = [
