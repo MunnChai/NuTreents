@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biqrko5gffb5j"
-path="res://.godot/imported/City_Buildings_1.png-41238362a4834da232dd300d26bd9828.ctex"
+uid="uid://b4r20eam5ua8m"
+path="res://.godot/imported/City_Decor_1.png-e2dbcb5a75fd00c6cc0c70955686d6d2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/City_Buildings_1.png"
-dest_files=["res://.godot/imported/City_Buildings_1.png-41238362a4834da232dd300d26bd9828.ctex"]
+source_file="res://world/proc_gen/structure_map/City_Decor_1.png"
+dest_files=["res://.godot/imported/City_Decor_1.png-e2dbcb5a75fd00c6cc0c70955686d6d2.ctex"]
 
 [params]
 

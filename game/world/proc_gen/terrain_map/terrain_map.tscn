@@ -1,0 +1,97 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8ibupddw5xou"]
+
+[ext_resource type="Texture2D" uid="uid://bqookpbbsmui5" path="res://world/proc_gen/terrain_map/Tiles_1.png" id="1_i2w04"]
+[ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://world/proc_gen/terrain_map/terrain_map.gd" id="2_81d22"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uh2vc"]
+texture = ExtResource("1_i2w04")
+texture_region_size = Vector2i(32, 16)
+0:0/size_in_atlas = Vector2i(1, 2)
+0:0/0 = 0
+1:0/size_in_atlas = Vector2i(1, 2)
+1:0/0 = 0
+2:0/size_in_atlas = Vector2i(1, 2)
+2:0/0 = 0
+3:0/size_in_atlas = Vector2i(1, 2)
+3:0/0 = 0
+0:2/size_in_atlas = Vector2i(1, 2)
+0:2/0 = 0
+1:2/size_in_atlas = Vector2i(1, 2)
+1:2/0 = 0
+2:2/size_in_atlas = Vector2i(1, 2)
+2:2/0 = 0
+3:2/size_in_atlas = Vector2i(1, 2)
+3:2/0 = 0
+0:4/size_in_atlas = Vector2i(1, 2)
+0:4/0 = 0
+1:4/size_in_atlas = Vector2i(1, 2)
+1:4/0 = 0
+2:4/size_in_atlas = Vector2i(1, 2)
+2:4/0 = 0
+3:4/size_in_atlas = Vector2i(1, 2)
+3:4/0 = 0
+4:4/size_in_atlas = Vector2i(1, 2)
+4:4/0 = 0
+0:6/size_in_atlas = Vector2i(1, 2)
+0:6/0 = 0
+1:6/size_in_atlas = Vector2i(1, 2)
+1:6/0 = 0
+2:6/size_in_atlas = Vector2i(1, 2)
+2:6/0 = 0
+3:6/size_in_atlas = Vector2i(1, 2)
+3:6/0 = 0
+4:6/size_in_atlas = Vector2i(1, 2)
+4:6/0 = 0
+5:6/size_in_atlas = Vector2i(1, 2)
+5:6/0 = 0
+6:6/size_in_atlas = Vector2i(1, 2)
+6:6/0 = 0
+7:6/size_in_atlas = Vector2i(1, 2)
+7:6/0 = 0
+7:8/size_in_atlas = Vector2i(1, 2)
+7:8/0 = 0
+6:8/size_in_atlas = Vector2i(1, 2)
+6:8/0 = 0
+5:8/size_in_atlas = Vector2i(1, 2)
+5:8/0 = 0
+4:8/size_in_atlas = Vector2i(1, 2)
+4:8/0 = 0
+3:8/size_in_atlas = Vector2i(1, 2)
+3:8/0 = 0
+2:8/size_in_atlas = Vector2i(1, 2)
+2:8/0 = 0
+1:8/size_in_atlas = Vector2i(1, 2)
+1:8/0 = 0
+0:8/size_in_atlas = Vector2i(1, 2)
+0:8/0 = 0
+0:10/size_in_atlas = Vector2i(1, 2)
+0:10/0 = 0
+1:10/size_in_atlas = Vector2i(1, 2)
+1:10/0 = 0
+2:10/size_in_atlas = Vector2i(1, 2)
+2:10/0 = 0
+3:10/size_in_atlas = Vector2i(1, 2)
+3:10/0 = 0
+1:12/size_in_atlas = Vector2i(1, 2)
+1:12/0 = 0
+0:12/size_in_atlas = Vector2i(1, 2)
+0:12/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ag0jr"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+custom_data_layer_0/name = "biome"
+custom_data_layer_0/type = 2
+sources/0 = SubResource("TileSetAtlasSource_uh2vc")
+
+[node name="GroundLayer" type="TileMapLayer"]
+tile_set = SubResource("TileSet_ag0jr")
+script = ExtResource("2_81d22")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
