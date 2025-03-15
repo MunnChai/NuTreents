@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dnqphbl5e44tn"]
+
+[node name="TechMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 200.0
+color = Color(0.242306, 0.311583, 0.348312, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 447.0
+offset_top = 93.0
+offset_right = 487.0
+offset_bottom = 116.0
+text = "technology"
