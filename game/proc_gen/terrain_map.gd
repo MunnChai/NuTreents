@@ -25,40 +25,16 @@ const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
 
 func _ready() -> void:
 	generate_map()
+	
+	y_sort_enabled = true
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
 	
 	if (event is InputEventKey && event.is_action_pressed("generate_map")):
 		generate_map()
-	
-	if (Input.is_action_pressed("lmb")):
-		var map_coords: Vector2i = local_to_map(get_mouse_coords())
-		
-		add_cell(map_coords)
-	
-	if (Input.is_action_pressed("rmb")):
-		var map_coords: Vector2i = local_to_map(get_mouse_coords())
-		
-		remove_cell(map_coords)
-
-func add_cell(map_coords: Vector2i) -> bool:
-	
-	var atlas_coords: Vector2i = Vector2i(0, 0)
-	
-	set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
-	
-	return true
-
-func remove_cell(map_coords: Vector2i) -> bool:
-	
-	var atlas_coords: Vector2i = Vector2i(0, 0)
-	
-	erase_cell(map_coords)
-	
-	return true
 
 
 func get_mouse_coords() -> Vector2:

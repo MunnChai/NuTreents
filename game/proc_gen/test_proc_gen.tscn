@@ -1,11 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://csdqqfvopxl7j"]
+[gd_scene load_steps=15 format=3 uid="uid://csdqqfvopxl7j"]
 
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://proc_gen/building_manager.gd" id="1_56hbk"]
 [ext_resource type="Texture2D" uid="uid://p5141fumd1kg" path="res://proc_gen/test_stuff.png" id="1_hsbd7"]
 [ext_resource type="Texture2D" uid="uid://2mmhuluw3t40" path="res://proc_gen/TileSheet1.png" id="1_pl6tw"]
-[ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://proc_gen/map_gen.gd" id="2_yi2m7"]
+[ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://proc_gen/terrain_map.gd" id="2_yi2m7"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://proc_gen/highlight.png" id="3_sjv4q"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://proc_gen/camera_controller.gd" id="3_yi2m7"]
+[ext_resource type="PackedScene" uid="uid://c7dgu5w3y8i6u" path="res://proc_gen/test_scene.tscn" id="5_acmx8"]
+[ext_resource type="Script" uid="uid://bvhhgn14tibd" path="res://proc_gen/building_map.gd" id="6_u0b2m"]
+[ext_resource type="PackedScene" uid="uid://c1bfluudjblxk" path="res://proc_gen/test_scene2.tscn" id="6_u0g1d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sjv4q"]
 texture = ExtResource("1_pl6tw")
@@ -56,11 +59,16 @@ texture_region_size = Vector2i(32, 16)
 2:0/0 = 0
 2:0/0/texture_origin = Vector2i(0, 16)
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_u0b2m"]
+scenes/1/scene = ExtResource("5_acmx8")
+scenes/2/scene = ExtResource("6_u0g1d")
+
 [sub_resource type="TileSet" id="TileSet_sjv4q"]
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(32, 16)
 sources/0 = SubResource("TileSetAtlasSource_56hbk")
+sources/1 = SubResource("TileSetScenesCollectionSource_u0b2m")
 
 [node name="TestProcGen" type="Node2D"]
 
@@ -80,6 +88,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BuildingLayer" type="TileMapLayer" parent="BuildingManager"]
 tile_set = SubResource("TileSet_sjv4q")
+script = ExtResource("6_u0b2m")
 
 [node name="Highlight" type="Sprite2D" parent="BuildingManager"]
 modulate = Color(1, 0, 0, 0.392157)

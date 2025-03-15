@@ -1,7 +1,7 @@
 extends Camera2D
 
 # Camera move constants
-const MOUSE_DRAG_STRENGTH: float = 125
+const MOUSE_DRAG_STRENGTH: float = 50
 
 # Camera zoom constants
 const FIXED_ZOOM_SIZES: Array[float] = [
@@ -42,7 +42,7 @@ func move_cam(delta: float) -> void:
 	
 	position -= distance_moved * MOUSE_DRAG_STRENGTH * delta
 
-func zoom_cam_in(delta: float) -> void:
+func zoom_cam_in(_delta: float) -> void:
 	current_zoom_index += 1
 	
 	if (current_zoom_index >= FIXED_ZOOM_SIZES.size()):
@@ -51,7 +51,7 @@ func zoom_cam_in(delta: float) -> void:
 	
 	zoom = Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index]
 
-func zoom_cam_out(delta: float) -> void:
+func zoom_cam_out(_delta: float) -> void:
 	current_zoom_index -= 1
 	
 	if (current_zoom_index < 0):
