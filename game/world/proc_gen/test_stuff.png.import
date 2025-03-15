@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c60mgtvcev6ay"
-path="res://.godot/imported/PlaceholderTiles.png-e4f2d0a49eb1a475c4acadb63de3a3d7.ctex"
+uid="uid://p5141fumd1kg"
+path="res://.godot/imported/test_stuff.png-59f57c70ce9af7c432a615764ab6a518.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://proc_gen/PlaceholderTiles.png"
-dest_files=["res://.godot/imported/PlaceholderTiles.png-e4f2d0a49eb1a475c4acadb63de3a3d7.ctex"]
+source_file="res://world/proc_gen/test_stuff.png"
+dest_files=["res://.godot/imported/test_stuff.png-59f57c70ce9af7c432a615764ab6a518.ctex"]
 
 [params]
 

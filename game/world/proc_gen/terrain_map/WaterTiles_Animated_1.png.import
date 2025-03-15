@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ib563qaldw58"
-path="res://.godot/imported/WaterTiles_Animated_1.png-01187257305129f4e1ac541155d5b359.ctex"
+path="res://.godot/imported/WaterTiles_Animated_1.png-86e0db3c053d5a013259fac092ad42d0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/WaterTiles_Animated_1.png"
-dest_files=["res://.godot/imported/WaterTiles_Animated_1.png-01187257305129f4e1ac541155d5b359.ctex"]
+source_file="res://world/proc_gen/terrain_map/WaterTiles_Animated_1.png"
+dest_files=["res://.godot/imported/WaterTiles_Animated_1.png-86e0db3c053d5a013259fac092ad42d0.ctex"]
 
 [params]
 

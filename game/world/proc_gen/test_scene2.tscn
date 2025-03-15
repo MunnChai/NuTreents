@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://c1bfluudjblxk"]
 
-[ext_resource type="Texture2D" uid="uid://p5141fumd1kg" path="res://proc_gen/test_stuff.png" id="1_j8xyc"]
+[ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://world/proc_gen/structure_map/City_Buildings_1.png" id="1_j8xyc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2dd77"]
 atlas = ExtResource("1_j8xyc")
-region = Rect2(32, 16, 32, 32)
+region = Rect2(32, 16, 32, 40)
 
 [node name="TestScene2" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -12)
 texture = SubResource("AtlasTexture_2dd77")

@@ -3,24 +3,25 @@ extends TileMapLayer
 
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
-const SOURCE_ID: int = 1
+const SOURCE_ID: int = 0
+const BIOME_FALLOFF = 1
 
 enum TILE_TYPE {
-	DIRT = 0,
-	GRASS = DIRT + 1,
-	CEMENT = GRASS + 1,
+	GRASS = 0,
+	DIRT = GRASS + 1,
+	CEMENT = DIRT + 1,
 }
 
 const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
-	TILE_TYPE.DIRT: Vector2i(0, 0),
-	TILE_TYPE.GRASS: Vector2i(0, 2),
+	TILE_TYPE.GRASS: Vector2i(0, 0),
+	TILE_TYPE.DIRT: Vector2i(0, 2),
 	TILE_TYPE.CEMENT: Vector2i(0, 4),
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
-	TILE_TYPE.DIRT: 2,
-	TILE_TYPE.GRASS: 3,
-	TILE_TYPE.CEMENT: 6,
+	TILE_TYPE.GRASS: 4,
+	TILE_TYPE.DIRT: 4,
+	TILE_TYPE.CEMENT: 4,
 }
 
 func _ready() -> void:
@@ -49,7 +50,7 @@ func generate_map() -> void:
 	# Create biomes and assign them to tiles
 	var biome_noise := FastNoiseLite.new()
 	
-	biome_noise.noise_type = FastNoiseLite.TYPE_CELLULAR
+	biome_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	biome_noise.seed = randi()
 	biome_noise.frequency = 0.025
 	biome_noise.fractal_octaves = 4
@@ -64,17 +65,23 @@ func generate_map() -> void:
 	test_image.rotation_degrees = 45
 	test_image.position = Vector2(200, 100)
 	
+	# Create "biomes"
 	for x in range(0, Constants.MAP_SIZE.x):
 		for y in range(0, Constants.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
+			var origin: Vector2i = Vector2i(Constants.MAP_SIZE) / 2
+			
+			var distance_from_origin: float = (map_coords - origin).length()
+			
+			var distance_scaled = distance_from_origin / (Constants.MAP_SIZE.length() * BIOME_FALLOFF)
+			
 			# Some value between 0.0 and 1.0
-			var noise_value: float = clamp((biome_noise.get_noise_2dv(map_coords) + 1), 0, 1)
+			var noise = biome_noise.get_noise_2dv(map_coords)
 			
-			if (noise_value == 1):
-				noise_value = 0
+			var noise_clamped: float = clamp((noise + distance_scaled) , 0, 0.99)
 			
-			var scaled_value: float = noise_value * TILE_ATLAS_COORDS.size()
+			var scaled_value: float = noise_clamped * TILE_ATLAS_COORDS.size()
 			
 			var tile_type: int = floor(scaled_value)
 			
@@ -87,16 +94,7 @@ func generate_map() -> void:
 			tile_data.set_custom_data("biome", tile_type)
 	
 	
-	# Get random tiles based on noise and biome
-	var noise: FastNoiseLite = FastNoiseLite.new()
-	
-	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
-	noise.seed = randi()
-	noise.frequency = 0.05
-	noise.fractal_octaves = 4
-	noise.fractal_lacunarity = 2
-	noise.fractal_gain = 0.5
-	
+	# Randomize tiles based on biome
 	for x in range(0, Constants.MAP_SIZE.x):
 		for y in range(0, Constants.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
@@ -105,10 +103,7 @@ func generate_map() -> void:
 			
 			var biome: int = tile_data.get_custom_data("biome")
 			
-			# Some value between 0.0 and 1.0
-			var noise_value: float = clamp((noise.get_noise_2dv(map_coords) + 1), 0, 1)
-			
-			var scaled_value: float = noise_value * (TILE_TYPE_VARIATIONS[biome] - 1)
+			var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
 			
 			var modifier: int = floor(scaled_value)
 			

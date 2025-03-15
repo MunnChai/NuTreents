@@ -20,7 +20,12 @@ func _input(_event: InputEvent) -> void:
 		
 		remove_cell(map_coords)
 
+# Remove the node at the given map coordinates
+# Returns true upon success, false if there is no node at the map coords
 func add_cell(map_coords: Vector2i) -> bool:
+	if (tile_scene_map.has(map_coords)):
+		return false
+	
 	var atlas_coords: Vector2i = Vector2i(0, 0)
 	
 	var scene_source: TileSetSource = tile_set.get_source(1)
@@ -35,8 +40,19 @@ func add_cell(map_coords: Vector2i) -> bool:
 	
 	return true
 
+
+# Remove the node at the given map coordinates
+# Returns true upon success, false if there is no node at the map coords
 func remove_cell(map_coords: Vector2i) -> bool:
-	erase_cell(map_coords)
+	if (!tile_scene_map.has(map_coords)):
+		return false
+	
+	var object: Node2D = tile_scene_map[map_coords]
+	
+	remove_child(object)
+	
+	tile_scene_map.erase(map_coords)
+	
 	return true
 
 func get_mouse_coords() -> Vector2:
