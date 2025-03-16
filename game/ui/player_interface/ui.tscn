@@ -7,7 +7,9 @@
 
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
 offset_left = 0.0
+offset_top = 448.0
 offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="ResourcesUI" parent="." instance=ExtResource("2_dfe3o")]
 anchors_preset = 0

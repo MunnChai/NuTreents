@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://buns43sl7chej"]
+[gd_scene load_steps=6 format=3 uid="uid://buns43sl7chej"]
 
+[ext_resource type="Script" uid="uid://cgn43ynuh6apg" path="res://ui/player_interface/resources_ui.gd" id="1_dcrin"]
 [ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/resource_sprites.png" id="1_lmyok"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lmyok"]
@@ -23,6 +24,7 @@ offset_right = -1152.0
 offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_dcrin")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -51,13 +53,13 @@ texture = SubResource("AtlasTexture_dcrin")
 layout_mode = 2
 text = "10"
 
-[node name="Nutreents" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Nutrients" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Nutreents"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Nutrients"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_qkopc")
 
-[node name="NutreentsLabel" type="Label" parent="VBoxContainer/Nutreents"]
+[node name="NutrientsLabel" type="Label" parent="VBoxContainer/Nutrients"]
 layout_mode = 2
 text = "10"
