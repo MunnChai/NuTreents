@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://bo6qxshi77p0d"]
+
+[node name="Speedle" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
