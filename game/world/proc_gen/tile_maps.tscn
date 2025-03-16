@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://csdqqfvopxl7j"]
 
-[ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/structure_manager.gd" id="1_56hbk"]
+[ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="1_56hbk"]
 [ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="2_u0b2m"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="3_sjv4q"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="3_yi2m7"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 
-[node name="TestProcGen" type="Node2D"]
+[node name="TileMaps" type="Node2D"]
 
 [node name="BuildingManager" type="Node2D" parent="."]
 script = ExtResource("1_56hbk")
