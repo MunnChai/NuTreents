@@ -9,15 +9,17 @@ var max_water: int
 var gain: Vector3
 var maint: int
 
-func _ready():
+func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2):
+	super._init(p)
 	died = false
 	attackable = true
-	hp = 10
-	storage = 0
-	max_water = 0
-	gain = Vector3(0, 0, 0)
-	maint = 0
-	
+	hp = h
+	storage = s
+	max_water = max
+	gain = g
+	maint = m
+
+
 func _process(delta):
 	update_gain()
 	update_maint()
