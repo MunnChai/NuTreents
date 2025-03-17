@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3xllkegns581"
-path="res://.godot/imported/Tree_Stump_1.png-c88635baa457e2af772d78c71102e11a.ctex"
+uid="uid://j2gnmo4lwid3"
+path="res://.godot/imported/Large_Tree_Stump_1.png-473af5f8ccd521f8e28f3085112714c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Tree_Stump_1.png"
-dest_files=["res://.godot/imported/Tree_Stump_1.png-c88635baa457e2af772d78c71102e11a.ctex"]
+source_file="res://trees/scripts/Trees/Large_Tree_Stump_1.png"
+dest_files=["res://.godot/imported/Large_Tree_Stump_1.png-473af5f8ccd521f8e28f3085112714c2.ctex"]
 
 [params]
 
