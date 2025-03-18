@@ -14,7 +14,7 @@ script = ExtResource("1_56hbk")
 [node name="GroundLayer" parent="BuildingManager" instance=ExtResource("2_u0b2m")]
 
 [node name="Highlight" type="Sprite2D" parent="BuildingManager"]
-modulate = Color(1, 0, 0, 0.392157)
+modulate = Color(0.245244, 0.844789, 1, 0.505882)
 texture = ExtResource("3_sjv4q")
 
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
