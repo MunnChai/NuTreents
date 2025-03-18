@@ -6,9 +6,9 @@ var sunlight: int = 50
 var nutrients: int = 200
 
 # Resource generation vars, would be changed based off # of trees/types of trees
-var water_per_s: int = 1
-var sun_per_s: int = 1
-var nutrients_per_s: int = 1
+var water_per_s: float = 1
+var sun_per_s: float = 1
+var nutrients_per_s: float = 1
 
 var seconds: float = 0
 
