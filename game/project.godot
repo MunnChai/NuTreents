@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 Constants="*res://constants.gd"
 TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
 
+[global_group]
+
+fog_map=""
+
 [input]
 
 move_cam={

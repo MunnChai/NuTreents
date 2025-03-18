@@ -3,7 +3,7 @@ extends TileMapLayer
 
 const FOG_SIZE = Constants.MAP_SIZE * 2
 
-var tree_vision_range: int = 1
+var tree_vision_range: int = 2
 
 
 func _ready() -> void:
@@ -28,9 +28,7 @@ func remove_fog_around(map_coords: Vector2i):
 		for y in range(map_coords.y - tree_vision_range, map_coords.y + tree_vision_range):
 			var current_coord: Vector2i = Vector2i(x, y)
 			
-			var atlas_coords: Vector2i = get_random_solid_atlas_coords()
-			
-			set_cell(current_coord, 0, atlas_coords, 0)
+			erase_cell(current_coord)
 
 func update_surrounding_tiles(map_coords: Vector2i):
 	var is_tree_here: bool = TreeManager.tree_map.has(map_coords)
