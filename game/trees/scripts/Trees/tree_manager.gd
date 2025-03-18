@@ -1,6 +1,10 @@
 extends Node
 class_name tree_manager
 
+@onready var fog_map: FogMap = get_tree().get_nodes_in_group("fog_map")[0]
+@onready var structure_map: BuildingMap = get_tree().get_nodes_in_group("structure_map")[0]
+@onready var terrain_map: TerrainMap = get_tree().get_nodes_in_group("terrain_map")[0]
+
 # stores all trees
 var tree_map: Dictionary[Vector2i, Node2D]
 var total_water: int
@@ -8,11 +12,11 @@ var total_n: int
 var total_sun: int
 
 func _ready():
-	add_to_group("structure_map")
-	add_to_group("terrain_map")
 	total_water = 0
 	total_n = 0
 	total_sun = 0
+	
+	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2)
 
 # TODO: add resources checking
 
@@ -27,6 +31,8 @@ func add_tree(type: int, p: Vector2i) -> int:
 	# call structure_map to add it on screen
 	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
 	object.add_default_tree(p)
+	
+	fog_map.remove_fog_around(p)
 	return 0
 
 

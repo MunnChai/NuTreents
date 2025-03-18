@@ -39,6 +39,6 @@ sources/0 = SubResource("TileSetAtlasSource_56hbk")
 sources/1 = SubResource("TileSetScenesCollectionSource_u0b2m")
 sources/2 = SubResource("TileSetScenesCollectionSource_yf235")
 
-[node name="BuildingLayer" type="TileMapLayer"]
+[node name="BuildingLayer" type="TileMapLayer" groups=["structure_map"]]
 tile_set = SubResource("TileSet_sjv4q")
 script = ExtResource("4_mu21j")
