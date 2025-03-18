@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnyvi6bwf1ryw"]
+
+[ext_resource type="Texture2D" uid="uid://bxcuvioyn8pxx" path="res://trees/scripts/Trees/Tree_Triangle_1.png" id="1_psvx4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cah0p"]
+atlas = ExtResource("1_psvx4")
+region = Rect2(31.5943, 14.5648, 32.8367, 40.6743)
+
+[node name="TestTree" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -14)
+texture = SubResource("AtlasTexture_cah0p")
