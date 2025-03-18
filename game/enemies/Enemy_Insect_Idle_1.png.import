@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccshvxurb1pd2"
-path="res://.godot/imported/Tree_Tech_Flywheel_Animated_1.png-bb6fbad675df42f20444cf7c78d7d800.ctex"
+uid="uid://dtnv0nwwg2ydq"
+path="res://.godot/imported/Enemy_Insect_Idle_1.png-643a8a0e3271fe28a01cccd0103a43f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Tree_Tech_Flywheel_Animated_1.png"
-dest_files=["res://.godot/imported/Tree_Tech_Flywheel_Animated_1.png-bb6fbad675df42f20444cf7c78d7d800.ctex"]
+source_file="res://enemies/Enemy_Insect_Idle_1.png"
+dest_files=["res://.godot/imported/Enemy_Insect_Idle_1.png-643a8a0e3271fe28a01cccd0103a43f8.ctex"]
 
 [params]
 

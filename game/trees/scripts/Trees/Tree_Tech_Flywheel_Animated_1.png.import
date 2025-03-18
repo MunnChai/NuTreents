@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpar2eke7fjfe"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://ccshvxurb1pd2"
+path="res://.godot/imported/Tree_Tech_Flywheel_Animated_1.png-7b7c960f3e4d05242b98c0401dfb7815.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://trees/scripts/Trees/Tree_Tech_Flywheel_Animated_1.png"
+dest_files=["res://.godot/imported/Tree_Tech_Flywheel_Animated_1.png-7b7c960f3e4d05242b98c0401dfb7815.ctex"]
 
 [params]
 

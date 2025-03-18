@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6v05rhs2ins3"
-path="res://.godot/imported/Tree_Pump_Animated_1.png-1e264c090eab544da5bc8f9ab194d608.ctex"
+uid="uid://cisb6jlydfp17"
+path="res://.godot/imported/Tree_Square_Red_1.png-2b410cffb1caf0569c6b841a7b74f9e0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Tree_Pump_Animated_1.png"
-dest_files=["res://.godot/imported/Tree_Pump_Animated_1.png-1e264c090eab544da5bc8f9ab194d608.ctex"]
+source_file="res://trees/scripts/Trees/Tree_Square_Red_1.png"
+dest_files=["res://.godot/imported/Tree_Square_Red_1.png-2b410cffb1caf0569c6b841a7b74f9e0.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpar2eke7fjfe"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://j2gnmo4lwid3"
+path="res://.godot/imported/Large_Tree_Stump_1.png-473af5f8ccd521f8e28f3085112714c2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://trees/scripts/Trees/Large_Tree_Stump_1.png"
+dest_files=["res://.godot/imported/Large_Tree_Stump_1.png-473af5f8ccd521f8e28f3085112714c2.ctex"]
 
 [params]
 

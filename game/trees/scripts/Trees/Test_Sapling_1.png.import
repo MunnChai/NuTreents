@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://j2gnmo4lwid3"
-path="res://.godot/imported/Large_Tree_Stump_1.png-a61420c5e470ed284a23e8812d0ddd9b.ctex"
+uid="uid://bl42gy3vcckga"
+path="res://.godot/imported/Test_Sapling_1.png-4b242e89a9f6d31a5aba1b676e9c964c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Large_Tree_Stump_1.png"
-dest_files=["res://.godot/imported/Large_Tree_Stump_1.png-a61420c5e470ed284a23e8812d0ddd9b.ctex"]
+source_file="res://trees/scripts/Trees/Test_Sapling_1.png"
+dest_files=["res://.godot/imported/Test_Sapling_1.png-4b242e89a9f6d31a5aba1b676e9c964c.ctex"]
 
 [params]
 

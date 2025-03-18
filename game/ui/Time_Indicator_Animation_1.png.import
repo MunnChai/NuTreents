@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bhu50q3gxlbry"
-path="res://.godot/imported/Tree_Square_1.png-8f86a5711820339970b1f6af05aa657a.ctex"
+uid="uid://bklrn087vva72"
+path="res://.godot/imported/Time_Indicator_Animation_1.png-a18b2e3344e954dec447f04fedc9618b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Tree_Square_1.png"
-dest_files=["res://.godot/imported/Tree_Square_1.png-8f86a5711820339970b1f6af05aa657a.ctex"]
+source_file="res://ui/Time_Indicator_Animation_1.png"
+dest_files=["res://.godot/imported/Time_Indicator_Animation_1.png-a18b2e3344e954dec447f04fedc9618b.ctex"]
 
 [params]
 
