@@ -60,8 +60,13 @@ func get_mouse_coords() -> Vector2:
 func generate_map() -> void:
 	print("Generating map...")
 	
+	
+	
 	# Fill map with grass
 	initialize_map()
+	
+	# Create rivers
+	generate_rivers()
 	
 	# Generate random cities
 	var city_coords: Array[Vector2i]
@@ -76,11 +81,6 @@ func generate_map() -> void:
 		
 		angle += 2 * PI / num_cities
 	
-	
-	
-	# Create rivers
-	generate_rivers()
-	
 	# Generate roads between cities first
 	generate_roads(city_coords)
 	
@@ -91,12 +91,14 @@ func generate_map() -> void:
 	generate_spawn()
 	
 	# Randomize tiles based on biome
-	randomize_tiles()
+	#randomize_tiles()
 
 
 
 
 func initialize_map() -> void:
+	
+	var grass_tiles: Array[Vector2i]
 	for x in range(0, Constants.MAP_SIZE.x):
 		for y in range(0, Constants.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
@@ -113,6 +115,10 @@ func initialize_map() -> void:
 			
 			var tile_data: TileData = get_cell_tile_data(map_coords)
 			tile_data.set_custom_data("biome", tile_type)
+			
+			grass_tiles.append(map_coords)
+	
+	#set_cells_terrain_connect(grass_tiles, 0, 0)
 
 func generate_rivers() -> void:
 	
@@ -124,6 +130,8 @@ func generate_rivers() -> void:
 	river_noise.fractal_octaves = 4
 	river_noise.fractal_lacunarity = 2
 	river_noise.fractal_gain = 0.5
+	
+	var river_tiles: Array[Vector2i]
 	
 	# For each tile
 	for x in range(0, Constants.MAP_SIZE.x):
@@ -145,11 +153,15 @@ func generate_rivers() -> void:
 			
 				var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
 				
-				set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+				#set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
 				
 				var tile_data: TileData = get_cell_tile_data(map_coords)
 				
-				tile_data.set_custom_data("biome", tile_type)
+				#tile_data.set_custom_data("biome", tile_type)
+				
+				river_tiles.append(map_coords)
+	
+	set_cells_terrain_connect(river_tiles, 0, 1)
 
 func generate_cities(city_coords: Array[Vector2i]):
 	for map_coords in city_coords:
