@@ -22,6 +22,7 @@ func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i):
 
 func die():
 	died = true
+	TreeManager.tree_die(pos)
 
 # returns gain so that system know how much resources should be added to total
 func get_gain() -> Vector3:
@@ -30,8 +31,8 @@ func get_gain() -> Vector3:
 # take water to survie, either from own storage or other trees
 # if insufficient water, deduct hp
 func update_maint():
-	if (storage >= maint):
-		storage -= maint
+	#if (storage >= maint):
+		#storage -= maint
 	# ask TreeManager for water, if no water then deduct health
 	var has_water = TreeManager.get_water(maint)
 	if (!has_water):

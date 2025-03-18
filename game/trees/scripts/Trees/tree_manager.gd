@@ -16,23 +16,24 @@ func _ready():
 	#await get_tree().process_frame
 	add_tree(1, Vector2i(1,0))
 	add_tree(1, Vector2i(1,1))
+	upgrade_tree(Vector2i(1,1))
 
 func _button_pressed():
 	update()
 	print_trees()
 	print_res()
-	remove_tree(Vector2i(1,1))
-	update()
-	print_trees()
-	print_res()
-
 
 # to be called each round, update everything?
 func update():
+	# iterate all trees, get their generated res and remove dead trees
 	for key in tree_map.keys():
+		if (!tree_map.has(key)):
+			continue
 		var tree: Twee = tree_map[key]
 		res += tree.get_gain()
 		tree.update_maint()
+		if (tree.died):
+			remove_tree(key)
 
 
 # add tree with given type at p
@@ -50,6 +51,19 @@ func add_tree(type: int, p: Vector2i) -> int:
 	#object.add_default_tree(p)
 	return 0
 
+# remove tree at given p
+# returns false if no tree exists at p; true otherwise
+func remove_tree(p: Vector2i) -> bool:
+	if (!tree_map.has(p)):
+		return false
+	var tree = tree_map[p]
+	tree_map.erase(p)
+	tree.free()
+	return true
+
+# same as remove_tree, but to dstinguish manually removed trees and dead trees
+func tree_die(p: Vector2i) -> bool:
+	return remove_tree(p)
 
 # upgrade the tree at given p
 # return: 0 -> succesfful, 1 -> no tree at p, 2 -> insufficient resources
@@ -72,19 +86,6 @@ func upgrade_tree(p: Vector2i) -> int:
 	return 0
 
 
-# remove the tree at given p; returns true if successful, false otherwise
-func remove_tree(p: Vector2i) -> bool:
-	if (!tree_map.has(p)):
-		return false
-	var tree: Twee = tree_map[p]
-	tree_map.erase(p)
-	tree.free()
-	
-	
-	#var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	#object.remove_cell(p)
-	return true
-
 # called by Tree when they don't have sufficient water to survive
 # returns false if total_water < maint; otherwise deduct maint from storage
 func get_water(maint: int) -> bool:
@@ -95,11 +96,12 @@ func get_water(maint: int) -> bool:
 		return true
 
 
+
 # function for testing, remove eventually
 func print_trees():
 	for key in tree_map.keys():
 		var tree: DefaultTree = tree_map[key]
-		print(key, ": water ", tree.storage, "  hp", tree.hp)
+		print(key, ": water ", tree.storage, "  hp ", tree.hp)
 
 # function for testing as well
 func print_res():
