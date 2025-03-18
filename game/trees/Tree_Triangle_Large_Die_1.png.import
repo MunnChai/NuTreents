@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbmjeifcxsi5y"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://cjx5rbvwtw2mj"
+path="res://.godot/imported/Tree_Triangle_Large_Die_1.png-5be0011a8004ec39d5890d3d470def9e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://trees/Tree_Triangle_Large_Die_1.png"
+dest_files=["res://.godot/imported/Tree_Triangle_Large_Die_1.png-5be0011a8004ec39d5890d3d470def9e.ctex"]
 
 [params]
 
