@@ -96,7 +96,7 @@ custom_data_layer_0/name = "biome"
 custom_data_layer_0/type = 2
 sources/0 = SubResource("TileSetAtlasSource_uh2vc")
 
-[node name="GroundLayer" type="TileMapLayer"]
+[node name="GroundLayer" type="TileMapLayer" groups=["terrain_map"]]
 tile_set = SubResource("TileSet_ag0jr")
 script = ExtResource("2_81d22")
 

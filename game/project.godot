@@ -23,6 +23,8 @@ TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
 [global_group]
 
 fog_map=""
+terrain_map=""
+structure_map=""
 
 [input]
 

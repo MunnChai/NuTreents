@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://p5141fumd1kg" path="res://world/proc_gen/test_stuff.png" id="1_d36px"]
 [ext_resource type="PackedScene" uid="uid://c7dgu5w3y8i6u" path="res://world/proc_gen/test_scene.tscn" id="2_4ecmq"]
 [ext_resource type="PackedScene" uid="uid://c1bfluudjblxk" path="res://world/proc_gen/test_scene2.tscn" id="3_yf235"]
-[ext_resource type="PackedScene" uid="uid://bnyvi6bwf1ryw" path="res://trees/scripts/DefaultTree2.tscn" id="4_4ecmq"]
+[ext_resource type="PackedScene" uid="uid://bjy0e6e31h2sg" path="res://trees/scripts/DefaultTree2.tscn" id="4_4ecmq"]
 [ext_resource type="Script" uid="uid://bvhhgn14tibd" path="res://world/proc_gen/structure_map/structure_map.gd" id="4_mu21j"]
 [ext_resource type="PackedScene" uid="uid://cyjc06vtibg0m" path="res://trees/scripts/ShadyTree.tscn" id="5_yf235"]
-[ext_resource type="PackedScene" uid="uid://bl1vcqwfbqxo3" path="res://trees/scripts/DefaultTree1.tscn" id="6_mu21j"]
+[ext_resource type="PackedScene" uid="uid://d4gwxpvd6lbgd" path="res://trees/scripts/DefaultTree1.tscn" id="6_mu21j"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_56hbk"]
 texture = ExtResource("1_d36px")
@@ -39,6 +39,6 @@ sources/0 = SubResource("TileSetAtlasSource_56hbk")
 sources/1 = SubResource("TileSetScenesCollectionSource_u0b2m")
 sources/2 = SubResource("TileSetScenesCollectionSource_yf235")
 
-[node name="BuildingLayer" type="TileMapLayer"]
+[node name="BuildingLayer" type="TileMapLayer" groups=["structure_map"]]
 tile_set = SubResource("TileSet_sjv4q")
 script = ExtResource("4_mu21j")
