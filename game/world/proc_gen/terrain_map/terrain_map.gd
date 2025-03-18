@@ -161,7 +161,8 @@ func generate_rivers() -> void:
 				
 				river_tiles.append(map_coords)
 	
-	set_cells_terrain_connect(river_tiles, 0, 1)
+	# Call deferred so that terrain connections are made after all generation is finished
+	call_deferred("set_cells_terrain_connect", river_tiles, 0, 1)
 
 func generate_cities(city_coords: Array[Vector2i]):
 	for map_coords in city_coords:
