@@ -3,33 +3,68 @@ class_name tree_manager
 
 # stores all trees
 var tree_map: Dictionary[Vector2i, Node2D]
+var total_water: int
+var total_n: int
+var total_sun: int
 
-@onready var fog_map: FogMap = get_tree().get_nodes_in_group("fog_map")[0]
+func _ready():
+	add_to_group("structure_map")
+	add_to_group("terrain_map")
+	total_water = 0
+	total_n = 0
+	total_sun = 0
 
-func add_tree(coords: Vector2i) -> bool:
-	if (tree_map.has(coords)):
-		upgrade_tree(coords)
-	var tree = DefaultTree.new(0, coords)
-	tree_map[coords] = tree
-	
-	fog_map.remove_fog_around(coords)
-	return true
-	
-func upgrade_tree(coords: Vector2i) -> bool:
-	if (!tree_map.has(coords)):
-		return false
-	var original_tree: DefaultTree = tree_map[coords]
+# TODO: add resources checking
+
+# add tree with given type at p
+# TODO type: will add more types later, codes only use DefaultTree for now
+# return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
+func add_tree(type: int, p: Vector2i) -> int:
+	if (tree_map.has(p)):
+		return 1
+	var tree = DefaultTree.new(0, p)
+	tree_map[p] = tree
+	# call structure_map to add it on screen
+	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
+	object.add_default_tree(p)
+	return 0
+
+
+# upgrade the tree at given p
+# return: 0 -> succesfful, 1 -> no tree at p, 2 -> insufficient resources
+#         3 -> secondary tree exists at p
+func upgrade_tree(p: Vector2i) -> int:
+	if (!tree_map.has(p)):
+		return 1
+		
+	var original_tree: DefaultTree = tree_map[p]
+	if (original_tree.level == 2):
+		return 3
+		
+	tree_map.erase(p)
 	var new_tree: DefaultTree = original_tree.upgrade()
-	tree_map.erase(coords)
-	tree_map[coords] = new_tree
-	
+	tree_map[p] = new_tree
 	original_tree.queue_free()
-	return true
 	
-func remove_tree(coords: Vector2i) -> bool:
-	if (!tree_map.has(coords)):
+	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
+	object.upgrade_cell(p)
+	return 0
+
+
+# remove the tree at given p; returns true if successful, false otherwise
+func remove_tree(p: Vector2i) -> bool:
+	if (!tree_map.has(p)):
 		return false
-	var tree = tree_map[coords]
-	tree_map.erase(coords)
+	var tree = tree_map[p]
+	tree_map.erase(p)
 	tree.queue_free()
+	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
+	object.remove_cell(p)
 	return true
+
+# function for testing, remove eventually
+func print_trees():
+	for key in tree_map:
+		var tree: DefaultTree = tree_map[key]
+		print(key, tree.storage)
+	print()

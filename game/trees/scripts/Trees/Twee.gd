@@ -20,7 +20,7 @@ func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2):
 	maint = m
 
 
-func _process(delta):
+func update():
 	update_gain()
 	update_maint()
 

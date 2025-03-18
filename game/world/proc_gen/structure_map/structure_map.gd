@@ -56,8 +56,6 @@ func remove_cell(map_coords: Vector2i) -> bool:
 	remove_child(object)
 	
 	tile_scene_map.erase(map_coords)
-	TreeManager.remove_tree(map_coords)
-	print(TreeManager.tree_map)
 	return true
 
 func get_mouse_coords() -> Vector2:
@@ -80,9 +78,7 @@ func add_default_tree(map_coords: Vector2i) -> bool:
 	object.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = object
-	TreeManager.add_tree(map_coords)
 	add_child(object)
-	print(TreeManager.tree_map)
 	return true
 	
 func upgrade_cell(map_coords: Vector2i):
@@ -98,7 +94,5 @@ func upgrade_cell(map_coords: Vector2i):
 	tree.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = tree
-	TreeManager.upgrade_tree(map_coords)
 	add_child(tree)
-	print(TreeManager.tree_map)
 	return
