@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8ibupddw5xou"]
 
-[ext_resource type="Texture2D" uid="uid://bqookpbbsmui5" path="res://world/proc_gen/terrain_map/Tiles_1.png" id="1_i2w04"]
+[ext_resource type="Texture2D" uid="uid://nc08yyyg3qtf" path="res://world/proc_gen/world_tiles.png" id="1_i2w04"]
 [ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://world/proc_gen/terrain_map/terrain_map.gd" id="2_81d22"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uh2vc"]
@@ -76,6 +76,17 @@ texture_region_size = Vector2i(32, 16)
 1:12/0 = 0
 0:12/size_in_atlas = Vector2i(1, 2)
 0:12/0 = 0
+0:14/size_in_atlas = Vector2i(1, 2)
+0:14/animation_speed = 8.0
+0:14/animation_frame_0/duration = 1.0
+0:14/animation_frame_1/duration = 1.0
+0:14/animation_frame_2/duration = 1.0
+0:14/animation_frame_3/duration = 1.0
+0:14/animation_frame_4/duration = 1.0
+0:14/animation_frame_5/duration = 1.0
+0:14/animation_frame_6/duration = 1.0
+0:14/animation_frame_7/duration = 1.0
+0:14/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_ag0jr"]
 tile_shape = 1
