@@ -6,12 +6,14 @@ const GAIN1 = Vector3(5, 0, 0)
 const GAIN1_BUFFED = Vector3(6, 0, 0)
 const MAX_WATER1 = 1
 const MAINT1 = 1
+const COST1 = 8
 
 const HP2 = 20
 const GAIN2 = Vector3(10, 2, 1)
 const GAIN2_BUFFED = Vector3(15, 6, 1)
 const MAX_WATER2 = 3
 const MAINT2 = 0
+const COST2 = 12
 
 func _init(s: int, p: Vector2i):
 	var g = GAIN1

@@ -5,11 +5,13 @@ const HP1 = 10
 const GAIN1 = Vector3(5, 0, 0)
 const MAX_WATER1 = 2
 const MAINT1 = 2
+const COST1 = 10
 
 const HP2 = 20
 const GAIN2 = Vector3(10, 2, 1)
 const MAX_WATER2 = 5
 const MAINT2 = 0
+const COST2 = 5
 
 func _init(s: int, p: Vector2i):
 	super._init(1, HP1, s, MAX_WATER1, GAIN1, MAINT1, p)

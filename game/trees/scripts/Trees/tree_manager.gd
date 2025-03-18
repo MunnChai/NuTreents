@@ -6,7 +6,7 @@ var tree_map: Dictionary[Vector2i, Node2D]
 var res: Vector3
 
 func _ready():
-	res = Vector3(0, 0, 0)
+	res = Vector3(10, 0, 0)
 	
 	# testing
 	var button = Button.new()
@@ -15,11 +15,12 @@ func _ready():
 	add_child(button)
 	#await get_tree().process_frame
 	add_tree(1, Vector2i(1,0))
-	add_tree(1, Vector2i(1,1))
-	upgrade_tree(Vector2i(1,1))
 
 func _button_pressed():
 	update()
+	print_trees()
+	print_res()
+	upgrade_tree(Vector2i(1,0))
 	print_trees()
 	print_res()
 
@@ -42,9 +43,12 @@ func update():
 func add_tree(type: int, p: Vector2i) -> int:
 	if (tree_map.has(p)):
 		return 1
+	if (!enough_n(DefaultTree.COST1)):
+		print("not enough N")
+		return 2
+		
 	var tree = DefaultTree.new(0, p)
 	tree_map[p] = tree
-	
 	# call structure_map to add it on screen TODO: weird 
 	#var object = get_tree().get_first_node_in_group("structure_map")
 	#print("Found node:", object, "Type:", object.get_class())
@@ -56,14 +60,11 @@ func add_tree(type: int, p: Vector2i) -> int:
 func remove_tree(p: Vector2i) -> bool:
 	if (!tree_map.has(p)):
 		return false
-	var tree = tree_map[p]
+	var tree: Twee = tree_map[p]
+	res.y -= tree.storage
 	tree_map.erase(p)
 	tree.free()
 	return true
-
-# same as remove_tree, but to dstinguish manually removed trees and dead trees
-func tree_die(p: Vector2i) -> bool:
-	return remove_tree(p)
 
 # upgrade the tree at given p
 # return: 0 -> succesfful, 1 -> no tree at p, 2 -> insufficient resources
@@ -76,6 +77,10 @@ func upgrade_tree(p: Vector2i) -> int:
 	if (original_tree.level == 2):
 		return 3
 		
+	if (!enough_n(DefaultTree.COST2)):
+		print("not enough N")
+		return 2
+		
 	tree_map.erase(p)
 	var new_tree: DefaultTree = original_tree.upgrade()
 	tree_map[p] = new_tree
@@ -84,6 +89,10 @@ func upgrade_tree(p: Vector2i) -> int:
 	#var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
 	#object.upgrade_cell(p)
 	return 0
+
+# same as remove_tree, but to dstinguish manually removed trees and dead trees
+func tree_die(p: Vector2i) -> bool:
+	return remove_tree(p)
 
 
 # called by Tree when they don't have sufficient water to survive
@@ -95,6 +104,13 @@ func get_water(maint: int) -> bool:
 		res.y -= maint
 		return true
 
+# check if player has enough N
+# if yes, spend required N and returns true; returns false otherwise
+func enough_n(cost: int) -> bool:
+	if (res.x >= cost):
+		res.x -= cost
+		return true
+	return false
 
 
 # function for testing, remove eventually
