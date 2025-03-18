@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbmjeifcxsi5y"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://c2vbw8v7hqbe0"
+path="res://.godot/imported/Fog_Tiles_1.png-3adc041ad0b7b715fd660693f4b8aaea.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://world/Fog_Tiles_1.png"
+dest_files=["res://.godot/imported/Fog_Tiles_1.png-3adc041ad0b7b715fd660693f4b8aaea.ctex"]
 
 [params]
 
