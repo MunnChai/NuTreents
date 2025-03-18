@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dffhgs1hnqji3"
-path="res://.godot/imported/Tree_Tech_Flywheel_Animated_2.png-048cbeea1abf8f6898cda6438c5a404f.ctex"
+uid="uid://bl42gy3vcckga"
+path="res://.godot/imported/Test_Sapling_1.png-4b242e89a9f6d31a5aba1b676e9c964c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Tree_Tech_Flywheel_Animated_2.png"
-dest_files=["res://.godot/imported/Tree_Tech_Flywheel_Animated_2.png-048cbeea1abf8f6898cda6438c5a404f.ctex"]
+source_file="res://trees/scripts/Trees/Test_Sapling_1.png"
+dest_files=["res://.godot/imported/Test_Sapling_1.png-4b242e89a9f6d31a5aba1b676e9c964c.ctex"]
 
 [params]
 

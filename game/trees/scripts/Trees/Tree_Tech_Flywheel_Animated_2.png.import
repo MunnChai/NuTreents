@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccshvxurb1pd2"
-path="res://.godot/imported/Tree_Tech_Flywheel_Animated_1.png-bb6fbad675df42f20444cf7c78d7d800.ctex"
+uid="uid://dffhgs1hnqji3"
+path="res://.godot/imported/Tree_Tech_Flywheel_Animated_2.png-a415a785ef55d766181d24b52420d5df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://trees/Tree_Tech_Flywheel_Animated_1.png"
-dest_files=["res://.godot/imported/Tree_Tech_Flywheel_Animated_1.png-bb6fbad675df42f20444cf7c78d7d800.ctex"]
+source_file="res://trees/scripts/Trees/Tree_Tech_Flywheel_Animated_2.png"
+dest_files=["res://.godot/imported/Tree_Tech_Flywheel_Animated_2.png-a415a785ef55d766181d24b52420d5df.ctex"]
 
 [params]
 
