@@ -8,8 +8,7 @@ var tile_scene_map: Dictionary[Vector2i, Node2D]
 func _ready() -> void:
 	y_sort_enabled = true
 	
-	await get_tree().process_frame
-	add_default_tree(Constants.MAP_SIZE / 2)
+	
 
 func _input(_event: InputEvent) -> void:
 	

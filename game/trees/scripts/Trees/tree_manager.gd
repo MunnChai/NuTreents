@@ -15,6 +15,8 @@ func _ready():
 	total_water = 0
 	total_n = 0
 	total_sun = 0
+	
+	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2)
 
 # TODO: add resources checking
 
