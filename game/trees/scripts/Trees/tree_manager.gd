@@ -3,18 +3,37 @@ class_name tree_manager
 
 # stores all trees
 var tree_map: Dictionary[Vector2i, Node2D]
-var total_water: int
-var total_n: int
-var total_sun: int
+var res: Vector3
 
 func _ready():
-	add_to_group("structure_map")
-	add_to_group("terrain_map")
-	total_water = 0
-	total_n = 0
-	total_sun = 0
+	res = Vector3(0, 0, 0)
+	
+	# testing
+	var button = Button.new()
+	button.text = "Update Resource"
+	button.pressed.connect(_button_pressed)
+	add_child(button)
+	#await get_tree().process_frame
+	add_tree(1, Vector2i(1,0))
+	add_tree(1, Vector2i(1,1))
 
-# TODO: add resources checking
+func _button_pressed():
+	update()
+	print_trees()
+	print_res()
+	remove_tree(Vector2i(1,1))
+	update()
+	print_trees()
+	print_res()
+
+
+# to be called each round, update everything?
+func update():
+	for key in tree_map.keys():
+		var tree: Twee = tree_map[key]
+		res += tree.get_gain()
+		tree.update_maint()
+
 
 # add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
@@ -24,9 +43,11 @@ func add_tree(type: int, p: Vector2i) -> int:
 		return 1
 	var tree = DefaultTree.new(0, p)
 	tree_map[p] = tree
-	# call structure_map to add it on screen
-	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	object.add_default_tree(p)
+	
+	# call structure_map to add it on screen TODO: weird 
+	#var object = get_tree().get_first_node_in_group("structure_map")
+	#print("Found node:", object, "Type:", object.get_class())
+	#object.add_default_tree(p)
 	return 0
 
 
@@ -44,10 +65,10 @@ func upgrade_tree(p: Vector2i) -> int:
 	tree_map.erase(p)
 	var new_tree: DefaultTree = original_tree.upgrade()
 	tree_map[p] = new_tree
-	original_tree.queue_free()
+	original_tree.free()
 	
-	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	object.upgrade_cell(p)
+	#var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
+	#object.upgrade_cell(p)
 	return 0
 
 
@@ -55,16 +76,31 @@ func upgrade_tree(p: Vector2i) -> int:
 func remove_tree(p: Vector2i) -> bool:
 	if (!tree_map.has(p)):
 		return false
-	var tree = tree_map[p]
+	var tree: Twee = tree_map[p]
 	tree_map.erase(p)
-	tree.queue_free()
-	var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	object.remove_cell(p)
+	tree.free()
+	
+	
+	#var object: BuildingMap = get_tree().get_first_node_in_group("structure_map")
+	#object.remove_cell(p)
 	return true
+
+# called by Tree when they don't have sufficient water to survive
+# returns false if total_water < maint; otherwise deduct maint from storage
+func get_water(maint: int) -> bool:
+	if (res.y < maint):
+		return false
+	else:
+		res.y -= maint
+		return true
+
 
 # function for testing, remove eventually
 func print_trees():
-	for key in tree_map:
+	for key in tree_map.keys():
 		var tree: DefaultTree = tree_map[key]
-		print(key, tree.storage)
-	print()
+		print(key, ": water ", tree.storage, "  hp", tree.hp)
+
+# function for testing as well
+func print_res():
+	print(res)

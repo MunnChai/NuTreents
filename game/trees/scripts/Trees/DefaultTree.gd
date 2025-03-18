@@ -11,7 +11,7 @@ const GAIN2 = Vector3(10, 2, 1)
 const MAX_WATER2 = 5
 const MAINT2 = 0
 
-func _init(s: int, p: Vector2):
+func _init(s: int, p: Vector2i):
 	super._init(1, HP1, s, MAX_WATER1, GAIN1, MAINT1, p)
 
 func upgrade() -> DefaultTree:

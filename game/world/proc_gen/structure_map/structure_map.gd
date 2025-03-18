@@ -6,6 +6,7 @@ const SOURCE_ID: int = 1
 var tile_scene_map: Dictionary[Vector2i, Node2D]
 
 func _ready() -> void:
+	add_to_group("structure_map")
 	y_sort_enabled = true
 
 func _input(_event: InputEvent) -> void:

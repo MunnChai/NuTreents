@@ -13,7 +13,7 @@ const GAIN2_BUFFED = Vector3(15, 6, 1)
 const MAX_WATER2 = 3
 const MAINT2 = 0
 
-func _init(s: int, p: Vector2):
+func _init(s: int, p: Vector2i):
 	var g = GAIN1
 	# TODO: if near tall things, changed g to buffed stats
 	super._init(1, HP1, s, MAX_WATER1, g, MAINT1, p)
