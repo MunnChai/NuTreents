@@ -17,14 +17,17 @@ const PERCENT_MORNING_THRESHOLD = 0.25 ## Percent of half day, occurs BEFORE
 
 @onready var modulation: CanvasModulate = %Modulation
 
+static var amount_of_night = 0.0
+
 func _ready() -> void:
 	clock = get_tree().root.find_child("Clock", true, false)
 
 func _process(delta: float) -> void:
 	if clock:
+		_update_modulation(delta)
 		_update_amount_of_night(delta)
 
-func _update_amount_of_night(delta: float) -> void:
+func _update_modulation(delta: float) -> void:
 	if clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS:
 		modulation.color = modulation.color.lerp(night_color, delta * LERP_TO_NIGHT_SPEED)
 	elif clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS * PERCENT_EVENING_THRESHOLD:
@@ -33,3 +36,9 @@ func _update_amount_of_night(delta: float) -> void:
 		modulation.color = modulation.color.lerp(day_color, delta * LERP_TO_DAY_SPEED)
 	else:
 		modulation.color = modulation.color.lerp(morning_color, delta * LERP_TO_MORNING_SPEED)
+
+func _update_amount_of_night(delta: float) -> void:
+	if clock.get_curr_day_sec() <= clock.HALF_DAY_SECONDS:
+		amount_of_night = lerp(amount_of_night, 0.0, delta * LERP_TO_MORNING_SPEED)
+	else:
+		amount_of_night = lerp(amount_of_night, 1.0, delta * LERP_TO_NIGHT_SPEED)
