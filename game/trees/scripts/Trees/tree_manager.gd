@@ -64,7 +64,6 @@ func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
 		return false
 	var f_id = forest_map[p]
-	var forest: Forest = forests[f_id]
 	remove_tree(p)
 	# assume remove_tree will free object correctly
 	forest_map.erase(p)
@@ -113,7 +112,50 @@ func find_forest(p: Vector2i):
 		return forest_count
 	
 	# TODO: if there are forest(s) near p, merge them together into new forest and assign p to that forest
+	merge_forests(adjacent_forests)
 	return 1
+
+## use divide-and-conquer to merge a set of Forests
+## only used pseudocode before let's see if actually works
+func merge_forests(forests: Array[int]):
+	if (forests.size() == 1):
+		# base case: merging is done
+		return forests
+	var mid: int = forests.size() / 2
+	# both left and right should be [i]
+	var left = merge_forests(forests.slice(0, mid))
+	var right = merge_forests(forests.slice(mid, forests.size()))
+	
+	# merge smaller set into ther larger
+	if (left.size() < right.size()):
+		# merge left forest into the right	
+		return merge_two_forests(left, right)
+		
+	else:
+		# merge right forest into the left
+		return merge_two_forests(right, left)
+
+## merge two Forests
+func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
+	var sf: Forest = forests[small[0]]
+	var bf: Forest = forests[big[0]]
+	
+	# merge water storage
+	bf.water += sf.water
+	
+	var trees: Dictionary[Vector2i, Node2D] = sf.trees
+	var new_id = bf.id
+	var old_id = sf.id
+	forests.erase(old_id)
+	# change forest_map (Dictionary[Vector2i, int])
+	for key in trees.keys():
+		forest_map[key] = new_id
+	# merge small's trees into big
+	bf.trees.merge(trees)
+	# free small
+	sf.free()
+	forest_count -= 1
+	return small
 
 
 ## same as remove_tree, but to distinguish manually removed trees and dead trees
