@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvr2kdmdupqe"]
+
+[ext_resource type="Texture2D" uid="uid://ds85meq2safjh" path="res://world/lighting/circle_01.png" id="1_ijx1n"]
+[ext_resource type="Script" uid="uid://riec35wcsjj1" path="res://world/lighting/night_point_light.gd" id="2_xtcjo"]
+
+[node name="NightLight" type="PointLight2D"]
+texture = ExtResource("1_ijx1n")
+script = ExtResource("2_xtcjo")
