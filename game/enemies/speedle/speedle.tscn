@@ -1,7 +1,80 @@
-[gd_scene format=3 uid="uid://bo6qxshi77p0d"]
+[gd_scene load_steps=7 format=3 uid="uid://bo6qxshi77p0d"]
+
+[ext_resource type="Script" uid="uid://d7o2gl2j3wuj" path="res://enemies/enemy.gd" id="1_c5xy8"]
+[ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/speedle_sheet.png" id="2_xb38i"]
+
+[sub_resource type="Animation" id="Animation_6ldno"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_120p8"]
+resource_name = "death"
+length = 0.666675
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="Animation" id="Animation_xb38i"]
+resource_name = "idle"
+length = 0.666675
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6ldno"]
+_data = {
+&"RESET": SubResource("Animation_6ldno"),
+&"death": SubResource("Animation_120p8"),
+&"idle": SubResource("Animation_xb38i")
+}
 
 [node name="Speedle" type="Node2D"]
+script = ExtResource("1_c5xy8")
+health = 15
+attack_damage = 5
+attack_range = 1
+move_speed = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+texture = ExtResource("2_xb38i")
+hframes = 8
+vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_6ldno")
+}
+autoplay = "idle"

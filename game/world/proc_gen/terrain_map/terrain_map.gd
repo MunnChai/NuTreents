@@ -91,7 +91,7 @@ func generate_map() -> void:
 	generate_spawn()
 	
 	# Randomize tiles based on biome
-	#randomize_tiles()
+	randomize_tiles()
 
 
 
@@ -153,11 +153,11 @@ func generate_rivers() -> void:
 			
 				var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
 				
-				#set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+				set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
 				
 				var tile_data: TileData = get_cell_tile_data(map_coords)
 				
-				#tile_data.set_custom_data("biome", tile_type)
+				tile_data.set_custom_data("biome", tile_type)
 				
 				river_tiles.append(map_coords)
 	
@@ -309,6 +309,5 @@ func randomize_tiles() -> void:
 			var biome: int = tile_data.get_custom_data("biome")
 			var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
 			var modifier: int = floor(scaled_value)
-			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
