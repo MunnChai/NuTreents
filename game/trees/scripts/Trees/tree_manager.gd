@@ -8,26 +8,35 @@ var res: Vector3
 var forest_count: int
 
 func _ready():
-	res = Vector3(15, 4, 0)
+	res = Vector3(0, 4, 0)
 	forest_count = 0
-	test()
+	#test()
 
 
 func test():
 	# testing
 	var button = Button.new()
-	button.text = "Update Resource (used for TreeManager Testing)"
+	button.text = "Update Resource (Forest and TreeManager testing)"
 	button.pressed.connect(_button_pressed)
 	button.set_position(Vector2i(0,-100))
 	add_child(button)
-		
-	add_tree(1, Vector2i(1,0))
-	upgrade_tree(Vector2i(1,0))
+	print(remove_tree(Vector2i(1,0)))
+	print(add_tree(1, Vector2i(1,0)))
+	res = Vector3(10, 4, 0)
+	print(add_tree(1, Vector2i(1,0)))
+	print(upgrade_tree(Vector2i(1,1)))
+	print(upgrade_tree(Vector2i(1,0)))
+	res.x += 20
+	print(upgrade_tree(Vector2i(1,0)))
+	forests[1].print_forest()
+	print(forest_map)
 	
 	
 func _button_pressed():
 	update()
-	
+	var f: Forest = forests[1]
+	f.print_forest()
+	print(forest_map)
 	
 ## to be called each round, update everything?
 func update():
@@ -35,6 +44,8 @@ func update():
 	for key in forests.keys():
 		var f: Forest = forests[key]
 		res += f.update()
+		if (f.empty):
+			remove_forest(key)
 
 
 ## add tree with given type at p
@@ -44,7 +55,7 @@ func add_tree(type: int, p: Vector2i) -> int:
 	if (forest_map.has(p)):
 		return 1
 	if (!enough_n(DefaultTree.COST1)):
-		print("not enough N")
+		#print("not enough N")
 		return 2
 	
 	var f_id: int = find_forest(p)
@@ -64,10 +75,18 @@ func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
 		return false
 	var f_id = forest_map[p]
-	remove_tree(p)
+	var f: Forest = forests[f_id]
+	f.remove_tree(p)
 	# assume remove_tree will free object correctly
 	forest_map.erase(p)
 	return true
+
+func remove_forest(id: int):
+	if (!forests.has(id)):
+		return
+	var f: Forest = forests[id]
+	f.free()
+	forests.erase(id)
 
 ## upgrade the tree at given p
 ## return: 0 -> succesfful, 1 -> no tree at p, 2 -> insufficient resources
@@ -77,7 +96,7 @@ func upgrade_tree(p: Vector2i) -> int:
 		return 1
 	
 	if (!enough_n(DefaultTree.COST2)):
-		print("not enough N")
+		#print("not enough N")
 		return 2
 		
 	var f_id = forest_map[p]
@@ -97,7 +116,7 @@ func find_forest(p: Vector2i):
 	if (forest_map.has(p)):
 		return forest_map[p]
 	# TODO: find forest adjacent to p
-	var adjacent_forests = []
+	var adjacent_forests: Array[int] = []
 	var directions = [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)]
 	for dir in directions:
 		var neighbour = p + dir
@@ -112,12 +131,11 @@ func find_forest(p: Vector2i):
 		return forest_count
 	
 	# TODO: if there are forest(s) near p, merge them together into new forest and assign p to that forest
-	merge_forests(adjacent_forests)
-	return 1
+	return merge_forests(adjacent_forests)[0]
 
 ## use divide-and-conquer to merge a set of Forests
 ## only used pseudocode before let's see if actually works
-func merge_forests(forests: Array[int]):
+func merge_forests(forests: Array[int]) -> Array[int]:
 	if (forests.size() == 1):
 		# base case: merging is done
 		return forests
@@ -125,18 +143,21 @@ func merge_forests(forests: Array[int]):
 	# both left and right should be [i]
 	var left = merge_forests(forests.slice(0, mid))
 	var right = merge_forests(forests.slice(mid, forests.size()))
+	if (left[0] == right[0]):
+		return left
 	
 	# merge smaller set into ther larger
 	if (left.size() < right.size()):
 		# merge left forest into the right	
 		return merge_two_forests(left, right)
-		
 	else:
 		# merge right forest into the left
 		return merge_two_forests(right, left)
 
 ## merge two Forests
 func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
+	if (small[0] == big[0]):
+		return small
 	var sf: Forest = forests[small[0]]
 	var bf: Forest = forests[big[0]]
 	
@@ -155,7 +176,7 @@ func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
 	# free small
 	sf.free()
 	forest_count -= 1
-	return small
+	return big
 
 
 ## same as remove_tree, but to distinguish manually removed trees and dead trees
@@ -179,3 +200,6 @@ func enough_n(cost: int) -> bool:
 		res.x -= cost
 		return true
 	return false
+
+func get_forest(id: int) -> Forest:
+	return forests[id]
