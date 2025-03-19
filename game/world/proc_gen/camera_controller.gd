@@ -50,7 +50,6 @@ func zoom_cam_in(delta: float) -> void:
 	if (current_zoom_index >= FIXED_ZOOM_SIZES.size()):
 		current_zoom_index = FIXED_ZOOM_SIZES.size() - 1
 	
-	
 	zoom = zoom.lerp(Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index], delta * ZOOM_SMOOTH_SPEED)
 
 func zoom_cam_out(delta: float) -> void:
