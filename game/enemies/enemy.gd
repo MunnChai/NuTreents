@@ -50,13 +50,24 @@ func update_movement(delta: float) -> void:
 
 # Returns true if it successfully moved, false if it has reached its destination
 func move_along_path() -> bool:
-	
 	if (current_path.size() == 0):
 		return false
 	
 	var next_tile: Vector2i = current_path.pop_front()
 	var terrain_map: TerrainMap = get_tree().get_first_node_in_group("terrain_map")
 	var global_pos: Vector2 = terrain_map.map_to_local(next_tile)
+	
+	# Hard coded for now
+	var direction: Vector2i = next_tile - map_position
+	match (direction):
+		Vector2i.UP:
+			sprite_2d.flip_h = true
+		Vector2i.DOWN:
+			sprite_2d.flip_h = true
+		Vector2i.LEFT:
+			sprite_2d.flip_h = false
+		Vector2i.RIGHT:
+			sprite_2d.flip_h = false
 	
 	var pos_tween: Tween = get_tree().create_tween()
 	pos_tween.set_ease(Tween.EASE_IN_OUT)
@@ -68,6 +79,8 @@ func move_along_path() -> bool:
 	offset_tween.set_trans(Tween.TRANS_CUBIC)
 	offset_tween.tween_property(sprite_2d, "position:y", -20, MOVE_DURATION / 2)
 	offset_tween.tween_property(sprite_2d, "position:y", -16, MOVE_DURATION / 2)
+	
+	map_position = next_tile
 	
 	return true
 
