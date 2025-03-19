@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpar2eke7fjfe"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://bklrn087vva72"
+path="res://.godot/imported/Time_Indicator_Animation_1.png-a18b2e3344e954dec447f04fedc9618b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://ui/Time_Indicator_Animation_1.png"
+dest_files=["res://.godot/imported/Time_Indicator_Animation_1.png-a18b2e3344e954dec447f04fedc9618b.ctex"]
 
 [params]
 

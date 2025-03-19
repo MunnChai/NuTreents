@@ -22,6 +22,8 @@ func update_highlight() -> void:
 		highlight.visible = true
 		highlight.position = terrain_map.map_to_local(map_coords)
 
+const TWEEN_TIME = 0.2
+
 # Updates the building map to make buildings in front of the currently hovered tile transparent
 func update_adjacent_tile_transparencies() -> void:
 	var mouse_pos: Vector2 = get_local_mouse_position()
@@ -29,7 +31,10 @@ func update_adjacent_tile_transparencies() -> void:
 	
 	for key in building_map.tile_scene_map:
 		var node: Node2D = building_map.tile_scene_map[key]
-		node.modulate.a = 1.0
+		
+		var tween: Tween = get_tree().create_tween()
+		tween.tween_property(node, "modulate", Color(node.modulate, 1.0), TWEEN_TIME)
+		#node.modulate.a = 1.0
 	
 	for x in range(map_coords.x, map_coords.x + 2):
 		for y in range(map_coords.y, map_coords.y + 2):
@@ -42,4 +47,7 @@ func update_adjacent_tile_transparencies() -> void:
 				continue
 			
 			var node: Node2D = building_map.tile_scene_map[adjacent_map_coords]
-			node.modulate.a = 0.5
+			
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(node, "modulate", Color(node.modulate, 0.5), TWEEN_TIME)
+			#node.modulate.a = 0.5

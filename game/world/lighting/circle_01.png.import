@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpar2eke7fjfe"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://ds85meq2safjh"
+path="res://.godot/imported/circle_01.png-696984229ce07a141db03ac246f51b18.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://world/lighting/circle_01.png"
+dest_files=["res://.godot/imported/circle_01.png-696984229ce07a141db03ac246f51b18.ctex"]
 
 [params]
 

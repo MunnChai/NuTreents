@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpar2eke7fjfe"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://rvo24sff24cc"
+path="res://.godot/imported/Enemy_Insect_Die_Test_1.png-d08ccf7d617299fd7ce808b7b8e205ad.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://enemies/Enemy_Insect_Die_Test_1.png"
+dest_files=["res://.godot/imported/Enemy_Insect_Die_Test_1.png-d08ccf7d617299fd7ce808b7b8e205ad.ctex"]
 
 [params]
 
