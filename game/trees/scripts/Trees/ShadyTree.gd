@@ -15,13 +15,13 @@ const MAX_WATER2 = 3
 const MAINT2 = 0
 const COST2 = 12
 
-func _init(s: int, p: Vector2i):
+func _init(s: int, p: Vector2i, f: int):
 	var g = GAIN1
 	# TODO: if near tall things, changed g to buffed stats
-	super._init(1, HP1, s, MAX_WATER1, g, MAINT1, p)
+	super._init(1, HP1, s, MAX_WATER1, g, MAINT1, p, f)
 
 func upgrade() -> ShadyTree:
-	var tree = ShadyTree.new(storage, pos)
+	var tree = ShadyTree.new(storage, pos, forest)
 	tree.level = 2
 	tree.hp = HP2
 	tree.max_water = MAX_WATER2

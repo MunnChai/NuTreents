@@ -8,8 +8,9 @@ var storage: int
 var max_water: int
 var gain: Vector3
 var maint: int
+var forest: int # forest id
 
-func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i):
+func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i, f: int):
 	super._init(p)
 	died = false
 	attackable = true
@@ -18,6 +19,7 @@ func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i):
 	max_water = max
 	gain = g
 	maint = m
+	forest = f
 
 
 func die():
@@ -35,12 +37,14 @@ func update() -> Vector3:
 	# take maint from storage
 	if (storage >= maint):
 		storage -= maint
-	elif (!TreeManager.get_water(maint - storage)):
-		# if game doesn't have enough water either
-		hp -= 2
 	else:
-		# game has enough water
-		storage = 0
+		var f: Forest = TreeManager.get_forest(forest)
+		if (!f.get_water(maint - storage)):
+			# if game doesn't have enough water either
+			hp -= 2
+		else:
+			# game has enough water
+			storage = 0
 	if (hp <= 0):
 		die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
