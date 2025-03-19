@@ -21,30 +21,32 @@ func update() -> Vector3:
 		var tree: Twee = trees[key]
 		res += tree.update()
 		if (tree.died):
-			#remove_tree(key)
+			remove_tree(key)
 			return res
 	return res
 
-## add tree of given type to this forest
+## add the given tree to this forest
 func add_tree(p: Vector2i, t: Twee):
 	trees[p] = t
 
 ## remove the tree at given p
-## returns false if no tree exists at p; true otherwise
-func remove_tree(p: Vector2i) -> bool:
-	if (!trees.has(p)):
-		return false
+## assume some tree exists at p
+func remove_tree(p: Vector2i):
 	var t: Twee = trees[p]
 	water -= t.storage
 	t.free()
 	trees.erase(p)
-	return true
 
 ## upgrade the tree at given p
-## return: 0 -> succesfful, 1 -> no tree at p, 2 -> insufficient resources
-##         3 -> secondary tree exists at p
+## returns false if tree at p is already secondary 
 func upgrade(p: Vector2i) -> int:
-	return 0
+	var tree: DefaultTree = trees[p]
+	if (tree.level == 2):
+		return false
+	trees.erase(p)
+	trees[p] = tree.upgrade()
+	tree.free()
+	return true
 
 ## called by Tree when they don't have sufficient water to survive
 ## returns false if total_water < maint; otherwise deduct maint from storage
