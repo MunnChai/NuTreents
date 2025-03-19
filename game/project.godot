@@ -19,12 +19,14 @@ config/icon="res://icon.svg"
 
 Constants="*res://constants.gd"
 TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
+EnemyManager="*res://enemies/enemy_manager.gd"
 
 [global_group]
 
 fog_map=""
 terrain_map=""
 structure_map=""
+enemy_map=""
 
 [input]
 

@@ -95,6 +95,8 @@ texture = ExtResource("3_sjv4q")
 
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
 
+[node name="EnemyLayer" type="Node2D" parent="BuildingManager" groups=["enemy_map"]]
+
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
 visible = false
 tile_set = SubResource("TileSet_1bgfd")

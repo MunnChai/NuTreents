@@ -65,8 +65,8 @@ func generate_map() -> void:
 	# Fill map with grass
 	initialize_map()
 	
-	# Create rivers
-	generate_rivers()
+	# Create rivers, and get river tiles for later
+	var river_tiles: Array[Vector2i] = get_rivers()
 	
 	# Generate random cities
 	var city_coords: Array[Vector2i]
@@ -91,7 +91,10 @@ func generate_map() -> void:
 	generate_spawn()
 	
 	# Randomize tiles based on biome
-	#randomize_tiles()
+	randomize_tiles()
+	
+	# Generate rivers at the end of map generation, so autotiling works
+	generate_rivers(river_tiles)
 
 
 
@@ -120,7 +123,7 @@ func initialize_map() -> void:
 	
 	#set_cells_terrain_connect(grass_tiles, 0, 0)
 
-func generate_rivers() -> void:
+func get_rivers() -> Array[Vector2i]:
 	
 	# Create noise
 	var river_noise := FastNoiseLite.new()
@@ -153,16 +156,43 @@ func generate_rivers() -> void:
 			
 				var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
 				
-				#set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+				set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
 				
 				var tile_data: TileData = get_cell_tile_data(map_coords)
 				
-				#tile_data.set_custom_data("biome", tile_type)
+				tile_data.set_custom_data("biome", tile_type)
 				
 				river_tiles.append(map_coords)
 	
 	# Call deferred so that terrain connections are made after all generation is finished
-	call_deferred("set_cells_terrain_connect", river_tiles, 0, 1)
+	#call_deferred("set_cells_terrain_connect", river_tiles, 0, 1)
+	return river_tiles
+
+# Called at the end of map generation
+# Removes non-water tiles from river_tiles, and then sets the cells to connect
+func generate_rivers(river_tiles: Array[Vector2i]) -> void:
+	var to_remove: Array[Vector2i] = []
+	for map_coords in river_tiles:
+		
+		# remove from array if: tile data is null, or tile already has an assigned biome that isn't river
+		var tile_data: TileData = get_cell_tile_data(map_coords)
+		if (tile_data == null):
+			to_remove.append(map_coords)
+			continue
+		
+		var tile_type: int = tile_data.get_custom_data("biome")
+		if (tile_type == null || tile_type != TILE_TYPE.WATER):
+			to_remove.append(map_coords)
+	
+	for map_coords in to_remove:
+		river_tiles.erase(map_coords)
+	
+	set_cells_terrain_connect(river_tiles, 0, 1)
+	
+	for map_coords in river_tiles:
+		var tile_data: TileData = get_cell_tile_data(map_coords)
+		tile_data.set_custom_data("biome", TILE_TYPE.WATER)
+
 
 func generate_cities(city_coords: Array[Vector2i]):
 	for map_coords in city_coords:
