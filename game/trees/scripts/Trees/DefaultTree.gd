@@ -10,7 +10,7 @@ const COST1 = 10
 const HP2 = 20
 const GAIN2 = Vector3(10, 2, 1)
 const MAX_WATER2 = 5
-const MAINT2 = 0
+const MAINT2 = 4
 const COST2 = 5
 
 func _init(s: int, p: Vector2i):

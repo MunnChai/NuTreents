@@ -22,25 +22,26 @@ func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i):
 
 func die():
 	died = true
-	TreeManager.tree_die(pos)
-
-# returns the right amount of resource to add to system
-# if storage > max_water after a turn, return the amount that's added to storage
-func get_gain() -> Vector3:
-	storage += gain.y
-	var g = Vector3(gain.x, min(gain.y, gain.y - (storage-max_water)), gain.z)
-	storage = min(storage, max_water)
-	return g
+	#TreeManager.tree_die(pos)
 	
-# take water to survie, either from own storage or other trees
-# if insufficient water, deduct hp
-func update_maint():
-	#if (storage >= maint):
-		#storage -= maint
-	# ask TreeManager for water, if no water then deduct health
-	# TODO: local storage not updated correctly
-	var has_water = TreeManager.get_water(maint)
-	if (!has_water):
+## update local storage and use water for maintainence
+## returns the right amount of res to system
+func update() -> Vector3:
+	var prev = storage # record old storage number
+	
+	# add new water to storage, storage equals at most max_water
+	storage = min(storage + gain.y, max_water)
+	
+	# take maint from storage
+	if (storage >= maint):
+		storage -= maint
+	elif (!TreeManager.get_water(maint - storage)):
+		# if game doesn't have enough water either
 		hp -= 2
+	else:
+		# game has enough water
+		storage = 0
 	if (hp <= 0):
 		die()
+	var g = Vector3(gain.x, storage - prev, gain.z)
+	return g
