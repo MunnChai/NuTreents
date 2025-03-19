@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://bo6qxshi77p0d"]
+[gd_scene load_steps=10 format=3 uid="uid://bo6qxshi77p0d"]
 
 [ext_resource type="Script" uid="uid://d7o2gl2j3wuj" path="res://enemies/enemy.gd" id="1_c5xy8"]
 [ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/speedle_sheet.png" id="2_xb38i"]
+[ext_resource type="Texture2D" uid="uid://ciqackaiahdkm" path="res://enemies/speedle/speedle_eyes_sheet.png" id="3_6ldno"]
+[ext_resource type="Script" uid="uid://btt3wf72o4sst" path="res://enemies/speedle/copy_frame_sprite.gd" id="4_b108m"]
 
 [sub_resource type="Animation" id="Animation_6ldno"]
 length = 0.001
@@ -60,6 +62,9 @@ _data = {
 &"idle": SubResource("Animation_xb38i")
 }
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6ldno"]
+light_mode = 1
+
 [node name="Speedle" type="Node2D"]
 script = ExtResource("1_c5xy8")
 health = 15
@@ -67,14 +72,23 @@ attack_damage = 5
 attack_range = 1
 move_speed = 1
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_6ldno")
+}
+autoplay = "idle"
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
 texture = ExtResource("2_xb38i")
 hframes = 8
 vframes = 2
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_6ldno")
-}
-autoplay = "idle"
+[node name="Eyes" type="Sprite2D" parent="." node_paths=PackedStringArray("copy_from")]
+material = SubResource("CanvasItemMaterial_6ldno")
+position = Vector2(0, -16)
+texture = ExtResource("3_6ldno")
+hframes = 8
+vframes = 2
+script = ExtResource("4_b108m")
+copy_from = NodePath("../Sprite2D")
