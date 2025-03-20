@@ -13,14 +13,14 @@ func _init(i: int):
 	
 ## to be called each round, update everything in this Forest
 ## returns the res to be added to the game
-func update(delta: float) -> Vector3:
+func update() -> Vector3:
 	# iterate all trees, get their generated res and remove dead trees
 	var res = Vector3(0,0,0)
 	for key in trees.keys():
 		if (!trees.has(key)):
 			continue
 		var tree: Twee = trees[key]
-		res += tree.update(delta)
+		res += tree.update()
 		if (tree.died):
 			remove_tree(key)
 	return res

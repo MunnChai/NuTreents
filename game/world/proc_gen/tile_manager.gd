@@ -30,7 +30,7 @@ func update_highlight() -> void:
 		highlight.modulate = Color("ff578681")
 	
 	# DETECT WHAT IS HIGHLIGHTED
-	detect_highlighted_objects(map_coords)
+	#detect_highlighted_objects(map_coords)
 
 func detect_highlighted_objects(pos: Vector2i) -> void:
 	var tile_type: TerrainMap.TILE_TYPE = terrain_map.get_tile_biome(pos)

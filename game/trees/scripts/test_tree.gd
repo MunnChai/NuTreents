@@ -12,7 +12,7 @@ var is_large := false
 var is_dead := false
 
 func _ready() -> void:
-	tree_data = DefaultTree.new(2, global_position)
+	tree_data = DefaultTree.new(2, global_position, 0)
 	animation_player.play("grow_small")
 
 func _process(delta: float) -> void:
@@ -22,7 +22,7 @@ func _process(delta: float) -> void:
 		if not is_large:
 			is_large = true
 			animation_player.play("grow_large")
-			tree_data.update()
+			#tree_data.update()
 	
 	#if life_time_seconds > 5.0:
 		#if not is_dead:

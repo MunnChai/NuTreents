@@ -8,7 +8,7 @@ class_name tree_manager
 # stores all trees
 var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
-var res: Vector3
+var res: Vector3 # Vec3(N, water, sun)
 var forest_count: int
 
 func _ready():
@@ -51,15 +51,15 @@ func update(delta: float):
 	# iterate all trees, get their generated res and remove dead trees
 	for key in forests.keys():
 		var f: Forest = forests[key]
-		res += f.update(delta)
+		res += f.update() 
 		if (f.empty):
-			remove_forest(key) 
+			remove_forest(key)  
 
 
 ## add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
-func add_tree(type: int, p: Vector2i) -> int:
+func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if (forest_map.has(p)):
 		return 1
 	if (!enough_n(DefaultTree.COST1)):
@@ -230,6 +230,7 @@ func get_tree_map() -> Dictionary[Vector2i, Twee]:
 	return tree_map
 # function for testing, remove eventually
 func print_trees():
+	var tree_map = get_tree_map()
 	for key in tree_map:
 		var tree: DefaultTree = tree_map[key]
 		print(key, tree.storage)
@@ -241,15 +242,18 @@ func is_reachable(pos: Vector2i):
 	return get_reachable_tree_placement_positions().has(pos)
 
 func is_occupied(pos: Vector2i):
-	return tree_map.has(pos)
+	return get_tree_map().has(pos)
 
 func is_stump(pos: Vector2i):
+	var tree_map = get_tree_map()
 	if not tree_map.has(pos):
 		return false
 	return (tree_map.get(pos) as Twee).died
 
 func get_reachable_tree_placement_positions() -> Array[Vector2i]:
 	var allowed_positions: Array[Vector2i] = []
+	
+	var tree_map = get_tree_map()
 	
 	for pos in tree_map.keys():
 		var tree: Twee = tree_map.get(pos)
