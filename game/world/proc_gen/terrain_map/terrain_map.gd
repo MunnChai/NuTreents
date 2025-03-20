@@ -342,3 +342,16 @@ func randomize_tiles() -> void:
 			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+
+
+
+func is_void(pos: Vector2) -> bool:
+	var tile_data: TileData = get_cell_tile_data(pos)
+	return tile_data == null
+
+func is_solid(pos: Vector2) -> bool:
+	if is_void(pos):
+		return false
+	var tile_data: TileData = get_cell_tile_data(pos)
+	var biome = tile_data.get_custom_data("biome")
+	return biome != TILE_TYPE.WATER

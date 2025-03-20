@@ -23,9 +23,12 @@ func _ready():
 # add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 # return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
+# 3 -> invalid/non-solid tile
 func add_tree(type: int, p: Vector2i) -> int:
 	if (tree_map.has(p)):
 		return 1
+	if not terrain_map.is_solid(p):
+		return 3
 	var tree = DefaultTree.new(0, p)
 	tree_map[p] = tree
 	# call structure_map to add it on screen
