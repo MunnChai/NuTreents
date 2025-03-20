@@ -8,8 +8,9 @@ var storage: int
 var max_water: int
 var gain: Vector3
 var maint: int
+var forest: int # forest id
 
-func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2):
+func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i, f: int):
 	super._init(p)
 	died = false
 	attackable = true
@@ -18,20 +19,33 @@ func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2):
 	max_water = max
 	gain = g
 	maint = m
+	forest = f
 
-
-func update():
-	update_gain()
-	update_maint()
 
 func die():
 	died = true
-	# TODO: update corresponding Tile.planted to false
-
-func update_gain():
-	# TODO
-	return
+	#TreeManager.tree_die(pos)
 	
-func update_maint():
-	# TODO
-	return
+## update local storage and use water for maintainence
+## returns the right amount of res to system
+func update(delta: float) -> Vector3:
+	var prev = storage # record old storage number
+	
+	# add new water to storage, storage equals at most max_water
+	storage = min(storage + gain.y, max_water)
+	
+	# take maint from storage
+	if (storage >= maint):
+		storage -= maint
+	else:
+		var f: Forest = TreeManager.get_forest(forest)
+		if (!f.get_water(maint - storage)):
+			# if game doesn't have enough water either
+			hp -= 2
+		else:
+			# game has enough water
+			storage = 0
+	if (hp <= 0):
+		die()
+	var g = Vector3(gain.x, storage - prev, gain.z)
+	return g
