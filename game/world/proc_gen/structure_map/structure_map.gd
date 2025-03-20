@@ -94,3 +94,8 @@ func upgrade_cell(map_coords: Vector2i):
 	tile_scene_map[map_coords] = tree
 	add_child(tree)
 	return
+
+
+
+func get_building_node(pos: Vector2i) -> Node2D:
+	return tile_scene_map.get(pos)

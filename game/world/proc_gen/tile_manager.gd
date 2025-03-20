@@ -16,11 +16,29 @@ func update_highlight() -> void:
 	
 	var tile_data: TileData = terrain_map.get_cell_tile_data(map_coords)
 	
-	if (tile_data == null):
+	# DON'T HIGHLIGHT OUTSIDE MAP
+	if terrain_map.is_void(map_coords):
 		highlight.visible = false
 	else:
 		highlight.visible = true
 		highlight.position = terrain_map.map_to_local(map_coords)
+
+	# RED IF NOT FERTILE or NOT REACHABLE
+	if terrain_map.is_fertile(map_coords) and TreeManager.is_reachable(map_coords):
+		highlight.modulate = Color("3fd7ff81")
+	else:
+		highlight.modulate = Color("ff578681")
+	
+	# DETECT WHAT IS HIGHLIGHTED
+	detect_highlighted_objects(map_coords)
+
+func detect_highlighted_objects(pos: Vector2i) -> void:
+	var tile_type: TerrainMap.TILE_TYPE = terrain_map.get_tile_biome(pos)
+	var building_node: Node2D = building_map.get_building_node(pos)
+	
+	print(tile_type)
+	if building_node != null:
+		print(building_node.get_id())
 
 const TWEEN_TIME = 0.2
 
@@ -49,5 +67,5 @@ func update_adjacent_tile_transparencies() -> void:
 			var node: Node2D = building_map.tile_scene_map[adjacent_map_coords]
 			
 			var tween: Tween = get_tree().create_tween()
-			tween.tween_property(node, "modulate", Color(node.modulate, 0.5), TWEEN_TIME)
+			tween.tween_property(node, "modulate", Color(node.modulate, 0.05), TWEEN_TIME)
 			#node.modulate.a = 0.5

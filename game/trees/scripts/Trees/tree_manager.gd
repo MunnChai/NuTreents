@@ -16,7 +16,7 @@ func _ready():
 	forest_count = 0
 	#test()
 	
-	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2)
+	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2, false)
 
 func _process(delta):
 	update(delta)
@@ -65,6 +65,10 @@ func add_tree(type: int, p: Vector2i) -> int:
 	if (!enough_n(DefaultTree.COST1)):
 		print("not enough N")
 		return 2
+	if not terrain_map.is_fertile(p):
+		return 3 
+	if enforce_reachable and not is_reachable(p):
+		return 4
 	
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
@@ -224,3 +228,34 @@ func get_tree_map() -> Dictionary[Vector2i, Twee]:
 			tree_map[pos] = forest.trees[pos]
 	
 	return tree_map
+# function for testing, remove eventually
+func print_trees():
+	for key in tree_map:
+		var tree: DefaultTree = tree_map[key]
+		print(key, tree.storage)
+	print()
+
+## POSITION CHECKS
+
+func is_reachable(pos: Vector2i):
+	return get_reachable_tree_placement_positions().has(pos)
+
+func is_occupied(pos: Vector2i):
+	return tree_map.has(pos)
+
+func is_stump(pos: Vector2i):
+	if not tree_map.has(pos):
+		return false
+	return (tree_map.get(pos) as Twee).died
+
+func get_reachable_tree_placement_positions() -> Array[Vector2i]:
+	var allowed_positions: Array[Vector2i] = []
+	
+	for pos in tree_map.keys():
+		var tree: Twee = tree_map.get(pos)
+		for offset in tree.get_reachable_offsets():
+			var new_pos = pos + offset
+			if not tree_map.has(new_pos):
+				allowed_positions.append(pos + offset)
+	
+	return allowed_positions

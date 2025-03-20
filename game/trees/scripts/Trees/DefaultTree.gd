@@ -15,6 +15,7 @@ const COST2 = 5
 
 func _init(s: int, p: Vector2i, f: int):
 	super._init(1, HP1, s, MAX_WATER1, GAIN1, MAINT1, p, f)
+	id = "default_tree"
 
 func upgrade() -> DefaultTree:
 	var tree = DefaultTree.new(storage, pos, forest)

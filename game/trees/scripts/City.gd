@@ -11,6 +11,7 @@ var sprite_id: int = 0
 
 func _init(t: int, p: Vector2):
 	super._init(p)
+	id = "city_building"
 	type = t
 	
 	sprite_id = randi_range(0, NUM_CITY_SPRITES - 1)

@@ -49,3 +49,12 @@ func update(delta: float) -> Vector3:
 		die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
+
+func update_maint():
+	# TODO
+	return
+
+## Gets the four directly adjacent tiles next to this twee
+## Override this if reachable tiles are different
+func get_reachable_offsets() -> Array[Vector2i]:
+	return [Vector2i.UP, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.LEFT]

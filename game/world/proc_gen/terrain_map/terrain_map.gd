@@ -2,6 +2,7 @@ class_name TerrainMap
 extends TileMapLayer
 
 enum TILE_TYPE {
+	VOID = -1,
 	GRASS = 0,
 	DIRT = GRASS + 1,
 	CITY = DIRT + 1,
@@ -342,3 +343,33 @@ func randomize_tiles() -> void:
 			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+			
+			tile_data = get_cell_tile_data(map_coords)
+			tile_data.set_custom_data("biome", biome)
+
+
+
+func get_tile_biome(pos: Vector2) -> TILE_TYPE:
+	var tile_data: TileData = get_cell_tile_data(pos)
+	if tile_data == null:
+		return TILE_TYPE.VOID
+	return tile_data.get_custom_data("biome")
+
+func is_void(pos: Vector2) -> bool:
+	var tile_data: TileData = get_cell_tile_data(pos)
+	return tile_data == null
+
+func is_solid(pos: Vector2) -> bool:
+	if is_void(pos):
+		return false
+	var tile_data: TileData = get_cell_tile_data(pos)
+	var biome = tile_data.get_custom_data("biome")
+	return biome != TILE_TYPE.WATER
+
+## Can I plant a tree on this tile?
+func is_fertile(pos: Vector2) -> bool:
+	if not is_solid(pos):
+		return false
+	var tile_data: TileData = get_cell_tile_data(pos)
+	var biome = tile_data.get_custom_data("biome")
+	return biome == TILE_TYPE.GRASS or biome == TILE_TYPE.DIRT

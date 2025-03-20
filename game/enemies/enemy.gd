@@ -29,6 +29,8 @@ func _ready() -> void:
 func init():
 	target_tree = get_nearest_tree()
 	
+	add_to_group("enemies")
+	
 	if (target_tree != null):
 		current_path = find_path_to_tree(target_tree)
 
