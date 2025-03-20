@@ -5,6 +5,8 @@ class_name tree_manager
 @onready var structure_map: BuildingMap = get_tree().get_nodes_in_group("structure_map")[0]
 @onready var terrain_map: TerrainMap = get_tree().get_nodes_in_group("terrain_map")[0]
 
+const DEFAULT_TREE = preload("res://trees/scenes/DefaultTree.tscn")
+
 # stores all trees
 var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
@@ -70,17 +72,18 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if enforce_reachable and not is_reachable(p):
 		return 4
 	
+	var tree: Twee = DEFAULT_TREE.instantiate()
+	
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
 	var forest: Forest = forests[f_id]
-	forest.add_tree(p, DefaultTree.new(0, p, f_id))
+	forest.add_tree(p, tree)
 	
 	fog_map.remove_fog_around(p)
 	
 	# call structure_map to add it on screen TODO: weird 
 	var structure_map: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	#print("Found node:", object, "Type:", object.get_class())
-	structure_map.add_default_tree(p)
+	structure_map.add_tree(p, tree)
 	return 0
 
 ## remove tree at given p

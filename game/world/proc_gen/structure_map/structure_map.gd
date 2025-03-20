@@ -62,6 +62,16 @@ func get_mouse_coords() -> Vector2:
 	return mouse_screen_pos
 
 
+func add_tree(map_coords: Vector2i, tree: Twee) -> bool:
+	if (tile_scene_map.has(map_coords)):
+		return false
+	
+	tree.position = map_to_local(map_coords)
+	
+	tile_scene_map[map_coords] = tree
+	add_child(tree)
+	return true
+
 # Add a DefaultTree at given map coordinates
 # Returns true upon success, false if some node already exists at the map coords
 func add_default_tree(map_coords: Vector2i) -> bool:

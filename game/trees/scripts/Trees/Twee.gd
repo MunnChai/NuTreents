@@ -1,25 +1,71 @@
 extends Structure
 class_name Twee
 
+@export var tree_stat: TreeStatResource
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
+
+# State variables
 var died: bool
 var attackable: bool
+var forest: int # forest id
+var storage: int # Current water amount
+
+# Stats
 var hp: int
-var storage: int
 var max_water: int
 var gain: Vector3
 var maint: int
-var forest: int # forest id
+var time_to_grow: float
 
-func _init(h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i, f: int):
-	super._init(p)
+var life_time_seconds := 0.0
+
+const TIME_TO_GROW = 30.0
+
+var is_large := false
+
+func _ready():
+	get_stats_from_resource(tree_stat)
+	animation_player.play("grow_small")
+
+func _process(delta: float) -> void:
+	life_time_seconds += delta
+	
+	if life_time_seconds > TIME_TO_GROW:
+		if not is_large:
+			is_large = true
+			animation_player.play("grow_large")
+			#tree_data.update()
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	if (anim_name == "grow_small"):
+		animation_player.play("small")
+	if (anim_name == "grow_large"):
+		animation_player.play("large")
+	if (anim_name == "die"):
+		animation_player.play("stump")
+
+func get_id():
+	return id
+
+func get_stats_from_resource(tree_stat: TreeStatResource):
+	hp = tree_stat.hp
+	max_water = tree_stat.max_water
+	gain = tree_stat.gain
+	maint = tree_stat.maint
+	time_to_grow = tree_stat.time_to_grow
+
+func get_upgrades_stats_from_resource(tree_stat: TreeStatResource):
+	hp = tree_stat.hp_2
+	max_water = tree_stat.max_water_2
+	gain = tree_stat.gain_2
+	maint = tree_stat.maint_2
+	time_to_grow = tree_stat.time_to_grow_2
+
+func initialize(p: Vector2i, f: int):
 	died = false
 	attackable = true
-	hp = h
-	storage = s
-	max_water = max
-	gain = g
-	maint = m
 	forest = f
+	init_pos(p)
 
 
 func die():

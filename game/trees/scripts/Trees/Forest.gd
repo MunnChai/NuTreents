@@ -22,11 +22,13 @@ func update() -> Vector3:
 		var tree: Twee = trees[key]
 		res += tree.update()
 		if (tree.died):
-			remove_tree(key)
+			#remove_tree(key)
+			pass
 	return res
 
 ## add the given tree to this forest
 func add_tree(p: Vector2i, t: Twee):
+	t.initialize(p, id)
 	trees[p] = t
 
 ## remove the tree at given p

@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cjx5rbvwtw2mj" path="res://trees/Tree_Triangle_Large_Die_1.png" id="4_poo4o"]
 [ext_resource type="Texture2D" uid="uid://c3xllkegns581" path="res://trees/scripts/Trees/Tree_Stump_1.png" id="5_poo4o"]
 
-[sub_resource type="Animation" id="Animation_nm8d4"]
+[sub_resource type="Animation" id="Animation_wkmxq"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -46,7 +46,7 @@ tracks/2/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_v1rxe"]
+[sub_resource type="Animation" id="Animation_k1xjq"]
 resource_name = "die"
 step = 0.0833333
 tracks/0/type = "value"
@@ -86,7 +86,7 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 }
 
-[sub_resource type="Animation" id="Animation_poo4o"]
+[sub_resource type="Animation" id="Animation_v1rxe"]
 resource_name = "grow_large"
 step = 0.0833333
 tracks/0/type = "value"
@@ -126,7 +126,7 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
 
-[sub_resource type="Animation" id="Animation_ct005"]
+[sub_resource type="Animation" id="Animation_ekqp5"]
 resource_name = "grow_small"
 step = 0.0833333
 tracks/0/type = "value"
@@ -166,7 +166,7 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_k1xjq"]
+[sub_resource type="Animation" id="Animation_aehio"]
 resource_name = "hurt"
 step = 0.0833333
 tracks/0/type = "value"
@@ -206,7 +206,7 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_wkmxq"]
+[sub_resource type="Animation" id="Animation_a0v0q"]
 resource_name = "large"
 loop_mode = 1
 step = 0.0833333
@@ -247,7 +247,7 @@ tracks/2/keys = {
 "values": [10]
 }
 
-[sub_resource type="Animation" id="Animation_gje1c"]
+[sub_resource type="Animation" id="Animation_6mlfr"]
 resource_name = "small"
 loop_mode = 1
 step = 0.0833333
@@ -288,7 +288,7 @@ tracks/2/keys = {
 "values": [9]
 }
 
-[sub_resource type="Animation" id="Animation_ekqp5"]
+[sub_resource type="Animation" id="Animation_p8vlg"]
 resource_name = "stump"
 loop_mode = 1
 step = 0.0833333
@@ -329,16 +329,16 @@ tracks/2/keys = {
 "values": [0]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_gje1c"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_13r4y"]
 _data = {
-&"RESET": SubResource("Animation_nm8d4"),
-&"die": SubResource("Animation_v1rxe"),
-&"grow_large": SubResource("Animation_poo4o"),
-&"grow_small": SubResource("Animation_ct005"),
-&"hurt": SubResource("Animation_k1xjq"),
-&"large": SubResource("Animation_wkmxq"),
-&"small": SubResource("Animation_gje1c"),
-&"stump": SubResource("Animation_ekqp5")
+&"RESET": SubResource("Animation_wkmxq"),
+&"die": SubResource("Animation_k1xjq"),
+&"grow_large": SubResource("Animation_v1rxe"),
+&"grow_small": SubResource("Animation_ekqp5"),
+&"hurt": SubResource("Animation_aehio"),
+&"large": SubResource("Animation_a0v0q"),
+&"small": SubResource("Animation_6mlfr"),
+&"stump": SubResource("Animation_p8vlg")
 }
 
 [node name="TestTree" type="Node2D"]
@@ -352,7 +352,7 @@ hframes = 9
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-&"": SubResource("AnimationLibrary_gje1c")
+&"": SubResource("AnimationLibrary_13r4y")
 }
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

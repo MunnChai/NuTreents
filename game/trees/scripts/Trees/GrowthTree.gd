@@ -5,4 +5,4 @@ var level: int
 
 func _init(l: int, h: int, s: int, max: int, g: Vector3, m: int, p: Vector2i, f: int):
 	level = l
-	super._init(h, s, max, g, m, p, f)
+	#super._init(h, s, max, g, m, p, f)
