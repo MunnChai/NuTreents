@@ -12,10 +12,14 @@ var res: Vector3
 var forest_count: int
 
 func _ready():
-	res = Vector3(0, 4, 0)
+	res = Vector3(10, 4, 0)
 	forest_count = 0
 	#test()
+	
+	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2)
 
+func _process(delta):
+	update(delta)
 
 func test():
 	# testing
@@ -37,19 +41,19 @@ func test():
 	
 	
 func _button_pressed():
-	update()
+	update(1.0)
 	var f: Forest = forests[1]
 	f.print_forest()
 	print(forest_map)
 	
 ## to be called each round, update everything?
-func update():
+func update(delta: float):
 	# iterate all trees, get their generated res and remove dead trees
 	for key in forests.keys():
 		var f: Forest = forests[key]
-		res += f.update()
+		res += f.update(delta)
 		if (f.empty):
-			remove_forest(key)
+			remove_forest(key) 
 
 
 ## add tree with given type at p
@@ -59,20 +63,20 @@ func add_tree(type: int, p: Vector2i) -> int:
 	if (forest_map.has(p)):
 		return 1
 	if (!enough_n(DefaultTree.COST1)):
-		#print("not enough N")
+		print("not enough N")
 		return 2
 	
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
 	var forest: Forest = forests[f_id]
 	forest.add_tree(p, DefaultTree.new(0, p, f_id))
-
+	
 	fog_map.remove_fog_around(p)
 	
 	# call structure_map to add it on screen TODO: weird 
-	#var object = get_tree().get_first_node_in_group("structure_map")
+	var structure_map: BuildingMap = get_tree().get_first_node_in_group("structure_map")
 	#print("Found node:", object, "Type:", object.get_class())
-	#object.add_default_tree(p)
+	structure_map.add_default_tree(p)
 	return 0
 
 ## remove tree at given p
@@ -209,3 +213,14 @@ func enough_n(cost: int) -> bool:
 
 func get_forest(id: int) -> Forest:
 	return forests[id]
+
+func get_tree_map() -> Dictionary[Vector2i, Twee]:
+	
+	var tree_map: Dictionary[Vector2i, Twee]
+	for key in forests:
+		var forest: Forest = forests[key]
+		
+		for pos in forest.trees:
+			tree_map[pos] = forest.trees[pos]
+	
+	return tree_map

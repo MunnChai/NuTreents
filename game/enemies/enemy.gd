@@ -198,11 +198,15 @@ func get_adjacent_tiles(pos: Vector2i) -> Array[Vector2i]:
 
 # Returns nearest tree to current pos, using Taxicab Distance 
 func get_nearest_tree() -> Twee:
+	var tree_map: Dictionary[Vector2i, Twee] = TreeManager.get_tree_map()
+	
+	if (tree_map.is_empty()):
+		return null
 	
 	var nearest_tree: Twee = null
 	var nearest_dist: float = INF
-	for key in TreeManager.tree_map:
-		var tree: Twee = TreeManager.tree_map[key]
+	for key in tree_map:
+		var tree: Twee = tree_map[key]
 		
 		var dist = get_taxicab_distance(tree.pos, map_position)
 		if (dist < nearest_dist):

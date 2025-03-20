@@ -31,7 +31,7 @@ func remove_fog_around(map_coords: Vector2i):
 			erase_cell(current_coord)
 
 func update_surrounding_tiles(map_coords: Vector2i):
-	var is_tree_here: bool = TreeManager.tree_map.has(map_coords)
+	var is_tree_here: bool = TreeManager.get_tree_map().has(map_coords)
 	
 	
 
