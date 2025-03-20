@@ -80,22 +80,27 @@ func print_trees():
 		print(key, tree.storage)
 	print()
 
+## POSITION CHECKS
+
 func is_reachable(pos: Vector2i):
 	return get_reachable_tree_placement_positions().has(pos)
 
+func is_occupied(pos: Vector2i):
+	return tree_map.has(pos)
+
+func is_stump(pos: Vector2i):
+	if not tree_map.has(pos):
+		return false
+	return (tree_map.get(pos) as Twee).died
+
 func get_reachable_tree_placement_positions() -> Array[Vector2i]:
 	var allowed_positions: Array[Vector2i] = []
-	var occupied_position: Array[Vector2i] = []
 	
 	for pos in tree_map.keys():
-		occupied_position.append(pos)
 		var tree: Twee = tree_map.get(pos)
 		for offset in tree.get_reachable_offsets():
-			allowed_positions.append(pos + offset)
+			var new_pos = pos + offset
+			if not tree_map.has(new_pos):
+				allowed_positions.append(pos + offset)
 	
-	var final_allowed_positions: Array[Vector2i] = []
-	for pos in allowed_positions:
-		if not occupied_position.has(pos):
-			final_allowed_positions.append(pos)
-	
-	return final_allowed_positions
+	return allowed_positions
