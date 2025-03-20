@@ -6,6 +6,8 @@ var tree_data: Twee
 
 var life_time_seconds := 0.0
 
+const TIME_TO_GROW = 30.0
+
 var is_large := false
 var is_dead := false
 
@@ -16,7 +18,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	life_time_seconds += delta
 	
-	if life_time_seconds > 3.0:
+	if life_time_seconds > TIME_TO_GROW:
 		if not is_large:
 			is_large = true
 			animation_player.play("grow_large")

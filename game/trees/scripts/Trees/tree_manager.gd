@@ -16,19 +16,21 @@ func _ready():
 	total_n = 0
 	total_sun = 0
 	
-	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2)
+	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2, false)
 
 # TODO: add resources checking
 
 # add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 # return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
-# 3 -> invalid/non-solid tile
-func add_tree(type: int, p: Vector2i) -> int:
+# 3 -> invalid/non-solid tile, 4 -> out of reach
+func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if (tree_map.has(p)):
 		return 1
 	if not terrain_map.is_solid(p):
-		return 3
+		return 3 
+	if enforce_reachable and not is_reachable(p):
+		return 4
 	var tree = DefaultTree.new(0, p)
 	tree_map[p] = tree
 	# call structure_map to add it on screen
@@ -77,3 +79,23 @@ func print_trees():
 		var tree: DefaultTree = tree_map[key]
 		print(key, tree.storage)
 	print()
+
+func is_reachable(pos: Vector2i):
+	return get_reachable_tree_placement_positions().has(pos)
+
+func get_reachable_tree_placement_positions() -> Array[Vector2i]:
+	var allowed_positions: Array[Vector2i] = []
+	var occupied_position: Array[Vector2i] = []
+	
+	for pos in tree_map.keys():
+		occupied_position.append(pos)
+		var tree: Twee = tree_map.get(pos)
+		for offset in tree.get_reachable_offsets():
+			allowed_positions.append(pos + offset)
+	
+	var final_allowed_positions: Array[Vector2i] = []
+	for pos in allowed_positions:
+		if not occupied_position.has(pos):
+			final_allowed_positions.append(pos)
+	
+	return final_allowed_positions
