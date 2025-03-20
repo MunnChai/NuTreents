@@ -23,6 +23,7 @@ func update() -> Vector3:
 		res += tree.update()
 		if (tree.died):
 			remove_tree(key)
+	print(res)
 	return res
 
 ## add the given tree to this forest
@@ -63,6 +64,7 @@ func get_water(maint: int) -> bool:
 
 
 func print_forest():
+	print(water)
 	for key in trees.keys():
 		var t: DefaultTree = trees[key]
 		print("level:", t.level, " hp:", t.hp, " water:", t.storage, " f:", t.forest)
