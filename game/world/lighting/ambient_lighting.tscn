@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbjvqrb1081re"]
+
+[ext_resource type="Script" uid="uid://cd35tuwmtxlc" path="res://world/lighting/ambient_lighting.gd" id="1_vpwli"]
+
+[node name="AmbientLighting" type="Node2D"]
+script = ExtResource("1_vpwli")
+
+[node name="Modulation" type="CanvasModulate" parent="."]
+unique_name_in_owner = true
+color = Color(0.134768, 0.269945, 0.460414, 1)

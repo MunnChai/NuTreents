@@ -1,10 +1,86 @@
-[gd_scene load_steps=6 format=3 uid="uid://csdqqfvopxl7j"]
+[gd_scene load_steps=10 format=3 uid="uid://csdqqfvopxl7j"]
 
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="1_56hbk"]
 [ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="2_u0b2m"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="3_sjv4q"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="3_yi2m7"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
+[ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
+[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0rry4"]
+texture = ExtResource("5_118ts")
+texture_region_size = Vector2i(32, 16)
+0:0/size_in_atlas = Vector2i(1, 2)
+0:0/0 = 0
+1:0/size_in_atlas = Vector2i(1, 2)
+1:0/0 = 0
+2:0/size_in_atlas = Vector2i(1, 2)
+2:0/0 = 0
+3:0/size_in_atlas = Vector2i(1, 2)
+3:0/0 = 0
+4:0/size_in_atlas = Vector2i(1, 2)
+4:0/0 = 0
+5:0/size_in_atlas = Vector2i(1, 2)
+5:0/0 = 0
+6:0/size_in_atlas = Vector2i(1, 2)
+6:0/0 = 0
+7:0/size_in_atlas = Vector2i(1, 2)
+7:0/0 = 0
+0:2/size_in_atlas = Vector2i(1, 2)
+0:2/0 = 0
+1:2/size_in_atlas = Vector2i(1, 2)
+1:2/0 = 0
+2:2/size_in_atlas = Vector2i(1, 2)
+2:2/0 = 0
+3:2/size_in_atlas = Vector2i(1, 2)
+3:2/0 = 0
+4:2/size_in_atlas = Vector2i(1, 2)
+4:2/0 = 0
+5:2/size_in_atlas = Vector2i(1, 2)
+5:2/0 = 0
+6:2/size_in_atlas = Vector2i(1, 2)
+6:2/0 = 0
+7:2/size_in_atlas = Vector2i(1, 2)
+7:2/0 = 0
+0:4/size_in_atlas = Vector2i(1, 2)
+0:4/0 = 0
+1:4/size_in_atlas = Vector2i(1, 2)
+1:4/0 = 0
+2:4/size_in_atlas = Vector2i(1, 2)
+2:4/0 = 0
+3:4/size_in_atlas = Vector2i(1, 2)
+3:4/0 = 0
+4:4/size_in_atlas = Vector2i(1, 2)
+4:4/0 = 0
+5:4/size_in_atlas = Vector2i(1, 2)
+5:4/0 = 0
+6:4/size_in_atlas = Vector2i(1, 2)
+6:4/0 = 0
+7:4/size_in_atlas = Vector2i(1, 2)
+7:4/0 = 0
+0:6/size_in_atlas = Vector2i(1, 2)
+0:6/0 = 0
+1:6/size_in_atlas = Vector2i(1, 2)
+1:6/0 = 0
+2:6/size_in_atlas = Vector2i(1, 2)
+2:6/0 = 0
+3:6/size_in_atlas = Vector2i(1, 2)
+3:6/0 = 0
+4:6/size_in_atlas = Vector2i(1, 2)
+4:6/0 = 0
+5:6/size_in_atlas = Vector2i(1, 2)
+5:6/0 = 0
+6:6/size_in_atlas = Vector2i(1, 2)
+6:6/0 = 0
+7:6/size_in_atlas = Vector2i(1, 2)
+7:6/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1bgfd"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+sources/0 = SubResource("TileSetAtlasSource_0rry4")
 
 [node name="TileMaps" type="Node2D"]
 
@@ -14,15 +90,18 @@ script = ExtResource("1_56hbk")
 [node name="GroundLayer" parent="BuildingManager" instance=ExtResource("2_u0b2m")]
 
 [node name="Highlight" type="Sprite2D" parent="BuildingManager"]
-modulate = Color(1, 0, 0, 0.392157)
+modulate = Color(0.245244, 0.844789, 1, 0.505882)
 texture = ExtResource("3_sjv4q")
 
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
 
+[node name="EnemyLayer" type="Node2D" parent="BuildingManager" groups=["enemy_map"]]
+
+[node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
+visible = false
+tile_set = SubResource("TileSet_1bgfd")
+script = ExtResource("5_1bgfd")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 script = ExtResource("3_yi2m7")
-
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0

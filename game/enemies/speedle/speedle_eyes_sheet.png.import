@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dpar2eke7fjfe"
-path="res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"
+uid="uid://ciqackaiahdkm"
+path="res://.godot/imported/speedle_eyes_sheet.png-991ad512dc220a2d01a7f1edc5663781.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/day_night_inidicators.png"
-dest_files=["res://.godot/imported/day_night_inidicators.png-b9d59d142155592a0bc73d85b0dfa58e.ctex"]
+source_file="res://enemies/speedle/speedle_eyes_sheet.png"
+dest_files=["res://.godot/imported/speedle_eyes_sheet.png-991ad512dc220a2d01a7f1edc5663781.ctex"]
 
 [params]
 

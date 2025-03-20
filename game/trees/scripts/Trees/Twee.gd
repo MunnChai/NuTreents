@@ -28,7 +28,7 @@ func die():
 	
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
-func update() -> Vector3:
+func update(delta: float) -> Vector3:
 	var prev = storage # record old storage number
 	
 	# add new water to storage, storage equals at most max_water
