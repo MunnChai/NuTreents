@@ -22,21 +22,13 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	seconds += delta
-	if seconds >= 1.0:
-		water += int(seconds) * water_per_s
-		sunlight += int(seconds) * sun_per_s
-		nutrients += int(seconds) * sun_per_s
-		
-		# Ex. if seconds = 1.3, leave 0.3 seconds to be combined with future delta times
-		seconds -= int(seconds) 
-		update_ui()
+	update_ui()
 
 # Updates the text of each label to show current resource values
 func update_ui():
-	water_label.text = str(TreeManager.res.x)
-	sun_label.text = str(TreeManager.res.y)
-	nutrients_label.text = str(TreeManager.res.z)
+	water_label.text = str(int(TreeManager.res.x))
+	sun_label.text = str(int(TreeManager.res.y))
+	nutrients_label.text = str(int(TreeManager.res.z))
 
 # Updates resource values + calls update_ui()
 func add_resources(delta_water: int, delta_sunlight: int, delta_nutrients: int):

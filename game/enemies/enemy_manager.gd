@@ -25,15 +25,13 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	
-	if (Input.is_action_just_pressed("rmb")):
+	if (Input.is_action_just_pressed("debug_button")):
 		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
 		spawn_enemy(EnemyType.SPEEDLE, map_coord)
 
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemies() -> int:
-	
-	
 	return 0
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree

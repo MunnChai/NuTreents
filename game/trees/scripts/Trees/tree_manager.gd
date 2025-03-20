@@ -21,7 +21,7 @@ var res: Vector3 # Vec3(N, water, sun)
 var forest_count: int
 
 func _ready():
-	res = Vector3(10, 4, 0)
+	res = Vector3(10, 0, 0)
 	forest_count = 0
 	#test()
 	
@@ -29,6 +29,19 @@ func _ready():
 
 func _process(delta):
 	update(delta)
+
+func _input(_event: InputEvent) -> void:
+	
+	if (Input.is_action_pressed("lmb")):
+		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
+		
+		add_tree(1, map_coords)
+	
+	if (Input.is_action_pressed("rmb")):
+		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
+		
+		remove_tree(map_coords)
+
 
 func test():
 	# testing
@@ -69,9 +82,11 @@ func update(delta: float):
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
 func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
+	var tree: Twee = TREE_DICT[type].instantiate()
+	
 	if (forest_map.has(p)):
 		return 1
-	if (!enough_n(DefaultTree.COST1)):
+	if (!enough_n(tree.tree_stat.cost_to_purchase)):
 		print("not enough N")
 		return 2
 	if not terrain_map.is_fertile(p):
@@ -79,7 +94,7 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if enforce_reachable and not is_reachable(p):
 		return 4
 	
-	var tree: Twee = TREE_DICT[type].instantiate()
+	res.x -= tree.tree_stat.cost_to_purchase
 	
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
@@ -89,8 +104,7 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	fog_map.remove_fog_around(p)
 	
 	# call structure_map to add it on screen TODO: weird 
-	var structure_map: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	structure_map.add_tree(p, tree)
+	structure_map.add_structure(p, tree)
 	return 0
 
 ## remove tree at given p
@@ -103,6 +117,8 @@ func remove_tree(p: Vector2i) -> bool:
 	f.remove_tree(p)
 	# assume remove_tree will free object correctly
 	forest_map.erase(p)
+	
+	structure_map.remove_structure(p)
 	return true
 
 func remove_forest(id: int):
@@ -221,7 +237,6 @@ func get_water(maint: int) -> bool:
 ## if yes, spend required N and returns true; returns false otherwise
 func enough_n(cost: int) -> bool:
 	if (res.x >= cost):
-		res.x -= cost
 		return true
 	return false
 

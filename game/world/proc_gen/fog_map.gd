@@ -1,9 +1,10 @@
 class_name FogMap
 extends TileMapLayer
 
+const DEFAULT_VISION_RANGE = 2
 const FOG_SIZE = Constants.MAP_SIZE * 2
 
-var tree_vision_range: int = 2
+var tree_vision_range: int = DEFAULT_VISION_RANGE
 
 
 func _ready() -> void:
