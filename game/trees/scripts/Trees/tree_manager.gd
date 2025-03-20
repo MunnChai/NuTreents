@@ -1,6 +1,10 @@
 extends Node
 class_name tree_manager
 
+@onready var fog_map: FogMap = get_tree().get_nodes_in_group("fog_map")[0]
+@onready var structure_map: BuildingMap = get_tree().get_nodes_in_group("structure_map")[0]
+@onready var terrain_map: TerrainMap = get_tree().get_nodes_in_group("terrain_map")[0]
+
 # stores all trees
 var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
@@ -62,6 +66,8 @@ func add_tree(type: int, p: Vector2i) -> int:
 	forest_map[p] = f_id
 	var forest: Forest = forests[f_id]
 	forest.add_tree(p, DefaultTree.new(0, p, f_id))
+
+	fog_map.remove_fog_around(p)
 	
 	# call structure_map to add it on screen TODO: weird 
 	#var object = get_tree().get_first_node_in_group("structure_map")
