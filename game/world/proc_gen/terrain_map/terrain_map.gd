@@ -2,6 +2,7 @@ class_name TerrainMap
 extends TileMapLayer
 
 enum TILE_TYPE {
+	VOID = -1,
 	GRASS = 0,
 	DIRT = GRASS + 1,
 	CITY = DIRT + 1,
@@ -347,6 +348,12 @@ func randomize_tiles() -> void:
 			tile_data.set_custom_data("biome", biome)
 
 
+
+func get_tile_biome(pos: Vector2) -> TILE_TYPE:
+	var tile_data: TileData = get_cell_tile_data(pos)
+	if tile_data == null:
+		return TILE_TYPE.VOID
+	return tile_data.get_custom_data("biome")
 
 func is_void(pos: Vector2) -> bool:
 	var tile_data: TileData = get_cell_tile_data(pos)

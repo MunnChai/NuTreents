@@ -16,7 +16,7 @@ func update_highlight() -> void:
 	
 	var tile_data: TileData = terrain_map.get_cell_tile_data(map_coords)
 	
-	# DON'T SHOW OUTSIDE MAP
+	# DON'T HIGHLIGHT OUTSIDE MAP
 	if terrain_map.is_void(map_coords):
 		highlight.visible = false
 	else:
@@ -28,6 +28,17 @@ func update_highlight() -> void:
 		highlight.modulate = Color("3fd7ff81")
 	else:
 		highlight.modulate = Color("ff578681")
+	
+	# DETECT WHAT IS HIGHLIGHTED
+	detect_highlighted_objects(map_coords)
+
+func detect_highlighted_objects(pos: Vector2i) -> void:
+	var tile_type: TerrainMap.TILE_TYPE = terrain_map.get_tile_biome(pos)
+	var building_node: Node2D = building_map.get_building_node(pos)
+	
+	print(tile_type)
+	if building_node != null:
+		print(building_node.get_id())
 
 const TWEEN_TIME = 0.2
 

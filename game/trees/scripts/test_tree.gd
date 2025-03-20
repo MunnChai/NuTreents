@@ -36,3 +36,6 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		animation_player.play("large")
 	if (anim_name == "die"):
 		animation_player.play("stump")
+
+func get_id():
+	return tree_data.get_id()

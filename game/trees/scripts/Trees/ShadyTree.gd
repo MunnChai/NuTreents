@@ -15,6 +15,7 @@ const MAINT2 = 0
 
 func _init(s: int, p: Vector2):
 	var g = GAIN1
+	id = "shady_tree"
 	# TODO: if near tall things, changed g to buffed stats
 	super._init(1, HP1, s, MAX_WATER1, g, MAINT1, p)
 
