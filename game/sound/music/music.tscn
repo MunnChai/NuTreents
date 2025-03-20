@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://c8v43r30xkvjw"]
+
+[ext_resource type="Script" uid="uid://dyhsgewfk0sfq" path="res://sound/music/music.gd" id="1_0t2ht"]
+[ext_resource type="AudioStream" uid="uid://2pkw1puo6lju" path="res://sound/music/NightCalm.ogg" id="2_0t2ht"]
+[ext_resource type="AudioStream" uid="uid://dl4yfhhi4ufc4" path="res://sound/music/NightMild.ogg" id="3_8w8ku"]
+[ext_resource type="AudioStream" uid="uid://dtnq1kv7jwfgm" path="res://sound/music/NightIntense.ogg" id="4_cb2kx"]
+
+[sub_resource type="AudioStreamInteractive" id="AudioStreamInteractive_kek77"]
+clip_count = 3
+clip_0/name = &"calm"
+clip_0/stream = ExtResource("2_0t2ht")
+clip_0/auto_advance = 0
+clip_1/name = &"mild"
+clip_1/stream = ExtResource("3_8w8ku")
+clip_1/auto_advance = 0
+clip_2/name = &"intense"
+clip_2/stream = ExtResource("4_cb2kx")
+clip_2/auto_advance = 0
+_transitions = {
+Vector2i(-1, -1): {
+"fade_beats": 1.0,
+"fade_mode": 3,
+"from_time": 2,
+"hold_previous": true,
+"to_time": 0
+}
+}
+
+[node name="Music" type="Node"]
+script = ExtResource("1_0t2ht")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamInteractive_kek77")
+autoplay = true
