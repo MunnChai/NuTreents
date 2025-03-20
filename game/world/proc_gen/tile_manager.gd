@@ -23,8 +23,8 @@ func update_highlight() -> void:
 		highlight.visible = true
 		highlight.position = terrain_map.map_to_local(map_coords)
 
-	# RED IF NOT SOLID or NOT REACHABLE
-	if terrain_map.is_solid(map_coords) and TreeManager.is_reachable(map_coords):
+	# RED IF NOT FERTILE or NOT REACHABLE
+	if terrain_map.is_fertile(map_coords) and TreeManager.is_reachable(map_coords):
 		highlight.modulate = Color("3fd7ff81")
 	else:
 		highlight.modulate = Color("ff578681")

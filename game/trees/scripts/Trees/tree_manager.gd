@@ -27,7 +27,7 @@ func _ready():
 func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if (tree_map.has(p)):
 		return 1
-	if not terrain_map.is_solid(p):
+	if not terrain_map.is_fertile(p):
 		return 3 
 	if enforce_reachable and not is_reachable(p):
 		return 4
