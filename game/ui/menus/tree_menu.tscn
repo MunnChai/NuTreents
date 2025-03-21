@@ -1,11 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://dwyhak12pdjyv"]
+[gd_scene load_steps=12 format=3 uid="uid://dwyhak12pdjyv"]
 
 [ext_resource type="Script" uid="uid://e4qihqohkef3" path="res://ui/menus/tree_menu.gd" id="1_o1upc"]
 [ext_resource type="Texture2D" uid="uid://bxcuvioyn8pxx" path="res://trees/scripts/Trees/Tree_Triangle_1.png" id="1_whqsm"]
 [ext_resource type="Texture2D" uid="uid://dys35xfsyt5ex" path="res://trees/Tree_Maple_1.png" id="2_bmhjr"]
-[ext_resource type="BitMap" uid="uid://bgvsqrggib0ct" path="res://icon2.svg" id="3_e4w7t"]
+[ext_resource type="Texture2D" uid="uid://dy08sebkwreai" path="res://ui/menus/menu_bg.png" id="2_dodub"]
 [ext_resource type="Texture2D" uid="uid://2yvw3a8ke32x" path="res://trees/Tree_Shady_1.png" id="4_qdsoo"]
 [ext_resource type="Texture2D" uid="uid://ltf8h6h1q7l8" path="res://trees/Tree_Tall_1.png" id="5_de0rn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodub"]
+atlas = ExtResource("2_dodub")
+region = Rect2(0, 208, 640, 152)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bmhjr"]
 atlas = ExtResource("1_whqsm")
@@ -28,19 +32,11 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_o1upc")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 200.0
-color = Color(0.169311, 0.348636, 0.222022, 1)
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 447.0
-offset_top = 93.0
-offset_right = 487.0
-offset_bottom = 116.0
-text = "trees"
+offset_bottom = 152.0
+texture = SubResource("AtlasTexture_dodub")
 
 [node name="Buttons" type="HBoxContainer" parent="."]
 layout_mode = 0
@@ -52,7 +48,6 @@ offset_bottom = 120.0
 [node name="DefaultTreeBtn" type="TextureButton" parent="Buttons"]
 layout_mode = 2
 texture_normal = SubResource("AtlasTexture_bmhjr")
-texture_click_mask = ExtResource("3_e4w7t")
 
 [node name="ExplorerTreeBtn" type="TextureButton" parent="Buttons"]
 layout_mode = 2

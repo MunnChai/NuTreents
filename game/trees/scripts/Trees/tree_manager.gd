@@ -33,7 +33,7 @@ var res: Vector3 # Vec3(N, water, sun)
 var forest_count: int
 
 # currently selected tree from ui
-var selected_tree_species: int = 0
+var selected_tree_species: int = 1
 
 func _ready():
 	res = Vector3(10, 0, 0)
