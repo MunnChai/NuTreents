@@ -8,6 +8,7 @@ shader_type canvas_item;
 uniform float flash_amount = 1.0;
 uniform float shake_amount = 10.0;
 uniform float alpha = 1.0;
+uniform vec2 pos = vec2(0.0, 0.0);
 
 uniform float uv_y_offset = 0.4;
 uniform vec3 flash_color: source_color = vec3(1.0, 1.0, 1.0);
@@ -54,12 +55,16 @@ float noise(vec2 uv) {
 void fragment() {
 	vec2 rounded_uv = vec2(round_to_x_pixel(UV.x), round_to_y_pixel(UV.y));
 
+	// SELECTING BETWEEN WIND AND SHAKE!
+
 	float y_falloff_factor = max(1.0 - round_to_y_pixel(UV.y) - uv_y_offset, 0.0);
+
 	float shake = shake_amount / 20.0;
 	float random = noise(vec2(0.0, rounded_uv.y + TIME) * 25.0);
-	float sin_value = sin(TIME * 15.0) / 20.0;
 
-	vec2 new_uv = UV + vec2(round_to_x_pixel(sin_value * shake * y_falloff_factor), 0.0);
+	float sin_value = sin(max(shake * 2.0, 1.0) * TIME * 1.0 * noise(pos / 10.0) * 2.0 + noise(pos / 12.5) * PI) / 100.0 * (max(shake * 5.0, 1.0));
+	// 15
+	vec2 new_uv = UV + vec2(sin_value * y_falloff_factor, 0.0);
 
 	COLOR = texture(TEXTURE, new_uv); // Read from texture
 

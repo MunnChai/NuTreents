@@ -75,6 +75,7 @@ func _update_shader(delta: float) -> void:
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("pos", pos)
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
 	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
@@ -153,6 +154,7 @@ func update(delta: float) -> Vector3:
 		var f: Forest = TreeManager.get_forest(forest)
 		if (!f.get_water(maint - storage)):
 			# if game doesn't have enough water either
+			flash_time = FLASH_DURATION
 			hp -= 2 * delta
 		else:
 			# game has enough water
