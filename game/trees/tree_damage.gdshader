@@ -7,6 +7,7 @@ shader_type canvas_item;
 
 uniform float flash_amount = 1.0;
 uniform float shake_amount = 10.0;
+uniform float alpha = 1.0;
 
 uniform float uv_y_offset = 0.4;
 uniform vec3 flash_color: source_color = vec3(1.0, 1.0, 1.0);
@@ -62,7 +63,11 @@ void fragment() {
 
 	COLOR = texture(TEXTURE, new_uv); // Read from texture
 
- 	COLOR = flash(COLOR, flash_amount);
+	if (COLOR.a > 0.0) {
+ 		COLOR = vec4(flash(COLOR, flash_amount).rgb, alpha);
+	} else {
+ 		COLOR = vec4(flash(COLOR, flash_amount).rgb, 0.0);
+	}
 	//COLOR = vec4(random, 0.0, 0.0, 1.0);
 	//COLOR = vec4(0.0, 1.0 - UV.y - 0.2, 0.0, 1.0);
 }

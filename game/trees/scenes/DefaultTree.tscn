@@ -12,6 +12,7 @@ resource_local_to_scene = true
 shader = ExtResource("5_my1gm")
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 10.0
+shader_parameter/alpha = 1.0
 shader_parameter/uv_y_offset = 0.1
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 

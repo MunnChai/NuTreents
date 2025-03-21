@@ -74,7 +74,8 @@ func _update_shader(delta: float) -> void:
 	shake_amount = move_toward(shake_amount, 0.0, delta * SHAKE_DECAY_RATE)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
-	
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
+
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
 	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
 	if is_large:
