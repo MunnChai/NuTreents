@@ -37,7 +37,7 @@ func _input(_event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		add_tree(2, map_coords)
+		add_tree(1, map_coords)
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())

@@ -2,6 +2,7 @@ extends Structure
 class_name Twee
 
 @export var tree_stat: TreeStatResource 
+@export var sheets: Array[Texture2D]
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite2D
 
@@ -28,6 +29,7 @@ func _ready():
 	get_stats_from_resource(tree_stat)
 	
 	# Equally likely... 
+	sprite.texture = sheets.pick_random()
 	
 	animation_player.connect("animation_finished", _on_animation_player_animation_finished)
 	play_grow_small_animation()
@@ -35,7 +37,7 @@ func _ready():
 func _process(delta: float) -> void:
 	life_time_seconds += delta
 	
-	print(animation_player.current_animation)
+	#print(animation_player.current_animation)
 	
 	if life_time_seconds > TIME_TO_GROW:
 		if not is_large:
@@ -85,11 +87,13 @@ func initialize(p: Vector2i, f: int):
 func die():
 	died = true
 	TreeManager.remove_tree(pos)
-	animation_player.play("die")
-	animation_player.animation_finished.connect(
-		func(animation_name):
-			queue_free()
-	)
+	queue_free()
+	
+	#animation_player.play("die")
+	#animation_player.animation_finished.connect(
+		#func(animation_name):
+			#queue_free()
+	#)
 	
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
@@ -134,8 +138,8 @@ func take_damage(damage: int) -> bool:
 	if (hp <= 0):
 		die()
 		return true
-	else:
-		animation_player.play("hurt")
+	#else:
+		#animation_player.play("hurt")
 	
 	return false
 
