@@ -1,21 +1,116 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8kbt51qdolu3"]
+[gd_scene load_steps=11 format=3 uid="uid://c8kbt51qdolu3"]
 
 [ext_resource type="Script" uid="uid://bnf8eche4rwwo" path="res://trees/scripts/Trees/Twee.gd" id="1_f38t6"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://trees/stats/DefaultTreeStat.tres" id="2_mwnlu"]
-[ext_resource type="Texture2D" uid="uid://bc728755ww76t" path="res://trees/Tree_Triangle_Grow_Small_1.png" id="2_my1gm"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://trees/tree_animations.res" id="3_4dnyq"]
+[ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://trees/sheets/tree_square_sheet.png" id="3_mwnlu"]
+[ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://trees/sheets/tree_triangle_sheet.png" id="4_my1gm"]
+
+[sub_resource type="Animation" id="Animation_vgmkb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_mwnlu"]
+resource_name = "grow_small"
+length = 0.833342
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_my1gm"]
+resource_name = "small"
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="Animation" id="Animation_cbled"]
+resource_name = "grow_large"
+length = 0.833342
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0833333, 0.166667, 0.25, 0.333333, 0.416667, 0.5, 0.583333, 0.666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [9, 10, 11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_34mk2"]
+resource_name = "large"
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [17]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vgmkb"]
+_data = {
+&"RESET": SubResource("Animation_vgmkb"),
+&"grow_large": SubResource("Animation_cbled"),
+&"grow_small": SubResource("Animation_mwnlu"),
+&"large": SubResource("Animation_34mk2"),
+&"small": SubResource("Animation_my1gm")
+}
 
 [node name="DefaultTree" type="Node2D"]
 script = ExtResource("1_f38t6")
 tree_stat = ExtResource("2_mwnlu")
+sheets = Array[Texture2D]([ExtResource("4_my1gm"), ExtResource("3_mwnlu")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, -16)
-texture = ExtResource("2_my1gm")
+texture = ExtResource("3_mwnlu")
 hframes = 9
+vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-&"": ExtResource("3_4dnyq")
+&"": SubResource("AnimationLibrary_vgmkb")
 }

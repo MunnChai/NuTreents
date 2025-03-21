@@ -21,6 +21,10 @@ Constants="*res://constants.gd"
 TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [global_group]
 
 fog_map=""

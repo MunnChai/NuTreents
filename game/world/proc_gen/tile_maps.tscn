@@ -1,12 +1,71 @@
-[gd_scene load_steps=10 format=3 uid="uid://csdqqfvopxl7j"]
+[gd_scene load_steps=20 format=3 uid="uid://csdqqfvopxl7j"]
 
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="1_56hbk"]
 [ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="2_u0b2m"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="3_sjv4q"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="3_yi2m7"]
+[ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/wooden_cursor_sheet.png" id="4_0rry4"]
+[ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://world/proc_gen/cursor.gd" id="4_k5rl5"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5rl5"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvuq2"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gwmkj"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5fvau"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jlgv"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2ei0"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7884c"]
+atlas = ExtResource("4_0rry4")
+region = Rect2(192, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qjouo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5rl5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvuq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gwmkj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5fvau")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jlgv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2ei0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7884c")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0rry4"]
 texture = ExtResource("5_118ts")
@@ -89,8 +148,17 @@ script = ExtResource("1_56hbk")
 
 [node name="GroundLayer" parent="BuildingManager" instance=ExtResource("2_u0b2m")]
 
+[node name="Cursor" type="AnimatedSprite2D" parent="BuildingManager" node_paths=PackedStringArray("highlight_node_2d")]
+z_index = 100
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_qjouo")
+autoplay = "default"
+frame_progress = 0.332974
+script = ExtResource("4_k5rl5")
+highlight_node_2d = NodePath("../Highlight")
+
 [node name="Highlight" type="Sprite2D" parent="BuildingManager"]
-modulate = Color(1, 0.340618, 0.524172, 0.505882)
+modulate = Color(0.792567, 0.568552, 1.34766e-06, 0.505882)
 texture = ExtResource("3_sjv4q")
 
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
