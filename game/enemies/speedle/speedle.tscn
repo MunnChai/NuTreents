@@ -86,7 +86,7 @@ light_mode = 1
 
 [node name="Speedle" type="Node2D"]
 script = ExtResource("1_c5xy8")
-health = 15
+max_health = 15
 attack_damage = 5
 attack_range = 1
 move_speed = 1
@@ -109,5 +109,6 @@ position = Vector2(0, -16)
 texture = ExtResource("3_6ldno")
 hframes = 8
 vframes = 3
+frame = 8
 script = ExtResource("4_b108m")
 copy_from = NodePath("../Sprite2D")

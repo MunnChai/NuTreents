@@ -4,13 +4,16 @@ extends Node2D
 const MOVE_DURATION: float = 0.5
 
 @export_group("Enemy Stats")
-@export var health: int
+@export var max_health: int
 @export var attack_damage: int
 @export var attack_range: int
 @export var move_speed: int
 
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
+
+var current_health: float
+var is_dead: bool = false
 
 var map_position: Vector2i
 
@@ -29,6 +32,7 @@ func _ready() -> void:
 func init():
 	target_new_tree()
 	add_to_group("enemies")
+	current_health = max_health
 
 
 
@@ -39,6 +43,9 @@ func _process(delta: float) -> void:
 
 
 func update_movement(delta: float) -> void:
+	if (is_dead):
+		return
+	
 	if (movement_cooldown > 0):
 		movement_cooldown -= delta
 		return
@@ -49,11 +56,11 @@ func update_movement(delta: float) -> void:
 
 func do_action():
 	# If the target tree doesn't exist
-	if (!target_tree):
+	if (!target_tree || target_tree.died):
 		target_new_tree()
 	
 	# If there are no more trees, do nothing
-	if (!target_tree):
+	if (!target_tree || target_tree.died):
 		return
 	
 	# If the target tree exists:
@@ -283,6 +290,8 @@ func get_nearest_tree() -> Twee:
 	var nearest_dist: float = INF
 	for key in tree_map:
 		var tree: Twee = tree_map[key]
+		if (tree.died):
+			continue
 		
 		var dist = get_taxicab_distance(tree.pos, map_position)
 		if (dist < nearest_dist):
@@ -301,3 +310,19 @@ func array_has(array: Array[Vector2i], what: Vector2i) -> bool:
 			return true
 	
 	return false
+
+func take_damage(damage: int):
+	
+	
+	current_health -= damage
+	
+	if (current_health <= 0):
+		die()
+
+func die():
+	is_dead = true
+	animation_player.play("death")
+	animation_player.animation_finished.connect(
+		func(animation_name):
+			queue_free()
+	)

@@ -70,6 +70,11 @@ func initialize(p: Vector2i, f: int):
 func die():
 	died = true
 	TreeManager.remove_tree(pos)
+	animation_player.play("die")
+	animation_player.animation_finished.connect(
+		func(animation_name):
+			queue_free()
+	)
 	
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
@@ -106,11 +111,16 @@ func get_reachable_offsets() -> Array[Vector2i]:
 
 # Returns true if dead
 func take_damage(damage: int) -> bool:
+	if (died):
+		return true
+	
 	hp -= damage
 	
 	if (hp <= 0):
 		die()
 		return true
+	else:
+		animation_player.play("hurt")
 	
 	return false
 
