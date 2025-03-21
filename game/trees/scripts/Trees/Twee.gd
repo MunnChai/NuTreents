@@ -39,10 +39,46 @@ func _process(delta: float) -> void:
 	
 	#print(animation_player.current_animation)
 	
+	_update_shader(delta)
 	if life_time_seconds > TIME_TO_GROW:
 		if not is_large:
 			upgrade_tree()
 			#tree_data.update()
+
+
+
+#const FLASH_DECAY_RATE = 50.0
+const SHAKE_DECAY_RATE = 30.0
+const FLASH_DURATION = 0.1 # In seconds
+var flash_time = 0.0
+var flash_amount = 0.0
+var shake_amount = 0.0
+
+## Handle animating shader parameters relating to damage
+func _update_shader(delta: float) -> void:
+	if flash_time > 0:
+		flash_amount = 1.0
+		flash_time -= delta
+		flash_time = max(flash_time, 0.0)
+	else:
+		flash_amount = 0.0
+		if died: # Flashes just before die... so that means after flash we die!
+			var death_vfx = GREEN_TREE_DIE.instantiate()
+			get_parent().add_child(death_vfx)
+			death_vfx.global_position = global_position
+			
+			queue_free()
+	shake_amount = move_toward(shake_amount, 0.0, delta * SHAKE_DECAY_RATE)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
+	
+	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
+	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
+	if is_large:
+		(sprite.get_material() as ShaderMaterial).set_shader_parameter("uv_y_offset", 0.1)
+	else:
+		(sprite.get_material() as ShaderMaterial).set_shader_parameter("uv_y_offset", 0.62)
+
 
 ## NOTHING to SMALL
 func play_grow_small_animation():
@@ -83,11 +119,13 @@ func initialize(p: Vector2i, f: int):
 	forest = f
 	init_pos(p)
 
+const GREEN_TREE_DIE = preload("res://trees/scenes/death/GreenTreeDie.tscn")
 
 func die():
 	died = true
 	TreeManager.remove_tree(pos)
-	queue_free()
+	flash_time = FLASH_DURATION
+	# Queue free will be called once the flash is over!
 	
 	#animation_player.play("die")
 	#animation_player.animation_finished.connect(
@@ -140,6 +178,10 @@ func take_damage(damage: int) -> bool:
 		return true
 	#else:
 		#animation_player.play("hurt")
+	
+	# VISUAL: SET AMOUNTS FOR FLASH & SHAKE
+	flash_time = FLASH_DURATION
+	shake_amount = 20.0
 	
 	return false
 
