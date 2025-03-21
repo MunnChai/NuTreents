@@ -8,11 +8,13 @@ class_name tree_manager
 const MOTHER_TREE = preload("res://trees/scenes/MotherTree.tscn")
 const DEFAULT_TREE = preload("res://trees/scenes/DefaultTree.tscn")
 const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
+const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
 
 const TREE_DICT: Dictionary[int, PackedScene] = {
 	0: MOTHER_TREE,
 	1: DEFAULT_TREE,
 	2: GUN_TREE,
+	3: WATER_TREE,
 }
 
 
@@ -27,7 +29,7 @@ func _ready():
 	forest_count = 0
 	#test()
 	
-	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2, false)
+	call_deferred("add_tree", 0, Global.MAP_SIZE / 2, false)
 
 func _process(delta):
 	update(delta)
@@ -37,7 +39,7 @@ func _input(_event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		add_tree(1, map_coords)
+		add_tree(3, map_coords)
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
@@ -117,12 +119,22 @@ func remove_tree(p: Vector2i) -> bool:
 		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
+	var tree: Twee = f.trees[p]
 	f.remove_tree(p)
 	# assume remove_tree will free object correctly
 	forest_map.erase(p)
 	
 	structure_map.remove_structure(p)
+	tree.die()
 	return true
+
+func get_twee(p: Vector2i) -> Twee:
+	var tree_map = get_tree_map()
+	if (!tree_map.has(p)):
+		return null
+	
+	return tree_map[p]
+
 
 func remove_forest(id: int):
 	if (!forests.has(id)):

@@ -28,6 +28,10 @@ var is_large := false
 func _ready():
 	get_stats_from_resource(tree_stat)
 	
+	
+	sprite.hframes = 9
+	sprite.vframes = 2
+	sprite.position.y = -16
 	# Equally likely... 
 	sprite.texture = sheets.pick_random()
 	
@@ -86,7 +90,7 @@ func initialize(p: Vector2i, f: int):
 
 func die():
 	died = true
-	TreeManager.remove_tree(pos)
+	#TreeManager.remove_tree(pos)
 	queue_free()
 	
 	#animation_player.play("die")
@@ -115,7 +119,8 @@ func update(delta: float) -> Vector3:
 			# game has enough water
 			storage = 0
 	if (hp <= 0):
-		die()
+		TreeManager.remove_tree(pos)
+		return Vector3()
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
 
@@ -136,7 +141,7 @@ func take_damage(damage: int) -> bool:
 	hp -= damage
 	
 	if (hp <= 0):
-		die()
+		TreeManager.remove_tree(pos)
 		return true
 	#else:
 		#animation_player.play("hurt")

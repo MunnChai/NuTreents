@@ -28,9 +28,6 @@ func update(delta: float) -> Vector3:
 			continue
 		var tree: Twee = trees[key]
 		res += tree.update(delta)
-		if (tree.died):
-			remove_tree(key)
-			pass
 	
 	return res
 
@@ -47,8 +44,8 @@ func remove_tree(p: Vector2i):
 	var t: Twee = trees[p]
 	water -= t.storage
 	trees.erase(p)
-	TreeManager.remove_tree(p)
 	
+	t.queue_free()
 
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 
