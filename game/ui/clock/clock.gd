@@ -71,4 +71,4 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func debug1() -> void:
 	var minutes: int = _current_day_seconds / 60
 	var seconds: int = _current_day_seconds % 60
-	print(str(minutes) + ":" + str(seconds))
+	#print(str(minutes) + ":" + str(seconds))

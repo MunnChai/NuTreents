@@ -12,7 +12,7 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 	EnemyType.SPEEDLE: SPEEDLE,
 	EnemyType.SILK_SPITTER: SILK_SPITTER
 }
-
+ 
 
 
 

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cuuxnj6p50s3g"]
+
+[ext_resource type="Script" uid="uid://w6imeajyursp" path="res://trees/scripts/Trees/GunTree.gd" id="1_b4h83"]
+[ext_resource type="Texture2D" uid="uid://dgasfcx8w1xu8" path="res://trees/Tree_Sphere_1.png" id="1_hm44p"]
+[ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://trees/stats/GunTree.tres" id="2_p5an4"]
+
+[node name="GunTree" type="Node2D"]
+script = ExtResource("1_b4h83")
+tree_stat = ExtResource("2_p5an4")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("1_hm44p")
+region_enabled = true
+region_rect = Rect2(32, 16, 32, 40)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -98,6 +98,7 @@ texture = ExtResource("3_sjv4q")
 [node name="EnemyLayer" type="Node2D" parent="BuildingManager" groups=["enemy_map"]]
 
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
+visible = false
 tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")
 

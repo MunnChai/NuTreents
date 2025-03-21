@@ -11,7 +11,7 @@ var forest: int # forest id
 var storage: int # Current water amount
 
 # Stats
-var hp: int
+var hp: float
 var max_water: int
 var gain: Vector3
 var maint: int
@@ -32,8 +32,7 @@ func _process(delta: float) -> void:
 	
 	if life_time_seconds > TIME_TO_GROW:
 		if not is_large:
-			is_large = true
-			animation_player.play("grow_large")
+			upgrade_tree()
 			#tree_data.update()
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
@@ -54,7 +53,7 @@ func get_stats_from_resource(tree_stat: TreeStatResource):
 	maint = tree_stat.maint
 	time_to_grow = tree_stat.time_to_grow
 
-func get_upgrades_stats_from_resource(tree_stat: TreeStatResource):
+func get_upgraded_stats_from_resource(tree_stat: TreeStatResource):
 	hp = tree_stat.hp_2
 	max_water = tree_stat.max_water_2
 	gain = tree_stat.gain_2
@@ -70,13 +69,13 @@ func initialize(p: Vector2i, f: int):
 
 func die():
 	died = true
-	#TreeManager.tree_die(pos)
+	TreeManager.remove_tree(pos)
 	
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
-func update() -> Vector3:
+func update(delta: float) -> Vector3:
 	var prev = storage # record old storage number
-	
+
 	# add new water to storage, storage equals at most max_water
 	storage = min(storage + gain.y, max_water)
 	
@@ -87,7 +86,7 @@ func update() -> Vector3:
 		var f: Forest = TreeManager.get_forest(forest)
 		if (!f.get_water(maint - storage)):
 			# if game doesn't have enough water either
-			hp -= 2
+			hp -= 2 * delta
 		else:
 			# game has enough water
 			storage = 0
@@ -104,3 +103,19 @@ func update_maint():
 ## Override this if reachable tiles are different
 func get_reachable_offsets() -> Array[Vector2i]:
 	return [Vector2i.UP, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.LEFT]
+
+# Returns true if dead
+func take_damage(damage: int) -> bool:
+	hp -= damage
+	
+	if (hp <= 0):
+		die()
+		return true
+	
+	return false
+
+
+func upgrade_tree() -> void:
+	is_large = true
+	animation_player.play("grow_large")
+	get_upgraded_stats_from_resource(tree_stat)
