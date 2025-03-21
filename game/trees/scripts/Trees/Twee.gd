@@ -24,6 +24,7 @@ var life_time_seconds := 0.0
 const TIME_TO_GROW = 5.0
 
 var is_large := false
+var is_growing := false
 
 func _ready():
 	get_stats_from_resource(tree_stat)
@@ -63,9 +64,11 @@ func _update_shader(delta: float) -> void:
 	else:
 		flash_amount = 0.0
 		if died: # Flashes just before die... so that means after flash we die!
-			var death_vfx = GREEN_TREE_DIE.instantiate()
-			get_parent().add_child(death_vfx)
-			death_vfx.global_position = global_position
+			if !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
+				var death_vfx = GREEN_TREE_DIE.instantiate()
+				get_parent().add_child(death_vfx)
+				death_vfx.global_position = global_position
+				## TODO: Do we leave stump?
 			
 			queue_free()
 	shake_amount = move_toward(shake_amount, 0.0, delta * SHAKE_DECAY_RATE)
@@ -93,6 +96,7 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		animation_player.play("small")
 	if (anim_name == "grow_large"):
 		animation_player.play("large")
+		is_growing = false
 	if (anim_name == "die"):
 		animation_player.play("stump")
 
@@ -189,4 +193,5 @@ func take_damage(damage: int) -> bool:
 func upgrade_tree() -> void:
 	is_large = true
 	animation_player.play("grow_large")
+	is_growing = true
 	get_upgraded_stats_from_resource(tree_stat)
