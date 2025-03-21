@@ -46,7 +46,7 @@ func attack_enemy(enemy: Enemy):
 	var distance = (enemy.global_position - global_position).length()
 	
 	var bullet_tween = get_tree().create_tween()
-	bullet_tween.set_ease(Tween.EASE_IN_OUT)
+	bullet_tween.set_ease(Tween.EASE_OUT)
 	bullet_tween.set_trans(Tween.TRANS_CUBIC)
 	bullet_tween.tween_property(bullet, "global_position", enemy.global_position, distance / BULLET_SPEED)
 	
