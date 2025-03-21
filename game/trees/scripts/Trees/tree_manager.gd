@@ -9,12 +9,14 @@ const MOTHER_TREE = preload("res://trees/scenes/MotherTree.tscn")
 const DEFAULT_TREE = preload("res://trees/scenes/DefaultTree.tscn")
 const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
 const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
+const TECH_TREE = preload("res://trees/scenes/TechTree.tscn")
 
 const TREE_DICT: Dictionary[int, PackedScene] = {
 	0: MOTHER_TREE,
 	1: DEFAULT_TREE,
 	2: GUN_TREE,
 	3: WATER_TREE,
+	4: TECH_TREE,
 }
 
 
