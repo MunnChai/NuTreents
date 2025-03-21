@@ -21,6 +21,12 @@ enum Vibe {
 var current_vibe = Vibe.CALM_NIGHT
 
 func _process(delta: float) -> void:
+	if Input.is_key_label_pressed(KEY_M):
+		audio_stream_player.stop()
+	
+	if audio_stream_player.get_stream_playback() == null:
+		return
+	
 	if len(get_tree().get_nodes_in_group("enemies")) > 15:
 		if current_vibe != Vibe.INTENSE_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("intense")

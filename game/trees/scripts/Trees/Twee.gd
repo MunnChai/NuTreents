@@ -1,8 +1,9 @@
 extends Structure
 class_name Twee
 
-@export var tree_stat: TreeStatResource
+@export var tree_stat: TreeStatResource 
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
+@onready var sprite: Sprite2D = %Sprite2D
 
 # State variables
 var died: bool
@@ -19,21 +20,35 @@ var time_to_grow: float
 
 var life_time_seconds := 0.0
 
-const TIME_TO_GROW = 30.0
+const TIME_TO_GROW = 5.0
 
 var is_large := false
 
 func _ready():
 	get_stats_from_resource(tree_stat)
-	animation_player.play("grow_small")
+	
+	# Equally likely... 
+	
+	animation_player.connect("animation_finished", _on_animation_player_animation_finished)
+	play_grow_small_animation()
 
 func _process(delta: float) -> void:
 	life_time_seconds += delta
+	
+	print(animation_player.current_animation)
 	
 	if life_time_seconds > TIME_TO_GROW:
 		if not is_large:
 			upgrade_tree()
 			#tree_data.update()
+
+## NOTHING to SMALL
+func play_grow_small_animation():
+	animation_player.play("grow_small")
+
+## SMALL to LARGE
+func play_grow_large_animation():
+	animation_player.play("grow_large")
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if (anim_name == "grow_small"):

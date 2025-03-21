@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var highlight: Sprite2D = $Highlight
+@onready var cursor: AnimatedSprite2D = $Cursor
 @onready var terrain_map: TerrainMap = $GroundLayer
 @onready var building_map: BuildingMap = $BuildingLayer
 
@@ -23,11 +24,22 @@ func update_highlight() -> void:
 		highlight.visible = true
 		highlight.position = terrain_map.map_to_local(map_coords)
 
-	# RED IF NOT FERTILE or NOT REACHABLE
 	if terrain_map.is_fertile(map_coords) and TreeManager.is_reachable(map_coords):
-		highlight.modulate = Color("3fd7ff81")
+		highlight.modulate = Color("3fd7ff81") ## BLUE
+		cursor.set_low()
+		cursor.enable()
+	elif TreeManager.is_occupied(map_coords):
+		## There is a tree here...
+		highlight.modulate = Color("ca910081") ## YELLOW
+		if TreeManager.is_large(map_coords):
+			cursor.set_high()
+		else:
+			cursor.set_medium()
+		cursor.enable()
 	else:
-		highlight.modulate = Color("ff578681")
+		## Cannot place on this tile
+		highlight.modulate = Color("ff578681") ## RED
+		cursor.disable()
 	
 	# DETECT WHAT IS HIGHLIGHTED
 	#detect_highlighted_objects(map_coords)

@@ -84,7 +84,8 @@ func update(delta: float):
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
 func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
-	var tree: Twee = TREE_DICT[type].instantiate()
+	var tree: Twee
+	tree = TREE_DICT[type].instantiate()
 	
 	if (forest_map.has(p)):
 		return 1
@@ -270,6 +271,11 @@ func is_reachable(pos: Vector2i):
 
 func is_occupied(pos: Vector2i):
 	return get_tree_map().has(pos)
+
+func is_large(pos: Vector2i):
+	if !is_occupied(pos):
+		return false
+	return (get_tree_map().get(pos) as Twee).is_large
 
 func is_stump(pos: Vector2i):
 	var tree_map = get_tree_map()
