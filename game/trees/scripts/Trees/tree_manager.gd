@@ -40,6 +40,10 @@ func _input(_event: InputEvent) -> void:
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
 		add_tree(3, map_coords)
+		#var tree: Twee = get_twee(map_coords)
+		#if (tree is WaterTree):
+			#print(tree.is_adjacent_to_water)
+		
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())

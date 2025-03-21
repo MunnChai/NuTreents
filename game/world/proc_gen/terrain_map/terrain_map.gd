@@ -50,6 +50,9 @@ func _input(event: InputEvent) -> void:
 	
 	if (event is InputEventKey && event.is_action_pressed("generate_map")):
 		generate_map()
+	
+	#if (Input.is_action_just_pressed("lmb")):
+		#print(get_tile_biome(local_to_map(get_mouse_coords())))
 
 
 func get_mouse_coords() -> Vector2:

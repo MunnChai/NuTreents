@@ -19,8 +19,6 @@ func update(delta: float) -> Vector3:
 	
 	var true_gain = get_water_gain()
 	
-	print(true_gain)
-	
 	# add new water to storage, storage equals at most max_water
 	storage = min(storage + gain.y, max_water)
 	
@@ -49,8 +47,8 @@ func get_water_gain():
 		return tree_stat.gain.y + water_bonus
 
 func is_water_adjacent() -> bool:
-	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE):
-		for y in range(-BASE_WATER_RANGE, BASE_WATER_RANGE):
+	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
+		for y in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
 			var coord: Vector2i = pos + Vector2i(x, y)
 			
 			var tile_type: int = Global.terrain_map.get_tile_biome(coord)
