@@ -64,7 +64,7 @@ func _update_shader(delta: float) -> void:
 	else:
 		flash_amount = 0.0
 		if died: # Flashes just before die... so that means after flash we die!
-			if !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
+			if is_large and !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
 				var death_vfx = GREEN_TREE_DIE.instantiate()
 				get_parent().add_child(death_vfx)
 				death_vfx.global_position = global_position
