@@ -46,7 +46,7 @@ water_min_text = "2"
 sun_min_text = "2"
 nutrients_min_text = "2"
 species_text = "Explorer"
-type = 1
+type = 5
 
 [node name="ShadyTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2

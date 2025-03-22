@@ -26,9 +26,9 @@ func _process(delta: float) -> void:
 
 # Updates the text of each label to show current resource values
 func update_ui():
-	water_label.text = str(int(TreeManager.res.x))
-	sun_label.text = str(int(TreeManager.res.y))
-	nutrients_label.text = str(int(TreeManager.res.z))
+	water_label.text = str(int(TreeManager.res.y))
+	sun_label.text = str(int(TreeManager.res.z))
+	nutrients_label.text = str(int(TreeManager.res.x))
 
 # Updates resource values + calls update_ui()
 func add_resources(delta_water: int, delta_sunlight: int, delta_nutrients: int):

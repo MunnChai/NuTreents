@@ -23,6 +23,11 @@ var time_to_grow: float
 
 var life_time_seconds := 0.0
 
+var is_adjacent_to_water: bool = false
+var water_bonus: int = 3
+const BASE_WATER_RANGE = 1
+
+
 #const TIME_TO_GROW = 5.0
 
 var is_large := false
@@ -41,6 +46,9 @@ func _ready():
 	
 	animation_player.connect("animation_finished", _on_animation_player_animation_finished)
 	play_grow_small_animation()
+	
+	is_adjacent_to_water = is_water_adjacent()
+	gain.y = get_water_gain()
 
 func _process(delta: float) -> void:
 	life_time_seconds += delta
@@ -207,3 +215,23 @@ func upgrade_tree() -> void:
 	animation_player.play("grow_large")
 	is_growing = true
 	get_upgraded_stats_from_resource(tree_stat)
+
+
+
+func get_water_gain():
+	if (!is_adjacent_to_water):
+		return tree_stat.gain.y
+	else:
+		return tree_stat.gain.y * 1.5
+
+func is_water_adjacent() -> bool:
+	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
+		for y in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
+			var coord: Vector2i = pos + Vector2i(x, y)
+			
+			var tile_type: int = Global.terrain_map.get_tile_biome(coord)
+			
+			if (tile_type == Global.terrain_map.TILE_TYPE.WATER):
+				return true
+	
+	return false
