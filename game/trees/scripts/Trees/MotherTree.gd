@@ -22,7 +22,7 @@ func initialize(p: Vector2i, f: int):
 func die():
 	died = true
 	
-	TreeManager.remove_tree(pos)
+	#TreeManager.remove_tree(pos)
 	# TODO: Game Over
 
 ## update local storage and use water for maintainence
@@ -44,8 +44,6 @@ func update(delta: float) -> Vector3:
 		else:
 			# game has enough water
 			storage = 0
-	if (hp <= 0):
-		die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
 

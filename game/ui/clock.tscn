@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cc8j5p14wpk8e"]
+[gd_scene load_steps=7 format=3 uid="uid://gndh6ypy0wse"]
 
 [ext_resource type="Texture2D" uid="uid://bklrn087vva72" path="res://ui/Time_Indicator_Animation_1.png" id="1_f4i75"]
 [ext_resource type="Script" uid="uid://bwymirp2g04qx" path="res://ui/clock/clock.gd" id="2_wy0fy"]
@@ -57,7 +57,7 @@ _data = {
 &"night_twinkle": SubResource("Animation_5p4hf")
 }
 
-[node name="Clock" type="Sprite2D"]
+[node name="Clock" type="Sprite2D" groups=["clock"]]
 texture = ExtResource("1_f4i75")
 hframes = 14
 script = ExtResource("2_wy0fy")

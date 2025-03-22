@@ -1,6 +1,6 @@
 class_name Clock extends Node
 
-const MINUTES_PER_DAY: float = 3.0
+const MINUTES_PER_DAY: float = 2.0
 const TOTAL_DAY_SECONDS: int = int(MINUTES_PER_DAY * 60)
 const HALF_DAY_SECONDS: int = TOTAL_DAY_SECONDS / 2
 
@@ -16,7 +16,7 @@ var _curr_day: int = 1
 
 func _ready() -> void:
 	animation_player.play("RESET")
-	# Engine.time_scale = 20
+	#Engine.time_scale = 20
 
 func _process(delta: float) -> void:
 	_process_time(delta)

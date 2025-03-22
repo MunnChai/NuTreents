@@ -1,6 +1,9 @@
 class_name TreeStatResource
 extends Resource
 
+@export var name: String
+@export_multiline var description: String
+
 @export_group("PrimaryTreeStats")
 @export var hp: int
 @export var max_water: int

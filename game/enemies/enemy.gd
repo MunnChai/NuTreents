@@ -214,6 +214,9 @@ func find_path_to_tree(tree: Twee) -> Array:
 				var new_path = current_path.duplicate(true)
 				new_path.append(next_pos)
 				paths.append(new_path)
+		
+		if (visited.size() > 200):
+			break
 	
 	return [] # could not find path
 
@@ -223,10 +226,11 @@ func is_valid_tile(map_pos: Vector2i) -> bool:
 	
 	var terrain_map: TerrainMap = get_tree().get_first_node_in_group("terrain_map")
 	
-	# Do not go on non-existent tiles
+	## Do not go on non-existent tiles - DEPRECATED
+	#  Please do go on non-existent tiles
 	var tile_data: TileData = terrain_map.get_cell_tile_data(map_pos)
 	if (tile_data == null):
-		return false
+		return true
 	
 	# Do not go on Water
 	var biome: int = tile_data.get_custom_data("biome")
