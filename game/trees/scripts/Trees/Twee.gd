@@ -1,6 +1,8 @@
 extends Structure
 class_name Twee
 
+const TREE_DAMAGE_SHADER = preload("res://trees/tree_damage.gdshader")
+
 @export var tree_stat: TreeStatResource 
 @export var sheets: Array[Texture2D]
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
@@ -35,6 +37,7 @@ func _ready():
 	sprite.position.y = -16
 	# Equally likely... 
 	sprite.texture = sheets.pick_random()
+	sprite.material = sprite.material.duplicate()
 	
 	animation_player.connect("animation_finished", _on_animation_player_animation_finished)
 	play_grow_small_animation()
@@ -71,7 +74,8 @@ func _update_shader(delta: float) -> void:
 	else:
 		flash_amount = 0.0
 	
-	if (!sprite):
+	
+	if (!sprite || !sprite.get_material()):
 		return
 	shake_amount = move_toward(shake_amount, 0.0, delta * SHAKE_DECAY_RATE)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
@@ -166,29 +170,7 @@ func update(delta: float) -> Vector3:
 	# add new water to storage, storage equals at most max_water
 	storage = min(storage + gain.y, max_water)
 	
-	# take maint from storage
-	#if (storage >= maint):
-		#storage -= maint
-		#is_dehydrated = false
-		#water_damage_time = 0.0
-	#else:
-		#var f: Forest = TreeManager.get_forest(forest)
-		#if (!f.get_water(maint - storage)):
-			## if game doesn't have enough water either
-			#is_dehydrated = true
-			#while (water_damage_time > WATER_DAMAGE_DELAY):
-				#take_damage(2)
-				#water_damage_time -= WATER_DAMAGE_DELAY
-			#water_damage_time += delta
-		#else:
-			## game has enough water
-			#is_dehydrated = false
-			#water_damage_time = 0.0
-			#storage = 0
-	#if (hp <= 0):
-		#die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
-	#_update_shader(delta)
 	return g
 
 func update_maint():

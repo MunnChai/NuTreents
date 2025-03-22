@@ -37,6 +37,9 @@ func update(delta: float) -> Vector3:
 	for key in sorted_trees:
 		if (!trees.has(key)):
 			continue
+		if (!trees[key]):
+			trees.erase(key)
+			continue
 		var tree: Twee = trees[key]
 		water += tree.gain.y
 	
