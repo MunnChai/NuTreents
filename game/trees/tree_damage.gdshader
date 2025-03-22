@@ -9,9 +9,14 @@ uniform float flash_amount = 1.0;
 uniform float shake_amount = 10.0;
 uniform float alpha = 1.0;
 uniform vec2 pos = vec2(0.0, 0.0);
+uniform bool dehydrated = false;
 
 uniform float uv_y_offset = 0.4;
 uniform vec3 flash_color: source_color = vec3(1.0, 1.0, 1.0);
+uniform vec3 tint_color: source_color = vec3(1.0, 1.0, 1.0);
+
+uniform float fps;
+uniform int frame_count;
 
 const int SPRITE_SHEET_UNIT_WIDTH = 9;
 const int SPRITE_SHEET_UNIT_HEIGHT = 2;
@@ -62,8 +67,9 @@ void fragment() {
 	float shake = shake_amount / 20.0;
 	float random = noise(vec2(0.0, rounded_uv.y + TIME) * 25.0);
 
-	float sin_value = sin(max(shake * 2.0, 1.0) * TIME * 1.0 * noise(pos / 10.0) * 2.0 + noise(pos / 12.5) * PI) / 100.0 * (max(shake * 5.0, 1.0));
+	float sin_value = sin(max(shake * 3.0, 1.0) * TIME * 1.0 * noise(pos / 10.0) * 2.0 + noise(pos / 12.5) * PI) / 100.0 * (max(shake * 5.0, 1.0));
 	// 15
+	// FIGURE OUT HOW TO BETTER COEXIST WIND AND SHAKE...
 	vec2 new_uv = UV + vec2(sin_value * y_falloff_factor, 0.0);
 
 	COLOR = texture(TEXTURE, new_uv); // Read from texture
@@ -73,6 +79,15 @@ void fragment() {
 	} else {
  		COLOR = vec4(flash(COLOR, flash_amount).rgb, 0.0);
 	}
+
+	//COLOR = COLOR * vec4(tint_color, COLOR.a);
+
+	// BROWNING?
+	if (COLOR.g > 0.3 && COLOR.a > 0.0 && dehydrated) {
+		COLOR.rgb = mix(COLOR.rgb, vec3(0.299 * COLOR.r + 0.587 * COLOR.g + 0.114 * COLOR.b), 1);
+		COLOR *= vec4(tint_color, 1.0);
+	}
+
 	//COLOR = vec4(random, 0.0, 0.0, 1.0);
 	//COLOR = vec4(0.0, 1.0 - UV.y - 0.2, 0.0, 1.0);
 }

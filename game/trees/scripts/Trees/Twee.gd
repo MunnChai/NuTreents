@@ -49,11 +49,12 @@ func _process(delta: float) -> void:
 
 
 #const FLASH_DECAY_RATE = 50.0
-const SHAKE_DECAY_RATE = 30.0
+const SHAKE_DECAY_RATE = 35.0
 const FLASH_DURATION = 0.1 # In seconds
 var flash_time = 0.0
 var flash_amount = 0.0
 var shake_amount = 0.0
+var is_dehydrated = false
 
 ## Handle animating shader parameters relating to damage
 func _update_shader(delta: float) -> void:
@@ -76,6 +77,8 @@ func _update_shader(delta: float) -> void:
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("pos", pos)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("dehydrated", is_dehydrated)
+	print(is_dehydrated)
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
 	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
@@ -138,7 +141,10 @@ func die():
 		#func(animation_name):
 			#queue_free()
 	#)
-	
+
+const WATER_DAMAGE_DELAY = 3.0
+var water_damage_time := 0.0
+
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
 func update(delta: float) -> Vector3:
@@ -150,14 +156,21 @@ func update(delta: float) -> Vector3:
 	# take maint from storage
 	if (storage >= maint):
 		storage -= maint
+		is_dehydrated = false
+		water_damage_time = 0.0
 	else:
 		var f: Forest = TreeManager.get_forest(forest)
 		if (!f.get_water(maint - storage)):
 			# if game doesn't have enough water either
-			flash_time = FLASH_DURATION
-			hp -= 2 * delta
+			is_dehydrated = true
+			while (water_damage_time > WATER_DAMAGE_DELAY):
+				take_damage(2)
+				water_damage_time -= WATER_DAMAGE_DELAY
+			water_damage_time += delta
 		else:
 			# game has enough water
+			is_dehydrated = false
+			water_damage_time = 0.0
 			storage = 0
 	if (hp <= 0):
 		die()
