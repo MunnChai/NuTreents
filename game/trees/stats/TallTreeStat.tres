@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_o52t0")
+name = "Tall Tree"
+description = ""
 hp = 10
 max_water = 3
 gain = Vector3(5, 0, 0)

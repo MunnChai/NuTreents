@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_pvc8c")
+name = "Explorer Tree"
+description = ""
 hp = 10
 max_water = 2
 gain = Vector3(5, 0, 0)

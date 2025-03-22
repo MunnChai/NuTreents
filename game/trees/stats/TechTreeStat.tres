@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_8s7ni")
+name = "Tech Tree"
+description = ""
 hp = 10
 max_water = 0
 gain = Vector3(0, 0, 0)

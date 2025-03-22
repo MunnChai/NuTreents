@@ -1,7 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://dwyhak12pdjyv"]
+[gd_scene load_steps=9 format=3 uid="uid://dwyhak12pdjyv"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="2_dodub"]
+[ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://trees/stats/DefaultTreeStat.tres" id="3_jkcef"]
 [ext_resource type="PackedScene" uid="uid://b8fg45slly116" path="res://ui/menus/tree_menu/tree_card.tscn" id="3_ubm70"]
+[ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://trees/stats/ExplorerTreeStat.tres" id="4_e4koi"]
+[ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://trees/stats/TallTreeStat.tres" id="5_486df"]
+[ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://trees/stats/WaterTreeStat.tres" id="6_ot1xe"]
+[ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://trees/stats/GunTreeStat.tres" id="7_32lbt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dodub"]
 atlas = ExtResource("2_dodub")
@@ -28,6 +33,7 @@ alignment = 1
 
 [node name="DefaultTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
+tree_stat = ExtResource("3_jkcef")
 water_plus_text = "1"
 sun_plus_text = "1"
 nutrients_plus_text = "1"
@@ -39,6 +45,7 @@ type = 1
 
 [node name="ExplorerTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
+tree_stat = ExtResource("4_e4koi")
 water_plus_text = "2"
 sun_plus_text = "2"
 nutrients_plus_text = "2"
@@ -48,19 +55,9 @@ nutrients_min_text = "2"
 species_text = "Explorer"
 type = 5
 
-[node name="ShadyTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
-layout_mode = 2
-water_plus_text = "3"
-sun_plus_text = "3"
-nutrients_plus_text = "3"
-water_min_text = "3"
-sun_min_text = "3"
-nutrients_min_text = "3"
-species_text = "Shady"
-type = 1
-
 [node name="TallTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
+tree_stat = ExtResource("5_486df")
 water_plus_text = "4"
 sun_plus_text = "4"
 nutrients_plus_text = "4"
@@ -72,6 +69,7 @@ type = 1
 
 [node name="WaterTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
+tree_stat = ExtResource("6_ot1xe")
 water_plus_text = "5"
 sun_plus_text = "5"
 nutrients_plus_text = "5"
@@ -81,19 +79,9 @@ nutrients_min_text = "5"
 species_text = "Water"
 type = 3
 
-[node name="ProtectorTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
-layout_mode = 2
-water_plus_text = "6"
-sun_plus_text = "6"
-nutrients_plus_text = "6"
-water_min_text = "6"
-sun_min_text = "6"
-nutrients_min_text = "6"
-species_text = "Protector"
-type = 1
-
 [node name="GunTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
+tree_stat = ExtResource("7_32lbt")
 water_plus_text = "7"
 sun_plus_text = "7"
 nutrients_plus_text = "7"

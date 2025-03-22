@@ -1,5 +1,6 @@
 extends Control
 
+@export var tree_stat: TreeStatResource
 @export var water_plus_text: String
 @export var sun_plus_text: String
 @export var nutrients_plus_text: String
@@ -18,14 +19,17 @@ extends Control
 @onready var species: Label = $TextureRect/Species
 
 func _ready() -> void:
-	water_plus.text = water_plus_text
-	sun_plus.text = sun_plus_text
-	nutrients_plus.text = nutrients_plus_text
-	water_min.text = water_min_text
-	sun_min.text = sun_min_text
-	nutrients_min.text = nutrients_min_text
-	species.text = species_text
+	var net_water = tree_stat.gain.y - tree_stat.maint
+	if (net_water > 0):
+		water_plus.text = str(net_water)
+	else:
+		water_min.text = str(abs(net_water))
+	
+	sun_plus.text = str(tree_stat.gain.z)
+	nutrients_plus.text = str(tree_stat.gain.x)
+	sun_min.text = str(0)
+	nutrients_min.text = str(0)
+	species.text = tree_stat.name
 
 func _on_button_pressed() -> void:
-	TreeManager.selected_tree_species = type
-	print(str(type))
+	TreeManager.selected_tree_species = type 
