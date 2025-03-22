@@ -38,10 +38,9 @@ func remove_tree(p: Vector2i):
 		return
 	var t: Twee = trees[p]
 	water -= t.storage
-	t.free()
 	trees.erase(p)
-	TreeManager.remove_tree(p)
 	
+	t.queue_free()
 
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 
@@ -65,6 +64,6 @@ func get_water(maint: int) -> bool:
 
 
 func print_forest():
+	print(id)
 	for key in trees.keys():
-		var t: DefaultTree = trees[key]
-		print("level:", t.level, " hp:", t.hp, " water:", t.storage, " f:", t.forest)
+		print(key)

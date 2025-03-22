@@ -17,11 +17,12 @@ const TREE_DICT: Dictionary[int, PackedScene] = {
 # stores all trees
 var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
+var tree_map: Dictionary[Vector2i, Twee]
 var res: Vector3 # Vec3(N, water, sun)
 var forest_count: int
 
 func _ready():
-	res = Vector3(10, 0, 0)
+	res = Vector3(100, 0, 0)
 	forest_count = 0
 	#test()
 	
@@ -50,16 +51,10 @@ func test():
 	button.pressed.connect(_button_pressed)
 	button.set_position(Vector2i(0,-100))
 	add_child(button)
-	print(remove_tree(Vector2i(1,0)))
-	print(add_tree(1, Vector2i(1,0)))
-	res = Vector3(10, 4, 0)
-	print(add_tree(1, Vector2i(1,0)))
-	print(upgrade_tree(Vector2i(1,1)))
-	print(upgrade_tree(Vector2i(1,0)))
-	res.x += 20
-	print(upgrade_tree(Vector2i(1,0)))
-	forests[1].print_forest()
-	print(forest_map)
+	
+	
+	
+	print(find_group(Vector2i(1,0)))
 	
 	
 func _button_pressed():
@@ -100,11 +95,15 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	forest_map[p] = f_id
 	var forest: Forest = forests[f_id]
 	forest.add_tree(p, tree)
+	tree_map[p] = tree
 	
 	fog_map.remove_fog_around(p)
 	
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
+	
+	# for testing split forest stuff
+	check_for_split(p)
 	return 0
 
 ## remove tree at given p
@@ -114,17 +113,23 @@ func remove_tree(p: Vector2i) -> bool:
 		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
+	var tree: Twee = f.trees[p]
 	f.remove_tree(p)
 	# assume remove_tree will free object correctly
 	forest_map.erase(p)
 	
+	forest_check(p, f_id)
+	
 	structure_map.remove_structure(p)
+	tree.die()
 	return true
 
 func remove_forest(id: int):
 	if (!forests.has(id)):
 		return
 	var f: Forest = forests[id]
+	for t in f.trees.keys():
+		tree_map.erase(t)
 	f.free()
 	forests.erase(id)
 
@@ -288,3 +293,101 @@ func get_reachable_tree_placement_positions() -> Array[Vector2i]:
 				allowed_positions.append(pos + offset)
 	
 	return allowed_positions
+
+## given a pos, check if there's a need to split the forest, split if neccessary
+## id is the forest_id of the original tree
+func forest_check(p: Vector2i, id: int):
+	print("forest_check called")
+	# check for split
+	var forest_groups: Array = check_for_split(p)
+	# split if needed
+	if (forest_groups.size() > 1):
+		split_forests(forest_groups, id)
+
+## check_for_split returns an array of Array[Vector2i] 
+## which each array is a connected tree group
+## finished (maybe we will see)
+func check_for_split(p: Vector2i) -> Array:
+	# find neighbouring trees
+	var neighbours: Array[Vector2i] = find_neighbours(p)
+	if (neighbours.is_empty()):
+		# no adjacent trees yipee
+		return []
+	
+	var groups: Array = []
+	var visited: Array[Vector2i] = []
+	for neigh in neighbours:
+		var temp = find_group(neigh)
+		if (!same_group(visited, temp)):
+			groups.append(temp)
+		visited.append(neigh)
+	# groups should have distinct elements (haha hopefully) (it works now i think)
+	return groups
+	
+## helper for check_for_split
+func same_group(visited: Array[Vector2i], group: Array[Vector2i]) -> bool:
+	for v in visited:
+		if (group.has(v)):
+			return true
+	return false
+
+## given an array of Array[Vector2i], assign forest to each group balabala
+## i feel like it should work
+func split_forests(forest_groups: Array, old_id: int):
+	# need to:
+	var forest_to_add = forest_groups.size() - 1
+	for i in range(forest_to_add):
+		new_forest_tada(forest_groups[i], forest_count + i + 1, old_id)
+	# update forest_count
+	forest_count += forest_to_add
+	for f in forests.keys():
+		forests[f].print_forest()
+	return
+
+## new a forest with given id
+func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
+	# remove tree from old forest
+	var old_f: Forest = forests[old_id]
+	
+	# update forests
+	var forest: Forest = Forest.new(id)
+	forests[id] = forest
+	for pos in trees:
+		# remove these from old forest
+		old_f.trees.erase(pos)
+	
+		# update some info
+		if (pos == Constants.ORIGIN):
+			continue
+		var tree = tree_map[pos]
+		tree.forest = id
+		forest_map[pos] = id
+		
+		# add this to new forest
+		forest.trees[pos] = tree
+	return forest
+
+## returns a connected tree set
+## finished i think (90% sure)
+func find_group(p: Vector2i) -> Array[Vector2i]:
+	var to_visit: Array[Vector2i] = [p]
+	to_visit.append_array(find_neighbours(p))
+	var group: Array[Vector2i] = []
+	while (!to_visit.is_empty()):
+		# while there are still trees connected
+		var t: Vector2i = to_visit.pop_front()
+		if (!group.has(t)):
+			# if t is not added to group yet
+			group.append(t)
+			to_visit.append_array(find_neighbours(t))
+	return group
+	
+## returns an array containing all adjacent trees of given p
+func find_neighbours(p: Vector2i) -> Array[Vector2i]:
+	var tree_groups: Array[Vector2i]
+	var directions = [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)]
+	for dir in directions:
+		var neighbour = p + dir
+		if (forest_map.has(neighbour)):
+			tree_groups.append(neighbour)
+	return tree_groups

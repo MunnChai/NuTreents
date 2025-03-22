@@ -222,7 +222,7 @@ func generate_city(map_coords: Vector2i) -> void:
 		walk_drunkard(map_coords, TILE_TYPE.CITY)
 
 func generate_spawn() -> void:
-	var origin: Vector2i = Vector2i(Constants.MAP_SIZE / 2)
+	var origin: Vector2i = Vector2i(Constants.ORIGIN)
 	
 	for i in range(0, NUM_DRUNKARDS * 4):
 		walk_drunkard(origin, TILE_TYPE.GRASS, [TILE_TYPE.DIRT])

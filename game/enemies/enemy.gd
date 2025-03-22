@@ -95,7 +95,6 @@ func move_along_path() -> bool:
 
 
 
-
 #
 # Pathfinding stuff
 #
