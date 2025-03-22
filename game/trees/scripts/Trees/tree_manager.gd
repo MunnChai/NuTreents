@@ -99,7 +99,7 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 		return 3 
 	if enforce_reachable and not is_reachable(p):
 		return 4
-	print("Forests: ", forests)
+	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
@@ -115,7 +115,7 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	# for testing split forest stuff
 	#check_for_split(p)
 	
-	print_forest_map()
+	#print_forest_map()
 	return 0
 
 ## remove tree at given p
@@ -135,7 +135,7 @@ func remove_tree(p: Vector2i) -> bool:
 	forest_check(p, f_id)
 	structure_map.remove_structure(p)
 	
-	print("Forests: ", forests)
+	#print("Forests: ", forests)
 	return true
 
 func get_twee(p: Vector2i) -> Twee:
@@ -409,7 +409,7 @@ func split_forests(forest_groups: Array, old_id: int):
 	forest_count += forest_to_add
 	#for f in forests.keys():
 		#forests[f].print_forest()
-	print_forest_map()
+	#print_forest_map()
 	return
 
 ## new a forest with given id
