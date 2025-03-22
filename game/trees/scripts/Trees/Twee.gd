@@ -21,7 +21,7 @@ var time_to_grow: float
 
 var life_time_seconds := 0.0
 
-const TIME_TO_GROW = 5.0
+#const TIME_TO_GROW = 5.0
 
 var is_large := false
 var is_growing := false
@@ -29,6 +29,10 @@ var is_growing := false
 func _ready():
 	get_stats_from_resource(tree_stat)
 	
+	
+	sprite.hframes = 9
+	sprite.vframes = 2
+	sprite.position.y = -16
 	# Equally likely... 
 	sprite.texture = sheets.pick_random()
 	
@@ -40,7 +44,7 @@ func _process(delta: float) -> void:
 	
 	#print(animation_player.current_animation)
 	
-	if life_time_seconds > TIME_TO_GROW:
+	if life_time_seconds > time_to_grow:
 		if not is_large:
 			upgrade_tree()
 			#tree_data.update()
@@ -70,7 +74,7 @@ func _update_shader(delta: float) -> void:
 				death_vfx.global_position = global_position
 				## TODO: Do we leave stump?
 			
-			queue_free()
+			#queue_free()
 			print("Died")
 	
 	if (!sprite):
@@ -135,9 +139,9 @@ const GREEN_TREE_DIE = preload("res://trees/scenes/death/GreenTreeDie.tscn")
 
 func die():
 	died = true
-	TreeManager.remove_tree(pos)
+	#TreeManager.remove_tree(pos)
 	flash_time = FLASH_DURATION
-	# Queue free will be called once the flash is over!
+	queue_free()
 	
 	#animation_player.play("die")
 	#animation_player.animation_finished.connect(
@@ -200,7 +204,7 @@ func take_damage(damage: int) -> bool:
 	hp -= damage
 	
 	if (hp <= 0):
-		die()
+		TreeManager.remove_tree(pos)
 		return true
 	#else:
 		#animation_player.play("hurt")

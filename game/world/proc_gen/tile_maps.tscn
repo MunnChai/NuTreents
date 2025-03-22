@@ -144,9 +144,11 @@ sources/0 = SubResource("TileSetAtlasSource_0rry4")
 [node name="TileMaps" type="Node2D"]
 
 [node name="BuildingManager" type="Node2D" parent="."]
+y_sort_enabled = true
 script = ExtResource("1_56hbk")
 
 [node name="GroundLayer" parent="BuildingManager" instance=ExtResource("2_u0b2m")]
+z_index = -5
 
 [node name="Cursor" type="AnimatedSprite2D" parent="BuildingManager" node_paths=PackedStringArray("highlight_node_2d")]
 z_index = 100
@@ -162,8 +164,10 @@ modulate = Color(0.792567, 0.568552, 1.34766e-06, 0.505882)
 texture = ExtResource("3_sjv4q")
 
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
+y_sort_enabled = true
 
 [node name="EnemyLayer" type="Node2D" parent="BuildingManager" groups=["enemy_map"]]
+y_sort_enabled = true
 
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
 visible = false

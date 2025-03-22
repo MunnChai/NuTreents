@@ -17,7 +17,7 @@ func _ready():
 func _process(delta: float) -> void:
 	life_time_seconds += delta
 	
-	if life_time_seconds > TIME_TO_GROW:
+	if life_time_seconds > time_to_grow:
 		if not is_large:
 			upgrade_tree()
 	

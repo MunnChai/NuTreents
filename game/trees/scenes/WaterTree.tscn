@@ -1,7 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://crxbaa8tdf281"]
+[gd_scene load_steps=5 format=3 uid="uid://bkkyw61ya8xr7"]
 
 [ext_resource type="Script" path="res://trees/scripts/Trees/WaterTree.gd" id="1_hllm5"]
-[ext_resource type="Resource" path="res://trees/stats/WaterTreeStat.tres" id="2_h5l5m"]
+[ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://trees/stats/WaterTreeStat.tres" id="2_h5l5m"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://trees/sheets/tree_square_sheet.png" id="3_lvmcj"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://trees/tree_animations.res" id="4_lvmcj"]
 

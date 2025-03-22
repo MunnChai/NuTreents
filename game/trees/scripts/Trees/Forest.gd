@@ -45,8 +45,6 @@ func update(delta: float) -> Vector3:
 			continue
 		var tree: Twee = trees[key]
 		res += tree.update(delta)
-		if (tree.died):
-			remove_tree(key)
 	
 	# Ignore water from update, just set what we calculated earlier
 	res.y = max(0, water)
@@ -66,8 +64,8 @@ func remove_tree(p: Vector2i):
 	var t: Twee = trees[p]
 	water -= t.storage
 	trees.erase(p)
-	TreeManager.remove_tree(p)
 	
+	t.die()
 
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 
@@ -91,6 +89,6 @@ func get_water(maint: int) -> bool:
 
 
 func print_forest():
+	print(id)
 	for key in trees.keys():
-		var t: DefaultTree = trees[key]
-		print("level:", t.level, " hp:", t.hp, " water:", t.storage, " f:", t.forest)
+		print(key)
