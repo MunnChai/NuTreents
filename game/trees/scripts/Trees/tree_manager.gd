@@ -11,12 +11,20 @@ const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
 const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
 const TECH_TREE = preload("res://trees/scenes/TechTree.tscn")
 
+enum TreeType {
+	MOTHER_TREE = 0,
+	DEFAULT_TREE = MOTHER_TREE + 1,
+	GUN_TREE = DEFAULT_TREE + 1,
+	WATER_TREE = GUN_TREE + 1,
+	TECH_TREE = WATER_TREE + 1,
+}
+
 const TREE_DICT: Dictionary[int, PackedScene] = {
-	0: MOTHER_TREE,
-	1: DEFAULT_TREE,
-	2: GUN_TREE,
-	3: WATER_TREE,
-	4: TECH_TREE,
+	TreeType.MOTHER_TREE: MOTHER_TREE,
+	TreeType.DEFAULT_TREE: DEFAULT_TREE,
+	TreeType.GUN_TREE: GUN_TREE,
+	TreeType.WATER_TREE: WATER_TREE,
+	TreeType.TECH_TREE: TECH_TREE,
 }
 
 
@@ -26,6 +34,9 @@ var forest_map: Dictionary[Vector2i, int] # {pos, id}
 var tree_map: Dictionary[Vector2i, Twee]
 var res: Vector3 # Vec3(N, water, sun)
 var forest_count: int
+
+# currently selected tree from ui
+var selected_tree_species: int = 1
 
 func _ready():
 	res = Vector3(100, 0, 0)
@@ -42,11 +53,7 @@ func _input(_event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		add_tree(1, map_coords)
-		#var tree: Twee = get_twee(map_coords)
-		#if (tree is WaterTree):
-			#print(tree.is_adjacent_to_water)
-		
+		add_tree(selected_tree_species, map_coords)
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())

@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://cw31hycsu8c78"]
+
+[ext_resource type="Texture2D" uid="uid://bg1bp3vm7likp" path="res://ui/player_interface/fastforward 1x.png" id="1_vag5l"]
+[ext_resource type="Script" uid="uid://tq1fjaos6asf" path="res://ui/player_interface/fast_forward_btn.gd" id="2_fehke"]
+[ext_resource type="Texture2D" uid="uid://ctic3l1nfi2jq" path="res://ui/player_interface/fastforward 2x.png" id="2_yooxn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fehke"]
+atlas = ExtResource("1_vag5l")
+region = Rect2(8, 16, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbwvr"]
+atlas = ExtResource("2_yooxn")
+region = Rect2(16, 16, 33, 32)
+
+[node name="FastForwardBtn" type="TextureButton"]
+offset_right = 28.0
+offset_bottom = 32.0
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_fehke")
+texture_pressed = SubResource("AtlasTexture_bbwvr")
+script = ExtResource("2_fehke")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

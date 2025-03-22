@@ -1,19 +1,17 @@
-[gd_scene format=3 uid="uid://dnqphbl5e44tn"]
+[gd_scene load_steps=3 format=3 uid="uid://dnqphbl5e44tn"]
+
+[ext_resource type="Texture2D" uid="uid://dy08sebkwreai" path="res://ui/menus/menu_bg.png" id="1_lce5o"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uhide"]
+atlas = ExtResource("1_lce5o")
+region = Rect2(0, 208, 640, 152)
 
 [node name="TechMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 200.0
-color = Color(0.242306, 0.311583, 0.348312, 1)
-
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 447.0
-offset_top = 93.0
-offset_right = 487.0
-offset_bottom = 116.0
-text = "technology"
+offset_bottom = 152.0
+texture = SubResource("AtlasTexture_uhide")
