@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dpveqnitfylgn"]
+[gd_scene load_steps=20 format=3 uid="uid://dpveqnitfylgn"]
 
 [ext_resource type="PackedScene" uid="uid://dwyhak12pdjyv" path="res://ui/menus/tree_menu/tree_menu.tscn" id="1_bb7ga"]
 [ext_resource type="Script" uid="uid://dhqoiddma2o7m" path="res://ui/menus/menu.gd" id="1_bq8en"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/menus/tech_menu.tscn" id="2_v5h4j"]
 [ext_resource type="PackedScene" uid="uid://cnkikqyrui6rg" path="res://ui/menus/settings_menu/settings.tscn" id="3_73fpc"]
 [ext_resource type="Texture2D" uid="uid://cp6u4ys1uoqt1" path="res://ui/menus/menu_button_selected_2x.png" id="3_maj2m"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="4_5ai1f"]
 [ext_resource type="Texture2D" uid="uid://cwhdt4oefoyib" path="res://ui/menus/menu_exit_button.png" id="7_maj2m"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_maj2m"]
@@ -135,12 +136,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -21.5
-offset_top = -11.5
-offset_right = 21.5
-offset_bottom = 11.5
+offset_left = -30.0
+offset_top = -14.19
+offset_right = 30.0
+offset_bottom = 37.81
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_5ai1f")
+theme_override_font_sizes/font_size = 64
 text = "Trees"
 vertical_alignment = 1
 
@@ -159,13 +162,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -21.5
-offset_top = -11.5
-offset_right = 21.5
-offset_bottom = 11.5
+offset_left = -58.0
+offset_top = -14.19
+offset_right = 58.0
+offset_bottom = 37.81
 grow_horizontal = 2
 grow_vertical = 2
-text = "Technology"
+theme_override_fonts/font = ExtResource("4_5ai1f")
+theme_override_font_sizes/font_size = 64
+text = "Tech"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Settings" type="TextureButton" parent="MenuButtons"]
 layout_mode = 2
@@ -183,13 +190,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -31.0
-offset_top = -11.5
-offset_right = 31.0
-offset_bottom = 11.5
+offset_left = -45.0
+offset_top = -14.19
+offset_right = 45.0
+offset_bottom = 37.81
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_5ai1f")
+theme_override_font_sizes/font_size = 64
 text = "Settings"
+vertical_alignment = 1
 
 [node name="TreeMenu" parent="." instance=ExtResource("1_bb7ga")]
 offset_top = -48.0
