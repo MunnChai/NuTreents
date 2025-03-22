@@ -21,16 +21,19 @@ var current_wave = 0
 const MIN_ENEMIES_PER_WAVE: int = 4
 const MAX_ENEMIES_PER_WAVE: int = 6
 
+var current_enemies: Array[Enemy]
+
+
 func _ready() -> void:
 	#spawn_enemy(EnemyType.SPEEDLE, Global.MAP_SIZE / 2)
 	pass
 
 func _input(event: InputEvent) -> void:
 	pass
-	#if (Input.is_action_just_pressed("debug_button")):
-		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
-		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		#spawn_enemy(EnemyType.SILK_SPITTER, map_coord)
+	if (Input.is_action_just_pressed("debug_button")):
+		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
+		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
+		spawn_enemy(EnemyType.SILK_SPITTER, map_coord)
 
 func _process(delta: float) -> void:
 	var curr_time = Global.clock.get_curr_day_sec()
@@ -42,6 +45,8 @@ func _process(delta: float) -> void:
 			spawning_interval = ENEMY_SPAWN_INTERVAL
 	else: # DAY TIME
 		current_wave = 0
+		if (current_enemies.size() > 0):
+			kill_all_enemies()
  
 
 
@@ -75,3 +80,12 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> void:
 	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
 	
 	enemy_map.add_child(enemy_node)
+	
+	current_enemies.append(enemy_node)
+
+
+func kill_all_enemies():
+	print("Hello")
+	for enemy: Enemy in current_enemies:
+		enemy.die()
+		current_enemies.erase(enemy)
