@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cuuxnj6p50s3g"]
+[gd_scene load_steps=7 format=3 uid="uid://cuuxnj6p50s3g"]
 
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://trees/tree_damage.gdshader" id="1_18yy7"]
 [ext_resource type="Script" uid="uid://w6imeajyursp" path="res://trees/scripts/Trees/GunTree.gd" id="1_b4h83"]
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://trees/stats/GunTreeStat.tres" id="2_p5an4"]
-[ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://trees/sheets/tree_square_sheet.png" id="3_mbreq"]
-[ext_resource type="Texture2D" uid="uid://baeko446ej3ri" path="res://trees/DefaultTree-Sheet.png" id="3_wexw6"]
+[ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://trees/sheets/tree_gun_sheet.png" id="3_18yy7"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://trees/tree_animations.res" id="4_mbreq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_18yy7"]
@@ -23,15 +22,15 @@ shader_parameter/frame_count = 0
 [node name="GunTree" type="Node2D"]
 script = ExtResource("1_b4h83")
 tree_stat = ExtResource("2_p5an4")
-sheets = Array[Texture2D]([ExtResource("3_mbreq")])
+sheets = Array[Texture2D]([ExtResource("3_18yy7")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_18yy7")
 position = Vector2(0, -16)
-texture = ExtResource("3_wexw6")
-hframes = 6
-vframes = 8
+texture = ExtResource("3_18yy7")
+hframes = 9
+vframes = 3
 region_rect = Rect2(32, 16, 32, 40)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
