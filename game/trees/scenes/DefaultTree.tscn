@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c8kbt51qdolu3"]
+[gd_scene load_steps=9 format=3 uid="uid://c8kbt51qdolu3"]
 
 [ext_resource type="Script" uid="uid://bnf8eche4rwwo" path="res://trees/scripts/Trees/Twee.gd" id="1_f38t6"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://trees/stats/DefaultTreeStat.tres" id="2_mwnlu"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://trees/tree_animations.res" id="3_4dnyq"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://trees/sheets/tree_square_sheet.png" id="3_mwnlu"]
 [ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://trees/sheets/tree_triangle_sheet.png" id="4_vgmkb"]
+[ext_resource type="Texture2D" uid="uid://eckdbj5rer4l" path="res://trees/sheets/tree_circle_sheet.png" id="5_cbled"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://trees/tree_damage.gdshader" id="5_my1gm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbled"]
@@ -24,7 +25,7 @@ shader_parameter/frame_count = 0
 [node name="DefaultTree" type="Node2D"]
 script = ExtResource("1_f38t6")
 tree_stat = ExtResource("2_mwnlu")
-sheets = Array[Texture2D]([ExtResource("3_mwnlu"), ExtResource("4_vgmkb")])
+sheets = Array[Texture2D]([ExtResource("3_mwnlu"), ExtResource("4_vgmkb"), ExtResource("5_cbled")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

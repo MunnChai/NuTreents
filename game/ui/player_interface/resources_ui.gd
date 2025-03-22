@@ -12,9 +12,9 @@ var nutrients_per_s: float = 1
 
 var seconds: float = 0
 
-@onready var water_label: Label = $VBoxContainer/Water/WaterLabel
-@onready var sun_label: Label = $VBoxContainer/Sunlight/SunLabel
-@onready var nutrients_label: Label = $VBoxContainer/Nutrients/NutrientsLabel
+@onready var water_label: Label = $WaterLabel
+@onready var sun_label: Label = $SunLabel
+@onready var nutrients_label: Label = $NutrientsLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

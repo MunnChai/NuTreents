@@ -6,6 +6,10 @@ extends Twee
 func _ready():
 	super._ready()
 	
+	sprite.hframes = 9
+	sprite.vframes = 3
+	sprite.position.y = -16
+	
 	# Calculate adjacency on start of runtime, instead of each frame
 	
 
@@ -21,7 +25,8 @@ func update(delta: float) -> Vector3:
 	return g
 
 
-
+func play_large_tree_animation():
+	animation_player.play("pump")
 
 
 func get_upgraded_stats_from_resource(tree_stat: TreeStatResource):

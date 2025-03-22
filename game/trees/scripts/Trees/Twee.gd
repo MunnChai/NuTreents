@@ -113,10 +113,13 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if (anim_name == "grow_small"):
 		animation_player.play("small")
 	if (anim_name == "grow_large"):
-		animation_player.play("large")
+		play_large_tree_animation()
 		is_growing = false
 	if (anim_name == "die"):
 		animation_player.play("stump")
+
+func play_large_tree_animation():
+	animation_player.play("large")
 
 func get_id():
 	return id

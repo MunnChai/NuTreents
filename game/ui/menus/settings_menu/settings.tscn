@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cnkikqyrui6rg"]
+[gd_scene load_steps=7 format=3 uid="uid://cnkikqyrui6rg"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_ypxvv"]
 [ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/menus/settings_menu/audio_settings.gd" id="2_8xtpb"]
+[ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="2_br6cj"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_gfptj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v0rmt"]
 atlas = ExtResource("1_ypxvv")
@@ -25,7 +27,7 @@ anchors_preset = 0
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 152.0
+offset_bottom = 300.0
 texture = SubResource("AtlasTexture_v0rmt")
 
 [node name="SliderLabel" type="Label" parent="TextureRect"]
@@ -35,24 +37,32 @@ offset_left = 304.0
 offset_top = 31.0
 offset_right = 332.0
 offset_bottom = 54.0
+theme_override_fonts/font = ExtResource("2_br6cj")
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_s2iut")
 text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AudioSettings" type="VBoxContainer" parent="TextureRect" node_paths=PackedStringArray("slider_label")]
-layout_mode = 0
+[node name="AudioLabel" type="Label" parent="TextureRect"]
+layout_mode = 2
 offset_left = 64.0
 offset_top = 24.0
 offset_right = 464.0
-offset_bottom = 124.0
+offset_bottom = 128.0
+theme_override_fonts/font = ExtResource("3_gfptj")
+theme_override_font_sizes/font_size = 128
+text = "Audio"
+
+[node name="AudioSettings" type="VBoxContainer" parent="TextureRect" node_paths=PackedStringArray("slider_label")]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 125.0
+offset_right = 464.0
+offset_bottom = 243.0
+theme_override_constants/separation = 20
 script = ExtResource("2_8xtpb")
 slider_label = NodePath("../SliderLabel")
-
-[node name="AudioLabel" type="Label" parent="TextureRect/AudioSettings"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Audio"
 
 [node name="MasterContainer" type="HBoxContainer" parent="TextureRect/AudioSettings"]
 layout_mode = 2
@@ -60,7 +70,8 @@ layout_mode = 2
 [node name="MasterLabel" type="Label" parent="TextureRect/AudioSettings/MasterContainer"]
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_fonts/font = ExtResource("2_br6cj")
+theme_override_font_sizes/font_size = 32
 text = "Master:"
 vertical_alignment = 1
 
@@ -77,7 +88,8 @@ layout_mode = 2
 [node name="MusicLabel" type="Label" parent="TextureRect/AudioSettings/MusicContainer"]
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_fonts/font = ExtResource("2_br6cj")
+theme_override_font_sizes/font_size = 32
 text = "Music:"
 vertical_alignment = 1
 
@@ -94,7 +106,8 @@ layout_mode = 2
 [node name="SFXLabel" type="Label" parent="TextureRect/AudioSettings/SFXContainer"]
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 14
+theme_override_fonts/font = ExtResource("2_br6cj")
+theme_override_font_sizes/font_size = 32
 text = "SFX:"
 vertical_alignment = 1
 

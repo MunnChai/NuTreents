@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://buns43sl7chej"]
+[gd_scene load_steps=7 format=3 uid="uid://buns43sl7chej"]
 
 [ext_resource type="Script" uid="uid://cgn43ynuh6apg" path="res://ui/player_interface/resources_ui.gd" id="1_dcrin"]
 [ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/resource_sprites.png" id="1_lmyok"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_qkopc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lmyok"]
 atlas = ExtResource("1_lmyok")
@@ -30,17 +31,15 @@ script = ExtResource("1_dcrin")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+alignment = 1
 
 [node name="Water" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/Water"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_lmyok")
-
-[node name="WaterLabel" type="Label" parent="VBoxContainer/Water"]
-layout_mode = 2
-text = "10"
 
 [node name="Sunlight" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -49,10 +48,6 @@ layout_mode = 2
 layout_mode = 2
 texture = SubResource("AtlasTexture_dcrin")
 
-[node name="SunLabel" type="Label" parent="VBoxContainer/Sunlight"]
-layout_mode = 2
-text = "10"
-
 [node name="Nutrients" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -60,6 +55,36 @@ layout_mode = 2
 layout_mode = 2
 texture = SubResource("AtlasTexture_qkopc")
 
-[node name="NutrientsLabel" type="Label" parent="VBoxContainer/Nutrients"]
+[node name="WaterLabel" type="Label" parent="."]
 layout_mode = 2
+offset_left = 40.0
+offset_top = 5.0
+offset_right = 64.0
+offset_bottom = 57.0
+theme_override_fonts/font = ExtResource("3_qkopc")
+theme_override_font_sizes/font_size = 64
 text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SunLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 40.0
+offset_top = 45.0
+offset_right = 64.0
+offset_bottom = 97.0
+theme_override_fonts/font = ExtResource("3_qkopc")
+theme_override_font_sizes/font_size = 64
+text = "10"
+vertical_alignment = 1
+
+[node name="NutrientsLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 40.0
+offset_top = 83.0
+offset_right = 64.0
+offset_bottom = 135.0
+theme_override_fonts/font = ExtResource("3_qkopc")
+theme_override_font_sizes/font_size = 64
+text = "10"
+vertical_alignment = 1

@@ -29,8 +29,14 @@ func _on_settings_pressed() -> void:
 
 func _on_close_menu_pressed() -> void:
 	if is_open:
+		
 		is_open = false
+		print("NA")
 		animation_player.play_backwards("menu_appear")
+	else:
+		is_open = true
+		print("YA")
+		animation_player.play("menu_appear")
 
 func set_visibility(tree : bool, tech : bool, settings : bool):
 	tree_menu.visible = tree

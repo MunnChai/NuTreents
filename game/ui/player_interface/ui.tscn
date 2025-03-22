@@ -15,8 +15,17 @@ shader_parameter/outer_radius = 1.34
 
 [node name="UI" type="CanvasLayer"]
 
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_anucx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_anucx")
+
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
-offset_bottom = 200.0
 
 [node name="ResourcesUI" parent="." instance=ExtResource("2_dfe3o")]
 anchors_preset = 0
@@ -32,20 +41,10 @@ size_flags_horizontal = 0
 size_flags_vertical = 4
 
 [node name="Clock" parent="." instance=ExtResource("3_wl5ax")]
-position = Vector2(1112, 40)
+position = Vector2(1086, 66)
 
 [node name="FastForwardBtn" parent="." instance=ExtResource("4_hxq26")]
-offset_left = 980.0
-offset_top = 24.0
-offset_right = 1013.0
-offset_bottom = 56.0
-
-[node name="Vignette" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_anucx")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("5_anucx")
+offset_left = 1075.0
+offset_top = 145.0
+offset_right = 1108.0
+offset_bottom = 177.0
