@@ -61,21 +61,15 @@ var is_dehydrated = false
 
 ## Handle animating shader parameters relating to damage
 func _update_shader(delta: float) -> void:
+	if died: ## Death handles its own stuff.
+		return
+	
 	if flash_time > 0:
 		flash_amount = 1.0
 		flash_time -= delta
 		flash_time = max(flash_time, 0.0)
 	else:
 		flash_amount = 0.0
-		if died: # Flashes just before die... so that means after flash we die!
-			if is_large and !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
-				var death_vfx = GREEN_TREE_DIE.instantiate()
-				get_parent().add_child(death_vfx)
-				death_vfx.global_position = global_position
-				## TODO: Do we leave stump?
-			
-			#queue_free()
-			print("Died")
 	
 	if (!sprite):
 		return
@@ -140,7 +134,17 @@ const GREEN_TREE_DIE = preload("res://trees/scenes/death/GreenTreeDie.tscn")
 func die():
 	died = true
 	#TreeManager.remove_tree(pos)
-	flash_time = FLASH_DURATION
+	flash_amount = 1.0
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
+	
+	await get_tree().create_timer(FLASH_DURATION).timeout
+	
+	if is_large and !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
+		var death_vfx = GREEN_TREE_DIE.instantiate()
+		get_parent().add_child(death_vfx)
+		death_vfx.global_position = global_position
+		#queue_free()
+	
 	queue_free()
 	
 	#animation_player.play("die")

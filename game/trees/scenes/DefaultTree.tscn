@@ -17,7 +17,7 @@ shader_parameter/pos = Vector2(0, 0)
 shader_parameter/dehydrated = false
 shader_parameter/uv_y_offset = 0.1
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
-shader_parameter/tint_color = Color(0.879993, 0.427405, 0.299759, 1)
+shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
 shader_parameter/fps = 0.0
 shader_parameter/frame_count = 0
 
