@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 Constants="*res://constants.gd"
 TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.gd"
+SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
 
 [global_group]
 
