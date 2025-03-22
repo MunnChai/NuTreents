@@ -106,9 +106,8 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 		return 3 
 	if enforce_reachable and not is_reachable(p):
 		return 4
-	
+	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
-	
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
 	var forest: Forest = forests[f_id]
@@ -121,13 +120,17 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	structure_map.add_structure(p, tree)
 	
 	# for testing split forest stuff
-	check_for_split(p)
+	#check_for_split(p)
+	
+	#print_forest_map()
 	return 0
 
 ## remove tree at given p
 ## returns false if no tree exists at p; true otherwise
 func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
+		return false
+	if (p == Global.ORIGIN): ## Game's effectively over. We want to do something *bombastic*
 		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
@@ -137,9 +140,9 @@ func remove_tree(p: Vector2i) -> bool:
 	forest_map.erase(p)
 	
 	forest_check(p, f_id)
-	
 	structure_map.remove_structure(p)
-	tree.die()
+	
+	#print("Forests: ", forests)
 	return true
 
 func get_twee(p: Vector2i) -> Twee:
@@ -193,7 +196,8 @@ func find_forest(p: Vector2i) -> int:
 	for dir in directions:
 		var neighbour = p + dir
 		if (forest_map.has(neighbour)):
-			adjacent_forests.append(forest_map[neighbour])
+			if (!adjacent_forests.has(forest_map[neighbour])):
+				adjacent_forests.append(forest_map[neighbour])
 	
 	if (adjacent_forests.is_empty()):
 		# no forests near p, then p is the new forest
@@ -202,8 +206,41 @@ func find_forest(p: Vector2i) -> int:
 		forests[forest_count] = Forest.new(forest_count)
 		return forest_count
 	
+	if (adjacent_forests.size() == 1):
+		return adjacent_forests[0]
+	
 	# TODO: if there are forest(s) near p, merge them together into new forest and assign p to that forest
-	return merge_forests(adjacent_forests)[0]
+	return merge_forests_brute_force(adjacent_forests)
+
+# Returns the forest id
+func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
+	var forest_id: = forests_to_merge[0]
+	
+	# Create a new forest
+	var new_forest = Forest.new(forest_id)
+	
+	# Remove old forests
+	for id: int in forests_to_merge:
+		forests.erase(id)
+	
+	# For every tree, if it is one of the adjacent trees' forests, add them to the new forest
+	for pos: Vector2i in forest_map:
+		var tree_id: int = forest_map[pos]
+		
+		if forests_to_merge.has(tree_id):
+			var tree: Twee = tree_map[pos]
+			
+			# Add to forest
+			new_forest.trees[pos] = tree
+			
+			# Add to forest map
+			forest_map[pos] = forest_id
+	
+	# Add new forest to trees
+	forests[forest_id] = new_forest
+	
+	return forest_id
+
 
 ## use divide-and-conquer to merge a set of Forests
 ## only used pseudocode before let's see if actually works
@@ -213,6 +250,7 @@ func merge_forests(list: Array[int]) -> Array[int]:
 		return list
 	var mid: int = list.size() / 2
 	# both left and right should be [i]
+	
 	var left = merge_forests(list.slice(0, mid))
 	var right = merge_forests(list.slice(mid, list.size()))
 	if (left[0] == right[0]):
@@ -230,6 +268,7 @@ func merge_forests(list: Array[int]) -> Array[int]:
 func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
 	if (small[0] == big[0]):
 		return small
+	
 	var sf: Forest = forests[small[0]]
 	var bf: Forest = forests[big[0]]
 	
@@ -255,6 +294,9 @@ func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
 func tree_die(p: Vector2i) -> bool:
 	return remove_tree(p)
 
+func print_forest_map():
+	for key in forest_map:
+		print(key, ", ", forest_map[key])
 
 ## called by Tree when they don't have sufficient water to survive
 ## returns false if total_water < maint; otherwise deduct maint from storage
@@ -367,13 +409,14 @@ func same_group(visited: Array[Vector2i], group: Array[Vector2i]) -> bool:
 ## i feel like it should work
 func split_forests(forest_groups: Array, old_id: int):
 	# need to:
-	var forest_to_add = forest_groups.size() - 1
+	var forest_to_add = forest_groups.size()
 	for i in range(forest_to_add):
 		new_forest_tada(forest_groups[i], forest_count + i + 1, old_id)
 	# update forest_count
 	forest_count += forest_to_add
-	for f in forests.keys():
-		forests[f].print_forest()
+	#for f in forests.keys():
+		#forests[f].print_forest()
+	#print_forest_map()
 	return
 
 ## new a forest with given id

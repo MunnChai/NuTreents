@@ -191,6 +191,7 @@ grow_vertical = 2
 text = "Settings"
 
 [node name="TreeMenu" parent="." instance=ExtResource("1_bb7ga")]
+script = null
 
 [node name="TechMenu" parent="." instance=ExtResource("2_v5h4j")]
 
