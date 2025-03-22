@@ -36,6 +36,7 @@ var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
 var tree_map: Dictionary[Vector2i, Twee]
 var res: Vector3 # Vec3(N, water, sun)
+var gain: Vector3
 var forest_count: int
 
 # currently selected tree from ui
@@ -85,13 +86,17 @@ func _button_pressed():
 	
 ## to be called each round, update everything?
 func update(delta: float):
+	gain = Vector3()
 	# iterate all trees, get their generated res and remove dead trees
 	for key in forests.keys():
 		var f: Forest = forests[key]
-		res += f.update(delta) * delta
-		res.y = max(0, res.y)
+		gain += f.update(delta)
+		
 		if (f.empty):
 			remove_forest(key)  
+	
+	res += gain * delta
+	res.y = max(0, res.y)
 
 
 ## add tree with given type at p
