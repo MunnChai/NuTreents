@@ -85,7 +85,7 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> void:
 
 
 func kill_all_enemies():
-	print("Hello")
+	#print("Hello")
 	for enemy: Enemy in current_enemies:
 		enemy.die()
 		current_enemies.erase(enemy)
