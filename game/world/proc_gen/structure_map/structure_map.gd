@@ -27,8 +27,6 @@ func remove_structure(map_coords: Vector2i) -> bool:
 	
 	var object: Node2D = tile_scene_map[map_coords]
 	
-	remove_child(object)
-	
 	tile_scene_map.erase(map_coords)
 	return true
 

@@ -17,10 +17,14 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Constants="*res://constants.gd"
+Global="*res://global.gd"
 TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.gd"
 SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [global_group]
 
@@ -28,6 +32,7 @@ fog_map=""
 terrain_map=""
 structure_map=""
 enemy_map=""
+clock=""
 
 [input]
 

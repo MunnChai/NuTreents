@@ -1,7 +1,10 @@
-extends Twee
 class_name TechTree
+extends Twee
+
 
 # i have no idea how tech tree works
 
-func _init() -> void:
+func _ready():
+	super._ready()
+	
 	id = "tech_tree"

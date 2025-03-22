@@ -7,25 +7,43 @@ class_name tree_manager
 
 const MOTHER_TREE = preload("res://trees/scenes/MotherTree.tscn")
 const DEFAULT_TREE = preload("res://trees/scenes/DefaultTree.tscn")
+const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
+const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
+const TECH_TREE = preload("res://trees/scenes/TechTree.tscn")
+
+enum TreeType {
+	MOTHER_TREE = 0,
+	DEFAULT_TREE = MOTHER_TREE + 1,
+	GUN_TREE = DEFAULT_TREE + 1,
+	WATER_TREE = GUN_TREE + 1,
+	TECH_TREE = WATER_TREE + 1,
+}
 
 const TREE_DICT: Dictionary[int, PackedScene] = {
-	0: MOTHER_TREE,
-	1: DEFAULT_TREE,
+	TreeType.MOTHER_TREE: MOTHER_TREE,
+	TreeType.DEFAULT_TREE: DEFAULT_TREE,
+	TreeType.GUN_TREE: GUN_TREE,
+	TreeType.WATER_TREE: WATER_TREE,
+	TreeType.TECH_TREE: TECH_TREE,
 }
 
 
 # stores all trees
 var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
+var tree_map: Dictionary[Vector2i, Twee]
 var res: Vector3 # Vec3(N, water, sun)
 var forest_count: int
 
+# currently selected tree from ui
+var selected_tree_species: int = 1
+
 func _ready():
-	res = Vector3(10, 0, 0)
+	res = Vector3(100, 0, 0)
 	forest_count = 0
 	#test()
 	
-	call_deferred("add_tree", 0, Constants.MAP_SIZE / 2, false)
+	call_deferred("add_tree", 0, Global.MAP_SIZE / 2, false)
 
 func _process(delta):
 	update(delta)
@@ -35,7 +53,7 @@ func _input(_event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		add_tree(1, map_coords)
+		add_tree(selected_tree_species, map_coords)
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
@@ -52,12 +70,6 @@ func test():
 	add_child(button)
 	print(remove_tree(Vector2i(1,0)))
 	print(add_tree(1, Vector2i(1,0)))
-	res = Vector3(10, 4, 0)
-	print(add_tree(1, Vector2i(1,0)))
-	print(upgrade_tree(Vector2i(1,1)))
-	print(upgrade_tree(Vector2i(1,0)))
-	res.x += 20
-	print(upgrade_tree(Vector2i(1,0)))
 	forests[1].print_forest()
 	print(forest_map)
 	
@@ -73,7 +85,7 @@ func update(delta: float):
 	# iterate all trees, get their generated res and remove dead trees
 	for key in forests.keys():
 		var f: Forest = forests[key]
-		res += f.update() * delta
+		res += f.update(delta) * delta
 		if (f.empty):
 			remove_forest(key)  
 
@@ -82,7 +94,8 @@ func update(delta: float):
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
 func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
-	var tree: Twee = TREE_DICT[type].instantiate()
+	var tree: Twee
+	tree = TREE_DICT[type].instantiate()
 	
 	if (forest_map.has(p)):
 		return 1
@@ -93,13 +106,13 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 		return 3 
 	if enforce_reachable and not is_reachable(p):
 		return 4
-	
+	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
-	
 	var f_id: int = find_forest(p)
 	forest_map[p] = f_id
 	var forest: Forest = forests[f_id]
 	forest.add_tree(p, tree)
+	tree_map[p] = tree
 	
 	fog_map.remove_fog_around(p)
 	
@@ -109,6 +122,10 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
 	
+	# for testing split forest stuff
+	#check_for_split(p)
+	
+	#print_forest_map()
 	return 0
 
 ## remove tree at given p
@@ -116,19 +133,35 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
 		return false
+	if (p == Global.ORIGIN): ## Game's effectively over. We want to do something *bombastic*
+		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
+	var tree: Twee = f.trees[p]
 	f.remove_tree(p)
 	# assume remove_tree will free object correctly
 	forest_map.erase(p)
 	
+	forest_check(p, f_id)
 	structure_map.remove_structure(p)
+	
+	#print("Forests: ", forests)
 	return true
+
+func get_twee(p: Vector2i) -> Twee:
+	var tree_map = get_tree_map()
+	if (!tree_map.has(p)):
+		return null
+	
+	return tree_map[p]
+
 
 func remove_forest(id: int):
 	if (!forests.has(id)):
 		return
 	var f: Forest = forests[id]
+	for t in f.trees.keys():
+		tree_map.erase(t)
 	f.free()
 	forests.erase(id)
 
@@ -154,9 +187,10 @@ func upgrade_tree(p: Vector2i) -> int:
 		return 0
 	else: return 3
 
+
 ## finds the corresponding forest id for given p
 ## combine forests if neccessary
-func find_forest(p: Vector2i):
+func find_forest(p: Vector2i) -> int:
 	if (forest_map.has(p)):
 		return forest_map[p]
 	# TODO: find forest adjacent to p
@@ -165,7 +199,8 @@ func find_forest(p: Vector2i):
 	for dir in directions:
 		var neighbour = p + dir
 		if (forest_map.has(neighbour)):
-			adjacent_forests.append(forest_map[neighbour])
+			if (!adjacent_forests.has(forest_map[neighbour])):
+				adjacent_forests.append(forest_map[neighbour])
 	
 	if (adjacent_forests.is_empty()):
 		# no forests near p, then p is the new forest
@@ -174,19 +209,53 @@ func find_forest(p: Vector2i):
 		forests[forest_count] = Forest.new(forest_count)
 		return forest_count
 	
+	if (adjacent_forests.size() == 1):
+		return adjacent_forests[0]
+	
 	# TODO: if there are forest(s) near p, merge them together into new forest and assign p to that forest
-	return merge_forests(adjacent_forests)[0]
+	return merge_forests_brute_force(adjacent_forests)
+
+# Returns the forest id
+func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
+	var forest_id: = forests_to_merge[0]
+	
+	# Create a new forest
+	var new_forest = Forest.new(forest_id)
+	
+	# Remove old forests
+	for id: int in forests_to_merge:
+		forests.erase(id)
+	
+	# For every tree, if it is one of the adjacent trees' forests, add them to the new forest
+	for pos: Vector2i in forest_map:
+		var tree_id: int = forest_map[pos]
+		
+		if forests_to_merge.has(tree_id):
+			var tree: Twee = tree_map[pos]
+			
+			# Add to forest
+			new_forest.trees[pos] = tree
+			
+			# Add to forest map
+			forest_map[pos] = forest_id
+	
+	# Add new forest to trees
+	forests[forest_id] = new_forest
+	
+	return forest_id
+
 
 ## use divide-and-conquer to merge a set of Forests
 ## only used pseudocode before let's see if actually works
-func merge_forests(forests: Array[int]) -> Array[int]:
-	if (forests.size() == 1):
+func merge_forests(list: Array[int]) -> Array[int]:
+	if (list.size() == 1):
 		# base case: merging is done
-		return forests
-	var mid: int = forests.size() / 2
+		return list
+	var mid: int = list.size() / 2
 	# both left and right should be [i]
-	var left = merge_forests(forests.slice(0, mid))
-	var right = merge_forests(forests.slice(mid, forests.size()))
+	
+	var left = merge_forests(list.slice(0, mid))
+	var right = merge_forests(list.slice(mid, list.size()))
 	if (left[0] == right[0]):
 		return left
 	
@@ -202,6 +271,7 @@ func merge_forests(forests: Array[int]) -> Array[int]:
 func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
 	if (small[0] == big[0]):
 		return small
+	
 	var sf: Forest = forests[small[0]]
 	var bf: Forest = forests[big[0]]
 	
@@ -227,6 +297,9 @@ func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
 func tree_die(p: Vector2i) -> bool:
 	return remove_tree(p)
 
+func print_forest_map():
+	for key in forest_map:
+		print(key, ", ", forest_map[key])
 
 ## called by Tree when they don't have sufficient water to survive
 ## returns false if total_water < maint; otherwise deduct maint from storage
@@ -273,6 +346,11 @@ func is_reachable(pos: Vector2i):
 func is_occupied(pos: Vector2i):
 	return get_tree_map().has(pos)
 
+func is_large(pos: Vector2i):
+	if !is_occupied(pos):
+		return false
+	return (get_tree_map().get(pos) as Twee).is_large
+
 func is_stump(pos: Vector2i):
 	var tree_map = get_tree_map()
 	if not tree_map.has(pos):
@@ -292,3 +370,102 @@ func get_reachable_tree_placement_positions() -> Array[Vector2i]:
 				allowed_positions.append(pos + offset)
 	
 	return allowed_positions
+
+## given a pos, check if there's a need to split the forest, split if neccessary
+## id is the forest_id of the original tree
+func forest_check(p: Vector2i, id: int):
+	print("forest_check called")
+	# check for split
+	var forest_groups: Array = check_for_split(p)
+	# split if needed
+	if (forest_groups.size() > 1):
+		split_forests(forest_groups, id)
+
+## check_for_split returns an array of Array[Vector2i] 
+## which each array is a connected tree group
+## finished (maybe we will see)
+func check_for_split(p: Vector2i) -> Array:
+	# find neighbouring trees
+	var neighbours: Array[Vector2i] = find_neighbours(p)
+	if (neighbours.is_empty()):
+		# no adjacent trees yipee
+		return []
+	
+	var groups: Array = []
+	var visited: Array[Vector2i] = []
+	for neigh in neighbours:
+		var temp = find_group(neigh)
+		if (!same_group(visited, temp)):
+			groups.append(temp)
+		visited.append(neigh)
+	# groups should have distinct elements (haha hopefully) (it works now i think)
+	return groups
+	
+## helper for check_for_split
+func same_group(visited: Array[Vector2i], group: Array[Vector2i]) -> bool:
+	for v in visited:
+		if (group.has(v)):
+			return true
+	return false
+
+## given an array of Array[Vector2i], assign forest to each group balabala
+## i feel like it should work
+func split_forests(forest_groups: Array, old_id: int):
+	# need to:
+	var forest_to_add = forest_groups.size()
+	for i in range(forest_to_add):
+		new_forest_tada(forest_groups[i], forest_count + i + 1, old_id)
+	# update forest_count
+	forest_count += forest_to_add
+	#for f in forests.keys():
+		#forests[f].print_forest()
+	#print_forest_map()
+	return
+
+## new a forest with given id
+func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
+	# remove tree from old forest
+	var old_f: Forest = forests[old_id]
+	
+	# update forests
+	var forest: Forest = Forest.new(id)
+	forests[id] = forest
+	for pos in trees:
+		# remove these from old forest
+		old_f.trees.erase(pos)
+	
+		## update some info
+		#if (pos == Global.ORIGIN):
+			#continue
+		var tree = tree_map[pos]
+		tree.forest = id
+		forest_map[pos] = id
+		
+		# add this to new forest
+		forest.trees[pos] = tree
+	return forest
+
+## returns a connected tree set
+## finished i think (90% sure)
+func find_group(p: Vector2i) -> Array[Vector2i]:
+	var to_visit: Array[Vector2i] = [p]
+	to_visit.append_array(find_neighbours(p))
+	var group: Array[Vector2i] = []
+	while (!to_visit.is_empty()):
+		# while there are still trees connected
+		var t: Vector2i = to_visit.pop_front()
+		if (!group.has(t)):
+			# if t is not added to group yet
+			group.append(t)
+			to_visit.append_array(find_neighbours(t))
+	return group
+	
+## returns an array containing all adjacent trees of given p
+func find_neighbours(p: Vector2i) -> Array[Vector2i]:
+	var tree_groups: Array[Vector2i]
+	var directions = [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)]
+	for dir in directions:
+		var neighbour = p + dir
+		if (forest_map.has(neighbour)):
+			tree_groups.append(neighbour)
+	return tree_groups

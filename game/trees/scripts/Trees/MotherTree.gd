@@ -22,11 +22,12 @@ func initialize(p: Vector2i, f: int):
 func die():
 	died = true
 	
+	#TreeManager.remove_tree(pos)
 	# TODO: Game Over
 
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
-func update() -> Vector3:
+func update(delta: float) -> Vector3:
 	var prev = storage # record old storage number
 	
 	# add new water to storage, storage equals at most max_water
@@ -39,12 +40,10 @@ func update() -> Vector3:
 		var f: Forest = TreeManager.get_forest(forest)
 		if (!f.get_water(maint - storage)):
 			# if game doesn't have enough water either
-			hp -= 2
+			hp -= 2 * delta
 		else:
 			# game has enough water
 			storage = 0
-	if (hp <= 0):
-		die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
 

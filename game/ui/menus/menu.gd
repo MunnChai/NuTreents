@@ -3,7 +3,11 @@ extends Control
 @export var tree_menu: Control
 @export var tech_menu: Control
 @export var settings_menu: Control
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var trees: TextureButton = $MenuButtons/Trees
+@onready var technology: TextureButton = $MenuButtons/Technology
+@onready var settings: TextureButton = $MenuButtons/Settings
 
 var is_open: bool = false
 
@@ -24,8 +28,9 @@ func _on_settings_pressed() -> void:
 	set_visibility(false, false, true)
 
 func _on_close_menu_pressed() -> void:
-	is_open = false
-	animation_player.play_backwards("menu_appear")
+	if is_open:
+		is_open = false
+		animation_player.play_backwards("menu_appear")
 
 func set_visibility(tree : bool, tech : bool, settings : bool):
 	tree_menu.visible = tree
