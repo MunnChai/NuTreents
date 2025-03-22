@@ -108,6 +108,7 @@ func get_water(maint: int) -> bool:
 
 
 func print_forest():
-	print(id)
+	print("Forest ID:", id)
 	for key in trees.keys():
-		print(key)
+		print("Tree: ", key)
+	print()
