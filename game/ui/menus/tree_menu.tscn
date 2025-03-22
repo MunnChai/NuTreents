@@ -1,19 +1,106 @@
-[gd_scene format=3 uid="uid://dwyhak12pdjyv"]
+[gd_scene load_steps=5 format=3 uid="uid://dwyhak12pdjyv"]
+
+[ext_resource type="Script" uid="uid://e4qihqohkef3" path="res://ui/menus/tree_menu.gd" id="1_o1upc"]
+[ext_resource type="Texture2D" uid="uid://dy08sebkwreai" path="res://ui/menus/menu_bg.png" id="2_dodub"]
+[ext_resource type="PackedScene" uid="uid://b8fg45slly116" path="res://ui/menus/tree_card.tscn" id="3_ubm70"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dodub"]
+atlas = ExtResource("2_dodub")
+region = Rect2(0, 208, 640, 152)
 
 [node name="TreeMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_o1upc")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 200.0
-color = Color(0.169311, 0.348636, 0.222022, 1)
+offset_bottom = 152.0
+texture = SubResource("AtlasTexture_dodub")
 
-[node name="Label" type="Label" parent="."]
+[node name="TreeCards" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 447.0
-offset_top = 93.0
-offset_right = 487.0
-offset_bottom = 116.0
-text = "trees"
+offset_left = 24.0
+offset_top = 16.0
+offset_right = 720.0
+offset_bottom = 140.0
+theme_override_constants/separation = 10
+
+[node name="DefaultTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "1"
+sun_plus_text = "1"
+nutrients_plus_text = "1"
+water_min_text = "1"
+sun_min_text = "1"
+nutrients_min_text = "1"
+species_text = "Default"
+
+[node name="ExplorerTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "2"
+sun_plus_text = "2"
+nutrients_plus_text = "2"
+water_min_text = "2"
+sun_min_text = "2"
+nutrients_min_text = "2"
+species_text = "Explorer"
+
+[node name="ShadyTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "3"
+sun_plus_text = "3"
+nutrients_plus_text = "3"
+water_min_text = "3"
+sun_min_text = "3"
+nutrients_min_text = "3"
+species_text = "Shady"
+
+[node name="TallTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "4"
+sun_plus_text = "4"
+nutrients_plus_text = "4"
+water_min_text = "4"
+sun_min_text = "4"
+nutrients_min_text = "4"
+species_text = "Tall"
+
+[node name="WaterTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "5"
+sun_plus_text = "5"
+nutrients_plus_text = "5"
+water_min_text = "5"
+sun_min_text = "5"
+nutrients_min_text = "5"
+species_text = "Water"
+
+[node name="ProtectorTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "6"
+sun_plus_text = "6"
+nutrients_plus_text = "6"
+water_min_text = "6"
+sun_min_text = "6"
+nutrients_min_text = "6"
+species_text = "Protector"
+
+[node name="GunTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
+layout_mode = 2
+water_plus_text = "7"
+sun_plus_text = "7"
+nutrients_plus_text = "7"
+water_min_text = "7"
+sun_min_text = "7"
+nutrients_min_text = "7"
+species_text = "Gun"
+
+[connection signal="pressed" from="TreeCards/DefaultTreeCard" to="." method="_on_default_tree_card_pressed"]
+[connection signal="pressed" from="TreeCards/ExplorerTreeCard" to="." method="_on_explorer_tree_card_pressed"]
+[connection signal="pressed" from="TreeCards/ShadyTreeCard" to="." method="_on_shady_tree_card_pressed"]
+[connection signal="pressed" from="TreeCards/TallTreeCard" to="." method="_on_tall_tree_card_pressed"]
+[connection signal="pressed" from="TreeCards/WaterTreeCard" to="." method="_on_water_tree_card_pressed"]
+[connection signal="pressed" from="TreeCards/ProtectorTreeCard" to="." method="_on_protector_tree_card_pressed"]
+[connection signal="pressed" from="TreeCards/GunTreeCard" to="." method="_on_gun_tree_card_pressed"]
