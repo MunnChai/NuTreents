@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://c174cdf1c7507"
+path="res://.godot/imported/Corvid Conspirator (White).fnt-97e61db4f093dbe2522d0b64156c2606.fontdata"
+
+[deps]
+
+source_file="res://ui/fonts/Angel Code Format (v1.2)/Corvid Conspirator (White)/Corvid Conspirator (White).fnt"
+dest_files=["res://.godot/imported/Corvid Conspirator (White).fnt-97e61db4f093dbe2522d0b64156c2606.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

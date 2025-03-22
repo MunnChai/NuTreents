@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://d1o6lv8dykj46"
+path="res://.godot/imported/Sol Schori (Black).fnt-fbbbf0b76e26208143e6849015f0037f.fontdata"
+
+[deps]
+
+source_file="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (Black)/Sol Schori (Black).fnt"
+dest_files=["res://.godot/imported/Sol Schori (Black).fnt-fbbbf0b76e26208143e6849015f0037f.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

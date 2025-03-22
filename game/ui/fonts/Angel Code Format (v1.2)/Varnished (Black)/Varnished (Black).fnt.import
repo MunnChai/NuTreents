@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://1tomajowj1gl"
+path="res://.godot/imported/Varnished (Black).fnt-1c45e30f055b6d3773625de24ee06740.fontdata"
+
+[deps]
+
+source_file="res://ui/fonts/Angel Code Format (v1.2)/Varnished (Black)/Varnished (Black).fnt"
+dest_files=["res://.godot/imported/Varnished (Black).fnt-1c45e30f055b6d3773625de24ee06740.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2
