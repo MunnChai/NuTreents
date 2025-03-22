@@ -1,10 +1,10 @@
 [gd_scene load_steps=19 format=3 uid="uid://dpveqnitfylgn"]
 
-[ext_resource type="PackedScene" uid="uid://dwyhak12pdjyv" path="res://ui/menus/tree_menu.tscn" id="1_bb7ga"]
+[ext_resource type="PackedScene" uid="uid://dwyhak12pdjyv" path="res://ui/menus/tree_menu/tree_menu.tscn" id="1_bb7ga"]
 [ext_resource type="Script" uid="uid://dhqoiddma2o7m" path="res://ui/menus/menu.gd" id="1_bq8en"]
 [ext_resource type="Texture2D" uid="uid://d3vjgwi8co80j" path="res://ui/menus/menu_button_unselected_2x.png" id="2_6r7ym"]
 [ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/menus/tech_menu.tscn" id="2_v5h4j"]
-[ext_resource type="PackedScene" uid="uid://cnkikqyrui6rg" path="res://ui/menus/settings.tscn" id="3_73fpc"]
+[ext_resource type="PackedScene" uid="uid://cnkikqyrui6rg" path="res://ui/menus/settings_menu/settings.tscn" id="3_73fpc"]
 [ext_resource type="Texture2D" uid="uid://cp6u4ys1uoqt1" path="res://ui/menus/menu_button_selected_2x.png" id="3_maj2m"]
 [ext_resource type="Texture2D" uid="uid://d1rve2ywyln4c" path="res://ui/menus/menu_exit_button_2x.png" id="7_maj2m"]
 

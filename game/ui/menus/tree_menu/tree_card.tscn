@@ -1,0 +1,159 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8fg45slly116"]
+
+[ext_resource type="Texture2D" uid="uid://cwdw0dy41qgvt" path="res://ui/menus/tree_menu/tree_card.png" id="1_wbhwn"]
+[ext_resource type="Script" uid="uid://dxwbpi670nhxn" path="res://ui/menus/tree_menu/tree_card.gd" id="2_hkimi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hkimi"]
+atlas = ExtResource("1_wbhwn")
+region = Rect2(48, 32, 96, 124)
+
+[node name="TreeCard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 96.0
+offset_bottom = 124.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_hkimi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_hkimi")
+
+[node name="WaterPlus" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.621
+anchor_right = 0.437
+anchor_bottom = 0.718
+offset_left = 0.0480003
+offset_top = -0.0039978
+offset_right = 0.0480003
+offset_bottom = -0.0319977
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 8
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SunPlus" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.448
+anchor_top = 0.621
+anchor_right = 0.698
+anchor_bottom = 0.718
+offset_left = -0.00800323
+offset_top = -0.00400543
+offset_right = -0.00800323
+offset_bottom = -0.0320053
+theme_override_font_sizes/font_size = 8
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="NutrientsPlus" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.708
+anchor_top = 0.621
+anchor_right = 0.958
+anchor_bottom = 0.718
+offset_left = 0.0319977
+offset_top = -0.00400543
+offset_right = 0.0319977
+offset_bottom = -0.0320053
+theme_override_font_sizes/font_size = 8
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="WaterMin" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.726
+anchor_right = 0.437
+anchor_bottom = 0.823
+offset_left = 0.0480003
+offset_top = -0.0240021
+offset_right = 0.0480003
+offset_bottom = -0.052002
+theme_override_font_sizes/font_size = 8
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="SunMin" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.448
+anchor_top = 0.726
+anchor_right = 0.698
+anchor_bottom = 0.823
+offset_left = -0.00800323
+offset_top = -0.0240021
+offset_right = -0.00800323
+offset_bottom = -0.052002
+theme_override_font_sizes/font_size = 8
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="NutrientsMin" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.708
+anchor_top = 0.726
+anchor_right = 0.958
+anchor_bottom = 0.823
+offset_left = 0.0319977
+offset_top = -0.0240021
+offset_right = 0.0319977
+offset_bottom = -0.052002
+theme_override_font_sizes/font_size = 8
+text = "5"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Species" type="Label" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.042
+anchor_top = 0.863
+anchor_right = 0.958
+anchor_bottom = 0.96
+offset_left = -0.0320005
+offset_top = -0.012001
+offset_right = 0.0319977
+offset_bottom = -0.0400085
+theme_override_font_sizes/font_size = 8
+text = "species"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[connection signal="mouse_entered" from="TextureRect/Button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="TextureRect/Button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="TextureRect/Button" to="." method="_on_button_pressed"]
