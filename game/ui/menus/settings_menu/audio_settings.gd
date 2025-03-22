@@ -41,9 +41,9 @@ func _on_sfx_slider_value_changed(value: float) -> void:
 func _update_slider_label(value: float, slider: HSlider) -> void:
 	slider_label.text = str(int(value * 100)) + "%"
 	
-	var offset: float = 20 # based off visual testing
-	var min: float = slider.global_position.x - slider_label.size.x / 2
-	var max: float = slider.global_position.x + slider.size.x - slider_label.size.x / 2
+	var offset: float = slider_label.size.x / 2
+	var min: float = slider.global_position.x - offset
+	var max: float = slider.global_position.x + slider.size.x - offset
 	slider_label.global_position.x = clamp(get_global_mouse_position().x - offset, min, max)
 	slider_label.global_position.y = slider.global_position.y - slider_label.size.y
 	slider_label.visible = true
