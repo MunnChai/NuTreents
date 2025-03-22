@@ -40,7 +40,6 @@ func _process(delta: float) -> void:
 	
 	#print(animation_player.current_animation)
 	
-	_update_shader(delta)
 	if life_time_seconds > TIME_TO_GROW:
 		if not is_large:
 			upgrade_tree()
@@ -72,13 +71,17 @@ func _update_shader(delta: float) -> void:
 				## TODO: Do we leave stump?
 			
 			queue_free()
+			print("Died")
+	
+	if (!sprite):
+		return
 	shake_amount = move_toward(shake_amount, 0.0, delta * SHAKE_DECAY_RATE)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("pos", pos)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("dehydrated", is_dehydrated)
-	print(is_dehydrated)
+	#print(is_dehydrated)
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
 	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
@@ -145,6 +148,8 @@ func die():
 const WATER_DAMAGE_DELAY = 3.0
 var water_damage_time := 0.0
 
+const DEHYDRATION_DAMAGE = 2
+
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
 func update(delta: float) -> Vector3:
@@ -154,27 +159,28 @@ func update(delta: float) -> Vector3:
 	storage = min(storage + gain.y, max_water)
 	
 	# take maint from storage
-	if (storage >= maint):
-		storage -= maint
-		is_dehydrated = false
-		water_damage_time = 0.0
-	else:
-		var f: Forest = TreeManager.get_forest(forest)
-		if (!f.get_water(maint - storage)):
-			# if game doesn't have enough water either
-			is_dehydrated = true
-			while (water_damage_time > WATER_DAMAGE_DELAY):
-				take_damage(2)
-				water_damage_time -= WATER_DAMAGE_DELAY
-			water_damage_time += delta
-		else:
-			# game has enough water
-			is_dehydrated = false
-			water_damage_time = 0.0
-			storage = 0
-	if (hp <= 0):
-		die()
+	#if (storage >= maint):
+		#storage -= maint
+		#is_dehydrated = false
+		#water_damage_time = 0.0
+	#else:
+		#var f: Forest = TreeManager.get_forest(forest)
+		#if (!f.get_water(maint - storage)):
+			## if game doesn't have enough water either
+			#is_dehydrated = true
+			#while (water_damage_time > WATER_DAMAGE_DELAY):
+				#take_damage(2)
+				#water_damage_time -= WATER_DAMAGE_DELAY
+			#water_damage_time += delta
+		#else:
+			## game has enough water
+			#is_dehydrated = false
+			#water_damage_time = 0.0
+			#storage = 0
+	#if (hp <= 0):
+		#die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
+	#_update_shader(delta)
 	return g
 
 func update_maint():

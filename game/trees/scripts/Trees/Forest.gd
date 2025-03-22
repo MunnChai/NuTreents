@@ -19,7 +19,24 @@ func update(delta: float) -> Vector3:
 		if (!trees.has(key)):
 			continue
 		var tree: Twee = trees[key]
-		water += tree.storage
+		water += tree.gain.y
+	
+	for key in trees.keys():
+		if (!trees.has(key)):
+			continue
+		var tree: Twee = trees[key]
+		water -= tree.maint
+		
+		if (water < 0):
+			tree.is_dehydrated = true
+			while (tree.water_damage_time > tree.WATER_DAMAGE_DELAY):
+				tree.take_damage(tree.DEHYDRATION_DAMAGE)
+				tree.water_damage_time -= tree.WATER_DAMAGE_DELAY
+			tree.water_damage_time += delta
+		else:
+			tree.is_dehydrated = false
+		
+		tree._update_shader(delta)
 	
 	# iterate all trees, get their generated res and remove dead trees
 	var res = Vector3(0,0,0)
@@ -30,7 +47,9 @@ func update(delta: float) -> Vector3:
 		res += tree.update(delta)
 		if (tree.died):
 			remove_tree(key)
-			pass
+	
+	# Ignore water from update, just set what we calculated earlier
+	res.y = max(0, water)
 	
 	return res
 
