@@ -17,6 +17,7 @@ extends Control
 @onready var sun_min: Label = $TextureRect/SunMin
 @onready var nutrients_min: Label = $TextureRect/NutrientsMin
 @onready var species: Label = $TextureRect/Species
+@onready var cost = $TextureRect/Cost
 
 func _ready() -> void:
 	var net_water = tree_stat.gain.y - tree_stat.maint
@@ -30,6 +31,7 @@ func _ready() -> void:
 	sun_min.text = str(0)
 	nutrients_min.text = str(0)
 	species.text = tree_stat.name
+	cost.text = "Cost: " + str(tree_stat.cost_to_purchase)
 
 func _on_button_pressed() -> void:
 	TreeManager.selected_tree_species = type 

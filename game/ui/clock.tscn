@@ -58,6 +58,7 @@ _data = {
 }
 
 [node name="Clock" type="Sprite2D" groups=["clock"]]
+scale = Vector2(2.5, 2.5)
 texture = ExtResource("1_f4i75")
 hframes = 14
 script = ExtResource("2_wy0fy")

@@ -4,9 +4,11 @@
 
 [resource]
 script = ExtResource("1_wnjji")
+name = ""
+description = ""
 hp = 50
 max_water = 10
-gain = Vector3(10, 10, 10)
+gain = Vector3(2, 6, 0)
 maint = 0
 time_to_grow = 0.0
 cost_to_purchase = 0

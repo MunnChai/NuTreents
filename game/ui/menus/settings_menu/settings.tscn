@@ -25,7 +25,7 @@ anchors_preset = 0
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 152.0
+offset_bottom = 300.0
 texture = SubResource("AtlasTexture_v0rmt")
 
 [node name="SliderLabel" type="Label" parent="TextureRect"]
@@ -46,6 +46,7 @@ offset_left = 64.0
 offset_top = 24.0
 offset_right = 464.0
 offset_bottom = 124.0
+theme_override_constants/separation = 40
 script = ExtResource("2_8xtpb")
 slider_label = NodePath("../SliderLabel")
 
