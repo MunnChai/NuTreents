@@ -16,7 +16,7 @@ var _curr_day: int = 1
 
 func _ready() -> void:
 	animation_player.play("RESET")
-	# Engine.time_scale = 20
+	#Engine.time_scale = 20
 
 func _process(delta: float) -> void:
 	_process_time(delta)
