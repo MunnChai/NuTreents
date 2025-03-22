@@ -42,6 +42,9 @@ func attack_enemy(enemy: Enemy):
 	add_child(bullet)
 	bullet.global_position = global_position
 	
+	#call sound effect
+	SfxManager.play_sound_effect("gun_tree_projectile")
+	
 	var distance = (enemy.global_position - global_position).length()
 	
 	var bullet_tween = get_tree().create_tween()

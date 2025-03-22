@@ -321,6 +321,10 @@ func take_damage(damage: int):
 
 func die():
 	is_dead = true
+	
+	#play sound effect
+	SfxManager.play_sound_effect("speedle_die")
+	
 	animation_player.play("death")
 	animation_player.animation_finished.connect(
 		func(animation_name):

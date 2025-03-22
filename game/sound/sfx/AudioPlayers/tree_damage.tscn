@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2syubqtismkd"]
+
+[ext_resource type="AudioStream" uid="uid://c23gwax8pql2n" path="res://sound/sfx/damage_tree.wav" id="1_y3j2g"]
+
+[node name="TreeDamage" type="AudioStreamPlayer"]
+stream = ExtResource("1_y3j2g")
