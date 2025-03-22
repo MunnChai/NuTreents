@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_wnjji")
+name = ""
+description = ""
 hp = 50
 max_water = 10
 gain = Vector3(10, 10, 10)

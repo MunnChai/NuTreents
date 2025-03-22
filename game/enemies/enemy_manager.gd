@@ -36,6 +36,9 @@ func _input(event: InputEvent) -> void:
 		spawn_enemy(EnemyType.SILK_SPITTER, map_coord)
 
 func _process(delta: float) -> void:
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
 	var curr_time = Global.clock.get_curr_day_sec()
 	
 	if (curr_time > Global.clock.HALF_DAY_SECONDS): # NIGHT TIME

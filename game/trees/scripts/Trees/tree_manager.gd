@@ -53,7 +53,9 @@ func _process(delta):
 	update(delta)
 
 func _input(_event: InputEvent) -> void:
-	
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
@@ -86,6 +88,9 @@ func _button_pressed():
 	
 ## to be called each round, update everything?
 func update(delta: float):
+	if (tree_map[Global.ORIGIN].died):
+		# if mother tree is dead
+		return
 	gain = Vector3()
 	# iterate all trees, get their generated res and remove dead trees
 	for key in forests.keys():
@@ -126,15 +131,11 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	fog_map.remove_fog_around(p)
 	
 	SfxManager.play_sound_effect("tree_plant")
-	print("done")
+	print(tree_map)
 	
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
 	
-	# for testing split forest stuff
-	#check_for_split(p)
-	
-	#print_forest_map()
 	return 0
 
 ## remove tree at given p
@@ -143,6 +144,8 @@ func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
 		return false
 	if (p == Global.ORIGIN): ## Game's effectively over. We want to do something *bombastic*
+		var mother: MotherTree = tree_map[p]
+		mother.die()
 		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
@@ -478,3 +481,6 @@ func find_neighbours(p: Vector2i) -> Array[Vector2i]:
 		if (forest_map.has(neighbour)):
 			tree_groups.append(neighbour)
 	return tree_groups
+
+func is_mother_dead() -> bool:
+	return (!tree_map.has(Global.ORIGIN) or tree_map[Global.ORIGIN].died)

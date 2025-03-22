@@ -196,9 +196,11 @@ func take_damage(damage: int) -> bool:
 		return true
 	
 	hp -= damage
-	
+	print(pos, " taking damage ", damage)
+	print(hp)
 	if (hp <= 0 and TreeManager.get_tree_map()[pos]):
 		TreeManager.remove_tree(pos)
+		print("remove mother tree")
 		return true
 	#else:
 		#animation_player.play("hurt")
