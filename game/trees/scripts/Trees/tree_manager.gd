@@ -51,10 +51,10 @@ func test():
 	button.pressed.connect(_button_pressed)
 	button.set_position(Vector2i(0,-100))
 	add_child(button)
-	
-	
-	
-	print(find_group(Vector2i(1,0)))
+	print(remove_tree(Vector2i(1,0)))
+	print(add_tree(1, Vector2i(1,0)))
+	forests[1].print_forest()
+	print(forest_map)
 	
 	
 func _button_pressed():
@@ -155,9 +155,10 @@ func upgrade_tree(p: Vector2i) -> int:
 		return 0
 	else: return 3
 
+
 ## finds the corresponding forest id for given p
 ## combine forests if neccessary
-func find_forest(p: Vector2i):
+func find_forest(p: Vector2i) -> int:
 	if (forest_map.has(p)):
 		return forest_map[p]
 	# TODO: find forest adjacent to p
@@ -180,14 +181,14 @@ func find_forest(p: Vector2i):
 
 ## use divide-and-conquer to merge a set of Forests
 ## only used pseudocode before let's see if actually works
-func merge_forests(forests: Array[int]) -> Array[int]:
-	if (forests.size() == 1):
+func merge_forests(list: Array[int]) -> Array[int]:
+	if (list.size() == 1):
 		# base case: merging is done
-		return forests
-	var mid: int = forests.size() / 2
+		return list
+	var mid: int = list.size() / 2
 	# both left and right should be [i]
-	var left = merge_forests(forests.slice(0, mid))
-	var right = merge_forests(forests.slice(mid, forests.size()))
+	var left = merge_forests(list.slice(0, mid))
+	var right = merge_forests(list.slice(mid, list.size()))
 	if (left[0] == right[0]):
 		return left
 	
