@@ -21,7 +21,7 @@ var time_to_grow: float
 
 var life_time_seconds := 0.0
 
-const TIME_TO_GROW = 5.0
+#const TIME_TO_GROW = 5.0
 
 var is_large := false
 
@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 	
 	#print(animation_player.current_animation)
 	
-	if life_time_seconds > TIME_TO_GROW:
+	if life_time_seconds > time_to_grow:
 		if not is_large:
 			upgrade_tree()
 			#tree_data.update()
@@ -115,6 +115,8 @@ func update(delta: float) -> Vector3:
 		if (!f.get_water(maint - storage)):
 			# if game doesn't have enough water either
 			hp -= 2 * delta
+			print("DYING")
+			print(forest)
 		else:
 			# game has enough water
 			storage = 0

@@ -381,9 +381,9 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 		# remove these from old forest
 		old_f.trees.erase(pos)
 	
-		# update some info
-		if (pos == Constants.ORIGIN):
-			continue
+		## update some info
+		#if (pos == Global.ORIGIN):
+			#continue
 		var tree = tree_map[pos]
 		tree.forest = id
 		forest_map[pos] = id
