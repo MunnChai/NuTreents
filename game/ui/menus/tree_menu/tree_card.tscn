@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8fg45slly116"]
+[gd_scene load_steps=5 format=3 uid="uid://b8fg45slly116"]
 
 [ext_resource type="Texture2D" uid="uid://cwdw0dy41qgvt" path="res://ui/menus/tree_menu/tree_card.png" id="1_wbhwn"]
 [ext_resource type="Script" uid="uid://dxwbpi670nhxn" path="res://ui/menus/tree_menu/tree_card.gd" id="2_hkimi"]
+[ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="3_db0qj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hkimi"]
 atlas = ExtResource("1_wbhwn")
@@ -26,22 +27,14 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_hkimi")
 
 [node name="WaterPlus" type="Label" parent="TextureRect"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.187
-anchor_top = 0.621
-anchor_right = 0.437
-anchor_bottom = 0.718
-offset_left = 0.0480003
-offset_top = -0.0039978
-offset_right = 0.0480003
-offset_bottom = -0.0319977
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 8
+layout_mode = 0
+offset_left = 48.0
+offset_top = 158.0
+offset_right = 88.0
+offset_bottom = 184.0
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "5"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="SunPlus" type="Label" parent="TextureRect"]
 layout_mode = 1
@@ -54,11 +47,11 @@ offset_left = -0.00800323
 offset_top = -0.00400543
 offset_right = -0.00800323
 offset_bottom = -0.0320053
-theme_override_font_sizes/font_size = 8
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="NutrientsPlus" type="Label" parent="TextureRect"]
 layout_mode = 1
@@ -71,11 +64,11 @@ offset_left = 0.0319977
 offset_top = -0.00400543
 offset_right = 0.0319977
 offset_bottom = -0.0320053
-theme_override_font_sizes/font_size = 8
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="WaterMin" type="Label" parent="TextureRect"]
 layout_mode = 1
@@ -88,11 +81,11 @@ offset_left = 0.0480003
 offset_top = -0.0240021
 offset_right = 0.0480003
 offset_bottom = -0.052002
-theme_override_font_sizes/font_size = 8
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="SunMin" type="Label" parent="TextureRect"]
 layout_mode = 1
@@ -105,11 +98,11 @@ offset_left = -0.00800323
 offset_top = -0.0240021
 offset_right = -0.00800323
 offset_bottom = -0.052002
-theme_override_font_sizes/font_size = 8
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="NutrientsMin" type="Label" parent="TextureRect"]
 layout_mode = 1
@@ -122,28 +115,38 @@ offset_left = 0.0319977
 offset_top = -0.0240021
 offset_right = 0.0319977
 offset_bottom = -0.052002
-theme_override_font_sizes/font_size = 8
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "5"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Species" type="Label" parent="TextureRect"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.042
-anchor_top = 0.863
+anchor_top = 0.0242903
 anchor_right = 0.958
-anchor_bottom = 0.96
+anchor_bottom = 0.12129
 offset_left = -0.0320005
 offset_top = -0.012001
 offset_right = 0.0319977
 offset_bottom = -0.0400085
-theme_override_font_sizes/font_size = 8
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
 text = "species"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+
+[node name="Cost" type="Label" parent="TextureRect"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 216.0
+offset_right = 101.0
+offset_bottom = 242.0
+theme_override_fonts/font = ExtResource("3_db0qj")
+theme_override_font_sizes/font_size = 32
+text = "Cost: "
 
 [node name="Button" type="Button" parent="TextureRect"]
 layout_mode = 1

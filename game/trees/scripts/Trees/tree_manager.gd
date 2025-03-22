@@ -10,6 +10,7 @@ const DEFAULT_TREE = preload("res://trees/scenes/DefaultTree.tscn")
 const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
 const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
 const TECH_TREE = preload("res://trees/scenes/TechTree.tscn")
+const EXPLORER_TREE = preload("res://trees/scenes/ExplorerTree.tscn")
 
 enum TreeType {
 	MOTHER_TREE = 0,
@@ -17,6 +18,7 @@ enum TreeType {
 	GUN_TREE = DEFAULT_TREE + 1,
 	WATER_TREE = GUN_TREE + 1,
 	TECH_TREE = WATER_TREE + 1,
+	EXPLORER_TREE = TECH_TREE + 1
 }
 
 const TREE_DICT: Dictionary[int, PackedScene] = {
@@ -25,6 +27,7 @@ const TREE_DICT: Dictionary[int, PackedScene] = {
 	TreeType.GUN_TREE: GUN_TREE,
 	TreeType.WATER_TREE: WATER_TREE,
 	TreeType.TECH_TREE: TECH_TREE,
+	TreeType.EXPLORER_TREE: EXPLORER_TREE,
 }
 
 
@@ -33,13 +36,14 @@ var forests: Dictionary[int, Forest] # {id, Forest}
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
 var tree_map: Dictionary[Vector2i, Twee]
 var res: Vector3 # Vec3(N, water, sun)
+var gain: Vector3
 var forest_count: int
 
 # currently selected tree from ui
 var selected_tree_species: int = 1
 
 func _ready():
-	res = Vector3(100, 0, 0)
+	res = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
 	
@@ -49,7 +53,9 @@ func _process(delta):
 	update(delta)
 
 func _input(_event: InputEvent) -> void:
-	
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
@@ -82,12 +88,20 @@ func _button_pressed():
 	
 ## to be called each round, update everything?
 func update(delta: float):
+	if (tree_map[Global.ORIGIN].died):
+		# if mother tree is dead
+		return
+	gain = Vector3()
 	# iterate all trees, get their generated res and remove dead trees
 	for key in forests.keys():
 		var f: Forest = forests[key]
-		res += f.update(delta) * delta
+		gain += f.update(delta)
+		
 		if (f.empty):
 			remove_forest(key)  
+	
+	res += gain * delta
+	res.y = max(0, res.y)
 
 
 ## add tree with given type at p
@@ -123,10 +137,6 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
 	
-	# for testing split forest stuff
-	#check_for_split(p)
-	
-	#print_forest_map()
 	return 0
 
 ## remove tree at given p
@@ -135,6 +145,8 @@ func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
 		return false
 	if (p == Global.ORIGIN): ## Game's effectively over. We want to do something *bombastic*
+		var mother: MotherTree = tree_map[p]
+		mother.die()
 		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
@@ -470,3 +482,6 @@ func find_neighbours(p: Vector2i) -> Array[Vector2i]:
 		if (forest_map.has(neighbour)):
 			tree_groups.append(neighbour)
 	return tree_groups
+
+func is_mother_dead() -> bool:
+	return (!tree_map.has(Global.ORIGIN) or tree_map[Global.ORIGIN].died)

@@ -214,6 +214,9 @@ func find_path_to_tree(tree: Twee) -> Array:
 				var new_path = current_path.duplicate(true)
 				new_path.append(next_pos)
 				paths.append(new_path)
+		
+		if (visited.size() > 200):
+			break
 	
 	return [] # could not find path
 

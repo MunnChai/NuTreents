@@ -1,17 +1,17 @@
 class_name WaterTree
 extends Twee
 
-const BASE_WATER_RANGE = 1
 
-var is_adjacent_to_water: bool = false
-var water_bonus: int = 3
-
+ 
 func _ready():
 	super._ready()
 	
+	sprite.hframes = 9
+	sprite.vframes = 3
+	sprite.position.y = -16
+	
 	# Calculate adjacency on start of runtime, instead of each frame
-	is_adjacent_to_water = is_water_adjacent()
-	gain.y = get_water_gain()
+	
 
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
@@ -25,24 +25,9 @@ func update(delta: float) -> Vector3:
 	return g
 
 
+func play_large_tree_animation():
+	animation_player.play("pump")
 
-func get_water_gain():
-	if (!is_adjacent_to_water):
-		return tree_stat.gain.y
-	else:
-		return tree_stat.gain.y + water_bonus
-
-func is_water_adjacent() -> bool:
-	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
-		for y in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
-			var coord: Vector2i = pos + Vector2i(x, y)
-			
-			var tile_type: int = Global.terrain_map.get_tile_biome(coord)
-			
-			if (tile_type == Global.terrain_map.TILE_TYPE.WATER):
-				return true
-	
-	return false
 
 func get_upgraded_stats_from_resource(tree_stat: TreeStatResource):
 	super.get_upgraded_stats_from_resource(tree_stat)

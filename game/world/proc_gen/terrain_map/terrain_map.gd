@@ -47,7 +47,9 @@ func _process(_delta: float) -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
-	
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
 	if (event is InputEventKey && event.is_action_pressed("generate_map")):
 		generate_map()
 	

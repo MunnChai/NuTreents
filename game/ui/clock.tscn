@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://gndh6ypy0wse"]
+[gd_scene load_steps=8 format=3 uid="uid://gndh6ypy0wse"]
 
 [ext_resource type="Texture2D" uid="uid://bklrn087vva72" path="res://ui/Time_Indicator_Animation_1.png" id="1_f4i75"]
 [ext_resource type="Script" uid="uid://bwymirp2g04qx" path="res://ui/clock/clock.gd" id="2_wy0fy"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_wy0fy"]
 
 [sub_resource type="Animation" id="Animation_xifpm"]
 length = 0.001
@@ -58,6 +59,7 @@ _data = {
 }
 
 [node name="Clock" type="Sprite2D" groups=["clock"]]
+scale = Vector2(2.5, 2.5)
 texture = ExtResource("1_f4i75")
 hframes = 14
 script = ExtResource("2_wy0fy")
@@ -72,6 +74,8 @@ offset_left = -80.0
 offset_top = -12.0
 offset_right = -37.0
 offset_bottom = 11.0
+theme_override_fonts/font = ExtResource("3_wy0fy")
+theme_override_font_sizes/font_size = 48
 text = "Day 0"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

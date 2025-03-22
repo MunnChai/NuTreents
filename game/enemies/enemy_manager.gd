@@ -36,6 +36,9 @@ func _input(event: InputEvent) -> void:
 		spawn_enemy(EnemyType.SILK_SPITTER, map_coord)
 
 func _process(delta: float) -> void:
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
 	var curr_time = Global.clock.get_curr_day_sec()
 	
 	if (curr_time > Global.clock.HALF_DAY_SECONDS): # NIGHT TIME
@@ -85,7 +88,9 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> void:
 
 
 func kill_all_enemies():
-	print("Hello")
+	#print("Hello")
 	for enemy: Enemy in current_enemies:
+		if (!enemy):
+			continue
 		enemy.die()
 		current_enemies.erase(enemy)
