@@ -171,7 +171,6 @@ func target_new_tree() -> Twee:
 	
 	return tree
 
-
 #
 # Pathfinding stuff
 #

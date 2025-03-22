@@ -69,6 +69,6 @@ func get_water(maint: int) -> bool:
 
 
 func print_forest():
+	print(id)
 	for key in trees.keys():
-		var t: DefaultTree = trees[key]
-		print("level:", t.level, " hp:", t.hp, " water:", t.storage, " f:", t.forest)
+		print(key)
