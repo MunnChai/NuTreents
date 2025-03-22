@@ -69,7 +69,7 @@ func update(delta: float) -> Vector3:
 		res += tree.update(delta)
 	
 	# Ignore water from update, just set what we calculated earlier
-	res.y = max(0, water)
+	res.y = water
 	
 	return res
 

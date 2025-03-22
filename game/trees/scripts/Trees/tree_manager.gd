@@ -86,6 +86,7 @@ func update(delta: float):
 	for key in forests.keys():
 		var f: Forest = forests[key]
 		res += f.update(delta) * delta
+		res.y = max(0, res.y)
 		if (f.empty):
 			remove_forest(key)  
 
