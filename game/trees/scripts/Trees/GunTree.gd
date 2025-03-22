@@ -12,6 +12,10 @@ var attack_cooldown: float = 0
 
 func _ready():
 	super._ready()
+	
+	sprite.hframes = 9
+	sprite.vframes = 3
+	sprite.position.y = -16
 
 func _process(delta: float) -> void:
 	life_time_seconds += delta
@@ -37,6 +41,8 @@ func attack_nearest_enemy():
 			return
 
 func attack_enemy(enemy: Enemy):
+	if is_large:
+		animation_player.play("shoot")
 	
 	var bullet = TREE_BULLET.instantiate()
 	add_child(bullet)
@@ -64,6 +70,11 @@ func deal_damage(enemy: Enemy):
 		return
 	
 	enemy.take_damage(damage)
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	super._on_animation_player_animation_finished(anim_name)
+	if (anim_name == "shoot"):
+		play_large_tree_animation()
 
 func upgrade_tree():
 	super.upgrade_tree()
