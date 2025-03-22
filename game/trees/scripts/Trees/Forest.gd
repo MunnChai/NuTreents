@@ -13,17 +13,22 @@ func _init(i: int):
 	
 ## to be called each round, update everything in this Forest
 ## returns the res to be added to the game
-func update() -> Vector3:
+func update(delta: float) -> Vector3:
+	water = 0
+	for key in trees.keys():
+		if (!trees.has(key)):
+			continue
+		var tree: Twee = trees[key]
+		water += tree.storage
+	
 	# iterate all trees, get their generated res and remove dead trees
 	var res = Vector3(0,0,0)
 	for key in trees.keys():
 		if (!trees.has(key)):
 			continue
 		var tree: Twee = trees[key]
-		res += tree.update()
-		if (tree.died):
-			#remove_tree(key)
-			pass
+		res += tree.update(delta)
+	
 	return res
 
 ## add the given tree to this forest
@@ -38,10 +43,9 @@ func remove_tree(p: Vector2i):
 		return
 	var t: Twee = trees[p]
 	water -= t.storage
-	t.free()
 	trees.erase(p)
-	TreeManager.remove_tree(p)
 	
+	t.queue_free()
 
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 
@@ -65,6 +69,6 @@ func get_water(maint: int) -> bool:
 
 
 func print_forest():
+	print(id)
 	for key in trees.keys():
-		var t: DefaultTree = trees[key]
-		print("level:", t.level, " hp:", t.hp, " water:", t.storage, " f:", t.forest)
+		print(key)

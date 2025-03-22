@@ -25,7 +25,7 @@ func _ready() -> void:
 	zoom = Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index]
 	## START THE CAMERA ON THE CENTRE WITH VERY SCUFFED MATH CALCULATION
 	## (This assumes the map is square)
-	global_position = Constants.MAP_SIZE.y / 2.0 * Vector2.DOWN * 16.0 + Vector2.RIGHT * 16.0
+	global_position = Global.MAP_SIZE.y / 2.0 * Vector2.DOWN * 16.0 + Vector2.RIGHT * 16.0
 
 func _process(delta: float) -> void:
 	

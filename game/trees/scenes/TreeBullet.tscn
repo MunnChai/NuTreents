@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c57qxqh1vmqsp"]
+
+[ext_resource type="Texture2D" uid="uid://j2gnmo4lwid3" path="res://trees/scripts/Trees/Large_Tree_Stump_1.png" id="1_r5epu"]
+
+[node name="TreeBullet" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("1_r5epu")

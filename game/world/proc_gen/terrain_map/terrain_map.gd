@@ -28,7 +28,7 @@ const BIOME_FALLOFF = 2
 
 const MIN_CITIES: int = 3
 const MAX_CITIES: int = 5
-const CITY_DISTANCE: int = Constants.MAP_SIZE.x / 2.5
+const CITY_DISTANCE: int = Global.MAP_SIZE.x / 2.5
 const DRUNKARD_LIFETIME: int = 15
 const NUM_DRUNKARDS: int = 10
 
@@ -50,6 +50,9 @@ func _input(event: InputEvent) -> void:
 	
 	if (event is InputEventKey && event.is_action_pressed("generate_map")):
 		generate_map()
+	
+	#if (Input.is_action_just_pressed("lmb")):
+		#print(get_tile_biome(local_to_map(get_mouse_coords())))
 
 
 func get_mouse_coords() -> Vector2:
@@ -76,7 +79,7 @@ func generate_map() -> void:
 	var angle: float = randf() * 2 * PI
 	for i in range(0, num_cities):
 		
-		var map_coords: Vector2i =  Constants.MAP_SIZE / 2
+		var map_coords: Vector2i =  Global.MAP_SIZE / 2
 		map_coords += Vector2i(Vector2.RIGHT.rotated(angle) * CITY_DISTANCE)
 		city_coords.append(map_coords)
 		
@@ -103,14 +106,14 @@ func generate_map() -> void:
 func initialize_map() -> void:
 	
 	var grass_tiles: Array[Vector2i]
-	for x in range(0, Constants.MAP_SIZE.x):
-		for y in range(0, Constants.MAP_SIZE.y):
+	for x in range(0, Global.MAP_SIZE.x):
+		for y in range(0, Global.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var origin: Vector2i = Vector2i(Constants.MAP_SIZE) / 2
+			var origin: Vector2i = Vector2i(Global.MAP_SIZE) / 2
 			
 			var distance_from_origin: float = (map_coords - origin).length()
-			var distance_scaled = distance_from_origin / (Constants.MAP_SIZE.length() * BIOME_FALLOFF)
+			var distance_scaled = distance_from_origin / (Global.MAP_SIZE.length() * BIOME_FALLOFF)
 			
 			var tile_type: int = TILE_TYPE.GRASS
 			
@@ -138,14 +141,14 @@ func get_rivers() -> Array[Vector2i]:
 	var river_tiles: Array[Vector2i]
 	
 	# For each tile
-	for x in range(0, Constants.MAP_SIZE.x):
-		for y in range(0, Constants.MAP_SIZE.y):
+	for x in range(0, Global.MAP_SIZE.x):
+		for y in range(0, Global.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var origin: Vector2i = Vector2i(Constants.MAP_SIZE) / 2
+			var origin: Vector2i = Vector2i(Global.MAP_SIZE) / 2
 			
 			var distance_from_origin: float = (map_coords - origin).length()
-			var distance_scaled = distance_from_origin / (Constants.MAP_SIZE.length() * BIOME_FALLOFF)
+			var distance_scaled = distance_from_origin / (Global.MAP_SIZE.length() * BIOME_FALLOFF)
 			
 			# Some value between 0.0 and 1.0
 			var noise = river_noise.get_noise_2dv(map_coords)
@@ -222,7 +225,7 @@ func generate_city(map_coords: Vector2i) -> void:
 		walk_drunkard(map_coords, TILE_TYPE.CITY)
 
 func generate_spawn() -> void:
-	var origin: Vector2i = Vector2i(Constants.MAP_SIZE / 2)
+	var origin: Vector2i = Vector2i(Global.MAP_SIZE / 2)
 	
 	for i in range(0, NUM_DRUNKARDS * 4):
 		walk_drunkard(origin, TILE_TYPE.GRASS, [TILE_TYPE.DIRT])
@@ -251,7 +254,7 @@ func walk_drunkard(map_coords: Vector2i, tile_type: TILE_TYPE, irreplaceable_til
 		
 		current_coord += direction
 		
-		if (current_coord.x >= Constants.MAP_SIZE.x || current_coord.y >= Constants.MAP_SIZE.y):
+		if (current_coord.x >= Global.MAP_SIZE.x || current_coord.y >= Global.MAP_SIZE.y):
 			drunkard_life -= 1
 			continue
 		if (current_coord.x < 0 || current_coord.y < 0):
@@ -312,7 +315,7 @@ func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, til
 		# Move in direction
 		current_coord += direction
 		
-		if (current_coord.x >= Constants.MAP_SIZE.x || current_coord.y >= Constants.MAP_SIZE.y):
+		if (current_coord.x >= Global.MAP_SIZE.x || current_coord.y >= Global.MAP_SIZE.y):
 			drunkard_life -= 1
 			continue
 		if (current_coord.x < 0 || current_coord.y < 0):
@@ -332,8 +335,8 @@ func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, til
 
 
 func randomize_tiles() -> void:
-	for x in range(0, Constants.MAP_SIZE.x):
-		for y in range(0, Constants.MAP_SIZE.y):
+	for x in range(0, Global.MAP_SIZE.x):
+		for y in range(0, Global.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
 			var tile_data: TileData = get_cell_tile_data(map_coords)

@@ -1,16 +1,19 @@
 class_name Enemy
-extends Node
+extends Node2D
 
-const MOVE_DURATION: float = 0.25
+const MOVE_DURATION: float = 0.5
 
 @export_group("Enemy Stats")
-@export var health: int
+@export var max_health: int
 @export var attack_damage: int
 @export var attack_range: int
 @export var move_speed: int
 
 @onready var sprite_2d = $Sprite2D
 @onready var animation_player = $AnimationPlayer
+
+var current_health: float
+var is_dead: bool = false
 
 var map_position: Vector2i
 
@@ -27,28 +30,76 @@ func _ready() -> void:
 	init()
 
 func init():
-	target_tree = get_nearest_tree()
-	
+	target_new_tree()
 	add_to_group("enemies")
-	
-	if (target_tree != null):
-		current_path = find_path_to_tree(target_tree)
+	current_health = max_health
+
 
 
 func _process(delta: float) -> void:
-	if (target_tree):
-		update_movement(delta)
+	update_movement(delta)
+
 
 
 
 func update_movement(delta: float) -> void:
+	if (is_dead):
+		return
+	
 	if (movement_cooldown > 0):
 		movement_cooldown -= delta
 		return
 	
-	move_along_path()
+	do_action()
 	
 	movement_cooldown = move_speed
+
+func do_action():
+	# If the target tree doesn't exist
+	if (!target_tree || target_tree.died):
+		target_new_tree()
+	
+	# If there are no more trees, do nothing
+	if (!target_tree || target_tree.died):
+		return
+	
+	# If the target tree exists:
+	var dist_to_tree = get_taxicab_distance(target_tree.pos, map_position)
+	
+	if (dist_to_tree <= attack_range):
+		attack_tree()
+	else:
+		move_along_path()
+
+func attack_tree():
+	var direction: Vector2i = target_tree.pos - map_position
+	face_direction(direction)
+	
+	var this_position = position
+	
+	var pos_tween: Tween = get_tree().create_tween()
+	pos_tween.set_ease(Tween.EASE_IN_OUT)
+	pos_tween.set_trans(Tween.TRANS_CUBIC)
+	pos_tween.tween_property(self, "position", target_tree.global_position, MOVE_DURATION / 2)
+	pos_tween.tween_property(self, "position", this_position, MOVE_DURATION / 2)
+	
+	# Connect signals
+	pos_tween.step_finished.connect(
+		func(tween):
+			deal_damage()
+			
+			# Disconnect signals
+			for callback in pos_tween.step_finished.get_connections():
+				pos_tween.step_finished.disconnect(callback["callable"])
+	)
+	
+	var offset_tween: Tween = get_tree().create_tween()
+	offset_tween.set_ease(Tween.EASE_IN_OUT)
+	offset_tween.set_trans(Tween.TRANS_CUBIC)
+	offset_tween.tween_property(sprite_2d, "position:y", -20, MOVE_DURATION / 4)
+	offset_tween.tween_property(sprite_2d, "position:y", -16, MOVE_DURATION / 4)
+	offset_tween.tween_property(sprite_2d, "position:y", -20, MOVE_DURATION / 4)
+	offset_tween.tween_property(sprite_2d, "position:y", -16, MOVE_DURATION / 4)
 
 # Returns true if it successfully moved, false if it has reached its destination
 func move_along_path() -> bool:
@@ -56,20 +107,22 @@ func move_along_path() -> bool:
 		return false
 	
 	var next_tile: Vector2i = current_path.pop_front()
+	if (!is_valid_tile(next_tile)):
+		var new_tree = target_new_tree()
+		if (!new_tree):
+			return false
+		
+		if (current_path.size() == 0):
+			return false
+		
+		next_tile = current_path.pop_front()
+	
 	var terrain_map: TerrainMap = get_tree().get_first_node_in_group("terrain_map")
 	var global_pos: Vector2 = terrain_map.map_to_local(next_tile)
 	
 	# Hard coded for now
 	var direction: Vector2i = next_tile - map_position
-	match (direction):
-		Vector2i.UP:
-			sprite_2d.flip_h = true
-		Vector2i.DOWN:
-			sprite_2d.flip_h = true
-		Vector2i.LEFT:
-			sprite_2d.flip_h = false
-		Vector2i.RIGHT:
-			sprite_2d.flip_h = false
+	face_direction(direction)
 	
 	var pos_tween: Tween = get_tree().create_tween()
 	pos_tween.set_ease(Tween.EASE_IN_OUT)
@@ -86,15 +139,37 @@ func move_along_path() -> bool:
 	
 	return true
 
+func deal_damage():
+	if (!target_tree):
+		return
+	
+	target_tree.take_damage(attack_damage)
+
+
+func face_direction(direction: Vector2i) -> void:
+	match (direction):
+		Vector2i.UP:
+			sprite_2d.flip_h = true
+			animation_player.play("idle_backwards")
+		Vector2i.DOWN:
+			sprite_2d.flip_h = true
+			animation_player.play("idle")
+		Vector2i.LEFT:
+			sprite_2d.flip_h = false
+			animation_player.play("idle_backwards")
+		Vector2i.RIGHT:
+			sprite_2d.flip_h = false
+			animation_player.play("idle")
 
 
 
-
-
-
-
-
-
+func target_new_tree() -> Twee:
+	var tree = get_nearest_tree()
+	if (tree):
+		target_tree = tree
+		current_path = find_path_to_tree(target_tree)
+	
+	return tree
 
 #
 # Pathfinding stuff
@@ -163,6 +238,11 @@ func is_valid_tile(map_pos: Vector2i) -> bool:
 	if (structure_map.tile_scene_map.has(map_pos)):
 		return false
 	
+	# Do not go on other enemies
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if (enemy.map_position == map_pos):
+			return false
+	
 	return true
 
 # Returns the index of the tile with the lowest F score (f = dist_from_start + approx_dist_to_end)
@@ -198,10 +278,10 @@ func get_adjacent_tiles(pos: Vector2i) -> Array[Vector2i]:
 
 
 
+
 # Returns nearest tree to current pos, using Taxicab Distance 
 func get_nearest_tree() -> Twee:
 	var tree_map: Dictionary[Vector2i, Twee] = TreeManager.get_tree_map()
-	
 	if (tree_map.is_empty()):
 		return null
 	
@@ -209,6 +289,8 @@ func get_nearest_tree() -> Twee:
 	var nearest_dist: float = INF
 	for key in tree_map:
 		var tree: Twee = tree_map[key]
+		if (tree.died):
+			continue
 		
 		var dist = get_taxicab_distance(tree.pos, map_position)
 		if (dist < nearest_dist):
@@ -227,3 +309,19 @@ func array_has(array: Array[Vector2i], what: Vector2i) -> bool:
 			return true
 	
 	return false
+
+func take_damage(damage: int):
+	
+	
+	current_health -= damage
+	
+	if (current_health <= 0):
+		die()
+
+func die():
+	is_dead = true
+	animation_player.play("death")
+	animation_player.animation_finished.connect(
+		func(animation_name):
+			queue_free()
+	)

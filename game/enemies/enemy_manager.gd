@@ -12,7 +12,7 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 	EnemyType.SPEEDLE: SPEEDLE,
 	EnemyType.SILK_SPITTER: SILK_SPITTER
 }
-
+ 
 
 
 
@@ -20,7 +20,7 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 
 
 func _ready() -> void:
-	#spawn_enemy(EnemyType.SPEEDLE, Constants.MAP_SIZE / 2)
+	#spawn_enemy(EnemyType.SPEEDLE, Global.MAP_SIZE / 2)
 	pass
 
 func _input(event: InputEvent) -> void:
