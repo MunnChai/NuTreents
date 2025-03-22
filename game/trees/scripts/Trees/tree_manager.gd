@@ -123,7 +123,7 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 func remove_tree(p: Vector2i) -> bool:
 	if (!forest_map.has(p)):
 		return false
-	if (p == Global.ORIGIN):
+	if (p == Global.ORIGIN): ## Game's effectively over. We want to do something *bombastic*
 		return false
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
