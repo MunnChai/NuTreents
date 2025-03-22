@@ -1,0 +1,17 @@
+[remap]
+
+importer="font_data_bmfont"
+type="FontFile"
+uid="uid://dwp431b5drirc"
+path="res://.godot/imported/Corvid Conspirator (Black).fnt-fb881f1e5fa97ccf4301c31d2c040789.fontdata"
+
+[deps]
+
+source_file="res://ui/fonts/Angel Code Format (v1.2)/Corvid Conspirator (Black)/Corvid Conspirator (Black).fnt"
+dest_files=["res://.godot/imported/Corvid Conspirator (Black).fnt-fb881f1e5fa97ccf4301c31d2c040789.fontdata"]
+
+[params]
+
+fallbacks=[]
+compress=true
+scaling_mode=2

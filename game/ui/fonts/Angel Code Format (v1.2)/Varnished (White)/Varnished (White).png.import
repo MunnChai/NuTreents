@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpfhxcj4mex44"
-path="res://.godot/imported/tech_rocket_skills_fuel.png-054bc1fa71220fbedea477f9e491d00c.ctex"
+uid="uid://bnw06pp6maddk"
+path="res://.godot/imported/Varnished (White).png-2dd39d929448168d83be2b75e5b3801e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/menus/tech_rocket_skills_fuel.png"
-dest_files=["res://.godot/imported/tech_rocket_skills_fuel.png-054bc1fa71220fbedea477f9e491d00c.ctex"]
+source_file="res://ui/fonts/Angel Code Format (v1.2)/Varnished (White)/Varnished (White).png"
+dest_files=["res://.godot/imported/Varnished (White).png-2dd39d929448168d83be2b75e5b3801e.ctex"]
 
 [params]
 

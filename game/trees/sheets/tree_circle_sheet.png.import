@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpfhxcj4mex44"
-path="res://.godot/imported/tech_rocket_skills_fuel.png-054bc1fa71220fbedea477f9e491d00c.ctex"
+uid="uid://eckdbj5rer4l"
+path="res://.godot/imported/tree_circle_sheet.png-83af17b217bf63619618dc5e4fdbc87e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/menus/tech_rocket_skills_fuel.png"
-dest_files=["res://.godot/imported/tech_rocket_skills_fuel.png-054bc1fa71220fbedea477f9e491d00c.ctex"]
+source_file="res://trees/sheets/tree_circle_sheet.png"
+dest_files=["res://.godot/imported/tree_circle_sheet.png-83af17b217bf63619618dc5e4fdbc87e.ctex"]
 
 [params]
 

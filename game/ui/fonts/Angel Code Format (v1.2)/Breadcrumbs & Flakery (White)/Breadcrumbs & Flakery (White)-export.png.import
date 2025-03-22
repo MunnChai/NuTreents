@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpfhxcj4mex44"
-path="res://.godot/imported/tech_rocket_skills_fuel.png-054bc1fa71220fbedea477f9e491d00c.ctex"
+uid="uid://dep6h7rg0qk1"
+path="res://.godot/imported/Breadcrumbs & Flakery (White)-export.png-47a26632689e7f49399b938ec614fbeb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/menus/tech_rocket_skills_fuel.png"
-dest_files=["res://.godot/imported/tech_rocket_skills_fuel.png-054bc1fa71220fbedea477f9e491d00c.ctex"]
+source_file="res://ui/fonts/Angel Code Format (v1.2)/Breadcrumbs & Flakery (White)/Breadcrumbs & Flakery (White)-export.png"
+dest_files=["res://.godot/imported/Breadcrumbs & Flakery (White)-export.png-47a26632689e7f49399b938ec614fbeb.ctex"]
 
 [params]
 
