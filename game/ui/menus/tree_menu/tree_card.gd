@@ -23,7 +23,9 @@ func _ready() -> void:
 	var net_water = tree_stat.gain.y - tree_stat.maint
 	if (net_water > 0):
 		water_plus.text = str(net_water)
+		water_min.text = str(0)
 	else:
+		water_plus.text = str(0)
 		water_min.text = str(abs(net_water))
 	
 	sun_plus.text = str(tree_stat.gain.z)
