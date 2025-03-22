@@ -207,7 +207,7 @@ func take_damage(damage: int) -> bool:
 	
 	hp -= damage
 	
-	if (hp <= 0):
+	if (hp <= 0 and TreeManager.get_tree_map()[pos]):
 		TreeManager.remove_tree(pos)
 		return true
 	#else:

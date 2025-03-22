@@ -130,9 +130,7 @@ func remove_tree(p: Vector2i) -> bool:
 	forest_map.erase(p)
 	
 	forest_check(p, f_id)
-	
 	structure_map.remove_structure(p)
-	tree.die()
 	return true
 
 func get_twee(p: Vector2i) -> Twee:
