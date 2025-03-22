@@ -43,7 +43,7 @@ var forest_count: int
 var selected_tree_species: int = 1
 
 func _ready():
-	res = Vector3(100, 0, 0)
+	res = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
 	
