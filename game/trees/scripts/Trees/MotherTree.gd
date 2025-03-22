@@ -44,8 +44,6 @@ func update(delta: float) -> Vector3:
 		else:
 			# game has enough water
 			storage = 0
-	if (hp <= 0):
-		die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
 

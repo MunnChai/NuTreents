@@ -11,13 +11,12 @@ var attack_range: int = 5
 var attack_cooldown: float = 0
 
 func _ready():
-	get_stats_from_resource(tree_stat)
-	animation_player.play("grow_small")
+	super._ready()
 
 func _process(delta: float) -> void:
 	life_time_seconds += delta
 	
-	if life_time_seconds > TIME_TO_GROW:
+	if life_time_seconds > time_to_grow:
 		if not is_large:
 			upgrade_tree()
 	

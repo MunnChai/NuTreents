@@ -33,3 +33,4 @@ script = ExtResource("1_0t2ht")
 unique_name_in_owner = true
 stream = SubResource("AudioStreamInteractive_kek77")
 autoplay = true
+bus = &"Music"

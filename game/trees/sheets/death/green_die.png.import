@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwhdt4oefoyib"
-path="res://.godot/imported/menu_exit_button.png-ae9c6eb722596f166f2824ce38818a98.ctex"
+uid="uid://cefp0sodb2dun"
+path="res://.godot/imported/green_die.png-ba890a44b10c31fe0a4e450700e5087a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/menus/menu_exit_button.png"
-dest_files=["res://.godot/imported/menu_exit_button.png-ae9c6eb722596f166f2824ce38818a98.ctex"]
+source_file="res://trees/sheets/death/green_die.png"
+dest_files=["res://.godot/imported/green_die.png-ba890a44b10c31fe0a4e450700e5087a.ctex"]
 
 [params]
 

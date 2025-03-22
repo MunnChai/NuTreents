@@ -1,0 +1,110 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnkikqyrui6rg"]
+
+[ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_ypxvv"]
+[ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/menus/settings_menu/audio_settings.gd" id="2_8xtpb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0rmt"]
+atlas = ExtResource("1_ypxvv")
+region = Rect2(0, 208, 640, 152)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s2iut"]
+bg_color = Color(0, 0, 0, 0.490196)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 152.0
+texture = SubResource("AtlasTexture_v0rmt")
+
+[node name="SliderLabel" type="Label" parent="TextureRect"]
+z_index = 4096
+layout_mode = 0
+offset_left = 304.0
+offset_top = 31.0
+offset_right = 332.0
+offset_bottom = 54.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_s2iut")
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AudioSettings" type="VBoxContainer" parent="TextureRect" node_paths=PackedStringArray("slider_label")]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 24.0
+offset_right = 464.0
+offset_bottom = 124.0
+script = ExtResource("2_8xtpb")
+slider_label = NodePath("../SliderLabel")
+
+[node name="AudioLabel" type="Label" parent="TextureRect/AudioSettings"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Audio"
+
+[node name="MasterContainer" type="HBoxContainer" parent="TextureRect/AudioSettings"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="TextureRect/AudioSettings/MasterContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Master:"
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="TextureRect/AudioSettings/MasterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+
+[node name="MusicContainer" type="HBoxContainer" parent="TextureRect/AudioSettings"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="TextureRect/AudioSettings/MusicContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Music:"
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="TextureRect/AudioSettings/MusicContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+
+[node name="SFXContainer" type="HBoxContainer" parent="TextureRect/AudioSettings"]
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="TextureRect/AudioSettings/SFXContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "SFX:"
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="TextureRect/AudioSettings/SFXContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+
+[connection signal="value_changed" from="TextureRect/AudioSettings/MasterContainer/MasterSlider" to="TextureRect/AudioSettings" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="TextureRect/AudioSettings/MusicContainer/MusicSlider" to="TextureRect/AudioSettings" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="TextureRect/AudioSettings/SFXContainer/SFXSlider" to="TextureRect/AudioSettings" method="_on_sfx_slider_value_changed"]

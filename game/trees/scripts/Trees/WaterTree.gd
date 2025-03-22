@@ -11,30 +11,16 @@ func _ready():
 	
 	# Calculate adjacency on start of runtime, instead of each frame
 	is_adjacent_to_water = is_water_adjacent()
+	gain.y = get_water_gain()
 
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
 func update(delta: float) -> Vector3:
 	var prev = storage # record old storage number
 	
-	var true_gain = get_water_gain()
-	
 	# add new water to storage, storage equals at most max_water
 	storage = min(storage + gain.y, max_water)
 	
-	# take maint from storage
-	if (storage >= maint):
-		storage -= maint
-	else:
-		var f: Forest = TreeManager.get_forest(forest)
-		if (!f.get_water(maint - storage)):
-			# if game doesn't have enough water either
-			hp -= 2 * delta
-		else:
-			# game has enough water
-			storage = 0
-	if (hp <= 0):
-		die()
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
 
@@ -57,3 +43,8 @@ func is_water_adjacent() -> bool:
 				return true
 	
 	return false
+
+func get_upgraded_stats_from_resource(tree_stat: TreeStatResource):
+	super.get_upgraded_stats_from_resource(tree_stat)
+	
+	gain.y = tree_stat.gain_2.y + water_bonus

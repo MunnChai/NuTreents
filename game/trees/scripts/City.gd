@@ -10,7 +10,7 @@ var type: int # 1: Skyscraper; 2: general city tile; 3: Factory
 var sprite_id: int = 0
 
 func _init(t: int, p: Vector2):
-	super._init(p)
+	init_pos(p)
 	id = "city_building"
 	type = t
 	
