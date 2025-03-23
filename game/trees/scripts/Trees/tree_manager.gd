@@ -63,7 +63,6 @@ func _input(_event: InputEvent) -> void:
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
 		add_tree(selected_tree_species, map_coords) 
-		PopupManager.create_popup("Not enough resources!", structure_map.map_to_local(map_coords))
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
@@ -116,14 +115,20 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	tree = TREE_DICT[type].instantiate()
 	
 	if (forest_map.has(p)):
+		PopupManager.create_popup("Occupied!", structure_map.map_to_local(p))
 		return 1
-	if (!enough_n(tree.tree_stat.cost_to_purchase)):
-		
-		return 2
-	if not terrain_map.is_fertile(p):
-		return 3 
 	if enforce_reachable and not is_reachable(p):
+		if Input.is_action_just_pressed("lmb"):
+			PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
 		return 4
+	if not terrain_map.is_fertile(p):
+		if Input.is_action_just_pressed("lmb"):
+			PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
+		return 3 
+	if (!enough_n(tree.tree_stat.cost_to_purchase)):
+		if Input.is_action_just_pressed("lmb"):
+			PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(p))
+		return 2
 	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
 	var f_id: int = find_forest(p)
