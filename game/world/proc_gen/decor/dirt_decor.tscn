@@ -13,4 +13,5 @@ script = ExtResource("1_oj3ck")
 num_tiles = 6
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
 texture = SubResource("AtlasTexture_n2rjr")

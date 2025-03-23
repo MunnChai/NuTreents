@@ -34,7 +34,11 @@ func remove_structure(map_coords: Vector2i) -> bool:
 	
 	var object: Node2D = tile_scene_map[map_coords]
 	
-	remove_child(object)
+	# Munn: kinda temp fix? twees handle freeing themselves, so we only need to free stuff like 
+	#       buildings, decor, etc.
+	if (not object is Twee):
+		remove_child(object)
+	
 	tile_scene_map.erase(map_coords)
 	return true
 
