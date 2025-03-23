@@ -29,14 +29,17 @@ func _ready() -> void:
 func _on_master_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(master_idx, linear_to_db(value))
 	_update_slider_label(value, master_slider)
+	SfxManager.play_sound_effect("ui_click")
 
 func _on_music_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(music_idx, linear_to_db(value))
 	_update_slider_label(value, music_slider)
+	SfxManager.play_sound_effect("ui_click")
 
 func _on_sfx_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(sfx_idx, linear_to_db(value))
 	_update_slider_label(value, sfx_slider)
+	SfxManager.play_sound_effect("ui_click")
 
 func _update_slider_label(value: float, slider: HSlider) -> void:
 	slider_label.text = str(int(value * 100)) + "%"

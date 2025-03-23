@@ -7,3 +7,4 @@ func _ready():
 
 func start_game():
 	SceneLoader.transition_to_game()
+	SfxManager.play_sound_effect("ui_click")

@@ -18,14 +18,17 @@ func _ready() -> void:
 func _on_trees_pressed() -> void:
 	_update_animation_player()
 	set_visibility(true, false, false)
+	SfxManager.play_sound_effect("ui_click")
 
 func _on_technology_pressed() -> void:
 	_update_animation_player()
 	set_visibility(false, true, false)
+	SfxManager.play_sound_effect("ui_click")
 
 func _on_settings_pressed() -> void:
 	_update_animation_player()
 	set_visibility(false, false, true)
+	SfxManager.play_sound_effect("ui_click")
 
 func _on_close_menu_pressed() -> void:
 	if is_open:
@@ -33,10 +36,12 @@ func _on_close_menu_pressed() -> void:
 		is_open = false
 		print("NA")
 		animation_player.play_backwards("menu_appear")
+		SfxManager.play_sound_effect("ui_click")
 	else:
 		is_open = true
 		print("YA")
 		animation_player.play("menu_appear")
+		SfxManager.play_sound_effect("ui_click")
 
 func set_visibility(tree : bool, tech : bool, settings : bool):
 	tree_menu.visible = tree

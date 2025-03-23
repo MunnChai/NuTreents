@@ -37,3 +37,4 @@ func _ready() -> void:
 
 func _on_button_pressed() -> void:
 	TreeManager.selected_tree_species = type 
+	SfxManager.play_sound_effect("ui_click")
