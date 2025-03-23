@@ -38,17 +38,17 @@ var desc_dictionary = {
 	"water_tree": "Dredges up them aquifers for your forest's convenience.",
 	"tall_tree": "Reaches above the clouds for more of that sweet, sweet sunlight.",
 	
-	"city_building": "TODO",
-	"factory": "TODO",
+	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
+	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
 	
-	"speedle": "TODO",
-	"silk_spitter": "TODO",
+	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
+	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
 	
 	TerrainMap.TILE_TYPE.DIRT: "Good old dirt. Nothing special.",
 	TerrainMap.TILE_TYPE.GRASS: "Fertile grasslands, ripe for trees.",
 	TerrainMap.TILE_TYPE.CITY: "Hard, cold asphalt. You'll have to remove it to plant.",
 	TerrainMap.TILE_TYPE.WATER: "Hydrates your nearby trees. Don't fall in, though.",
-	TerrainMap.TILE_TYPE.ROAD: "TODO",
+	TerrainMap.TILE_TYPE.ROAD: "Well-worn tar. You'll have to remove it to plant.",
 }
 
 func _ready():
