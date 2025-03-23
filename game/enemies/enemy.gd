@@ -316,7 +316,7 @@ func array_has(array: Array[Vector2i], what: Vector2i) -> bool:
 	return false
 
 func take_damage(damage: int):
-	
+	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(map_position))
 	
 	current_health -= damage
 	

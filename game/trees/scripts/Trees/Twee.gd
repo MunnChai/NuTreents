@@ -205,6 +205,7 @@ func take_damage(damage: int) -> bool:
 	#play sound effect
 	SfxManager.play_sound_effect("tree_damage")
 	hp -= damage
+	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(pos))
 	#print(pos, " taking damage ", damage)
 	#print(hp)
 	if (hp <= 0 and TreeManager.get_tree_map()[pos]):
