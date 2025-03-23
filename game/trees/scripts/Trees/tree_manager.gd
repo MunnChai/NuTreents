@@ -49,11 +49,11 @@ func _ready():
 	pass
 
 func start_game():
-	res = Vector3(0, 0, 0)
+	res = Vector3(25, 0, 0)
 	gain = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
-	res += Vector3(10000000, 0, 100)
+	#res += Vector3(10000000, 0, 100)
 	
 	forests.clear()
 	forest_map.clear()
