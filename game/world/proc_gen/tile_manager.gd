@@ -57,6 +57,8 @@ func detect_highlighted_objects(pos: Vector2i) -> void:
 	var is_hovering_enemy: bool = false
 	var hovered_enemy: Enemy
 	for enemy: Enemy in enemies:
+		if (!enemy):
+			continue
 		if (enemy.map_position == pos):
 			hovered_enemy = enemy
 			is_hovering_enemy = true

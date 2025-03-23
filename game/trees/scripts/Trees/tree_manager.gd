@@ -159,6 +159,35 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 			unsuccessful = true
 			PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(p))
 		return 2
+	if (type == TreeType.TECH_TREE):
+		var can_place = true
+		if (!structure_map.tile_scene_map.has(p)):
+			can_place = false
+		else:
+			var structure: Structure = structure_map.tile_scene_map[p]
+			if (not structure is FactoryRemains):
+				can_place = false
+		
+		if (!can_place):
+			if Input.is_action_just_pressed("lmb") and !unsuccessful:
+				unsuccessful = true
+				PopupManager.create_popup("Requires factory remains!", structure_map.map_to_local(p))
+			return 5
+	
+	var tech_slot: int
+	# SPECIAL CASE FOR PLANTING TECH TREES ON FACTORY REMAINS:
+	if (structure_map.tile_scene_map.has(p)):
+		var structure: Structure = structure_map.tile_scene_map[p]
+		if (structure is FactoryRemains):
+			if (type == TreeType.TECH_TREE):
+				tech_slot = structure.tech_slot
+				structure_map.remove_structure(p)
+			else:
+				PopupManager.create_popup("Only Tech Trees go on Factory Remains!", structure_map.map_to_local(p))
+				return 5
+	
+	if (tree is TechTree):
+		tree.tech_slot = tech_slot
 	
 	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
@@ -530,6 +559,9 @@ func is_mother_dead() -> bool:
 	return (!tree_map.has(Global.ORIGIN) or tree_map[Global.ORIGIN].died)
 
 
+
+const FACTORY_REMAINS = preload("res://trees/scripts/factory_remains.tscn")
+
 func handle_right_click(map_pos: Vector2i):
 	if (!is_reachable(map_pos, true)):
 		PopupManager.create_popup("Too far away!", structure_map.map_to_local(map_pos))
@@ -559,13 +591,23 @@ func handle_right_click(map_pos: Vector2i):
 			if (res.x > structure.cost_to_remove):
 				
 				res.x -= structure.cost_to_remove
+				
+				var tech_slot = structure.tech_slot
 				structure_map.remove_structure(map_pos)
+				
+				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
 				
 				PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
 				
 				# TODO: INSTANTIATE FACTORY REMAINS
+				var factory_remains = FACTORY_REMAINS.instantiate()
+				factory_remains.tech_slot = tech_slot
+				structure_map.add_structure(map_pos, factory_remains)
 			else:
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		if (structure is FactoryRemains):
+			PopupManager.create_popup("Cannot destroy factory remains!", structure_map.map_to_local(map_pos))
 		
 		# Return after removing building
 		return

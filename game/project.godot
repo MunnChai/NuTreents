@@ -35,6 +35,7 @@ terrain_map=""
 structure_map=""
 enemy_map=""
 clock=""
+tech_menu=""
 
 [input]
 

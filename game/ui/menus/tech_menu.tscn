@@ -1,17 +1,115 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnqphbl5e44tn"]
+[gd_scene load_steps=8 format=3 uid="uid://dnqphbl5e44tn"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_lce5o"]
+[ext_resource type="Script" uid="uid://bwokny8rxgsix" path="res://ui/menus/tech_menu.gd" id="1_uhide"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_8dtan"]
+[ext_resource type="Texture2D" uid="uid://bfsstyi7u6uwg" path="res://ui/menus/tech_rocket_skills_body.png" id="4_4mcpe"]
+[ext_resource type="Texture2D" uid="uid://cpfhxcj4mex44" path="res://ui/menus/tech_rocket_skills_fuel.png" id="5_1jrc1"]
+[ext_resource type="Texture2D" uid="uid://dsio21mg4t5oe" path="res://ui/menus/tech_rocket_skills_wings.png" id="6_m6vhx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uhide"]
 atlas = ExtResource("1_lce5o")
 region = Rect2(0, 208, 640, 152)
 
-[node name="TechMenu" type="Control"]
+[node name="TechMenu" type="Control" groups=["tech_menu"]]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_uhide")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Backboard" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 300.0
 texture = SubResource("AtlasTexture_uhide")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Backboard"]
+layout_mode = 0
+offset_right = 1166.0
+offset_bottom = 293.0
+
+[node name="VictoryPanel" type="VBoxContainer" parent="Backboard/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextContainner" type="MarginContainer" parent="Backboard/HBoxContainer/VictoryPanel"]
+layout_mode = 2
+theme_override_constants/margin_top = 30
+
+[node name="RequirementsLabel" type="RichTextLabel" parent="Backboard/HBoxContainer/VictoryPanel/TextContainner"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("3_8dtan")
+theme_override_font_sizes/normal_font_size = 48
+text = "Technology Required:
+- Rocket Body
+- Rocket Fuel
+- Rocket Wings"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ButtonContainer" type="MarginContainer" parent="Backboard/HBoxContainer/VictoryPanel"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="WinButton" type="Button" parent="Backboard/HBoxContainer/VictoryPanel/ButtonContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8dtan")
+theme_override_font_sizes/font_size = 48
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Backboard/HBoxContainer/VictoryPanel/ButtonContainer/WinButton"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = 4.0
+offset_right = 213.0
+offset_bottom = 57.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_8dtan")
+theme_override_font_sizes/normal_font_size = 64
+text = "TO THE MOON"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Backboard/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RocketBody" type="TextureRect" parent="Backboard/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("4_4mcpe")
+stretch_mode = 6
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Backboard/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RocketFuel" type="TextureRect" parent="Backboard/HBoxContainer/VBoxContainer3"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_1jrc1")
+stretch_mode = 6
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Backboard/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RocketWings" type="TextureRect" parent="Backboard/HBoxContainer/VBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_m6vhx")
+stretch_mode = 6
+
+[connection signal="pressed" from="Backboard/HBoxContainer/VictoryPanel/ButtonContainer/WinButton" to="." method="click_victory"]

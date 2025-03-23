@@ -16,6 +16,7 @@ var name_dictionary = {
 	
 	"city_building": "CITY STRUCTURE",
 	"factory": "FACTORY",
+	"factory_remains": "FACTORY REMAINS",
 	
 	"speedle": "SPEEDLE",
 	"silk_spitter": "SILK_SPITTER"
@@ -40,6 +41,7 @@ var desc_dictionary = {
 	
 	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
 	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
+	"factory_remains": "TODO: Yoooo, this factory remains is so awesome! please plant a tech tree here",
 	
 	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
 	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",

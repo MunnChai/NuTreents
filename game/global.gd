@@ -7,6 +7,7 @@ var structure_map: BuildingMap
 var terrain_map: TerrainMap
 var fog_map: FogMap
 var clock: Clock
+var tech_menu: TechMenu
 
 enum GameState {
 	PLAYING = 0,
@@ -26,3 +27,4 @@ func update_globals():
 	terrain_map = get_tree().get_first_node_in_group("terrain_map")
 	fog_map = get_tree().get_first_node_in_group("fog_map")
 	clock = get_tree().get_first_node_in_group("clock")
+	tech_menu = get_tree().get_first_node_in_group("tech_menu")

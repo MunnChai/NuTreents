@@ -7,7 +7,7 @@ const BLACK_SCREEN = preload("res://scene_loader/black_screen.tscn")
 const MAIN_MENU = preload("res://ui/main_menu/main_menu.tscn") # Main menu
 const MAIN = preload("res://main.tscn") # Game scene
 const GAME_OVER = preload("res://ui/game_over/game_over.tscn") # Gane over screen
-
+const VICTORY_SCREEN = preload("res://ui/VictoryScreen.tscn")
 # Fade in + out duration
 const FADE_DURATION = 2.0
 
@@ -27,6 +27,9 @@ func transition_to_game():
 
 func transition_to_game_over():
 	transition_to_packed(GAME_OVER, 2.0, 2.0)
+
+func transition_to_victory_screen():
+	transition_to_packed(VICTORY_SCREEN, 2.0, 2.0)
 
 func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION / 2, tween_out_duration = FADE_DURATION / 2):
 	if (is_transitioning):

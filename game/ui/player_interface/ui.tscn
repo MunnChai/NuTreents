@@ -52,6 +52,7 @@ offset_right = 1108.0
 offset_bottom = 177.0
 
 [node name="InfoBox" parent="." instance=ExtResource("7_a4txa")]
+visible = false
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
