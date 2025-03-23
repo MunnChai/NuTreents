@@ -12,6 +12,7 @@ enum GameState {
 	PLAYING = 0,
 	PAUSED = PLAYING + 1,
 	MAIN_MENU = PAUSED + 1,
+	GAME_OVER = MAIN_MENU + 1,
 }
 
 var game_state

@@ -21,9 +21,8 @@ func initialize(p: Vector2i, f: int):
 
 func die():
 	died = true
-	print("Mother died")
-	#TreeManager.remove_tree(pos)
-	# TODO: Game Over
+	Global.game_state = Global.GameState.GAME_OVER
+	SceneLoader.transition_to_game_over()
 
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system

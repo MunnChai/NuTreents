@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://brvnsccuk4c4t"]
+
+[ext_resource type="Script" uid="uid://csl38ffeasjd" path="res://ui/game_over/game_over.gd" id="1_4cp6t"]
+[ext_resource type="Texture2D" uid="uid://dqkpijulu52xf" path="res://ui/main_menu/game_over_screen.png" id="1_ns3eh"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="2_5nexe"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4cp6t")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_ns3eh")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 275.0
+offset_top = 46.0
+offset_right = 844.0
+offset_bottom = 207.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_5nexe")
+theme_override_font_sizes/normal_font_size = 192
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Retry" type="Button" parent="."]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 152.0
+offset_right = 665.0
+offset_bottom = 200.0
+theme_override_fonts/font = ExtResource("2_5nexe")
+theme_override_font_sizes/font_size = 48
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Retry"]
+layout_mode = 0
+offset_left = -112.0
+offset_right = 315.0
+offset_bottom = 80.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_5nexe")
+theme_override_font_sizes/normal_font_size = 96
+text = "Try Again"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainMenuButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 467.0
+offset_top = 225.0
+offset_right = 666.0
+offset_bottom = 280.0
+theme_override_fonts/font = ExtResource("2_5nexe")
+theme_override_font_sizes/font_size = 48
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenuButton"]
+layout_mode = 0
+offset_left = -76.0
+offset_top = 6.0
+offset_right = 282.0
+offset_bottom = 85.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_5nexe")
+theme_override_font_sizes/normal_font_size = 96
+text = "Main Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Retry" to="." method="retry"]
+[connection signal="pressed" from="MainMenuButton" to="." method="return_to_main_menu"]

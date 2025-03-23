@@ -50,12 +50,19 @@ func _ready():
 
 func start_game():
 	res = Vector3(0, 0, 0)
+	gain = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
+	
+	forests.clear()
+	forest_map.clear()
+	tree_map.clear()
 	
 	fog_map = get_tree().get_nodes_in_group("fog_map")[0]
 	structure_map = get_tree().get_nodes_in_group("structure_map")[0]
 	terrain_map = get_tree().get_nodes_in_group("terrain_map")[0]
+	
+	EnemyManager.start_game()
 	
 	await get_tree().process_frame
 	
@@ -69,6 +76,9 @@ func _process(delta):
 	update(delta)
 
 func _input(_event: InputEvent) -> void:
+	if (Global.game_state != Global.GameState.PLAYING):
+		return
+	
 	if (TreeManager.is_mother_dead()):
 		# if mother died
 		return

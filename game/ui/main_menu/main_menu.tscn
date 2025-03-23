@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://cedh52sbdvy3x"]
+[gd_scene load_steps=5 format=3 uid="uid://cedh52sbdvy3x"]
 
 [ext_resource type="Script" uid="uid://c0uuieuuepysv" path="res://ui/main_menu/main_menu.gd" id="1_omy8q"]
-[ext_resource type="Texture2D" uid="uid://div5wly01yjfq" path="res://ui/main_menu/main_menu_bg.png" id="1_uhj5c"]
+[ext_resource type="Texture2D" uid="uid://r31ptf3bjx5" path="res://ui/main_menu/main_menu_bg.png" id="1_uhj5c"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="2_mu8pm"]
+[ext_resource type="Texture2D" uid="uid://fu3tsme7dqwe" path="res://ui/main_menu/start_button.png" id="4_i5wg5"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -34,12 +35,21 @@ offset_top = 480.0
 offset_right = 1113.0
 offset_bottom = 615.0
 
-[node name="ButtonText" type="RichTextLabel" parent="Button"]
+[node name="TextureRect" type="TextureRect" parent="Button"]
 layout_mode = 0
-offset_left = 2.0
-offset_top = 27.0
-offset_right = 313.0
-offset_bottom = 161.0
+offset_left = -54.0
+offset_top = -28.0
+offset_right = 366.0
+offset_bottom = 168.0
+mouse_filter = 2
+texture = ExtResource("4_i5wg5")
+
+[node name="ButtonText" type="RichTextLabel" parent="Button/TextureRect"]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 55.0
+offset_right = 367.0
+offset_bottom = 189.0
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("2_mu8pm")
 theme_override_font_sizes/normal_font_size = 160
