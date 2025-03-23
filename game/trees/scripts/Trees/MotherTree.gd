@@ -21,7 +21,7 @@ func initialize(p: Vector2i, f: int):
 
 func die():
 	died = true
-	
+	print("Mother died")
 	#TreeManager.remove_tree(pos)
 	# TODO: Game Over
 

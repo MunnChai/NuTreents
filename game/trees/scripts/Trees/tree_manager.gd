@@ -11,6 +11,7 @@ const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
 const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
 const TECH_TREE = preload("res://trees/scenes/TechTree.tscn")
 const EXPLORER_TREE = preload("res://trees/scenes/ExplorerTree.tscn")
+const TALL_TREE = preload("res://trees/scenes/TallTree.tscn")
 
 enum TreeType {
 	MOTHER_TREE = 0,
@@ -18,7 +19,8 @@ enum TreeType {
 	GUN_TREE = DEFAULT_TREE + 1,
 	WATER_TREE = GUN_TREE + 1,
 	TECH_TREE = WATER_TREE + 1,
-	EXPLORER_TREE = TECH_TREE + 1
+	EXPLORER_TREE = TECH_TREE + 1,
+	TALL_TREE = EXPLORER_TREE + 1,
 }
 
 const TREE_DICT: Dictionary[int, PackedScene] = {
@@ -28,6 +30,7 @@ const TREE_DICT: Dictionary[int, PackedScene] = {
 	TreeType.WATER_TREE: WATER_TREE,
 	TreeType.TECH_TREE: TECH_TREE,
 	TreeType.EXPLORER_TREE: EXPLORER_TREE,
+	TreeType.TALL_TREE: TALL_TREE
 }
 
 
