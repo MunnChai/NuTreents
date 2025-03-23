@@ -87,8 +87,7 @@ func test():
 	print(add_tree(1, Vector2i(1,0)))
 	forests[1].print_forest()
 	print(forest_map)
-	
-	
+
 func _button_pressed():
 	update(1.0)
 	var f: Forest = forests[1]

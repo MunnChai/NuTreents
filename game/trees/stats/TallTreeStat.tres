@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_o52t0")
 name = "Tall Tree"
+id = "tall_tree"
 description = ""
 hp = 10
 max_water = 3

@@ -51,3 +51,10 @@ func _on_button_pressed() -> void:
 	if TreeManager.selected_tree_species != type:
 		TreeManager.selected_tree_species = type 
 		SfxManager.play_sound_effect("ui_click")
+
+
+func _on_mouse_entered():
+	InfoBox.get_instance().show_content_for_tree(tree_stat)
+
+func _on_mouse_exited():
+	InfoBox.get_instance().hide_content()

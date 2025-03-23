@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_8s7ni")
 name = "Tech Tree"
+id = "tech_tree"
 description = ""
 hp = 10
 max_water = 0
