@@ -53,6 +53,9 @@ func _ready():
 	id = "default_tree"
 
 func _process(delta: float) -> void:
+	if (is_dehydrated):
+		return
+	
 	life_time_seconds += delta
 	
 	#print(animation_player.current_animation)
