@@ -28,6 +28,7 @@ var movement_cooldown: float
 
 func _ready() -> void:
 	init()
+	sprite_2d.vframes = 4
 
 func init():
 	target_new_tree()
@@ -321,6 +322,13 @@ func take_damage(damage: int):
 	
 	if (current_health <= 0):
 		die()
+	else:
+		if (animation_player.current_animation == "idle"):
+			animation_player.play("hurt")
+			animation_player.queue("idle")
+		elif (animation_player.current_animation == "idle_backwards"):
+			animation_player.play("hurt_backwards")
+			animation_player.queue("idle_backwards")
 
 func die():
 	is_dead = true

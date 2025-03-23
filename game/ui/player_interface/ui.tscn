@@ -2,9 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
-[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="3_wl5ax"]
+[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="3_wl5ax"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="4_6i6ec"]
-[ext_resource type="PackedScene" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
+[ext_resource type="PackedScene" uid="uid://cw31hycsu8c78" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]

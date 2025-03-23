@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c57qxqh1vmqsp"]
+[gd_scene load_steps=3 format=3 uid="uid://c57qxqh1vmqsp"]
 
+[ext_resource type="Script" uid="uid://qo1v5fqd4bxl" path="res://trees/scripts/tree_bullet.gd" id="1_cbhl6"]
 [ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://trees/sheets/projectiles/tree_bullet.png" id="1_r5epu"]
 
 [node name="TreeBullet" type="Node2D"]
+script = ExtResource("1_cbhl6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_r5epu")

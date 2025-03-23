@@ -23,16 +23,17 @@ libraries = {
 autoplay = "idle"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -12)
 texture = ExtResource("2_xb38i")
 hframes = 8
-vframes = 3
+vframes = 4
 
 [node name="Eyes" type="Sprite2D" parent="." node_paths=PackedStringArray("copy_from")]
 material = SubResource("CanvasItemMaterial_6ldno")
-position = Vector2(0, -16)
+position = Vector2(0, -12)
 texture = ExtResource("3_6ldno")
 hframes = 8
-vframes = 3
+vframes = 4
+frame = 16
 script = ExtResource("4_b108m")
 copy_from = NodePath("../Sprite2D")

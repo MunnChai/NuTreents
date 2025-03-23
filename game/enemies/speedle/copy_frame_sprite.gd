@@ -8,4 +8,4 @@ func _process(delta: float) -> void:
 	vframes = copy_from.vframes
 	frame = copy_from.frame
 	flip_h = copy_from.flip_h
-	flip_v = copy_from.flip_v
+	flip_v = copy_from.flip_v 
