@@ -15,6 +15,7 @@ offset_right = 96.0
 offset_bottom = 124.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_default_cursor_shape = 2
 script = ExtResource("2_hkimi")
 
 [node name="TextureRect" type="TextureRect" parent="."]
