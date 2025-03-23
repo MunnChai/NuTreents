@@ -68,6 +68,7 @@ func start_game():
 	await get_tree().process_frame
 	
 	call_deferred("add_tree", 0, Global.MAP_SIZE / 2, false)
+
 	print("Yes!!")
 
 func _process(delta):
@@ -195,6 +196,14 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if (type != 0): #check to make sure it's not mother tree
 		SfxManager.play_sound_effect("tree_plant")
 		print("done")
+	
+	#if (type == 0):
+		#structure_map.add_structure(p + Vector2i.UP + Vector2i.LEFT, tree)
+		#forest.add_tree(p + Vector2i.UP + Vector2i.LEFT, tree)
+		#structure_map.add_structure(p + Vector2i.UP, tree)
+		#forest.add_tree(p + Vector2i.UP, tree)
+		#structure_map.add_structure(p + Vector2i.LEFT, tree)
+		#forest.add_tree(p + Vector2i.LEFT, tree)
 	
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
