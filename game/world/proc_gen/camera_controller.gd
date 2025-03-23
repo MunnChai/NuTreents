@@ -37,6 +37,15 @@ func _process(delta: float) -> void:
 		zoom_cam_out(delta)
 	
 	prev_mouse_pos = get_viewport().get_mouse_position()
+	
+	lock_camera()
+
+
+const X_MAX: float = 32 * Global.MAP_SIZE.x / 2
+const Y_MAX: float = 16 * Global.MAP_SIZE.y / 2
+func lock_camera():
+	global_position.x = clamp(global_position.x, -X_MAX, X_MAX)
+	global_position.y = clamp(global_position.y, 0, Y_MAX * 2)
 
 func move_cam(delta: float) -> void:
 	print("YAR")
