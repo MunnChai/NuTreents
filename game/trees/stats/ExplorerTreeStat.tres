@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_pvc8c")
 name = "Explorer Tree"
+id = "explorer_tree"
 description = ""
 hp = 10
 max_water = 2

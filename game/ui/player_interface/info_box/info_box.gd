@@ -60,6 +60,31 @@ func _ready():
 static func get_instance() -> InfoBox:
 	return instance
 
+func hide_content():
+	rich_text.text = ""
+
+func show_content_for_tree(tree_stat: TreeStatResource):
+	if (!name_dictionary.has(tree_stat.id)):
+		rich_text.text = ""
+		return
+	
+	var content = "[i]" + name_dictionary[tree_stat.id] + "[/i]";
+	content += "\n\n"
+	content += desc_dictionary[tree_stat.id]
+	rich_text.text = content
+	
+	rich_text.text += "\n"
+
+	rich_text.text +="\n"
+	rich_text.text += "HP: " + str(tree_stat.hp)
+	rich_text.text += "\nNET WATER: " + str(tree_stat.gain.y - tree_stat.maint) + "/s"
+	rich_text.text += "\nNET NUTRIENTS: " + str(tree_stat.gain.x) + "/s"
+	rich_text.text += "\nNET SUN: " + str(tree_stat.gain.z) + "/s"
+	
+	rich_text.text += "\n"
+
+
+
 func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_factory: bool = false) -> void:
 	var world_pos = Global.terrain_map.map_to_local(pos)
 	var fog_pos = Global.fog_map.local_to_map(world_pos)

@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_oaifg")
 name = "Default Tree"
+id = "default_tree"
 description = ""
 hp = 10
 max_water = 2

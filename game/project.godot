@@ -37,6 +37,7 @@ structure_map=""
 enemy_map=""
 clock=""
 tech_menu=""
+tile_manager=""
 
 [input]
 

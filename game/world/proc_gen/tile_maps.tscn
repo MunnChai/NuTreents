@@ -143,7 +143,7 @@ sources/0 = SubResource("TileSetAtlasSource_0rry4")
 
 [node name="TileMaps" type="Node2D"]
 
-[node name="BuildingManager" type="Node2D" parent="."]
+[node name="BuildingManager" type="Node2D" parent="." groups=["tile_manager"]]
 y_sort_enabled = true
 script = ExtResource("1_56hbk")
 
