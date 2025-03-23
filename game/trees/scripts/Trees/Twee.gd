@@ -48,7 +48,8 @@ func _ready():
 	play_grow_small_animation()
 	
 	is_adjacent_to_water = is_water_adjacent()
-	gain.y = get_water_gain()
+	if (is_adjacent_to_water):
+		maint = 0
 	
 	id = "default_tree"
 
@@ -142,6 +143,9 @@ func get_upgraded_stats_from_resource(tree_stat: TreeStatResource):
 	gain = tree_stat.gain_2
 	maint = tree_stat.maint_2
 	time_to_grow = tree_stat.time_to_grow_2
+	
+	if (is_adjacent_to_water):
+		maint = 0
 
 func initialize(p: Vector2i, f: int):
 	died = false
