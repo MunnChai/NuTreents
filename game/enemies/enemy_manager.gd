@@ -87,7 +87,7 @@ func spawn_enemies() -> int:
 		var world_pos = Global.fog_map.map_to_local(rand_pos)
 		var terrain_pos = Global.terrain_map.local_to_map(world_pos)
 		
-		spawn_enemy(1, terrain_pos)
+		spawn_enemy(rand_enemy, terrain_pos)
 	
 	return num_enemies
 
