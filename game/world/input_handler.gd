@@ -17,10 +17,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		var map_coords: Vector2i = Global.structure_map.local_to_map(Global.structure_map.get_mouse_coords())
 		
 		TreeManager.handle_right_click(map_coords)
-	
-	if (event is InputEventMouseMotion):
-		update_highlight()
-		update_adjacent_tile_transparencies()
+
+func _process(delta: float) -> void:
+	update_highlight()
+	update_adjacent_tile_transparencies()
 
 # Moves the tile highlight sprite to the correct position
 func update_highlight() -> void:
@@ -51,9 +51,24 @@ func update_highlight() -> void:
 			tile_manager.cursor.set_medium()
 		tile_manager.cursor.enable()
 	else:
-		## Cannot place on this tile
 		tile_manager.highlight.modulate = Color("ff578681") ## RED
-		tile_manager.cursor.disable()
+		var building_node: Node2D = Global.structure_map.get_building_node(map_coords)
+		if not TreeManager.is_reachable(map_coords):
+			## Cannot place on this tile
+			tile_manager.cursor.disable()
+		elif terrain_map.get_tile_biome(map_coords) == TerrainMap.TILE_TYPE.CITY or terrain_map.get_tile_biome(map_coords) == TerrainMap.TILE_TYPE.ROAD:
+			tile_manager.cursor.set_low()
+			if building_node:
+				if building_node.get_id() == "city_building":
+					tile_manager.cursor.set_high()
+					tile_manager.cursor.play()
+				elif building_node.get_id() == "factory":
+					tile_manager.cursor.set_medium()
+					tile_manager.cursor.play()
+			tile_manager.cursor.enable()
+		else:
+			## Cannot place on this tile
+			tile_manager.cursor.disable()
 	
 	# DETECT WHAT IS HIGHLIGHTED
 	detect_highlighted_objects(map_coords)
