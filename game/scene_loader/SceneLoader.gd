@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 # For fading
 const BLACK_SCREEN = preload("res://scene_loader/black_screen.tscn")
@@ -17,6 +17,8 @@ var is_transitioning: bool = false
 func _ready():
 	black_screen = BLACK_SCREEN.instantiate()
 	black_screen.z_index = 100
+	layer = 100
+	
 	add_child(black_screen)
 
 func transition_to_main_menu():
