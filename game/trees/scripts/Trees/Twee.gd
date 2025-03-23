@@ -49,6 +49,8 @@ func _ready():
 	
 	is_adjacent_to_water = is_water_adjacent()
 	gain.y = get_water_gain()
+	
+	id = "default_tree"
 
 func _process(delta: float) -> void:
 	life_time_seconds += delta
@@ -205,8 +207,9 @@ func take_damage(damage: int) -> bool:
 	#play sound effect
 	SfxManager.play_sound_effect("tree_damage")
 	hp -= damage
-	print(pos, " taking damage ", damage)
-	print(hp)
+	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(pos))
+	#print(pos, " taking damage ", damage)
+	#print(hp)
 	if (hp <= 0 and TreeManager.get_tree_map()[pos]):
 		TreeManager.remove_tree(pos)
 		print("remove mother tree")

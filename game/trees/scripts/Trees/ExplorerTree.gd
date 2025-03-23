@@ -1,6 +1,10 @@
 class_name ExplorerTree
 extends Twee
 
+func _ready() -> void:
+	super._ready()
+	
+	id = "explorer_tree"
 
 func get_reachable_offsets() -> Array[Vector2i]:
 	

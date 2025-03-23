@@ -11,6 +11,7 @@ const GUN_TREE = preload("res://trees/scenes/GunTree.tscn")
 const WATER_TREE = preload("res://trees/scenes/WaterTree.tscn")
 const TECH_TREE = preload("res://trees/scenes/TechTree.tscn")
 const EXPLORER_TREE = preload("res://trees/scenes/ExplorerTree.tscn")
+const TALL_TREE = preload("res://trees/scenes/TallTree.tscn")
 
 enum TreeType {
 	MOTHER_TREE = 0,
@@ -18,7 +19,8 @@ enum TreeType {
 	GUN_TREE = DEFAULT_TREE + 1,
 	WATER_TREE = GUN_TREE + 1,
 	TECH_TREE = WATER_TREE + 1,
-	EXPLORER_TREE = TECH_TREE + 1
+	EXPLORER_TREE = TECH_TREE + 1,
+	TALL_TREE = EXPLORER_TREE + 1,
 }
 
 const TREE_DICT: Dictionary[int, PackedScene] = {
@@ -28,6 +30,7 @@ const TREE_DICT: Dictionary[int, PackedScene] = {
 	TreeType.WATER_TREE: WATER_TREE,
 	TreeType.TECH_TREE: TECH_TREE,
 	TreeType.EXPLORER_TREE: EXPLORER_TREE,
+	TreeType.TALL_TREE: TALL_TREE
 }
 
 
@@ -59,7 +62,7 @@ func _input(_event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		add_tree(selected_tree_species, map_coords)
+		add_tree(selected_tree_species, map_coords) 
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
@@ -88,6 +91,8 @@ func _button_pressed():
 	
 ## to be called each round, update everything?
 func update(delta: float):
+	if Input.is_action_just_released("lmb"):
+		unsuccessful = false
 	if (tree_map[Global.ORIGIN].died):
 		# if mother tree is dead
 		return
@@ -103,7 +108,7 @@ func update(delta: float):
 	res += gain * delta
 	res.y = max(0, res.y)
 
-
+var unsuccessful = false
 ## add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
@@ -112,14 +117,26 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	tree = TREE_DICT[type].instantiate()
 	
 	if (forest_map.has(p)):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
+			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p))
 		return 1
-	if (!enough_n(tree.tree_stat.cost_to_purchase)):
-		print("not enough N")
-		return 2
-	if not terrain_map.is_fertile(p):
-		return 3 
 	if enforce_reachable and not is_reachable(p):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
+			PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
 		return 4
+	if not terrain_map.is_fertile(p):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
+			PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
+		return 3 
+	if (!enough_n(tree.tree_stat.cost_to_purchase)):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
+			PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(p))
+		return 2
+	
 	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
 	var f_id: int = find_forest(p)

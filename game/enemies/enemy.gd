@@ -28,6 +28,7 @@ var movement_cooldown: float
 
 func _ready() -> void:
 	init()
+	sprite_2d.vframes = 4
 
 func init():
 	target_new_tree()
@@ -315,12 +316,19 @@ func array_has(array: Array[Vector2i], what: Vector2i) -> bool:
 	return false
 
 func take_damage(damage: int):
-	
+	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(map_position))
 	
 	current_health -= damage
 	
 	if (current_health <= 0):
 		die()
+	else:
+		if (animation_player.current_animation == "idle"):
+			animation_player.play("hurt")
+			animation_player.queue("idle")
+		elif (animation_player.current_animation == "idle_backwards"):
+			animation_player.play("hurt_backwards")
+			animation_player.queue("idle_backwards")
 
 func die():
 	is_dead = true

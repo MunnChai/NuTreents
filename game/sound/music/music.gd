@@ -22,7 +22,7 @@ var current_vibe = Vibe.CALM_NIGHT
 
 func _process(delta: float) -> void:
 	if Input.is_key_label_pressed(KEY_M):
-		audio_stream_player.stop()
+		audio_stream_player.play()
 	
 	if audio_stream_player.get_stream_playback() == null:
 		return

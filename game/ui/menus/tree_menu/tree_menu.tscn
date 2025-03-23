@@ -66,7 +66,7 @@ water_min_text = "4"
 sun_min_text = "4"
 nutrients_min_text = "4"
 species_text = "Tall"
-type = 1
+type = 6
 
 [node name="WaterTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
