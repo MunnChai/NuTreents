@@ -1,13 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwyhak12pdjyv"]
+[gd_scene load_steps=15 format=3 uid="uid://dwyhak12pdjyv"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="2_dodub"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://trees/stats/DefaultTreeStat.tres" id="3_jkcef"]
 [ext_resource type="PackedScene" uid="uid://b8fg45slly116" path="res://ui/menus/tree_menu/tree_card.tscn" id="3_ubm70"]
 [ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://trees/stats/ExplorerTreeStat.tres" id="4_e4koi"]
 [ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://trees/stats/TallTreeStat.tres" id="5_486df"]
+[ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://ui/menus/tree_menu/icons/explorer_tree.png" id="5_xu310"]
+[ext_resource type="Texture2D" uid="uid://cicss6euv30fe" path="res://ui/menus/tree_menu/icons/tall_tree.png" id="6_438ci"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://trees/stats/WaterTreeStat.tres" id="6_ot1xe"]
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://trees/stats/GunTreeStat.tres" id="7_32lbt"]
 [ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://trees/stats/TechTreeStat.tres" id="8_87trl"]
+[ext_resource type="Texture2D" uid="uid://8vev3878o70d" path="res://ui/menus/tree_menu/icons/pump_tree.png" id="8_ugj6x"]
+[ext_resource type="Texture2D" uid="uid://dogdbwrs7cpmw" path="res://ui/menus/tree_menu/icons/tech_tree.png" id="9_uw2bc"]
+[ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://ui/menus/tree_menu/icons/gun_tree.png" id="11_ffnwc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dodub"]
 atlas = ExtResource("2_dodub")
@@ -55,6 +60,7 @@ sun_min_text = "2"
 nutrients_min_text = "2"
 species_text = "Explorer"
 type = 5
+texture = ExtResource("5_xu310")
 
 [node name="TallTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
@@ -67,6 +73,7 @@ sun_min_text = "4"
 nutrients_min_text = "4"
 species_text = "Tall"
 type = 6
+texture = ExtResource("6_438ci")
 
 [node name="WaterTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
@@ -79,6 +86,7 @@ sun_min_text = "5"
 nutrients_min_text = "5"
 species_text = "Water"
 type = 3
+texture = ExtResource("8_ugj6x")
 
 [node name="GunTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
@@ -91,8 +99,10 @@ sun_min_text = "7"
 nutrients_min_text = "7"
 species_text = "Gun"
 type = 2
+texture = ExtResource("11_ffnwc")
 
 [node name="TechTreeCard" parent="TreeCards" instance=ExtResource("3_ubm70")]
 layout_mode = 2
 tree_stat = ExtResource("8_87trl")
 type = 4
+texture = ExtResource("9_uw2bc")

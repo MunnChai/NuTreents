@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8fg45slly116"]
+[gd_scene load_steps=7 format=3 uid="uid://b8fg45slly116"]
 
 [ext_resource type="Texture2D" uid="uid://cwdw0dy41qgvt" path="res://ui/menus/tree_menu/tree_card.png" id="1_wbhwn"]
 [ext_resource type="Script" uid="uid://dxwbpi670nhxn" path="res://ui/menus/tree_menu/tree_card.gd" id="2_hkimi"]
 [ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="3_db0qj"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/menus/tree_menu/icons/default_tree.png" id="3_gytjr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hkimi"]
 atlas = ExtResource("1_wbhwn")
@@ -19,6 +20,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_default_cursor_shape = 2
 script = ExtResource("2_hkimi")
+texture = ExtResource("3_gytjr")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -28,6 +30,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_hkimi")
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = 12.0
+offset_right = 32.0
+offset_bottom = 140.0
+grow_horizontal = 2
+texture = ExtResource("3_gytjr")
+stretch_mode = 3
 
 [node name="WaterPlus" type="Label" parent="TextureRect"]
 layout_mode = 0

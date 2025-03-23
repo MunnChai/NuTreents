@@ -10,6 +10,8 @@ extends Control
 @export var species_text: String
 @export var type: TreeManager.TreeType
 
+@export var texture: Texture2D
+
 @onready var water_plus: Label = $TextureRect/WaterPlus
 @onready var sun_plus: Label = $TextureRect/SunPlus
 @onready var nutrients_plus: Label = $TextureRect/NutrientsPlus
@@ -20,6 +22,8 @@ extends Control
 @onready var cost = $TextureRect/Cost
 
 func _ready() -> void:
+	$TextureRect/TextureRect.texture = texture
+	
 	var net_water = tree_stat.gain.y - tree_stat.maint
 	if (net_water > 0):
 		water_plus.text = str(int(net_water))
