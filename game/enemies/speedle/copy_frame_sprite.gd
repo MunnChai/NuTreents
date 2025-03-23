@@ -9,3 +9,4 @@ func _process(delta: float) -> void:
 	frame = copy_from.frame
 	flip_h = copy_from.flip_h
 	flip_v = copy_from.flip_v 
+	position = copy_from.position

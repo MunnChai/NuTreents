@@ -53,6 +53,7 @@ func start_game():
 	gain = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
+	res += Vector3(10000000, 0, 100)
 	
 	forests.clear()
 	forest_map.clear()
@@ -74,24 +75,6 @@ func _process(delta):
 		return
 	
 	update(delta)
-
-func _input(_event: InputEvent) -> void:
-	if (Global.game_state != Global.GameState.PLAYING):
-		return
-	
-	if (TreeManager.is_mother_dead()):
-		# if mother died
-		return
-	if (Input.is_action_pressed("lmb")):
-		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
-		
-		add_tree(selected_tree_species, map_coords) 
-	
-	if (Input.is_action_just_pressed("rmb")):
-		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
-		
-		handle_right_click(map_coords)
-
 
 func test():
 	# testing
@@ -115,7 +98,7 @@ func _button_pressed():
 ## to be called each round, update everything?
 func update(delta: float):
 	if Input.is_action_just_released("lmb"):
-		unsuccessful = false
+		placed = false
 	if (tree_map[Global.ORIGIN].died):
 		# if mother tree is dead
 		return
@@ -131,7 +114,7 @@ func update(delta: float):
 	res += gain * delta
 	res.y = max(0, res.y)
 
-var unsuccessful = false
+var placed = false
 ## add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
@@ -139,25 +122,32 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	var tree: Twee
 	tree = TREE_DICT[type].instantiate()
 	
+	if (terrain_map.is_void(p)):
+		return -1
+	
 	if (forest_map.has(p)):
-		if Input.is_action_just_pressed("lmb") and !unsuccessful:
-			unsuccessful = true
-			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p))
+		if Input.is_action_just_pressed("lmb") and !placed:
+			placed = true
+			SfxManager.play_sound_effect("ui_fail")
+			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
 		return 1
 	if enforce_reachable and not is_reachable(p):
-		if Input.is_action_just_pressed("lmb") and !unsuccessful:
-			unsuccessful = true
+		if Input.is_action_just_pressed("lmb") and !placed:
+			placed = true
+			SfxManager.play_sound_effect("ui_fail")
 			PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
 		return 4
 	if not terrain_map.is_fertile(p):
-		if Input.is_action_just_pressed("lmb") and !unsuccessful:
-			unsuccessful = true
+		if Input.is_action_just_pressed("lmb") and !placed:
+			placed = true
+			SfxManager.play_sound_effect("ui_fail")
 			PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
 		return 3 
 	if (!enough_n(tree.tree_stat.cost_to_purchase)):
-		if Input.is_action_just_pressed("lmb") and !unsuccessful:
-			unsuccessful = true
-			PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(p))
+		if Input.is_action_just_pressed("lmb") and !placed:
+			placed = true
+			SfxManager.play_sound_effect("ui_fail")
+			PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
 		return 2
 	if (type == TreeType.TECH_TREE):
 		var can_place = true
@@ -169,9 +159,10 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 				can_place = false
 		
 		if (!can_place):
-			if Input.is_action_just_pressed("lmb") and !unsuccessful:
-				unsuccessful = true
-				PopupManager.create_popup("Requires factory remains!", structure_map.map_to_local(p))
+			if Input.is_action_just_pressed("lmb") and !placed:
+				placed = true
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Requires factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
 			return 5
 	
 	var tech_slot: int
@@ -183,8 +174,10 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 				tech_slot = structure.tech_slot
 				structure_map.remove_structure(p)
 			else:
-				PopupManager.create_popup("Only Tech Trees go on Factory Remains!", structure_map.map_to_local(p))
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Only Tech Trees grow on factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
 				return 5
+	placed = true
 	
 	if (tree is TechTree):
 		tree.tech_slot = tech_slot

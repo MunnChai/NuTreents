@@ -69,7 +69,7 @@ func _process(delta: float) -> void:
 
 
 #const FLASH_DECAY_RATE = 50.0
-const SHAKE_DECAY_RATE = 35.0
+const SHAKE_DECAY_RATE = 15.0
 const FLASH_DURATION = 0.1 # In seconds
 var flash_time = 0.0
 var flash_amount = 0.0
@@ -101,11 +101,13 @@ func _update_shader(delta: float) -> void:
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
 	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
-	if is_large:
-		(sprite.get_material() as ShaderMaterial).set_shader_parameter("uv_y_offset", 0.1)
-	else:
-		(sprite.get_material() as ShaderMaterial).set_shader_parameter("uv_y_offset", 0.62)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("uv_y_offset", get_uv_y_offset())
 
+func get_uv_y_offset() -> float:
+	if is_large:
+		return 0.1
+	else:
+		return 0.62
 
 ## NOTHING to SMALL
 func play_grow_small_animation():
@@ -214,7 +216,7 @@ func take_damage(damage: int) -> bool:
 	#play sound effect
 	SfxManager.play_sound_effect("tree_damage")
 	hp -= damage
-	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(pos))
+	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(pos), Color("fe9888"))
 	#print(pos, " taking damage ", damage)
 	#print(hp)
 	if (hp <= 0 and TreeManager.get_tree_map()[pos]):
@@ -226,7 +228,7 @@ func take_damage(damage: int) -> bool:
 	
 	# VISUAL: SET AMOUNTS FOR FLASH & SHAKE
 	flash_time = FLASH_DURATION
-	shake_amount = 20.0
+	shake_amount = 30.0
 	
 	return false
 

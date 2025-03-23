@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
-[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="3_wl5ax"]
+[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="3_wl5ax"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="4_6i6ec"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
@@ -23,10 +23,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("5_anucx")
 
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
+mouse_filter = 1
 
 [node name="ResourcesUI" parent="." instance=ExtResource("2_dfe3o")]
 anchors_preset = 0
@@ -40,6 +41,7 @@ grow_horizontal = 1
 grow_vertical = 1
 size_flags_horizontal = 0
 size_flags_vertical = 4
+mouse_filter = 1
 
 [node name="Clock" parent="." instance=ExtResource("3_wl5ax")]
 position = Vector2(1086, 66)
@@ -50,6 +52,7 @@ offset_left = 1075.0
 offset_top = 145.0
 offset_right = 1108.0
 offset_bottom = 177.0
+mouse_default_cursor_shape = 2
 
 [node name="InfoBox" parent="." instance=ExtResource("7_a4txa")]
 visible = false

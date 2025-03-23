@@ -27,6 +27,12 @@ func _ready():
 	
 	id = "tech_tree"
 
+func get_uv_y_offset() -> float:
+	if is_large:
+		return 0.1
+	else:
+		return 0.75
+
 func play_large_tree_animation():
 	animation_player.play("pump")
 

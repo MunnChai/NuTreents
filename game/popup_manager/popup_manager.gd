@@ -9,8 +9,9 @@ const MIN_SIZE: float = 1.0
 const TWEEN_DURATION: float = 1.0
 const Y_OFFSET_RANGE: float = 20
 
-func create_popup(text: String, position: Vector2, text_color: Vector3 = Vector3(1, 1, 1)):  
+func create_popup(text: String, position: Vector2, text_color: Color = Color.WHITE, outline_color: Color = Color.BLACK):  
 	var popup = POPUP.instantiate()
+	popup.set_color(text_color, outline_color)
 	popup.text = text
 	popup.z_index = 200
 	popup.position += position

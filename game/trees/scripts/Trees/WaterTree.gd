@@ -15,6 +15,12 @@ func _ready():
 	# Calculate adjacency on start of runtime, instead of each frame
 	
 
+func get_uv_y_offset() -> float:
+	if is_large:
+		return 0.1
+	else:
+		return 0.75
+
 ## update local storage and use water for maintainence
 ## returns the right amount of res to system
 func update(delta: float) -> Vector3:

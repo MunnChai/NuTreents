@@ -322,10 +322,12 @@ cache/0/32/0/glyphs/59/uv_rect = Rect2(1, 19, 12, 16)
 cache/0/32/0/glyphs/59/texture_idx = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_5207d"]
+resource_local_to_scene = true
 font = SubResource("FontFile_u1ony")
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kcn2c"]
+resource_local_to_scene = true
 font = SubResource("FontFile_u1ony")
 font_color = Color(0, 0, 0, 1)
 outline_color = Color(0, 0, 0, 1)

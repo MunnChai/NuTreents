@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://iw7jkyqnnakt"]
+
+[ext_resource type="AudioStream" uid="uid://beg6lkfe736xw" path="res://sound/sfx/ui_fail.wav" id="1_o2tgx"]
+
+[node name="UiFail" type="AudioStreamPlayer"]
+stream = ExtResource("1_o2tgx")

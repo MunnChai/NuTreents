@@ -43,7 +43,7 @@ func _input(event: InputEvent) -> void:
 	if (Input.is_action_just_pressed("debug_button")):
 		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		spawn_enemy(EnemyType.SILK_SPITTER, map_coord)
+		spawn_enemy(EnemyType.SPEEDLE, map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -129,12 +129,14 @@ func kill_all_enemies():
 			continue
 		
 		# UNCOMMENT THESE!!!!
-		enemy.die()
-		current_enemies.erase(enemy)
+		#enemy.die()
+		#current_enemies.erase(enemy)
 
 
 func get_enemy_at(pos: Vector2i) -> Enemy:
 	for enemy in current_enemies:
+		if (!enemy):
+			continue
 		if (enemy.is_dead):
 			continue
 		if (enemy.map_position == pos):

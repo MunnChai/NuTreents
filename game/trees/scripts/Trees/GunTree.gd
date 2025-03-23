@@ -94,3 +94,12 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 func upgrade_tree():
 	super.upgrade_tree()
 	damage = 6 # TODO: Make a better way set damage values (resource, dictionary, etc.)
+
+func get_uv_y_offset() -> float:
+	if is_large:
+		if animation_player.current_animation.get_basename() == "shoot":
+			return 1.0
+		else:
+			return 0.45
+	else:
+		return 0.75
