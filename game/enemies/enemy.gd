@@ -337,7 +337,10 @@ func die():
 	is_dead = true
 	
 	#play sound effect
-	SfxManager.play_sound_effect("speedle_die")
+	if (id == "speedle"):
+		SfxManager.play_sound_effect("speedle_die")
+	else:
+		SfxManager.play_sound_effect("silk_spitter")
 	
 	animation_player.play("death")
 	animation_player.animation_finished.connect(

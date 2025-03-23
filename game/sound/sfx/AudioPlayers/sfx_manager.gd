@@ -16,7 +16,8 @@ var ui_click: AudioStreamPlayer
 const UI_CLICK = preload("res://sound/sfx/AudioPlayers/ui_click.tscn")
 var concrete_break: AudioStreamPlayer
 const CONCRETE_BREAK = preload("res://sound/sfx/AudioPlayers/concrete_break.tscn")
-
+var silk_spitter: AudioStreamPlayer
+const SILK_SPITTER = preload("res://sound/sfx/AudioPlayers/silk_spitter.tscn")
 var SFX_DICT: Dictionary[String, AudioStreamPlayer]  
 
 func _ready() -> void:
@@ -59,6 +60,10 @@ func _ready() -> void:
 	concrete_break = CONCRETE_BREAK.instantiate()
 	add_child(concrete_break)
 	SFX_DICT["concrete_break"] = concrete_break
+	
+	silk_spitter = SILK_SPITTER.instantiate()
+	add_child(silk_spitter)
+	SFX_DICT["silk_spitter"] = silk_spitter
 
 func play_sound_effect(name: String) -> void:
 	var sound_effect: AudioStreamPlayer = SFX_DICT[name]

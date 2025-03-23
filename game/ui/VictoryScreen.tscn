@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://lkkuqqnm4li6"]
 
-[ext_resource type="Script" path="res://ui/victory_screen.gd" id="1_6j8wp"]
+[ext_resource type="Script" uid="uid://bsy2ynl4u60l2" path="res://ui/victory_screen.gd" id="1_6j8wp"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="1_f88p8"]
 [ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="2_6j8wp"]
 

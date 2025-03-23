@@ -19,8 +19,8 @@ var spawning_interval_tracker: float = 0
 var current_wave = 0
 var day_tracker = 1
 
-var min_enemies_per_wave: int = 4
-var max_enemies_per_wave: int = 6
+var min_enemies_per_wave: int = 1
+var max_enemies_per_wave: int = 2
 
 var current_enemies: Array[Enemy]
 
@@ -40,10 +40,10 @@ func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	if (Input.is_action_just_pressed("debug_button")):
-		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
-		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		spawn_enemy(EnemyType.SPEEDLE, map_coord)
+	#if (Input.is_action_just_pressed("debug_button")):
+		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
+		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
+		#spawn_enemy(EnemyType.SPEEDLE, map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -129,8 +129,8 @@ func kill_all_enemies():
 			continue
 		
 		# UNCOMMENT THESE!!!!
-		#enemy.die()
-		#current_enemies.erase(enemy)
+		enemy.die()
+		current_enemies.erase(enemy)
 
 
 func get_enemy_at(pos: Vector2i) -> Enemy:
