@@ -7,6 +7,7 @@ var clock: Clock
 func _ready() -> void:
 	clock = get_tree().root.find_child("Clock", true, false)
 	audio_stream_player.play()
+	audio_stream_player.bus = "Music"
 
 
 enum Vibe {

@@ -557,6 +557,7 @@ const FACTORY_REMAINS = preload("res://trees/scripts/factory_remains.tscn")
 
 func handle_right_click(map_pos: Vector2i):
 	if (!is_reachable(map_pos, true)):
+		SfxManager.play_sound_effect("ui_fail")
 		PopupManager.create_popup("Too far away!", structure_map.map_to_local(map_pos))
 		return
 	
@@ -572,11 +573,13 @@ func handle_right_click(map_pos: Vector2i):
 		# If building is city_building, remove city_building (if you have enough nutrients)
 		if (structure is CityBuilding):
 			if (res.x > structure.cost_to_remove):
-				
+				SfxManager.play_sound_effect("concrete_break")
 				res.x -= structure.cost_to_remove
 				structure_map.remove_structure(map_pos)
 				PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
+				
 			else:
+				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
 		# If building is factory, remove factory, instantiate factory remains
@@ -590,6 +593,7 @@ func handle_right_click(map_pos: Vector2i):
 				
 				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
 				
+				SfxManager.play_sound_effect("concrete_break")
 				PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
 				
 				# TODO: INSTANTIATE FACTORY REMAINS
@@ -597,9 +601,11 @@ func handle_right_click(map_pos: Vector2i):
 				factory_remains.tech_slot = tech_slot
 				structure_map.add_structure(map_pos, factory_remains)
 			else:
+				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
 		if (structure is FactoryRemains):
+			SfxManager.play_sound_effect("ui_fail")
 			PopupManager.create_popup("Cannot destroy factory remains!", structure_map.map_to_local(map_pos))
 		
 		# Return after removing building
@@ -623,8 +629,10 @@ func handle_right_click(map_pos: Vector2i):
 				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
 					structure_map.remove_structure(map_pos)
 				
+				SfxManager.play_sound_effect("concrete_break")
 				PopupManager.create_popup("Concrete removed!", structure_map.map_to_local(map_pos))
 			else:
+				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
 		if (tile_type == terrain_map.TILE_TYPE.ROAD):
@@ -637,8 +645,10 @@ func handle_right_click(map_pos: Vector2i):
 				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
 					structure_map.remove_structure(map_pos)
 				
+				SfxManager.play_sound_effect("concrete_break")
 				PopupManager.create_popup("Road destroyed!", structure_map.map_to_local(map_pos))
 			else:
+				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 	
 	

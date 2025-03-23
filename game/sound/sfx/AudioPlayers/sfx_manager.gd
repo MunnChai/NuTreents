@@ -14,6 +14,8 @@ var ui_fail: AudioStreamPlayer
 const UI_FAIL = preload("res://sound/sfx/AudioPlayers/ui_fail.tscn")
 var ui_click: AudioStreamPlayer
 const UI_CLICK = preload("res://sound/sfx/AudioPlayers/ui_click.tscn")
+var concrete_break: AudioStreamPlayer
+const CONCRETE_BREAK = preload("res://sound/sfx/AudioPlayers/concrete_break.tscn")
 
 var SFX_DICT: Dictionary[String, AudioStreamPlayer]  
 
@@ -52,10 +54,16 @@ func _ready() -> void:
 	ui_click = UI_CLICK.instantiate()
 	add_child(ui_click)
 	SFX_DICT["ui_click"] = ui_click
+	
+	#concrete break sfx
+	concrete_break = CONCRETE_BREAK.instantiate()
+	add_child(concrete_break)
+	SFX_DICT["concrete_break"] = concrete_break
 
 func play_sound_effect(name: String) -> void:
 	var sound_effect: AudioStreamPlayer = SFX_DICT[name]
 	if (sound_effect != null): 
+		sound_effect.bus = "SFX"
 		sound_effect.playing = true
 	
 	# pitch variation
