@@ -3,6 +3,8 @@ extends Node2D
 
 const MOVE_DURATION: float = 0.5
 
+@export var id: String
+
 @export_group("Enemy Stats")
 @export var max_health: int
 @export var attack_damage: int

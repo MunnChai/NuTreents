@@ -50,8 +50,20 @@ func update_highlight() -> void:
 func detect_highlighted_objects(pos: Vector2i) -> void:
 	var tile_type: TerrainMap.TILE_TYPE = terrain_map.get_tile_biome(pos)
 	var building_node: Node2D = building_map.get_building_node(pos)
+	var enemies: Array[Enemy] = EnemyManager.current_enemies
 	
-	if building_node != null:
+	# Munn: shouldn't actually be too performance heavy, since we should have like < 50 enemies at a time
+	var is_hovering_enemy: bool = false
+	var hovered_enemy: Enemy
+	for enemy: Enemy in enemies:
+		if (enemy.map_position == pos):
+			hovered_enemy = enemy
+			is_hovering_enemy = true
+			break
+	
+	if (is_hovering_enemy):
+		InfoBox.get_instance().show_content_for(pos, hovered_enemy.id, tile_type)
+	elif building_node != null:
 		InfoBox.get_instance().show_content_for(pos, building_node.get_id(), tile_type)
 	else:
 		InfoBox.get_instance().show_content_for(pos, "no_building", tile_type)
