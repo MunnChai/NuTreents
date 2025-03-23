@@ -13,13 +13,14 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 	EnemyType.SILK_SPITTER: SILK_SPITTER
 }
  
-const NUM_WAVES: int = 5
-const ENEMY_SPAWN_INTERVAL: float = Global.clock.HALF_DAY_SECONDS / NUM_WAVES
-var spawning_interval: float = 0
+var num_waves: int = 1
+var enemy_spawn_interval: float = Global.clock.HALF_DAY_SECONDS / num_waves
+var spawning_interval_tracker: float = 0
 var current_wave = 0
+var day_tracker = 1
 
-const MIN_ENEMIES_PER_WAVE: int = 4
-const MAX_ENEMIES_PER_WAVE: int = 6
+var min_enemies_per_wave: int = 4
+var max_enemies_per_wave: int = 6
 
 var current_enemies: Array[Enemy]
 
@@ -39,23 +40,45 @@ func _process(delta: float) -> void:
 	if (TreeManager.is_mother_dead()):
 		# if mother died
 		return
-	var curr_time = Global.clock.get_curr_day_sec()
 	
+	var curr_time = Global.clock.get_curr_day_sec()
 	if (curr_time > Global.clock.HALF_DAY_SECONDS): # NIGHT TIME
-		spawning_interval -= delta
-		if (spawning_interval <= 0):
+		
+		#increases difficulty based on day in game
+		increase_difficulty()
+		
+		spawning_interval_tracker -= delta
+		if (spawning_interval_tracker <= 0):
 			spawn_enemies()
-			spawning_interval = ENEMY_SPAWN_INTERVAL
+			spawning_interval_tracker = enemy_spawn_interval
 	else: # DAY TIME
 		current_wave = 0
 		if (current_enemies.size() > 0):
 			kill_all_enemies()
  
-
+# increases the severity of bug spawns based on the day
+func increase_difficulty() -> void:
+	var curr_day = Global.clock.get_curr_day()
+	if (curr_day > day_tracker):
+		var isOdd: int = curr_day % 2
+		
+		#if day is an odd day, increase waves
+		if (isOdd != 0):
+			num_waves += 1
+			
+		#if day is an even day, increase number of enemies per wave
+		else:
+			if (min_enemies_per_wave + 1 >= max_enemies_per_wave):
+				max_enemies_per_wave += 1
+			else:
+				min_enemies_per_wave += 1
+		
+		# update day tracker, don't forget silly :)
+		day_tracker = curr_day
 
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemies() -> int:
-	var num_enemies = randi_range(MIN_ENEMIES_PER_WAVE, MAX_ENEMIES_PER_WAVE)
+	var num_enemies = randi_range(min_enemies_per_wave, max_enemies_per_wave)
 	
 	for i in range(0, num_enemies):
 		var rand_enemy = EnemyType.values().pick_random()
