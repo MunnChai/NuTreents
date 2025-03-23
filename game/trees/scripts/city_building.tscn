@@ -9,6 +9,7 @@ region = Rect2(0, 80, 32, 40)
 
 [node name="CityBuilding" type="Node2D"]
 script = ExtResource("1_342x3")
+cost_to_remove = 250
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)

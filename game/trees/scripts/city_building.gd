@@ -4,6 +4,8 @@ extends Structure
 const NUM_CITY_SPRITES = 8
 @onready var sprite_2d = $Sprite2D
 
+@export var cost_to_remove: int = 0
+
 func _ready():
 	sprite_2d.texture = sprite_2d.texture.duplicate()
 	var texture: AtlasTexture = sprite_2d.texture

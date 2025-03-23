@@ -49,3 +49,13 @@ func get_mouse_coords() -> Vector2:
 	var mouse_screen_pos: Vector2 = get_local_mouse_position()
 	
 	return mouse_screen_pos
+
+# Returns true if the position has an obstructive structure on it (structures that aren't decor)
+func does_obstructive_structure_exist(map_pos: Vector2i) -> bool:
+	if (!tile_scene_map.has(map_pos)):
+		return false
+	
+	var object: Structure = tile_scene_map[map_pos]
+	
+	return object.id != "decor"
+	

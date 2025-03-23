@@ -20,6 +20,7 @@ var tile_name_dictionary = {
 	TerrainMap.TILE_TYPE.GRASS: "GRASS",
 	TerrainMap.TILE_TYPE.CITY: "CITY",
 	TerrainMap.TILE_TYPE.WATER: "WATER",
+	TerrainMap.TILE_TYPE.ROAD: "ROAD",
 }
 
 var desc_dictionary = {
@@ -34,6 +35,7 @@ var desc_dictionary = {
 	TerrainMap.TILE_TYPE.GRASS: "Fertile grasslands, ripe for trees.",
 	TerrainMap.TILE_TYPE.CITY: "Hard, cold asphalt. You'll have to remove it to plant.",
 	TerrainMap.TILE_TYPE.WATER: "Hydrates your nearby trees. Don't fall in, though.",
+	TerrainMap.TILE_TYPE.ROAD: "TODO",
 }
 
 func _ready():

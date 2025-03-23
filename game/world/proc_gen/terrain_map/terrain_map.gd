@@ -563,3 +563,6 @@ func is_fertile(pos: Vector2) -> bool:
 	var tile_data: TileData = get_cell_tile_data(pos)
 	var biome = tile_data.get_custom_data("biome")
 	return biome == TILE_TYPE.GRASS or biome == TILE_TYPE.DIRT
+
+func set_cell_type(pos: Vector2i, tile_type: TILE_TYPE):
+	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], 0)

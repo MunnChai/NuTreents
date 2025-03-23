@@ -64,10 +64,10 @@ func _input(_event: InputEvent) -> void:
 		
 		add_tree(selected_tree_species, map_coords) 
 	
-	if (Input.is_action_pressed("rmb")):
+	if (Input.is_action_just_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		remove_tree(map_coords)
+		handle_right_click(map_coords)
 
 
 func test():
@@ -502,3 +502,75 @@ func find_neighbours(p: Vector2i) -> Array[Vector2i]:
 
 func is_mother_dead() -> bool:
 	return (!tree_map.has(Global.ORIGIN) or tree_map[Global.ORIGIN].died)
+
+
+func handle_right_click(map_pos: Vector2i):
+	pass
+	
+	# Get any building on the tile
+	if (structure_map.does_obstructive_structure_exist(map_pos)):
+		var structure: Structure = structure_map.tile_scene_map[map_pos]
+		
+		# If building is tree, remove tree and return (unless it's the mother tree)
+		if (structure is Twee):
+			remove_tree(map_pos)
+		
+		# If building is city_building, remove city_building (if you have enough nutrients)
+		if (structure is CityBuilding):
+			if (res.x > structure.cost_to_remove):
+				
+				res.x -= structure.cost_to_remove
+				structure_map.remove_structure(map_pos)
+			else:
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		# If building is factory, remove factory, instantiate factory remains
+		if (structure is Factory):
+			if (res.x > structure.cost_to_remove):
+				
+				res.x -= structure.cost_to_remove
+				structure_map.remove_structure(map_pos)
+				
+				# TODO: INSTANTIATE FACTORY REMAINS
+			else:
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		# Return after removing building
+		return
+	
+	# IF THERE ARE NO STRUCTURES (except decor) ON THE TILE
+	
+	# If tile is city_tile/road_tile, replace tile with dirt tile if you have enough nutrients
+	const COST_TO_REMOVE_CITY_TILE: int = 100
+	const COST_TO_REMOVE_ROAD_TILE: int = 250
+	var tile_data = terrain_map.get_cell_tile_data(map_pos)
+	if (tile_data):
+		var tile_type = tile_data.get_custom_data("biome")
+		
+		if (tile_type == terrain_map.TILE_TYPE.CITY):
+			if (res.x > COST_TO_REMOVE_CITY_TILE):
+				
+				res.x -= COST_TO_REMOVE_CITY_TILE
+				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				
+				# Check if decor exists on this spot
+				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
+					structure_map.remove_structure(map_pos)
+			else:
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		if (tile_type == terrain_map.TILE_TYPE.ROAD):
+			if (res.x > COST_TO_REMOVE_ROAD_TILE):
+				
+				res.x -= COST_TO_REMOVE_ROAD_TILE
+				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				
+				# Check if decor exists on this spot
+				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
+					structure_map.remove_structure(map_pos)
+			else:
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+	
+	
+	
+	# Delete decor

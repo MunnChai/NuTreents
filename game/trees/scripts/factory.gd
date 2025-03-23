@@ -3,6 +3,8 @@ extends Structure
 
 @onready var sprite_2d = $Sprite2D
 
+@export var cost_to_remove: int = 0
+
 func _ready():
 	var rand = randf()
 	if (rand > 0.5):
