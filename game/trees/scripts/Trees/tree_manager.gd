@@ -133,8 +133,9 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	
 	fog_map.remove_fog_around(p)
 	
-	SfxManager.play_sound_effect("tree_plant")
-	print(tree_map)
+	if (type != 0): #check to make sure it's not mother tree
+		SfxManager.play_sound_effect("tree_plant")
+		print("done")
 	
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)

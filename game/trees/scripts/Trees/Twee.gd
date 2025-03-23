@@ -148,6 +148,10 @@ const GREEN_TREE_DIE = preload("res://trees/scenes/death/GreenTreeDie.tscn")
 
 func die():
 	died = true
+	
+	#play sound effect
+	SfxManager.play_sound_effect("tree_remove")
+
 	#TreeManager.remove_tree(pos)
 	flash_amount = 1.0
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
@@ -198,6 +202,8 @@ func take_damage(damage: int) -> bool:
 	if (died):
 		return true
 	
+	#play sound effect
+	SfxManager.play_sound_effect("tree_damage")
 	hp -= damage
 	print(pos, " taking damage ", damage)
 	print(hp)
