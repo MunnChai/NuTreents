@@ -91,6 +91,8 @@ func _button_pressed():
 	
 ## to be called each round, update everything?
 func update(delta: float):
+	if Input.is_action_just_released("lmb"):
+		unsuccessful = false
 	if (tree_map[Global.ORIGIN].died):
 		# if mother tree is dead
 		return
@@ -106,7 +108,7 @@ func update(delta: float):
 	res += gain * delta
 	res.y = max(0, res.y)
 
-
+var unsuccessful = false
 ## add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
@@ -115,20 +117,26 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	tree = TREE_DICT[type].instantiate()
 	
 	if (forest_map.has(p)):
-		PopupManager.create_popup("Occupied!", structure_map.map_to_local(p))
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
+			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p))
 		return 1
 	if enforce_reachable and not is_reachable(p):
-		if Input.is_action_just_pressed("lmb"):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
 			PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
 		return 4
 	if not terrain_map.is_fertile(p):
-		if Input.is_action_just_pressed("lmb"):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
 			PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
 		return 3 
 	if (!enough_n(tree.tree_stat.cost_to_purchase)):
-		if Input.is_action_just_pressed("lmb"):
+		if Input.is_action_just_pressed("lmb") and !unsuccessful:
+			unsuccessful = true
 			PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(p))
 		return 2
+	
 	#print("Forests: ", forests)
 	res.x -= tree.tree_stat.cost_to_purchase
 	var f_id: int = find_forest(p)
