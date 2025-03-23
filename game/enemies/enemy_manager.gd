@@ -115,8 +115,8 @@ func kill_all_enemies():
 	for enemy: Enemy in current_enemies:
 		if (!enemy):
 			continue
-		#enemy.die()
-		#current_enemies.erase(enemy)
+		enemy.die()
+		current_enemies.erase(enemy)
 
 
 func get_enemy_at(pos: Vector2i) -> Enemy:
