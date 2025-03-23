@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://cw31hycsu8c78"]
+[gd_scene load_steps=6 format=3 uid="uid://pk6h7e8bh5y6"]
 
 [ext_resource type="Texture2D" uid="uid://bg1bp3vm7likp" path="res://ui/player_interface/fastforward 1x.png" id="1_vag5l"]
-[ext_resource type="Script" uid="uid://tq1fjaos6asf" path="res://ui/player_interface/fast_forward_btn.gd" id="2_fehke"]
+[ext_resource type="Script" path="res://ui/player_interface/fast_forward_btn.gd" id="2_fehke"]
 [ext_resource type="Texture2D" uid="uid://ctic3l1nfi2jq" path="res://ui/player_interface/fastforward 2x.png" id="2_yooxn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fehke"]

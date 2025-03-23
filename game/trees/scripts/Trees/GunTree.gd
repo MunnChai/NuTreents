@@ -15,6 +15,8 @@ var current_target_enemy: Enemy
 func _ready():
 	super._ready()
 	
+	id = "gun_tree"
+	
 	sprite.hframes = 9
 	sprite.vframes = 3
 	sprite.position.y = -16

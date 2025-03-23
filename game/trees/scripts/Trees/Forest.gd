@@ -50,11 +50,16 @@ func update(delta: float) -> Vector3:
 		water -= tree.maint
 		
 		if (water < 0):
-			tree.is_dehydrated = true
-			while (tree.water_damage_time > tree.WATER_DAMAGE_DELAY):
-				tree.take_damage(tree.DEHYDRATION_DAMAGE)
-				tree.water_damage_time -= RandomNumberGenerator.new().randf_range(tree.WATER_DAMAGE_DELAY, tree.WATER_DAMAGE_DELAY * 2)
-			tree.water_damage_time += delta
+			
+			if (TreeManager.res.y == 0):
+				tree.is_dehydrated = true
+				
+				while (tree.water_damage_time > tree.WATER_DAMAGE_DELAY):
+					tree.take_damage(tree.DEHYDRATION_DAMAGE)
+					tree.water_damage_time -= RandomNumberGenerator.new().randf_range(tree.WATER_DAMAGE_DELAY, tree.WATER_DAMAGE_DELAY * 2)
+				tree.water_damage_time += delta
+			else:
+				tree.is_dehydrated = false
 		else:
 			tree.is_dehydrated = false
 		

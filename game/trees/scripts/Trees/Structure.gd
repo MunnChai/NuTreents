@@ -5,7 +5,7 @@ var id: String
 var pos: Vector2i
 
 func _ready() -> void:
-	pass
+	id = "structure"
 
 func init_pos(p: Vector2i):
 	pos = p
