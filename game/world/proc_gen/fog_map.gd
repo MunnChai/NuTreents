@@ -2,7 +2,7 @@ class_name FogMap
 extends TileMapLayer
 
 const DEFAULT_VISION_RANGE = 3
-const FOG_SIZE = Global.MAP_SIZE * 2
+const FOG_SIZE = Global.MAP_SIZE * 5
 
 var tree_vision_range: int = DEFAULT_VISION_RANGE
 
@@ -12,8 +12,8 @@ func _ready() -> void:
 	init()
 
 func init() -> void:
-	for x in range(-Global.MAP_SIZE.x / 2, FOG_SIZE.x - Global.MAP_SIZE.x / 2): # Munn: Ignore how ugly this is lol
-		for y in range(-Global.MAP_SIZE.y / 2, FOG_SIZE.y - Global.MAP_SIZE.y / 2):
+	for x in range(-Global.MAP_SIZE.x * 2, FOG_SIZE.x - Global.MAP_SIZE.x): # Munn: Ignore how ugly this is lol
+		for y in range(-Global.MAP_SIZE.y * 2, FOG_SIZE.y - Global.MAP_SIZE.y):
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
 			var origin: Vector2i = Vector2i(Global.MAP_SIZE) / 2
