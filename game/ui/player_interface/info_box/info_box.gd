@@ -12,7 +12,13 @@ var name_dictionary = {
 	"explorer_tree": "EXPLORER TREE",
 	"tech_tree": "TECH TREE",
 	"water_tree": "WATER TREE",
-	"tall_tree": "TALL TREE"
+	"tall_tree": "TALL TREE",
+	
+	"city_building": "CITY STRUCTURE",
+	"factory": "FACTORY",
+	
+	"speedle": "SPEEDLE",
+	"silk_spitter": "SILK_SPITTER"
 }
 
 var tile_name_dictionary = {
@@ -20,6 +26,7 @@ var tile_name_dictionary = {
 	TerrainMap.TILE_TYPE.GRASS: "GRASS",
 	TerrainMap.TILE_TYPE.CITY: "CITY",
 	TerrainMap.TILE_TYPE.WATER: "WATER",
+	TerrainMap.TILE_TYPE.ROAD: "ROAD",
 }
 
 var desc_dictionary = {
@@ -30,10 +37,18 @@ var desc_dictionary = {
 	"tech_tree": "For all your technology needs.",
 	"water_tree": "Dredges up them aquifers for your forest's convenience.",
 	"tall_tree": "Reaches above the clouds for more of that sweet, sweet sunlight.",
+	
+	"city_building": "TODO",
+	"factory": "TODO",
+	
+	"speedle": "TODO",
+	"silk_spitter": "TODO",
+	
 	TerrainMap.TILE_TYPE.DIRT: "Good old dirt. Nothing special.",
 	TerrainMap.TILE_TYPE.GRASS: "Fertile grasslands, ripe for trees.",
 	TerrainMap.TILE_TYPE.CITY: "Hard, cold asphalt. You'll have to remove it to plant.",
 	TerrainMap.TILE_TYPE.WATER: "Hydrates your nearby trees. Don't fall in, though.",
+	TerrainMap.TILE_TYPE.ROAD: "TODO",
 }
 
 func _ready():
@@ -60,19 +75,32 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		
 		rich_text.text += "\n"
 		
-		var tree: Twee = TreeManager.get_twee(pos)
-		rich_text.text +="\n"
-		rich_text.text += "HP: " + str(tree.hp)
-		rich_text.text += "\nNET WATER: " + str(tree.gain.y - tree.maint) + "/s"
-		rich_text.text += "\nNET NUTRIENTS: " + str(tree.gain.x) + "/s"
-		rich_text.text += "\nNET SUN: " + str(tree.gain.z) + "/s"
+		var enemy: Enemy = EnemyManager.get_enemy_at(pos)
+		var structure: Structure = null
+		if (Global.structure_map.tile_scene_map.has(pos)):
+			structure = Global.structure_map.tile_scene_map[pos]
 		
-		rich_text.text += "\n"
-		
-		if (TreeManager.get_twee(pos).is_dehydrated):
-			rich_text.text += "\n[color=ab5012]DEHYDRATED[/color]"
-		if (previously_factory):
-			rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
+		if (structure is Twee):
+			rich_text.text +="\n"
+			rich_text.text += "HP: " + str(structure.hp)
+			rich_text.text += "\nNET WATER: " + str(structure.gain.y - structure.maint) + "/s"
+			rich_text.text += "\nNET NUTRIENTS: " + str(structure.gain.x) + "/s"
+			rich_text.text += "\nNET SUN: " + str(structure.gain.z) + "/s"
+			
+			rich_text.text += "\n"
+			
+			if (TreeManager.get_twee(pos).is_dehydrated):
+				rich_text.text += "\n[color=ab5012]DEHYDRATED[/color]"
+			if (previously_factory):
+				rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
+		elif (structure is CityBuilding || structure is Factory):
+			rich_text.text +="\n"
+			rich_text.text += "Nutrients needed to destroy: " + str(structure.cost_to_remove)
+		elif (enemy != null):
+			rich_text.text +="\n"
+			rich_text.text += "HP: " + str(enemy.current_health)
+			rich_text.text += "\nDAMAGE: " + str(enemy.attack_damage)
+			rich_text.text += "\nRANGE: " + str(enemy.attack_range)
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";
@@ -84,3 +112,11 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		
 			if (previously_factory):
 				rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
+			
+			var structure_map = Global.structure_map
+			if (tile_type == TerrainMap.TILE_TYPE.ROAD):
+				rich_text.text += "\n"
+				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_ROAD_TILE)
+			elif (tile_type == TerrainMap.TILE_TYPE.CITY):
+				rich_text.text += "\n"
+				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_CITY_TILE)

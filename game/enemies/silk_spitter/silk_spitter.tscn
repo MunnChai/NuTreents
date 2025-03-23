@@ -11,6 +11,7 @@ light_mode = 1
 
 [node name="SilkSpitter" type="Node2D"]
 script = ExtResource("1_blffj")
+id = "silk_spitter"
 max_health = 10
 attack_damage = 1
 attack_range = 2

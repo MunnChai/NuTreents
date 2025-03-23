@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn2g41pplrq6r"]
+
+[ext_resource type="Script" uid="uid://widothseyw5s" path="res://world/proc_gen/decor/decor.gd" id="1_oj3ck"]
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://world/proc_gen/decor/world_decor_sheet.png" id="2_txa7v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2rjr"]
+atlas = ExtResource("2_txa7v")
+region = Rect2(0, 96, 32, 24)
+
+[node name="DirtDecor" type="Node2D"]
+position = Vector2(0, -4)
+script = ExtResource("1_oj3ck")
+num_tiles = 6
+decor_id = "dirt_decor"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = SubResource("AtlasTexture_n2rjr")

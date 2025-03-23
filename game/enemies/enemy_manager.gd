@@ -117,3 +117,13 @@ func kill_all_enemies():
 			continue
 		#enemy.die()
 		#current_enemies.erase(enemy)
+
+
+func get_enemy_at(pos: Vector2i) -> Enemy:
+	for enemy in current_enemies:
+		if (enemy.is_dead):
+			continue
+		if (enemy.map_position == pos):
+			return enemy
+	
+	return null

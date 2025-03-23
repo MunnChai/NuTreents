@@ -3,6 +3,8 @@ extends Node2D
 
 const MOVE_DURATION: float = 0.5
 
+@export var id: String
+
 @export_group("Enemy Stats")
 @export var max_health: int
 @export var attack_damage: int
@@ -240,8 +242,9 @@ func is_valid_tile(map_pos: Vector2i) -> bool:
 	
 	# Do not go through structures
 	var structure_map: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	if (structure_map.tile_scene_map.has(map_pos)):
+	if (structure_map.does_obstructive_structure_exist(map_pos)):
 		return false
+		
 	
 	# Do not go on other enemies
 	for enemy in get_tree().get_nodes_in_group("enemies"):

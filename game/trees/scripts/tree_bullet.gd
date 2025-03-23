@@ -11,6 +11,7 @@ var enemy: Enemy
 var damage: int
 
 func _ready():
+	y_sort_enabled = true
 	begin_tween()
 	
 	var timer = get_tree().create_timer(BULLET_DURATION)
