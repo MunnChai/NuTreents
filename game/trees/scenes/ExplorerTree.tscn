@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dagtk01aebfae"]
 
-[ext_resource type="Script" uid="uid://dfn6yt6ytgn45" path="res://trees/scripts/Trees/ExplorerTree.gd" id="1_jl2e1"]
+[ext_resource type="Script" path="res://trees/scripts/Trees/ExplorerTree.gd" id="1_jl2e1"]
 [ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://trees/stats/ExplorerTreeStat.tres" id="2_je5j6"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://trees/tree_damage.gdshader" id="2_wshlp"]
 [ext_resource type="Texture2D" uid="uid://tscwrw87atsj" path="res://trees/sheets/tree_explorer_sheet.png" id="3_je5j6"]
