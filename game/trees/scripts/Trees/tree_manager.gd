@@ -1,9 +1,9 @@
 extends Node
 class_name tree_manager
 
-@onready var fog_map: FogMap = get_tree().get_nodes_in_group("fog_map")[0]
-@onready var structure_map: BuildingMap = get_tree().get_nodes_in_group("structure_map")[0]
-@onready var terrain_map: TerrainMap = get_tree().get_nodes_in_group("terrain_map")[0]
+var fog_map: FogMap
+var structure_map: BuildingMap
+var terrain_map: TerrainMap
 
 const MOTHER_TREE = preload("res://trees/scenes/MotherTree.tscn")
 const DEFAULT_TREE = preload("res://trees/scenes/DefaultTree.tscn")
@@ -46,13 +46,26 @@ var forest_count: int
 var selected_tree_species: int = 1
 
 func _ready():
+	pass
+
+func start_game():
 	res = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
 	
+	fog_map = get_tree().get_nodes_in_group("fog_map")[0]
+	structure_map = get_tree().get_nodes_in_group("structure_map")[0]
+	terrain_map = get_tree().get_nodes_in_group("terrain_map")[0]
+	
+	await get_tree().process_frame
+	
 	call_deferred("add_tree", 0, Global.MAP_SIZE / 2, false)
+	print("Yes!!")
 
 func _process(delta):
+	if (Global.game_state != Global.GameState.PLAYING):
+		return
+	
 	update(delta)
 
 func _input(_event: InputEvent) -> void:

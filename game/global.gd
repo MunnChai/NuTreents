@@ -8,7 +8,19 @@ var terrain_map: TerrainMap
 var fog_map: FogMap
 var clock: Clock
 
+enum GameState {
+	PLAYING = 0,
+	PAUSED = PLAYING + 1,
+	MAIN_MENU = PAUSED + 1,
+}
+
+var game_state
+
 func _ready() -> void:
+	game_state = GameState.MAIN_MENU
+
+
+func update_globals():
 	structure_map = get_tree().get_first_node_in_group("structure_map")
 	terrain_map = get_tree().get_first_node_in_group("terrain_map")
 	fog_map = get_tree().get_first_node_in_group("fog_map")

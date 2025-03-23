@@ -8,6 +8,7 @@ var tree_vision_range: int = DEFAULT_VISION_RANGE
 
 
 func _ready() -> void:
+	await get_tree().process_frame
 	init()
 
 func init() -> void:

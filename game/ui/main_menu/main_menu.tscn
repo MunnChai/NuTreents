@@ -1,10 +1,50 @@
-[gd_scene format=3 uid="uid://cedh52sbdvy3x"]
+[gd_scene load_steps=4 format=3 uid="uid://cedh52sbdvy3x"]
+
+[ext_resource type="Script" uid="uid://c0uuieuuepysv" path="res://ui/main_menu/main_menu.gd" id="1_omy8q"]
+[ext_resource type="Texture2D" uid="uid://div5wly01yjfq" path="res://ui/main_menu/main_menu_bg.png" id="1_uhj5c"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="2_mu8pm"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_omy8q")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1148.0
+offset_bottom = 646.0
+texture = ExtResource("1_uhj5c")
+
+[node name="Title" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 52.0
+offset_right = 544.0
+offset_bottom = 233.0
+theme_override_fonts/normal_font = ExtResource("2_mu8pm")
+theme_override_font_sizes/normal_font_size = 192
+text = "NuTREEnts"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 801.0
+offset_top = 480.0
+offset_right = 1113.0
+offset_bottom = 615.0
+
+[node name="ButtonText" type="RichTextLabel" parent="Button"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 27.0
+offset_right = 313.0
+offset_bottom = 161.0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_mu8pm")
+theme_override_font_sizes/normal_font_size = 160
+text = "Start"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="start_game"]

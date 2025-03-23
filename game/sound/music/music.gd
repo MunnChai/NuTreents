@@ -6,6 +6,7 @@ var clock: Clock
 
 func _ready() -> void:
 	clock = get_tree().root.find_child("Clock", true, false)
+	audio_stream_player.play()
 
 
 enum Vibe {
@@ -21,9 +22,6 @@ enum Vibe {
 var current_vibe = Vibe.CALM_NIGHT
 
 func _process(delta: float) -> void:
-	if Input.is_key_label_pressed(KEY_M):
-		audio_stream_player.play()
-	
 	if audio_stream_player.get_stream_playback() == null:
 		return
 	

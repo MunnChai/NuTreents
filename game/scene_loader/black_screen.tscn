@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c4lpy1xm6ny0k"]
+
+[node name="BlackScreen" type="ColorRect"]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -489.0
+offset_top = -251.0
+offset_right = 534.0
+offset_bottom = 296.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

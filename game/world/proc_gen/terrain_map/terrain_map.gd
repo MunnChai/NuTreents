@@ -58,6 +58,7 @@ const TARGETED_DRUNKARD_INTELLIGENCE: float = 0.85
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
 func _ready() -> void:
+	await get_tree().process_frame
 	generate_map()
 	
 	y_sort_enabled = true
