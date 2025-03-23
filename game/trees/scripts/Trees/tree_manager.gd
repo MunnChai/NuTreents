@@ -62,7 +62,8 @@ func _input(_event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
 		
-		add_tree(selected_tree_species, map_coords)
+		add_tree(selected_tree_species, map_coords) 
+		PopupManager.create_popup("Not enough resources!", structure_map.map_to_local(map_coords))
 	
 	if (Input.is_action_pressed("rmb")):
 		var map_coords: Vector2i = structure_map.local_to_map(structure_map.get_mouse_coords())
@@ -117,7 +118,7 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if (forest_map.has(p)):
 		return 1
 	if (!enough_n(tree.tree_stat.cost_to_purchase)):
-		print("not enough N")
+		
 		return 2
 	if not terrain_map.is_fertile(p):
 		return 3 

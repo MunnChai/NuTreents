@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://mhew1w7kolf4"]
+
+[ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="1_i60km"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kcn2c"]
+font = ExtResource("1_i60km")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Popup" type="Label"]
+offset_left = -616.0
+offset_top = -184.0
+offset_right = 613.0
+offset_bottom = 182.0
+text = "Hi"
+label_settings = SubResource("LabelSettings_kcn2c")
+horizontal_alignment = 1
+vertical_alignment = 1

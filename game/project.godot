@@ -21,6 +21,7 @@ Global="*res://global.gd"
 TreeManager="*res://trees/scripts/Trees/tree_manager.gd"
 EnemyManager="*res://enemies/enemy_manager.gd"
 SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
+PopupManager="*res://popup_manager/popup_manager.gd"
 
 [display]
 
