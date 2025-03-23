@@ -35,6 +35,15 @@ func _ready() -> void:
 	species.text = tree_stat.name
 	cost.text = "Cost: " + str(tree_stat.cost_to_purchase)
 
+@onready var start_position = $TextureRect.position
+
+func _process(delta: float) -> void:
+	if TreeManager.selected_tree_species == type:
+		$TextureRect.position = start_position + Vector2.UP * 8.0
+	else:
+		$TextureRect.position = start_position + Vector2.DOWN * 4.0
+
 func _on_button_pressed() -> void:
-	TreeManager.selected_tree_species = type 
-	SfxManager.play_sound_effect("ui_click")
+	if TreeManager.selected_tree_species != type:
+		TreeManager.selected_tree_species = type 
+		SfxManager.play_sound_effect("ui_click")

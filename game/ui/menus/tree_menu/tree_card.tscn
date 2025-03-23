@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8fg45slly116"]
+[gd_scene load_steps=6 format=3 uid="uid://b8fg45slly116"]
 
 [ext_resource type="Texture2D" uid="uid://cwdw0dy41qgvt" path="res://ui/menus/tree_menu/tree_card.png" id="1_wbhwn"]
 [ext_resource type="Script" uid="uid://dxwbpi670nhxn" path="res://ui/menus/tree_menu/tree_card.gd" id="2_hkimi"]
@@ -7,6 +7,8 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_hkimi"]
 atlas = ExtResource("1_wbhwn")
 region = Rect2(48, 32, 96, 124)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_db0qj"]
 
 [node name="TreeCard" type="Control"]
 layout_mode = 3
@@ -156,6 +158,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_db0qj")
 flat = true
 
 [connection signal="mouse_entered" from="TextureRect/Button" to="." method="_on_button_mouse_entered"]
