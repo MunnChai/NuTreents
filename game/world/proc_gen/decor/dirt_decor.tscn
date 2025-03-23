@@ -11,6 +11,7 @@ region = Rect2(0, 96, 32, 24)
 position = Vector2(0, -4)
 script = ExtResource("1_oj3ck")
 num_tiles = 6
+decor_id = "dirt_decor"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -4)

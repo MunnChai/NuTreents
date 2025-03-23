@@ -4,6 +4,7 @@ extends Structure
 @onready var sprite_2d = $Sprite2D
 
 @export var num_tiles: int
+@export var decor_id: String = "decor"
 
 func _ready():
 	# Duplicate texture (so the same texture isn't used for every decor object)
@@ -21,4 +22,5 @@ func _ready():
 	if (rand > 0.5):
 		sprite_2d.flip_h = true
 	
-	id = "decor"
+	# If we want to have separate info box stuff
+	id = decor_id

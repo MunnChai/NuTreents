@@ -10,6 +10,7 @@ region = Rect2(0, 0, 32, 32)
 [node name="CityDecor" type="Node2D"]
 script = ExtResource("1_qej67")
 num_tiles = 6
+decor_id = "city_decor"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = SubResource("AtlasTexture_1mmvi")

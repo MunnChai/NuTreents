@@ -547,16 +547,15 @@ func handle_right_click(map_pos: Vector2i):
 	# IF THERE ARE NO STRUCTURES (except decor) ON THE TILE
 	
 	# If tile is city_tile/road_tile, replace tile with dirt tile if you have enough nutrients
-	const COST_TO_REMOVE_CITY_TILE: int = 100
-	const COST_TO_REMOVE_ROAD_TILE: int = 250
+	
 	var tile_data = terrain_map.get_cell_tile_data(map_pos)
 	if (tile_data):
 		var tile_type = tile_data.get_custom_data("biome")
 		
 		if (tile_type == terrain_map.TILE_TYPE.CITY):
-			if (res.x > COST_TO_REMOVE_CITY_TILE):
+			if (res.x > structure_map.COST_TO_REMOVE_CITY_TILE):
 				
-				res.x -= COST_TO_REMOVE_CITY_TILE
+				res.x -= structure_map.COST_TO_REMOVE_CITY_TILE
 				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
 				
 				# Check if decor exists on this spot
@@ -568,9 +567,9 @@ func handle_right_click(map_pos: Vector2i):
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
 		if (tile_type == terrain_map.TILE_TYPE.ROAD):
-			if (res.x > COST_TO_REMOVE_ROAD_TILE):
+			if (res.x > structure_map.COST_TO_REMOVE_ROAD_TILE):
 				
-				res.x -= COST_TO_REMOVE_ROAD_TILE
+				res.x -= structure_map.COST_TO_REMOVE_ROAD_TILE
 				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
 				
 				# Check if decor exists on this spot

@@ -240,12 +240,8 @@ func is_valid_tile(map_pos: Vector2i) -> bool:
 	
 	# Do not go through structures
 	var structure_map: BuildingMap = get_tree().get_first_node_in_group("structure_map")
-	if (structure_map.tile_scene_map.has(map_pos)):
-		
-		# Ignore decor
-		var structure: Structure = structure_map.tile_scene_map[map_pos]
-		if (structure.id != "decor"):
-			return false
+	if (structure_map.does_obstructive_structure_exist(map_pos)):
+		return false
 		
 	
 	# Do not go on other enemies

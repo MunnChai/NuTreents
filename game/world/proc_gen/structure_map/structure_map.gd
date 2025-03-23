@@ -5,6 +5,9 @@ const SOURCE_ID: int = 1
 
 var tile_scene_map: Dictionary[Vector2i, Node2D]
 
+const COST_TO_REMOVE_CITY_TILE: int = 100
+const COST_TO_REMOVE_ROAD_TILE: int = 250
+
 func _ready() -> void:
 	add_to_group("structure_map")
 	y_sort_enabled = true
@@ -13,13 +16,11 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 	if (tile_scene_map.has(map_coords)):
 		# Check if it is a decor structure
 		var curr_structure: Structure = tile_scene_map[map_coords]
-		if (curr_structure.id != "decor"): # If it is not decor, you CANT BUILD HERE!
+		if (!curr_structure.id.ends_with("decor")): # If it is not decor, you CANT BUILD HERE!
 			return false
 		# Otherwise, destroy the decor and continue
 		remove_structure(map_coords)
-		
-	if (structure.id == "decor"):
-		print("Adding decro!")
+	
 	structure.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = structure
@@ -57,5 +58,5 @@ func does_obstructive_structure_exist(map_pos: Vector2i) -> bool:
 	
 	var object: Structure = tile_scene_map[map_pos]
 	
-	return object.id != "decor"
+	return !object.id.ends_with("decor")
 	
