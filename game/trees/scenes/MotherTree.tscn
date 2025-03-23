@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dogi3on6nhcuq" path="res://trees/scripts/Trees/MotherTree.gd" id="1_thw2w"]
 [ext_resource type="Resource" uid="uid://ll6klr2ec2b8" path="res://trees/stats/MotherTreeStat.tres" id="2_wvohp"]
-[ext_resource type="Texture2D" uid="uid://bq1xkos3efixb" path="res://trees/sheets/mother/mother_tree_with_sapling.png" id="3_icgiw"]
+[ext_resource type="Texture2D" uid="uid://c3xllkegns581" path="res://trees/scripts/Trees/Tree_Stump_1.png" id="3_icgiw"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://trees/tree_animations.res" id="4_icgiw"]
 
 [node name="MotherTree" type="Node2D"]

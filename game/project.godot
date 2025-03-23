@@ -27,6 +27,7 @@ SceneLoader="*res://scene_loader/SceneLoader.gd"
 [display]
 
 window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 
 [global_group]
 
