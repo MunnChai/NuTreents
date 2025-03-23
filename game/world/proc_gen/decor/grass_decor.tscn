@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://b40m4udwv8lnt"]
+
+[ext_resource type="Script" uid="uid://widothseyw5s" path="res://world/proc_gen/decor/decor.gd" id="1_cc26o"]
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://world/proc_gen/decor/world_decor_sheet.png" id="2_iworl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1hx1g"]
+atlas = ExtResource("2_iworl")
+region = Rect2(0, 32, 32, 24)
+
+[node name="GrassDecor" type="Node2D"]
+script = ExtResource("1_cc26o")
+num_tiles = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = SubResource("AtlasTexture_1hx1g")

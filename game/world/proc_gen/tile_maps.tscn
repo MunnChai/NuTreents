@@ -170,6 +170,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
+visible = false
 z_index = 5
 tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")

@@ -1,14 +1,14 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwpl26cf6kleg"]
 
-[ext_resource type="Script" uid="uid://cdj38ccqw5k2c" path="res://trees/scripts/City.gd" id="1_26gml"]
+[ext_resource type="Script" uid="uid://iavbe6xpcga4" path="res://trees/scripts/city_building.gd" id="1_342x3"]
 [ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://world/proc_gen/structure_map/City_Buildings_1.png" id="2_342x3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_iku8c"]
 atlas = ExtResource("2_342x3")
-region = Rect2(0, 16, 32, 40)
+region = Rect2(0, 80, 32, 40)
 
 [node name="CityBuilding" type="Node2D"]
-script = ExtResource("1_26gml")
+script = ExtResource("1_342x3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)

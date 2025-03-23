@@ -7,6 +7,7 @@ enum TILE_TYPE {
 	DIRT = GRASS + 1,
 	CITY = DIRT + 1,
 	WATER = CITY + 1,
+	ROAD = WATER + 1,
 }
 
 const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
@@ -14,6 +15,7 @@ const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
 	TILE_TYPE.DIRT: Vector2i(0, 2),
 	TILE_TYPE.CITY: Vector2i(0, 4),
 	TILE_TYPE.WATER: Vector2i(0, 14),
+	TILE_TYPE.ROAD: Vector2i(0, 6),
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
@@ -21,6 +23,7 @@ const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
 	TILE_TYPE.DIRT: 4,
 	TILE_TYPE.CITY: 4,
 	TILE_TYPE.WATER: 1,
+	TILE_TYPE.ROAD: 6,
 }
 
 const SOURCE_ID: int = 0
@@ -31,6 +34,22 @@ const MAX_CITIES: int = 5
 const CITY_DISTANCE: int = Global.MAP_SIZE.x / 2.5
 const DRUNKARD_LIFETIME: int = 15
 const NUM_DRUNKARDS: int = 10
+
+# City information
+const CITY_BUILDING = preload("res://trees/scripts/city_building.tscn")
+const FACTORY = preload("res://trees/scripts/factory.tscn")
+
+const NUM_FACTORIES: int = 3
+const MIN_BUILDINGS_PER_CITY: int = 5
+const MAX_BUILDINGS_PER_CITY: int = 7
+
+const MIN_ROADS_PER_CITY: int = 3
+const MAX_ROADS_PER_CITY: int = 5
+
+# Decor scenes
+const CITY_DECOR = preload("res://world/proc_gen/decor/city_decor.tscn")
+const GRASS_DECOR = preload("res://world/proc_gen/decor/grass_decor.tscn")
+const DIRT_DECOR = preload("res://world/proc_gen/decor/dirt_decor.tscn")
 
 const TARGETED_DRUNKARD_LIFETIME: int = 60
 const TARGETED_NUM_DRUNKARDS: int = 1
@@ -91,7 +110,7 @@ func generate_map() -> void:
 	generate_roads(city_coords)
 	
 	# Generate cities on top of roads (pretty important, otherwise roads will "cut through" cities)
-	generate_cities(city_coords)
+	var city_tiles = generate_cities(city_coords)
 	
 	# Create spawn area of grass
 	generate_spawn()
@@ -99,9 +118,12 @@ func generate_map() -> void:
 	# Randomize tiles based on biome
 	randomize_tiles()
 	
+	call_deferred("generate_factories", city_coords)
+	call_deferred("generate_buildings", city_tiles)
+	call_deferred("add_decor")
+	
 	# Generate rivers at the end of map generation, so autotiling works
 	generate_rivers(river_tiles)
-
 
 
 
@@ -200,9 +222,18 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 		tile_data.set_custom_data("biome", TILE_TYPE.WATER)
 
 
-func generate_cities(city_coords: Array[Vector2i]):
+func generate_cities(city_coords: Array[Vector2i]) -> Array[Vector2i]:
+	var city_tiles: Array[Vector2i] = []
 	for map_coords in city_coords:
-		generate_city(map_coords)
+		var tiles = generate_city(map_coords)
+		city_tiles.append_array(tiles)
+	
+	var remove_duplicates: Dictionary[Vector2i, int]
+	for tile in city_tiles:
+		remove_duplicates[tile] = 0
+	city_tiles = remove_duplicates.keys()
+	
+	return city_tiles
 
 
 func generate_roads(city_coords: Array[Vector2i]) -> void:
@@ -222,9 +253,41 @@ func build_road(city_i: Vector2i, city_j: Vector2i) -> void:
 		walk_drunkard_targeted(city_i, city_j, TILE_TYPE.DIRT)
 
 
-func generate_city(map_coords: Vector2i) -> void:
+func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
+	var city_tiles: Array[Vector2i] = []
 	for i in range(0, NUM_DRUNKARDS):
-		walk_drunkard(map_coords, TILE_TYPE.CITY)
+		var tiles = walk_drunkard(map_coords, TILE_TYPE.CITY)
+		city_tiles.append_array(tiles)
+	
+	var remove_duplicates: Dictionary[Vector2i, int] = {}
+	for tile in city_tiles:
+		remove_duplicates[tile] = 0
+	city_tiles = remove_duplicates.keys()
+	
+	map_coords += Vector2i(1, 1)
+	# Generate roads
+	var road_tiles: Array[Vector2i] = []
+	var num_roads = randi_range(MIN_ROADS_PER_CITY, MAX_ROADS_PER_CITY)
+	var irreplaceable_tiles: Array[TILE_TYPE] = [TILE_TYPE.GRASS, TILE_TYPE.DIRT, TILE_TYPE.WATER]
+	for i in range(0, num_roads):
+		var tiles = walk_drunkard_stride(map_coords, TILE_TYPE.ROAD, 3, 5, irreplaceable_tiles)
+		road_tiles.append_array(tiles)
+	
+	var remove_road_duplicates: Dictionary[Vector2i, int] = {}
+	for tile in road_tiles:
+		remove_road_duplicates[tile] = 0
+	road_tiles = remove_road_duplicates.keys()
+	
+	call_deferred("set_cells_terrain_connect", road_tiles, 0, 2, false)
+	
+	# Generate buildings
+	
+	
+	
+	# Generate factories
+	
+	
+	return city_tiles
 
 func generate_spawn() -> void:
 	var origin: Vector2i = Vector2i(Global.MAP_SIZE / 2)
@@ -233,12 +296,71 @@ func generate_spawn() -> void:
 		walk_drunkard(origin, TILE_TYPE.GRASS, [TILE_TYPE.DIRT])
 
 
+func generate_factories(city_coords: Array[Vector2i]) -> void:
+	for i in range(0, NUM_FACTORIES):
+		var coord = city_coords.pick_random()
+		city_coords.erase(coord)
+		
+		var factory: Structure = FACTORY.instantiate()
+		
+		var structure_map = Global.structure_map
+		structure_map.add_structure(coord, factory)
+		
+		var fog_map = Global.fog_map
+		fog_map.remove_fog_around(coord)
+
+const BUILDING_FREQUENCY: float = 0.4
+func generate_buildings(city_tiles: Array[Vector2i]) -> void:
+	
+	# Generate buildings randomly
+	for tile: Vector2i in city_tiles:
+		var tile_data = get_cell_tile_data(tile)
+		
+		if (tile_data):
+			var tile_type: int = tile_data.get_custom_data("biome")
+			
+			if (tile_type == TILE_TYPE.CITY):
+				var structure_map: BuildingMap = Global.structure_map
+				
+				var rand = randf()
+				if (rand <= BUILDING_FREQUENCY):
+					var building: Structure = CITY_BUILDING.instantiate()
+					
+					structure_map.add_structure(tile, building)
+
+const CITY_DECOR_FREQUENCY = 0.3
+const DIRT_DECOR_FREQUENCY = 0.4
+const GRASS_DECOR_FREQUENCY = 0.025
+func add_decor() -> void:
+	for x in range(0, Global.MAP_SIZE.x):
+		for y in range(0, Global.MAP_SIZE.y):
+			var pos = Vector2i(x, y)
+			var structure_map = Global.structure_map
+			
+			var tile_data = get_cell_tile_data(pos)
+			if (tile_data):
+				var type = tile_data.get_custom_data("biome")
+				var rand = randf()
+				if (type == TILE_TYPE.CITY && rand < CITY_DECOR_FREQUENCY):
+					var decor = CITY_DECOR.instantiate()
+					
+					structure_map.add_structure(pos, decor)
+				elif (type == TILE_TYPE.GRASS && rand < GRASS_DECOR_FREQUENCY):
+					var decor = GRASS_DECOR.instantiate()
+					
+					structure_map.add_structure(pos, decor)
+				elif (type == TILE_TYPE.DIRT && rand < DIRT_DECOR_FREQUENCY):
+					var decor = DIRT_DECOR.instantiate()
+					
+					structure_map.add_structure(pos, decor)
 
 
 
-func walk_drunkard(map_coords: Vector2i, tile_type: TILE_TYPE, irreplaceable_tiles: Array[TILE_TYPE] = []):
+
+func walk_drunkard(map_coords: Vector2i, tile_type: TILE_TYPE, irreplaceable_tiles: Array[TILE_TYPE] = []) -> Array[Vector2i]:
 	var drunkard_life: int = DRUNKARD_LIFETIME
 	var current_coord: Vector2i = map_coords
+	var visited: Array[Vector2i] = []
 	while (drunkard_life > 0):
 		# Walk in a random direction
 		var rand: int = randi_range(0, 3)
@@ -278,9 +400,72 @@ func walk_drunkard(map_coords: Vector2i, tile_type: TILE_TYPE, irreplaceable_til
 		set_cell(current_coord, SOURCE_ID, atlas_coords, 0)
 		tile_data = get_cell_tile_data(current_coord)
 		tile_data.set_custom_data("biome", tile_type)
+		visited.append(current_coord)
 		
 		drunkard_life -= 1
+	
+	var remove_duplicates: Dictionary[Vector2i, int]
+	for tile: Vector2i in visited:
+		remove_duplicates[tile] = 0
+	visited = remove_duplicates.keys()
+	
+	return visited
 
+func walk_drunkard_stride(start_coords: Vector2i, tile_type: TILE_TYPE, min_stride: int, max_stride: int, irreplaceable_tiles: Array[TILE_TYPE]) -> Array[Vector2i]:
+	var drunkard_life: int = DRUNKARD_LIFETIME
+	var current_coord: Vector2i = start_coords
+	var visited: Array[Vector2i] = []
+	
+	var stride: int = randi_range(min_stride, max_stride)
+	
+	while (drunkard_life > 0):
+		# Walk in a random direction
+		var rand: int = randi_range(0, 3)
+		
+		var direction: Vector2i
+		match (rand):
+			0:
+				direction = Vector2i.UP
+			1:
+				direction = Vector2i.DOWN
+			2:
+				direction = Vector2i.LEFT
+			3:
+				direction = Vector2i.RIGHT
+		var curr_step = 0
+		while (curr_step < stride):
+			current_coord += direction
+			
+			if (current_coord.x >= Global.MAP_SIZE.x || current_coord.y >= Global.MAP_SIZE.y):
+				curr_step += 1
+				continue
+			if (current_coord.x < 0 || current_coord.y < 0):
+				curr_step += 1
+				continue
+			var tile_data = get_cell_tile_data(current_coord)
+			if (tile_data):
+				var type = tile_data.get_custom_data("biome")
+				if (irreplaceable_tiles.has(type)):
+					curr_step += 1
+					continue
+			
+			# Set to City Tile
+			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
+			set_cell(current_coord, SOURCE_ID, atlas_coords, 0)
+			tile_data = get_cell_tile_data(current_coord)
+			tile_data.set_custom_data("biome", tile_type)
+			visited.append(current_coord)
+			
+			curr_step += 1
+			
+		drunkard_life -= 1
+	
+	var remove_duplicates: Dictionary[Vector2i, int]
+	for tile: Vector2i in visited:
+		remove_duplicates[tile] = 0
+	visited = remove_duplicates.keys()
+	
+	return visited
 
 
 func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, tile_type: TILE_TYPE) -> bool:

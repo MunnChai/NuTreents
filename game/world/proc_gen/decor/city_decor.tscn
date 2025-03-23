@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3mguhm2mf5de"]
+
+[ext_resource type="Script" uid="uid://widothseyw5s" path="res://world/proc_gen/decor/decor.gd" id="1_qej67"]
+[ext_resource type="Texture2D" uid="uid://b4r20eam5ua8m" path="res://world/proc_gen/decor/City_Decor_1.png" id="2_xei5b"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mmvi"]
+atlas = ExtResource("2_xei5b")
+region = Rect2(0, 0, 32, 32)
+
+[node name="CityDecor" type="Node2D"]
+script = ExtResource("1_qej67")
+num_tiles = 6
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_1mmvi")

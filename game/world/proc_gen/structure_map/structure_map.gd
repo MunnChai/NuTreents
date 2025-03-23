@@ -11,8 +11,15 @@ func _ready() -> void:
 
 func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 	if (tile_scene_map.has(map_coords)):
-		return false
-	
+		# Check if it is a decor structure
+		var curr_structure: Structure = tile_scene_map[map_coords]
+		if (curr_structure.id != "decor"): # If it is not decor, you CANT BUILD HERE!
+			return false
+		# Otherwise, destroy the decor and continue
+		remove_structure(map_coords)
+		
+	if (structure.id == "decor"):
+		print("Adding decro!")
 	structure.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = structure
@@ -27,6 +34,7 @@ func remove_structure(map_coords: Vector2i) -> bool:
 	
 	var object: Node2D = tile_scene_map[map_coords]
 	
+	remove_child(object)
 	tile_scene_map.erase(map_coords)
 	return true
 
