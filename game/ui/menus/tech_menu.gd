@@ -50,4 +50,5 @@ func check_victory():
 
 
 func click_victory():
+	Global.game_state = Global.GameState.VICTORY
 	SceneLoader.transition_to_victory_screen()

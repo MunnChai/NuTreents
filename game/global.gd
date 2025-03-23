@@ -11,8 +11,8 @@ var tech_menu: TechMenu
 
 enum GameState {
 	PLAYING = 0,
-	PAUSED = PLAYING + 1,
-	MAIN_MENU = PAUSED + 1,
+	VICTORY = PLAYING + 1,
+	MAIN_MENU = VICTORY + 1,
 	GAME_OVER = MAIN_MENU + 1,
 }
 
