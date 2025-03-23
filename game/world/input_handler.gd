@@ -60,11 +60,10 @@ func update_highlight() -> void:
 			tile_manager.cursor.set_low()
 			if building_node:
 				if building_node.get_id() == "city_building":
-					tile_manager.cursor.set_high()
+					tile_manager.cursor.set_high_play()
 					tile_manager.cursor.play()
 				elif building_node.get_id() == "factory":
-					tile_manager.cursor.set_medium()
-					tile_manager.cursor.play()
+					tile_manager.cursor.set_medium_play()
 			tile_manager.cursor.enable()
 		else:
 			## Cannot place on this tile

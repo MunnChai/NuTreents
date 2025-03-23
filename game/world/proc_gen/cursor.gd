@@ -24,6 +24,14 @@ func set_high() -> void:
 	stop()
 	pos_offset = Vector2(0, -16)
 
+func set_medium_play() -> void:
+	play()
+	pos_offset = Vector2(0, 0)
+
+func set_high_play() -> void:
+	play()
+	pos_offset = Vector2(0, -16)
+
 var is_enabled := true
 
 func enable() -> void:
