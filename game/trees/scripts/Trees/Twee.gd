@@ -49,6 +49,8 @@ func _ready():
 	
 	is_adjacent_to_water = is_water_adjacent()
 	gain.y = get_water_gain()
+	
+	id = "default_tree"
 
 func _process(delta: float) -> void:
 	life_time_seconds += delta

@@ -45,15 +45,16 @@ func update_highlight() -> void:
 		cursor.disable()
 	
 	# DETECT WHAT IS HIGHLIGHTED
-	#detect_highlighted_objects(map_coords)
+	detect_highlighted_objects(map_coords)
 
 func detect_highlighted_objects(pos: Vector2i) -> void:
 	var tile_type: TerrainMap.TILE_TYPE = terrain_map.get_tile_biome(pos)
 	var building_node: Node2D = building_map.get_building_node(pos)
 	
-	print(tile_type)
 	if building_node != null:
-		print(building_node.get_id())
+		InfoBox.get_instance().show_content_for(pos, building_node.get_id(), tile_type)
+	else:
+		InfoBox.get_instance().show_content_for(pos, "no_building", tile_type)
 
 const TWEEN_TIME = 0.2
 

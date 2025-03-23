@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://yufx63s5h3lt"]
 
-[ext_resource type="Script" uid="uid://bnf8eche4rwwo" path="res://trees/scripts/Trees/Twee.gd" id="1_8h5dq"]
+[ext_resource type="Script" uid="uid://dx6ofl3xjn02w" path="res://trees/scripts/Trees/TallTree.gd" id="1_ipn3t"]
 [ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://trees/stats/TallTreeStat.tres" id="2_66x5p"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://trees/tree_damage.gdshader" id="2_ngu8s"]
 [ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://trees/sheets/tree_tall_sheet.png" id="3_tcj32"]
@@ -20,7 +20,7 @@ shader_parameter/fps = 0.0
 shader_parameter/frame_count = 0
 
 [node name="TallTree" type="Node2D"]
-script = ExtResource("1_8h5dq")
+script = ExtResource("1_ipn3t")
 tree_stat = ExtResource("2_66x5p")
 sheets = Array[Texture2D]([ExtResource("3_tcj32")])
 

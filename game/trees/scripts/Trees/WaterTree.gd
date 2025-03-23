@@ -6,6 +6,8 @@ extends Twee
 func _ready():
 	super._ready()
 	
+	id = "water_tree"
+	
 	sprite.hframes = 9
 	sprite.vframes = 3
 	sprite.position.y = -16

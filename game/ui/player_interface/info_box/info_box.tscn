@@ -1,0 +1,62 @@
+[gd_scene load_steps=5 format=3 uid="uid://71cpfqvfyp5d"]
+
+[ext_resource type="Script" uid="uid://ddllwxcbnl4v6" path="res://ui/player_interface/info_box/info_box.gd" id="1_4bjjy"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_wqdbr"]
+[ext_resource type="FontFile" uid="uid://cndyubir4djau" path="res://ui/fonts/monogram/monogram-extended.ttf" id="2_efhpa"]
+[ext_resource type="FontFile" uid="uid://bxprk7fref4dc" path="res://ui/fonts/monogram/monogram-extended-italic.ttf" id="3_4bjjy"]
+
+[node name="InfoBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+script = ExtResource("1_4bjjy")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -161.0
+offset_right = 1.0
+offset_bottom = 163.0
+grow_horizontal = 0
+texture = ExtResource("1_wqdbr")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="RichText" type="RichTextLabel" parent="NinePatchRect/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/default_color = Color(0.827451, 0.654902, 0.2, 1)
+theme_override_constants/line_separation = -3
+theme_override_fonts/normal_font = ExtResource("2_efhpa")
+theme_override_fonts/italics_font = ExtResource("3_4bjjy")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[i]DEFAULT TREE[/i]
+
+What have we, but trees and naught food?
+
+[color=6cb3b4]INDUSTRIAL
+"
