@@ -92,5 +92,5 @@ func kill_all_enemies():
 	for enemy: Enemy in current_enemies:
 		if (!enemy):
 			continue
-		enemy.die()
-		current_enemies.erase(enemy)
+		#enemy.die()
+		#current_enemies.erase(enemy)
