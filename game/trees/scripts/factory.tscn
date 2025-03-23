@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://ney755v7lyxy"]
 
-[ext_resource type="Script" uid="uid://bxk30kqg4mueg" path="res://trees/scripts/factory.gd" id="1_mcte4"]
+[ext_resource type="Script" path="res://trees/scripts/factory.gd" id="1_mcte4"]
 [ext_resource type="Texture2D" uid="uid://cafkj4qot2ato" path="res://world/proc_gen/structure_map/factory_sheet.png" id="2_mdjg4"]
 
 [sub_resource type="Animation" id="Animation_8g0gh"]

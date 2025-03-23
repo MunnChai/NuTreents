@@ -370,8 +370,8 @@ func print_trees():
 
 ## POSITION CHECKS
 
-func is_reachable(pos: Vector2i):
-	return get_reachable_tree_placement_positions().has(pos)
+func is_reachable(pos: Vector2i, include_trees: bool = false):
+	return get_reachable_tree_placement_positions(include_trees).has(pos)
 
 func is_occupied(pos: Vector2i):
 	return get_tree_map().has(pos)
@@ -387,7 +387,7 @@ func is_stump(pos: Vector2i):
 		return false
 	return (tree_map.get(pos) as Twee).died
 
-func get_reachable_tree_placement_positions() -> Array[Vector2i]:
+func get_reachable_tree_placement_positions(include_trees: bool = false) -> Array[Vector2i]:
 	var allowed_positions: Array[Vector2i] = []
 	
 	var tree_map = get_tree_map()
@@ -398,6 +398,9 @@ func get_reachable_tree_placement_positions() -> Array[Vector2i]:
 			var new_pos = pos + offset
 			if not tree_map.has(new_pos):
 				allowed_positions.append(pos + offset)
+		
+		if (include_trees):
+			allowed_positions.append(pos)
 	
 	return allowed_positions
 
@@ -505,7 +508,7 @@ func is_mother_dead() -> bool:
 
 
 func handle_right_click(map_pos: Vector2i):
-	if (!is_reachable(map_pos)):
+	if (!is_reachable(map_pos, true)):
 		PopupManager.create_popup("Too far away!", structure_map.map_to_local(map_pos))
 		return
 	
