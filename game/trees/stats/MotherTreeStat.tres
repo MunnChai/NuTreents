@@ -5,6 +5,7 @@
 [resource]
 script = ExtResource("1_wnjji")
 name = ""
+id = ""
 description = ""
 hp = 50
 max_water = 10
