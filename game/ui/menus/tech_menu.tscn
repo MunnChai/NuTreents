@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnqphbl5e44tn"]
+[gd_scene load_steps=9 format=3 uid="uid://dnqphbl5e44tn"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_lce5o"]
 [ext_resource type="Script" uid="uid://bwokny8rxgsix" path="res://ui/menus/tech_menu.gd" id="1_uhide"]
@@ -10,6 +10,8 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_uhide"]
 atlas = ExtResource("1_lce5o")
 region = Rect2(0, 208, 640, 152)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8dtan"]
 
 [node name="TechMenu" type="Control" groups=["tech_menu"]]
 layout_mode = 3
@@ -62,6 +64,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_8dtan")
 theme_override_font_sizes/font_size = 48
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8dtan")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Backboard/HBoxContainer/VictoryPanel/ButtonContainer/WinButton"]
 layout_mode = 0

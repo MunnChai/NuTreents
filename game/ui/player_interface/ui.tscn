@@ -16,15 +16,14 @@ shader_parameter/outer_radius = 1.34
 
 [node name="UI" type="CanvasLayer"]
 
-[node name="Vignette" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_anucx")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("5_anucx")
+[node name="InfoBox" parent="." instance=ExtResource("7_a4txa")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = 40.0
+offset_bottom = 40.0
+grow_horizontal = 0
 
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
 mouse_filter = 1
@@ -54,10 +53,12 @@ offset_right = 1108.0
 offset_bottom = 177.0
 mouse_default_cursor_shape = 2
 
-[node name="InfoBox" parent="." instance=ExtResource("7_a4txa")]
-visible = false
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 0
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_anucx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_anucx")

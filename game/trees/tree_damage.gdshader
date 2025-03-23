@@ -65,9 +65,9 @@ void fragment() {
 	float y_falloff_factor = max(1.0 - round_to_y_pixel(UV.y) - uv_y_offset, 0.0);
 
 	float shake = shake_amount / 20.0;
-	float random = noise(vec2(0.0, rounded_uv.y + TIME) * 25.0);
+	//float random = noise(vec2(0.0, rounded_uv.y + TIME) * 25.0);
 
-	float sin_value = sin(max(shake * 1.0, 1.0) * TIME * 1.0 * noise(pos / 10.0) * 2.0 + noise(pos / 12.5) * PI) / 100.0 * (max(shake * 3.0, 1.0));
+	float sin_value = sin(max(shake * 1.0, 1.0) * TIME * 1.0) / 100.0 * (max(shake * 3.0, 1.0));
 	// 15
 	// FIGURE OUT HOW TO BETTER COEXIST WIND AND SHAKE...
 	vec2 new_uv = UV + vec2(sin_value * y_falloff_factor, 0.0);

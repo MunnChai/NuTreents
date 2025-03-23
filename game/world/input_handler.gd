@@ -2,7 +2,6 @@ class_name InputHandler
 extends Node
 
 func _unhandled_input(event: InputEvent) -> void:
-	print(event)
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
