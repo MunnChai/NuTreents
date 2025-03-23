@@ -505,7 +505,9 @@ func is_mother_dead() -> bool:
 
 
 func handle_right_click(map_pos: Vector2i):
-	pass
+	if (!is_reachable(map_pos)):
+		PopupManager.create_popup("Too far away!", structure_map.map_to_local(map_pos))
+		return
 	
 	# Get any building on the tile
 	if (structure_map.does_obstructive_structure_exist(map_pos)):
@@ -514,6 +516,7 @@ func handle_right_click(map_pos: Vector2i):
 		# If building is tree, remove tree and return (unless it's the mother tree)
 		if (structure is Twee):
 			remove_tree(map_pos)
+			PopupManager.create_popup("Tree removed!", structure_map.map_to_local(map_pos))
 		
 		# If building is city_building, remove city_building (if you have enough nutrients)
 		if (structure is CityBuilding):
@@ -521,6 +524,7 @@ func handle_right_click(map_pos: Vector2i):
 				
 				res.x -= structure.cost_to_remove
 				structure_map.remove_structure(map_pos)
+				PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
 			else:
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
@@ -530,6 +534,8 @@ func handle_right_click(map_pos: Vector2i):
 				
 				res.x -= structure.cost_to_remove
 				structure_map.remove_structure(map_pos)
+				
+				PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
 				
 				# TODO: INSTANTIATE FACTORY REMAINS
 			else:
@@ -556,6 +562,8 @@ func handle_right_click(map_pos: Vector2i):
 				# Check if decor exists on this spot
 				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
 					structure_map.remove_structure(map_pos)
+				
+				PopupManager.create_popup("Concrete removed!", structure_map.map_to_local(map_pos))
 			else:
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
@@ -568,6 +576,8 @@ func handle_right_click(map_pos: Vector2i):
 				# Check if decor exists on this spot
 				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
 					structure_map.remove_structure(map_pos)
+				
+				PopupManager.create_popup("Road destroyed!", structure_map.map_to_local(map_pos))
 			else:
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 	
