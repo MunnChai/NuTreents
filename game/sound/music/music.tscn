@@ -26,7 +26,7 @@ Vector2i(-1, -1): {
 }
 }
 
-[node name="Music" type="Node"]
+[node name="Music" type="Node" groups=["music"]]
 script = ExtResource("1_0t2ht")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

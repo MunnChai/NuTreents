@@ -37,6 +37,8 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	if (is_transitioning):
 		return
 	
+	
+	
 	is_transitioning = true
 	var tween_in = get_tree().create_tween()
 	
@@ -45,6 +47,11 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	
 	tween_in.finished.connect(
 		func():
+			var music: Node = get_tree().get_first_node_in_group("music")
+			if (music):
+				print("STOPPING_MUSIC")
+				music.audio_stream_player.stop()
+			
 			get_tree().change_scene_to_packed(scene)
 			
 			var tween_out = get_tree().create_tween()

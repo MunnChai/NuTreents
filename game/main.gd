@@ -7,3 +7,7 @@ func _ready():
 	
 	TreeManager.call_deferred("start_game")
 	Global.game_state = Global.GameState.PLAYING
+
+#func _process(delta):
+	#if Input.is_action_just_pressed("debug_button"):
+		#SceneLoader.transition_to_game_over()
