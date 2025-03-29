@@ -54,6 +54,7 @@ func _on_button_pressed() -> void:
 
 
 func _on_mouse_entered():
+	print("Stuff here")
 	InfoBox.get_instance().show_content_for_tree(tree_stat)
 
 func _on_mouse_exited():

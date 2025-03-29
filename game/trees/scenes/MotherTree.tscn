@@ -10,6 +10,7 @@ script = ExtResource("1_thw2w")
 tree_stat = ExtResource("2_wvohp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(0, -16)
 texture = ExtResource("3_icgiw")
 
