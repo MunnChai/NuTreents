@@ -114,13 +114,18 @@ func update(delta: float):
 	res += gain * delta
 	res.y = max(0, res.y)
 
+func get_new_tree_of_type(type: int) -> Twee:
+	return TREE_DICT[type].instantiate()
+func get_new_tree_of_currently_selected_type() -> Twee:
+	return get_new_tree_of_type(TreeManager.selected_tree_species)
+
 var placed = false
 ## add tree with given type at p
 # TODO type: will add more types later, codes only use DefaultTree for now
 ## return: 0 -> successful, 1 -> unavailable space, 2-> insufficient resources
 func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	var tree: Twee
-	tree = TREE_DICT[type].instantiate()
+	tree = get_new_tree_of_type(type)
 	
 	if (terrain_map.is_void(p)):
 		return -1

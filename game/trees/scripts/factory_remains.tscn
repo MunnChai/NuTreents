@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bfm8d0et0587i"]
 
-[ext_resource type="Script" path="res://trees/scripts/factory_remains.gd" id="1_jybpn"]
+[ext_resource type="Script" uid="uid://3la43gjclqem" path="res://trees/scripts/factory_remains.gd" id="1_jybpn"]
 [ext_resource type="Texture2D" uid="uid://b7oe8yquy47bv" path="res://world/proc_gen/structure_map/factory_remains.png" id="2_hx4a5"]
 
 [node name="FactoryRemains" type="Node2D"]
