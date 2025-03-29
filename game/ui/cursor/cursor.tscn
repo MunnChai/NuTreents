@@ -1,0 +1,82 @@
+[gd_scene load_steps=14 format=3 uid="uid://uf3j0muxm4jw"]
+
+[ext_resource type="Script" uid="uid://dw077n56o8g48" path="res://ui/cursor/cursor.gd" id="1_mqibp"]
+[ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="2_o2uqn"]
+[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/info_box_detection.gd" id="3_iygdk"]
+[ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/wooden_arrow.gd" id="3_sdxe7"]
+[ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/wooden_arrow_sheet.png" id="4_n6l3j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v6v85"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjmk3"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3d4o"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61smt"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrq54"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_trmi3"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_umjfs"]
+atlas = ExtResource("4_n6l3j")
+region = Rect2(192, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f33o1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v6v85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjmk3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3d4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61smt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrq54")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_trmi3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_umjfs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="Cursor" type="Marker2D"]
+script = ExtResource("1_mqibp")
+
+[node name="ModulationHighlight" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+modulate = Color(0.792567, 0.568552, 1.34766e-06, 0.505882)
+texture = ExtResource("2_o2uqn")
+
+[node name="InfoBoxDetector" type="Node" parent="."]
+script = ExtResource("3_iygdk")
+
+[node name="WoodenArrow" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+z_index = 25
+sprite_frames = SubResource("SpriteFrames_f33o1")
+frame_progress = 0.531519
+script = ExtResource("3_sdxe7")

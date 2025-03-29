@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bm0baq3q3jrlx"
-path="res://.godot/imported/wooden_cursor_sheet.png-6679114bf2b7519f5e425dd83fff8a3b.ctex"
+path="res://.godot/imported/wooden_arrow_sheet.png-6954ddffb186d28783f10dedddbf7846.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/wooden_cursor_sheet.png"
-dest_files=["res://.godot/imported/wooden_cursor_sheet.png-6679114bf2b7519f5e425dd83fff8a3b.ctex"]
+source_file="res://ui/cursor/wooden_arrow_sheet.png"
+dest_files=["res://.godot/imported/wooden_arrow_sheet.png-6954ddffb186d28783f10dedddbf7846.ctex"]
 
 [params]
 
