@@ -17,10 +17,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		var map_coords: Vector2i = Global.structure_map.local_to_map(Global.structure_map.get_mouse_coords())
 		
 		TreeManager.handle_right_click(map_coords)
-
-func _process(delta: float) -> void:
+	
 	update_highlight()
 	update_adjacent_tile_transparencies()
+
+func _process(delta: float) -> void:
+	pass
 
 # Moves the tile highlight sprite to the correct position
 func update_highlight() -> void:
