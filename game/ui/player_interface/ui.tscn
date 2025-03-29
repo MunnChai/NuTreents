@@ -25,8 +25,10 @@ anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -408.0
-offset_bottom = -408.0
+offset_left = -400.0
+offset_top = -78.0
+offset_right = -400.0
+offset_bottom = -78.0
 grow_horizontal = 0
 
 [node name="ResourcesUI" parent="." instance=ExtResource("2_dfe3o")]
@@ -48,10 +50,10 @@ position = Vector2(1086, 66)
 scale = Vector2(2, 2)
 
 [node name="FastForwardBtn" parent="." instance=ExtResource("4_hxq26")]
-offset_left = 1075.0
-offset_top = 145.0
-offset_right = 1108.0
-offset_bottom = 177.0
+offset_left = 1102.0
+offset_top = 90.0
+offset_right = 1135.0
+offset_bottom = 122.0
 mouse_default_cursor_shape = 2
 
 [node name="Vignette" type="ColorRect" parent="."]

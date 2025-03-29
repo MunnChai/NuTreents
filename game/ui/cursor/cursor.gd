@@ -127,11 +127,15 @@ func _update_visuals() -> void:
 		else:
 			_set_arrow_bobbing(false)
 
-	print(is_enabled)
-
 	# Don't highlight outside the map or on non-solid tiles...
 	if not terrain_map.is_solid(iso_position):
-		disable()
+		# Don't highlight void
+		if terrain_map.is_void(iso_position):
+			disable()
+		else: # Show red on water
+			enable()
+			_set_highlight_modulate(RED)
+			_set_arrow_visible(false)
 		return
 	
 	# We are highlighting an existing tree
