@@ -22,8 +22,11 @@ enum Vibe {
 
 var current_vibe = Vibe.CALM_NIGHT
 
-func _process(delta: float) -> void:
+func _process(delta: float) -> void: 
 	if audio_stream_player.get_stream_playback() == null:
+		return
+		
+	if !audio_stream_player.playing || !audio_stream_player.stream_paused:
 		return
 	
 	if len(get_tree().get_nodes_in_group("enemies")) > 15:
