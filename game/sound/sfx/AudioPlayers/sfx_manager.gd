@@ -24,6 +24,8 @@ var SFX_DICT: Dictionary[String, AudioStreamPlayer]
 
 func _ready() -> void:
 	#tree_plant sfx
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	tree_plant = TREE_PLANT.instantiate()
 	add_child(tree_plant)
 	SFX_DICT["tree_plant"] = tree_plant
