@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=3 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=80 format=3 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
 [ext_resource type="Script" uid="uid://cpegi8xung0dm" path="res://ui/menus/tutorial_menu.gd" id="3_30bqp"]
@@ -43,6 +43,7 @@
 [ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/info_box_detection.gd" id="22_a7wyg"]
 [ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/wooden_arrow_sheet.png" id="23_a8se6"]
 [ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/wooden_arrow.gd" id="24_2780h"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="24_xjovo"]
 [ext_resource type="Script" uid="uid://bp3dai7xhyayw" path="res://tutorial/tutorial_input_handler.gd" id="31_jpd2v"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_811q2"]
@@ -459,7 +460,7 @@ texture = ExtResource("10_yio4a")
 [node name="TextureRect" parent="UI/UI/Menu/TreeMenu/TreeCards/ExplorerTreeCard" index="0"]
 texture = SubResource("AtlasTexture_hkimi")
 
-[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/ExplorerTreeCard/TextureRect" index="9"]
+[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/ExplorerTreeCard/TextureRect" index="7"]
 visible = false
 theme_override_styles/focus = SubResource("StyleBoxEmpty_db0qj")
 
@@ -476,7 +477,7 @@ species_text = "Tall"
 type = 6
 texture = ExtResource("12_non8q")
 
-[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/TallTreeCard/TextureRect" index="9"]
+[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/TallTreeCard/TextureRect" index="7"]
 visible = false
 
 [node name="WaterTreeCard" parent="UI/UI/Menu/TreeMenu/TreeCards" instance=ExtResource("7_by7os")]
@@ -492,7 +493,7 @@ species_text = "Water"
 type = 3
 texture = ExtResource("14_suxcq")
 
-[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/WaterTreeCard/TextureRect" index="9"]
+[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/WaterTreeCard/TextureRect" index="7"]
 visible = false
 
 [node name="GunTreeCard" parent="UI/UI/Menu/TreeMenu/TreeCards" instance=ExtResource("7_by7os")]
@@ -508,7 +509,7 @@ species_text = "Gun"
 type = 2
 texture = ExtResource("16_0uc3m")
 
-[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/GunTreeCard/TextureRect" index="9"]
+[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/GunTreeCard/TextureRect" index="7"]
 visible = false
 
 [node name="TechTreeCard" parent="UI/UI/Menu/TreeMenu/TreeCards" instance=ExtResource("7_by7os")]
@@ -517,7 +518,7 @@ tree_stat = ExtResource("17_ohbjn")
 type = 4
 texture = ExtResource("18_apt3h")
 
-[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/TechTreeCard/TextureRect" index="9"]
+[node name="Button" parent="UI/UI/Menu/TreeMenu/TreeCards/TechTreeCard/TextureRect" index="7"]
 visible = false
 
 [node name="TechMenu" parent="UI/UI/Menu" instance=ExtResource("7_jpd2v")]
@@ -566,6 +567,20 @@ offset_right = -400.0
 offset_bottom = -78.0
 grow_horizontal = 0
 
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/UI"]
+offset_right = 239.0
+offset_bottom = 111.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("24_xjovo")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
 [node name="ResourcesUI" parent="UI/UI" instance=ExtResource("4_30bqp")]
 anchors_preset = 0
 anchor_right = 0.0
@@ -608,14 +623,17 @@ script = ExtResource("8_6bq4q")
 z_index = 1000
 
 [node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
-offset_bottom = 1507.0
+offset_left = 232.0
+offset_top = 21.0
+offset_right = 564.0
+offset_bottom = 250.0
 
 [node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
-text = "Click on a tile adjacent to your forest to plant a new tree. "
+text = "Trees consume water, and if your forest does not produce enough water, your trees may start dying!
+"
 
 [node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
-text = "Hi!
-"
+text = "Oh no!!!"
 autowrap_mode = 3
 
 [node name="FadeScreen" type="Control" parent="UI/UI/TutorialUI"]
@@ -637,10 +655,10 @@ texture = SubResource("GradientTexture1D_e4vot")
 
 [node name="CircleClip" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
 material = SubResource("CanvasItemMaterial_l38k8")
-offset_left = -155.0
-offset_top = -121.0
-offset_right = 245.0
-offset_bottom = 279.0
+offset_left = -123.0
+offset_top = -142.0
+offset_right = 277.0
+offset_bottom = 258.0
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_30bqp")
 

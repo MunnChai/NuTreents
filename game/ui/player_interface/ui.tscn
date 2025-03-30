@@ -35,8 +35,8 @@ offset_bottom = -44.0
 grow_horizontal = 0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
-offset_right = 235.0
-offset_bottom = 153.0
+offset_right = 239.0
+offset_bottom = 111.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("3_5i6hg")

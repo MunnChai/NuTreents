@@ -13,7 +13,6 @@ var nutrients_per_s: float = 1
 var seconds: float = 0
 
 @onready var water_label: Label = $WaterLabel
-@onready var sun_label: Label = $SunLabel
 @onready var nutrients_label: Label = $NutrientsLabel
 
 # Called when the node enters the scene tree for the first time.
@@ -27,7 +26,6 @@ func _process(delta: float) -> void:
 # Updates the text of each label to show current resource values
 func update_ui():
 	water_label.text = str(int(TreeManager.res.y)) + " (" + _get_pos(TreeManager.gain.y) + str(int(TreeManager.gain.y)) + "/s)"
-	sun_label.text = str(int(TreeManager.res.z)) + " (" + _get_pos(TreeManager.gain.z) + str(int(TreeManager.gain.z)) + "/s)"
 	nutrients_label.text = str(int(TreeManager.res.x)) + " (" + _get_pos(TreeManager.gain.x) + str(int(TreeManager.gain.x)) + "/s)"
 
 func _get_pos(gain: int) -> String:

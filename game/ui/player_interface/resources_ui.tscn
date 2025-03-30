@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://buns43sl7chej"]
+[gd_scene load_steps=6 format=3 uid="uid://buns43sl7chej"]
 
 [ext_resource type="Script" uid="uid://cgn43ynuh6apg" path="res://ui/player_interface/resources_ui.gd" id="1_dcrin"]
 [ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/resource_sprites.png" id="1_lmyok"]
@@ -7,10 +7,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_lmyok"]
 atlas = ExtResource("1_lmyok")
 region = Rect2(30, 14, 36, 36)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dcrin"]
-atlas = ExtResource("1_lmyok")
-region = Rect2(30, 62, 36, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkopc"]
 atlas = ExtResource("1_lmyok")
@@ -41,13 +37,6 @@ alignment = 1
 layout_mode = 2
 texture = SubResource("AtlasTexture_lmyok")
 
-[node name="Sunlight" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Sunlight"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_dcrin")
-
 [node name="Nutrients" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 
@@ -67,23 +56,12 @@ text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SunLabel" type="Label" parent="."]
-layout_mode = 2
-offset_left = 40.0
-offset_top = 45.0
-offset_right = 64.0
-offset_bottom = 97.0
-theme_override_fonts/font = ExtResource("3_qkopc")
-theme_override_font_sizes/font_size = 64
-text = "10"
-vertical_alignment = 1
-
 [node name="NutrientsLabel" type="Label" parent="."]
 layout_mode = 2
 offset_left = 40.0
-offset_top = 83.0
+offset_top = 44.0
 offset_right = 64.0
-offset_bottom = 135.0
+offset_bottom = 96.0
 theme_override_fonts/font = ExtResource("3_qkopc")
 theme_override_font_sizes/font_size = 64
 text = "10"
