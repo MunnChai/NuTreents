@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=33 format=3 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="2_l38k8"]
@@ -28,6 +28,38 @@ shader = ExtResource("7_jf5h8")
 shader_parameter/alpha = 0.75
 shader_parameter/inner_radius = 0.16
 shader_parameter/outer_radius = 1.34
+
+[sub_resource type="Gradient" id="Gradient_l38k8"]
+colors = PackedColorArray(0, 0, 0, 0.784314, 0, 0, 0, 0.784314)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_e4vot"]
+gradient = SubResource("Gradient_l38k8")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l38k8"]
+blend_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_e4vot"]
+offsets = PackedFloat32Array(0.181818, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_30bqp"]
+gradient = SubResource("Gradient_e4vot")
+width = 400
+height = 400
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_e4vot"]
+blend_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_30bqp"]
+offsets = PackedFloat32Array(0.987013, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8mlcc"]
+gradient = SubResource("Gradient_30bqp")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_00b0i"]
 texture = ExtResource("8_u4yp8")
@@ -168,6 +200,7 @@ offset_bottom = 122.0
 mouse_default_cursor_shape = 2
 
 [node name="Vignette" type="ColorRect" parent="UI/UI"]
+visible = false
 material = SubResource("ShaderMaterial_anucx")
 anchors_preset = 15
 anchor_right = 1.0
@@ -180,7 +213,49 @@ script = ExtResource("8_6bq4q")
 [node name="TutorialUI" parent="UI/UI" instance=ExtResource("3_811q2")]
 z_index = 1000
 
+[node name="FadeScreen" type="Control" parent="UI/UI/TutorialUI"]
+z_index = -10
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasGroup" type="CanvasGroup" parent="UI/UI/TutorialUI/FadeScreen"]
+
+[node name="BlackScreen" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
+visible = false
+offset_left = -240.0
+offset_top = -98.0
+offset_right = 1405.0
+offset_bottom = 753.0
+mouse_filter = 2
+texture = SubResource("GradientTexture1D_e4vot")
+
+[node name="CircleClip" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
+material = SubResource("CanvasItemMaterial_l38k8")
+offset_left = -155.0
+offset_top = -121.0
+offset_right = 245.0
+offset_bottom = 279.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_30bqp")
+
+[node name="SquareClip" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
+visible = false
+material = SubResource("CanvasItemMaterial_e4vot")
+offset_left = -243.0
+offset_top = 317.0
+offset_right = 1425.0
+offset_bottom = 660.0
+texture = SubResource("GradientTexture2D_8mlcc")
+
+[node name="TextBox" parent="UI/UI/TutorialUI" index="1"]
+offset_bottom = 280.0
+
+[node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
+text = "In this menu, you can select trees to plant. Trees cost Nutreents to grow. You can see how many Nutreents you have in the top left."
+
 [node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
+text = "Nice!"
 autowrap_mode = 3
 
 [node name="World" type="Node2D" parent="."]
@@ -213,6 +288,7 @@ zoom = Vector2(2, 2)
 script = ExtResource("10_h8kaa")
 
 [node name="AmbientLighting" parent="World" instance=ExtResource("4_t4yv6")]
+visible = false
 night_color = Color(0.220747, 0.405964, 0.660919, 1)
 
 [node name="Music" parent="World" instance=ExtResource("5_q7tcw")]
