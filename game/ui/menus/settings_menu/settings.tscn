@@ -101,7 +101,7 @@ custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_br6cj")
 theme_override_font_sizes/font_size = 32
-text = "Master:"
+text = "Master "
 vertical_alignment = 1
 
 [node name="MasterSlider" type="HSlider" parent="TextureRect/AudioSettings/MasterContainer"]
@@ -125,7 +125,7 @@ custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_br6cj")
 theme_override_font_sizes/font_size = 32
-text = "Music:"
+text = "Music  "
 vertical_alignment = 1
 
 [node name="MusicSlider" type="HSlider" parent="TextureRect/AudioSettings/MusicContainer"]
@@ -149,7 +149,7 @@ custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_br6cj")
 theme_override_font_sizes/font_size = 32
-text = "SFX:"
+text = "SFX    "
 vertical_alignment = 1
 
 [node name="SFXSlider" type="HSlider" parent="TextureRect/AudioSettings/SFXContainer"]
