@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnkikqyrui6rg"]
+[gd_scene load_steps=12 format=3 uid="uid://cnkikqyrui6rg"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_ypxvv"]
 [ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/menus/settings_menu/audio_settings.gd" id="2_8xtpb"]
 [ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="2_br6cj"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_gfptj"]
+[ext_resource type="Texture2D" uid="uid://ccua4jn8gnqfv" path="res://ui/grabber.png" id="5_xrvoc"]
+[ext_resource type="Texture2D" uid="uid://dg7l21n2ghlxw" path="res://ui/grabber_highlighted.png" id="6_ggmja"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v0rmt"]
 atlas = ExtResource("1_ypxvv")
@@ -19,6 +21,33 @@ expand_margin_left = 2.0
 expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ggmja"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.4, 0.113725, 0.0627451, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.670588, 0.313726, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_os65m"]
+bg_color = Color(0.670588, 0.313726, 0.0705882, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrvoc"]
+content_margin_left = 6.0
+content_margin_top = 6.0
+content_margin_right = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.670588, 0.313726, 0.0705882, 1)
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -79,8 +108,14 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("5_xrvoc")
+theme_override_icons/grabber_highlight = ExtResource("6_ggmja")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ggmja")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_os65m")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_xrvoc")
 max_value = 1.0
 step = 0.05
+value = 0.4
 
 [node name="MusicContainer" type="HBoxContainer" parent="TextureRect/AudioSettings"]
 layout_mode = 2
@@ -97,8 +132,14 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("5_xrvoc")
+theme_override_icons/grabber_highlight = ExtResource("6_ggmja")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ggmja")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_os65m")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_xrvoc")
 max_value = 1.0
 step = 0.05
+value = 0.4
 
 [node name="SFXContainer" type="HBoxContainer" parent="TextureRect/AudioSettings"]
 layout_mode = 2
@@ -115,8 +156,14 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
+theme_override_icons/grabber = ExtResource("5_xrvoc")
+theme_override_icons/grabber_highlight = ExtResource("6_ggmja")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ggmja")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_os65m")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_xrvoc")
 max_value = 1.0
 step = 0.05
+value = 0.4
 
 [connection signal="value_changed" from="TextureRect/AudioSettings/MasterContainer/MasterSlider" to="TextureRect/AudioSettings" method="_on_master_slider_value_changed"]
 [connection signal="value_changed" from="TextureRect/AudioSettings/MusicContainer/MusicSlider" to="TextureRect/AudioSettings" method="_on_music_slider_value_changed"]

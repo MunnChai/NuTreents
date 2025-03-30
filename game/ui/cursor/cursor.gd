@@ -172,6 +172,20 @@ func _update_visuals() -> void:
 		_set_highlight_modulate(YELLOW)
 		_set_arrow_visible(true)
 		_set_arrow_bobbing(true)
+		if (building_node as Structure) != null:
+			if building_node is CityBuilding:
+				if not TreeManager.enough_n((building_node as CityBuilding).cost_to_remove):
+					_set_arrow_bobbing(false)
+			elif building_node is Factory:
+				if not TreeManager.enough_n((building_node as Factory).cost_to_remove):
+					_set_arrow_bobbing(false)
+		else:
+			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.CITY:
+				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
+					_set_arrow_bobbing(false)
+			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.ROAD:
+				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
+					_set_arrow_bobbing(false)
 		return
 
 func _can_plant() -> bool:
