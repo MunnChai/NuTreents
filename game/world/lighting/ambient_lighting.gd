@@ -8,12 +8,12 @@ const LERP_TO_EVENING_SPEED = 1.0
 const LERP_TO_NIGHT_SPEED = 0.5
 
 const PERCENT_EVENING_THRESHOLD = 0.75 ## Percent of half day, occurs AFTER
-const PERCENT_MORNING_THRESHOLD = 0.25 ## Percent of half day, occurs BEFORE
+const PERCENT_MORNING_THRESHOLD = 0.15 ## Percent of half day, occurs BEFORE
 
 @export var day_color = Color(1.0, 1.0, 1.0, 1.0)
 @export var night_color = Color("224575", 1.0)
 @export var evening_color = Color("ec955d", 1.0)
-@export var morning_color = Color("c4e5f1", 1.0)
+@export var morning_color = Color("7fc3db", 1.0)
 
 @onready var modulation: CanvasModulate = %Modulation
 

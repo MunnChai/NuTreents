@@ -19,7 +19,7 @@ var name_dictionary = {
 	"factory_remains": "FACTORY REMAINS",
 	
 	"speedle": "SPEEDLE",
-	"silk_spitter": "SILK_SPITTER"
+	"silk_spitter": "SILK SPITTER"
 }
 
 var tile_name_dictionary = {

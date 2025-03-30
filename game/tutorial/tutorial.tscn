@@ -1,7 +1,7 @@
 [gd_scene load_steps=63 format=3 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
-[ext_resource type="Script" uid="uid://cpegi8xung0dm" path="res://ui/menus/tutorial_menu.gd" id="3_30bqp"]
+[ext_resource type="Script" path="res://ui/menus/tutorial_menu.gd" id="3_30bqp"]
 [ext_resource type="PackedScene" uid="uid://c4y6pxijsm16g" path="res://tutorial/tutorial_ui.tscn" id="3_811q2"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="3_e4vot"]
 [ext_resource type="Texture2D" uid="uid://d3vjgwi8co80j" path="res://ui/menus/menu_button_unselected_2x.png" id="3_e8ato"]
@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="4_30bqp"]
 [ext_resource type="Texture2D" uid="uid://cp6u4ys1uoqt1" path="res://ui/menus/menu_button_selected_2x.png" id="4_dgq6q"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="4_t4yv6"]
-[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="5_8mlcc"]
+[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="5_8mlcc"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="5_eu4un"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="5_q7tcw"]
 [ext_resource type="PackedScene" uid="uid://dnlplabvpyu4g" path="res://tutorial/new_tile_maps/tutorial_terrain_map.tscn" id="5_rcm07"]
@@ -25,12 +25,12 @@
 [ext_resource type="Texture2D" uid="uid://cwhdt4oefoyib" path="res://ui/menus/menu_exit_button.png" id="9_a7wyg"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="9_enf0y"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="10_h8kaa"]
-[ext_resource type="Script" uid="uid://6ku20yk0jera" path="res://tutorial/tutorial_cursor.gd" id="20_jpd2v"]
+[ext_resource type="Script" path="res://tutorial/tutorial_cursor.gd" id="20_jpd2v"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="21_dpu50"]
 [ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/info_box_detection.gd" id="22_a7wyg"]
 [ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/wooden_arrow_sheet.png" id="23_a8se6"]
 [ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/wooden_arrow.gd" id="24_2780h"]
-[ext_resource type="Script" uid="uid://bp3dai7xhyayw" path="res://tutorial/tutorial_input_handler.gd" id="31_jpd2v"]
+[ext_resource type="Script" path="res://tutorial/tutorial_input_handler.gd" id="31_jpd2v"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_811q2"]
 

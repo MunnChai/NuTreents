@@ -17,7 +17,7 @@ func _ready() -> void:
 	audio_stream_player.bus = "Music"
 	day_player.bus = "Music"
 	
-	day_player.play()
+	#day_player.play()
 
 
 enum Vibe {
@@ -31,36 +31,55 @@ enum Vibe {
 }
 
 var current_vibe = Vibe.CALM_NIGHT
-var playing_day := true
+var playing_day := false
+var has_transitioned := false
 
 func _process(delta: float) -> void: 
-	if clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS:
-		if playing_day:
-			playing_day = false
-			transition_to_night()
-		update_night_track()
-			
+	if not play_tutorial:
+		if clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS:
+			## NIGHT
+			if playing_day:
+				playing_day = false
+				transition_to_night()
+			update_night_track()
+			has_transitioned = false
+		elif clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS * AmbientLighting.PERCENT_EVENING_THRESHOLD:
+			## EVENING
+			if not has_transitioned:
+				fade_all_out()
+				has_transitioned = true
+		elif clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS * AmbientLighting.PERCENT_MORNING_THRESHOLD:
+			## DAY
+			if not playing_day:
+				playing_day = true
+				transition_to_day()
+			update_day_track()
+			has_transitioned = false
+		else:
+			## MORNING
+			if not has_transitioned:
+				fade_all_out()
+				has_transitioned = true
 	else:
-		if not playing_day:
-			playing_day = true
-			transition_to_day()
-		update_day_track()
+		fade_all_out()
 
-func transition_to_day():
-	get_tree().create_tween().tween_property(audio_stream_player, "volume_linear", 0, 2.0);
+func fade_all_out():
+	get_tree().create_tween().tween_property(audio_stream_player, "volume_linear", 0, 3.0);
+	get_tree().create_tween().tween_property(day_player, "volume_linear", 0, 3.0);
 	await get_tree().create_timer(3.0).timeout
 	audio_stream_player.stream_paused = true
+	day_player.stream_paused = true
+
+func transition_to_day():
 	day_player.stream_paused = false
 	if not day_player.playing:
 		day_player.play()
-	get_tree().create_tween().tween_property(day_player, "volume_linear", 1, 2.0);
-
+		day_player.volume_linear = 1.0
+	else:
+		get_tree().create_tween().tween_property(day_player, "volume_linear", 1, 2.0);
 
 func transition_to_night():
-	get_tree().create_tween().tween_property(day_player, "volume_linear", 0, 2.0);
-	await get_tree().create_timer(3.0).timeout
 	audio_stream_player.stream_paused = false
-	day_player.stream_paused = true
 	if not audio_stream_player.playing:
 		audio_stream_player.play()
 	get_tree().create_tween().tween_property(audio_stream_player, "volume_linear", 1, 2.0);
