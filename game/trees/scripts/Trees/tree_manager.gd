@@ -45,6 +45,11 @@ var forest_count: int
 # currently selected tree from ui
 var selected_tree_species: int = 1
 
+
+# Used in the tutorial
+signal tree_placed
+
+
 func _ready():
 	pass
 
@@ -211,6 +216,10 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
+	
+	# Don't emit for mother tree
+	if (!tree is MotherTree):
+		tree_placed.emit()
 	
 	return 0
 

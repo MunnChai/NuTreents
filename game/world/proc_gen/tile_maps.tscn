@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0rry4"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_118ts"]
 texture = ExtResource("5_118ts")
 texture_region_size = Vector2i(32, 16)
 0:0/size_in_atlas = Vector2i(1, 2)
@@ -80,7 +80,7 @@ texture_region_size = Vector2i(32, 16)
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(32, 16)
-sources/0 = SubResource("TileSetAtlasSource_0rry4")
+sources/0 = SubResource("TileSetAtlasSource_118ts")
 
 [node name="TileMaps" type="Node2D"]
 

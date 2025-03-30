@@ -1,12 +1,107 @@
-[gd_scene load_steps=8 format=3 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=25 format=3 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
-[ext_resource type="PackedScene" uid="uid://cxej40hx3cxdc" path="res://ui/player_interface/ui.tscn" id="2_o3bec"]
+[ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="2_l38k8"]
 [ext_resource type="PackedScene" uid="uid://c4y6pxijsm16g" path="res://tutorial/tutorial_ui.tscn" id="3_811q2"]
-[ext_resource type="PackedScene" uid="uid://csdqqfvopxl7j" path="res://world/proc_gen/tile_maps.tscn" id="3_bonnm"]
+[ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="3_e4vot"]
+[ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="4_3e0vf"]
+[ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="4_30bqp"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="4_t4yv6"]
+[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="5_8mlcc"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="5_q7tcw"]
+[ext_resource type="PackedScene" uid="uid://dnlplabvpyu4g" path="res://tutorial/new_tile_maps/tutorial_terrain_map.tscn" id="5_rcm07"]
+[ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="6_idkkj"]
+[ext_resource type="PackedScene" uid="uid://uf3j0muxm4jw" path="res://ui/cursor/cursor.tscn" id="6_nrgr8"]
+[ext_resource type="Script" uid="uid://ccdm0vnayrxeg" path="res://tutorial/new_tile_maps/tutorial_terrain_map.gd" id="6_t57g5"]
 [ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://input/input_handler.gd" id="6_yw3de"]
+[ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="7_jf5h8"]
+[ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="7_lvqxb"]
+[ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="8_6bq4q"]
+[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="8_u4yp8"]
+[ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="9_enf0y"]
+[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="10_h8kaa"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_811q2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
+shader = ExtResource("7_jf5h8")
+shader_parameter/alpha = 0.75
+shader_parameter/inner_radius = 0.16
+shader_parameter/outer_radius = 1.34
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_00b0i"]
+texture = ExtResource("8_u4yp8")
+texture_region_size = Vector2i(32, 16)
+0:0/size_in_atlas = Vector2i(1, 2)
+0:0/0 = 0
+1:0/size_in_atlas = Vector2i(1, 2)
+1:0/0 = 0
+2:0/size_in_atlas = Vector2i(1, 2)
+2:0/0 = 0
+3:0/size_in_atlas = Vector2i(1, 2)
+3:0/0 = 0
+4:0/size_in_atlas = Vector2i(1, 2)
+4:0/0 = 0
+5:0/size_in_atlas = Vector2i(1, 2)
+5:0/0 = 0
+6:0/size_in_atlas = Vector2i(1, 2)
+6:0/0 = 0
+7:0/size_in_atlas = Vector2i(1, 2)
+7:0/0 = 0
+0:2/size_in_atlas = Vector2i(1, 2)
+0:2/0 = 0
+1:2/size_in_atlas = Vector2i(1, 2)
+1:2/0 = 0
+2:2/size_in_atlas = Vector2i(1, 2)
+2:2/0 = 0
+3:2/size_in_atlas = Vector2i(1, 2)
+3:2/0 = 0
+4:2/size_in_atlas = Vector2i(1, 2)
+4:2/0 = 0
+5:2/size_in_atlas = Vector2i(1, 2)
+5:2/0 = 0
+6:2/size_in_atlas = Vector2i(1, 2)
+6:2/0 = 0
+7:2/size_in_atlas = Vector2i(1, 2)
+7:2/0 = 0
+0:4/size_in_atlas = Vector2i(1, 2)
+0:4/0 = 0
+1:4/size_in_atlas = Vector2i(1, 2)
+1:4/0 = 0
+2:4/size_in_atlas = Vector2i(1, 2)
+2:4/0 = 0
+3:4/size_in_atlas = Vector2i(1, 2)
+3:4/0 = 0
+4:4/size_in_atlas = Vector2i(1, 2)
+4:4/0 = 0
+5:4/size_in_atlas = Vector2i(1, 2)
+5:4/0 = 0
+6:4/size_in_atlas = Vector2i(1, 2)
+6:4/0 = 0
+7:4/size_in_atlas = Vector2i(1, 2)
+7:4/0 = 0
+0:6/size_in_atlas = Vector2i(1, 2)
+0:6/0 = 0
+1:6/size_in_atlas = Vector2i(1, 2)
+1:6/0 = 0
+2:6/size_in_atlas = Vector2i(1, 2)
+2:6/0 = 0
+3:6/size_in_atlas = Vector2i(1, 2)
+3:6/0 = 0
+4:6/size_in_atlas = Vector2i(1, 2)
+4:6/0 = 0
+5:6/size_in_atlas = Vector2i(1, 2)
+5:6/0 = 0
+6:6/size_in_atlas = Vector2i(1, 2)
+6:6/0 = 0
+7:6/size_in_atlas = Vector2i(1, 2)
+7:6/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_nrgr8"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+sources/0 = SubResource("TileSetAtlasSource_00b0i")
 
 [node name="Tutorial" type="Node"]
 script = ExtResource("1_p47bv")
@@ -18,16 +113,104 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 1
 
-[node name="UI" parent="UI" instance=ExtResource("2_o3bec")]
+[node name="UI" type="CanvasLayer" parent="UI"]
+
+[node name="Menu" parent="UI/UI" instance=ExtResource("2_l38k8")]
+mouse_filter = 1
+
+[node name="Trees" parent="UI/UI/Menu/MenuButtons" index="0"]
+button_group = SubResource("ButtonGroup_811q2")
+
+[node name="Technology" parent="UI/UI/Menu/MenuButtons" index="1"]
+button_group = SubResource("ButtonGroup_811q2")
+
+[node name="Settings" parent="UI/UI/Menu/MenuButtons" index="2"]
+button_group = SubResource("ButtonGroup_811q2")
+
+[node name="CloseMenu" parent="UI/UI/Menu" index="4"]
+button_group = SubResource("ButtonGroup_811q2")
+
+[node name="InfoBox" parent="UI/UI/Menu" instance=ExtResource("3_e4vot")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -78.0
+offset_right = -400.0
+offset_bottom = -78.0
+grow_horizontal = 0
+
+[node name="ResourcesUI" parent="UI/UI" instance=ExtResource("4_30bqp")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 1
+grow_vertical = 1
+size_flags_horizontal = 0
+size_flags_vertical = 4
+mouse_filter = 1
+
+[node name="Clock" parent="UI/UI" instance=ExtResource("5_8mlcc")]
+position = Vector2(1086, 66)
+scale = Vector2(2, 2)
+
+[node name="FastForwardBtn" parent="UI/UI" instance=ExtResource("6_idkkj")]
+offset_left = 1102.0
+offset_top = 90.0
+offset_right = 1135.0
+offset_bottom = 122.0
+mouse_default_cursor_shape = 2
+
+[node name="Vignette" type="ColorRect" parent="UI/UI"]
+material = SubResource("ShaderMaterial_anucx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("8_6bq4q")
 
 [node name="TutorialUI" parent="UI/UI" instance=ExtResource("3_811q2")]
+z_index = 1000
 
-[node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
-offset_bottom = 606.0
+[node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
+autowrap_mode = 3
 
 [node name="World" type="Node2D" parent="."]
 
-[node name="TileMaps" parent="World" instance=ExtResource("3_bonnm")]
+[node name="TileMaps" type="Node2D" parent="World"]
+
+[node name="BuildingManager" type="Node2D" parent="World/TileMaps" groups=["tile_manager"]]
+y_sort_enabled = true
+script = ExtResource("4_3e0vf")
+
+[node name="GroundLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("5_rcm07")]
+script = ExtResource("6_t57g5")
+
+[node name="Cursor" parent="World/TileMaps/BuildingManager" instance=ExtResource("6_nrgr8")]
+
+[node name="BuildingLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("7_lvqxb")]
+y_sort_enabled = true
+
+[node name="EnemyLayer" type="Node2D" parent="World/TileMaps/BuildingManager" groups=["enemy_map"]]
+y_sort_enabled = true
+
+[node name="FogLayer" type="TileMapLayer" parent="World/TileMaps/BuildingManager" groups=["fog_map"]]
+visible = false
+z_index = 5
+tile_set = SubResource("TileSet_nrgr8")
+script = ExtResource("9_enf0y")
+
+[node name="Camera2D" type="Camera2D" parent="World/TileMaps"]
+zoom = Vector2(2, 2)
+script = ExtResource("10_h8kaa")
 
 [node name="AmbientLighting" parent="World" instance=ExtResource("4_t4yv6")]
 night_color = Color(0.220747, 0.405964, 0.660919, 1)
@@ -37,4 +220,6 @@ night_color = Color(0.220747, 0.405964, 0.660919, 1)
 [node name="InputHandler" type="Node" parent="World"]
 script = ExtResource("6_yw3de")
 
+[editable path="UI/UI/Menu"]
+[editable path="UI/UI/Menu/TreeMenu"]
 [editable path="UI/UI/TutorialUI"]
