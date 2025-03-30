@@ -589,6 +589,11 @@ func handle_right_click(map_pos: Vector2i):
 		
 		# If building is tree, remove tree and return (unless it's the mother tree)
 		if (structure is Twee):
+			if (structure is MotherTree):
+				PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(map_pos))
+				SfxManager.play_sound_effect("ui_fail")
+				return
+			
 			remove_tree(map_pos)
 			PopupManager.create_popup("Tree removed!", structure_map.map_to_local(map_pos))
 		
