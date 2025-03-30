@@ -180,7 +180,17 @@ script = ExtResource("8_6bq4q")
 [node name="TutorialUI" parent="UI/UI" instance=ExtResource("3_811q2")]
 z_index = 1000
 
+[node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
+offset_left = 416.0
+offset_top = 53.0
+offset_right = 748.0
+offset_bottom = 188.0
+
+[node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
+text = "That's all! Good luck growing your forest!"
+
 [node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
+text = "Okie dokes"
 autowrap_mode = 3
 
 [node name="World" type="Node2D" parent="."]

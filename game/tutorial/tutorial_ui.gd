@@ -2,9 +2,9 @@ extends Control
 
 const ANIMATION_LIBRARY_NAME: String = "tutorial_animation"
 
-# Various buttons...
+# Various references to parts of the UI
 @onready var tree_menu_button = $"../Menu/MenuButtons/Trees"
-
+@onready var menu = $"../Menu"
 
 
 # Animation stuff
@@ -85,4 +85,7 @@ func skip_tutorial() -> void:
 	SceneLoader.transition_to_game()
 
 func _on_continue_button_pressed():
+	if (current_animation == TREE_MENU_ANIMATION && menu.is_open):
+		menu._on_close_menu_pressed() # calling private function is CRAZY
+	
 	play_next_animation()
