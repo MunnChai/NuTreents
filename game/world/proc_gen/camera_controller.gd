@@ -52,8 +52,14 @@ func _process(delta: float) -> void:
 	
 	prev_mouse_pos = get_viewport().get_mouse_position()
 	
+	var prev_zoom = zoom
+	var before_pos = get_global_mouse_position()
+	
 	zoom = MathUtil.decay(zoom, Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index], ZOOM_DECAY, delta / Engine.time_scale)
 	zoom = Vector2(max(zoom.x, 1.0), max(zoom.y, 1.0))
+	
+	if zoom != prev_zoom:
+		position += before_pos - get_global_mouse_position()
 	
 	lock_camera()
 
