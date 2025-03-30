@@ -60,10 +60,10 @@ script = ExtResource("1_b6rpk")
 
 [node name="TextBox" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_left = 393.0
-offset_top = 34.0
-offset_right = 725.0
-offset_bottom = 215.0
+offset_left = 416.0
+offset_top = 53.0
+offset_right = 748.0
+offset_bottom = 188.0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="TextBox"]
 layout_mode = 2
@@ -96,7 +96,7 @@ theme_override_fonts/normal_font = ExtResource("2_lhyr3")
 theme_override_fonts/italics_font = ExtResource("3_b6rpk")
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
-text = "You can use WASD to move the camera, and scroll the mouse wheel to zoom in and out."
+text = "That's all! Good luck growing your forest!"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -112,7 +112,7 @@ theme_override_constants/margin_bottom = 20
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_mpg42")
 theme_override_font_sizes/font_size = 32
-text = "Cool"
+text = "Okie dokes"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

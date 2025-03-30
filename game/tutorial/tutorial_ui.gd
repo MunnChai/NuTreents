@@ -84,8 +84,13 @@ func _on_first_tree_placed():
 func skip_tutorial() -> void:
 	SceneLoader.transition_to_game()
 
+const END_TUTORIAL_INDEX = 9
 func _on_continue_button_pressed():
 	if (current_animation == TREE_MENU_ANIMATION && menu.is_open):
 		menu._on_close_menu_pressed() # calling private function is CRAZY
+	
+	if (current_animation == END_TUTORIAL_INDEX):
+		SceneLoader.transition_to_game()
+		return
 	
 	play_next_animation()
