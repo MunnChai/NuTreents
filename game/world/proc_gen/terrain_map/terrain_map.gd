@@ -557,6 +557,13 @@ func is_solid(pos: Vector2) -> bool:
 	var biome = tile_data.get_custom_data("biome")
 	return biome != TILE_TYPE.WATER
 
+func is_concrete(pos: Vector2) -> bool:
+	if is_fertile(pos):
+		return false
+	var tile_data: TileData = get_cell_tile_data(pos)
+	var biome = tile_data.get_custom_data("biome")
+	return biome == TILE_TYPE.CITY || biome == TILE_TYPE.ROAD
+
 ## Can I plant a tree on this tile?
 func is_fertile(pos: Vector2) -> bool:
 	if not is_solid(pos):

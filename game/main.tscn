@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cxej40hx3cxdc" path="res://ui/player_interface/ui.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="3_1bvp3"]
-[ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://world/input_handler.gd" id="5_7mycd"]
+[ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://input/input_handler.gd" id="5_7mycd"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_lquwl")

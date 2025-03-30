@@ -19,3 +19,8 @@ func _ready():
 		tech_slot = Global.tech_menu.unassigned_tech.pick_random()
 		Global.tech_menu.unassigned_tech.erase(tech_slot)
 		print("Assigned factory tech slot: ", tech_slot)
+
+## Returns the "height" that the arrow cursor should be above this structure...
+## One of "low", "medium", and "high".
+func get_arrow_cursor_height() -> String:
+	return "medium"

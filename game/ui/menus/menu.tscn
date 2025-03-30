@@ -198,9 +198,9 @@ offset_bottom = -48.0
 
 [node name="CloseMenu" type="Button" parent="."]
 layout_mode = 2
-offset_left = 684.0
+offset_left = 680.0
 offset_top = -81.0
-offset_right = 752.0
+offset_right = 748.0
 offset_bottom = -47.0
 mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_5ai1f")

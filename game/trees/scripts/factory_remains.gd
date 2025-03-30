@@ -11,3 +11,8 @@ func _ready():
 		sprite_2d.flip_h = true
 	
 	id = "factory_remains"
+
+## Returns the "height" that the arrow cursor should be above this structure...
+## One of "low", "medium", and "high".
+func get_arrow_cursor_height() -> String:
+	return "low"

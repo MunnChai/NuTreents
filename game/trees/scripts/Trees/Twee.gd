@@ -258,3 +258,9 @@ func is_water_adjacent() -> bool:
 				return true
 	
 	return false
+
+## "medium" if small, "high" if large...
+func get_arrow_cursor_height() -> String:
+	if is_large:
+		return "high"
+	return "medium"

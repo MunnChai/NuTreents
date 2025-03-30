@@ -54,3 +54,7 @@ func update_maint():
 ## Override this if reachable tiles are different
 func get_reachable_offsets() -> Array[Vector2i]:
 	return [Vector2i.UP, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.LEFT]
+
+## Mother tree is always a medium
+func get_arrow_cursor_height() -> String:
+	return "medium"
