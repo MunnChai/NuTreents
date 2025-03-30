@@ -83,6 +83,8 @@ func set_iso_position(new_iso_pos: Vector2i) -> void:
 
 func on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	update_adjacent_tile_transparencies()
+	
+	$InfoBoxDetector.detect(iso_position)
 
 ## Update position and change state based on what's at the position
 func _process(delta: float) -> void:
@@ -90,8 +92,6 @@ func _process(delta: float) -> void:
 	wooden_arrow.set_cursor_position(global_position)
 	
 	_update_visuals()
-	
-	$InfoBoxDetector.detect(iso_position)
 
 #region VISUALS
 
