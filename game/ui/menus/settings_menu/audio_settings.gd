@@ -22,6 +22,9 @@ func _ready() -> void:
 	master_slider.value = db_to_linear(AudioServer.get_bus_volume_db(master_idx))
 	music_slider.value = db_to_linear(AudioServer.get_bus_volume_db(music_idx))
 	sfx_slider.value = db_to_linear(AudioServer.get_bus_volume_db(sfx_idx))
+	
+	load_audio_settings()
+	
 	slider_label.visible = false
 	
 	master_slider.connect("drag_ended", func(val: bool): slider_label.visible = false)
@@ -37,18 +40,21 @@ func _on_master_slider_value_changed(value: float) -> void:
 	_update_slider_label(value, master_slider)
 	if !init:
 		SfxManager.play_sound_effect("ui_click")
+		save_audio_settings()
 
 func _on_music_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(music_idx, linear_to_db(value))
 	_update_slider_label(value, music_slider)
 	if !init:
 		SfxManager.play_sound_effect("ui_click")
+		save_audio_settings()
 
 func _on_sfx_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(sfx_idx, linear_to_db(value))
 	_update_slider_label(value, sfx_slider)
 	if !init:
 		SfxManager.play_sound_effect("ui_click")
+		save_audio_settings()
 
 func _update_slider_label(value: float, slider: HSlider) -> void:
 	slider_label.text = str(int(value * 100)) + "%"
@@ -59,3 +65,25 @@ func _update_slider_label(value: float, slider: HSlider) -> void:
 	slider_label.global_position.x = clamp(get_global_mouse_position().x - offset, min, max)
 	slider_label.global_position.y = slider.global_position.y - slider_label.size.y
 	slider_label.visible = true
+
+func save_audio_settings() -> void:
+	var config = ConfigFile.new()
+	
+	config.set_value("audio", "master", master_slider.value)
+	config.set_value("audio", "music", music_slider.value)
+	config.set_value("audio", "sfx", sfx_slider.value)
+	
+	config.save("user://settings.cfg")
+
+func load_audio_settings() -> void:
+	var config = ConfigFile.new()
+	# Load data from a file.
+	var err = config.load("user://settings.cfg")
+
+	# If the file didn't load, ignore it.
+	if err != OK:
+		return
+
+	master_slider.value = config.get_value("audio", "master", 1.0)
+	music_slider.value = config.get_value("audio", "music", 1.0)
+	sfx_slider.value = config.get_value("audio", "sfx", 1.0)

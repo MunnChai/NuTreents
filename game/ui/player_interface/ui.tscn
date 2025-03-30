@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=10 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="3_5i6hg"]
 [ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="3_wl5ax"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="4_6i6ec"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
@@ -17,6 +18,8 @@ shader_parameter/outer_radius = 1.34
 [node name="UI" type="CanvasLayer"]
 
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
+offset_right = -128.0
+offset_bottom = 128.0
 mouse_filter = 1
 
 [node name="InfoBox" parent="Menu" instance=ExtResource("7_a4txa")]
@@ -25,11 +28,25 @@ anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -78.0
-offset_right = -400.0
-offset_bottom = -78.0
+offset_left = -272.0
+offset_top = -44.0
+offset_right = -272.0
+offset_bottom = -44.0
 grow_horizontal = 0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+offset_right = 235.0
+offset_bottom = 153.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("3_5i6hg")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
 
 [node name="ResourcesUI" parent="." instance=ExtResource("2_dfe3o")]
 anchors_preset = 0

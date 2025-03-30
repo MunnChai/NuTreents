@@ -133,6 +133,7 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> void:
 	current_enemies.append(enemy_node)
 
 
+
 func kill_all_enemies():
 	#print("Hello")
 	for enemy: Enemy in current_enemies:

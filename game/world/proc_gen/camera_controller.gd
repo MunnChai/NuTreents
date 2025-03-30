@@ -33,16 +33,10 @@ const DECELERATION_RATE = 10.0
 
 var velocity := Vector2.ZERO
 
+var move_position_by := Vector2.ZERO
+
 func _process(delta: float) -> void:
-	var direction = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized()
-	if (direction.length_squared() > 0.01):
-		velocity = MathUtil.decay(velocity, direction * MAX_SPEED, ACCELERATION, delta / Engine.time_scale)
-	else:
-		velocity = MathUtil.decay(velocity, Vector2.ZERO, DECELERATION_RATE, delta / Engine.time_scale)
-	global_position += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * delta / Engine.time_scale
-	
-	if Input.is_action_pressed("move_cam"):
-		move_cam(delta / Engine.time_scale)
+	move_position_by = Vector2.ZERO
 	
 	if Input.is_action_just_released("zoom_cam_in"):
 		zoom_cam_in(delta / Engine.time_scale)
@@ -50,10 +44,28 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_released("zoom_cam_out"):
 		zoom_cam_out(delta / Engine.time_scale)
 	
+	var direction = Vector2(Input.get_axis("left", "right"), Input.get_axis("up", "down")).normalized()
+	if (direction.length_squared() > 0.01):
+		velocity = MathUtil.decay(velocity, direction * MAX_SPEED, ACCELERATION, delta / Engine.time_scale)
+	else:
+		velocity = MathUtil.decay(velocity, Vector2.ZERO, DECELERATION_RATE, delta / Engine.time_scale)
+	position += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * delta / Engine.time_scale
+	move_position_by += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * delta / Engine.time_scale
+	
+	if Input.is_action_pressed("move_cam"):
+		move_cam(delta / Engine.time_scale)
+	
 	prev_mouse_pos = get_viewport().get_mouse_position()
+	
+	var prev_zoom = zoom
+	var before_pos = get_global_mouse_position()
 	
 	zoom = MathUtil.decay(zoom, Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index], ZOOM_DECAY, delta / Engine.time_scale)
 	zoom = Vector2(max(zoom.x, 1.0), max(zoom.y, 1.0))
+	
+	## https://forum.godotengine.org/t/how-to-zoom-camera-to-mouse/37348
+	if zoom != prev_zoom:
+		position += before_pos - (get_global_mouse_position() - move_position_by)
 	
 	lock_camera()
 
@@ -68,6 +80,7 @@ func move_cam(delta: float) -> void:
 	var curr_mouse_pos: Vector2 = get_viewport().get_mouse_position()
 	var distance_moved: Vector2 = curr_mouse_pos - prev_mouse_pos
 	position -= distance_moved * MOUSE_DRAG_STRENGTH * delta * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index])
+	move_position_by -= distance_moved * MOUSE_DRAG_STRENGTH * delta * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index])
 
 func zoom_cam_in(delta: float) -> void:
 	current_zoom_index += 1

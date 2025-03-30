@@ -28,4 +28,6 @@ func _ready():
 ## Returns the "height" that the arrow cursor should be above this structure...
 ## One of "low", "medium", and "high".
 func get_arrow_cursor_height() -> String:
+	if sprite_2d.texture.region.position.x == 32 * 3:
+		return "medium"
 	return "high"
