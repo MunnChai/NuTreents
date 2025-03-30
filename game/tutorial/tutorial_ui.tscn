@@ -1,0 +1,119 @@
+[gd_scene load_steps=9 format=3 uid="uid://c4y6pxijsm16g"]
+
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_1t4nb"]
+[ext_resource type="Script" uid="uid://hy64o2jjgayp" path="res://tutorial/tutorial_ui.gd" id="1_b6rpk"]
+[ext_resource type="FontFile" uid="uid://cndyubir4djau" path="res://ui/fonts/monogram/monogram-extended.ttf" id="2_lhyr3"]
+[ext_resource type="FontFile" uid="uid://bxprk7fref4dc" path="res://ui/fonts/monogram/monogram-extended-italic.ttf" id="3_b6rpk"]
+[ext_resource type="AnimationLibrary" uid="uid://dubrxg2g3id4k" path="res://tutorial/tutorial_animation.res" id="4_lhyr3"]
+[ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="6_mpg42"]
+
+[sub_resource type="Animation" id="Animation_mpg42"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextBox:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_er71h"]
+_data = {
+&"RESET": SubResource("Animation_mpg42")
+}
+
+[node name="TutorialUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_b6rpk")
+
+[node name="TextBox" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 393.0
+offset_top = 34.0
+offset_right = 725.0
+offset_bottom = 192.0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TextBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_1t4nb")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextBox"]
+layout_mode = 2
+
+[node name="TextContainer" type="MarginContainer" parent="TextBox/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 16
+
+[node name="RichText" type="RichTextLabel" parent="TextBox/VBoxContainer/TextContainer"]
+clip_contents = false
+layout_mode = 2
+theme_override_constants/line_separation = -3
+theme_override_fonts/normal_font = ExtResource("2_lhyr3")
+theme_override_fonts/italics_font = ExtResource("3_b6rpk")
+theme_override_font_sizes/normal_font_size = 32
+bbcode_enabled = true
+text = "You can remove trees using the right mouse button."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonContainer" type="MarginContainer" parent="TextBox/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 20
+
+[node name="ContinueButton" type="Button" parent="TextBox/VBoxContainer/ButtonContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_mpg42")
+theme_override_font_sizes/font_size = 32
+text = "Not my trees!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_er71h"),
+&"tutorial_animation": ExtResource("4_lhyr3")
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 152.0
+offset_right = 220.0
+offset_bottom = 214.0
+
+[node name="SkipLabel" type="RichTextLabel" parent="PanelContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("6_mpg42")
+theme_override_font_sizes/normal_font_size = 32
+text = "Skip Tutorial"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SkipTutorialButton" type="TextureButton" parent="PanelContainer"]
+layout_mode = 2
+
+[connection signal="pressed" from="TextBox/VBoxContainer/ButtonContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="PanelContainer/SkipTutorialButton" to="." method="skip_tutorial"]
