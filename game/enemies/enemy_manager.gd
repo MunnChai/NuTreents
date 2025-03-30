@@ -76,14 +76,14 @@ func increase_difficulty() -> void:
 		
 		#if day is an odd day, increase waves
 		if (isOdd != 0):
-			num_waves *= 2
+			num_waves += 1
 		
 		#if day is an even day, increase number of enemies per wave
 		else:
-			if (min_enemies_per_wave * 2 >= max_enemies_per_wave):
-				max_enemies_per_wave *= 2
+			if (min_enemies_per_wave + 2 >= max_enemies_per_wave):
+				max_enemies_per_wave += 2
 			else:
-				min_enemies_per_wave *= 2
+				min_enemies_per_wave += 2
 		
 		# update day tracker, don't forget silly :)
 		day_tracker = curr_day

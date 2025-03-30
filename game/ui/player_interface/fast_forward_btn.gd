@@ -5,7 +5,7 @@ func _ready() -> void:
 
 func _on_toggled(toggled_on: bool) -> void:
 	if toggled_on:
-		Engine.time_scale = 2
+		Engine.time_scale = 3
 	else:
 		Engine.time_scale = 1
 	SfxManager.play_sound_effect("ui_click")
