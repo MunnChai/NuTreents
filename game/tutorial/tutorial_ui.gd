@@ -26,7 +26,6 @@ func _ready() -> void:
 func play_next_animation() -> void:
 	current_animation += 1
 	play_animation(current_animation)
-	
 
 func play_animation(index: int) -> void:
 	print(ANIMATION_LIBRARY_NAME + "/" + get_animation_name(index))
@@ -82,10 +81,13 @@ func _on_first_tree_placed():
 
 
 func skip_tutorial() -> void:
+	SfxManager.play_sound_effect("ui_click")
 	SceneLoader.transition_to_game()
 
 const END_TUTORIAL_INDEX = 9
 func _on_continue_button_pressed():
+	SfxManager.play_sound_effect("ui_click")
+
 	if (current_animation == TREE_MENU_ANIMATION && menu.is_open):
 		menu._on_close_menu_pressed() # calling private function is CRAZY
 	

@@ -1,11 +1,35 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4y6pxijsm16g"]
+[gd_scene load_steps=11 format=3 uid="uid://c4y6pxijsm16g"]
 
-[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_1t4nb"]
 [ext_resource type="Script" uid="uid://hy64o2jjgayp" path="res://tutorial/tutorial_ui.gd" id="1_b6rpk"]
 [ext_resource type="FontFile" uid="uid://cndyubir4djau" path="res://ui/fonts/monogram/monogram-extended.ttf" id="2_lhyr3"]
+[ext_resource type="Texture2D" uid="uid://4w1j52ggdmji" path="res://ui/player_interface/info_box/nine_tile_menu_2x.png" id="2_mpg42"]
 [ext_resource type="FontFile" uid="uid://bxprk7fref4dc" path="res://ui/fonts/monogram/monogram-extended-italic.ttf" id="3_b6rpk"]
 [ext_resource type="AnimationLibrary" uid="uid://dubrxg2g3id4k" path="res://tutorial/tutorial_animation.res" id="4_lhyr3"]
 [ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="6_mpg42"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mpg42"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.666667, 0.313726, 0.0745098, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_er71h"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 8.0
+bg_color = Color(0.666667, 0.313726, 0.0745098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.666667, 0.313726, 0.0745098, 1)
 
 [sub_resource type="Animation" id="Animation_mpg42"]
 length = 0.001
@@ -63,18 +87,18 @@ layout_mode = 0
 offset_left = 416.0
 offset_top = 53.0
 offset_right = 748.0
-offset_bottom = 188.0
+offset_bottom = 216.0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="TextBox"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("1_1t4nb")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
+texture = ExtResource("2_mpg42")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
@@ -84,9 +108,9 @@ layout_mode = 2
 [node name="TextContainer" type="MarginContainer" parent="TextBox/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
+theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_bottom = 24
 
 [node name="RichText" type="RichTextLabel" parent="TextBox/VBoxContainer/TextContainer"]
 clip_contents = false
@@ -106,12 +130,17 @@ vertical_alignment = 1
 layout_mode = 2
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 24
 
 [node name="ContinueButton" type="Button" parent="TextBox/VBoxContainer/ButtonContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme_override_fonts/font = ExtResource("6_mpg42")
 theme_override_font_sizes/font_size = 32
+theme_override_styles/focus = SubResource("StyleBoxFlat_mpg42")
+theme_override_styles/hover = SubResource("StyleBoxFlat_er71h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_er71h")
+theme_override_styles/normal = SubResource("StyleBoxFlat_mpg42")
 text = "Okie dokes"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -137,6 +166,7 @@ vertical_alignment = 1
 
 [node name="SkipTutorialButton" type="TextureButton" parent="PanelContainer"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 
 [connection signal="pressed" from="TextBox/VBoxContainer/ButtonContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="PanelContainer/SkipTutorialButton" to="." method="skip_tutorial"]

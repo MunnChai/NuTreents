@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="4_3e0vf"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="4_30bqp"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="4_t4yv6"]
-[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="5_8mlcc"]
+[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="5_8mlcc"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="5_q7tcw"]
 [ext_resource type="PackedScene" uid="uid://dnlplabvpyu4g" path="res://tutorial/new_tile_maps/tutorial_terrain_map.tscn" id="5_rcm07"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="6_idkkj"]
@@ -189,10 +189,12 @@ size_flags_vertical = 4
 mouse_filter = 1
 
 [node name="Clock" parent="UI/UI" instance=ExtResource("5_8mlcc")]
+visible = false
 position = Vector2(1086, 66)
 scale = Vector2(2, 2)
 
 [node name="FastForwardBtn" parent="UI/UI" instance=ExtResource("6_idkkj")]
+visible = false
 offset_left = 1102.0
 offset_top = 90.0
 offset_right = 1135.0
@@ -212,6 +214,16 @@ script = ExtResource("8_6bq4q")
 
 [node name="TutorialUI" parent="UI/UI" instance=ExtResource("3_811q2")]
 z_index = 1000
+
+[node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
+offset_bottom = 280.0
+
+[node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
+text = "In this menu, you can select trees to plant. Trees cost Nutreents to grow. You can see how many Nutreents you have in the top left."
+
+[node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
+text = "Nice!"
+autowrap_mode = 3
 
 [node name="FadeScreen" type="Control" parent="UI/UI/TutorialUI"]
 z_index = -10
@@ -248,16 +260,6 @@ offset_right = 1425.0
 offset_bottom = 660.0
 texture = SubResource("GradientTexture2D_8mlcc")
 
-[node name="TextBox" parent="UI/UI/TutorialUI" index="1"]
-offset_bottom = 280.0
-
-[node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
-text = "In this menu, you can select trees to plant. Trees cost Nutreents to grow. You can see how many Nutreents you have in the top left."
-
-[node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
-text = "Nice!"
-autowrap_mode = 3
-
 [node name="World" type="Node2D" parent="."]
 
 [node name="TileMaps" type="Node2D" parent="World"]
@@ -292,6 +294,7 @@ visible = false
 night_color = Color(0.220747, 0.405964, 0.660919, 1)
 
 [node name="Music" parent="World" instance=ExtResource("5_q7tcw")]
+play_tutorial = true
 
 [node name="InputHandler" type="Node" parent="World"]
 script = ExtResource("6_yw3de")
