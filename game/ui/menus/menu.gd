@@ -1,3 +1,4 @@
+class_name Menu
 extends Control
 
 @export var tree_menu: Control
@@ -42,6 +43,11 @@ func _on_close_menu_pressed() -> void:
 		print("YA")
 		animation_player.play("menu_appear")
 		SfxManager.play_sound_effect("ui_pages")
+
+func close_menu():
+	is_open = false
+	animation_player.play_backwards("menu_appear")
+	SfxManager.play_sound_effect("ui_pages")
 
 func set_visibility(tree : bool, tech : bool, settings : bool):
 	tree_menu.visible = tree

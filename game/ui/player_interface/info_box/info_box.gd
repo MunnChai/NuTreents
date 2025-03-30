@@ -19,7 +19,7 @@ var name_dictionary = {
 	"factory_remains": "FACTORY REMAINS",
 	
 	"speedle": "SPEEDLE",
-	"silk_spitter": "SILK_SPITTER"
+	"silk_spitter": "SILK SPITTER"
 }
 
 var tile_name_dictionary = {
@@ -37,7 +37,7 @@ var desc_dictionary = {
 	"explorer_tree": "A bubbly maple. Reaches far to adjacent lands.",
 	"tech_tree": "For all your technology needs.",
 	"water_tree": "Dredges up them aquifers for your forest's convenience.",
-	"tall_tree": "Reaches above the clouds for more of that sweet, sweet sunlight.",
+	"tall_tree": "Sharp and sturdy. It'll take more than a few bugs to chop this one.",
 	
 	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
 	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",

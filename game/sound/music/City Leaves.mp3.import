@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bsa0vhvl0vlyw"
+path="res://.godot/imported/City Leaves.mp3-626e27c5ffe4ad34a98861b731a76f74.mp3str"
+
+[deps]
+
+source_file="res://sound/music/City Leaves.mp3"
+dest_files=["res://.godot/imported/City Leaves.mp3-626e27c5ffe4ad34a98861b731a76f74.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

@@ -45,6 +45,11 @@ var forest_count: int
 # currently selected tree from ui
 var selected_tree_species: int = 1
 
+
+# Used in the tutorial
+signal tree_placed
+
+
 func _ready():
 	pass
 
@@ -211,6 +216,10 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	
 	# call structure_map to add it on screen TODO: weird 
 	structure_map.add_structure(p, tree)
+	
+	# Don't emit for mother tree
+	if (!tree is MotherTree):
+		tree_placed.emit()
 	
 	return 0
 
@@ -580,6 +589,11 @@ func handle_right_click(map_pos: Vector2i):
 		
 		# If building is tree, remove tree and return (unless it's the mother tree)
 		if (structure is Twee):
+			if (structure is MotherTree):
+				PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(map_pos))
+				SfxManager.play_sound_effect("ui_fail")
+				return
+			
 			remove_tree(map_pos)
 			PopupManager.create_popup("Tree removed!", structure_map.map_to_local(map_pos))
 		

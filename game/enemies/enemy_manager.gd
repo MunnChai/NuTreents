@@ -13,7 +13,7 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 	EnemyType.SILK_SPITTER: SILK_SPITTER
 }
  
-var num_waves: int = 1
+var num_waves: int = 2
 var enemy_spawn_interval: float = Global.clock.HALF_DAY_SECONDS / num_waves
 var spawning_interval_tracker: float = 0
 var current_wave = 0
@@ -76,14 +76,14 @@ func increase_difficulty() -> void:
 		
 		#if day is an odd day, increase waves
 		if (isOdd != 0):
-			num_waves += 1
-			
+			num_waves *= 2
+		
 		#if day is an even day, increase number of enemies per wave
 		else:
-			if (min_enemies_per_wave + 1 >= max_enemies_per_wave):
-				max_enemies_per_wave += 1
+			if (min_enemies_per_wave * 2 >= max_enemies_per_wave):
+				max_enemies_per_wave *= 2
 			else:
-				min_enemies_per_wave += 1
+				min_enemies_per_wave *= 2
 		
 		# update day tracker, don't forget silly :)
 		day_tracker = curr_day
@@ -95,7 +95,18 @@ func spawn_enemies() -> int:
 	for i in range(0, num_enemies):
 		var rand_enemy = EnemyType.values().pick_random()
 		
-		var rand_pos = Global.fog_map.get_used_cells().pick_random()
+		var possible_cells = Global.fog_map.get_used_cells()
+		var distance = INF
+		for cell in possible_cells:
+			if cell.distance_squared_to(Global.ORIGIN) < distance:
+				distance = cell.distance_squared_to(Global.ORIGIN)
+		
+		var allowed_cells = []
+		for cell in possible_cells:
+			if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 10.0:
+				allowed_cells.append(cell)
+		
+		var rand_pos = allowed_cells.pick_random()
 		var world_pos = Global.fog_map.map_to_local(rand_pos)
 		var terrain_pos = Global.terrain_map.local_to_map(world_pos)
 		

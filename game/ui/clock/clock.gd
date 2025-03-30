@@ -11,6 +11,8 @@ var _delta_seconds: float = 0
 var _tot_sec_elapsed: float = 0 # For func get_current_sec()
 var _curr_day: int = 1
 
+var is_paused: bool = false
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var label: Label = $Label
 
@@ -19,7 +21,9 @@ func _ready() -> void:
 	# Engine.time_scale = 20
 
 func _process(delta: float) -> void:
-	_process_time(delta)
+	if (!is_paused):
+		_process_time(delta)
+	
 	_update_animation_player()
 	_update_label()
 
