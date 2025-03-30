@@ -1,27 +1,101 @@
-[gd_scene load_steps=33 format=3 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=51 format=3 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
-[ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="2_l38k8"]
+[ext_resource type="Script" uid="uid://cpegi8xung0dm" path="res://ui/menus/tutorial_menu.gd" id="3_30bqp"]
 [ext_resource type="PackedScene" uid="uid://c4y6pxijsm16g" path="res://tutorial/tutorial_ui.tscn" id="3_811q2"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="3_e4vot"]
+[ext_resource type="Texture2D" uid="uid://d3vjgwi8co80j" path="res://ui/menus/menu_button_unselected_2x.png" id="3_e8ato"]
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="4_3e0vf"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="4_30bqp"]
+[ext_resource type="Texture2D" uid="uid://cp6u4ys1uoqt1" path="res://ui/menus/menu_button_selected_2x.png" id="4_dgq6q"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="4_t4yv6"]
-[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="5_8mlcc"]
+[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="5_8mlcc"]
+[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="5_eu4un"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="5_q7tcw"]
 [ext_resource type="PackedScene" uid="uid://dnlplabvpyu4g" path="res://tutorial/new_tile_maps/tutorial_terrain_map.tscn" id="5_rcm07"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="6_idkkj"]
 [ext_resource type="PackedScene" uid="uid://uf3j0muxm4jw" path="res://ui/cursor/cursor.tscn" id="6_nrgr8"]
 [ext_resource type="Script" uid="uid://ccdm0vnayrxeg" path="res://tutorial/new_tile_maps/tutorial_terrain_map.gd" id="6_t57g5"]
+[ext_resource type="PackedScene" uid="uid://dwyhak12pdjyv" path="res://ui/menus/tree_menu/tree_menu.tscn" id="6_u47y0"]
 [ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://input/input_handler.gd" id="6_yw3de"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="7_jf5h8"]
+[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/menus/tech_menu.tscn" id="7_jpd2v"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="7_lvqxb"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="8_6bq4q"]
+[ext_resource type="PackedScene" uid="uid://cnkikqyrui6rg" path="res://ui/menus/settings_menu/settings.tscn" id="8_dpu50"]
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="8_u4yp8"]
+[ext_resource type="Texture2D" uid="uid://cwhdt4oefoyib" path="res://ui/menus/menu_exit_button.png" id="9_a7wyg"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="9_enf0y"]
 [ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="10_h8kaa"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_811q2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_maj2m"]
+atlas = ExtResource("3_e8ato")
+region = Rect2(48, 96, 160, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwjwq"]
+atlas = ExtResource("4_dgq6q")
+region = Rect2(48, 96, 160, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ai1f"]
+atlas = ExtResource("3_e8ato")
+region = Rect2(48, 96, 160, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6364y"]
+atlas = ExtResource("4_dgq6q")
+region = Rect2(48, 96, 160, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cg7j7"]
+atlas = ExtResource("3_e8ato")
+region = Rect2(48, 96, 160, 34)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l1cna"]
+atlas = ExtResource("4_dgq6q")
+region = Rect2(48, 96, 160, 34)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ai1f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7jds"]
+atlas = ExtResource("9_a7wyg")
+region = Rect2(48, 48, 32, 16)
+
+[sub_resource type="Animation" id="Animation_mrn3s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 696)]
+}
+
+[sub_resource type="Animation" id="Animation_hyvv2"]
+resource_name = "menu_appear"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 696), Vector2(0, 396)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mrn3s"]
+_data = {
+&"RESET": SubResource("Animation_mrn3s"),
+&"menu_appear": SubResource("Animation_hyvv2")
+}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("7_jf5h8")
@@ -147,20 +221,148 @@ mouse_filter = 1
 
 [node name="UI" type="CanvasLayer" parent="UI"]
 
-[node name="Menu" parent="UI/UI" instance=ExtResource("2_l38k8")]
+[node name="Menu" type="Control" parent="UI/UI" node_paths=PackedStringArray("tree_menu", "tech_menu", "settings_menu")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 696.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 1
+script = ExtResource("3_30bqp")
+tree_menu = NodePath("TreeMenu")
+tech_menu = NodePath("TechMenu")
+settings_menu = NodePath("Settings")
 
-[node name="Trees" parent="UI/UI/Menu/MenuButtons" index="0"]
+[node name="MenuButtons" type="HBoxContainer" parent="UI/UI/Menu"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = -77.81
+offset_right = 487.0
+offset_bottom = -43.81
+theme_override_constants/separation = 0
+
+[node name="Trees" type="TextureButton" parent="UI/UI/Menu/MenuButtons"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_811q2")
+texture_normal = SubResource("AtlasTexture_maj2m")
+texture_hover = SubResource("AtlasTexture_wwjwq")
+
+[node name="Label" type="Label" parent="UI/UI/Menu/MenuButtons/Trees"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -14.19
+offset_right = 30.0
+offset_bottom = 37.81
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_eu4un")
+theme_override_font_sizes/font_size = 64
+text = "Trees"
+vertical_alignment = 1
+
+[node name="Technology" type="TextureButton" parent="UI/UI/Menu/MenuButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_811q2")
+texture_normal = SubResource("AtlasTexture_5ai1f")
+texture_hover = SubResource("AtlasTexture_6364y")
+
+[node name="Label" type="Label" parent="UI/UI/Menu/MenuButtons/Technology"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.0
+offset_top = -14.19
+offset_right = 58.0
+offset_bottom = 37.81
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_eu4un")
+theme_override_font_sizes/font_size = 64
+text = "Tech"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Settings" type="TextureButton" parent="UI/UI/Menu/MenuButtons"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.6
+mouse_default_cursor_shape = 2
+toggle_mode = true
+button_group = SubResource("ButtonGroup_811q2")
+texture_normal = SubResource("AtlasTexture_cg7j7")
+texture_hover = SubResource("AtlasTexture_l1cna")
+
+[node name="Label" type="Label" parent="UI/UI/Menu/MenuButtons/Settings"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -14.19
+offset_right = 45.0
+offset_bottom = 37.81
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("5_eu4un")
+theme_override_font_sizes/font_size = 64
+text = "Settings"
+vertical_alignment = 1
+
+[node name="TreeMenu" parent="UI/UI/Menu" instance=ExtResource("6_u47y0")]
+offset_top = -48.0
+offset_bottom = -48.0
+
+[node name="TechMenu" parent="UI/UI/Menu" instance=ExtResource("7_jpd2v")]
+visible = false
+offset_top = -48.0
+offset_bottom = -48.0
+
+[node name="Settings" parent="UI/UI/Menu" instance=ExtResource("8_dpu50")]
+visible = false
+offset_top = -48.0
+offset_bottom = -48.0
+
+[node name="CloseMenu" type="Button" parent="UI/UI/Menu"]
+layout_mode = 2
+offset_left = 680.0
+offset_top = -81.0
+offset_right = 748.0
+offset_bottom = -47.0
+mouse_default_cursor_shape = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5ai1f")
+toggle_mode = true
 button_group = SubResource("ButtonGroup_811q2")
 
-[node name="Technology" parent="UI/UI/Menu/MenuButtons" index="1"]
-button_group = SubResource("ButtonGroup_811q2")
+[node name="TextureRect" type="TextureRect" parent="UI/UI/Menu/CloseMenu"]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 72.0
+offset_bottom = 36.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_d7jds")
 
-[node name="Settings" parent="UI/UI/Menu/MenuButtons" index="2"]
-button_group = SubResource("ButtonGroup_811q2")
-
-[node name="CloseMenu" parent="UI/UI/Menu" index="4"]
-button_group = SubResource("ButtonGroup_811q2")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/UI/Menu"]
+libraries = {
+&"": SubResource("AnimationLibrary_mrn3s")
+}
 
 [node name="InfoBox" parent="UI/UI/Menu" instance=ExtResource("3_e4vot")]
 layout_mode = 1
@@ -299,6 +501,10 @@ play_tutorial = true
 [node name="InputHandler" type="Node" parent="World"]
 script = ExtResource("6_yw3de")
 
-[editable path="UI/UI/Menu"]
+[connection signal="pressed" from="UI/UI/Menu/MenuButtons/Trees" to="UI/UI/Menu" method="_on_trees_pressed"]
+[connection signal="pressed" from="UI/UI/Menu/MenuButtons/Technology" to="UI/UI/Menu" method="_on_technology_pressed"]
+[connection signal="pressed" from="UI/UI/Menu/MenuButtons/Settings" to="UI/UI/Menu" method="_on_settings_pressed"]
+[connection signal="pressed" from="UI/UI/Menu/CloseMenu" to="UI/UI/Menu" method="_on_close_menu_pressed"]
+
 [editable path="UI/UI/Menu/TreeMenu"]
 [editable path="UI/UI/TutorialUI"]

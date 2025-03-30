@@ -77,9 +77,6 @@ func _on_first_tree_placed():
 	play_animation(WATER_MANAGEMENT_ANIMATION) # Water management animation
 	TreeManager.tree_placed.disconnect(_on_first_tree_placed)
 
-
-
-
 func skip_tutorial() -> void:
 	SfxManager.play_sound_effect("ui_click")
 	SceneLoader.transition_to_game()
@@ -89,7 +86,7 @@ func _on_continue_button_pressed():
 	SfxManager.play_sound_effect("ui_click")
 
 	if (current_animation == TREE_MENU_ANIMATION && menu.is_open):
-		menu._on_close_menu_pressed() # calling private function is CRAZY
+		menu.close_menu()
 	
 	if (current_animation == END_TUTORIAL_INDEX):
 		SceneLoader.transition_to_game()
