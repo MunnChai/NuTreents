@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="GodotWildJam79_Growing"
+config/name="NuTREEnts"
 run/main_scene="uid://cedh52sbdvy3x"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://b58wlyiwuebmb"
 
 [autoload]
 
@@ -120,6 +120,7 @@ right={
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.14902, 0.117647, 0.227451, 1)
 2d/snap/snap_2d_transforms_to_pixel=true
 2d/snap/snap_2d_vertices_to_pixel=true
