@@ -63,6 +63,7 @@ func _process(delta: float) -> void:
 	zoom = MathUtil.decay(zoom, Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index], ZOOM_DECAY, delta / Engine.time_scale)
 	zoom = Vector2(max(zoom.x, 1.0), max(zoom.y, 1.0))
 	
+	## https://forum.godotengine.org/t/how-to-zoom-camera-to-mouse/37348
 	if zoom != prev_zoom:
 		position += before_pos - (get_global_mouse_position() - move_position_by)
 	
