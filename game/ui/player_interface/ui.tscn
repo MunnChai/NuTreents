@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
-[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="3_5i6hg"]
-[ext_resource type="PackedScene" uid="uid://gndh6ypy0wse" path="res://ui/clock.tscn" id="3_wl5ax"]
+[ext_resource type="Texture2D" uid="uid://4w1j52ggdmji" path="res://ui/player_interface/info_box/nine_tile_menu_2x.png" id="3_5i6hg"]
+[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="3_wl5ax"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="4_6i6ec"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
@@ -16,6 +16,16 @@ shader_parameter/inner_radius = 0.16
 shader_parameter/outer_radius = 1.34
 
 [node name="UI" type="CanvasLayer"]
+
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_anucx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_anucx")
 
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
 offset_right = -128.0
@@ -34,51 +44,43 @@ offset_right = -272.0
 offset_bottom = -44.0
 grow_horizontal = 0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-offset_right = 239.0
-offset_bottom = 111.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("3_5i6hg")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
 [node name="ResourcesUI" parent="." instance=ExtResource("2_dfe3o")]
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 16.0
-offset_bottom = 16.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 size_flags_horizontal = 0
 size_flags_vertical = 4
 mouse_filter = 1
 
+[node name="NinePatchRect2" type="NinePatchRect" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -228.0
+offset_bottom = 67.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("3_5i6hg")
+region_rect = Rect2(0, 0, 96, 96)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
 [node name="Clock" parent="." instance=ExtResource("3_wl5ax")]
-position = Vector2(1086, 66)
+position = Vector2(1087, 66)
 scale = Vector2(2, 2)
 
 [node name="FastForwardBtn" parent="." instance=ExtResource("4_hxq26")]
-offset_left = 1102.0
-offset_top = 90.0
-offset_right = 1135.0
-offset_bottom = 122.0
+offset_left = 1109.0
+offset_top = 82.0
+offset_right = 1142.0
+offset_bottom = 114.0
 mouse_default_cursor_shape = 2
-
-[node name="Vignette" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_anucx")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-script = ExtResource("5_anucx")

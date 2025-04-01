@@ -6,7 +6,7 @@
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_gfptj"]
 [ext_resource type="Texture2D" uid="uid://ccua4jn8gnqfv" path="res://ui/grabber.png" id="5_xrvoc"]
 [ext_resource type="Texture2D" uid="uid://dg7l21n2ghlxw" path="res://ui/grabber_highlighted.png" id="6_ggmja"]
-[ext_resource type="Script" uid="uid://bvbl512hyhlmu" path="res://ui/menus/settings_menu/pause_button.gd" id="7_os65m"]
+[ext_resource type="Script" path="res://ui/menus/settings_menu/pause_button.gd" id="7_os65m"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v0rmt"]
 atlas = ExtResource("1_ypxvv")
@@ -63,6 +63,7 @@ border_width_bottom = 2
 border_color = Color(0.670588, 0.313726, 0.0705882, 1)
 
 [node name="Settings" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 0
 
