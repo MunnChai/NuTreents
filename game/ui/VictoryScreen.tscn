@@ -36,7 +36,7 @@ offset_bottom = 483.0
 theme_override_fonts/normal_font = ExtResource("2_6j8wp")
 theme_override_font_sizes/normal_font_size = 48
 text = "You and your fellow saplings travelled through space, 
-eventually settling at a distance planet which was suitable for tree life."
+eventually settling at a distant planet which was suitable for tree life."
 horizontal_alignment = 1
 vertical_alignment = 1
 
