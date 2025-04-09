@@ -87,3 +87,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		var map_coords: Vector2i = Cursor.get_instance().iso_position
 		TreeManager.handle_right_click(map_coords)
+	
+	if Input.is_action_just_pressed("reset_cursor"):
+		ScreenCursor.instance.offset_position = Vector2.ZERO
+	
+	if Input.is_action_just_pressed("menu_left"):
+		TreeMenu.instance.previous_tree()
+	if Input.is_action_just_pressed("menu_right"):
+		TreeMenu.instance.next_tree()

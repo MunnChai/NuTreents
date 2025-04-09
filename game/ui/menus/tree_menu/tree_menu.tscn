@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=3 uid="uid://dwyhak12pdjyv"]
+[gd_scene load_steps=16 format=3 uid="uid://dwyhak12pdjyv"]
 
+[ext_resource type="Script" uid="uid://baih8o03he1bg" path="res://ui/menus/tree_menu/tree_menu.gd" id="1_v2ya0"]
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="2_dodub"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://trees/stats/DefaultTreeStat.tres" id="3_jkcef"]
 [ext_resource type="PackedScene" uid="uid://b8fg45slly116" path="res://ui/menus/tree_menu/tree_card.tscn" id="3_ubm70"]
@@ -21,6 +22,7 @@ region = Rect2(0, 208, 640, 152)
 [node name="TreeMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_v2ya0")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

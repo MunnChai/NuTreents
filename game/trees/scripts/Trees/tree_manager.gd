@@ -46,6 +46,7 @@ var forest_count: int
 var selected_tree_species: int = 1
 
 
+
 # Used in the tutorial
 signal tree_placed
 
