@@ -69,7 +69,6 @@ func _process(delta: float) -> void:
 	
 	lock_camera()
 
-
 const X_MAX: float = 32 * Global.MAP_SIZE.x / 2
 const Y_MAX: float = 16 * Global.MAP_SIZE.y / 2
 func lock_camera():

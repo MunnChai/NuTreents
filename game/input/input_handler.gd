@@ -9,7 +9,7 @@ enum DeviceType {
 	CONTROLLER,
 }
 
-var current_device_type: DeviceType = DeviceType.KEYBOARD_MOUSE
+static var current_device_type: DeviceType = DeviceType.KEYBOARD_MOUSE
 
 ## PLAN 1
 ## Use Godot built-in control focus systems for navigating the UI.
@@ -27,7 +27,7 @@ func _input(event: InputEvent) -> void:
 		device_type_changed.emit(current_device_type)
 	
 	if current_device_type == DeviceType.CONTROLLER:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	else:
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
@@ -55,6 +55,15 @@ func get_device_type(event: InputEvent) -> DeviceType:
 
 ## ACTUAL CURRENT INPUT LOGIC
 
+func _process(delta: float) -> void:
+	if current_device_type == DeviceType.CONTROLLER:
+		#ScreenCursor.instance.global_position = get_viewport().get_camera_2d().global_position
+		var cursor_move_direction = Vector2(Input.get_axis("cursor_left", "cursor_right"), Input.get_axis("cursor_up", "cursor_down")).normalized()
+		ScreenCursor.instance.offset_position += cursor_move_direction * 100.0 * delta / Engine.time_scale
+
+		Cursor.get_instance().move_to(ScreenCursor.instance.global_position)
+		ScreenCursor.instance.show()
+
 func _unhandled_input(event: InputEvent) -> void:
 	# We aren't playing the game...
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -66,6 +75,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	if current_device_type == DeviceType.KEYBOARD_MOUSE:
 		Cursor.get_instance().move_to(Global.terrain_map.get_local_mouse_position())
+		ScreenCursor.instance.hide()
 	
 	if (Input.is_action_pressed("lmb")):
 		if not Cursor.get_instance().can_interact():
