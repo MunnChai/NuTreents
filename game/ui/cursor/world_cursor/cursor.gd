@@ -10,6 +10,8 @@ signal disabled
 var is_enabled := true
 var iso_position: Vector2i
 
+var attempted_already := false
+
 ## BUGS
 ## - When in UI, kind scuffed.
 ## - Correct height on billboard/short city buildings... 
@@ -21,6 +23,11 @@ func _ready() -> void:
 
 ## Perform LEFT MOUSE BUTTON action
 func do_primary_action() -> void:
+	if attempted_already:
+		return 
+	
+	attempted_already = true
+	
 	var p: Vector2i = iso_position
 	
 	var terrain_map := Global.terrain_map
@@ -210,3 +217,4 @@ func can_interact() -> bool:
 
 func on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	$InfoBoxDetector.detect(iso_position)
+	attempted_already = false

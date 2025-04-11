@@ -32,11 +32,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		return
 	
-	if (Input.is_action_pressed("lmb")):
+	if (Input.is_action_pressed("lmb")): # We want press and hold to work...
 		if not Cursor.instance.can_interact():
 			return
 		Cursor.instance.do_primary_action()
-	elif (Input.is_action_just_pressed("rmb")):
+	else:
+		Cursor.instance.attempted_already = false
+	
+	if (Input.is_action_just_pressed("rmb")): # Only deal with on click
 		if not Cursor.instance.can_interact():
 			return
 		Cursor.instance.do_secondary_action()
