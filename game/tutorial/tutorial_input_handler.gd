@@ -19,7 +19,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not Cursor.get_instance().can_interact():
 			return
 		var map_coords: Vector2i = Cursor.get_instance().iso_position
-		TreeManager.add_tree(TreeManager.selected_tree_species, map_coords)
+		TreeManager.place_tree(TreeManager.selected_tree_species, map_coords)
 	elif (Input.is_action_just_pressed("rmb")):
 		if not Cursor.get_instance().can_interact():
 			return

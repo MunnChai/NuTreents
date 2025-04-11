@@ -82,13 +82,13 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		var map_coords: Vector2i = Cursor.get_instance().iso_position
 		var new_twee = TreeRegistry.get_new_twee(TreeMenu.instance.get_currently_selected_tree_type())
-		new_twee.init_pos(map_coords)
-		TreeManager.place_tree(new_twee)
+		TreeManager.place_tree(new_twee, map_coords)
 	elif (Input.is_action_just_pressed("rmb")):
 		if not Cursor.get_instance().can_interact():
 			return
 		var map_coords: Vector2i = Cursor.get_instance().iso_position
-		TreeManager.handle_right_click(map_coords)
+		if TreeManager.is_twee(map_coords):
+			TreeManager.remove_tree(map_coords)
 	
 	if Input.is_action_just_pressed("reset_cursor"):
 		ScreenCursor.instance.offset_position = Vector2.ZERO

@@ -16,10 +16,27 @@ var forest_map: Dictionary[Vector2i, int] # {pos, id}
 var tree_map: Dictionary[Vector2i, Twee]
 var forest_count: int
 
-var res: Vector3 # Vec3(N, water, sun)
-var gain: Vector3
-
 #region CORE FUNCTIONALITY
+
+## Start the game with a blank slate
+func start_game():
+	# Make sure all of these are cleared at a new game...
+	forests.clear()
+	forest_map.clear()
+	tree_map.clear()
+	forest_count = 0
+	
+	# Ensure map references are correct and up to date
+	fog_map = Global.fog_map
+	structure_map = Global.structure_map
+	terrain_map = Global.terrain_map
+	
+	# Need to wait a frame, something to do with fog or something
+	await get_tree().process_frame
+	
+	## SPAWN THE MOTHER TREE
+	var mother_tree: MotherTree = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
+	call_deferred("place_tree", mother_tree, Global.ORIGIN)
 
 ## Returns the twee at the given position, null if there is none
 func get_twee(pos: Vector2i) -> Twee:
@@ -31,8 +48,13 @@ func get_twee(pos: Vector2i) -> Twee:
 func get_tree_map() -> Dictionary[Vector2i, Twee]:
 	return tree_map
 
-## Place the given twee
-func place_tree(twee: Twee) -> void:
+## Place the given twee at the given position
+func place_tree(twee: Twee, pos: Vector2i) -> void:
+	twee.init_pos(pos)
+	add_tree(twee)
+
+## Add the given twee to the map
+func add_tree(twee: Twee) -> void:
 	var p = twee.pos
 	
 	# Forest... 
@@ -78,32 +100,6 @@ func remove_tree(p: Vector2i) -> void:
 	
 	# Signal!
 	tree_removed.emit(p)
-
-## Start the game with a blank slate
-func start_game():
-	res = Vector3(25, 0, 0)
-	gain = Vector3(0, 0, 0)
-	forest_count = 0
-	
-	# Make sure all of these are cleared at a new game...
-	forests.clear()
-	forest_map.clear()
-	tree_map.clear()
-	
-	# Ensure map references are correct and up to date
-	fog_map = Global.fog_map
-	structure_map = Global.structure_map
-	terrain_map = Global.terrain_map
-	
-	## ??? Why here
-	EnemyManager.start_game()
-	
-	await get_tree().process_frame
-	
-	## SPAWN THE MOTHER TREE
-	var mother_tree: MotherTree = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
-	mother_tree.init_pos(Global.ORIGIN)
-	call_deferred("place_tree", mother_tree)
 
 #endregion
 

@@ -5,6 +5,7 @@ const TREE_DAMAGE_SHADER = preload("res://structures/trees/tree_damage.gdshader"
 
 @export var tree_stat: TreeStatResource 
 @export var sheets: Array[Texture2D]
+
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite2D
 
@@ -27,15 +28,11 @@ var is_adjacent_to_water: bool = false
 var water_bonus: int = 3
 const BASE_WATER_RANGE = 1
 
-
-#const TIME_TO_GROW = 5.0
-
 var is_large := false
 var is_growing := false
 
 func _ready():
 	get_stats_from_resource(tree_stat)
-	
 	
 	sprite.hframes = 9
 	sprite.vframes = 2
