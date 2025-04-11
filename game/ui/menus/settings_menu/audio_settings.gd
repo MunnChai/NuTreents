@@ -67,23 +67,12 @@ func _update_slider_label(value: float, slider: HSlider) -> void:
 	slider_label.visible = true
 
 func save_audio_settings() -> void:
-	var config = ConfigFile.new()
-	
-	config.set_value("audio", "master", master_slider.value)
-	config.set_value("audio", "music", music_slider.value)
-	config.set_value("audio", "sfx", sfx_slider.value)
-	
-	config.save("user://settings.cfg")
+	Settings.set_setting("master", master_slider.value)
+	Settings.set_setting("music", music_slider.value)
+	Settings.set_setting("sfx", sfx_slider.value)
+	Settings.save_to_config()
 
 func load_audio_settings() -> void:
-	var config = ConfigFile.new()
-	# Load data from a file.
-	var err = config.load("user://settings.cfg")
-
-	# If the file didn't load, ignore it.
-	if err != OK:
-		return
-
-	master_slider.value = config.get_value("audio", "master", 1.0)
-	music_slider.value = config.get_value("audio", "music", 1.0)
-	sfx_slider.value = config.get_value("audio", "sfx", 1.0)
+	master_slider.value = Settings.get_setting_or_default( "master", 1.0)
+	music_slider.value = Settings.get_setting_or_default("music", 1.0)
+	sfx_slider.value = Settings.get_setting_or_default("sfx", 1.0)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c3v4eb77shmie"
-path="res://.godot/imported/screen_cursor.png-258dd4ae2aaa1bf54d50016159cca7c4.ctex"
+uid="uid://bm0baq3q3jrlx"
+path="res://.godot/imported/wooden_arrow_sheet.png-3592626b0898633deec36a6b7c9a51f3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/cursor/screen_cursor.png"
-dest_files=["res://.godot/imported/screen_cursor.png-258dd4ae2aaa1bf54d50016159cca7c4.ctex"]
+source_file="res://ui/cursor/world_cursor/visual/wooden_arrow_sheet.png"
+dest_files=["res://.godot/imported/wooden_arrow_sheet.png-3592626b0898633deec36a6b7c9a51f3.ctex"]
 
 [params]
 

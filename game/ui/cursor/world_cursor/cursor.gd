@@ -12,6 +12,27 @@ var iso_position: Vector2i
 ## - When in UI, kind scuffed.
 ## - Correct height on billboard/short city buildings... 
 
+#region RELEVANT INTERACTIONS
+
+func do_primary_action() -> void:
+	## Place tree if allowed...
+	pass
+
+func do_secondary_action() -> void:
+	## Remove tree/building if present...
+	pass
+
+func move_to(local_world_pos: Vector2) -> void:
+	set_iso_position(Global.terrain_map.local_to_map(local_world_pos))
+
+func set_iso_position(new_iso_pos: Vector2i) -> void:
+	var old_pos = iso_position
+	iso_position = new_iso_pos
+	if old_pos != new_iso_pos:
+		just_moved.emit(old_pos, new_iso_pos)
+
+#endregion
+
 func _ready() -> void:
 	instance = self # Assuming only one cursor!
 	set_iso_position(Global.ORIGIN)
@@ -36,50 +57,6 @@ func disable() -> void:
 	is_enabled = false
 	hide()
 	_set_arrow_visible(false)
-
-static func get_instance() -> Cursor:
-	return instance
-
-func move_to(mouse_pos: Vector2) -> void:
-	set_iso_position(Global.terrain_map.local_to_map(mouse_pos))
-
-func move_by(offset: Vector2i) -> void:
-	#if offset.y < 0:
-		#set_iso_position(iso_position + Vector2i.UP + Vector2i.LEFT)
-	#elif offset.y > 0:
-		#set_iso_position(iso_position + Vector2i.DOWN + Vector2i.RIGHT)
-	
-	if (iso_position.y % 2 == 0) != (iso_position.x % 2 == 0):
-		if offset.y > 0:
-			set_iso_position(iso_position + Vector2i.DOWN)
-		elif offset.y < 0:
-			set_iso_position(iso_position + Vector2i.LEFT)
-	else:
-		if offset.y > 0:
-			set_iso_position(iso_position + Vector2i.RIGHT)
-		elif offset.y < 0:
-			set_iso_position(iso_position + Vector2i.UP)
-	
-	if (iso_position.y % 2 == 0) != (iso_position.x % 2 == 0):
-		if offset.x > 0:
-			set_iso_position(iso_position + Vector2i.RIGHT)
-		elif offset.x < 0:
-			set_iso_position(iso_position + Vector2i.DOWN)
-	else:
-		if offset.x > 0:
-			set_iso_position(iso_position + Vector2i.UP)
-		elif offset.x < 0:
-			set_iso_position(iso_position + Vector2i.LEFT)
-
-func move_by_smooth(amount: Vector2) -> void:
-	var new_pos = Global.terrain_map.map_to_local(iso_position) + amount.normalized()
-	move_to(new_pos)
-
-func set_iso_position(new_iso_pos: Vector2i) -> void:
-	var old_pos = iso_position
-	iso_position = new_iso_pos
-	if old_pos != new_iso_pos:
-		just_moved.emit(old_pos, new_iso_pos)
 
 func on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	update_adjacent_tile_transparencies()
@@ -192,8 +169,7 @@ func _can_plant() -> bool:
 	var current_twee: Twee = TreeRegistry.get_new_twee(TreeMenu.instance.get_currently_selected_tree_type())
 	if current_twee == null:
 		return false
-	#return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
-	return true
+	return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
 
 func _set_highlight_modulate(color: Color) -> void:
 	highlight.modulate = color
