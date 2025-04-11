@@ -189,10 +189,11 @@ func _update_visuals() -> void:
 		return
 
 func _can_plant() -> bool:
-	var current_twee: Twee = TreeManager.get_new_tree_of_currently_selected_type()
+	var current_twee: Twee = TreeRegistry.get_new_twee(TreeMenu.instance.get_currently_selected_tree_type())
 	if current_twee == null:
 		return false
-	return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
+	#return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
+	return true
 
 func _set_highlight_modulate(color: Color) -> void:
 	highlight.modulate = color

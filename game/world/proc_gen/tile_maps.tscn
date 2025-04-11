@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://csdqqfvopxl7j"]
+[gd_scene load_steps=12 format=3 uid="uid://csdqqfvopxl7j"]
 
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="1_56hbk"]
 [ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="2_u0b2m"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
+[ext_resource type="Texture2D" uid="uid://c3v4eb77shmie" path="res://ui/cursor/screen_cursor.png" id="7_0rry4"]
+[ext_resource type="Script" uid="uid://cwd7jo774q43l" path="res://world/proc_gen/screen_cursor.gd" id="8_k5rl5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_118ts"]
 texture = ExtResource("5_118ts")
@@ -103,6 +105,11 @@ y_sort_enabled = true
 z_index = 5
 tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")
+
+[node name="ScreenCursor" type="Sprite2D" parent="."]
+z_index = 1000
+texture = ExtResource("7_0rry4")
+script = ExtResource("8_k5rl5")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

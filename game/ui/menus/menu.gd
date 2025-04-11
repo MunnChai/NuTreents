@@ -16,6 +16,14 @@ func _ready() -> void:
 	animation_player.play("RESET")
 	set_visibility(true, false, false)
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("menu"):
+		if !is_open:
+			trees.pressed.emit()
+			tree_menu.focus_mode = Control.FOCUS_ALL
+		else:
+			close_menu()
+
 func _on_trees_pressed() -> void:
 	_update_animation_player()
 	set_visibility(true, false, false)

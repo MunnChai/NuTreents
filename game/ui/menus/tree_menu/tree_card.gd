@@ -38,14 +38,14 @@ func _ready() -> void:
 @onready var start_position = $TextureRect.position
 
 func _process(delta: float) -> void:
-	if TreeManager.selected_tree_species == type:
+	if TreeMenu.instance.get_currently_selected_tree_type() == type:
 		$TextureRect.position = start_position + Vector2.UP * 8.0
 	else:
 		$TextureRect.position = start_position + Vector2.DOWN * 4.0
 
 func _on_button_pressed() -> void:
-	if TreeManager.selected_tree_species != type:
-		TreeManager.selected_tree_species = type 
+	if TreeMenu.instance.get_currently_selected_tree_type() != type:
+		TreeMenu.instance.currently_selected_tree = TreeMenu.instance.tree_order.find(type) 
 		SfxManager.play_sound_effect("ui_click")
 
 
