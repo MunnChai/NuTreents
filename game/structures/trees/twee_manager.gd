@@ -16,10 +16,19 @@ var forest_map: Dictionary[Vector2i, int] # {pos, id}
 var tree_map: Dictionary[Vector2i, Twee]
 var forest_count: int
 
+## Amount of nutreents the player has
+var nutreents: float = 0
+## Current gain rate of nutreents
+var nutreents_gain: float = 0
+func enough_n(cost: int) -> bool:
+	return nutreents >= cost
+
 #region CORE FUNCTIONALITY
 
 ## Start the game with a blank slate
 func start_game():
+	nutreents = 25
+	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
 	forest_map.clear()
@@ -92,8 +101,8 @@ func remove_tree(p: Vector2i) -> void:
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
 	var tree: Twee = f.trees[p]
-	f.remove_tree(p) # Assume remove_tree will free object correctly
 	forest_map.erase(p)
+	f.remove_tree(p) # Assume remove_tree will free object correctly
 	forest_check(p, f_id)
 	
 	# Map...
@@ -113,7 +122,8 @@ func remove_tree(p: Vector2i) -> void:
 #region PROCESSING
 
 func _process(delta: float) -> void:
-	get_nutrient_gain(delta)
+	nutreents_gain = get_nutrient_gain(delta)
+	nutreents += nutreents_gain * delta # Nutreents/second * time 
 	update_water_maintenance(delta)
 
 func get_nutrient_gain(delta: float) -> float:

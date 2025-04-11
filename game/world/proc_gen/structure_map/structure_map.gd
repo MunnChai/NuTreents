@@ -24,7 +24,8 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 	structure.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = structure
-	add_child(structure)
+	if structure.get_parent() == null:
+		add_child(structure)
 	return true
 
 # Remove the node at the given map coordinates

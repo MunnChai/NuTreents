@@ -2,6 +2,7 @@ extends Node
 class_name Forest
 
 var trees: Dictionary[Vector2i, Node2D]
+var tree_set: Array[Twee]
 var water: float
 var id: int
 var empty: bool
@@ -85,14 +86,17 @@ func update(delta: float) -> Vector3:
 # Returns the sum of nutrient gains of all the trees in this forest
 func get_nutrient_gain(delta: float) -> float:
 	var nutrient_sum: float = 0
-	
-	for key: Vector2i in trees.keys():
-		if (!trees.has(key)):
-			continue
-		
-		var tree: Twee = trees[key]
-		
+
+	for tree: Twee in tree_set:
 		nutrient_sum += tree.get_nutrient_gain(delta)
+	
+	#for key: Vector2i in trees.keys():
+		#if (!trees.has(key)):
+			#continue
+		#
+		#var tree: Twee = trees[key]
+		#
+		#nutrient_sum += tree.get_nutrient_gain(delta)
 	
 	return nutrient_sum
 
@@ -146,6 +150,9 @@ func update_water_maintenance(delta: float) -> float:
 func add_tree(p: Vector2i, t: Twee):
 	t.initialize(p, id)
 	trees[p] = t
+	
+	if not tree_set.has(t):
+		tree_set.append(t)
 
 ## remove the tree at given p
 ## assume some tree exists at p
@@ -155,6 +162,9 @@ func remove_tree(p: Vector2i):
 	var t: Twee = trees[p]
 	water -= t.storage
 	trees.erase(p)
+	tree_set.erase(t)
+	
+	t.remove()
 	
 	t.die()
 
@@ -177,7 +187,6 @@ func get_water(maint: int) -> bool:
 	else:
 		water -= maint
 		return true
-
 
 func print_forest():
 	print("Forest ID:", id)
