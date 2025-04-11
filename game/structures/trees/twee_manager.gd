@@ -72,8 +72,6 @@ func place_tree(twee: Twee, pos: Vector2i) -> void:
 func add_tree(twee: Twee) -> void:
 	var occupied_positions = twee.get_occupied_positions()
 	
-	print("e")
-	
 	for p: Vector2i in occupied_positions:
 		if is_twee(p):
 			return
@@ -317,13 +315,15 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 	var forest: Forest = Forest.new(id)
 	forests[id] = forest
 	for pos in trees:
+		var tree = tree_map[pos]
+		
 		# remove these from old forest
 		old_f.trees.erase(pos)
+		old_f.tree_set.erase(tree)
 	
 		## update some info
 		#if (pos == Global.ORIGIN):
 			#continue
-		var tree = tree_map[pos]
 		tree.forest = id
 		forest_map[pos] = id
 		
