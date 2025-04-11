@@ -22,6 +22,8 @@ var nutreents: float = 0
 var nutreents_gain: float = 0
 func enough_n(cost: int) -> bool:
 	return nutreents >= cost
+func consume_n(cost: int) -> void:
+	nutreents -= cost
 
 #region CORE FUNCTIONALITY
 

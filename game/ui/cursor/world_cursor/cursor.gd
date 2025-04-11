@@ -4,194 +4,209 @@ extends Marker2D
 static var instance: Cursor
 
 signal just_moved(old_pos: Vector2i, new_pos: Vector2i)
+signal enabled
+signal disabled
 
-var is_enabled := false
+var is_enabled := true
 var iso_position: Vector2i
 
 ## BUGS
 ## - When in UI, kind scuffed.
 ## - Correct height on billboard/short city buildings... 
 
-#region RELEVANT INTERACTIONS
+func _ready() -> void:
+	instance = self # Assuming only one cursor!
+	set_iso_position(Global.ORIGIN)
+	just_moved.connect(on_just_moved)
 
+## Perform LEFT MOUSE BUTTON action
 func do_primary_action() -> void:
-	## Place tree if allowed...
-	pass
+	var p: Vector2i = iso_position
+	
+	var terrain_map := Global.terrain_map
+	var structure_map := Global.structure_map
+	
+	var type: Global.TreeType = TreeMenu.instance.get_currently_selected_tree_type() 
+	var tree: Twee = TreeRegistry.get_new_twee(type)
+	
+	if terrain_map.is_void(p):
+		return
+	
+	if TreeManager.is_twee(p):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
+		return
+	
+	if not TreeManager.is_reachable(p):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
+		return
+	
+	if not terrain_map.is_fertile(p):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
+		return
+	 
+	if !TreeManager.enough_n(tree.tree_stat.cost_to_purchase):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
+		return
 
+	if type == Global.TreeType.TECH_TREE:
+		var can_place = true
+		
+		if !structure_map.tile_scene_map.has(p):
+			can_place = false
+		else:
+			var structure: Structure = structure_map.tile_scene_map[p]
+			if (not structure is FactoryRemains):
+				can_place = false
+		
+		if !can_place:
+			SfxManager.play_sound_effect("ui_fail")
+			PopupManager.create_popup("Requires factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
+			return
+	
+	var tech_slot: int
+	# SPECIAL CASE FOR PLANTING TECH TREES ON FACTORY REMAINS:
+	if structure_map.tile_scene_map.has(p):
+		var structure: Structure = structure_map.tile_scene_map[p]
+		if structure is FactoryRemains:
+			if type == Global.TreeType.TECH_TREE:
+				tech_slot = structure.tech_slot
+				structure_map.remove_structure(p)
+			else:
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Only Tech Trees grow on factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
+				return
+	
+	if tree is TechTree:
+		tree.tech_slot = tech_slot
+	
+	TreeManager.consume_n(tree.tree_stat.cost_to_purchase)
+	SfxManager.play_sound_effect("tree_plant")
+	TreeManager.place_tree(tree, p)
+
+const FACTORY_REMAINS = preload("res://structures/city/factory/factory_remains.tscn")
+
+## Perform RIGHT MOUSE BUTTON action
 func do_secondary_action() -> void:
-	## Remove tree/building if present...
-	pass
+	var map_pos: Vector2i = iso_position
+	
+	var terrain_map := Global.terrain_map
+	var structure_map := Global.structure_map
+	
+	if not TreeManager.is_reachable(map_pos, true):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Too far away!", structure_map.map_to_local(map_pos))
+		return
+	
+	# Get any building on the tile
+	if (structure_map.does_obstructive_structure_exist(map_pos)):
+		var structure: Structure = structure_map.tile_scene_map[map_pos]
+		
+		# If building is tree, remove tree and return (unless it's the mother tree)
+		if (structure is Twee):
+			if (structure is MotherTree):
+				PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(map_pos))
+				SfxManager.play_sound_effect("ui_fail")
+				return
+			
+			TreeManager.remove_tree(map_pos)
+			PopupManager.create_popup("Tree removed!", structure_map.map_to_local(map_pos))
+		
+		# If building is city_building, remove city_building (if you have enough nutrients)
+		if (structure is CityBuilding):
+			if TreeManager.enough_n(structure.cost_to_remove):
+				SfxManager.play_sound_effect("concrete_break")
+				TreeManager.consume_n(structure.cost_to_remove)
+				structure_map.remove_structure(map_pos)
+				PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
+			else:
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		# If building is factory, remove factory, instantiate factory remains
+		if (structure is Factory):
+			if TreeManager.enough_n(structure.cost_to_remove):
+				TreeManager.consume_n(structure.cost_to_remove)
+				
+				var tech_slot = structure.tech_slot
+				structure_map.remove_structure(map_pos)
+				
+				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				
+				SfxManager.play_sound_effect("concrete_break")
+				PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
+				
+				# TODO: INSTANTIATE FACTORY REMAINS
+				var factory_remains = FACTORY_REMAINS.instantiate()
+				factory_remains.tech_slot = tech_slot
+				structure_map.add_structure(map_pos, factory_remains)
+			else:
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		if (structure is FactoryRemains):
+			SfxManager.play_sound_effect("ui_fail")
+			PopupManager.create_popup("Cannot destroy factory remains!", structure_map.map_to_local(map_pos))
+		
+		# Return after removing building
+		return
+	
+	# IF THERE ARE NO STRUCTURES (except decor) ON THE TILE
+	
+	# If tile is city_tile/road_tile, replace tile with dirt tile if you have enough nutrients
+	
+	var tile_data = terrain_map.get_cell_tile_data(map_pos)
+	if (tile_data):
+		var tile_type = tile_data.get_custom_data("biome")
+		
+		if (tile_type == terrain_map.TILE_TYPE.CITY):
+			if TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
+				TreeManager.consume_n(structure_map.COST_TO_REMOVE_CITY_TILE)
+				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				
+				# Check if decor exists on this spot
+				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
+					structure_map.remove_structure(map_pos)
+				
+				SfxManager.play_sound_effect("concrete_break")
+				PopupManager.create_popup("Concrete removed!", structure_map.map_to_local(map_pos))
+			else:
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+		
+		if (tile_type == terrain_map.TILE_TYPE.ROAD):
+			if TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
+				
+				TreeManager.consume_n(structure_map.COST_TO_REMOVE_ROAD_TILE)
+				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				
+				# Check if decor exists on this spot
+				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
+					structure_map.remove_structure(map_pos)
+				
+				SfxManager.play_sound_effect("concrete_break")
+				PopupManager.create_popup("Road destroyed!", structure_map.map_to_local(map_pos))
+			else:
+				SfxManager.play_sound_effect("ui_fail")
+				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 
+## Moves the cursor to the given LOCAL WORLD COORDINATE
 func move_to(local_world_pos: Vector2) -> void:
 	set_iso_position(Global.terrain_map.local_to_map(local_world_pos))
 
+## Sets the ISOMETRIC WORLD POSITION of the cursor
 func set_iso_position(new_iso_pos: Vector2i) -> void:
 	var old_pos = iso_position
 	iso_position = new_iso_pos
 	if old_pos != new_iso_pos:
 		just_moved.emit(old_pos, new_iso_pos)
 
-#endregion
-
-func _ready() -> void:
-	instance = self # Assuming only one cursor!
-	set_iso_position(Global.ORIGIN)
-	just_moved.connect(on_just_moved)
-	disable()
-
+## Returns true if the cursor may be used to interact...
 func can_interact() -> bool:
 	return is_enabled
 
-func enable() -> void:
-	if is_enabled:
-		return
-	is_enabled = true
-	show()
-	global_position = Global.terrain_map.map_to_local(iso_position)
-	wooden_arrow.set_cursor_position(global_position)
-	_set_arrow_visible(true)
-
-func disable() -> void:
-	if not is_enabled:
-		return
-	is_enabled = false
-	hide()
-	_set_arrow_visible(false)
-
 func on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
-	update_adjacent_tile_transparencies()
-	
 	$InfoBoxDetector.detect(iso_position)
-
-## Update position and change state based on what's at the position
-func _process(delta: float) -> void:
-	global_position = Global.terrain_map.map_to_local(iso_position)
-	wooden_arrow.set_cursor_position(global_position)
-	
-	_update_visuals()
-
-#region VISUALS
-
-# Structures where the arrow should "bob" up and down on them,
-# if they happen to be in range...
-const BOBBING_BUILDING_IDS = ["city_building", "factory", "factory_remains"]
-
-const YELLOW := Color("ca910081")
-const BLUE := Color("3fd7ff81")
-const RED := Color("ff578681")
-
-@onready var highlight: Sprite2D = %ModulationHighlight
-@onready var wooden_arrow: CursorWoodenArrow = %WoodenArrow
-
-## Change visual details based on what is highlighted...
-func _update_visuals() -> void:
-	var terrain_map = Global.terrain_map
-	var structure_map = Global.structure_map
-	var building_node = structure_map.get_building_node(iso_position)
-	
-	# SET THE ARROW HEIGHT BASED ON WHAT IS ON THIS TILE...
-	if building_node == null:
-		_set_arrow_height("low")
-	else:
-		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
-	
-	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
-	if building_node == null:
-		_set_arrow_bobbing(true)
-	else:
-		if (building_node as Structure).get_id() in BOBBING_BUILDING_IDS:
-			_set_arrow_bobbing(true)
-		else:
-			_set_arrow_bobbing(false)
-
-	# Don't highlight outside the map or on non-solid tiles...
-	if not terrain_map.is_solid(iso_position):
-		# Don't highlight void
-		if terrain_map.is_void(iso_position):
-			disable()
-		else: # Show red on water
-			enable()
-			_set_highlight_modulate(RED)
-			_set_arrow_visible(false)
-		return
-	
-	# We are highlighting an existing tree
-	if TreeManager.is_twee(iso_position):
-		enable()
-		_set_highlight_modulate(YELLOW)
-		_set_arrow_visible(true)
-		return
-	
-	# We are too far away from any trees...
-	if not TreeManager.is_reachable(iso_position):
-		enable()
-		_set_highlight_modulate(RED)
-		_set_arrow_visible(false)
-		return
-	
-	# OK. Now we are in range...
-	
-	# Fertile ground!
-	if terrain_map.is_fertile(iso_position):
-		enable()
-		if _can_plant():
-			_set_highlight_modulate(BLUE)
-			_set_arrow_bobbing(true)
-		else:
-			_set_highlight_modulate(YELLOW)
-			_set_arrow_bobbing(false)
-		_set_arrow_visible(true)
-		return
-	
-	# We are highlighting concrete...
-	if terrain_map.is_concrete(iso_position):
-		enable()
-		_set_highlight_modulate(YELLOW)
-		_set_arrow_visible(true)
-		_set_arrow_bobbing(true)
-		if (building_node as Structure) != null:
-			if building_node is CityBuilding:
-				if not TreeManager.enough_n((building_node as CityBuilding).cost_to_remove):
-					_set_arrow_bobbing(false)
-			elif building_node is Factory:
-				if not TreeManager.enough_n((building_node as Factory).cost_to_remove):
-					_set_arrow_bobbing(false)
-		else:
-			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.CITY:
-				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
-					_set_arrow_bobbing(false)
-			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.ROAD:
-				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
-					_set_arrow_bobbing(false)
-		return
-
-func _can_plant() -> bool:
-	var current_twee: Twee = TreeRegistry.get_new_twee(TreeMenu.instance.get_currently_selected_tree_type())
-	if current_twee == null:
-		return false
-	return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
-
-func _set_highlight_modulate(color: Color) -> void:
-	highlight.modulate = color
-
-func _set_arrow_visible(value: bool) -> void:
-	if value:
-		wooden_arrow.enable()
-	else:
-		wooden_arrow.disable()
-
-func _set_arrow_height(value: String) -> void:
-	wooden_arrow.set_height(value)
-
-func _set_arrow_bobbing(value: bool) -> void:
-	if value and not wooden_arrow.is_playing():
-		wooden_arrow.play()
-	elif not value and wooden_arrow.is_playing():
-		wooden_arrow.stop()
-
-# Updates the building map to make buildings in front of the currently hovered tile transparent
-func update_adjacent_tile_transparencies() -> void:
-	var building_map: BuildingMap = Global.structure_map
-	building_map.update_transparencies_around(iso_position)
-
-#endregion

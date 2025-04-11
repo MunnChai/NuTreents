@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bm0baq3q3jrlx"
-path="res://.godot/imported/wooden_arrow_sheet.png-3592626b0898633deec36a6b7c9a51f3.ctex"
+path="res://.godot/imported/wooden_arrow_sheet.png-7f9c8310e50a683bd2a18e4792dc5a7b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/cursor/world_cursor/visual/wooden_arrow_sheet.png"
-dest_files=["res://.godot/imported/wooden_arrow_sheet.png-3592626b0898633deec36a6b7c9a51f3.ctex"]
+source_file="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow_sheet.png"
+dest_files=["res://.godot/imported/wooden_arrow_sheet.png-7f9c8310e50a683bd2a18e4792dc5a7b.ctex"]
 
 [params]
 

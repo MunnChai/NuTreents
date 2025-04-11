@@ -35,7 +35,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")):
 		if not Cursor.instance.can_interact():
 			return
-		var map_coords: Vector2i = Cursor.instance.iso_position
 		Cursor.instance.do_primary_action()
 	elif (Input.is_action_just_pressed("rmb")):
 		if not Cursor.instance.can_interact():
