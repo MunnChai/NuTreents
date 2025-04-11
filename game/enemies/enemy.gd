@@ -67,7 +67,7 @@ func do_action():
 		return
 	
 	# If the target tree exists:
-	var dist_to_tree = get_taxicab_distance(target_tree.pos, map_position)
+	var dist_to_tree = get_taxicab_distance(target_tree.get_pos(), map_position)
 	
 	if (dist_to_tree <= attack_range):
 		attack_tree()
@@ -75,7 +75,7 @@ func do_action():
 		move_along_path()
 
 func attack_tree():
-	var direction: Vector2i = target_tree.pos - map_position
+	var direction: Vector2i = target_tree.get_pos() - map_position
 	face_direction(direction)
 	
 	var this_position = position
@@ -181,7 +181,7 @@ func target_new_tree() -> Twee:
 # Uses A-Star to find the nearest viable path to the target_tree
 func find_path_to_tree(tree: Twee) -> Array:
 	
-	var target_pos: Vector2i = tree.pos
+	var target_pos: Vector2i = tree.get_pos()
 	
 	var to_visit: Array[Vector2i] = [map_position]
 	var paths: Array[Array] = [[]] # Nested typed collections aren't supported 😔
@@ -300,7 +300,7 @@ func get_nearest_tree() -> Twee:
 		if (tree.died):
 			continue
 		
-		var dist = get_taxicab_distance(tree.pos, map_position)
+		var dist = get_taxicab_distance(tree.get_pos(), map_position)
 		if (dist < nearest_dist):
 			nearest_tree = tree
 			nearest_dist = dist

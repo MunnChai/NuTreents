@@ -191,6 +191,7 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 			
 			# Add to forest
 			new_forest.trees[pos] = tree
+			new_forest.add_tree_to_set(tree)
 			
 			# Add to forest map
 			forest_map[pos] = forest_id
@@ -322,6 +323,7 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 		
 		# add this to new forest
 		forest.trees[pos] = tree
+		forest.add_tree_to_set(tree)
 	return forest
 
 ## returns a connected tree set

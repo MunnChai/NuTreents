@@ -151,22 +151,29 @@ func add_tree(p: Vector2i, t: Twee):
 	t.initialize(p, id)
 	trees[p] = t
 	
+	add_tree_to_set(t)
+
+func add_tree_to_set(t: Twee):
 	if not tree_set.has(t):
 		tree_set.append(t)
+
+func remove_tree_from_set(t: Twee):
+	tree_set.erase(t)
 
 ## remove the tree at given p
 ## assume some tree exists at p
 func remove_tree(p: Vector2i):
 	if (!trees.has(p)):
 		return
+	
 	var t: Twee = trees[p]
+	t.die()
+	
 	water -= t.storage
 	trees.erase(p)
 	tree_set.erase(t)
 	
 	t.remove()
-	
-	t.die()
 
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 

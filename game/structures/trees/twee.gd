@@ -169,12 +169,12 @@ const GREEN_TREE_DIE = preload("res://structures/trees/scenes/death/green_tree_d
 func die():
 	died = true
 	
-	#play sound effect
 	SfxManager.play_sound_effect("tree_remove")
-
-	#TreeManager.remove_tree(pos)
+	
 	flash_amount = 1.0
-	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
+	
+	if !(!sprite || !sprite.get_material()):
+		(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	
 	await get_tree().create_timer(FLASH_DURATION).timeout
 	
@@ -235,7 +235,6 @@ func take_damage(damage: int) -> bool:
 	#print(hp)
 	if (hp <= 0 and TreeManager.get_tree_map()[get_pos()]):
 		TreeManager.remove_tree(get_pos())
-		print("remove mother tree")
 		return true
 	#else:
 		#animation_player.play("hurt")
