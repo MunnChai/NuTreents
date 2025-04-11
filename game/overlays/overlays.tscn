@@ -24,9 +24,9 @@ offset_bottom = 689.0
 texture = SubResource("GradientTexture1D_w1w4n")
 
 [node name="WorldCanvas" type="CanvasLayer" parent="."]
-visible = false
 follow_viewport_enabled = true
 
 [node name="WaterOverlay" type="Node2D" parent="WorldCanvas"]
+visible = false
 z_index = 10
 script = ExtResource("1_k14tv")

@@ -17,6 +17,7 @@ shader_parameter/inner_radius = 0.16
 shader_parameter/outer_radius = 1.34
 
 [node name="UI" type="CanvasLayer"]
+layer = 5
 
 [node name="Vignette" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_anucx")

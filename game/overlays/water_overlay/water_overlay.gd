@@ -4,6 +4,13 @@ extends Overlay
 const WATER_HIGHLIGHT = preload("res://overlays/water_overlay/water_highlight.tscn")
 var highlights: Dictionary[Vector2i, Sprite2D]
 
+const HEALTHY_WATER_GAIN = 10
+const UNHEALTHY_WATER_GAIN = 0
+
+const HEALTHY_COLOR: Color = Color.SKY_BLUE
+const UNHEALTHY_COLOR: Color = Color.INDIAN_RED
+const DEHYDRATED_COLOR: Color = Color.DARK_RED
+
 func update_highlights() -> void:
 	# PENTUPLE FOR LOOP ON EVERY FRAME? satisfactory
 	
@@ -34,9 +41,12 @@ func update_highlights() -> void:
 		
 		var highlight = highlights[position]
 		
-		if (forest.water_gain < 0):
-			highlight.modulate = Color.DARK_RED
-		else:
-			highlight.modulate = Color.SKY_BLUE
+		var gain = clamp(forest.water_gain, UNHEALTHY_WATER_GAIN, HEALTHY_WATER_GAIN) / (HEALTHY_WATER_GAIN - UNHEALTHY_WATER_GAIN)
 		
+		var color = lerp(UNHEALTHY_COLOR, HEALTHY_COLOR, gain)
+		
+		if (forest.water_gain < 0):
+			color = DEHYDRATED_COLOR
+		
+		highlight.modulate = color
 		highlight.modulate.a = 0.75
