@@ -16,7 +16,7 @@ func initialize(p: Vector2i, f: int):
 	died = false
 	attackable = true
 	forest = f
-	init_pos(p)
+	#init_pos(p)
 
 
 func die():

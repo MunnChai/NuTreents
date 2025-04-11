@@ -103,12 +103,14 @@ func spawn_enemies() -> int:
 		
 		var allowed_cells = []
 		for cell in possible_cells:
-			if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 10.0:
+			if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 50.0:
 				allowed_cells.append(cell)
 		
 		var rand_pos = allowed_cells.pick_random()
 		var world_pos = Global.fog_map.map_to_local(rand_pos)
 		var terrain_pos = Global.terrain_map.local_to_map(world_pos)
+		
+		print(terrain_pos)
 		
 		spawn_enemy(rand_enemy, terrain_pos)
 	

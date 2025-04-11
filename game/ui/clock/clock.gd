@@ -1,8 +1,9 @@
 class_name Clock extends Node
 
-const MINUTES_PER_DAY: float = 1.0
+const MINUTES_PER_DAY: float = 3.0
 const TOTAL_DAY_SECONDS: int = int(MINUTES_PER_DAY * 60)
 const HALF_DAY_SECONDS: int = TOTAL_DAY_SECONDS / 2
+#const HALF_DAY_SECONDS: int = 0 # Use this for MAXIMUM WAVE
 
 var is_day: bool = true
 
