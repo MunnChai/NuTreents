@@ -8,7 +8,7 @@ extends Control
 @export var sun_min_text: String
 @export var nutrients_min_text: String
 @export var species_text: String
-@export var type: TreeManager.TreeType
+@export var type: Global.TreeType
 
 @export var texture: Texture2D
 

@@ -36,8 +36,8 @@ const DRUNKARD_LIFETIME: int = 15
 const NUM_DRUNKARDS: int = 10
 
 # City information
-const CITY_BUILDING = preload("res://trees/scripts/city_building.tscn")
-const FACTORY = preload("res://trees/scripts/factory.tscn")
+const CITY_BUILDING = preload("res://structures/city/city_building.tscn")
+const FACTORY = preload("res://structures/city/factory/factory.tscn")
 
 const NUM_FACTORIES: int = 3
 const MIN_BUILDINGS_PER_CITY: int = 5

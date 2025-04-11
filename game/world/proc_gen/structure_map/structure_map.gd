@@ -9,7 +9,7 @@ const COST_TO_REMOVE_CITY_TILE: int = 100
 const COST_TO_REMOVE_ROAD_TILE: int = 250
 
 func _ready() -> void:
-	add_to_group("structure_map")
+	#add_to_group("structure_map")
 	y_sort_enabled = true
 
 func add_structure(map_coords: Vector2i, structure: Structure) -> bool:

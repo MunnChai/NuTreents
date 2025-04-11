@@ -139,7 +139,7 @@ func _update_visuals() -> void:
 		return
 	
 	# We are highlighting an existing tree
-	if TreeManager.is_occupied(iso_position):
+	if TreeManager.is_twee(iso_position):
 		enable()
 		_set_highlight_modulate(YELLOW)
 		_set_arrow_visible(true)

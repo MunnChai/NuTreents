@@ -1,0 +1,38 @@
+[gd_scene load_steps=7 format=3 uid="uid://bkkyw61ya8xr7"]
+
+[ext_resource type="Script" uid="uid://be4ovf4c2f8ll" path="res://structures/trees/scenes/water_tree.gd" id="1_hllm5"]
+[ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_h5l5m"]
+[ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="3_i263m"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/tree_damage.gdshader" id="4_i263m"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="4_lvmcj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewqov"]
+shader = ExtResource("4_i263m")
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 10.0
+shader_parameter/alpha = 1.0
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/dehydrated = false
+shader_parameter/uv_y_offset = 0.1
+shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
+shader_parameter/tint_color = Color(0.996078, 0.596078, 0.533333, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+
+[node name="WaterTree" type="Node2D"]
+script = ExtResource("1_hllm5")
+tree_stat = ExtResource("2_h5l5m")
+sheets = Array[Texture2D]([ExtResource("3_i263m")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_ewqov")
+texture = ExtResource("3_i263m")
+hframes = 9
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("4_lvmcj")
+}

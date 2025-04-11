@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=3 uid="uid://dagtk01aebfae"]
+
+[ext_resource type="Script" uid="uid://dfn6yt6ytgn45" path="res://structures/trees/scenes/explorer_tree.gd" id="1_jl2e1"]
+[ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://structures/trees/stats/explorer_tree_stat.tres" id="2_je5j6"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/tree_damage.gdshader" id="2_wshlp"]
+[ext_resource type="Texture2D" uid="uid://tscwrw87atsj" path="res://structures/trees/sheets/tree_explorer_sheet.png" id="3_je5j6"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="5_qk86u"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_je5j6"]
+shader = ExtResource("2_wshlp")
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 10.0
+shader_parameter/alpha = 1.0
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/dehydrated = true
+shader_parameter/uv_y_offset = 0.4
+shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
+shader_parameter/tint_color = Color(0.698855, 0.499038, 0.506055, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+
+[node name="ExplorerTree" type="Node2D"]
+script = ExtResource("1_jl2e1")
+tree_stat = ExtResource("2_je5j6")
+sheets = Array[Texture2D]([ExtResource("3_je5j6")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_je5j6")
+texture = ExtResource("3_je5j6")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("5_qk86u")
+}

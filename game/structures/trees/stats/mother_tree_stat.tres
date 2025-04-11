@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=2 format=3 uid="uid://ll6klr2ec2b8"]
+
+[ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_wnjji"]
+
+[resource]
+script = ExtResource("1_wnjji")
+name = ""
+id = ""
+description = ""
+hp = 50
+max_water = 10
+gain = Vector3(2, 6, 0)
+maint = 0
+time_to_grow = 0.0
+cost_to_purchase = 0
+hp_2 = 0
+max_water_2 = 0
+gain_2 = Vector3(0, 0, 0)
+maint_2 = 0
+time_to_grow_2 = 0.0
+cost_to_purchase_2 = 0
+metadata/_custom_type_script = "uid://cmqpyvo3bas1d"

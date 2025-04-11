@@ -36,7 +36,7 @@ func transition_to_victory_screen():
 	transition_to_packed(VICTORY_SCREEN, 2.0, 2.0)
 
 func transition_to_tutorial():
-	transition_to_packed(TUTORIAL, 1.0, 1.0)
+	transition_to_packed(MAIN, 1.0, 1.0)
 
 func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION / 2, tween_out_duration = FADE_DURATION / 2):
 	if (is_transitioning):
