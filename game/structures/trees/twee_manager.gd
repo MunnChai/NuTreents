@@ -72,6 +72,12 @@ func place_tree(twee: Twee, pos: Vector2i) -> void:
 func add_tree(twee: Twee) -> void:
 	var occupied_positions = twee.get_occupied_positions()
 	
+	print("e")
+	
+	for p: Vector2i in occupied_positions:
+		if is_twee(p):
+			return
+	
 	for p: Vector2i in occupied_positions:
 		# Forest... 
 		var f_id: int = find_forest(p)

@@ -90,14 +90,6 @@ func get_nutrient_gain(delta: float) -> float:
 	for tree: Twee in tree_set:
 		nutrient_sum += tree.get_nutrient_gain(delta)
 	
-	#for key: Vector2i in trees.keys():
-		#if (!trees.has(key)):
-			#continue
-		#
-		#var tree: Twee = trees[key]
-		#
-		#nutrient_sum += tree.get_nutrient_gain(delta)
-	
 	return nutrient_sum
 
 func update_water_maintenance(delta: float) -> float:
