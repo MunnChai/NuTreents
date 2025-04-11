@@ -87,3 +87,11 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 		else:
 			var tween: Tween = get_tree().create_tween()
 			tween.tween_property(node, "modulate", Color(node.modulate, 0.4), TWEEN_TIME)
+
+
+func set_tree_transparency(alpha: float):
+	var structures = tile_scene_map.values()
+	
+	for structure: Node2D in structures:
+		if (structure is Twee):
+			structure.modulate.a = alpha # WE ADJUST THE TREE'S MODULATE IN update_transparencies_around............ maybe just set visible = false?

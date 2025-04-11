@@ -312,6 +312,7 @@ offset_bottom = 40.0
 mouse_filter = 1
 
 [node name="UI" type="CanvasLayer" parent="UI"]
+layer = 5
 
 [node name="Menu" type="Control" parent="UI/UI" node_paths=PackedStringArray("tree_menu", "tech_menu", "settings_menu")]
 layout_mode = 3

@@ -103,6 +103,28 @@ func remove_tree(p: Vector2i) -> void:
 
 #endregion
 
+#region PROCESSING
+
+func _process(delta: float) -> void:
+	get_nutrient_gain(delta)
+	update_water_maintenance(delta)
+
+func get_nutrient_gain(delta: float) -> float:
+	var nutrient_sum: float = 0
+	for forest_id: int in forests:
+		var forest: Forest = forests[forest_id]
+		nutrient_sum += forest.get_nutrient_gain(delta)
+	return nutrient_sum
+
+func update_water_maintenance(delta: float) -> float:
+	var water_gain = 0
+	for forest_id: int in forests:
+		var forest: Forest = forests[forest_id]
+		water_gain += forest.update_water_maintenance(delta)
+	return water_gain
+
+#endregion
+
 #region FOREST LOGIC
 
 ## finds the corresponding forest id for given p

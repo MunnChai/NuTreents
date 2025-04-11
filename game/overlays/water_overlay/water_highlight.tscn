@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgpi8y8uf41x5"]
+
+[ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="1_wms7a"]
+
+[node name="WaterHighlight" type="Sprite2D"]
+modulate = Color(1, 1, 1, 0.313726)
+texture = ExtResource("1_wms7a")

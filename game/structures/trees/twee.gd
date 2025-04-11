@@ -196,6 +196,11 @@ func update(delta: float) -> Vector3:
 	var g = Vector3(gain.x, storage - prev, gain.z)
 	return g
 
+func get_nutrient_gain(delta: float) -> float:
+	return gain.x
+
+
+
 func update_maint():
 	# TODO
 	return
@@ -243,6 +248,12 @@ func get_water_gain():
 		return tree_stat.gain.y
 	else:
 		return tree_stat.gain.y * 1.5
+
+func get_water_maint():
+	if (!is_adjacent_to_water):
+		return tree_stat.maint
+	else:
+		return 0
 
 func is_water_adjacent() -> bool:
 	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
