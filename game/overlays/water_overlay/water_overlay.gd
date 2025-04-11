@@ -4,7 +4,7 @@ extends Overlay
 const WATER_HIGHLIGHT = preload("res://overlays/water_overlay/water_highlight.tscn")
 var highlights: Dictionary[Vector2i, Sprite2D]
 
-const HEALTHY_WATER_GAIN = 10
+const HEALTHY_WATER_GAIN = 15
 const UNHEALTHY_WATER_GAIN = 0
 
 const HEALTHY_COLOR: Color = Color.SKY_BLUE
