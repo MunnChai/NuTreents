@@ -8,6 +8,7 @@ var terrain_map: TerrainMap
 var fog_map: FogMap
 var clock: Clock
 var tech_menu: TechMenu
+var overlay_manager: OverlayManager
 
 enum GameState {
 	PLAYING = 0,
@@ -28,3 +29,4 @@ func update_globals():
 	fog_map = get_tree().get_first_node_in_group("fog_map")
 	clock = get_tree().get_first_node_in_group("clock")
 	tech_menu = get_tree().get_first_node_in_group("tech_menu")
+	overlay_manager = get_tree().get_first_node_in_group("overlay_manager")

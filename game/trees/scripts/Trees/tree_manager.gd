@@ -54,7 +54,7 @@ func _ready():
 	pass
 
 func start_game():
-	res = Vector3(25, 0, 0)
+	res = Vector3(1000, 0, 0)
 	gain = Vector3(0, 0, 0)
 	forest_count = 0
 	#test()
@@ -507,7 +507,7 @@ func get_reachable_tree_placement_positions(include_trees: bool = false) -> Arra
 ## given a pos, check if there's a need to split the forest, split if neccessary
 ## id is the forest_id of the original tree
 func forest_check(p: Vector2i, id: int):
-	print("forest_check called")
+	#print("forest_check called")
 	# check for split
 	var forest_groups: Array = check_for_split(p)
 	# split if needed

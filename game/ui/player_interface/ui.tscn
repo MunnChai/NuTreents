@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=11 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="7_a4txa"]
+[ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="9_2ct0b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -84,3 +85,16 @@ offset_top = 82.0
 offset_right = 1142.0
 offset_bottom = 114.0
 mouse_default_cursor_shape = 2
+
+[node name="OverlayButtons" type="HBoxContainer" parent="."]
+offset_left = 1029.0
+offset_top = 138.0
+offset_right = 1130.0
+offset_bottom = 178.0
+script = ExtResource("9_2ct0b")
+
+[node name="WaterOverlayButton" type="Button" parent="OverlayButtons"]
+layout_mode = 2
+text = "WATERVIEW"
+
+[connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]

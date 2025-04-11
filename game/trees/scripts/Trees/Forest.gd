@@ -6,6 +6,8 @@ var water: float
 var id: int
 var empty: bool
 
+var water_gain: float
+
 func _init(i: int):
 	water = 0
 	id = i
@@ -134,6 +136,8 @@ func update_water_maintenance(delta: float) -> float:
 	
 	water += net_water * delta
 	water = clamp(water, 0, INF)
+	
+	water_gain = net_water
 	
 	return net_water
 
