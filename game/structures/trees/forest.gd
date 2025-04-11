@@ -88,7 +88,8 @@ func get_nutrient_gain(delta: float) -> float:
 	var nutrient_sum: float = 0
 
 	for tree: Twee in tree_set:
-		nutrient_sum += tree.get_nutrient_gain(delta)
+		if tree: # temp null check. i have no idea why this is a thing
+			nutrient_sum += tree.get_nutrient_gain(delta)
 	
 	return nutrient_sum
 

@@ -176,13 +176,13 @@ func die():
 	if !(!sprite || !sprite.get_material()):
 		(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	
-	#await get_tree().create_timer(FLASH_DURATION).timeout
+	await get_tree().create_timer(FLASH_DURATION).timeout
 	
-	#if is_large and !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
-		#var death_vfx = GREEN_TREE_DIE.instantiate()
-		#get_parent().add_child(death_vfx)
-		#death_vfx.global_position = global_position
-		##queue_free()
+	if is_large and !is_growing: # Temp fix: Prevent small trees from spawning big tree die vfx
+		var death_vfx = GREEN_TREE_DIE.instantiate()
+		get_parent().add_child(death_vfx)
+		death_vfx.global_position = global_position
+		#queue_free()
 	
 	queue_free()
 	
