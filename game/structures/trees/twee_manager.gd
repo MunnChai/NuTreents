@@ -36,7 +36,12 @@ func start_game():
 	
 	## SPAWN THE MOTHER TREE
 	var mother_tree: MotherTree = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
-	call_deferred("place_tree", mother_tree, Global.ORIGIN)
+	mother_tree.init_occupied_positions([ 
+		Global.ORIGIN + Vector2i.LEFT,
+		Global.ORIGIN + Vector2i.LEFT + Vector2i.UP,
+		Global.ORIGIN + Vector2i.UP,
+		Global.ORIGIN])
+	call_deferred("add_tree", mother_tree)
 
 ## Returns the twee at the given position, null if there is none
 func get_twee(pos: Vector2i) -> Twee:
@@ -49,29 +54,31 @@ func get_tree_map() -> Dictionary[Vector2i, Twee]:
 	return tree_map
 
 ## Place the given twee at the given position
+## NOTE: ONLY USE THIS FOR SINGLE TILE TWEES
 func place_tree(twee: Twee, pos: Vector2i) -> void:
 	twee.init_pos(pos)
 	add_tree(twee)
 
 ## Add the given twee to the map
 func add_tree(twee: Twee) -> void:
-	var p = twee.pos
+	var occupied_positions = twee.get_occupied_positions()
 	
-	# Forest... 
-	var f_id: int = find_forest(p)
-	forest_map[p] = f_id
-	var forest: Forest = forests[f_id]
-	forest.add_tree(p, twee)
-	
-	# Map...
-	tree_map[p] = twee
-	
-	# Structure map...
-	structure_map.add_structure(p, twee)
-	
-	# Fog...
-	fog_map.remove_fog_around(p)
-	
+	for p: Vector2i in occupied_positions:
+		# Forest... 
+		var f_id: int = find_forest(p)
+		forest_map[p] = f_id
+		var forest: Forest = forests[f_id]
+		forest.add_tree(p, twee)
+		
+		# Map...
+		tree_map[p] = twee
+		
+		# Structure map...
+		structure_map.add_structure(p, twee)
+		
+		# Fog...
+		fog_map.remove_fog_around(p)
+	 
 	# Signal!
 	tree_placed.emit(twee)
  

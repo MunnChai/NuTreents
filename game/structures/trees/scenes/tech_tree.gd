@@ -59,7 +59,7 @@ func die():
 	
 	# Instantiate factory remains again
 	var factory_remains = FACTORY_REMAINS.instantiate()
-	Global.structure_map.add_structure(pos, factory_remains)
+	Global.structure_map.add_structure(get_pos(), factory_remains)
 	factory_remains.tech_slot = tech_slot
 	
 	queue_free()

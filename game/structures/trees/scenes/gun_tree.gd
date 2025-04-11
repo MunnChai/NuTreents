@@ -47,7 +47,7 @@ func check_attack_range():
 			if (enemy.is_dead):
 				continue
 			
-			var dist_to_enemy = get_taxicab_distance(pos, enemy.map_position)
+			var dist_to_enemy = get_taxicab_distance(get_pos(), enemy.map_position)
 			
 			if (dist_to_enemy <= attack_range):
 				current_target_enemy = enemy

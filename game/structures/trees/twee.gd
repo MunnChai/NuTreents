@@ -3,33 +3,38 @@ class_name Twee
 
 const TREE_DAMAGE_SHADER = preload("res://structures/trees/tree_damage.gdshader")
 
+## Elementary stats resource for this tree
 @export var tree_stat: TreeStatResource 
+## List of sprite sheet variations for this tree, 
+## defaults to a randomly chosen sheet at ready time
 @export var sheets: Array[Texture2D]
 
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite: Sprite2D = %Sprite2D
 
-# State variables
+## State variables
 var died: bool
 var attackable: bool
 var forest: int # forest id
 var storage: int # Current water amount
 
-# Stats
+var is_large := false
+var is_growing := false
+
+## Stats
 var hp: float
 var max_water: int
 var gain: Vector3
 var maint: int
 var time_to_grow: float
 
+## Seconds spent alive...
+## TODO: This might introduce bugs..? Possibly use TIMERS instead
 var life_time_seconds := 0.0
 
+const BASE_WATER_RANGE = 1
 var is_adjacent_to_water: bool = false
 var water_bonus: int = 3
-const BASE_WATER_RANGE = 1
-
-var is_large := false
-var is_growing := false
 
 func _ready():
 	get_stats_from_resource(tree_stat)
@@ -63,7 +68,14 @@ func _process(delta: float) -> void:
 			upgrade_tree()
 			#tree_data.update()
 
-
+## OVERRIDE
+func remove() -> void:
+	if marked_for_removal:
+		return
+	marked_for_removal = true
+	
+	for pos: Vector2i in get_occupied_positions():
+		TreeManager.remove_tree(pos)
 
 #const FLASH_DECAY_RATE = 50.0
 const SHAKE_DECAY_RATE = 15.0
@@ -92,7 +104,7 @@ func _update_shader(delta: float) -> void:
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
-	(sprite.get_material() as ShaderMaterial).set_shader_parameter("pos", pos)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("pos", get_pos())
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("dehydrated", is_dehydrated)
 	#print(is_dehydrated)
 
@@ -218,11 +230,11 @@ func take_damage(damage: int) -> bool:
 	#play sound effect
 	SfxManager.play_sound_effect("tree_damage")
 	hp -= damage
-	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(pos), Color("fe9888"))
+	PopupManager.create_popup(str(damage), Global.structure_map.map_to_local(get_pos()), Color("fe9888"))
 	#print(pos, " taking damage ", damage)
 	#print(hp)
-	if (hp <= 0 and TreeManager.get_tree_map()[pos]):
-		TreeManager.remove_tree(pos)
+	if (hp <= 0 and TreeManager.get_tree_map()[get_pos()]):
+		TreeManager.remove_tree(get_pos())
 		print("remove mother tree")
 		return true
 	#else:
@@ -258,7 +270,7 @@ func get_water_maint():
 func is_water_adjacent() -> bool:
 	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
 		for y in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
-			var coord: Vector2i = pos + Vector2i(x, y)
+			var coord: Vector2i = get_pos() + Vector2i(x, y)
 			
 			var tile_type: int = Global.terrain_map.get_tile_biome(coord)
 			

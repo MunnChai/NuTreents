@@ -68,7 +68,12 @@ const TWEEN_TIME = 0.2
 
 ## Updates the transparencies of relevant tiles based on the given position
 func update_transparencies_around(map_pos: Vector2i) -> void:
+	var selected_structure = null
+	if does_structure_exist(map_pos):
+		selected_structure = tile_scene_map[map_pos]
+	
 	var adjacent_coords = []
+	var adjacent_structures = []
 	
 	for x in range(map_pos.x, map_pos.x + 2):
 		for y in range(map_pos.y, map_pos.y + 2):
@@ -77,11 +82,12 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 				continue
 			if does_structure_exist(adj_pos):
 				adjacent_coords.append(adj_pos)
+				adjacent_structures.append(tile_scene_map[adj_pos])
 	
 	for key in tile_scene_map:
 		var node: Node2D = tile_scene_map[key]
 		
-		if not key in adjacent_coords:
+		if (not key in adjacent_coords and not node in adjacent_structures) or selected_structure == node:
 			var tween: Tween = get_tree().create_tween()
 			tween.tween_property(node, "modulate", Color(node.modulate, 1.0), TWEEN_TIME)
 		else:
