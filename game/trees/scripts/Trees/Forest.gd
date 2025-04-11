@@ -2,7 +2,7 @@ extends Node
 class_name Forest
 
 var trees: Dictionary[Vector2i, Node2D]
-var water: int
+var water: float
 var id: int
 var empty: bool
 
@@ -50,7 +50,6 @@ func update(delta: float) -> Vector3:
 		water -= tree.maint
 		
 		if (water < 0):
-			
 			if (TreeManager.res.y == 0):
 				if (tree.is_adjacent_to_water):
 					tree.is_dehydrated = false
@@ -80,6 +79,64 @@ func update(delta: float) -> Vector3:
 	res.y = water
 	
 	return res
+
+# Returns the sum of nutrient gains of all the trees in this forest
+func get_nutrient_gain(delta: float) -> float:
+	var nutrient_sum: float = 0
+	
+	for key: Vector2i in trees.keys():
+		if (!trees.has(key)):
+			continue
+		
+		var tree: Twee = trees[key]
+		
+		nutrient_sum += tree.get_nutrient_gain(delta)
+	
+	return nutrient_sum
+
+func update_water_maintenance(delta: float) -> float:
+	var sorted_trees = trees.keys()
+	#sorted_trees.sort_custom(sort_close_to_far)
+	
+	var net_water: float = 0
+	for key in sorted_trees:
+		if (!trees.has(key)):
+			continue
+		if (!trees[key]):
+			trees.erase(key)
+			continue
+		var tree: Twee = trees[key]
+		net_water += tree.gain.y
+	
+	for key in sorted_trees:
+		if (!trees.has(key)):
+			continue
+		var tree: Twee = trees[key]
+		net_water -= tree.get_water_maint()
+		
+		if (net_water < 0): # If the gain for this forest does not outweigh the maintenance
+			if (water <= 0): # Check THIS forest's water supply
+				if (tree.is_adjacent_to_water): # If the tree is next to water, don't be dehydrated
+					tree.is_dehydrated = false
+				else:
+					tree.is_dehydrated = true
+					
+					while (tree.water_damage_time > tree.WATER_DAMAGE_DELAY):
+						tree.take_damage(tree.DEHYDRATION_DAMAGE)
+						tree.water_damage_time -= RandomNumberGenerator.new().randf_range(tree.WATER_DAMAGE_DELAY, tree.WATER_DAMAGE_DELAY * 2)
+					tree.water_damage_time += delta
+			else:
+				tree.is_dehydrated = false
+		else:
+			tree.is_dehydrated = false
+		
+		tree._update_shader(delta)
+	
+	water += net_water * delta
+	water = clamp(water, 0, INF)
+	
+	return net_water
+
 
 ## add the given tree to this forest
 func add_tree(p: Vector2i, t: Twee):

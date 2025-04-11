@@ -80,7 +80,16 @@ func _process(delta):
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	update(delta)
+	if Input.is_action_just_released("lmb"):
+		placed = false
+	
+	# Munn: don't really need to pass in delta, but could be useful in the future
+	gain.x = get_nutrient_gain(delta)
+	gain.y = update_water_maintenance(delta)
+	gain.z = 0
+	
+	res += gain * delta
+	res = res.clamp(Vector3(0,0,0), Vector3(INF,INF,INF)) # Resources cannot go below 0
 
 func test():
 	# testing
@@ -118,6 +127,27 @@ func update(delta: float):
 	
 	res += gain * delta
 	res.y = max(0, res.y)
+
+func get_nutrient_gain(delta: float) -> float:
+	var nutrient_sum: float = 0
+	
+	for forest_id: int in forests:
+		var forest: Forest = forests[forest_id]
+		
+		nutrient_sum += forest.get_nutrient_gain(delta)
+	
+	return nutrient_sum
+
+func update_water_maintenance(delta: float) -> float:
+	var water_gain = 0
+	
+	for forest_id: int in forests:
+		var forest: Forest = forests[forest_id]
+		
+		water_gain += forest.update_water_maintenance(delta)
+	
+	return water_gain
+
 
 func get_new_tree_of_type(type: int) -> Twee:
 	return TREE_DICT[type].instantiate()
@@ -221,6 +251,8 @@ func add_tree(type: int, p: Vector2i, enforce_reachable: bool = true) -> int:
 	if (!tree is MotherTree):
 		tree_placed.emit()
 	
+	#print_forest_map()
+	
 	return 0
 
 ## remove tree at given p
@@ -242,6 +274,7 @@ func remove_tree(p: Vector2i) -> bool:
 	forest_check(p, f_id)
 	structure_map.remove_structure(p)
 	
+	#print_forest_map()
 	#print("Forests: ", forests)
 	return true
 
