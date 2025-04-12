@@ -200,6 +200,7 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 		
 		if forests_to_merge.has(tree_id):
 			var tree: Twee = tree_map[pos]
+			tree.forest = forest_id
 			
 			# Add to forest
 			new_forest.trees[pos] = tree
