@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c5ab514k8x8dc" path="res://overlays/overlays.tscn" id="3_kek77"]
-[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="5_5vw27"]
 [ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://input/input_handler.gd" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://5xnl4wkxo80k" path="res://ui/cursor/virtual_cursor/virtual_cursor.tscn" id="6_4c57u"]
+[ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="7_4c57u"]
 [ext_resource type="AudioStream" uid="uid://c82lm8mfowgcs" path="res://sound/sfx/wind_loop.wav" id="7_272bh"]
 
 [node name="Main" type="Node"]
@@ -34,9 +34,7 @@ night_color = Color(0.220747, 0.405964, 0.660919, 1)
 
 [node name="VirtualCursor" parent="World" instance=ExtResource("6_4c57u")]
 
-[node name="Camera2D" type="Camera2D" parent="World"]
-zoom = Vector2(2, 2)
-script = ExtResource("5_5vw27")
+[node name="Camera" parent="World" instance=ExtResource("7_4c57u")]
 
 [node name="Music" parent="World" instance=ExtResource("3_1bvp3")]
 

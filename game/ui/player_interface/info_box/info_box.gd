@@ -79,7 +79,7 @@ func show_content_for_tree(tree_stat: TreeStatResource):
 	rich_text.text += "HP: " + str(tree_stat.hp)
 	rich_text.text += "\nNET WATER: " + str(tree_stat.gain.y - tree_stat.maint) + "/s"
 	rich_text.text += "\nNET NUTRIENTS: " + str(tree_stat.gain.x) + "/s"
-	rich_text.text += "\nNET SUN: " + str(tree_stat.gain.z) + "/s"
+	#rich_text.text += "\nNET SUN: " + str(tree_stat.gain.z) + "/s"
 	
 	rich_text.text += "\n"
 
@@ -112,7 +112,7 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			rich_text.text += "HP: " + str(structure.hp)
 			rich_text.text += "\nNET WATER: " + str(structure.gain.y - structure.maint) + "/s"
 			rich_text.text += "\nNET NUTRIENTS: " + str(structure.gain.x) + "/s"
-			rich_text.text += "\nNET SUN: " + str(structure.gain.z) + "/s"
+			#rich_text.text += "\nNET SUN: " + str(structure.gain.z) + "/s"
 			
 			rich_text.text += "\n"
 			

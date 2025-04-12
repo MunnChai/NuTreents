@@ -94,6 +94,9 @@ func get_nutrient_gain(delta: float) -> float:
 	return nutrient_sum
 
 func update_water_maintenance(delta: float) -> float:
+	# TODO: Figure out water spread cost mechanic
+	# and how to prevent multitiles from having more influence
+	
 	var sorted_trees = trees.keys()
 	#sorted_trees.sort_custom(sort_close_to_far)
 	

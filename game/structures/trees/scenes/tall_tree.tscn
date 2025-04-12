@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dx6ofl3xjn02w" path="res://structures/trees/scenes/tall_tree.gd" id="1_ipn3t"]
 [ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://structures/trees/stats/tall_tree_stat.tres" id="2_66x5p"]
-[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/tree_damage.gdshader" id="2_ngu8s"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="2_ngu8s"]
 [ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="3_tcj32"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="5_ipn3t"]
 

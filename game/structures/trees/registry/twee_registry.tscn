@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://ctuxphh5vm582"]
 
-[ext_resource type="Script" uid="uid://dnayrutw5452u" path="res://structures/trees/twee_registry.gd" id="1_m8guu"]
+[ext_resource type="Script" uid="uid://dnayrutw5452u" path="res://structures/trees/registry/twee_registry.gd" id="1_m8guu"]
 [ext_resource type="PackedScene" uid="uid://d21aaigi3uwrw" path="res://structures/trees/scenes/mother_tree.tscn" id="2_85kqc"]
 [ext_resource type="PackedScene" uid="uid://c8kbt51qdolu3" path="res://structures/trees/scenes/default_tree.tscn" id="3_glvak"]
 [ext_resource type="PackedScene" uid="uid://cuuxnj6p50s3g" path="res://structures/trees/scenes/gun_tree.tscn" id="4_e3kfh"]

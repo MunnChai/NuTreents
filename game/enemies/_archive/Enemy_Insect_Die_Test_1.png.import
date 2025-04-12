@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtnv0nwwg2ydq"
-path="res://.godot/imported/Enemy_Insect_Idle_1.png-643a8a0e3271fe28a01cccd0103a43f8.ctex"
+uid="uid://rvo24sff24cc"
+path="res://.godot/imported/Enemy_Insect_Die_Test_1.png-0f5df4bef75dc7f89a4f488f62cdebdf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/Enemy_Insect_Idle_1.png"
-dest_files=["res://.godot/imported/Enemy_Insect_Idle_1.png-643a8a0e3271fe28a01cccd0103a43f8.ctex"]
+source_file="res://enemies/_archive/Enemy_Insect_Die_Test_1.png"
+dest_files=["res://.godot/imported/Enemy_Insect_Die_Test_1.png-0f5df4bef75dc7f89a4f488f62cdebdf.ctex"]
 
 [params]
 

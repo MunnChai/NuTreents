@@ -99,7 +99,7 @@ layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("4_skti3")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "[color=red][shake rate=50.0 level=100 connected=1]tomato"
+text = "[color=red][shake rate=50.0 level=100 connected=1]whater?"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

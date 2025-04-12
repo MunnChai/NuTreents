@@ -1,7 +1,7 @@
 extends Structure
 class_name Twee
 
-const TREE_DAMAGE_SHADER = preload("res://structures/trees/tree_damage.gdshader")
+const TREE_DAMAGE_SHADER = preload("res://structures/trees/shaders/tree_damage.gdshader")
 
 ## Elementary stats resource for this tree
 @export var tree_stat: TreeStatResource 

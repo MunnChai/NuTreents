@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://mhew1w7kolf4"]
 
-[ext_resource type="Script" uid="uid://dlvjal0entt0y" path="res://popup_manager/popup.gd" id="1_i60km"]
+[ext_resource type="Script" uid="uid://dlvjal0entt0y" path="res://ui/popup_manager/popup.gd" id="1_i60km"]
 
 [sub_resource type="Image" id="Image_kcn2c"]
 data = {
