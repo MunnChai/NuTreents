@@ -1,15 +1,11 @@
-class_name WaterOverlay
+class_name HealthOverlay
 extends Overlay
 
-const WATER_HIGHLIGHT = preload("res://overlays/water_overlay/water_highlight.tscn")
+const HEALTH_HIGHLIGHT = preload("res://overlays/health_overlay/health_highlight.tscn")
 var highlights: Dictionary[Vector2i, Sprite2D]
 
-const HEALTHY_WATER_GAIN = 15
-const UNHEALTHY_WATER_GAIN = 0
-
-const HEALTHY_COLOR: Color = Color.SKY_BLUE
-const UNHEALTHY_COLOR: Color = Color.INDIAN_RED
-const DEHYDRATED_COLOR: Color = Color.DARK_RED
+const HEALTHY_COLOR: Color = Color.GREEN_YELLOW
+const UNHEALTHY_COLOR: Color = Color.DARK_RED
 
 func update_highlights() -> void:
 	# PENTUPLE FOR LOOP ON EVERY FRAME? satisfactory
@@ -26,7 +22,7 @@ func update_highlights() -> void:
 	# Add trees that aren't in highlights
 	for pos: Vector2i in TreeManager.forest_map.keys():
 		if (!highlights.has(pos)):
-			var new_highlight = WATER_HIGHLIGHT.instantiate()
+			var new_highlight = HEALTH_HIGHLIGHT.instantiate()
 			var true_pos = Global.structure_map.map_to_local(pos)
 			new_highlight.global_position = true_pos
 			
@@ -36,17 +32,16 @@ func update_highlights() -> void:
 	
 	# Update highlights according to forest
 	for pos: Vector2i in highlights:
-		var forest_id = TreeManager.forest_map[pos]
-		var forest: Forest = TreeManager.forests[forest_id]
-		
+		var tree: Twee = TreeManager.tree_map[pos]
 		var highlight = highlights[pos]
 		
-		var gain = clamp(forest.water_gain, UNHEALTHY_WATER_GAIN, HEALTHY_WATER_GAIN) / (HEALTHY_WATER_GAIN - UNHEALTHY_WATER_GAIN)
+		var tree_max_hp: float = tree.tree_stat.hp
+		if (tree.is_large):
+			tree_max_hp = tree.tree_stat.hp_2
 		
-		var color = lerp(UNHEALTHY_COLOR, HEALTHY_COLOR, gain)
+		var hp_percent = tree.hp / tree_max_hp
 		
-		if (forest.water_gain < 0):
-			color = DEHYDRATED_COLOR
+		var color = lerp(UNHEALTHY_COLOR, HEALTHY_COLOR, hp_percent)
 		
 		highlight.modulate = color
 		highlight.modulate.a = 0.75

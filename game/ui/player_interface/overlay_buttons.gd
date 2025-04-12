@@ -5,7 +5,8 @@ extends HBoxContainer
 func _on_water_overlay_pressed() -> void:
 	show_overlay(OverlayManager.OverlayType.WATER_OVERLAY)
 
-
+func _on_health_overlay_pressed() -> void:
+	show_overlay(OverlayManager.OverlayType.HEALTH_OVERLAY)
 
 
 

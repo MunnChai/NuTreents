@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://c37t31thk1byt"]
+
+[ext_resource type="Script" uid="uid://cn7aixomc0uk7" path="res://overlays/health_overlay/health_overlay.gd" id="1_gy62l"]
+[ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="1_h0o6b"]
+
+[node name="HealthHighlight" type="Sprite2D"]
+texture = ExtResource("1_h0o6b")
+script = ExtResource("1_gy62l")

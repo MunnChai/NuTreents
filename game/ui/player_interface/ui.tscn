@@ -98,4 +98,9 @@ script = ExtResource("9_2ct0b")
 layout_mode = 2
 text = "WATERVIEW"
 
+[node name="HealthOverlayButton2" type="Button" parent="OverlayButtons"]
+layout_mode = 2
+text = "WATERVIEW"
+
 [connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
+[connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5ab514k8x8dc"]
+[gd_scene load_steps=6 format=3 uid="uid://c5ab514k8x8dc"]
 
 [ext_resource type="Script" uid="uid://d3by5y7qdumyk" path="res://overlays/overlay_manager.gd" id="1_bgy80"]
 [ext_resource type="Script" uid="uid://3rj6ed5chwnt" path="res://overlays/water_overlay/water_overlay.gd" id="1_k14tv"]
+[ext_resource type="Script" uid="uid://cn7aixomc0uk7" path="res://overlays/health_overlay/health_overlay.gd" id="3_w1w4n"]
 
 [sub_resource type="Gradient" id="Gradient_bgy80"]
 
@@ -30,3 +31,8 @@ follow_viewport_enabled = true
 visible = false
 z_index = 10
 script = ExtResource("1_k14tv")
+
+[node name="HealthOverlay" type="Node2D" parent="WorldCanvas"]
+visible = false
+script = ExtResource("3_w1w4n")
+metadata/_custom_type_script = "uid://cn7aixomc0uk7"

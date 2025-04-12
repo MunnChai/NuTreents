@@ -12,9 +12,10 @@ var overlays: Dictionary[OverlayType, Overlay]
 var current_overlay: Overlay
 
 
-# Add new overlays here
+# Add new overlays here, and in the ENUM above
 func _ready() -> void:
 	overlays[OverlayType.WATER_OVERLAY] = $WorldCanvas/WaterOverlay
+	overlays[OverlayType.HEALTH_OVERLAY] = $WorldCanvas/HealthOverlay
 
 
 

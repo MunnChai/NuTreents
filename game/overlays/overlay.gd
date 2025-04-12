@@ -5,6 +5,8 @@ extends Node2D
 # Base class for overlays
 # 
 
+func _ready() -> void:
+	z_index = 10
 
 func _process(delta: float) -> void:
 	if (visible):
