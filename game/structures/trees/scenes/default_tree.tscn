@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="3_mwnlu"]
 [ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="4_vgmkb"]
 [ext_resource type="Texture2D" uid="uid://eckdbj5rer4l" path="res://structures/trees/sheets/tree_circle_sheet.png" id="5_cbled"]
-[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/tree_damage.gdshader" id="5_my1gm"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="5_my1gm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbled"]
 resource_local_to_scene = true

@@ -7,7 +7,7 @@ const BLACK_SCREEN = preload("res://scene_loader/black_screen.tscn")
 const MAIN_MENU = preload("res://ui/main_menu/main_menu.tscn") # Main menu
 const MAIN = preload("res://main.tscn") # Game scene
 const GAME_OVER = preload("res://ui/game_over/game_over.tscn") # Gane over screen
-const VICTORY_SCREEN = preload("res://ui/VictoryScreen.tscn")
+const VICTORY_SCREEN = preload("res://ui/victory/victory_screen.tscn")
 const TUTORIAL = preload("res://tutorial/tutorial.tscn")
 
 # Fade in + out duration

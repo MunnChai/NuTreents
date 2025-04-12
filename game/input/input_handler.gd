@@ -1,6 +1,8 @@
 class_name InputHandler
 extends Node
 
+## Handles device detection and propogation of certain inputs into the game
+
 func _input(event: InputEvent) -> void:
 	_update_device_type(event)
 

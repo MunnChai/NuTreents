@@ -1,13 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxd4072sdpptn"]
+[gd_scene load_steps=10 format=3 uid="uid://bxd4072sdpptn"]
 
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="1_56hbk"]
 [ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="2_u0b2m"]
-[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="3_yi2m7"]
 [ext_resource type="PackedScene" uid="uid://uf3j0muxm4jw" path="res://ui/cursor/world_cursor/visual_cursor/visual_cursor.tscn" id="4_0rry4"]
 [ext_resource type="PackedScene" uid="uid://bnfqehf31racc" path="res://ui/cursor/world_cursor/cursor.tscn" id="4_118ts"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
-[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
+[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/fog_tiles_1.png" id="5_118ts"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_118ts"]
 texture = ExtResource("5_118ts")
@@ -107,7 +106,3 @@ y_sort_enabled = true
 z_index = 5
 tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-script = ExtResource("3_yi2m7")

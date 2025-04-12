@@ -1,7 +1,7 @@
 extends Structure
 class_name Twee
 
-const TREE_DAMAGE_SHADER = preload("res://structures/trees/tree_damage.gdshader")
+const TREE_DAMAGE_SHADER = preload("res://structures/trees/shaders/tree_damage.gdshader")
 
 ## Elementary stats resource for this tree
 @export var tree_stat: TreeStatResource 
@@ -256,13 +256,13 @@ func upgrade_tree() -> void:
 
 func get_water_gain():
 	if (!is_adjacent_to_water):
-		return tree_stat.gain.y
+		return gain.y
 	else:
-		return tree_stat.gain.y * 1.5
+		return gain.y * 1.5
 
 func get_water_maint():
 	if (!is_adjacent_to_water):
-		return tree_stat.maint
+		return maint
 	else:
 		return 0
 

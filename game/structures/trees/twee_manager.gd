@@ -60,6 +60,12 @@ func get_twee(pos: Vector2i) -> Twee:
 		return null
 	return tree_map[pos]
 
+## Returns the forest at the given position, null if there is none
+func get_forest_at(pos: Vector2i) -> Forest:
+	if not is_twee(pos):
+		return null
+	return get_forest(forest_map[pos])
+
 ## Returns a dictionary of positions to twees
 func get_tree_map() -> Dictionary[Vector2i, Twee]:
 	return tree_map

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://be4ovf4c2f8ll" path="res://structures/trees/scenes/water_tree.gd" id="1_hllm5"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_h5l5m"]
 [ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="3_i263m"]
-[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/tree_damage.gdshader" id="4_i263m"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_i263m"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="4_lvmcj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ewqov"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kymn2pn31r2"
-path="res://.godot/imported/speedle_sheet.png-cc2af28b79a78be6a0156ae09bfe2892.ctex"
+uid="uid://dtnv0nwwg2ydq"
+path="res://.godot/imported/Enemy_Insect_Idle_1.png-f012fcaa0942aff8b7b7003f73c3fc31.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/speedle_sheet.png"
-dest_files=["res://.godot/imported/speedle_sheet.png-cc2af28b79a78be6a0156ae09bfe2892.ctex"]
+source_file="res://enemies/_archive/Enemy_Insect_Idle_1.png"
+dest_files=["res://.godot/imported/Enemy_Insect_Idle_1.png-f012fcaa0942aff8b7b7003f73c3fc31.ctex"]
 
 [params]
 

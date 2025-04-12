@@ -18,6 +18,9 @@ func initialize(p: Vector2i, f: int):
 	forest = f
 	#init_pos(p)
 
+func take_damage(damage: int) -> bool:
+	CameraShake.instance.add_trauma(0.1)
+	return super.take_damage(damage)
 
 func die():
 	died = true

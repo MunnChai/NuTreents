@@ -2,7 +2,7 @@ extends Node
 
 const FONT = preload("res://ui/fonts/monogram/monogram.ttf")
 
-const POPUP = preload("res://popup_manager/popup.tscn")
+const POPUP = preload("res://ui/popup_manager/popup.tscn")
 
 const SIZE_MULTIPLIER: float = 0.15
 const MIN_SIZE: float = 1.0
