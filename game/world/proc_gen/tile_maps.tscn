@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bnfqehf31racc" path="res://ui/cursor/world_cursor/cursor.tscn" id="4_118ts"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
-[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/fog_tiles_1.png" id="5_118ts"]
+[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_118ts"]
 texture = ExtResource("5_118ts")

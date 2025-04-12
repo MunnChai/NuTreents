@@ -2,7 +2,7 @@ class_name HealthOverlay
 extends Overlay
 
 const HEALTH_HIGHLIGHT = preload("res://overlays/health_overlay/health_highlight.tscn")
-var highlights: Dictionary[Vector2i, Sprite2D]
+var highlights: Dictionary[Vector2i, HealthHighlight]
 
 const HEALTHY_COLOR: Color = Color.GREEN_YELLOW
 const UNHEALTHY_COLOR: Color = Color.DARK_RED
@@ -29,11 +29,10 @@ func update_highlights() -> void:
 			add_child(new_highlight)
 			highlights[pos] = new_highlight
 	
-	
 	# Update highlights according to forest
 	for pos: Vector2i in highlights:
 		var tree: Twee = TreeManager.tree_map[pos]
-		var highlight = highlights[pos]
+		var highlight: HealthHighlight = highlights[pos]
 		
 		var tree_max_hp: float = tree.tree_stat.hp
 		if (tree.is_large):
@@ -43,5 +42,7 @@ func update_highlights() -> void:
 		
 		var color = lerp(UNHEALTHY_COLOR, HEALTHY_COLOR, hp_percent)
 		
-		highlight.modulate = color
-		highlight.modulate.a = 0.75
+		highlight.self_modulate = color
+		highlight.self_modulate.a = 0.75
+		
+		highlight.set_label_number(tree.hp)

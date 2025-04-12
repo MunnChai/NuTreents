@@ -1,7 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://bgpi8y8uf41x5"]
+[gd_scene load_steps=4 format=3 uid="uid://bgpi8y8uf41x5"]
 
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="1_wms7a"]
+[ext_resource type="Script" uid="uid://cj3f6h860dt7x" path="res://overlays/water_overlay/water_highlight.gd" id="2_aart4"]
+[ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="3_cxk47"]
 
 [node name="WaterHighlight" type="Sprite2D"]
-modulate = Color(1, 1, 1, 0.313726)
 texture = ExtResource("1_wms7a")
+script = ExtResource("2_aart4")
+
+[node name="Label" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -29.0
+offset_right = 44.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("3_cxk47")
+text = "+1"
+horizontal_alignment = 1
+vertical_alignment = 1

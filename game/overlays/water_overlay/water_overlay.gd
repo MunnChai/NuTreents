@@ -2,7 +2,7 @@ class_name WaterOverlay
 extends Overlay
 
 const WATER_HIGHLIGHT = preload("res://overlays/water_overlay/water_highlight.tscn")
-var highlights: Dictionary[Vector2i, Sprite2D]
+var highlights: Dictionary[Vector2i, WaterHighlight]
 
 const HEALTHY_WATER_GAIN = 15
 const UNHEALTHY_WATER_GAIN = 0
@@ -36,10 +36,10 @@ func update_highlights() -> void:
 	
 	# Update highlights according to forest
 	for pos: Vector2i in highlights:
-		var forest_id = TreeManager.forest_map[pos]
-		var forest: Forest = TreeManager.forests[forest_id]
+		var tree: Twee = TreeManager.tree_map[pos]
+		var forest: Forest = TreeManager.forests[tree.forest]
 		
-		var highlight = highlights[pos]
+		var highlight: WaterHighlight = highlights[pos]
 		
 		var gain = clamp(forest.water_gain, UNHEALTHY_WATER_GAIN, HEALTHY_WATER_GAIN) / (HEALTHY_WATER_GAIN - UNHEALTHY_WATER_GAIN)
 		
@@ -48,5 +48,9 @@ func update_highlights() -> void:
 		if (forest.water_gain < 0):
 			color = DEHYDRATED_COLOR
 		
-		highlight.modulate = color
-		highlight.modulate.a = 0.75
+		highlight.self_modulate = color
+		highlight.self_modulate.a = 0.75
+		
+		var net_water = tree.get_water_gain() - tree.get_water_maint()
+		
+		highlight.set_label_number(net_water)

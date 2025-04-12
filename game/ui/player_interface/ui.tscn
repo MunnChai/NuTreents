@@ -79,6 +79,7 @@ axis_stretch_vertical = 1
 [node name="Clock" parent="." instance=ExtResource("3_wl5ax")]
 position = Vector2(1087, 66)
 scale = Vector2(2, 2)
+texture = null
 
 [node name="FastForwardBtn" parent="." instance=ExtResource("4_hxq26")]
 offset_left = 1109.0
@@ -87,20 +88,28 @@ offset_right = 1142.0
 offset_bottom = 114.0
 mouse_default_cursor_shape = 2
 
-[node name="OverlayButtons" type="HBoxContainer" parent="."]
-offset_left = 1029.0
-offset_top = 138.0
-offset_right = 1130.0
-offset_bottom = 178.0
+[node name="OverlayButtons" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 418.0
+offset_top = -188.0
+offset_right = 560.0
+offset_bottom = -116.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
 script = ExtResource("9_2ct0b")
 
 [node name="WaterOverlayButton" type="Button" parent="OverlayButtons"]
 layout_mode = 2
-text = "WATERVIEW"
+text = "WATER VIEW"
 
 [node name="HealthOverlayButton2" type="Button" parent="OverlayButtons"]
 layout_mode = 2
-text = "WATERVIEW"
+text = "HEALTH VIEW"
 
 [connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
 [connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]
