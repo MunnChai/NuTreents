@@ -256,13 +256,13 @@ func upgrade_tree() -> void:
 
 func get_water_gain():
 	if (!is_adjacent_to_water):
-		return tree_stat.gain.y
+		return gain.y
 	else:
-		return tree_stat.gain.y * 1.5
+		return gain.y * 1.5
 
 func get_water_maint():
 	if (!is_adjacent_to_water):
-		return tree_stat.maint
+		return maint
 	else:
 		return 0
 
