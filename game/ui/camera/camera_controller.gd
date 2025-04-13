@@ -9,7 +9,7 @@ const FIXED_ZOOM_SIZES: Array[float] = [
 	2,
 	4,
 	6,
-	8
+	8,
 ]
 
 # Camera move vars
@@ -24,7 +24,7 @@ func _ready() -> void:
 	zoom = Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index]
 	## START THE CAMERA ON THE CENTRE WITH VERY SCUFFED MATH CALCULATION
 	## (This assumes the map is square)
-	core_position = Global.MAP_SIZE.y / 2.0 * Vector2.DOWN * 16.0 + Vector2.RIGHT * 16.0
+	core_position = Global.ORIGIN + Vector2i(16, 0)
 	global_position = core_position
 
 const ZOOM_DECAY := 20.0
@@ -82,8 +82,8 @@ func _process(delta: float) -> void:
 const X_MAX: float = 32 * Global.MAP_SIZE.x / 2
 const Y_MAX: float = 16 * Global.MAP_SIZE.y / 2
 func lock_camera():
-	core_position.x = clamp(core_position.x, -X_MAX, X_MAX)
-	core_position.y = clamp(core_position.y, 0, Y_MAX * 2)
+	core_position.x = clamp(core_position.x, Global.ORIGIN.x - X_MAX, Global.ORIGIN.x + X_MAX)
+	core_position.y = clamp(core_position.y, Global.ORIGIN.y - Y_MAX, Global.ORIGIN.y + Y_MAX)
 
 func move_cam(delta: float) -> void:
 	var curr_mouse_pos: Vector2 = get_viewport().get_mouse_position()
