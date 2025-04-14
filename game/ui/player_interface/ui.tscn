@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=12 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="7_a4txa"]
 [ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="9_2ct0b"]
+[ext_resource type="PackedScene" uid="uid://f3txviy6p4s" path="res://ui/pause_menu/pause_screen.tscn" id="10_08otm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -35,6 +36,7 @@ offset_bottom = 128.0
 mouse_filter = 1
 
 [node name="InfoBox" parent="Menu" instance=ExtResource("7_a4txa")]
+visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -110,6 +112,8 @@ text = "WATER VIEW"
 [node name="HealthOverlayButton2" type="Button" parent="OverlayButtons"]
 layout_mode = 2
 text = "HEALTH VIEW"
+
+[node name="PauseScreen" parent="." instance=ExtResource("10_08otm")]
 
 [connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
 [connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]

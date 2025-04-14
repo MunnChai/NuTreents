@@ -17,6 +17,8 @@ var black_screen: ColorRect
 var is_transitioning: bool = false
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	black_screen = BLACK_SCREEN.instantiate()
 	black_screen.z_index = 100
 	layer = 100
@@ -45,13 +47,15 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	
 	
 	is_transitioning = true
-	var tween_in = get_tree().create_tween()
+	var tween_in = create_tween()
 	
 	tween_in.tween_property(black_screen, "modulate:a", 1.0, tween_in_duration)
 	
 	
 	tween_in.finished.connect(
 		func():
+			get_tree().paused = false
+			
 			var music: Node = get_tree().get_first_node_in_group("music")
 			if (music):
 				print("STOPPING_MUSIC")
@@ -59,7 +63,7 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			
 			get_tree().change_scene_to_packed(scene)
 			
-			var tween_out = get_tree().create_tween()
+			var tween_out = create_tween()
 			
 			tween_out.tween_property(black_screen, "modulate:a", 0.0, tween_out_duration)
 			is_transitioning = false
