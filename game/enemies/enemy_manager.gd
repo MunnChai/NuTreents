@@ -1,5 +1,11 @@
 extends Node
 
+## EnemyManager autoload
+## Handles enemy spawning, enemy waves, etc.
+
+## TODO: Refactor out EnemyRegistry
+## Generally make logic more easy to understand
+
 const SILK_SPITTER: PackedScene = preload("res://enemies/silk_spitter/silk_spitter.tscn")
 const SPEEDLE: PackedScene = preload("res://enemies/speedle/speedle.tscn")
 
@@ -103,7 +109,7 @@ func spawn_enemies() -> int:
 		
 		var allowed_cells = []
 		for cell in possible_cells:
-			if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 10.0:
+			if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 50.0:
 				allowed_cells.append(cell)
 		
 		var rand_pos = allowed_cells.pick_random()

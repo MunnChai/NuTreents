@@ -4,8 +4,8 @@ extends Node
 # so entire scene will be done when this is called
 func _ready():
 	Global.update_globals()
-	
 	TreeManager.call_deferred("start_game")
+	EnemyManager.call_deferred("start_game")
 	Global.game_state = Global.GameState.PLAYING
 
 #func _process(delta):

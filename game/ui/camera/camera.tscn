@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhvwmm2t468c3"]
+
+[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://ui/camera/camera_controller.gd" id="1_7vwbl"]
+[ext_resource type="Script" uid="uid://cqyfw8nf0two1" path="res://ui/camera/camera_shake.gd" id="2_pfoii"]
+
+[node name="Camera" type="Camera2D"]
+ignore_rotation = false
+zoom = Vector2(2, 2)
+script = ExtResource("1_7vwbl")
+
+[node name="CameraShake" type="Node" parent="."]
+script = ExtResource("2_pfoii")
+decay = 0.65
+max_roll = 0.1

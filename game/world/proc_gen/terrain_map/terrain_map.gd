@@ -8,6 +8,7 @@ enum TILE_TYPE {
 	CITY = DIRT + 1,
 	WATER = CITY + 1,
 	ROAD = WATER + 1,
+	DESERT = ROAD + 1,
 }
 
 const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
@@ -16,6 +17,7 @@ const TILE_ATLAS_COORDS: Dictionary[TILE_TYPE, Vector2i] = {
 	TILE_TYPE.CITY: Vector2i(0, 4),
 	TILE_TYPE.WATER: Vector2i(0, 14),
 	TILE_TYPE.ROAD: Vector2i(0, 6),
+	TILE_TYPE.DESERT: Vector2i(0, 22),
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
@@ -24,20 +26,21 @@ const TILE_TYPE_VARIATIONS: Dictionary[TILE_TYPE, int] = {
 	TILE_TYPE.CITY: 4,
 	TILE_TYPE.WATER: 1,
 	TILE_TYPE.ROAD: 6,
+	TILE_TYPE.DESERT: 3,
 }
 
 const SOURCE_ID: int = 0
 const BIOME_FALLOFF = 2
 
-const MIN_CITIES: int = 3
-const MAX_CITIES: int = 5
+const MIN_CITIES: int = 5
+const MAX_CITIES: int = 8
 const CITY_DISTANCE: int = Global.MAP_SIZE.x / 2.5
-const DRUNKARD_LIFETIME: int = 15
-const NUM_DRUNKARDS: int = 10
+const DRUNKARD_LIFETIME: int = 25
+const NUM_DRUNKARDS: int = 20
 
 # City information
-const CITY_BUILDING = preload("res://trees/scripts/city_building.tscn")
-const FACTORY = preload("res://trees/scripts/factory.tscn")
+const CITY_BUILDING = preload("res://structures/city/city_building.tscn")
+const FACTORY = preload("res://structures/city/factory/factory.tscn")
 
 const NUM_FACTORIES: int = 3
 const MIN_BUILDINGS_PER_CITY: int = 5
@@ -51,8 +54,8 @@ const CITY_DECOR = preload("res://world/proc_gen/decor/city_decor.tscn")
 const GRASS_DECOR = preload("res://world/proc_gen/decor/grass_decor.tscn")
 const DIRT_DECOR = preload("res://world/proc_gen/decor/dirt_decor.tscn")
 
-const TARGETED_DRUNKARD_LIFETIME: int = 60
-const TARGETED_NUM_DRUNKARDS: int = 1
+const TARGETED_DRUNKARD_LIFETIME: int = 150
+const TARGETED_NUM_DRUNKARDS: int = 3
 const TARGETED_DRUNKARD_INTELLIGENCE: float = 0.85
 
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
@@ -70,8 +73,9 @@ func _input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		# if mother died
 		return
-	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		#generate_map()
+	if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		generate_map()
+		Global.structure_map.remove_all_structures()
 	
 	#if (Input.is_action_just_pressed("lmb")):
 		#print(get_tile_biome(local_to_map(get_mouse_coords())))
@@ -101,16 +105,18 @@ func generate_map() -> void:
 	var angle: float = randf() * 2 * PI
 	for i in range(0, num_cities):
 		
-		var map_coords: Vector2i =  Global.MAP_SIZE / 2
+		var map_coords: Vector2i = Global.ORIGIN
 		map_coords += Vector2i(Vector2.RIGHT.rotated(angle) * CITY_DISTANCE)
 		city_coords.append(map_coords)
 		
 		angle += 2 * PI / num_cities
+		
+		#print("City: ", map_coords)
 	
 	# Generate roads between cities first
 	generate_roads(city_coords)
 	
-	# Generate cities on top of roads (pretty important, otherwise roads will "cut through" cities)
+	# Generate cities on top of roads
 	var city_tiles = generate_cities(city_coords)
 	
 	# Create spawn area of grass
@@ -130,12 +136,23 @@ func generate_map() -> void:
 
 func initialize_map() -> void:
 	
+	var noise := FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	noise.seed = randi()
+	noise.frequency = 0.005
+	noise.fractal_octaves = 4
+	noise.fractal_lacunarity = 2
+	noise.fractal_gain = 0.5
+	
+	#test_image.texture = NoiseTexture2D.new()
+	#test_image.texture.noise = noise
+	
 	var grass_tiles: Array[Vector2i]
-	for x in range(0, Global.MAP_SIZE.x):
-		for y in range(0, Global.MAP_SIZE.y):
+	for x in get_map_x_range():
+		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var origin: Vector2i = Vector2i(Global.MAP_SIZE) / 2
+			var origin: Vector2i = Global.ORIGIN
 			
 			var distance_from_origin: float = (map_coords - origin).length()
 			var distance_scaled = distance_from_origin / (Global.MAP_SIZE.length() * BIOME_FALLOFF)
@@ -166,11 +183,11 @@ func get_rivers() -> Array[Vector2i]:
 	var river_tiles: Array[Vector2i]
 	
 	# For each tile
-	for x in range(0, Global.MAP_SIZE.x):
-		for y in range(0, Global.MAP_SIZE.y):
+	for x in get_map_x_range():
+		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var origin: Vector2i = Vector2i(Global.MAP_SIZE) / 2
+			var origin: Vector2i = Global.ORIGIN
 			
 			var distance_from_origin: float = (map_coords - origin).length()
 			var distance_scaled = distance_from_origin / (Global.MAP_SIZE.length() * BIOME_FALLOFF)
@@ -269,7 +286,7 @@ func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
 	# Generate roads
 	var road_tiles: Array[Vector2i] = []
 	var num_roads = randi_range(MIN_ROADS_PER_CITY, MAX_ROADS_PER_CITY)
-	var irreplaceable_tiles: Array[TILE_TYPE] = [TILE_TYPE.GRASS, TILE_TYPE.DIRT, TILE_TYPE.WATER]
+	var irreplaceable_tiles: Array[TILE_TYPE] = [TILE_TYPE.GRASS, TILE_TYPE.DIRT, TILE_TYPE.WATER, TILE_TYPE.DESERT]
 	for i in range(0, num_roads):
 		var tiles = walk_drunkard_stride(map_coords, TILE_TYPE.ROAD, 3, 5, irreplaceable_tiles)
 		road_tiles.append_array(tiles)
@@ -281,17 +298,10 @@ func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
 	
 	call_deferred("set_cells_terrain_connect", road_tiles, 0, 2, false)
 	
-	# Generate buildings
-	
-	
-	
-	# Generate factories
-	
-	
 	return city_tiles
 
 func generate_spawn() -> void:
-	var origin: Vector2i = Vector2i(Global.MAP_SIZE / 2)
+	var origin: Vector2i = Global.ORIGIN
 	
 	for i in range(0, NUM_DRUNKARDS * 4):
 		walk_drunkard(origin, TILE_TYPE.GRASS, [TILE_TYPE.DIRT])
@@ -333,8 +343,8 @@ const CITY_DECOR_FREQUENCY = 0.3
 const DIRT_DECOR_FREQUENCY = 0.4
 const GRASS_DECOR_FREQUENCY = 0.025
 func add_decor() -> void:
-	for x in range(0, Global.MAP_SIZE.x):
-		for y in range(0, Global.MAP_SIZE.y):
+	for x in get_map_x_range():
+		for y in get_map_y_range():
 			var pos = Vector2i(x, y)
 			var structure_map = Global.structure_map
 			
@@ -379,10 +389,10 @@ func walk_drunkard(map_coords: Vector2i, tile_type: TILE_TYPE, irreplaceable_til
 		
 		current_coord += direction
 		
-		if (current_coord.x >= Global.MAP_SIZE.x || current_coord.y >= Global.MAP_SIZE.y):
+		if (current_coord.x >= get_map_x_range().back() || current_coord.y >= get_map_y_range().back()):
 			drunkard_life -= 1
 			continue
-		if (current_coord.x < 0 || current_coord.y < 0):
+		if (current_coord.x < get_map_x_range().front() || current_coord.y < get_map_y_range().front()):
 			drunkard_life -= 1
 			continue
 		
@@ -437,10 +447,10 @@ func walk_drunkard_stride(start_coords: Vector2i, tile_type: TILE_TYPE, min_stri
 		while (curr_step < stride):
 			current_coord += direction
 			
-			if (current_coord.x >= Global.MAP_SIZE.x || current_coord.y >= Global.MAP_SIZE.y):
+			if (current_coord.x >= get_map_x_range().back() || current_coord.y >= get_map_y_range().back()):
 				curr_step += 1
 				continue
-			if (current_coord.x < 0 || current_coord.y < 0):
+			if (current_coord.x < get_map_x_range().front() || current_coord.y < get_map_y_range().front()):
 				curr_step += 1
 				continue
 			var tile_data = get_cell_tile_data(current_coord)
@@ -503,10 +513,10 @@ func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, til
 		# Move in direction
 		current_coord += direction
 		
-		if (current_coord.x >= Global.MAP_SIZE.x || current_coord.y >= Global.MAP_SIZE.y):
+		if (current_coord.x >= get_map_x_range().back() || current_coord.y >= get_map_y_range().back()):
 			drunkard_life -= 1
 			continue
-		if (current_coord.x < 0 || current_coord.y < 0):
+		if (current_coord.x < get_map_x_range().front() || current_coord.y < get_map_y_range().front()):
 			drunkard_life -= 1
 			continue
 		
@@ -523,8 +533,8 @@ func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, til
 
 
 func randomize_tiles() -> void:
-	for x in range(0, Global.MAP_SIZE.x):
-		for y in range(0, Global.MAP_SIZE.y):
+	for x in get_map_x_range():
+		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
 			var tile_data: TileData = get_cell_tile_data(map_coords)
@@ -538,6 +548,12 @@ func randomize_tiles() -> void:
 			tile_data = get_cell_tile_data(map_coords)
 			tile_data.set_custom_data("biome", biome)
 
+
+func get_map_x_range() -> Array:
+	return range(-Global.MAP_SIZE.x / 2, Global.MAP_SIZE.x / 2 + 1)
+
+func get_map_y_range() -> Array:
+	return range(-Global.MAP_SIZE.y / 2, Global.MAP_SIZE.y / 2 + 1)
 
 
 func get_tile_biome(pos: Vector2) -> TILE_TYPE:

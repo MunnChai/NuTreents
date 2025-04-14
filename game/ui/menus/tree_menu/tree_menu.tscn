@@ -1,15 +1,16 @@
-[gd_scene load_steps=15 format=3 uid="uid://dwyhak12pdjyv"]
+[gd_scene load_steps=16 format=3 uid="uid://dwyhak12pdjyv"]
 
+[ext_resource type="Script" uid="uid://baih8o03he1bg" path="res://ui/menus/tree_menu/tree_menu.gd" id="1_v2ya0"]
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="2_dodub"]
-[ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://trees/stats/DefaultTreeStat.tres" id="3_jkcef"]
+[ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://structures/trees/stats/default_tree_stat.tres" id="3_jkcef"]
 [ext_resource type="PackedScene" uid="uid://b8fg45slly116" path="res://ui/menus/tree_menu/tree_card.tscn" id="3_ubm70"]
-[ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://trees/stats/ExplorerTreeStat.tres" id="4_e4koi"]
-[ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://trees/stats/TallTreeStat.tres" id="5_486df"]
+[ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://structures/trees/stats/explorer_tree_stat.tres" id="4_e4koi"]
+[ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://structures/trees/stats/tall_tree_stat.tres" id="5_486df"]
 [ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://ui/menus/tree_menu/icons/explorer_tree.png" id="5_xu310"]
 [ext_resource type="Texture2D" uid="uid://cicss6euv30fe" path="res://ui/menus/tree_menu/icons/tall_tree.png" id="6_438ci"]
-[ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://trees/stats/WaterTreeStat.tres" id="6_ot1xe"]
-[ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://trees/stats/GunTreeStat.tres" id="7_32lbt"]
-[ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://trees/stats/TechTreeStat.tres" id="8_87trl"]
+[ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="6_ot1xe"]
+[ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="7_32lbt"]
+[ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://structures/trees/stats/tech_tree_stat.tres" id="8_87trl"]
 [ext_resource type="Texture2D" uid="uid://8vev3878o70d" path="res://ui/menus/tree_menu/icons/pump_tree.png" id="8_ugj6x"]
 [ext_resource type="Texture2D" uid="uid://dogdbwrs7cpmw" path="res://ui/menus/tree_menu/icons/tech_tree.png" id="9_uw2bc"]
 [ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://ui/menus/tree_menu/icons/gun_tree.png" id="11_ffnwc"]
@@ -21,6 +22,7 @@ region = Rect2(0, 208, 640, 152)
 [node name="TreeMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_v2ya0")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

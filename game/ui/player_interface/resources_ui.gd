@@ -25,17 +25,24 @@ func _process(delta: float) -> void:
 
 # Updates the text of each label to show current resource values
 func update_ui():
-	if TreeManager.gain.x != 0:
-		nutrients_label.text = str(int(TreeManager.res.x)) + " (" + _get_pos(TreeManager.gain.x) + str(int(TreeManager.gain.x)) + "/s)"
+	if TreeManager.nutreents_gain != 0:
+		nutrients_label.text = str(int(TreeManager.nutreents)) + " (" + _get_pos(TreeManager.nutreents_gain) + str(int(TreeManager.nutreents_gain)) + "/s)"
 	else:
-		nutrients_label.text = str(int(TreeManager.res.x))
+		nutrients_label.text = str(int(TreeManager.nutreents))
 
-	if TreeManager.gain.y == 0:
-		water_label.text = str(int(TreeManager.res.y))
-	elif TreeManager.gain.y < 0:
-		water_label.text = "[color=ff5671][shake rate=50.0 level=10 connected=1]" + str(int(TreeManager.res.y)) + " (" + _get_pos(TreeManager.gain.y) + str(int(TreeManager.gain.y)) + "/s)" 
+	if Cursor.instance != null:
+		var highlighted_forest := TreeManager.get_forest_at(Cursor.instance.iso_position)
+		if highlighted_forest != null:
+			if highlighted_forest.water_gain == 0:
+				water_label.text = str(int(highlighted_forest.water))
+			elif highlighted_forest.water_gain < 0:
+				water_label.text = "[color=ff5671][shake rate=50.0 level=10 connected=1]" + str(int(highlighted_forest.water)) + " (" + _get_pos(highlighted_forest.water_gain) + str(int(highlighted_forest.water_gain)) + "/s)" 
+			else:
+				water_label.text = str(int(highlighted_forest.water)) + " (" + _get_pos(highlighted_forest.water_gain) + str(int(highlighted_forest.water_gain)) + "/s)"
+		else:
+			water_label.text = ""
 	else:
-		water_label.text = str(int(TreeManager.res.y)) + " (" + _get_pos(TreeManager.gain.y) + str(int(TreeManager.gain.y)) + "/s)"
+		water_label.text = ""
 
 func _get_pos(gain: int) -> String:
 	if gain >= 0:

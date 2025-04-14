@@ -9,7 +9,7 @@ const COST_TO_REMOVE_CITY_TILE: int = 100
 const COST_TO_REMOVE_ROAD_TILE: int = 250
 
 func _ready() -> void:
-	add_to_group("structure_map")
+	#add_to_group("structure_map")
 	y_sort_enabled = true
 
 func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
@@ -24,7 +24,8 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 	structure.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = structure
-	add_child(structure)
+	if structure.get_parent() == null:
+		add_child(structure)
 	return true
 
 # Remove the node at the given map coordinates
@@ -68,7 +69,12 @@ const TWEEN_TIME = 0.2
 
 ## Updates the transparencies of relevant tiles based on the given position
 func update_transparencies_around(map_pos: Vector2i) -> void:
+	var selected_structure = null
+	if does_structure_exist(map_pos):
+		selected_structure = tile_scene_map[map_pos]
+	
 	var adjacent_coords = []
+	var adjacent_structures = []
 	
 	for x in range(map_pos.x, map_pos.x + 2):
 		for y in range(map_pos.y, map_pos.y + 2):
@@ -77,13 +83,37 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 				continue
 			if does_structure_exist(adj_pos):
 				adjacent_coords.append(adj_pos)
+				adjacent_structures.append(tile_scene_map[adj_pos])
 	
 	for key in tile_scene_map:
 		var node: Node2D = tile_scene_map[key]
 		
-		if not key in adjacent_coords:
+		if (not key in adjacent_coords and not node in adjacent_structures) or selected_structure == node:
 			var tween: Tween = get_tree().create_tween()
 			tween.tween_property(node, "modulate", Color(node.modulate, 1.0), TWEEN_TIME)
 		else:
 			var tween: Tween = get_tree().create_tween()
 			tween.tween_property(node, "modulate", Color(node.modulate, 0.4), TWEEN_TIME)
+
+
+func set_tree_transparency(alpha: float):
+	var structures = tile_scene_map.values()
+	
+	for structure: Node2D in structures:
+		if (structure is Twee):
+			structure.modulate.a = alpha # WE ADJUST THE TREE'S MODULATE IN update_transparencies_around............ maybe just set visible = false?
+
+
+# Removes all structures including trees, except for the mother tree
+func remove_all_structures() -> void:
+	for pos in tile_scene_map.keys():
+		if (!tile_scene_map.has(pos)):
+			continue
+		
+		var structure = tile_scene_map[pos]
+		if (structure is MotherTree): # Don't remove mother tree
+			pass
+		elif (structure is Twee):
+			TreeManager.remove_tree(pos)
+		else:
+			remove_structure(pos)

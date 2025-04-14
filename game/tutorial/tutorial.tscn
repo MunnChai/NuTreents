@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=70 format=3 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
 [ext_resource type="Script" uid="uid://cpegi8xung0dm" path="res://ui/menus/tutorial_menu.gd" id="3_30bqp"]
@@ -24,12 +24,15 @@
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="8_u4yp8"]
 [ext_resource type="Texture2D" uid="uid://cwhdt4oefoyib" path="res://ui/menus/menu_exit_button.png" id="9_a7wyg"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="9_enf0y"]
-[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://world/proc_gen/camera_controller.gd" id="10_h8kaa"]
+[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://ui/camera/camera_controller.gd" id="10_h8kaa"]
 [ext_resource type="Script" uid="uid://6ku20yk0jera" path="res://tutorial/tutorial_cursor.gd" id="20_jpd2v"]
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="21_dpu50"]
-[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/info_box_detection.gd" id="22_a7wyg"]
-[ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/wooden_arrow_sheet.png" id="23_a8se6"]
-[ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/wooden_arrow.gd" id="24_2780h"]
+[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/world_cursor/info_box_detection.gd" id="22_a7wyg"]
+[ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow_sheet.png" id="23_a8se6"]
+[ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow.gd" id="24_2780h"]
+[ext_resource type="Texture2D" uid="uid://p5141fumd1kg" path="res://world/proc_gen/test_stuff.png" id="26_a8se6"]
+[ext_resource type="PackedScene" uid="uid://c7dgu5w3y8i6u" path="res://world/proc_gen/test_scene.tscn" id="27_2780h"]
+[ext_resource type="PackedScene" uid="uid://c1bfluudjblxk" path="res://world/proc_gen/test_scene2.tscn" id="28_lh3vr"]
 [ext_resource type="Script" uid="uid://bp3dai7xhyayw" path="res://tutorial/tutorial_input_handler.gd" id="31_jpd2v"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_811q2"]
@@ -196,6 +199,34 @@ animations = [{
 "speed": 12.0
 }]
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_56hbk"]
+texture = ExtResource("26_a8se6")
+texture_region_size = Vector2i(32, 16)
+0:1/size_in_atlas = Vector2i(1, 2)
+0:1/0 = 0
+0:1/0/texture_origin = Vector2i(0, 8)
+1:1/size_in_atlas = Vector2i(1, 2)
+1:1/0 = 0
+1:1/0/texture_origin = Vector2i(0, 8)
+2:0/size_in_atlas = Vector2i(1, 3)
+2:0/0 = 0
+2:0/0/texture_origin = Vector2i(0, 16)
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_u0b2m"]
+scenes/1/scene = ExtResource("27_2780h")
+scenes/2/scene = ExtResource("28_lh3vr")
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yf235"]
+resource_name = "Trees"
+
+[sub_resource type="TileSet" id="TileSet_sjv4q"]
+tile_shape = 1
+tile_layout = 5
+tile_size = Vector2i(32, 16)
+sources/0 = SubResource("TileSetAtlasSource_56hbk")
+sources/1 = SubResource("TileSetScenesCollectionSource_u0b2m")
+sources/2 = SubResource("TileSetScenesCollectionSource_yf235")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_00b0i"]
 texture = ExtResource("8_u4yp8")
 texture_region_size = Vector2i(32, 16)
@@ -281,6 +312,7 @@ offset_bottom = 40.0
 mouse_filter = 1
 
 [node name="UI" type="CanvasLayer" parent="UI"]
+layer = 5
 
 [node name="Menu" type="Control" parent="UI/UI" node_paths=PackedStringArray("tree_menu", "tech_menu", "settings_menu")]
 layout_mode = 3
@@ -455,6 +487,7 @@ mouse_filter = 1
 visible = false
 position = Vector2(1086, 66)
 scale = Vector2(2, 2)
+texture = null
 
 [node name="FastForwardBtn" parent="UI/UI" instance=ExtResource("6_idkkj")]
 visible = false
@@ -555,6 +588,7 @@ script = ExtResource("24_2780h")
 
 [node name="BuildingLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("7_lvqxb")]
 y_sort_enabled = true
+tile_set = SubResource("TileSet_sjv4q")
 
 [node name="EnemyLayer" type="Node2D" parent="World/TileMaps/BuildingManager" groups=["enemy_map"]]
 y_sort_enabled = true

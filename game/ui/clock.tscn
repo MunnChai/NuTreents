@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://cc8j5p14wpk8e"]
 
-[ext_resource type="Texture2D" uid="uid://bklrn087vva72" path="res://ui/Time_Indicator_Animation_1.png" id="1_f4i75"]
+[ext_resource type="Texture2D" uid="uid://bklrn087vva72" path="res://ui/time_indicator.png" id="1_f4i75"]
 [ext_resource type="Script" uid="uid://bwymirp2g04qx" path="res://ui/clock/clock.gd" id="2_wy0fy"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_wy0fy"]
 

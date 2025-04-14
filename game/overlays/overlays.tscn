@@ -1,0 +1,38 @@
+[gd_scene load_steps=6 format=3 uid="uid://c5ab514k8x8dc"]
+
+[ext_resource type="Script" uid="uid://d3by5y7qdumyk" path="res://overlays/overlay_manager.gd" id="1_bgy80"]
+[ext_resource type="Script" uid="uid://3rj6ed5chwnt" path="res://overlays/water_overlay/water_overlay.gd" id="1_k14tv"]
+[ext_resource type="Script" uid="uid://cn7aixomc0uk7" path="res://overlays/health_overlay/health_overlay.gd" id="3_w1w4n"]
+
+[sub_resource type="Gradient" id="Gradient_bgy80"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w1w4n"]
+gradient = SubResource("Gradient_bgy80")
+
+[node name="Overlays" type="Node2D" groups=["overlay_manager"]]
+script = ExtResource("1_bgy80")
+
+[node name="ScreenDarkenCanvas" type="CanvasLayer" parent="."]
+layer = 0
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="ScreenDarkenCanvas"]
+modulate = Color(0, 0, 0, 0.705882)
+offset_left = -46.0
+offset_top = -14.0
+offset_right = 1187.0
+offset_bottom = 689.0
+texture = SubResource("GradientTexture1D_w1w4n")
+
+[node name="WorldCanvas" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="WaterOverlay" type="Node2D" parent="WorldCanvas"]
+visible = false
+z_index = 10
+script = ExtResource("1_k14tv")
+
+[node name="HealthOverlay" type="Node2D" parent="WorldCanvas"]
+visible = false
+script = ExtResource("3_w1w4n")
+metadata/_custom_type_script = "uid://cn7aixomc0uk7"

@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5hb8uicicaj3"]
-
-[ext_resource type="Script" uid="uid://vvgbw07cad3w" path="res://trees/scripts/Trees/tree_manager.gd" id="1_u23ee"]
-
-[node name="TreeManagerTestOnly" type="Node"]
-script = ExtResource("1_u23ee")
-metadata/_custom_type_script = "uid://vvgbw07cad3w"

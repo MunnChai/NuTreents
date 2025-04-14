@@ -1,6 +1,65 @@
 class_name InputHandler
 extends Node
 
+## Handles device detection and propogation of certain inputs into the game
+
+func _input(event: InputEvent) -> void:
+	_update_device_type(event)
+
+#region ACTUAL INPUT LOGIC
+
+func _process(delta: float) -> void:
+	_update_cursor(delta)
+
+## Updates the cursor/virtual cursor POSITION based on input type...
+func _update_cursor(delta: float) -> void:
+	if current_device_type == DeviceType.KEYBOARD_MOUSE:
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		Cursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
+		VirtualCursor.instance.hide()
+	
+	if current_device_type == DeviceType.CONTROLLER:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		var cursor_move_direction = Vector2(Input.get_axis("cursor_left", "cursor_right"), Input.get_axis("cursor_up", "cursor_down")).normalized()
+		VirtualCursor.instance.offset_position += cursor_move_direction * Settings.get_setting_or_default("virtual_cursor_speed", 50.0) * TimeUtil.unscaled_delta(delta)
+		Cursor.instance.move_to(VirtualCursor.instance.global_position)
+		VirtualCursor.instance.show()
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Game is not in playing mode...
+	if (Global.game_state != Global.GameState.PLAYING):
+		return
+	
+	# Mother tree is dead...
+	if (TreeManager.is_mother_dead()):
+		return
+	
+	if (Input.is_action_pressed("lmb")): # We want press and hold to work...
+		if not Cursor.instance.can_interact():
+			return
+		Cursor.instance.do_primary_action()
+	else:
+		Cursor.instance.attempted_already = false
+	
+	if (Input.is_action_just_pressed("rmb")): # Only deal with on click
+		if not Cursor.instance.can_interact():
+			return
+		Cursor.instance.do_secondary_action()
+	
+	## Controller reset to centre of screen...
+	if Input.is_action_just_pressed("reset_cursor"):
+		VirtualCursor.instance.offset_position = Vector2.ZERO
+	
+	## Controller shift left/right in menu...
+	if Input.is_action_just_pressed("menu_left"):
+		TreeMenu.instance.previous_tree()
+	if Input.is_action_just_pressed("menu_right"):
+		TreeMenu.instance.next_tree()
+
+#endregion
+
+#region DEVICE TYPE
+
 signal device_type_changed(new_device_type: DeviceType)
 
 enum DeviceType {
@@ -9,27 +68,17 @@ enum DeviceType {
 	CONTROLLER,
 }
 
-var current_device_type: DeviceType = DeviceType.KEYBOARD_MOUSE
+static var current_device_type: DeviceType = DeviceType.KEYBOARD_MOUSE
+static func is_using_controller() -> bool:
+	return current_device_type == DeviceType.CONTROLLER
+static func is_using_keyboard() -> bool:
+	return current_device_type == DeviceType.KEYBOARD_MOUSE
 
-## PLAN 1
-## Use Godot built-in control focus systems for navigating the UI.
-## Augmenting with function calls as is necessary...
-## Then, if input is not handled by UI, split behaviour based on that.
-## All button inputs should be similar, no need to worry.
-## Mainly camera control and aiming...
-## Which should modify a Vector2i (for aim) and a Vector2 (for camera)
-## So then that way when switching between input modes mouse carries over to controller...
-
-func _input(event: InputEvent) -> void:
+func _update_device_type(event: InputEvent) -> void:
 	var old_device_type = current_device_type
 	current_device_type = get_device_type(event)
 	if old_device_type != current_device_type:
 		device_type_changed.emit(current_device_type)
-	
-	if current_device_type == DeviceType.CONTROLLER:
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	else:
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 ## Checks for determing the specific event type
 func is_key_event(event: InputEvent) -> bool:
@@ -51,29 +100,4 @@ func get_device_type(event: InputEvent) -> DeviceType:
 		return DeviceType.CONTROLLER
 	return DeviceType.UNKNOWN
 
-
-
-## ACTUAL CURRENT INPUT LOGIC
-
-func _unhandled_input(event: InputEvent) -> void:
-	# We aren't playing the game...
-	if (Global.game_state != Global.GameState.PLAYING):
-		return
-	
-	if (TreeManager.is_mother_dead()):
-		# If mother died
-		return
-	
-	if current_device_type == DeviceType.KEYBOARD_MOUSE:
-		Cursor.get_instance().move_to(Global.terrain_map.get_local_mouse_position())
-	
-	if (Input.is_action_pressed("lmb")):
-		if not Cursor.get_instance().can_interact():
-			return
-		var map_coords: Vector2i = Cursor.get_instance().iso_position
-		TreeManager.add_tree(TreeManager.selected_tree_species, map_coords)
-	elif (Input.is_action_just_pressed("rmb")):
-		if not Cursor.get_instance().can_interact():
-			return
-		var map_coords: Vector2i = Cursor.get_instance().iso_position
-		TreeManager.handle_right_click(map_coords)
+#endregion

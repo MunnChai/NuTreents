@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnfqehf31racc"]
+
+[ext_resource type="Script" uid="uid://dw077n56o8g48" path="res://ui/cursor/world_cursor/cursor.gd" id="1_dv20g"]
+[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/world_cursor/info_box_detection.gd" id="3_jmr0v"]
+
+[node name="Cursor" type="Marker2D"]
+script = ExtResource("1_dv20g")
+
+[node name="InfoBoxDetector" type="Node" parent="."]
+script = ExtResource("3_jmr0v")
