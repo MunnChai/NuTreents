@@ -1,6 +1,6 @@
 extends Node
 
-const MAP_SIZE: Vector2i = Vector2i(1, 1) * 120
+const MAP_SIZE: Vector2i = Vector2i(1, 1) * 80
 const ORIGIN: Vector2i = Vector2(0, 0)
 
 ## ACCESS REFERENCES
