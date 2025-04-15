@@ -130,10 +130,10 @@ func _update_visuals() -> void:
 		return
 
 func _can_plant() -> bool:
-	var current_twee: Twee = TreeRegistry.get_new_twee(TreeMenu.instance.get_currently_selected_tree_type())
-	if current_twee == null:
+	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(TreeMenu.instance.get_currently_selected_tree_type())
+	if tree_stat == null:
 		return false
-	return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
+	return TreeManager.enough_n(tree_stat.cost_to_purchase)
 
 func _set_highlight_modulate(color: Color) -> void:
 	highlight.modulate = color

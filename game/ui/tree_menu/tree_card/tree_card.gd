@@ -65,7 +65,7 @@ func _process(delta: float) -> void:
 	
 	$CardRect.position = start_position + offset
 	
-	var percent_of_full := float(TreeManager.nutreents) / float(TreeRegistry.get_new_twee(tree_type).tree_stat.cost_to_purchase)
+	var percent_of_full := float(TreeManager.nutreents) / float(TreeRegistry.get_twee_stat(tree_type).cost_to_purchase)
 	percent_of_full = clampf(percent_of_full, 0.0, 1.0)
 	
 	if percent_of_full >= 1.0:
@@ -77,11 +77,6 @@ func _process(delta: float) -> void:
 		is_available = false
 	
 	%WaitRect.scale.y = MathUtil.decay(%WaitRect.scale.y, 1.0 - percent_of_full, 20.0, delta)
-	
-	#if not TreeManager.enough_n(TreeRegistry.get_new_twee(tree_type).tree_stat.cost_to_purchase):
-		#$CardRect.modulate = Color.DARK_GRAY
-	#else:
-		#$CardRect.modulate = Color.WHITE
 	
 	if is_selected and is_available:
 		$CardRect.position += sin(time * 5.0) * Vector2.UP * 2.0
