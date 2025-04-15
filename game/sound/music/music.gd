@@ -13,6 +13,8 @@ func _ready() -> void:
 	if play_tutorial:
 		audio_stream_player.stream = CITY_LEAVES
 	
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 	#audio_stream_player.play()
 	audio_stream_player.bus = "Music"
 	day_player.bus = "Music"

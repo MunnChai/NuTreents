@@ -51,6 +51,10 @@ func pause_game() -> void:
 	get_tree().paused = true
 	game_paused.emit()
 	
+	var filter := AudioEffectLowPassFilter.new()
+	filter.cutoff_hz = 800.0
+	AudioServer.add_bus_effect(AudioServer.get_bus_index("Music"), filter, 0)
+	
 	show()
 	resume_button.grab_focus() ## TEMP: So controller can navigate the menu...
 
@@ -58,6 +62,9 @@ func unpause_game() -> void:
 	is_paused = false
 	get_tree().paused = false
 	game_resumed.emit()
+	
+	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
+		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
 	
 	hide()
 

@@ -18,10 +18,25 @@ enum SectionType {
 @onready var graphics_settings: PanelContainer = %GraphicsSettings
 @onready var controls_settings: PanelContainer = %ControlsSettings
 
+var is_open := false
 var section := SectionType.SYSTEM
 
 func _ready() -> void:
-	pass
+	system_button.focus_entered.connect(_on_button_focused)
+	audio_button.focus_entered.connect(_on_button_focused)
+	graphics_button.focus_entered.connect(_on_button_focused)
+	controls_button.focus_entered.connect(_on_button_focused)
+	hide()
+
+func open() -> void:
+	is_open = true
+	switch_to(SectionType.SYSTEM)
+	system_button.grab_focus()
+	show()
+
+func close() -> void:
+	is_open = false
+	hide()
 
 func switch_to(section_type: SectionType) -> void:
 	section = section_type
@@ -55,3 +70,6 @@ func _on_graphics_button_pressed() -> void:
 
 func _on_controls_button_pressed() -> void:
 	switch_to(SectionType.CONTROLS)
+
+func _on_button_focused() -> void:
+	SfxManager.play_sound_effect("ui_click")
