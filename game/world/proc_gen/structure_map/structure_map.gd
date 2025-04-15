@@ -17,6 +17,7 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 		# Check if it is a decor structure
 		var curr_structure: Structure = tile_scene_map[map_coords]
 		if (!curr_structure.id.ends_with("decor")): # If it is not decor, you CANT BUILD HERE!
+			structure.queue_free()
 			return false
 		# Otherwise, destroy the decor and continue
 		remove_structure(map_coords)
