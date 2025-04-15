@@ -138,7 +138,8 @@ func _process(delta: float) -> void:
 	nutreents += nutreents_gain * delta # Nutreents/second * time 
 	update_water_maintenance(delta)
 	
-	if Input.is_action_just_pressed("fast_forward"):
+	if Input.is_action_just_pressed("debug_button_2"):
+		print("Orphan Nodes:")
 		print_orphan_nodes()
 
 func get_nutrient_gain(delta: float) -> float:

@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://buns43sl7chej"]
 
 [ext_resource type="Script" uid="uid://cgn43ynuh6apg" path="res://ui/player_interface/resources_ui.gd" id="1_dcrin"]
-[ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/resource_sprites.png" id="1_lmyok"]
+[ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/player_interface/resource_sprites.png" id="1_lmyok"]
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="2_skti3"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="4_1bfyl"]
 [ext_resource type="FontFile" uid="uid://do0noe326hf02" path="res://ui/fonts/Sol Schori Bold.ttf" id="4_skti3"]

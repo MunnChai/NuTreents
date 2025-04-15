@@ -12,14 +12,18 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_omy8q")
 
-[node name="Background" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 1148.0
-offset_bottom = 646.0
-texture = ExtResource("1_uhj5c")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Title" type="RichTextLabel" parent="."]
-layout_mode = 0
+[node name="Background" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uhj5c")
+stretch_mode = 6
+
+[node name="Title" type="RichTextLabel" parent="CanvasLayer"]
 offset_left = 144.0
 offset_top = 52.0
 offset_right = 544.0
@@ -30,8 +34,7 @@ text = "NuTREEnts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
+[node name="Button" type="Button" parent="CanvasLayer"]
 offset_left = 801.0
 offset_top = 480.0
 offset_right = 1113.0
@@ -39,7 +42,7 @@ offset_bottom = 615.0
 mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5wg5")
 
-[node name="TextureRect" type="TextureRect" parent="Button"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Button"]
 layout_mode = 0
 offset_left = -54.0
 offset_top = -28.0
@@ -48,7 +51,7 @@ offset_bottom = 168.0
 mouse_filter = 2
 texture = ExtResource("4_i5wg5")
 
-[node name="ButtonText" type="RichTextLabel" parent="Button/TextureRect"]
+[node name="ButtonText" type="RichTextLabel" parent="CanvasLayer/Button/TextureRect"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 55.0
@@ -61,4 +64,4 @@ text = "Start"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Button" to="." method="start_game"]
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="start_game"]

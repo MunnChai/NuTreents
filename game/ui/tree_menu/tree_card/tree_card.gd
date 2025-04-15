@@ -29,6 +29,7 @@ func _on_mouse_entered() -> void:
 	#$CardRect.global_position = start_position + Vector2.UP * 5.0
 	#$CardRect.modulate = Color.RED
 	is_highlighted = true
+	show_hover_info_box()
 	if not is_selected:
 		SfxManager.play_sound_effect("ui_click")
 		pop()
@@ -37,6 +38,7 @@ func _on_mouse_exited() -> void:
 	#$CardRect.global_position = start_position
 	#$CardRect.modulate = Color.WHITE
 	is_highlighted = false
+	HoverInfoBox.instance.hide()
 
 const OFFSET_DECAY_CONSTANT := 32.0
 
@@ -82,6 +84,22 @@ func _process(delta: float) -> void:
 		$CardRect.position += sin(time * 5.0) * Vector2.UP * 2.0
 	else:
 		time = 0.0
+
+func show_hover_info_box() -> void:
+	HoverInfoBox.instance.show()
+	HoverInfoBox.instance.global_position = %TooltipPivot.global_position + Vector2.UP * 5.0
+	var stat: TreeStatResource = TreeRegistry.get_twee_stat(tree_type)
+	var content: String = ""
+	content += stat.name.to_upper() + "\n"
+	content += "\n"
+	content += "[color=d9863e]Costs " + str(stat.cost_to_purchase) + " nutreents\n"
+	content += "Has " + str(stat.hp_2) + " HP\n"
+	content += stat.description
+	#content += "\n"
+	#content += "When grown: \n"
+	#content += "WATER: " + str(stat.gain_2.y) + "/s" + "\n"
+	HoverInfoBox.instance.set_content(content)
+	HoverInfoBox.instance.pop()
 
 func pop() -> void:
 	$CardRect.scale = Vector2(1.2, 1.2)

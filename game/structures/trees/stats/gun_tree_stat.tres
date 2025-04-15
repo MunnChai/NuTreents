@@ -6,7 +6,7 @@
 script = ExtResource("1_3msaf")
 name = "Gun Tree"
 id = "gun_tree"
-description = ""
+description = "Fires at baddies"
 hp = 10
 max_water = 0
 gain = Vector3(0, 0, 0)
