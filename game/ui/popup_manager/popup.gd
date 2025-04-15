@@ -11,11 +11,11 @@ func _ready() -> void:
 
 func set_color(text_color: Color, outline_color: Color):
 	label_settings.duplicate(true)
-	$Label.duplicate(true)
-	$Label2.duplicate(true)
-	$Label3.duplicate(true)
-	$Label4.duplicate(true)
-	$Label5.duplicate(true)
+	$Label.label_settings.duplicate(true)
+	$Label2.label_settings.duplicate(true)
+	$Label3.label_settings.duplicate(true)
+	$Label4.label_settings.duplicate(true)
+	$Label5.label_settings.duplicate(true)
 	
 	label_settings.font_color = text_color
 	
