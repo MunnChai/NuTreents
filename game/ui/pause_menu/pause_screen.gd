@@ -62,6 +62,12 @@ func _process(delta: float) -> void:
 			else:
 				close_settings_menu()
 				SfxManager.play_sound_effect("ui_click")
+		elif Input.is_action_just_pressed("ui_cancel"):
+			if settings_menu.is_open:
+				close_settings_menu()
+			elif pause_menu.is_paused:
+				pause_menu.unpause_game()
+				SfxManager.play_sound_effect("ui_click")
 
 func _on_game_paused() -> void:
 	show()

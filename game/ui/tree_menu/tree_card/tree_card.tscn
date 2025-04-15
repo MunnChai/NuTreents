@@ -1,25 +1,43 @@
-[gd_scene load_steps=5 format=3 uid="uid://bsfy4ir4jyguw"]
+[gd_scene load_steps=4 format=3 uid="uid://bsfy4ir4jyguw"]
 
 [ext_resource type="Script" uid="uid://b6lbnfuj5tgoc" path="res://ui/tree_menu/tree_card/tree_card.gd" id="1_oi4kf"]
 [ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/menus/tree_menu/icons/default_tree.png" id="1_qqaul"]
 [ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/menus/tree_menu/tree_card_smol.png" id="2_oi4kf"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oi4kf"]
-
-[node name="TreeCard" type="PanelContainer"]
-offset_right = 36.0
-offset_bottom = 49.0
+[node name="TreeCard" type="Control"]
+custom_minimum_size = Vector2(36.22, 0)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.11
+offset_right = 18.11
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_default_cursor_shape = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_oi4kf")
 script = ExtResource("1_oi4kf")
 
 [node name="Control" type="Control" parent="."]
-layout_mode = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -24.5
+offset_right = 18.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+mouse_default_cursor_shape = 2
 
-[node name="ColorRect" type="ColorRect" parent="Control"]
+[node name="ShadowRect" type="ColorRect" parent="Control"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -33,11 +51,25 @@ mouse_filter = 2
 color = Color(0, 0, 0, 0.541176)
 
 [node name="CardRect" type="TextureRect" parent="."]
-layout_mode = 2
+clip_children = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -24.5
+offset_right = 18.0
+offset_bottom = 24.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(18, 24)
+mouse_default_cursor_shape = 2
 texture = ExtResource("2_oi4kf")
 stretch_mode = 5
 
-[node name="ImageRect" type="TextureRect" parent="CardRect"]
+[node name="TreeIconRect" type="TextureRect" parent="CardRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,6 +84,18 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_qqaul")
 stretch_mode = 5
+
+[node name="WaitRect" type="ColorRect" parent="CardRect"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(18, 0)
+mouse_filter = 2
+color = Color(0.34902, 0.14902, 0.235294, 0.741176)
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

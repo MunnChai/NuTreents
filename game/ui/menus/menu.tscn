@@ -1,6 +1,5 @@
-[gd_scene load_steps=18 format=3 uid="uid://dpveqnitfylgn"]
+[gd_scene load_steps=17 format=3 uid="uid://dpveqnitfylgn"]
 
-[ext_resource type="PackedScene" uid="uid://dwyhak12pdjyv" path="res://ui/menus/tree_menu/tree_menu.tscn" id="1_bb7ga"]
 [ext_resource type="Script" uid="uid://dhqoiddma2o7m" path="res://ui/menus/menu.gd" id="1_bq8en"]
 [ext_resource type="Texture2D" uid="uid://d3vjgwi8co80j" path="res://ui/menus/menu_button_unselected_2x.png" id="2_6r7ym"]
 [ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/menus/tech_menu.tscn" id="2_v5h4j"]
@@ -69,7 +68,7 @@ _data = {
 &"menu_appear": SubResource("Animation_hyvv2")
 }
 
-[node name="Menu" type="Control" node_paths=PackedStringArray("tree_menu", "tech_menu")]
+[node name="Menu" type="Control" node_paths=PackedStringArray("tech_menu")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -79,7 +78,6 @@ offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_bq8en")
-tree_menu = NodePath("TreeMenu")
 tech_menu = NodePath("TechMenu")
 
 [node name="MenuButtons" type="HBoxContainer" parent="."]
@@ -143,10 +141,6 @@ theme_override_font_sizes/font_size = 64
 text = "Tech"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="TreeMenu" parent="." instance=ExtResource("1_bb7ga")]
-offset_top = -48.0
-offset_bottom = -48.0
 
 [node name="TechMenu" parent="." instance=ExtResource("2_v5h4j")]
 visible = false

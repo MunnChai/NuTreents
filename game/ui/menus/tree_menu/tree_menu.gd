@@ -1,14 +1,15 @@
 class_name TreeMenu
 extends Control
 
+## TODO:
+## Select using num keys in 1234567890 order
+
 var tree_order = [Global.TreeType.DEFAULT_TREE,
 	Global.TreeType.EXPLORER_TREE,
 	Global.TreeType.TALL_TREE,
 	Global.TreeType.WATER_TREE,
 	Global.TreeType.GUN_TREE,
 	Global.TreeType.TECH_TREE]
-
-@onready var node_order = $TreeCards.get_children()
 
 var currently_selected_tree = 0
 
@@ -19,6 +20,9 @@ func _ready() -> void:
 
 func get_currently_selected_tree_type() -> Global.TreeType:
 	return tree_order[currently_selected_tree]
+
+func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
+	currently_selected_tree = tree_order.find(tree_type)
 
 func next_tree() -> void:
 	currently_selected_tree += 1

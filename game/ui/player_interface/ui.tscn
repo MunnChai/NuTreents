@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=22 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
@@ -12,12 +12,14 @@
 [ext_resource type="PackedScene" uid="uid://f3txviy6p4s" path="res://ui/pause_menu/pause_screen.tscn" id="10_08otm"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="10_kxjjr"]
 [ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/menus/tree_menu/icons/default_tree.png" id="11_entb1"]
+[ext_resource type="Script" uid="uid://baih8o03he1bg" path="res://ui/menus/tree_menu/tree_menu.gd" id="11_pn7ui"]
 [ext_resource type="PackedScene" uid="uid://bsfy4ir4jyguw" path="res://ui/tree_menu/tree_card/tree_card.tscn" id="13_cgw4i"]
 [ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://ui/menus/tree_menu/icons/explorer_tree.png" id="13_ne4dy"]
 [ext_resource type="Texture2D" uid="uid://cicss6euv30fe" path="res://ui/menus/tree_menu/icons/tall_tree.png" id="14_ne4dy"]
 [ext_resource type="Texture2D" uid="uid://8vev3878o70d" path="res://ui/menus/tree_menu/icons/pump_tree.png" id="15_m2nkm"]
 [ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://ui/menus/tree_menu/icons/gun_tree.png" id="16_1v54r"]
 [ext_resource type="Texture2D" uid="uid://dogdbwrs7cpmw" path="res://ui/menus/tree_menu/icons/tech_tree.png" id="17_fhgk0"]
+[ext_resource type="Texture2D" uid="uid://bifsmjt32xkrd" path="res://ui/menus/tree_menu/icons/tech_card_smol.png" id="19_pj2a8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -133,6 +135,7 @@ anchor_right = 0.5
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("11_pn7ui")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="TreeMenu"]
 z_index = -1
@@ -165,12 +168,11 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -98.0
-offset_top = -49.0
-offset_right = 98.0
+offset_left = -118.0
+offset_right = 118.0
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 38
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TreeMenu/MarginContainer"]
 layout_mode = 2
@@ -179,26 +181,33 @@ alignment = 1
 [node name="TreeCard" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
 layout_mode = 2
 tree_image = ExtResource("11_entb1")
+tree_type = 1
 
 [node name="TreeCard2" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
 layout_mode = 2
 tree_image = ExtResource("13_ne4dy")
+tree_type = 5
 
 [node name="TreeCard3" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
 layout_mode = 2
 tree_image = ExtResource("14_ne4dy")
+tree_type = 6
 
 [node name="TreeCard4" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
 layout_mode = 2
 tree_image = ExtResource("15_m2nkm")
+tree_type = 3
 
 [node name="TreeCard5" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
 layout_mode = 2
 tree_image = ExtResource("16_1v54r")
+tree_type = 2
 
 [node name="TreeCard6" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
 layout_mode = 2
 tree_image = ExtResource("17_fhgk0")
+tree_type = 4
+special_card_image = ExtResource("19_pj2a8")
 
 [node name="PauseScreen" parent="." instance=ExtResource("10_08otm")]
 visible = false
