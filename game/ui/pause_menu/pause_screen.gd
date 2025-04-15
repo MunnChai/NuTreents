@@ -11,6 +11,7 @@ var can_pause := true
 
 @onready var pause_menu: PauseMenu = %PauseMenu
 @onready var pause_menu_offset = %PauseMenuOffset
+@onready var pause_menu_scale_pivot: Control = %PauseMenuScalePivot
 @onready var dimmer: ColorRect = %Dimmer
 
 @onready var dimmer_opacity := dimmer.modulate.a
@@ -40,12 +41,20 @@ func open_settings_menu() -> void:
 	settings_menu_offset.modulate.a = 0
 	create_tween().tween_property(settings_menu_offset, "modulate", Color(pause_menu_offset.modulate, 1), 0.1)
 	
+	settings_menu.scale = Vector2(0.7, 1.3)
+	create_tween().tween_property(settings_menu, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	
+	pause_menu_scale_pivot.scale = Vector2(1.3, 0.7)
+	create_tween().tween_property(pause_menu_scale_pivot, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	
 	create_tween().tween_property(pause_menu_offset, "position", Vector2.LEFT * 200.0, 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 
 func close_settings_menu() -> void:
 	settings_menu.close()
 	pause_menu.settings_button.grab_focus()
 	create_tween().tween_property(pause_menu_offset, "position", Vector2.ZERO, 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	pause_menu_scale_pivot.scale = Vector2(1.3, 0.7)
+	create_tween().tween_property(pause_menu_scale_pivot, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 
 func _process(delta: float) -> void:
 	if can_pause:
@@ -61,6 +70,9 @@ func _on_game_paused() -> void:
 	
 	pause_menu_offset.position = Vector2.DOWN * 50.0
 	create_tween().tween_property(pause_menu_offset, "position", Vector2.ZERO, 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+	
+	pause_menu_scale_pivot.scale = Vector2(0.7, 1.3)
+	create_tween().tween_property(pause_menu_scale_pivot, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	
 	pause_menu_offset.modulate.a = 0
 	create_tween().tween_property(pause_menu_offset, "modulate", Color(pause_menu_offset.modulate, 1), 0.1)

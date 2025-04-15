@@ -29,8 +29,8 @@ func _ready() -> void:
 	hide()
 
 func open() -> void:
-	is_open = true
 	switch_to(SectionType.SYSTEM)
+	is_open = true
 	system_button.grab_focus()
 	show()
 
@@ -42,6 +42,10 @@ func switch_to(section_type: SectionType) -> void:
 	section = section_type
 	
 	SfxManager.play_sound_effect("ui_pages")
+	
+	if is_open:
+		scale = Vector2(1.1, 1.1)
+		create_tween().tween_property(self, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	
 	system_settings.hide()
 	audio_settings.hide()
