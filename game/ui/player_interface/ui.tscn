@@ -1,15 +1,23 @@
-[gd_scene load_steps=12 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=20 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://dpveqnitfylgn" path="res://ui/menus/menu.tscn" id="1_gvw8e"]
 [ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="2_dfe3o"]
-[ext_resource type="Texture2D" uid="uid://4w1j52ggdmji" path="res://ui/player_interface/info_box/nine_tile_menu_2x.png" id="3_5i6hg"]
 [ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock.tscn" id="3_wl5ax"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="4_6i6ec"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="6_08otm"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="7_a4txa"]
 [ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="9_2ct0b"]
 [ext_resource type="PackedScene" uid="uid://f3txviy6p4s" path="res://ui/pause_menu/pause_screen.tscn" id="10_08otm"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="10_kxjjr"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/menus/tree_menu/icons/default_tree.png" id="11_entb1"]
+[ext_resource type="PackedScene" uid="uid://bsfy4ir4jyguw" path="res://ui/tree_menu/tree_card/tree_card.tscn" id="13_cgw4i"]
+[ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://ui/menus/tree_menu/icons/explorer_tree.png" id="13_ne4dy"]
+[ext_resource type="Texture2D" uid="uid://cicss6euv30fe" path="res://ui/menus/tree_menu/icons/tall_tree.png" id="14_ne4dy"]
+[ext_resource type="Texture2D" uid="uid://8vev3878o70d" path="res://ui/menus/tree_menu/icons/pump_tree.png" id="15_m2nkm"]
+[ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://ui/menus/tree_menu/icons/gun_tree.png" id="16_1v54r"]
+[ext_resource type="Texture2D" uid="uid://dogdbwrs7cpmw" path="res://ui/menus/tree_menu/icons/tech_tree.png" id="17_fhgk0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -31,6 +39,7 @@ mouse_filter = 2
 script = ExtResource("5_anucx")
 
 [node name="Menu" parent="." instance=ExtResource("1_gvw8e")]
+visible = false
 offset_right = -128.0
 offset_bottom = 128.0
 mouse_filter = 1
@@ -69,8 +78,8 @@ offset_bottom = 67.0
 grow_horizontal = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-texture = ExtResource("3_5i6hg")
-region_rect = Rect2(0, 0, 96, 96)
+texture = ExtResource("6_08otm")
+region_rect = Rect2(0, 0, 48, 48)
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
@@ -78,15 +87,15 @@ patch_margin_bottom = 16
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
-[node name="Clock" parent="." instance=ExtResource("3_wl5ax")]
-position = Vector2(1087, 66)
+[node name="Clock" parent="NinePatchRect2" instance=ExtResource("3_wl5ax")]
+position = Vector2(163, 66)
 scale = Vector2(2, 2)
-texture = null
 
-[node name="FastForwardBtn" parent="." instance=ExtResource("4_hxq26")]
-offset_left = 1109.0
+[node name="FastForwardBtn" parent="NinePatchRect2" instance=ExtResource("4_hxq26")]
+layout_mode = 0
+offset_left = 185.0
 offset_top = 82.0
-offset_right = 1142.0
+offset_right = 218.0
 offset_bottom = 114.0
 mouse_default_cursor_shape = 2
 
@@ -107,13 +116,92 @@ script = ExtResource("9_2ct0b")
 
 [node name="WaterOverlayButton" type="Button" parent="OverlayButtons"]
 layout_mode = 2
+theme = ExtResource("10_kxjjr")
 text = "WATER VIEW"
 
 [node name="HealthOverlayButton2" type="Button" parent="OverlayButtons"]
 layout_mode = 2
+theme = ExtResource("10_kxjjr")
 text = "HEALTH VIEW"
 
+[node name="TreeMenu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="TreeMenu"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -32.0
+offset_right = 256.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_08otm")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TreeMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -98.0
+offset_top = -49.0
+offset_right = 98.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TreeMenu/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="TreeCard" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
+layout_mode = 2
+tree_image = ExtResource("11_entb1")
+
+[node name="TreeCard2" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
+layout_mode = 2
+tree_image = ExtResource("13_ne4dy")
+
+[node name="TreeCard3" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
+layout_mode = 2
+tree_image = ExtResource("14_ne4dy")
+
+[node name="TreeCard4" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
+layout_mode = 2
+tree_image = ExtResource("15_m2nkm")
+
+[node name="TreeCard5" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
+layout_mode = 2
+tree_image = ExtResource("16_1v54r")
+
+[node name="TreeCard6" parent="TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_cgw4i")]
+layout_mode = 2
+tree_image = ExtResource("17_fhgk0")
+
 [node name="PauseScreen" parent="." instance=ExtResource("10_08otm")]
+visible = false
 
 [connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
 [connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]

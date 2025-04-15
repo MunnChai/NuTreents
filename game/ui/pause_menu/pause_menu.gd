@@ -20,6 +20,10 @@ signal quit_to_desktop_pressed
 @onready var quit_game_button: Button = %QuitGameButton
 
 func _ready() -> void:
+	#get_tree().root.content_scale_factor = 2.0
+	get_tree().root.content_scale_factor = 1.0
+	## TODO: Figure out how to scale for really small windows, and make sure right size...
+	
 	setup_button_signals()
 
 func setup_button_signals() -> void:
@@ -45,23 +49,34 @@ func toggle_pause() -> void:
 	else:
 		pause_game()
 
+var previous_time_scale := 1.0
+
 ## Pauses the game
 func pause_game() -> void:
 	is_paused = true
 	get_tree().paused = true
 	game_paused.emit()
 	
+	previous_time_scale = Engine.time_scale
+	Engine.time_scale = 1.0
+	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
 	AudioServer.add_bus_effect(AudioServer.get_bus_index("Music"), filter, 0)
+	
+	NutreentsDiscordRPC.update_details("Navigating menus")
 	
 	show()
 	resume_button.grab_focus() ## TEMP: So controller can navigate the menu...
 
 func unpause_game() -> void:
+	Engine.time_scale = previous_time_scale
+	
 	is_paused = false
 	get_tree().paused = false
 	game_resumed.emit()
+	
+	NutreentsDiscordRPC.update_details("Growing a forest")
 	
 	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)

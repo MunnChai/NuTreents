@@ -29,6 +29,7 @@ EnemyManager="*res://enemies/enemy_manager.gd"
 SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
 PopupManager="*res://ui/popup_manager/popup_manager.gd"
 SceneLoader="*res://scene_loader/scene_loader.gd"
+DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 
 [display]
 
@@ -39,6 +40,10 @@ window/stretch/aspect="expand"
 
 movie_writer/movie_file="/Users/felixrl/Felix/Projects/310-Game Development/GodotWildJam/GodotWildJam79/Recordings/movie.avi"
 movie_writer/fps=24
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg")
 
 [global_group]
 

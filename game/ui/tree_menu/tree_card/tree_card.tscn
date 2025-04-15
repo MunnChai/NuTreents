@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsfy4ir4jyguw"]
+
+[ext_resource type="Script" uid="uid://b6lbnfuj5tgoc" path="res://ui/tree_menu/tree_card/tree_card.gd" id="1_oi4kf"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/menus/tree_menu/icons/default_tree.png" id="1_qqaul"]
+[ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/menus/tree_menu/tree_card_smol.png" id="2_oi4kf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oi4kf"]
+
+[node name="TreeCard" type="PanelContainer"]
+offset_right = 36.0
+offset_bottom = 49.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_oi4kf")
+script = ExtResource("1_oi4kf")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.08
+offset_bottom = 1.92
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.541176)
+
+[node name="CardRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_oi4kf")
+stretch_mode = 5
+
+[node name="ImageRect" type="TextureRect" parent="CardRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -34.87
+offset_right = 16.0
+offset_bottom = 29.13
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qqaul")
+stretch_mode = 5
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

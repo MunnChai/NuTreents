@@ -4,8 +4,6 @@ extends Control
 ## BUGS
 ## BUG: Fade in black screen is on a higher layer than the pause screen
 ## BUG: Pause menu shadow is hidden behind tree menu
-## BUG: All time tween animations using scaled delta time (aka when fast forward, 2x as fast)
-## to fix this, somehow make tweens use TimeUtil.unscaled_delta(delta)
 
 var can_pause := true
 

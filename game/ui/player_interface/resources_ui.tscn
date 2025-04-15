@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://buns43sl7chej"]
+[gd_scene load_steps=9 format=3 uid="uid://buns43sl7chej"]
 
 [ext_resource type="Script" uid="uid://cgn43ynuh6apg" path="res://ui/player_interface/resources_ui.gd" id="1_dcrin"]
 [ext_resource type="Texture2D" uid="uid://bcw5st08ggkf7" path="res://ui/resource_sprites.png" id="1_lmyok"]
-[ext_resource type="Texture2D" uid="uid://4w1j52ggdmji" path="res://ui/player_interface/info_box/nine_tile_menu_2x.png" id="2_skti3"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="2_skti3"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="4_1bfyl"]
 [ext_resource type="FontFile" uid="uid://do0noe326hf02" path="res://ui/fonts/Sol Schori Bold.ttf" id="4_skti3"]
+[ext_resource type="FontFile" uid="uid://dq160v4jnp7v2" path="res://ui/fonts/Sol Schori.ttf" id="6_nnjjx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qkopc"]
 atlas = ExtResource("1_lmyok")
@@ -26,15 +28,15 @@ script = ExtResource("1_dcrin")
 
 [node name="Container" type="PanelContainer" parent="."]
 layout_mode = 0
-offset_right = 166.0
-offset_bottom = 120.0
+offset_right = 158.0
+offset_bottom = 98.0
 
 [node name="NinePatchRect3" type="NinePatchRect" parent="Container"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource("2_skti3")
-region_rect = Rect2(0, 0, 96, 96)
+region_rect = Rect2(0, 0, 48, 48)
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
@@ -44,10 +46,10 @@ axis_stretch_vertical = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Container"]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 24
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
 [node name="VBox" type="VBoxContainer" parent="Container/MarginContainer"]
 layout_mode = 2
@@ -68,6 +70,8 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("4_1bfyl")
 theme_override_fonts/normal_font = ExtResource("4_skti3")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
@@ -96,7 +100,8 @@ layout_mode = 2
 [node name="WaterLabel" type="RichTextLabel" parent="Container/MarginContainer/VBox/Water"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("4_skti3")
+theme = ExtResource("4_1bfyl")
+theme_override_fonts/normal_font = ExtResource("6_nnjjx")
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
 text = "[color=red][shake rate=50.0 level=100 connected=1]whater?"

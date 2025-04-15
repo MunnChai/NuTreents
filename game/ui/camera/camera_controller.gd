@@ -63,8 +63,8 @@ func _process(delta: float) -> void:
 	var prev_zoom = zoom
 	var before_pos = get_global_mouse_position()
 	
-	zoom = MathUtil.decay(zoom, Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index], ZOOM_DECAY, TimeUtil.unscaled_delta(delta))
-	zoom = Vector2(max(zoom.x, 1.0), max(zoom.y, 1.0))
+	zoom = MathUtil.decay(zoom, Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index] / get_tree().root.content_scale_factor, ZOOM_DECAY, TimeUtil.unscaled_delta(delta))
+	zoom = Vector2(max(zoom.x, 0.1), max(zoom.y, 0.1))
 	
 	## BUG: Moves extra fast during zooming because not accounting for extra motion..?
 	## https://forum.godotengine.org/t/how-to-zoom-camera-to-mouse/37348

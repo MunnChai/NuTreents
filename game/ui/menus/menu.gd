@@ -8,7 +8,6 @@ extends Control
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var trees: TextureButton = $MenuButtons/Trees
 @onready var technology: TextureButton = $MenuButtons/Technology
-@onready var settings: TextureButton = $MenuButtons/Settings
 
 var is_open: bool = false
 

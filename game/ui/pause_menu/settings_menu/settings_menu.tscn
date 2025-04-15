@@ -225,7 +225,6 @@ horizontal_alignment = 1
 
 [node name="GraphicsSettings" type="PanelContainer" parent="VBoxContainer/ContentMenu/MarginContainer" node_paths=PackedStringArray("window_option_button", "resolution_option_button", "gui_scale_slider", "brightness_slider", "shake_slider")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
 script = ExtResource("6_82n5i")
@@ -282,7 +281,6 @@ popup/item_0/text = "1920x1080"
 popup/item_0/id = 2
 
 [node name="GUIScaleContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
-visible = false
 layout_mode = 2
 
 [node name="GUIScaleLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
@@ -301,7 +299,6 @@ theme = ExtResource("2_ih0hb")
 min_value = 1.0
 max_value = 3.0
 value = 1.0
-rounded = true
 
 [node name="BrightnessContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
 visible = false
@@ -414,7 +411,8 @@ value = 0.4
 [connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer/MusicSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings" method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer/SFXSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
 [connection signal="item_selected" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/WindowOptionButton" to="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings" method="_on_window_option_button_item_selected"]
-[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="drag_ended" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_drag_ended"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer/BrightnessSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer/ShakeSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer/GUIScaleSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]

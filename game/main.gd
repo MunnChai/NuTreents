@@ -7,6 +7,7 @@ func _ready():
 	TreeManager.call_deferred("start_game")
 	EnemyManager.call_deferred("start_game")
 	Global.game_state = Global.GameState.PLAYING
+	NutreentsDiscordRPC.update_details("Growing a forest")
 
 #func _process(delta):
 	#if Input.is_action_just_pressed("debug_button"):

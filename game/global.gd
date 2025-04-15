@@ -37,6 +37,8 @@ var game_state
 
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU
+	
+	NutreentsDiscordRPC.start()
 
 func update_globals():
 	structure_map = get_tree().get_first_node_in_group("structure_map")
