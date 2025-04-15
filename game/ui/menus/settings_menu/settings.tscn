@@ -1,7 +1,7 @@
 [gd_scene load_steps=14 format=3 uid="uid://cnkikqyrui6rg"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_ypxvv"]
-[ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/menus/settings_menu/audio_settings.gd" id="2_8xtpb"]
+[ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/pause_menu/settings_menu/audio_settings.gd" id="2_8xtpb"]
 [ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="2_br6cj"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_gfptj"]
 [ext_resource type="Texture2D" uid="uid://ccua4jn8gnqfv" path="res://ui/grabber.png" id="5_xrvoc"]

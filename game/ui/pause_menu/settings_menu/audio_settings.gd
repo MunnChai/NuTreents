@@ -1,13 +1,13 @@
-extends VBoxContainer
+extends Control
 
 # Audio bus indexes
 var master_idx: int
 var music_idx: int
 var sfx_idx: int
 
-@onready var master_slider: HSlider = $MasterContainer/MasterSlider
-@onready var music_slider: HSlider = $MusicContainer/MusicSlider
-@onready var sfx_slider: HSlider = $SFXContainer/SFXSlider
+@export var master_slider: HSlider
+@export var music_slider: HSlider
+@export var sfx_slider: HSlider
 
 @export var slider_label: Label
 
@@ -64,7 +64,7 @@ func _update_slider_label(value: float, slider: HSlider) -> void:
 	var max: float = slider.global_position.x + slider.size.x - offset
 	slider_label.global_position.x = clamp(get_global_mouse_position().x - offset, min, max)
 	slider_label.global_position.y = slider.global_position.y - slider_label.size.y
-	slider_label.visible = true
+	slider_label.visible = false
 
 func save_audio_settings() -> void:
 	Settings.set_setting("master", master_slider.value)

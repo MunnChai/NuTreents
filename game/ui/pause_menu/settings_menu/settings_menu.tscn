@@ -1,0 +1,403 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqkyj7u64uhxk"]
+
+[ext_resource type="Script" uid="uid://bahpw1sj2v1u5" path="res://ui/pause_menu/settings_menu/settings_menu.gd" id="1_ih0hb"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_t8c42"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="2_ih0hb"]
+[ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/pause_menu/settings_menu/audio_settings.gd" id="4_iegsy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ih0hb"]
+
+[node name="SettingsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ih0hb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.5
+offset_top = -38.5
+offset_right = 104.5
+offset_bottom = 38.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="SystemButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+text = "System"
+
+[node name="AudioButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+text = "Audio"
+
+[node name="GraphicsButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+text = "Graphics"
+
+[node name="ControlsButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+text = "Controls"
+
+[node name="ContentMenu" type="PanelContainer" parent="VBoxContainer"]
+process_mode = 3
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="VBoxContainer/ContentMenu"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_t8c42")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/ContentMenu/NinePatchRect"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 11.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.639216)
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ContentMenu"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="SystemSettings" type="PanelContainer" parent="VBoxContainer/ContentMenu/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/SystemSettings"]
+layout_mode = 2
+
+[node name="SystemsLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/SystemSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "SYSTEM"
+fit_content = true
+
+[node name="LanguageLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/SystemSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Language"
+fit_content = true
+
+[node name="OptionButton" type="OptionButton" parent="VBoxContainer/ContentMenu/MarginContainer/SystemSettings/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+selected = 0
+allow_reselect = true
+item_count = 2
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "Tree"
+popup/item_1/id = 1
+
+[node name="AudioSettings" type="PanelContainer" parent="VBoxContainer/ContentMenu/MarginContainer" node_paths=PackedStringArray("master_slider", "music_slider", "sfx_slider", "slider_label")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+script = ExtResource("4_iegsy")
+master_slider = NodePath("VBoxContainer/AudioSettings/MasterContainer/MasterSlider")
+music_slider = NodePath("VBoxContainer/AudioSettings/MusicContainer/MusicSlider")
+sfx_slider = NodePath("VBoxContainer/AudioSettings/SFXContainer/SFXSlider")
+slider_label = NodePath("Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="AudioLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "AUDIO
+"
+fit_content = true
+
+[node name="AudioSettings" type="VBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="MasterContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Master "
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="MusicContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Music  "
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="SFXContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "SFX    "
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="Label" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/AudioSettings"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "100"
+horizontal_alignment = 1
+
+[node name="GraphicsSettings" type="PanelContainer" parent="VBoxContainer/ContentMenu/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings"]
+layout_mode = 2
+
+[node name="GraphicsLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "GRAPHICS"
+fit_content = true
+
+[node name="WindowLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Window Mode"
+fit_content = true
+
+[node name="WindowOptionButton" type="OptionButton" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+selected = 0
+allow_reselect = true
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Maximized"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+
+[node name="ResolutionLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Resolution"
+fit_content = true
+
+[node name="ResolutionOptionButton" type="OptionButton" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+selected = 0
+allow_reselect = true
+item_count = 1
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 2
+
+[node name="GUIScaleContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="GUIScaleLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "GUI Scale   "
+vertical_alignment = 1
+
+[node name="GUIScaleSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="BrightnessContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="BrightnessLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Brightness  "
+vertical_alignment = 1
+
+[node name="BrightnessSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="ScreenShakeContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="ShakeLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Screen Shake"
+vertical_alignment = 1
+
+[node name="ShakeSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="ControlsSettings" type="PanelContainer" parent="VBoxContainer/ContentMenu/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "CONTROLS"
+fit_content = true
+
+[node name="RebindingLabel" type="RichTextLabel" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Rebinding coming soon!"
+fit_content = true
+
+[node name="MouseSensitivityLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Mouse Sensitivity"
+vertical_alignment = 1
+
+[node name="MouseSensitivityContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="GUIScaleSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="VibrationLabel" type="Label" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Controller Vibration"
+vertical_alignment = 1
+
+[node name="ControllerVibrationContainer" type="HBoxContainer" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="VibrationSlider" type="HSlider" parent="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/SystemButton" to="." method="_on_system_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/AudioButton" to="." method="_on_audio_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/GraphicsButton" to="." method="_on_graphics_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer/MasterSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer/MusicSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer/SFXSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer/BrightnessSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer/ShakeSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer/GUIScaleSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/ContentMenu/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer/VibrationSlider" to="VBoxContainer/ContentMenu/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]

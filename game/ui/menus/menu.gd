@@ -60,7 +60,7 @@ func close_menu():
 func set_visibility(tree : bool, tech : bool, settings : bool):
 	tree_menu.visible = tree
 	tech_menu.visible = tech
-	settings_menu.visible = settings
+	#settings_menu.visible = settings
 
 func _update_animation_player():
 	if !is_open:

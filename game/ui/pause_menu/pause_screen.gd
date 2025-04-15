@@ -3,6 +3,7 @@ extends Control
 
 ## BUGS
 ## BUG: Fade in black screen is on a higher layer than the pause screen
+## BUG: Pause menu shadow is hidden behind tree menu
 
 var can_pause := true
 
