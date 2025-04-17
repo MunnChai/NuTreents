@@ -15,7 +15,7 @@ func _ready():
 	begin_tween()
 	
 	var timer = get_tree().create_timer(BULLET_DURATION)
-	timer.timeout.connect(queue_free)
+	timer.timeout.connect(end_bullet_life)
 
 func _process(delta: float) -> void:
 	if (!enemy):
@@ -31,8 +31,7 @@ func _process(delta: float) -> void:
 	var sprite_distance = (enemy.global_position - sprite_2d.global_position).length()
 	
 	if (sprite_distance < CONTACT_DIST):
-		enemy.take_damage(damage)
-		queue_free()
+		end_bullet_life()
 
 func begin_tween():
 	var tween = get_tree().create_tween() 
@@ -44,3 +43,7 @@ func begin_tween():
 	
 	var tween_2 = get_tree().create_tween() 
 	tween_2.set_ease(Tween.EASE_IN) 
+
+func end_bullet_life() -> void:
+	enemy.take_damage(damage)
+	queue_free()
