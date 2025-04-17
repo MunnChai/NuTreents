@@ -16,6 +16,8 @@ const FADE_DURATION = 2.0
 var black_screen: ColorRect
 var is_transitioning: bool = false
 
+signal scene_changed
+
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
@@ -28,8 +30,16 @@ func _ready():
 func transition_to_main_menu():
 	transition_to_packed(MAIN_MENU)
 
-func transition_to_game():
+func transition_to_game(session_data: Dictionary = {}):
 	transition_to_packed(MAIN)
+	
+	if session_data.is_empty():
+		return
+	
+	# Pass session data to game
+	await scene_changed
+	
+	Global.session_data = session_data
 
 func transition_to_game_over():
 	transition_to_packed(GAME_OVER, 2.0, 2.0)
@@ -38,19 +48,16 @@ func transition_to_victory_screen():
 	transition_to_packed(VICTORY_SCREEN, 2.0, 2.0)
 
 func transition_to_tutorial():
-	transition_to_packed(MAIN, 1.0, 1.0)
+	transition_to_packed(TUTORIAL, 1.0, 1.0)
 
 func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION / 2, tween_out_duration = FADE_DURATION / 2):
 	if (is_transitioning):
 		return
 	
-	
-	
 	is_transitioning = true
 	var tween_in = create_tween()
 	
 	tween_in.tween_property(black_screen, "modulate:a", 1.0, tween_in_duration)
-	
 	
 	tween_in.finished.connect(
 		func():
@@ -66,8 +73,9 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			var tween_out = create_tween()
 			
 			tween_out.tween_property(black_screen, "modulate:a", 0.0, tween_out_duration)
-			tween_out.finished.connect(
-				func():
-					is_transitioning = false
-			)
+			is_transitioning = false
+			
+			scene_changed.emit()
 	)
+	
+	Global.session_data.clear()

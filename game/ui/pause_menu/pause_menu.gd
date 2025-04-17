@@ -112,7 +112,7 @@ func _on_main_menu_button_pressed() -> void:
 	
 	SfxManager.play_sound_effect("ui_click")
 	## TODO: Check for save game... confirmation!
-	SessionData.save_session_data()
+	SessionData.save_session_data(Global.session_id)
 	SceneLoader.transition_to_main_menu()
 
 func _on_quit_game_button_pressed() -> void:
@@ -120,7 +120,7 @@ func _on_quit_game_button_pressed() -> void:
 	
 	SfxManager.play_sound_effect("ui_click")
 	## TODO: Check for save game... confirmation!
-	SessionData.save_session_data()
+	SessionData.save_session_data(Global.session_id)
 	get_tree().quit()
 
 func _on_enabled_button_focus() -> void:

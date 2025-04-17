@@ -4,14 +4,14 @@
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="2_c1ymq"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="3_3mv1y"]
 
-[node name="SaveMenu" type="PanelContainer"]
+[node name="LoadMenu" type="PanelContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 377.0
-offset_top = 133.0
-offset_right = -395.0
-offset_bottom = -186.0
+offset_left = 305.0
+offset_top = 48.0
+offset_right = -269.0
+offset_bottom = -35.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7xcav")
@@ -54,7 +54,7 @@ layout_mode = 2
 [node name="LoadTitle" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_3mv1y")
-theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/normal_font_size = 64
 text = " Saves"
 fit_content = true
 
@@ -75,4 +75,5 @@ layout_mode = 2
 size_flags_horizontal = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("3_3mv1y")
+theme_override_font_sizes/font_size = 32
 text = "Back"

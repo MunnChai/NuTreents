@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cuc37nusx6e0e"]
 
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="1_yp4uk"]
-[ext_resource type="Script" uid="uid://cgm4o80avttry" path="res://ui/save_and_load/load_button.gd" id="2_x54al"]
+[ext_resource type="Script" uid="uid://cgm4o80avttry" path="res://ui/save_and_load/load_menu/load_button/load_button.gd" id="2_x54al"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yp4uk"]
 size = Vector2(40, 40)
@@ -50,7 +50,7 @@ layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 
-[node name="SaveNumLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="WorldNameLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -60,13 +60,13 @@ text = "Save 1
 "
 fit_content = true
 
-[node name="TimePlayedLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="DayLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 theme = ExtResource("1_yp4uk")
-text = "Time Played"
+text = "Day X"
 fit_content = true
 horizontal_alignment = 2
 
@@ -83,15 +83,4 @@ mouse_filter = 2
 theme = ExtResource("1_yp4uk")
 text = "Some Stuff"
 fit_content = true
-vertical_alignment = 2
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_filter = 2
-theme = ExtResource("1_yp4uk")
-text = "Some more stuff
-"
-fit_content = true
-horizontal_alignment = 2
 vertical_alignment = 2
