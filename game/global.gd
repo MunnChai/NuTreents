@@ -35,10 +35,15 @@ enum GameState {
 
 var game_state
 
+# For seeded randomness
+var session_seed: int
+
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU
 	
 	NutreentsDiscordRPC.start()
+	
+	set_seed(100)
 
 func update_globals():
 	structure_map = get_tree().get_first_node_in_group("structure_map")
@@ -47,3 +52,11 @@ func update_globals():
 	clock = get_tree().get_first_node_in_group("clock")
 	tech_menu = get_tree().get_first_node_in_group("tech_menu")
 	overlay_manager = get_tree().get_first_node_in_group("overlay_manager")
+
+# Sets the seed for all rand calls, eg. randi(), Array.piok_random(), Array.shuffle(), etc.
+func set_seed(seed: int) -> void:
+	session_seed = seed
+	seed(session_seed) 
+
+func get_seed() -> int:
+	return session_seed

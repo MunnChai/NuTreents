@@ -90,7 +90,8 @@ func get_mouse_coords() -> Vector2:
 func generate_map() -> void:
 	print("Generating map...")
 	
-	
+	# Set seed here for consistent world generation
+	#Global.set_seed(100) # Probably use the seed that was saved from previous play sessions
 	
 	# Fill map with grass
 	initialize_map()
