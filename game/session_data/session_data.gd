@@ -5,11 +5,6 @@ const SAVE_PATH := "user://session_data"
 const SAVE_NAME := "session_"
 
 # SAVED DATA:
-# seed: int
-# structure_map: Dictionary[Vector2i, Node2D]
-# current_day: int
-# current_time: float
-# enemies...?
 
 var session_data: Dictionary = {}
 
@@ -33,6 +28,9 @@ func save_session_data(save_num: int = 1):
 	else:
 		print("Saved session data to: ", full_path)
 	
+	# TODO: Save Forests, Trees, nutreents, water, etc. (yikes!)
+	
+	# TODO: Save buildings + decor
 	# Save structure map as PackedScenes... kinda scuffed, saves a lot more data than we need to
 	#var structure_map: Dictionary
 	#for pos in Global.structure_map.tile_scene_map:
@@ -48,7 +46,6 @@ func save_session_data(save_num: int = 1):
 	#config.set_value(SECTION_NAME, "structure_map", structure_map)
 	
 	# TODO: Save time of day + current day
-	
 	
 	# TODO: Save enemies
 	
@@ -72,6 +69,10 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		return {}
 	else:
 		print("Loaded session data from: ", full_path)
+	
+	# Returns if this save slot is empty
+	if config.get_section_keys(SECTION_NAME).is_empty():
+		return {}
 	
 	# Get world name
 	var world_name: String = config.get_value(SECTION_NAME, "world_name")
@@ -103,7 +104,7 @@ func set_session_data(save_num: int, key: String, value: Variant):
 	
 	config.save(full_path)
 
-# Empties a 
+# Empties a session
 func clear_session_data(save_num: int = 1):
 	var config = ConfigFile.new()
 	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"

@@ -16,13 +16,15 @@ func _ready():
 		call_deferred("load_world", session_data)
 
 func create_new_world() -> void:
-	# Create new seed
+	# Set seed before world generation, for deterministic map gen
+	Global.set_seed(Global.get_seed())
 	
 	TreeManager.start_game()
 	EnemyManager.start_game()
 	Global.terrain_map.generate_map()
 
 func load_world(session_data: Dictionary) -> void:
+	# Set seed before world generation, for deterministic map gen
 	Global.set_seed(session_data["seed"])
 	
 	TreeManager.start_game()

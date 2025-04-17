@@ -61,9 +61,14 @@ func update_globals():
 	overlay_manager = get_tree().get_first_node_in_group("overlay_manager")
 
 func new_seed() -> int:
-	var new_seed = randi()
-	session_seed = new_seed
+	# Set seed as a semi random number (time since unix epoch or whatever)
+	var new_seed = int(Time.get_unix_time_from_system())
 	seed(new_seed)
+	
+	# Generate another semi random number, that feels more random
+	new_seed = randi()
+	seed(new_seed)
+	session_seed = new_seed
 	return new_seed
 
 # Sets the seed for all rand calls, eg. randi(), Array.piok_random(), Array.shuffle(), etc.
