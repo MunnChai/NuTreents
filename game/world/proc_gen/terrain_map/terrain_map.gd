@@ -61,9 +61,6 @@ const TARGETED_DRUNKARD_INTELLIGENCE: float = 0.85
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
 func _ready() -> void:
-	await get_tree().process_frame
-	generate_map()
-	
 	y_sort_enabled = true
 
 func _process(_delta: float) -> void:
@@ -87,7 +84,7 @@ func get_mouse_coords() -> Vector2:
 	return mouse_screen_pos
 
 
-func generate_map() -> void:
+func generate_map(with_structures: bool = true) -> void:
 	print("Generating map...")
 	
 	# Set seed here for consistent world generation
@@ -126,9 +123,10 @@ func generate_map() -> void:
 	# Randomize tiles based on biome
 	randomize_tiles()
 	
-	call_deferred("generate_factories", city_coords)
-	call_deferred("generate_buildings", city_tiles)
-	call_deferred("add_decor")
+	if with_structures:
+		call_deferred("generate_factories", city_coords)
+		call_deferred("generate_buildings", city_tiles)
+		call_deferred("add_decor")
 	
 	# Generate rivers at the end of map generation, so autotiling works
 	generate_rivers(river_tiles)

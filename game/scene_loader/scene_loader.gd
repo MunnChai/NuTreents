@@ -66,5 +66,8 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			var tween_out = create_tween()
 			
 			tween_out.tween_property(black_screen, "modulate:a", 0.0, tween_out_duration)
-			is_transitioning = false
+			tween_out.finished.connect(
+				func():
+					is_transitioning = false
+			)
 	)
