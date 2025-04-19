@@ -21,6 +21,7 @@ shader_parameter/frame_count = 0
 
 [node name="ExplorerTree" type="Node2D"]
 script = ExtResource("1_jl2e1")
+type = 5
 tree_stat = ExtResource("2_je5j6")
 sheets = Array[Texture2D]([ExtResource("3_je5j6")])
 

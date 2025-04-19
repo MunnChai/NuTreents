@@ -30,10 +30,19 @@ func load_world(session_data: Dictionary) -> void:
 	TreeManager.start_game()
 	EnemyManager.start_game()
 	#Global.terrain_map.generate_map(false)
-	Global.terrain_map.generate_map(true) # Temp until i get structure saving working
+	Global.terrain_map.generate_map(false) # Temp until i get structure saving working
+	
+	# Place trees
+	var tree_map: Dictionary = session_data["tree_map"]
+	for pos in tree_map.keys():
+		var tree_resource: TweeDataResource = tree_map[pos]
+		
+		if (tree_resource.type == Global.TreeType.MOTHER_TREE):
+			continue
+		
+		var tree: Twee = TreeRegistry.get_new_twee(tree_resource.type)
+		TreeManager.place_tree(tree, pos)
+		
+		tree.apply_data_resource(tree_resource)
 	
 	#Global.structure_map.load_structures_from(session_data["structure_map"])
-
-#func _process(delta):
-	#if Input.is_action_just_pressed("debug_button"):
-		#SceneLoader.transition_to_game_over()

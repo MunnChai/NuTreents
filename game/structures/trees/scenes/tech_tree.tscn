@@ -21,6 +21,7 @@ shader_parameter/frame_count = 0
 
 [node name="TechTree" type="Node2D"]
 script = ExtResource("1_l8d8v")
+type = 4
 tree_stat = ExtResource("2_hmfl0")
 sheets = Array[Texture2D]([ExtResource("3_tnjkq")])
 

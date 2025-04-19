@@ -3,6 +3,9 @@ class_name Twee
 
 const TREE_DAMAGE_SHADER = preload("res://structures/trees/shaders/tree_damage.gdshader")
 
+# Munn: I'm using this for an easier way to save tree data
+@export var type: Global.TreeType
+
 ## Elementary stats resource for this tree
 @export var tree_stat: TreeStatResource 
 ## List of sprite sheet variations for this tree, 
@@ -137,6 +140,9 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 
 func play_large_tree_animation():
 	animation_player.play("large")
+
+func play_small_tree_animation():
+	animation_player.play("small")
 
 func get_id():
 	return id
@@ -283,3 +289,20 @@ func get_arrow_cursor_height() -> String:
 	if is_large:
 		return "high"
 	return "medium"
+
+func apply_data_resource(tree_resource: TweeDataResource):
+	hp = tree_resource.hp
+	
+	life_time_seconds = tree_resource.life_time_seconds
+	is_large = tree_resource.is_large
+	
+	sprite.texture = sheets[tree_resource.sheet_id]
+	
+	if (is_large):
+		play_large_tree_animation()
+		get_upgraded_stats_from_resource(tree_stat)
+	else:
+		play_small_tree_animation()
+		get_stats_from_resource(tree_stat)
+	
+	# TODO: Set forest water...

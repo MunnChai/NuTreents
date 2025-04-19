@@ -21,6 +21,7 @@ shader_parameter/frame_count = 0
 
 [node name="WaterTree" type="Node2D"]
 script = ExtResource("1_hllm5")
+type = 3
 tree_stat = ExtResource("2_h5l5m")
 sheets = Array[Texture2D]([ExtResource("3_i263m")])
 

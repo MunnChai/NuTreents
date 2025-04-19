@@ -28,10 +28,31 @@ func save_session_data(save_num: int = 1):
 	else:
 		print("Saved session data to: ", full_path)
 	
-	# TODO: Save Forests, Trees, nutreents, water, etc. (yikes!)
+	# Save nutreents
+	
+	
+	# Save trees
+	var tree_map: Dictionary
+	for pos in TreeManager.tree_map:
+		var tree: Twee = TreeManager.tree_map[pos]
+		
+		var save_resource: TweeDataResource = TweeDataResource.new()
+		
+		save_resource.type = tree.type
+		
+		save_resource.hp = tree.hp
+		save_resource.life_time_seconds = tree.life_time_seconds
+		save_resource.is_large = tree.is_large
+		
+		save_resource.sheet_id = tree.sheets.find(tree.sprite.texture)
+		
+		save_resource.forest_water = TreeManager.forests[tree.forest].water
+		
+		tree_map[pos] = save_resource
+	
+	config.set_value(SECTION_NAME, "tree_map", tree_map)
 	
 	# TODO: Save buildings + decor
-	# Save structure map as PackedScenes... kinda scuffed, saves a lot more data than we need to
 	#var structure_map: Dictionary
 	#for pos in Global.structure_map.tile_scene_map:
 		#var node = Global.structure_map.tile_scene_map[pos]
@@ -50,7 +71,6 @@ func save_session_data(save_num: int = 1):
 	# TODO: Save enemies
 	
 	create_save_directory()
-	
 	
 	err = config.save(full_path)
 	if err != OK:
@@ -82,6 +102,10 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	var session_seed: int = config.get_value(SECTION_NAME, "seed")
 	session_data["seed"] = session_seed
 	#print("Seed: ", session_seed)
+	
+	# Get trees
+	var tree_map: Dictionary = config.get_value(SECTION_NAME, "tree_map")
+	session_data["tree_map"] = tree_map
 	
 	# Get structure map
 	#var structure_map: Dictionary = config.get_value(SECTION_NAME, "structure_map")
