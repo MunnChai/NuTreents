@@ -24,6 +24,7 @@ func set_button_info(save_num: int, session_data: Dictionary):
 	
 	world_name_label.text = session_data["world_name"]
 	seed_label.text = "Seed: " + str(session_data["seed"])
+	day_label.text = "Day " + str(session_data["current_day"])
 	
 	button.pressed.connect(load_game.bind(save_num, session_data))
 

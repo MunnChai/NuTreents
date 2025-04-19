@@ -32,6 +32,14 @@ func load_world(session_data: Dictionary) -> void:
 	#Global.terrain_map.generate_map(false)
 	Global.terrain_map.generate_map(false) # Temp until i get structure saving working
 	
+	# Set nutreents
+	TreeManager.nutreents = session_data["nutreents"]
+	
+	# Set time and day
+	Global.clock.set_current_sec(session_data["total_time"])
+	Global.clock.set_curr_day(session_data["current_day"])
+	Global.clock.set_curr_day_sec(session_data["current_time"])
+	
 	# Place trees
 	var tree_map: Dictionary = session_data["tree_map"]
 	for pos in tree_map.keys():

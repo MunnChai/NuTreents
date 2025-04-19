@@ -29,7 +29,16 @@ func save_session_data(save_num: int = 1):
 		print("Saved session data to: ", full_path)
 	
 	# Save nutreents
+	var nutreents: int = TreeManager.nutreents
+	config.set_value(SECTION_NAME, "nutreents", nutreents)
 	
+	# Save time and day
+	var current_day: int = Global.clock.get_curr_day()
+	var current_time: float = Global.clock.get_curr_day_sec()
+	var total_time: float = Global.clock.get_current_sec()
+	config.set_value(SECTION_NAME, "current_day", current_day)
+	config.set_value(SECTION_NAME, "current_time", current_time)
+	config.set_value(SECTION_NAME, "total_time", total_time)
 	
 	# Save trees
 	var tree_map: Dictionary
@@ -85,7 +94,6 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"
 	var err = config.load(full_path)
 	if err != OK:
-		print("WARNING: Failed to load session data!")
 		return {}
 	else:
 		print("Loaded session data from: ", full_path)
@@ -103,15 +111,22 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	session_data["seed"] = session_seed
 	#print("Seed: ", session_seed)
 	
+	# Get nutreents
+	var nutreents = config.get_value(SECTION_NAME, "nutreents")
+	session_data["nutreents"] = nutreents
+	
+	# Get time and day
+	var current_day = config.get_value(SECTION_NAME, "current_day")
+	var current_time = config.get_value(SECTION_NAME, "current_time")
+	var total_time = config.get_value(SECTION_NAME, "total_time")
+	session_data["current_day"] = current_day
+	session_data["current_time"] = current_time
+	session_data["total_time"] = total_time
+	
 	# Get trees
 	var tree_map: Dictionary = config.get_value(SECTION_NAME, "tree_map")
 	session_data["tree_map"] = tree_map
 	
-	# Get structure map
-	#var structure_map: Dictionary = config.get_value(SECTION_NAME, "structure_map")
-	#session_data["structure_map"] = structure_map
-	#for key in structure_map.keys():
-		#print(key, ": ", structure_map[key])
 	
 	return session_data
 
@@ -133,8 +148,8 @@ func clear_session_data(save_num: int = 1):
 	var config = ConfigFile.new()
 	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"
 	var err = config.load(full_path)
+	# Don't "clear" a file that doesn't even exist
 	if err != OK:
-		print("WARNING: Failed to load session data: ", full_path)
 		return
 	
 	config.clear()
@@ -145,8 +160,6 @@ func clear_session_data(save_num: int = 1):
 func create_save_directory() -> void:
 	if !DirAccess.dir_exists_absolute(SAVE_PATH):
 		DirAccess.make_dir_absolute(SAVE_PATH)
-
-
 
 
 func _set_owner(node, root):

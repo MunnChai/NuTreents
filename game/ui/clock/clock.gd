@@ -31,14 +31,21 @@ func _process(delta: float) -> void:
 # Returns time in seconds since start of game
 func get_current_sec() -> float:
 	return _tot_sec_elapsed
+func set_current_sec(sec: float) -> void:
+	_tot_sec_elapsed = sec
 
 # Returns time in seconds since start of most recent day
 func get_curr_day_sec() -> float:
 	return _current_day_seconds
+func set_curr_day_sec(sec: float) -> void:
+	_current_day_seconds = sec
 
 # Returns the current day (starts at day 1)
 func get_curr_day() -> int:
 	return _curr_day
+func set_curr_day(day: int) -> void:
+	_curr_day = day
+
 
 # Increments time variables
 func _process_time(delta: float) -> void:

@@ -291,7 +291,6 @@ func get_arrow_cursor_height() -> String:
 	return "medium"
 
 func apply_data_resource(tree_resource: TweeDataResource):
-	hp = tree_resource.hp
 	
 	life_time_seconds = tree_resource.life_time_seconds
 	is_large = tree_resource.is_large
@@ -304,5 +303,7 @@ func apply_data_resource(tree_resource: TweeDataResource):
 	else:
 		play_small_tree_animation()
 		get_stats_from_resource(tree_stat)
+	
+	hp = tree_resource.hp
 	
 	# TODO: Set forest water...
