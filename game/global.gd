@@ -16,6 +16,14 @@ var clock: Clock
 var tech_menu: TechMenu
 var overlay_manager: OverlayManager
 
+## STRUCTURE IDS
+
+enum StructureType {
+	CITY_BUILDING = 0,
+	FACTORY = CITY_BUILDING + 1,
+	DECOR = FACTORY + 1
+}
+
 ## TREE IDS
 
 enum TreeType {

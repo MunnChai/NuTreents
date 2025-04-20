@@ -112,26 +112,24 @@ func remove_all_structures() -> void:
 			continue
 		
 		var structure = tile_scene_map[pos]
-		if (structure is MotherTree): # Don't remove mother tree
+		if (structure is Twee): # Don't remove trees
 			continue
-		elif (structure is Twee):
-			TreeManager.remove_tree(pos)
+		#elif (structure is Twee):
+			#TreeManager.remove_tree(pos)
 		else:
 			remove_structure(pos)
 
 
 
 
-func load_structures_from(dict: Dictionary) -> void:
-	remove_all_structures()
+func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:
+	if remove_structures:
+		remove_all_structures()
 	
-	#for pos: Vector2i in dict:
-		#var scene: PackedScene = dict[pos]
-		#var node: Node2D = scene.instantiate()
-		#node.y_sort_enabled = true
-		#if (node is MotherTree):
-			#continue
-		#elif (node is Twee):
-			#TreeManager.place_tree(node, pos)
-		#else:
-			#add_structure(pos, node)
+	for pos: Vector2i in data.keys():
+		var save_resource: StructureDataResource = data[pos]
+		
+		var structure: Structure = StructureRegistry.get_new_structure(save_resource.type)
+		
+		add_structure(pos, structure)
+		structure.apply_data_resource(save_resource)

@@ -279,7 +279,7 @@ func is_water_adjacent() -> bool:
 			
 			var tile_type: int = Global.terrain_map.get_tile_biome(coord)
 			
-			if (tile_type == Global.terrain_map.TILE_TYPE.WATER):
+			if (tile_type == Global.terrain_map.TileType.WATER):
 				return true
 	
 	return false
@@ -290,7 +290,7 @@ func get_arrow_cursor_height() -> String:
 		return "high"
 	return "medium"
 
-func apply_data_resource(tree_resource: TweeDataResource):
+func apply_data_resource(tree_resource: Resource):
 	
 	life_time_seconds = tree_resource.life_time_seconds
 	is_large = tree_resource.is_large

@@ -3,7 +3,6 @@ extends Node
 # Parent _ready() is called after all children _ready()s have been called, 
 # so entire scene will be done when this is called
 func _ready():
-	print(Global.session_id)
 	var session_data = Global.session_data
 	
 	Global.update_globals()
@@ -29,11 +28,14 @@ func load_world(session_data: Dictionary) -> void:
 	
 	TreeManager.start_game()
 	EnemyManager.start_game()
-	#Global.terrain_map.generate_map(false)
-	Global.terrain_map.generate_map(false) # Temp until i get structure saving working
+	Global.terrain_map.generate_map(false) # Generate map without buildings (TEMP UNTIL I SAVE ALL DATA)
+	
 	
 	# Set nutreents
 	TreeManager.nutreents = session_data["nutreents"]
+	
+	session_data["structure_map"]
+	session_data["terrain_map"]
 	
 	# Set time and day
 	Global.clock.set_current_sec(session_data["total_time"])
@@ -52,5 +54,8 @@ func load_world(session_data: Dictionary) -> void:
 		TreeManager.place_tree(tree, pos)
 		
 		tree.apply_data_resource(tree_resource)
+	
+	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
+	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
 	#Global.structure_map.load_structures_from(session_data["structure_map"])

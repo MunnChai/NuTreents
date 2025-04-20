@@ -143,7 +143,7 @@ func do_secondary_action() -> void:
 				var tech_slot = structure.tech_slot
 				structure_map.remove_structure(map_pos)
 				
-				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				terrain_map.set_cell_type(map_pos, terrain_map.TileType.DIRT)
 				
 				SfxManager.play_sound_effect("concrete_break")
 				PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
@@ -171,10 +171,10 @@ func do_secondary_action() -> void:
 	if (tile_data):
 		var tile_type = tile_data.get_custom_data("biome")
 		
-		if (tile_type == terrain_map.TILE_TYPE.CITY):
+		if (tile_type == terrain_map.TileType.CITY):
 			if TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
 				TreeManager.consume_n(structure_map.COST_TO_REMOVE_CITY_TILE)
-				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				terrain_map.set_cell_type(map_pos, terrain_map.TileType.DIRT)
 				
 				# Check if decor exists on this spot
 				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):
@@ -186,11 +186,11 @@ func do_secondary_action() -> void:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 		
-		if (tile_type == terrain_map.TILE_TYPE.ROAD):
+		if (tile_type == terrain_map.TileType.ROAD):
 			if TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
 				
 				TreeManager.consume_n(structure_map.COST_TO_REMOVE_ROAD_TILE)
-				terrain_map.set_cell_type(map_pos, terrain_map.TILE_TYPE.DIRT)
+				terrain_map.set_cell_type(map_pos, terrain_map.TileType.DIRT)
 				
 				# Check if decor exists on this spot
 				if (structure_map.tile_scene_map.has(map_pos) && !structure_map.does_obstructive_structure_exist(map_pos)):

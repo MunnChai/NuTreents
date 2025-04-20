@@ -1,7 +1,5 @@
 class_name Factory
-extends Structure
-
-@onready var sprite_2d = $Sprite2D
+extends CityStructure
 
 @export var cost_to_remove: int = 0
 
@@ -12,6 +10,7 @@ func _ready():
 	if (rand > 0.5):
 		sprite_2d.flip_h = true
 	
+	structure_type = Global.StructureType.FACTORY
 	id = "factory"
 	
 	# If tech_slots are still unassigned
@@ -24,3 +23,10 @@ func _ready():
 ## One of "low", "medium", and "high".
 func get_arrow_cursor_height() -> String:
 	return "medium"
+
+func apply_data_resource(save_resource: Resource):
+	structure_type = save_resource.type
+	
+	sprite_2d.flip_h = save_resource.flip_h
+	
+	tech_slot = save_resource.tech_slot

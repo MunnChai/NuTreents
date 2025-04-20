@@ -121,10 +121,10 @@ func _update_visuals() -> void:
 				if not TreeManager.enough_n((building_node as Factory).cost_to_remove):
 					_set_arrow_bobbing(false)
 		else:
-			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.CITY:
+			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TileType.CITY:
 				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
 					_set_arrow_bobbing(false)
-			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.ROAD:
+			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TileType.ROAD:
 				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
 					_set_arrow_bobbing(false)
 		return

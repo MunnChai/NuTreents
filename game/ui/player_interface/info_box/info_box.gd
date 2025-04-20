@@ -23,11 +23,11 @@ var name_dictionary = {
 }
 
 var tile_name_dictionary = {
-	TerrainMap.TILE_TYPE.DIRT: "DIRT",
-	TerrainMap.TILE_TYPE.GRASS: "GRASS",
-	TerrainMap.TILE_TYPE.CITY: "CITY",
-	TerrainMap.TILE_TYPE.WATER: "WATER",
-	TerrainMap.TILE_TYPE.ROAD: "ROAD",
+	TerrainMap.TileType.DIRT: "DIRT",
+	TerrainMap.TileType.GRASS: "GRASS",
+	TerrainMap.TileType.CITY: "CITY",
+	TerrainMap.TileType.WATER: "WATER",
+	TerrainMap.TileType.ROAD: "ROAD",
 }
 
 var desc_dictionary = {
@@ -46,11 +46,11 @@ var desc_dictionary = {
 	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
 	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
 	
-	TerrainMap.TILE_TYPE.DIRT: "Good old dirt. Nothing special.",
-	TerrainMap.TILE_TYPE.GRASS: "Fertile grasslands, ripe for trees.",
-	TerrainMap.TILE_TYPE.CITY: "Cold, hard asphalt. You'll have to remove it to plant.",
-	TerrainMap.TILE_TYPE.WATER: "Hydrates your nearby trees. Don't fall in, though.",
-	TerrainMap.TILE_TYPE.ROAD: "Well-worn tar. You'll have to remove it to plant.",
+	TerrainMap.TileType.DIRT: "Good old dirt. Nothing special.",
+	TerrainMap.TileType.GRASS: "Fertile grasslands, ripe for trees.",
+	TerrainMap.TileType.CITY: "Cold, hard asphalt. You'll have to remove it to plant.",
+	TerrainMap.TileType.WATER: "Hydrates your nearby trees. Don't fall in, though.",
+	TerrainMap.TileType.ROAD: "Well-worn tar. You'll have to remove it to plant.",
 }
 
 func _ready():
@@ -141,9 +141,9 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 				rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
 			
 			var structure_map = Global.structure_map
-			if (tile_type == TerrainMap.TILE_TYPE.ROAD):
+			if (tile_type == TerrainMap.TileType.ROAD):
 				rich_text.text += "\n"
 				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_ROAD_TILE)
-			elif (tile_type == TerrainMap.TILE_TYPE.CITY):
+			elif (tile_type == TerrainMap.TileType.CITY):
 				rich_text.text += "\n"
 				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_CITY_TILE)

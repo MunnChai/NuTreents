@@ -31,6 +31,7 @@ PopupManager="*res://ui/popup_manager/popup_manager.gd"
 SceneLoader="*res://scene_loader/scene_loader.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 SessionData="*res://session_data/session_data.gd"
+StructureRegistry="*res://structures/city/registry/structure_registry.tscn"
 
 [display]
 
