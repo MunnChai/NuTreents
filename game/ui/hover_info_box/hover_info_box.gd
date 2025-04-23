@@ -7,6 +7,7 @@ static var instance: HoverInfoBox
 
 func _ready() -> void:
 	instance = self
+	hide()
 
 func set_content(content: String) -> void:
 	label.text = content

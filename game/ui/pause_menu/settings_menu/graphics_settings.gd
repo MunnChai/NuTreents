@@ -1,6 +1,10 @@
 class_name GraphicsSettings
 extends PanelContainer
 
+## BUG: GUI Scale causes issues with a lot of parts of the game...
+## Like controller cursor, camera movement, etc.
+## Camera is not updated when the GUI scale is changed while paused...
+
 @export var window_option_button: OptionButton
 @export var resolution_option_button: OptionButton
 @export var gui_scale_slider: Slider
