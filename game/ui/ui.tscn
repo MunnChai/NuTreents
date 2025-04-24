@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=16 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://b1f0pb7wkyn1" path="res://ui/resource_indicator/resource_indicator.tscn" id="3_hrmpd"]
 [ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock/clock.tscn" id="3_wl5ax"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="10_hrmpd"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
 [ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
+[ext_resource type="PackedScene" uid="uid://bhyyy6a55e8pp" path="res://ui/cursor/game_cursor.tscn" id="14_os0ka"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -118,6 +119,9 @@ offset_right = -100.0
 offset_bottom = 251.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="GameCursor" parent="." instance=ExtResource("14_os0ka")]
+mouse_filter = 2
 
 [connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
 [connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]

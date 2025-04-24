@@ -113,6 +113,7 @@ tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")
 
 [node name="HoverInfoBox" type="Control" parent="BuildingManager"]
+visible = false
 z_index = 1000
 layout_mode = 3
 anchors_preset = 0

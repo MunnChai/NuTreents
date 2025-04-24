@@ -53,6 +53,8 @@ func _update_visuals() -> void:
 	var structure_map = Global.structure_map
 	var building_node = structure_map.get_building_node(iso_position)
 	
+	#Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	
 	# SET THE ARROW HEIGHT BASED ON WHAT IS ON THIS TILE...
 	if building_node == null:
 		_set_arrow_height("low")
@@ -60,7 +62,7 @@ func _update_visuals() -> void:
 		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
-	if building_node == null:
+	if building_node == null || not structure_map.does_obstructive_structure_exist(iso_position):
 		_set_arrow_bobbing(true)
 	else:
 		if (building_node as Structure).get_id() in BOBBING_BUILDING_IDS:

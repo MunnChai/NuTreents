@@ -96,8 +96,8 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 	
 	if (name_dictionary.has(id)):
 		var content = "[i]" + name_dictionary[id] + "[/i]";
-		content += "\n\n"
-		content += desc_dictionary[id]
+		content += "\n"
+		content += "[color=d9863e]" + desc_dictionary[id]
 		rich_text.text = content
 		
 		rich_text.text += "\n"
@@ -131,8 +131,8 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";
-			content += "\n\n"
-			content += desc_dictionary[tile_type]
+			content += "\n"
+			content += "[color=d9863e]" + desc_dictionary[tile_type]
 			rich_text.text = content
 		
 			rich_text.text += "\n"
@@ -147,3 +147,9 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			elif (tile_type == TerrainMap.TileType.CITY):
 				rich_text.text += "\n"
 				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_CITY_TILE)
+
+func _process(delta: float) -> void:
+	if not rich_text.text.is_empty():
+		GameCursor.instance.show_tooltip(rich_text.text)
+	else:
+		GameCursor.instance.hide_tooltip()

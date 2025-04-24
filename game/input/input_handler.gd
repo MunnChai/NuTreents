@@ -11,19 +11,19 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	_update_cursor(delta)
 
-func _notification(blah):
-	match blah:
-		NOTIFICATION_WM_MOUSE_EXIT:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			print('Mouse left window')
-		NOTIFICATION_WM_MOUSE_ENTER:
-			#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-			print('Mouse entered window')
-			
+#func _notification(blah):
+	#match blah:
+		#NOTIFICATION_WM_MOUSE_EXIT:
+			#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+			#print('Mouse left window')
+		#NOTIFICATION_WM_MOUSE_ENTER:
+			##Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+			#print('Mouse entered window')
+			#
 
 ## Updates the cursor/virtual cursor POSITION based on input type...
 func _update_cursor(delta: float) -> void:
-	print(Input.get_current_cursor_shape())
+	#print(Input.get_current_cursor_shape())
 	
 	if current_device_type == DeviceType.KEYBOARD_MOUSE:
 		Cursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
