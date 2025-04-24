@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://dnqphbl5e44tn"]
 
 [ext_resource type="Texture2D" uid="uid://cafh6no7e6j03" path="res://ui/menus/menu_bg.png" id="1_lce5o"]
-[ext_resource type="Script" uid="uid://bwokny8rxgsix" path="res://ui/tech_menu/tech_menu.gd" id="1_uhide"]
+[ext_resource type="Script" uid="uid://bwokny8rxgsix" path="res://ui/screen_ui/tech_menu/tech_menu.gd" id="1_uhide"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="3_8dtan"]
-[ext_resource type="Texture2D" uid="uid://bfsstyi7u6uwg" path="res://ui/tech_menu/tech_rocket_skills_body.png" id="4_4mcpe"]
-[ext_resource type="Texture2D" uid="uid://cpfhxcj4mex44" path="res://ui/tech_menu/tech_rocket_skills_fuel.png" id="5_1jrc1"]
-[ext_resource type="Texture2D" uid="uid://dsio21mg4t5oe" path="res://ui/tech_menu/tech_rocket_skills_wings.png" id="6_m6vhx"]
+[ext_resource type="Texture2D" uid="uid://bfsstyi7u6uwg" path="res://ui/screen_ui/tech_menu/tech_rocket_skills_body.png" id="4_4mcpe"]
+[ext_resource type="Texture2D" uid="uid://cpfhxcj4mex44" path="res://ui/screen_ui/tech_menu/tech_rocket_skills_fuel.png" id="5_1jrc1"]
+[ext_resource type="Texture2D" uid="uid://dsio21mg4t5oe" path="res://ui/screen_ui/tech_menu/tech_rocket_skills_wings.png" id="6_m6vhx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uhide"]
 atlas = ExtResource("1_lce5o")

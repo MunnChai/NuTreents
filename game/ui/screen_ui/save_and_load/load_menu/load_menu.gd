@@ -1,7 +1,7 @@
 extends PanelContainer
 
-const MENU_THEME = preload("res://ui/pause_menu/pause_menu_theme.tres")
-const LOAD_BUTTON = preload("res://ui/save_and_load/load_menu/load_button/load_button.tscn")
+const MENU_THEME = preload("res://ui/main_ui_theme.tres")
+const LOAD_BUTTON = preload("res://ui/screen_ui/save_and_load/load_menu/load_button/load_button.tscn")
 
 @onready var load_buttons: VBoxContainer = %LoadButtons
 @onready var back_button: Button = %BackButton

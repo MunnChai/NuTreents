@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://d0c1fpnqy3k0i"]
 
-[ext_resource type="PackedScene" uid="uid://bkuuj58b1syaq" path="res://ui/save_and_load/load_menu/load_menu.tscn" id="1_l1u8x"]
-[ext_resource type="Script" uid="uid://duax20cg3vivt" path="res://ui/save_and_load/load_screen.gd" id="1_v1031"]
-[ext_resource type="PackedScene" uid="uid://bexvvsxohs5xm" path="res://ui/save_and_load/new_world_menu/new_world_menu.tscn" id="2_v1031"]
+[ext_resource type="PackedScene" uid="uid://bkuuj58b1syaq" path="res://ui/screen_ui/save_and_load/load_menu/load_menu.tscn" id="1_l1u8x"]
+[ext_resource type="Script" uid="uid://duax20cg3vivt" path="res://ui/screen_ui/save_and_load/load_screen.gd" id="1_v1031"]
+[ext_resource type="PackedScene" uid="uid://bexvvsxohs5xm" path="res://ui/screen_ui/save_and_load/new_world_menu/new_world_menu.tscn" id="2_v1031"]
 
 [node name="LoadScreen" type="Control"]
 layout_mode = 3

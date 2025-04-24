@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://r31ptf3bjx5" path="res://ui/main_menu/main_menu_bg.png" id="1_uhj5c"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="2_mu8pm"]
 [ext_resource type="Texture2D" uid="uid://fu3tsme7dqwe" path="res://ui/main_menu/start_button.png" id="4_i5wg5"]
-[ext_resource type="PackedScene" uid="uid://d0c1fpnqy3k0i" path="res://ui/save_and_load/load_screen.tscn" id="5_3c04x"]
+[ext_resource type="PackedScene" uid="uid://d0c1fpnqy3k0i" path="res://ui/screen_ui/save_and_load/load_screen.tscn" id="5_3c04x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5wg5"]
 

@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://wt1hrs7civkc"]
+
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="1_x4oq8"]
+[ext_resource type="Script" uid="uid://l67arn8e8g4s" path="res://ui/screen_ui/elements/screen_button.gd" id="2_f7d0f"]
+
+[node name="ScreenButton" type="Button"]
+offset_right = 99.0
+offset_bottom = 31.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("1_x4oq8")
+text = "I am button"
+script = ExtResource("2_f7d0f")
+
+[node name="DropShadow" type="ColorRect" parent="."]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.639216)

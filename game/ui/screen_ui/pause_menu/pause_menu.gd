@@ -1,5 +1,5 @@
 class_name PauseMenu
-extends PanelContainer
+extends Control
 
 var is_paused := false
 
@@ -18,6 +18,18 @@ signal quit_to_desktop_pressed
 @onready var load_button: Button = %LoadButton
 @onready var main_menu_button: Button = %MainMenuButton
 @onready var quit_game_button: Button = %QuitGameButton
+
+func open() -> void:
+	pause_game()
+	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.2)
+	position = position + Vector2.DOWN * 100.0
+	TweenUtil.whoosh(self, position + Vector2.UP * 100.0, 0.25)
+
+func close() -> void:
+	unpause_game()
+
+func return_to() -> void:
+	pass
 
 func _ready() -> void:
 	#get_tree().root.content_scale_factor = 2.0
@@ -85,14 +97,23 @@ func unpause_game() -> void:
 
 #region BUTTON HANDLERS
 
+const SETTINGS_MENU = preload("res://ui/screen_ui/pause_menu/settings_menu/settings_menu.tscn")
+
 func _on_resume_button_pressed() -> void:
 	SfxManager.play_sound_effect("ui_click")
-	unpause_game()
+	Global.screen_ui.exit_menu()
 
 func _on_settings_button_pressed() -> void:
 	settings_button_pressed.emit()
 	
 	SfxManager.play_sound_effect("ui_click")
+	
+	var settings := SETTINGS_MENU.instantiate()
+	Global.screen_ui.add_menu(settings)
+	
+	TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.2)
+	TweenUtil.whoosh(self, position + Vector2.LEFT * 200.0, 0.25)
+	
 	## TODO: Go to the settings menu
 
 func _on_save_button_pressed() -> void:

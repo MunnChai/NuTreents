@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpyl2aj5vemli"]
+
+[ext_resource type="Script" uid="uid://bd7dixcab5d0w" path="res://ui/screen_ui/screen_ui.gd" id="1_q5bun"]
+
+[node name="ScreenUI" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q5bun")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.541176)

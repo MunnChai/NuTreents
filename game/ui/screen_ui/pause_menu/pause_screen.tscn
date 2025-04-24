@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://f3txviy6p4s"]
 
-[ext_resource type="Script" uid="uid://bc7cu7un4qjp7" path="res://ui/pause_menu/pause_screen.gd" id="1_amjc5"]
-[ext_resource type="PackedScene" uid="uid://bb1hfx6qp2nul" path="res://ui/pause_menu/pause_menu.tscn" id="1_yciml"]
-[ext_resource type="PackedScene" uid="uid://dqkyj7u64uhxk" path="res://ui/pause_menu/settings_menu/settings_menu.tscn" id="3_5fse2"]
-[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="3_amjc5"]
+[ext_resource type="Script" uid="uid://bc7cu7un4qjp7" path="res://ui/screen_ui/pause_menu/pause_screen.gd" id="1_amjc5"]
+[ext_resource type="PackedScene" uid="uid://bb1hfx6qp2nul" path="res://ui/screen_ui/pause_menu/pause_menu.tscn" id="1_yciml"]
+[ext_resource type="PackedScene" uid="uid://dqkyj7u64uhxk" path="res://ui/screen_ui/pause_menu/settings_menu/settings_menu.tscn" id="3_5fse2"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_amjc5"]
 
 [node name="PauseScreen" type="Control"]
 process_mode = 3

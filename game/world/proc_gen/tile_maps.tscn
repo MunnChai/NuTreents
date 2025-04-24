@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/fog_tiles_1.png" id="5_118ts"]
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="8_jvuq2"]
 [ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="9_gwmkj"]
-[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="10_5fvau"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_5fvau"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_118ts"]
 texture = ExtResource("5_118ts")

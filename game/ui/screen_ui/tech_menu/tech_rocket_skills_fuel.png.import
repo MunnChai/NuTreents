@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfsstyi7u6uwg"
-path="res://.godot/imported/tech_rocket_skills_body.png-7f384d3f1ab9592145de00ca6d3f3be2.ctex"
+uid="uid://cpfhxcj4mex44"
+path="res://.godot/imported/tech_rocket_skills_fuel.png-657e1bf96527e1a2232dd8b073666f51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/tech_menu/tech_rocket_skills_body.png"
-dest_files=["res://.godot/imported/tech_rocket_skills_body.png-7f384d3f1ab9592145de00ca6d3f3be2.ctex"]
+source_file="res://ui/screen_ui/tech_menu/tech_rocket_skills_fuel.png"
+dest_files=["res://.godot/imported/tech_rocket_skills_fuel.png-657e1bf96527e1a2232dd8b073666f51.ctex"]
 
 [params]
 

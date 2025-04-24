@@ -38,6 +38,9 @@ func close() -> void:
 	is_open = false
 	hide()
 
+func return_to() -> void:
+	pass
+
 func switch_to(section_type: SectionType) -> void:
 	section = section_type
 	

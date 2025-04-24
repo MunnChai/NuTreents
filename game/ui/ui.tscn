@@ -8,10 +8,10 @@
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="6_08otm"]
 [ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="9_2ct0b"]
 [ext_resource type="PackedScene" uid="uid://brejyjscqrd5j" path="res://ui/tree_menu/tree_menu.tscn" id="9_08otm"]
-[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/tech_menu/tech_menu.tscn" id="9_bi8hs"]
-[ext_resource type="PackedScene" uid="uid://f3txviy6p4s" path="res://ui/pause_menu/pause_screen.tscn" id="10_08otm"]
+[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/screen_ui/tech_menu/tech_menu.tscn" id="9_bi8hs"]
+[ext_resource type="PackedScene" uid="uid://f3txviy6p4s" path="res://ui/screen_ui/pause_menu/pause_screen.tscn" id="10_08otm"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="10_hrmpd"]
-[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="10_kxjjr"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
 [ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]

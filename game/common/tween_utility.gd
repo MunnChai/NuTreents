@@ -26,26 +26,37 @@ static func get_tweens_under_target(target: Node) -> Dictionary:
 #region TWEEN TECHNIQUES
 
 ## Set scale, then tween back to one
-static func pop(target: CanvasItem, scale: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> void:
+static func pop(target: CanvasItem, scale: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> Tween:
 	target.scale = scale
 	var tween = get_new_tween(target, "scale")
 	tween.set_trans(transition_type)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(target, "scale", Vector2.ONE, duration)
+	return tween
 
 ## Add scale, then tween back to one
-static func pop_delta(target: CanvasItem, scale_delta: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> void:
+static func pop_delta(target: CanvasItem, scale_delta: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> Tween:
 	target.scale += scale_delta
 	var tween = get_new_tween(target, "scale")
 	tween.set_trans(transition_type)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(target, "scale", Vector2.ONE, duration)
+	return tween
 
 ## Tween to another location
-static func whoosh(target: CanvasItem, position: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> void:
+static func whoosh(target: CanvasItem, position: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> Tween:
 	var tween = get_new_tween(target, "position")
 	tween.set_trans(transition_type)
 	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property(target, "position", position, duration)
+	return tween
+
+## Tween opacity
+static func fade(target: CanvasItem, opacity: float, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_SINE) -> Tween:
+	var tween = get_new_tween(target, "opacity")
+	tween.set_trans(transition_type)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(target, "modulate:a", opacity, duration)
+	return tween
 
 #endregion

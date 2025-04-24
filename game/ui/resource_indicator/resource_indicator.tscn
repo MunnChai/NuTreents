@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cgn43ynuh6apg" path="res://ui/player_interface/resources_ui.gd" id="1_aba0v"]
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_y0gg3"]
 [ext_resource type="Texture2D" uid="uid://yrouuc47vr6" path="res://ui/resource_indicator/nutreents_icon.png" id="2_edu5u"]
-[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/pause_menu/pause_menu_theme.tres" id="3_l6h0k"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_l6h0k"]
 [ext_resource type="Texture2D" uid="uid://b8cw204428puv" path="res://ui/resource_indicator/water_icon.png" id="4_aba0v"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_edu5u"]
