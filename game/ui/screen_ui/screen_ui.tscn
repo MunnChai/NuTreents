@@ -1,25 +1,71 @@
-[gd_scene load_steps=2 format=3 uid="uid://dpyl2aj5vemli"]
+[gd_scene load_steps=7 format=3 uid="uid://dpyl2aj5vemli"]
 
 [ext_resource type="Script" uid="uid://bd7dixcab5d0w" path="res://ui/screen_ui/screen_ui.gd" id="1_q5bun"]
+[ext_resource type="PackedScene" uid="uid://bhyyy6a55e8pp" path="res://ui/cursor/game_cursor.tscn" id="2_2e8l5"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_58s5c"]
+[ext_resource type="PackedScene" uid="uid://bb1hfx6qp2nul" path="res://ui/screen_ui/pause_menu/pause_menu.tscn" id="2_g2xr2"]
+[ext_resource type="PackedScene" uid="uid://dqkyj7u64uhxk" path="res://ui/screen_ui/pause_menu/settings_menu/settings_menu.tscn" id="3_55tr8"]
+[ext_resource type="Script" uid="uid://rmgcuvum63sm" path="res://ui/screen_ui/version_label.gd" id="3_stx1l"]
 
-[node name="ScreenUI" type="Control"]
+[node name="ScreenUI" type="CanvasLayer"]
 process_mode = 3
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layer = 100
 script = ExtResource("1_q5bun")
 
 [node name="Dimmer" type="ColorRect" parent="."]
 unique_name_in_owner = true
 process_mode = 3
 z_index = -1
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.541176)
+
+[node name="MenuLayer" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VersionLabel" type="RichTextLabel" parent="MenuLayer"]
+modulate = Color(1, 1, 1, 0.494118)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.5
+offset_top = -40.0
+offset_right = 160.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_58s5c")
+bbcode_enabled = true
+text = "[center]NuTREEnts v0.0.1 by SI INTERACTIVE"
+script = ExtResource("3_stx1l")
+
+[node name="PauseMenu" parent="MenuLayer" instance=ExtResource("2_g2xr2")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsMenu" parent="MenuLayer" instance=ExtResource("3_55tr8")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="GameCursor" parent="." instance=ExtResource("2_2e8l5")]

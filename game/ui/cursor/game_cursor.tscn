@@ -27,6 +27,7 @@ offset_bottom = 47.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_1dai2")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+modulate = Color(0, 0, 0, 0.592157)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

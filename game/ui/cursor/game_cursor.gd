@@ -8,14 +8,32 @@ static var instance: GameCursor
 
 func _ready() -> void:
 	instance = self
+	hide_tooltip()
+
+var force_hide_tooltip := false
+var is_tooltip_visible := true
+@onready var tooltip_start_position: Vector2 = $PanelContainer.position
 
 func hide_tooltip() -> void:
-	$PanelContainer.hide()
+	if not is_tooltip_visible:
+		return
+	is_tooltip_visible = false
+	TweenUtil.fade($PanelContainer, 0.0, 0.1).finished.connect(func(): $PanelContainer.hide())
 func show_tooltip(content: String) -> void:
-	$PanelContainer.show()
+	if force_hide_tooltip or HoverInfoBox.instance.visible:
+		return
 	if %TooltipText.text != content:
-		TweenUtil.pop_delta($PanelContainer, Vector2(0.25, 0.25), 0.35)
-	%TooltipText.text = content
+		#$PanelContainer.position += Vector2.DOWN * 10.0
+		#TweenUtil.whoosh($PanelContainer, tooltip_start_position, 0.5)
+		TweenUtil.pop_delta($PanelContainer, Vector2(0.12, 0.12), 0.25)
+		%TooltipText.text = content
+	
+	if is_tooltip_visible:
+		return
+	
+	is_tooltip_visible = true
+	$PanelContainer.show()
+	TweenUtil.fade($PanelContainer, 1.0, 0.1)
 
 func _process(delta: float) -> void:
 	global_position = get_global_mouse_position()
@@ -25,6 +43,8 @@ func _process(delta: float) -> void:
 			$TextureRect.texture = hand_texture
 		_:
 			$TextureRect.texture = pointer_texture
+	#if force_hide_tooltip or HoverInfoBox.instance.visible:
+		#hide_tooltip()
 
 func _notification(blah):
 	match blah:

@@ -15,7 +15,7 @@ var fog_map: FogMap
 var clock: Clock
 var tech_menu: TechMenu
 var overlay_manager: OverlayManager
-var screen_ui: ScreenUI
+#var screen_ui: ScreenUI
 
 ## STRUCTURE IDS
 

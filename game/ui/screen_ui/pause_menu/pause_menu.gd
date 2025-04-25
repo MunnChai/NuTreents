@@ -1,5 +1,8 @@
 class_name PauseMenu
-extends Control
+extends ScreenMenu
+
+## PAUSE MENU
+## The first menu that appears in the overlay pause screen
 
 var is_paused := false
 
@@ -19,23 +22,33 @@ signal quit_to_desktop_pressed
 @onready var main_menu_button: Button = %MainMenuButton
 @onready var quit_game_button: Button = %QuitGameButton
 
-func open() -> void:
-	pause_game()
-	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.2)
-	position = position + Vector2.DOWN * 100.0
-	TweenUtil.whoosh(self, position + Vector2.UP * 100.0, 0.25)
+@onready var starting_position := position
 
-func close() -> void:
+func open(previous_menu: ScreenMenu) -> void:
+	position = starting_position
+	pause_game()
+	
+	## ANIMATION
+	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
+	position = position + Vector2.DOWN * 100.0
+	TweenUtil.whoosh(self, starting_position, 0.4)
+	TweenUtil.fade(self, 1.0, 0.1)
+
+func close(next_menu: ScreenMenu) -> void:
+	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
+	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.4)
+	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)
+func _finish_close() -> void:
 	unpause_game()
 
-func return_to() -> void:
-	pass
+func return_to(previous_menu: ScreenMenu) -> void:
+	## ANIMATION
+	TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.3)
+	TweenUtil.whoosh(self, starting_position, 0.4)
 
 func _ready() -> void:
-	#get_tree().root.content_scale_factor = 2.0
-	get_tree().root.content_scale_factor = 1.0
 	## TODO: Figure out how to scale for really small windows, and make sure right size...
-	
+	get_tree().root.content_scale_factor = 1.0
 	setup_button_signals()
 
 func setup_button_signals() -> void:
@@ -48,8 +61,8 @@ func setup_button_signals() -> void:
 	
 	resume_button.focus_entered.connect(_on_enabled_button_focus)
 	settings_button.focus_entered.connect(_on_enabled_button_focus)
-	save_button.focus_entered.connect(_on_disabled_button_focus)
-	load_button.focus_entered.connect(_on_disabled_button_focus)
+	save_button.focus_entered.connect(_on_enabled_button_focus)
+	load_button.focus_entered.connect(_on_enabled_button_focus)
 	main_menu_button.focus_entered.connect(_on_enabled_button_focus)
 	quit_game_button.focus_entered.connect(_on_enabled_button_focus)
 
@@ -69,6 +82,9 @@ func pause_game() -> void:
 	get_tree().paused = true
 	game_paused.emit()
 	
+	if GameCursor.instance:
+		GameCursor.instance.force_hide_tooltip = true
+	
 	previous_time_scale = Engine.time_scale
 	Engine.time_scale = 1.0
 	
@@ -83,6 +99,9 @@ func pause_game() -> void:
 
 func unpause_game() -> void:
 	Engine.time_scale = previous_time_scale
+	
+	if GameCursor.instance:
+		GameCursor.instance.force_hide_tooltip = false
 	
 	is_paused = false
 	get_tree().paused = false
@@ -101,18 +120,19 @@ const SETTINGS_MENU = preload("res://ui/screen_ui/pause_menu/settings_menu/setti
 
 func _on_resume_button_pressed() -> void:
 	SfxManager.play_sound_effect("ui_click")
-	Global.screen_ui.exit_menu()
+	ScreenUI.terminate_stack()
 
 func _on_settings_button_pressed() -> void:
 	settings_button_pressed.emit()
 	
 	SfxManager.play_sound_effect("ui_click")
 	
-	var settings := SETTINGS_MENU.instantiate()
-	Global.screen_ui.add_menu(settings)
-	
-	TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.2)
-	TweenUtil.whoosh(self, position + Vector2.LEFT * 200.0, 0.25)
+	if ScreenUI.settings_menu.is_open:
+		ScreenUI.exit_menu()
+	else:
+		ScreenUI.add_menu(ScreenUI.settings_menu)
+		TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.2)
+		TweenUtil.whoosh(self, position + Vector2.LEFT * 200.0, 0.25)
 	
 	## TODO: Go to the settings menu
 

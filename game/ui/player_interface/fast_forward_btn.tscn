@@ -20,4 +20,6 @@ texture_normal = SubResource("AtlasTexture_fehke")
 texture_pressed = SubResource("AtlasTexture_bbwvr")
 script = ExtResource("2_fehke")
 
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="toggled" from="." to="." method="_on_toggled"]

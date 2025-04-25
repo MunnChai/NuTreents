@@ -1,5 +1,5 @@
 class_name SettingsMenu
-extends Control
+extends ScreenMenu
 
 enum SectionType {
 	SYSTEM,
@@ -18,6 +18,8 @@ enum SectionType {
 @onready var graphics_settings: PanelContainer = %GraphicsSettings
 @onready var controls_settings: PanelContainer = %ControlsSettings
 
+@onready var start_position := position
+
 var is_open := false
 var section := SectionType.SYSTEM
 
@@ -28,17 +30,29 @@ func _ready() -> void:
 	controls_button.focus_entered.connect(_on_button_focused)
 	hide()
 
-func open() -> void:
+## SCREEN UI IMPLEMENTATIONS
+
+func open(previous_menu: ScreenMenu) -> void:
 	switch_to(SectionType.SYSTEM)
 	is_open = true
 	system_button.grab_focus()
 	show()
+	
+	position += Vector2.DOWN * 50.0
+	TweenUtil.whoosh(self, start_position, 0.4)
+	TweenUtil.fade(self, 1, 0.2)
+	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 
-func close() -> void:
+func close(next_menu: ScreenMenu) -> void:
 	is_open = false
+	
+	TweenUtil.whoosh(self, start_position + Vector2.DOWN * 50.0, 0.4)
+	TweenUtil.fade(self, 0, 0.1).finished.connect(_finish_close)
+	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
+func _finish_close() -> void:
 	hide()
 
-func return_to() -> void:
+func return_to(previous_menu: ScreenMenu) -> void:
 	pass
 
 func switch_to(section_type: SectionType) -> void:

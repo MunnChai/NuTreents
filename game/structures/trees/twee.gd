@@ -108,7 +108,7 @@ func _update_shader(delta: float) -> void:
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
 	(sprite.get_material() as ShaderMaterial).set_shader_parameter("pos", get_pos())
-	(sprite.get_material() as ShaderMaterial).set_shader_parameter("dehydrated", is_dehydrated)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("tint_amount", 1.0 if is_dehydrated else 0.0)
 	#print(is_dehydrated)
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)

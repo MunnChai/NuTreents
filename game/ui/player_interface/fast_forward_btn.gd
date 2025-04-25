@@ -22,3 +22,14 @@ func _on_toggled(toggled_on: bool) -> void:
 
 #func _gui_input(event: InputEvent) -> void:
 	#get_viewport().set_input_as_handled()
+
+## TODO: Enforce tooltip hierarchy
+
+func _on_mouse_entered() -> void:
+	if button_pressed:
+		GameCursor.instance.show_tooltip("Enable Fast Forward")
+	else:
+		GameCursor.instance.show_tooltip("Disable Fast Forward")
+
+func _on_mouse_exited() -> void:
+	GameCursor.instance.hide_tooltip()

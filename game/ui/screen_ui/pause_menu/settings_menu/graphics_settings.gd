@@ -27,7 +27,8 @@ func load_graphics_settings() -> void:
 	gui_scale_slider.value = Settings.get_setting_or_default("gui_scale", 1.0)
 	window_option_button.selected = Settings.get_setting_or_default("window_option", 0)
 	
-	get_tree().root.content_scale_factor = gui_scale_slider.value
+	#get_tree().root.content_scale_factor = gui_scale_slider.value
+	#get_tree().root.content_scale_factor = 1.2
 
 func _on_window_option_button_item_selected(index: int) -> void:
 	SfxManager.play_sound_effect("ui_click")
@@ -46,7 +47,7 @@ func _on_window_option_button_item_selected(index: int) -> void:
 
 
 func _on_gui_scale_slider_drag_ended(value_changed: bool) -> void:
-	get_tree().root.content_scale_factor = gui_scale_slider.value
+	#get_tree().root.content_scale_factor = gui_scale_slider.value
 	save_graphics_settings()
 
 func _on_gui_scale_slider_value_changed(value: float) -> void:

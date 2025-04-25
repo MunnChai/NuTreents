@@ -1,47 +1,62 @@
-class_name ScreenUI
-extends Control
+class_name ScreenUIGlobal
+extends CanvasLayer
 
-const PAUSE_MENU = preload("res://ui/screen_ui/pause_menu/pause_menu.tscn")
+## SCREEN UI AUTOLOAD
+
+## ---
+
+@onready var menu_layer = %MenuLayer
+
+@onready var pause_menu: PauseMenu = %PauseMenu
+@onready var settings_menu: SettingsMenu = %SettingsMenu
 
 var is_open := false
 
-var menu_stack := []
+var menu_stack: Array[ScreenMenu] = []
 ## Adds a menu to the UI and opens it
 ## Opens the ScreenUI if it is not open
-func add_menu(menu: Control) -> void:
+func add_menu(menu: ScreenMenu) -> void:
 	menu_stack.push_back(menu)
 	if menu.get_parent() == null:
-		add_child(menu)
+		menu_layer.add_child(menu)
 	if not is_open:
 		open()
 	if menu.has_method("open"):
-		menu.open()
+		menu.open(get_previously_active_menu())
 ## Pops the latest menu in the UI and closes it
 ## Closes the ScreenUI if it was the last menu
-func exit_menu() -> Control:
+func exit_menu() -> ScreenMenu:
 	var menu = menu_stack.pop_back()
+	var new_menu := get_active_menu()
+	if menu.has_method("close"):
+		menu.close(new_menu)
 	if menu_stack.is_empty():
 		close()
-	if menu.has_method("close"):
-		menu.close()
-	var new_menu := get_active_menu()
+		return
 	if new_menu != null and new_menu.has_method("return_to"):
-		new_menu.return_to()
+		new_menu.return_to(menu)
 	return menu
 ## Clears the stack and closes the ScreenUI
 func terminate_stack() -> void:
-	for menu: Control in menu_stack:
+	for menu: ScreenMenu in menu_stack:
 		if menu.has_method("close_on_termination"):
 			menu.close_on_termination()
 		elif menu.has_method("close"):
-			menu.close()
+			menu.close(null)
 	menu_stack = []
+	close()
 ## Returns the menu that is currently at the top of the stack
-func get_active_menu() -> Control:
+func get_active_menu() -> ScreenMenu:
 	return menu_stack.back()
+## Returns the menu that is second highest in the stack,
+## or null if there is none
+func get_previously_active_menu() -> ScreenMenu:
+	if menu_stack.size() < 2:
+		return null
+	return menu_stack[-2]
 
 func _ready() -> void:
-	Global.screen_ui = self
+	#Global.screen_ui = self
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	jump_to_closed()
 
@@ -66,10 +81,9 @@ func jump_to_closed() -> void:
 	%Dimmer.modulate.a = 0.0
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") and Global.game_state == Global.GameState.PLAYING:
 		if not is_open:
-			var new_menu := PAUSE_MENU.instantiate()
-			add_menu(new_menu)
+			add_menu(pause_menu)
 			return
 	
 	if Input.is_action_just_pressed("pause"):
