@@ -22,11 +22,7 @@ func _ready():
 	sprite.position.y = -16
 
 func _process(delta: float) -> void:
-	life_time_seconds += delta
-	
-	if life_time_seconds > time_to_grow:
-		if not is_large:
-			upgrade_tree()
+	super._process(delta)
 	
 	# Check for enemies in range
 	if (!current_target_enemy || current_target_enemy.is_dead):

@@ -39,6 +39,9 @@ const BASE_WATER_RANGE = 1
 var is_adjacent_to_water: bool = false
 var water_bonus: int = 3
 
+const OUTLINE_FADE_DURATION: float = 0.1
+var is_outline_active: bool = false
+
 func _ready():
 	get_stats_from_resource(tree_stat)
 	
@@ -49,6 +52,8 @@ func _ready():
 	sprite.texture = sheets.pick_random()
 	sprite.material = sprite.material.duplicate()
 	
+	#copy_sprite_to_outline_sprite()
+	
 	animation_player.connect("animation_finished", _on_animation_player_animation_finished)
 	play_grow_small_animation()
 	
@@ -57,6 +62,8 @@ func _ready():
 		maint = 0
 	
 	id = "default_tree"
+	
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("outline_width", 1)
 
 func _process(delta: float) -> void:
 	if (is_dehydrated):
@@ -70,6 +77,12 @@ func _process(delta: float) -> void:
 		if not is_large:
 			upgrade_tree()
 			#tree_data.update()
+	
+	#outline_sprite.frame = sprite.frame
+	if is_outline_active:
+		show_outline(delta)
+	else:
+		hide_outline(delta)
 
 ## OVERRIDE
 func remove() -> void:
@@ -306,4 +319,24 @@ func apply_data_resource(tree_resource: Resource):
 	
 	hp = tree_resource.hp
 	
+	#copy_sprite_to_outline_sprite()
 	# TODO: Set forest water...
+
+#func copy_sprite_to_outline_sprite():
+	#outline_sprite.hframes = sprite.hframes
+	#outline_sprite.vframes = sprite.vframes
+	#outline_sprite.position.y = sprite.position.y
+	#outline_sprite.texture = sprite.texture
+	#outline_sprite.material = outline_sprite.material.duplicate()
+
+func show_outline(delta: float):
+	var current_alpha = (sprite.get_material() as ShaderMaterial).get_shader_parameter("outline_alpha")
+	var target_alpha = 1.0
+	var lerped_alpha = lerp(current_alpha, target_alpha, delta / OUTLINE_FADE_DURATION)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("outline_alpha", lerped_alpha)
+
+func hide_outline(delta: float):
+	var current_alpha = (sprite.get_material() as ShaderMaterial).get_shader_parameter("outline_alpha")
+	var target_alpha = 0.0
+	var lerped_alpha = lerp(current_alpha, target_alpha, delta / OUTLINE_FADE_DURATION)
+	(sprite.get_material() as ShaderMaterial).set_shader_parameter("outline_alpha", lerped_alpha)
