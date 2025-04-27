@@ -8,8 +8,7 @@ var tree_vision_range: int = DEFAULT_VISION_RANGE
 
 
 func _ready() -> void:
-	await get_tree().process_frame
-	init()
+	pass
 
 func init() -> void:
 	for x in range(Global.ORIGIN.x - FOG_SIZE.x / 2, Global.ORIGIN.x + FOG_SIZE.x / 2): # Munn: Ignore how ugly this is lol

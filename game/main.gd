@@ -28,8 +28,10 @@ func load_world(session_data: Dictionary) -> void:
 	
 	TreeManager.start_game()
 	EnemyManager.start_game()
-	Global.terrain_map.generate_map(false) # Generate map without buildings (TEMP UNTIL I SAVE ALL DATA)
+	Global.terrain_map.generate_map(false) # Generate map without buildings
+	Global.fog_map.init()
 	
+	TreeManager.start_game()
 	
 	# Set nutreents
 	TreeManager.nutreents = session_data["nutreents"]
