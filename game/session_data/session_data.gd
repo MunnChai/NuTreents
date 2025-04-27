@@ -14,6 +14,8 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST and Global.game_state == Global.GameState.PLAYING:
 		save_session_data(Global.session_id)
 
+#region SavingFunctions
+
 # Create a new world, setting any initial metadata (name, seed, etc.)
 func create_new_session_data(save_num: int, world_name: String = "New World", seed: int = randi()):
 	var config = ConfigFile.new()
@@ -216,18 +218,16 @@ func clear_session_data(save_num: int = 1):
 	
 	config.save(full_path)
 
+#endregion
+
+
 # Creates a directory in the User directory if it does not already exist
 func create_save_directory() -> void:
 	if !DirAccess.dir_exists_absolute(SAVE_PATH):
 		DirAccess.make_dir_absolute(SAVE_PATH)
 
 
-func _set_owner(node, root):
-	if node != root:
-		node.owner = root
-	for child in node.get_children():
-		_set_owner(child, root)
-
+#region SaveResources
 
 func _create_twee_save_resource(twee: Twee) -> TweeDataResource:
 	var save_resource: TweeDataResource = TweeDataResource.new()
@@ -275,3 +275,5 @@ func _create_enemy_save_resource(enemy: Enemy) -> EnemyDataResource:
 	save_resource.hp = enemy.current_health
 	
 	return save_resource
+
+#endregion
