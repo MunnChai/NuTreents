@@ -315,9 +315,6 @@ func generate_factories(city_coords: Array[Vector2i]) -> void:
 		
 		var structure_map = Global.structure_map
 		structure_map.add_structure(coord, factory)
-		
-		var fog_map = Global.fog_map
-		fog_map.remove_fog_around(coord)
 
 const BUILDING_FREQUENCY: float = 0.4
 func generate_buildings(city_tiles: Array[Vector2i]) -> void:

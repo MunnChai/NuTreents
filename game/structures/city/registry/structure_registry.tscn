@@ -1,13 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://i677y27v8cbs"]
+[gd_scene load_steps=5 format=3 uid="uid://i677y27v8cbs"]
 
 [ext_resource type="Script" uid="uid://cvi6o5tn5mc0v" path="res://structures/city/registry/structure_registry.gd" id="1_kgvgx"]
 [ext_resource type="PackedScene" uid="uid://dwpl26cf6kleg" path="res://structures/city/city_building.tscn" id="2_i0u6k"]
 [ext_resource type="PackedScene" uid="uid://chvny0irraqes" path="res://world/proc_gen/decor/decor.tscn" id="3_bx4ul"]
+[ext_resource type="PackedScene" uid="uid://ney755v7lyxy" path="res://structures/city/factory/factory.tscn" id="3_grlbt"]
 
 [node name="CityStructureRegistry" type="Node"]
 script = ExtResource("1_kgvgx")
 structure_scene_registry = Dictionary[int, PackedScene]({
 0: ExtResource("2_i0u6k"),
-1: ExtResource("2_i0u6k"),
+1: ExtResource("3_grlbt"),
 2: ExtResource("3_bx4ul")
 })
