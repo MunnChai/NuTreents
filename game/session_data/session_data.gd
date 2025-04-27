@@ -10,6 +10,10 @@ const SAVE_NAME := "session_"
 
 var session_data: Dictionary = {}
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and Global.game_state == Global.GameState.PLAYING:
+		save_session_data(Global.session_id)
+
 # Create a new world, setting any initial metadata (name, seed, etc.)
 func create_new_session_data(save_num: int, world_name: String = "New World", seed: int = randi()):
 	var config = ConfigFile.new()
@@ -25,10 +29,6 @@ func save_session_data(save_num: int = 1):
 	var config = ConfigFile.new()
 	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"
 	var err = config.load(full_path)
-	if err != OK:
-		print("WARNING: Failed to save session data!")
-	else:
-		print("Saved session data to: ", full_path)
 	
 	# Save nutreents
 	var nutreents: int = TreeManager.nutreents
