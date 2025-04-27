@@ -72,7 +72,15 @@ func save_session_data(save_num: int = 1):
 		structure_map[pos] = save_resource
 	config.set_value(SECTION_SESSION, "structure_map", structure_map)
 	
-	# TODO: Save enemies
+	# Save enemies + EnemyManager info
+	var enemy_map: Dictionary
+	for enemy: Enemy in EnemyManager.current_enemies:
+		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
+		if !save_resource:
+			continue
+		enemy_map[enemy.map_position] = save_resource
+	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
+	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.enemy_spawn_timer)
 	
 	create_save_directory()
 	
@@ -117,6 +125,12 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	session_data["current_day"] = current_day
 	session_data["current_time"] = current_time
 	session_data["total_time"] = total_time
+	
+	# Get EnemyManager info
+	var enemy_map: Dictionary = config.get_value(SECTION_SESSION, "enemy_map")
+	var enemy_spawn_timer: float = config.get_value(SECTION_SESSION, "enemy_spawn_timer")
+	session_data["enemy_map"] = enemy_map
+	session_data["enemy_spawn_timer"] = enemy_spawn_timer
 	
 	# Get tiles
 	var terrain_map: Dictionary = config.get_value(SECTION_SESSION, "terrain_map")
@@ -209,4 +223,11 @@ func _create_structure_save_resource(structure: Structure) -> StructureDataResou
 		save_resource.type = structure.structure_type
 	
 	return save_resource
+
+func _create_enemy_save_resource(enemy: Enemy) -> EnemyDataResource:
+	var save_resource: EnemyDataResource = EnemyDataResource.new()
 	
+	save_resource.type = enemy.type
+	save_resource.hp = enemy.current_health
+	
+	return save_resource
