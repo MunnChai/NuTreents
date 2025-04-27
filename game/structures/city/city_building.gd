@@ -1,8 +1,9 @@
 class_name CityBuilding
-extends Structure
+extends CityStructure
+
 
 const NUM_CITY_SPRITES = 8
-@onready var sprite_2d = $Sprite2D
+
 
 @export var cost_to_remove: int = 0
 
@@ -24,6 +25,7 @@ func _ready():
 		sprite_2d.flip_h = true
 	
 	id = "city_building"
+	structure_type = Global.StructureType.CITY_BUILDING
 
 ## Returns the "height" that the arrow cursor should be above this structure...
 ## One of "low", "medium", and "high".
@@ -31,3 +33,10 @@ func get_arrow_cursor_height() -> String:
 	if sprite_2d.texture.region.position.x == 32 * 3:
 		return "medium"
 	return "high"
+
+func apply_data_resource(save_resource: Resource):
+	structure_type = save_resource.type
+	
+	sprite_2d.flip_h = save_resource.flip_h
+	
+	sprite_2d.texture.region.position = save_resource.texture_region_position

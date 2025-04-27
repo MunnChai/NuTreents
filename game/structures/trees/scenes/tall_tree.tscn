@@ -21,6 +21,7 @@ shader_parameter/frame_count = 0
 
 [node name="TallTree" type="Node2D"]
 script = ExtResource("1_ipn3t")
+type = 6
 tree_stat = ExtResource("2_66x5p")
 sheets = Array[Texture2D]([ExtResource("3_tcj32")])
 

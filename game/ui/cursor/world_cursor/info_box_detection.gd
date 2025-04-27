@@ -6,7 +6,7 @@ extends Node
 func detect(pos: Vector2i) -> void:
 	var terrain_map = Global.terrain_map
 	var building_map = Global.structure_map
-	var tile_type: TerrainMap.TILE_TYPE = terrain_map.get_tile_biome(pos)
+	var tile_type: TerrainMap.TileType = terrain_map.get_tile_biome(pos)
 	var building_node: Node2D = building_map.get_building_node(pos)
 	var enemies: Array[Enemy] = EnemyManager.current_enemies
 	

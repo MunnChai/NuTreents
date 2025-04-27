@@ -17,9 +17,13 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 		# Check if it is a decor structure
 		var curr_structure: Structure = tile_scene_map[map_coords]
 		if (!curr_structure.id.ends_with("decor")): # If it is not decor, you CANT BUILD HERE!
+			structure.queue_free()
 			return false
 		# Otherwise, destroy the decor and continue
 		remove_structure(map_coords)
+	
+	if structure is Factory:
+		Global.fog_map.remove_fog_around(map_coords)
 	
 	structure.position = map_to_local(map_coords)
 	
@@ -111,9 +115,24 @@ func remove_all_structures() -> void:
 			continue
 		
 		var structure = tile_scene_map[pos]
-		if (structure is MotherTree): # Don't remove mother tree
-			pass
-		elif (structure is Twee):
-			TreeManager.remove_tree(pos)
+		if (structure is Twee): # Don't remove trees
+			continue
+		#elif (structure is Twee):
+			#TreeManager.remove_tree(pos)
 		else:
 			remove_structure(pos)
+
+
+
+
+func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:
+	if remove_structures:
+		remove_all_structures()
+	
+	for pos: Vector2i in data.keys():
+		var save_resource: StructureDataResource = data[pos]
+		
+		var structure: Structure = StructureRegistry.get_new_structure(save_resource.type)
+		
+		add_structure(pos, structure)
+		structure.apply_data_resource(save_resource)

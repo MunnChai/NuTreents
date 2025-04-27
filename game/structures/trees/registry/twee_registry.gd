@@ -5,6 +5,16 @@ extends Node
 ## Access using TreeRegistry
 
 @export var twee_scene_registry: Dictionary[Global.TreeType, PackedScene]
+var twee_stat_registry: Dictionary[Global.TreeType, TreeStatResource]
+
+func _ready() -> void:
+	_generate_twee_stat_registry()
+
+func _generate_twee_stat_registry() -> void:
+	for type: Global.TreeType in twee_scene_registry.keys():
+		var temp_twee := get_new_twee(type)
+		twee_stat_registry[type] = temp_twee.tree_stat
+		temp_twee.free() ## IMPORTANT! Prevent memory leak
 
 ## Returns the packed scene asset for the given TreeType
 func get_twee_packed_scene(type: Global.TreeType) -> PackedScene:
@@ -13,3 +23,7 @@ func get_twee_packed_scene(type: Global.TreeType) -> PackedScene:
 ## Returns a new instantiated scene node of the given TreeType
 func get_new_twee(type: Global.TreeType) -> Twee:
 	return get_twee_packed_scene(type).instantiate()
+
+## Returns the stat resource for a given tree type
+func get_twee_stat(type: Global.TreeType) -> TreeStatResource:
+	return twee_stat_registry[type]

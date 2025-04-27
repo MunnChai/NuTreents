@@ -4,6 +4,7 @@ extends Node2D
 const MOVE_DURATION: float = 0.5
 
 @export var id: String
+@export var type: EnemyManager.EnemyType
 
 @export_group("Enemy Stats")
 @export var max_health: int
@@ -19,6 +20,7 @@ var is_dead: bool = false
 
 var map_position: Vector2i
 
+signal died()
 
 
 # Pathfinding variables
@@ -352,3 +354,5 @@ func die():
 		func(animation_name):
 			queue_free()
 	)
+	
+	died.emit()

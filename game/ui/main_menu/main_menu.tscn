@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://cedh52sbdvy3x"]
+[gd_scene load_steps=7 format=3 uid="uid://cedh52sbdvy3x"]
 
 [ext_resource type="Script" uid="uid://c0uuieuuepysv" path="res://ui/main_menu/main_menu.gd" id="1_omy8q"]
 [ext_resource type="Texture2D" uid="uid://r31ptf3bjx5" path="res://ui/main_menu/main_menu_bg.png" id="1_uhj5c"]
 [ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="2_mu8pm"]
 [ext_resource type="Texture2D" uid="uid://fu3tsme7dqwe" path="res://ui/main_menu/start_button.png" id="4_i5wg5"]
+[ext_resource type="PackedScene" uid="uid://d0c1fpnqy3k0i" path="res://ui/save_and_load/load_screen.tscn" id="5_3c04x"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i5wg5"]
 
@@ -12,14 +13,18 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_omy8q")
 
-[node name="Background" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 1148.0
-offset_bottom = 646.0
-texture = ExtResource("1_uhj5c")
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Title" type="RichTextLabel" parent="."]
-layout_mode = 0
+[node name="Background" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_uhj5c")
+stretch_mode = 6
+
+[node name="Title" type="RichTextLabel" parent="CanvasLayer"]
 offset_left = 144.0
 offset_top = 52.0
 offset_right = 544.0
@@ -30,8 +35,8 @@ text = "NuTREEnts"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Button" type="Button" parent="."]
-layout_mode = 0
+[node name="StartButton" type="Button" parent="CanvasLayer"]
+unique_name_in_owner = true
 offset_left = 801.0
 offset_top = 480.0
 offset_right = 1113.0
@@ -39,7 +44,7 @@ offset_bottom = 615.0
 mouse_default_cursor_shape = 2
 theme_override_styles/focus = SubResource("StyleBoxEmpty_i5wg5")
 
-[node name="TextureRect" type="TextureRect" parent="Button"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/StartButton"]
 layout_mode = 0
 offset_left = -54.0
 offset_top = -28.0
@@ -48,7 +53,7 @@ offset_bottom = 168.0
 mouse_filter = 2
 texture = ExtResource("4_i5wg5")
 
-[node name="ButtonText" type="RichTextLabel" parent="Button/TextureRect"]
+[node name="ButtonText" type="RichTextLabel" parent="CanvasLayer/StartButton/TextureRect"]
 layout_mode = 0
 offset_left = 56.0
 offset_top = 55.0
@@ -61,4 +66,5 @@ text = "Start"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Button" to="." method="start_game"]
+[node name="LoadScreen" parent="CanvasLayer" instance=ExtResource("5_3c04x")]
+visible = false

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://bgpi8y8uf41x5"]
 
 [ext_resource type="Texture2D" uid="uid://djhkiiggkd66b" path="res://overlays/water_overlay/water_highlight-Sheet.png" id="1_cxk47"]
-[ext_resource type="Script" path="res://overlays/water_overlay/water_highlight.gd" id="2_aart4"]
+[ext_resource type="Script" uid="uid://cj3f6h860dt7x" path="res://overlays/water_overlay/water_highlight.gd" id="2_aart4"]
 [ext_resource type="FontFile" uid="uid://bygvev32r70qk" path="res://ui/fonts/monogram/monogram.ttf" id="3_cxk47"]
 
 [sub_resource type="Animation" id="Animation_qften"]

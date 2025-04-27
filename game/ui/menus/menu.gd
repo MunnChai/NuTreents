@@ -1,14 +1,11 @@
 class_name Menu
 extends Control
 
-@export var tree_menu: Control
 @export var tech_menu: Control
-@export var settings_menu: Control
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var trees: TextureButton = $MenuButtons/Trees
 @onready var technology: TextureButton = $MenuButtons/Technology
-@onready var settings: TextureButton = $MenuButtons/Settings
 
 var is_open: bool = false
 
@@ -20,7 +17,7 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("menu"):
 		if !is_open:
 			trees.pressed.emit()
-			tree_menu.focus_mode = Control.FOCUS_ALL
+			#tree_menu.focus_mode = Control.FOCUS_ALL
 		else:
 			close_menu()
 
@@ -58,9 +55,9 @@ func close_menu():
 	SfxManager.play_sound_effect("ui_pages")
 
 func set_visibility(tree : bool, tech : bool, settings : bool):
-	tree_menu.visible = tree
+	#tree_menu.visible = tree
 	tech_menu.visible = tech
-	settings_menu.visible = settings
+	#settings_menu.visible = settings
 
 func _update_animation_player():
 	if !is_open:

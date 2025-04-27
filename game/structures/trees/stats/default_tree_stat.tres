@@ -6,7 +6,7 @@
 script = ExtResource("1_oaifg")
 name = "Default Tree"
 id = "default_tree"
-description = ""
+description = "Produces nutreents"
 hp = 10
 max_water = 2
 gain = Vector3(0, 0, 0)

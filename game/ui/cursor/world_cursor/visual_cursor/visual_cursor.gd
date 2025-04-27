@@ -121,19 +121,19 @@ func _update_visuals() -> void:
 				if not TreeManager.enough_n((building_node as Factory).cost_to_remove):
 					_set_arrow_bobbing(false)
 		else:
-			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.CITY:
+			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TileType.CITY:
 				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
 					_set_arrow_bobbing(false)
-			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TILE_TYPE.ROAD:
+			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TileType.ROAD:
 				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
 					_set_arrow_bobbing(false)
 		return
 
 func _can_plant() -> bool:
-	var current_twee: Twee = TreeRegistry.get_new_twee(TreeMenu.instance.get_currently_selected_tree_type())
-	if current_twee == null:
+	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(TreeMenu.instance.get_currently_selected_tree_type())
+	if tree_stat == null:
 		return false
-	return TreeManager.enough_n(current_twee.tree_stat.cost_to_purchase)
+	return TreeManager.enough_n(tree_stat.cost_to_purchase)
 
 func _set_highlight_modulate(color: Color) -> void:
 	highlight.modulate = color

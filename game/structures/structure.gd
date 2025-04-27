@@ -55,3 +55,6 @@ func get_occupied_positions() -> Array[Vector2i]:
 ## One of "low", "medium", and "high".
 func get_arrow_cursor_height() -> String:
 	return "low"
+
+func apply_data_resource(save_resource: Resource):
+	pass

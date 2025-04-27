@@ -24,6 +24,7 @@ shader_parameter/frame_count = 0
 
 [node name="DefaultTree" type="Node2D"]
 script = ExtResource("1_f38t6")
+type = 1
 tree_stat = ExtResource("2_mwnlu")
 sheets = Array[Texture2D]([ExtResource("3_mwnlu"), ExtResource("4_vgmkb"), ExtResource("5_cbled")])
 

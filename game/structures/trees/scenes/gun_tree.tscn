@@ -21,6 +21,7 @@ shader_parameter/frame_count = 0
 
 [node name="GunTree" type="Node2D"]
 script = ExtResource("1_b4h83")
+type = 2
 tree_stat = ExtResource("2_p5an4")
 sheets = Array[Texture2D]([ExtResource("3_18yy7")])
 

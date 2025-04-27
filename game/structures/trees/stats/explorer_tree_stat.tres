@@ -6,7 +6,7 @@
 script = ExtResource("1_pvc8c")
 name = "Explorer Tree"
 id = "explorer_tree"
-description = ""
+description = "Has +1 square placement range"
 hp = 10
 max_water = 2
 gain = Vector3(0, 0, 0)

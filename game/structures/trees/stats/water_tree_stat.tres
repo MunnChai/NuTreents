@@ -6,7 +6,7 @@
 script = ExtResource("1_fptt7")
 name = "Water Tree"
 id = "water_tree"
-description = ""
+description = "Produces water"
 hp = 10
 max_water = 3
 gain = Vector3(0, 0, 0)
