@@ -24,7 +24,7 @@ func open(previous_menu: ScreenMenu) -> void:
 	TweenUtil.fade(self, 1.0, 0.1)
 
 func close(next_menu: ScreenMenu) -> void:
-	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
+	TweenUtil.scale_to(self, Vector2(0.9, 1.1), 0.05)
 	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.4)
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)
 func _finish_close() -> void:
@@ -32,8 +32,7 @@ func _finish_close() -> void:
 
 func return_to(previous_menu: ScreenMenu) -> void:
 	## ANIMATION
-	TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.3)
-	TweenUtil.whoosh(self, starting_position, 0.4)
+	open(previous_menu)
 
 
 

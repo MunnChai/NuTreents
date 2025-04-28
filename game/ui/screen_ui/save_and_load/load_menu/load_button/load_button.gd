@@ -32,9 +32,16 @@ func set_button_info_empty(save_num: int):
 	delete_button.visible = false
 	has_save_file = false
 	
-	world_name_label.text = "New World"
+	world_name_label.text = "New World\n[color=ffffff](Click to create!)"
 	day_label.text = ""
 	seed_label.text = ""
+	
+	button.pressed.connect(_open_new_world_menu)
+
+func _open_new_world_menu() -> void:
+	if not ScreenUI.new_world_menu.is_open:
+		ScreenUI.get_active_menu().close(ScreenUI.new_world_menu)
+		ScreenUI.add_menu(ScreenUI.new_world_menu)
 
 func load_game(save_num: int, session_data: Dictionary) -> void:
 	Global.session_id = save_num

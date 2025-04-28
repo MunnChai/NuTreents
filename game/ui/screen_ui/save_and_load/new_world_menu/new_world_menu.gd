@@ -1,23 +1,44 @@
-extends PanelContainer
+class_name NewWorldMenu
+extends ScreenMenu
 
 var is_open := false
 
-@onready var world_name: LineEdit = $MarginContainer/VBoxContainer/VBoxContainer/WorldName
+@onready var world_name: LineEdit = %WorldName
 @onready var create_button: Button = %CreateButton
 @onready var back_button: Button = %BackButton
 
 func _ready() -> void:
 	create_button.pressed.connect(create_new_world)
-	
+	back_button.pressed.connect(_back)
 	world_name.text_changed.connect(check_valid_world_name)
 
-func open():
+func _back() -> void:
+	ScreenUI.exit_menu()
+
+## SCREEN UI IMPLEMENTATIONS
+
+@onready var start_position := position
+
+func open(previous_menu: ScreenMenu) -> void:
 	is_open = true
 	show()
+	
+	position += Vector2.DOWN * 50.0
+	TweenUtil.whoosh(self, start_position, 0.4)
+	TweenUtil.fade(self, 1, 0.2)
+	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 
-func close():
+func close(next_menu: ScreenMenu) -> void:
 	is_open = false
+	
+	TweenUtil.whoosh(self, start_position + Vector2.DOWN * 50.0, 0.4)
+	TweenUtil.fade(self, 0, 0.1).finished.connect(_finish_close)
+	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
+func _finish_close() -> void:
 	hide()
+
+func return_to(previous_menu: ScreenMenu) -> void:
+	pass
 
 func check_valid_world_name():
 	# Ensure naem

@@ -25,6 +25,14 @@ static func get_tweens_under_target(target: Node) -> Dictionary:
 
 #region TWEEN TECHNIQUES
 
+## Tween the scale to the desired target scale
+static func scale_to(target: CanvasItem, scale: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO, ease_type: Tween.EaseType = Tween.EASE_IN) -> Tween:
+	var tween = get_new_tween(target, "scale")
+	tween.set_trans(transition_type)
+	tween.set_ease(ease_type)
+	tween.tween_property(target, "scale", scale, duration)
+	return tween
+
 ## Set scale, then tween back to one
 static func pop(target: CanvasItem, scale: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> Tween:
 	target.scale = scale

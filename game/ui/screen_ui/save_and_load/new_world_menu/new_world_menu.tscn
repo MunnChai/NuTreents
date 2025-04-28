@@ -1,127 +1,124 @@
-[gd_scene load_steps=4 format=3 uid="uid://bexvvsxohs5xm"]
+[gd_scene load_steps=5 format=3 uid="uid://bexvvsxohs5xm"]
 
 [ext_resource type="Script" uid="uid://cvxvoqns1yg1c" path="res://ui/screen_ui/save_and_load/new_world_menu/new_world_menu.gd" id="1_0amx6"]
-[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_rwms7"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_0amx6"]
+[ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_5li0k"]
+[ext_resource type="Texture2D" uid="uid://bbhcyk1k6fkk" path="res://ui/screen_ui/save_and_load/new_world_menu/new_world_decor.png" id="3_mquka"]
 
-[node name="NewWorldMenu" type="PanelContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="NewWorldMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_0amx6")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("1_rwms7")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="ColorRect" type="ColorRect" parent="NinePatchRect"]
-z_index = -1
+[node name="PanelContainerWrapper" parent="." instance=ExtResource("2_5li0k")]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 11.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.639216)
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
 theme_override_constants/margin_top = 24
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Title" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_mquka")
+stretch_mode = 2
+
+[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Title" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
 text = "Create a new World"
 fit_content = true
 
-[node name="WorldName" type="LineEdit" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="WorldName" type="LineEdit" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/font_size = 38
+theme_override_font_sizes/font_size = 16
 text = "New Forest"
 placeholder_text = "Name your Forest"
 max_length = 25
 
-[node name="WorldType" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Control2" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="WorldType" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/normal_font_size = 48
+bbcode_enabled = true
 text = "World Type"
 fit_content = true
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 16
 toggle_mode = true
 text = "Grove"
 
-[node name="Button2" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button2" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/font_size = 32
 toggle_mode = true
 text = "Forest"
 
-[node name="Button3" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="Button3" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/font_size = 32
 toggle_mode = true
 text = "Woodland"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Control3" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/normal_font_size = 48
-text = "Maybe some other world settings"
+bbcode_enabled = true
+text = "[color=d9863e]Maybe some other world settings????"
 fit_content = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="CreateButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 2
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_0amx6")
-theme_override_font_sizes/font_size = 48
-text = "Plant your Forest!"
-
-[node name="BackButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="BackButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 mouse_default_cursor_shape = 2
 theme = ExtResource("2_0amx6")
-theme_override_font_sizes/font_size = 48
 text = "Back"
+
+[node name="CreateButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_0amx6")
+text = "Plant your Forest!"
