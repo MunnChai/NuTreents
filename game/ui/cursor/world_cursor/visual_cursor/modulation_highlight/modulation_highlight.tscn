@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dl0gnb847s7bv"]
+
+[ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="1_tw8sa"]
+
+[node name="ModulationHighlight" type="Sprite2D"]
+y_sort_enabled = true
+texture = ExtResource("1_tw8sa")
