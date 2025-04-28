@@ -62,17 +62,17 @@ float noise(vec2 uv) {
 
 bool is_on_edge(vec2 uv, sampler2D texture2d, vec2 texture_pixel_size) {
 	vec4 color = texture(texture2d, uv);
-	
+
 	if (color.a > 0.0) {
 		return false;
 	}
-	
+
 	for (int x = -outline_width; x <= outline_width; x++) {
 		for (int y = -outline_width; y <= outline_width; y++) {
 			if (abs(float(x)) + abs(float(y)) > float(outline_width)) { // For diamond shaped edge detection
 				continue;
 			}
-			
+
 			vec4 surrounding_color = texture(texture2d, uv + vec2(float(x) * texture_pixel_size.x, float(y) * texture_pixel_size.y));
 			if (surrounding_color.a > 0.0) {
 				return true;
@@ -112,11 +112,11 @@ void fragment() {
 		COLOR.rgb = mix(COLOR.rgb, vec3(0.299 * COLOR.r + 0.587 * COLOR.g + 0.114 * COLOR.b), 1);
 		COLOR *= vec4(tint_color, 1.0);
 	}
-	
+
 	if (is_on_edge(new_uv, TEXTURE, TEXTURE_PIXEL_SIZE)) {
 		COLOR = vec4(1.0, 1.0, 1.0, outline_alpha);
 	}
-	
+
 	//COLOR = vec4(random, 0.0, 0.0, 1.0);
 	//COLOR = vec4(0.0, 1.0 - UV.y - 0.2, 0.0, 1.0);
 }

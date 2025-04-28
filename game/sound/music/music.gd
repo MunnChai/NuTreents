@@ -90,10 +90,10 @@ func update_day_track() -> void:
 	pass
 
 func update_night_track() -> void:
-	if audio_stream_player.get_stream_playback() == null:
+	if !audio_stream_player.playing || !audio_stream_player.stream_paused:
 		return
 	
-	if !audio_stream_player.playing || !audio_stream_player.stream_paused:
+	if audio_stream_player.get_stream_playback() == null:
 		return
 	
 	if len(get_tree().get_nodes_in_group("enemies")) > 15:

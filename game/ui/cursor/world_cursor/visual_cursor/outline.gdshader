@@ -6,17 +6,17 @@ uniform vec3 outline_color: source_color = vec3(1.0, 1.0, 1.0);
 
 bool is_on_edge(vec2 uv, sampler2D texture2d, vec2 texture_pixel_size) {
 	vec4 color = texture(texture2d, uv);
-	
+
 	if (color.a > 0.0) {
 		return false;
 	}
-	
+
 	for (int x = -outline_width; x <= outline_width; x++) {
 		for (int y = -outline_width; y <= outline_width; y++) {
 			if (abs(float(x)) + abs(float(y)) > float(outline_width)) {
 				continue;
 			}
-			
+
 			vec4 surrounding_color = texture(texture2d, uv + vec2(float(x) * texture_pixel_size.x, float(y) * texture_pixel_size.y));
 			if (surrounding_color.a > 0.0) {
 				return true;
