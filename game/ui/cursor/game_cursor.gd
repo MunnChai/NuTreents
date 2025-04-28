@@ -14,6 +14,9 @@ extends Control
 @onready var cursor_icon: TextureRect = %CursorIcon
 @onready var floating_tooltip: FloatingTooltip = %FloatingTooltip
 
+@onready var previous_mouse_position := get_global_mouse_position()
+var mouse_velocity := Vector2.ZERO
+
 static var instance: GameCursor
 
 func _ready() -> void:
@@ -22,6 +25,14 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	global_position = get_global_mouse_position()
+	
+	var new_mouse_velocity = global_position - previous_mouse_position
+	if new_mouse_velocity > mouse_velocity:
+		mouse_velocity = new_mouse_velocity
+	else:
+		mouse_velocity = MathUtil.decay(mouse_velocity, new_mouse_velocity, 18.0, delta)
+	previous_mouse_position = global_position
+	
 	_update_cursor_shape()
 
 ## Update the cursor shape based on Input's current cursor shape

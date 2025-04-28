@@ -16,6 +16,7 @@ offset_left = -18.11
 offset_right = 18.11
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(18, 0)
 size_flags_horizontal = 0
 size_flags_vertical = 0
 mouse_filter = 1

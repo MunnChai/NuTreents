@@ -50,6 +50,8 @@ func _detect_and_handle_selection() -> void:
 
 ## Update the offset of the card image rect based on various details
 const OFFSET_DECAY_CONSTANT := 32.0 # How fast does offset "lerp"?
+const ROTATION_OFFSET_DECAY_CONSTANT := 8.0
+var rotation_offset := 0.0
 func _update_card_image_offset(delta: float) -> void:
 	## Highlighted or selected have different offsets
 	if is_highlighted or is_selected:
@@ -59,6 +61,14 @@ func _update_card_image_offset(delta: float) -> void:
 			offset = MathUtil.decay(offset, Vector2.UP * 3.0, OFFSET_DECAY_CONSTANT, delta)
 	else:
 		offset = MathUtil.decay(offset, Vector2.ZERO, OFFSET_DECAY_CONSTANT, delta)
+	
+	card_image.rotation_degrees = rotation_offset
+	
+	if not is_highlighted:
+		rotation_offset = MathUtil.decay(rotation_offset, 0.0, ROTATION_OFFSET_DECAY_CONSTANT, delta)
+	else:
+		rotation_offset = MathUtil.decay(rotation_offset, ((get_local_mouse_position() - pivot_offset).x) / 3.0, ROTATION_OFFSET_DECAY_CONSTANT, delta)
+
 	card_image.position = start_position + offset # NOTE that the position is reset every frame.
 	
 	## SINUSOIDAL MOTION only if SELECTED and PLACEABLE
@@ -98,6 +108,8 @@ func _on_mouse_entered() -> void:
 	#if not is_selected:
 	SfxManager.play_sound_effect("ui_click")
 	pop()
+	
+	rotation_offset = clampf(GameCursor.instance.mouse_velocity.x * 2.0, -25, 25) 
 
 ## Mouse has exited MouseDetector
 func _on_mouse_exited() -> void:
