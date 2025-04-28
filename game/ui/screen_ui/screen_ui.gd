@@ -9,6 +9,7 @@ extends CanvasLayer
 
 @onready var pause_menu: PauseMenu = %PauseMenu
 @onready var settings_menu: SettingsMenu = %SettingsMenu
+@onready var load_menu: LoadMenu = %LoadMenu
 
 var is_open := false
 

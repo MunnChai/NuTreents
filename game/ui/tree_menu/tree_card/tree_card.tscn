@@ -18,18 +18,20 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-mouse_default_cursor_shape = 2
+mouse_filter = 1
 script = ExtResource("1_oi4kf")
 
 [node name="TooltipPivot" type="Control" parent="."]
 unique_name_in_owner = true
+layout_mode = 1
 anchors_preset = 0
 offset_left = 18.0
 offset_top = -30.0
 offset_right = 18.0
 offset_bottom = -30.0
+mouse_filter = 2
 
-[node name="Control" type="Control" parent="."]
+[node name="ShadowPivot" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -45,7 +47,7 @@ grow_vertical = 2
 mouse_filter = 2
 mouse_default_cursor_shape = 2
 
-[node name="ShadowRect" type="ColorRect" parent="Control"]
+[node name="ShadowRect" type="ColorRect" parent="ShadowPivot"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -58,7 +60,8 @@ grow_vertical = 0
 mouse_filter = 2
 color = Color(0, 0, 0, 0.541176)
 
-[node name="CardRect" type="TextureRect" parent="."]
+[node name="CardImage" type="TextureRect" parent="."]
+unique_name_in_owner = true
 clip_children = 2
 layout_mode = 1
 anchors_preset = 8
@@ -73,11 +76,12 @@ offset_bottom = 24.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(18, 24)
-mouse_default_cursor_shape = 2
+mouse_filter = 2
 texture = ExtResource("2_oi4kf")
 stretch_mode = 5
 
-[node name="TreeIconRect" type="TextureRect" parent="CardRect"]
+[node name="TreeImage" type="TextureRect" parent="CardImage"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -93,7 +97,7 @@ grow_vertical = 2
 texture = ExtResource("1_qqaul")
 stretch_mode = 5
 
-[node name="WaitRect" type="ColorRect" parent="CardRect"]
+[node name="WaitRect" type="ColorRect" parent="CardImage"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -105,5 +109,23 @@ pivot_offset = Vector2(18, 0)
 mouse_filter = 2
 color = Color(0.34902, 0.14902, 0.235294, 0.741176)
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[node name="MouseDetector" type="Control" parent="."]
+unique_name_in_owner = true
+anchors_preset = 0
+offset_top = -38.0
+offset_right = 36.0
+offset_bottom = 26.0
+mouse_default_cursor_shape = 2
+
+[node name="DebugPanel" type="Panel" parent="MouseDetector"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[connection signal="mouse_entered" from="MouseDetector" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MouseDetector" to="." method="_on_mouse_exited"]

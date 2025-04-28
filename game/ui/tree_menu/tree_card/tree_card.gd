@@ -1,72 +1,77 @@
 class_name TreeCard
 extends Control
 
-@export var tree_image: Texture2D
+## TREE CARD
+## The HUD bar UI element for a tree
+
+## ---
+
+## The type of tree that this card represents
 @export var tree_type: Global.TreeType
+@onready var stat: TreeStatResource = TreeRegistry.get_twee_stat(tree_type)
 
-@export var special_card_image: Texture2D
+## REFERENCES
+@onready var card_image: TextureRect = %CardImage
+@onready var tree_image: TextureRect = %TreeImage
+@onready var wait_rect: ColorRect = %WaitRect
+@onready var tooltip_pivot: Control = %TooltipPivot
 
-@onready var start_position: Vector2 = $CardRect.position
+#region STATE
 
-@onready var offset: Vector2 = Vector2.ZERO
+## Is this card highlighted by the mouse cursor? (Not necessarily selected)
+var is_highlighted := false
+## Is this card actively selected? (Chosen to be placed)
+var is_selected := false
+## Is this card available based on the player's stats and nutreents count?
+var is_available := false
+var elapsed_time := 0.0 ## TODO: Optimize this or something..? Make it a looping animation instead?
 
-var is_highlighted = false
-var is_selected = false
+#endregion
 
 func _ready() -> void:
-	$CardRect/TreeIconRect.texture = tree_image
-	
+	_init_visuals()
 	TreeManager.tree_placed.connect(_on_tree_placed)
-	
-	if special_card_image != null:
-		$CardRect.texture = special_card_image
 
-func _on_tree_placed(new_twee: Twee) -> void:
-	if is_selected:
-		pop()
-
-func _on_mouse_entered() -> void:
-	#$CardRect.global_position = start_position + Vector2.UP * 5.0
-	#$CardRect.modulate = Color.RED
-	is_highlighted = true
-	show_hover_info_box()
-	if not is_selected:
-		SfxManager.play_sound_effect("ui_click")
-		pop()
-
-func _on_mouse_exited() -> void:
-	#$CardRect.global_position = start_position
-	#$CardRect.modulate = Color.WHITE
-	is_highlighted = false
-	HoverInfoBox.instance.hide()
-
-const OFFSET_DECAY_CONSTANT := 32.0
-
-var time := 0.0
-
-var is_available := false
+func _init_visuals() -> void:
+	tree_image.texture = stat.tree_icon
+	if stat.special_card_background_override != null:
+		card_image.texture = stat.special_card_background_override
 
 func _process(delta: float) -> void:
-	time += delta
+	elapsed_time += delta
 	
+	_detect_and_handle_selection()
+	is_selected = TreeMenu.instance.get_currently_selected_tree_type() == tree_type
+	_update_availability(delta)
+	_update_card_image_offset(delta)
+
+func _detect_and_handle_selection() -> void:
+	## Not selected, highlighted, and clicked -> Select this tree type
 	if is_highlighted and not is_selected and Input.is_action_just_pressed("lmb"):
 		TreeMenu.instance.set_currently_selected_tree_type(tree_type)
 		SfxManager.play_sound_effect("ui_click")
-	
-	is_selected = TreeMenu.instance.get_currently_selected_tree_type() == tree_type
-	
+
+## Update the offset of the card image rect based on various details
+const OFFSET_DECAY_CONSTANT := 32.0 # How fast does offset "lerp"?
+func _update_card_image_offset(delta: float) -> void:
+	## Highlighted or selected have different offsets
 	if is_highlighted or is_selected:
-		#$CardRect.position = start_position + Vector2.UP * 3.0
 		if is_selected:
 			offset = MathUtil.decay(offset, Vector2.UP * 10.0, OFFSET_DECAY_CONSTANT, delta)
 		elif is_highlighted:
 			offset = MathUtil.decay(offset, Vector2.UP * 3.0, OFFSET_DECAY_CONSTANT, delta)
 	else:
 		offset = MathUtil.decay(offset, Vector2.ZERO, OFFSET_DECAY_CONSTANT, delta)
-		#$CardRect.position = start_position + Vector2.DOWN * 0.0
+	card_image.position = start_position + offset # NOTE that the position is reset every frame.
 	
-	$CardRect.position = start_position + offset
-	
+	## SINUSOIDAL MOTION only if SELECTED and PLACEABLE
+	if is_selected and is_available:
+		card_image.position += sin(elapsed_time * 5.0) * Vector2.UP * 2.0
+	else:
+		elapsed_time = 0.0
+
+## Update the availability status (Is this card able to be placed at this time?)
+func _update_availability(delta: float) -> void:
 	var percent_of_full := float(TreeManager.nutreents) / float(TreeRegistry.get_twee_stat(tree_type).cost_to_purchase)
 	percent_of_full = clampf(percent_of_full, 0.0, 1.0)
 	
@@ -78,18 +83,47 @@ func _process(delta: float) -> void:
 	else:
 		is_available = false
 	
-	%WaitRect.scale.y = MathUtil.decay(%WaitRect.scale.y, 1.0 - percent_of_full, 20.0, delta)
-	
-	if is_selected and is_available:
-		$CardRect.position += sin(time * 5.0) * Vector2.UP * 2.0
-	else:
-		time = 0.0
+	wait_rect.scale.y = MathUtil.decay(wait_rect.scale.y, 1.0 - percent_of_full, 20.0, delta)
 
+#region EVENT HANDLERS
+
+## A tree has been placed/added by TweeManager!
+func _on_tree_placed(new_twee: Twee) -> void:
+	if is_selected:
+		pop() ## Selected card was just placed!
+
+## Mouse has entered MouseDetector
+func _on_mouse_entered() -> void:
+	is_highlighted = true
+	show_hover_info_box()
+	
+	#if not is_selected:
+	SfxManager.play_sound_effect("ui_click")
+	pop()
+
+## Mouse has exited MouseDetector
+func _on_mouse_exited() -> void:
+	is_highlighted = false
+	hide_hover_info_box()
+
+#endregion
+
+#region HOVER INFO BOX
+
+## Show the hover info box
 func show_hover_info_box() -> void:
-	HoverInfoBox.instance.show()
-	HoverInfoBox.instance.global_position = %TooltipPivot.global_position + Vector2.UP * 5.0
-	var stat: TreeStatResource = TreeRegistry.get_twee_stat(tree_type)
+	HoverInfoBox.instance.move_to_pivot(tooltip_pivot.global_position + Vector2.UP * 5.0)
+	HoverInfoBox.instance.show_content(generate_hover_info_box_text_entry())
+func hide_hover_info_box() -> void:
+	HoverInfoBox.instance.hide_content()
+
+## Generates the hover info box text based on this TreeType and returns the string
+func generate_hover_info_box_text_entry() -> String:
 	var content: String = ""
+	
+	if stat == null:
+		return "ERROR: Not a valid tree type/no stat resource!"
+	
 	content += stat.name.to_upper() + "\n"
 	content += "\n"
 	content += "[color=d9863e]Costs " + str(stat.cost_to_purchase) + " nutreents\n"
@@ -98,9 +132,18 @@ func show_hover_info_box() -> void:
 	#content += "\n"
 	#content += "When grown: \n"
 	#content += "WATER: " + str(stat.gain_2.y) + "/s" + "\n"
-	HoverInfoBox.instance.set_content(content)
-	HoverInfoBox.instance.pop()
+	
+	return content
 
+#endregion
+
+#region ANIMATION 
+
+@onready var start_position: Vector2 = card_image.position
+@onready var offset: Vector2 = Vector2.ZERO
+
+## Make the card suddenly become bigger, then go back to normal
 func pop() -> void:
-	$CardRect.scale = Vector2(1.2, 1.2)
-	create_tween().tween_property($CardRect, "scale", Vector2.ONE, 0.25).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	TweenUtil.pop_delta(card_image, Vector2(0.2, 0.2), 0.25, Tween.TRANS_CUBIC)
+
+#endregion

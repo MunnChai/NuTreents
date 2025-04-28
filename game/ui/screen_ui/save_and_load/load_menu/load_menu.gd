@@ -1,4 +1,5 @@
-extends PanelContainer
+class_name LoadMenu
+extends ScreenMenu
 
 const MENU_THEME = preload("res://ui/main_ui_theme.tres")
 const LOAD_BUTTON = preload("res://ui/screen_ui/save_and_load/load_menu/load_button/load_button.tscn")
@@ -7,6 +8,34 @@ const LOAD_BUTTON = preload("res://ui/screen_ui/save_and_load/load_menu/load_but
 @onready var back_button: Button = %BackButton
 
 var is_open := false
+
+@onready var starting_position := position
+
+## SCREEN MENU IMPLEMENTATION
+
+func open(previous_menu: ScreenMenu) -> void:
+	position = starting_position
+	show()
+	
+	## ANIMATION
+	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
+	position = position + Vector2.DOWN * 100.0
+	TweenUtil.whoosh(self, starting_position, 0.4)
+	TweenUtil.fade(self, 1.0, 0.1)
+
+func close(next_menu: ScreenMenu) -> void:
+	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
+	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.4)
+	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)
+func _finish_close() -> void:
+	hide()
+
+func return_to(previous_menu: ScreenMenu) -> void:
+	## ANIMATION
+	TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.3)
+	TweenUtil.whoosh(self, starting_position, 0.4)
+
+
 
 func _ready():
 	create_load_buttons()
@@ -28,3 +57,7 @@ func create_load_button(save_num: int = 1):
 
 func get_load_buttons() -> Array:
 	return load_buttons.get_children()
+
+
+func _on_back_button_pressed() -> void:
+	ScreenUI.exit_menu()

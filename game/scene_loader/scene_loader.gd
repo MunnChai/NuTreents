@@ -62,6 +62,7 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	tween_in.finished.connect(
 		func():
 			get_tree().paused = false
+			ScreenUI.terminate_stack()
 			
 			var music: Node = get_tree().get_first_node_in_group("music")
 			if (music):

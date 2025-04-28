@@ -27,9 +27,9 @@ func _on_toggled(toggled_on: bool) -> void:
 
 func _on_mouse_entered() -> void:
 	if button_pressed:
-		GameCursor.instance.show_tooltip("Enable Fast Forward")
+		GameCursor.instance.show_tooltip("Enable Fast Forward", 1)
 	else:
-		GameCursor.instance.show_tooltip("Disable Fast Forward")
+		GameCursor.instance.show_tooltip("Disable Fast Forward", 1)
 
 func _on_mouse_exited() -> void:
 	GameCursor.instance.hide_tooltip()

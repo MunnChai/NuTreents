@@ -44,10 +44,10 @@ static func pop_delta(target: CanvasItem, scale_delta: Vector2, duration: float 
 	return tween
 
 ## Tween to another location
-static func whoosh(target: CanvasItem, position: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO) -> Tween:
+static func whoosh(target: CanvasItem, position: Vector2, duration: float = 0.5, transition_type: Tween.TransitionType = Tween.TRANS_EXPO, ease_type: Tween.EaseType = Tween.EASE_OUT) -> Tween:
 	var tween = get_new_tween(target, "position")
 	tween.set_trans(transition_type)
-	tween.set_ease(Tween.EASE_OUT)
+	tween.set_ease(ease_type)
 	tween.tween_property(target, "position", position, duration)
 	return tween
 

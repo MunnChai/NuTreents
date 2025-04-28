@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=2 format=3 uid="uid://2t6mabvksoaa"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://2t6mabvksoaa"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_oaifg"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/tree_menu/icons/default_tree.png" id="2_xrtgq"]
 
 [resource]
 script = ExtResource("1_oaifg")
 name = "Default Tree"
 id = "default_tree"
 description = "Produces nutreents"
+tree_icon = ExtResource("2_xrtgq")
 hp = 10
 max_water = 2
 gain = Vector3(0, 0, 0)

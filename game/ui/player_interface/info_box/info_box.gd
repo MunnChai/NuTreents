@@ -150,6 +150,6 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 
 func _process(delta: float) -> void:
 	if not rich_text.text.is_empty():
-		GameCursor.instance.show_tooltip(rich_text.text)
+		GameCursor.instance.show_tooltip(rich_text.text, 0)
 	else:
 		GameCursor.instance.hide_tooltip()
