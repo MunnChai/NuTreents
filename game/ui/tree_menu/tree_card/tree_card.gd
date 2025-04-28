@@ -16,8 +16,7 @@ extends Control
 @onready var wait_rect: ColorRect = %WaitRect
 @onready var tooltip_pivot: Control = %TooltipPivot
 
-#region STATE
-
+## STATE
 ## Is this card highlighted by the mouse cursor? (Not necessarily selected)
 var is_highlighted := false
 ## Is this card actively selected? (Chosen to be placed)
@@ -25,8 +24,6 @@ var is_selected := false
 ## Is this card available based on the player's stats and nutreents count?
 var is_available := false
 var elapsed_time := 0.0 ## TODO: Optimize this or something..? Make it a looping animation instead?
-
-#endregion
 
 func _ready() -> void:
 	_init_visuals()
@@ -96,6 +93,7 @@ func _on_tree_placed(new_twee: Twee) -> void:
 func _on_mouse_entered() -> void:
 	is_highlighted = true
 	show_hover_info_box()
+	FloatingTooltip.instance.force_hidden = true
 	
 	#if not is_selected:
 	SfxManager.play_sound_effect("ui_click")
@@ -105,6 +103,7 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	is_highlighted = false
 	hide_hover_info_box()
+	FloatingTooltip.instance.force_hidden = false
 
 #endregion
 
@@ -122,7 +121,7 @@ func generate_hover_info_box_text_entry() -> String:
 	var content: String = ""
 	
 	if stat == null:
-		return "ERROR: Not a valid tree type/no stat resource!"
+		return "ERROR: Not a valid tree type/no stat resource in the registry!"
 	
 	content += stat.name.to_upper() + "\n"
 	content += "\n"

@@ -82,8 +82,8 @@ func pause_game() -> void:
 	get_tree().paused = true
 	game_paused.emit()
 	
-	if GameCursor.instance:
-		GameCursor.instance.force_hide_tooltip = true
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = true
 	
 	previous_time_scale = Engine.time_scale
 	Engine.time_scale = 1.0
@@ -100,8 +100,8 @@ func pause_game() -> void:
 func unpause_game() -> void:
 	Engine.time_scale = previous_time_scale
 	
-	if GameCursor.instance:
-		GameCursor.instance.force_hide_tooltip = false
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = false
 	
 	is_paused = false
 	get_tree().paused = false

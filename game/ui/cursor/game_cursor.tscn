@@ -1,13 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhyyy6a55e8pp"]
+[gd_scene load_steps=5 format=3 uid="uid://bhyyy6a55e8pp"]
 
 [ext_resource type="Script" uid="uid://ba3os81gow2pp" path="res://ui/cursor/game_cursor.gd" id="1_r61ph"]
 [ext_resource type="Texture2D" uid="uid://osqxigfn8kag" path="res://ui/cursor/game_cursor_pointer.png" id="1_y5rov"]
 [ext_resource type="Texture2D" uid="uid://bx2ug7nhyiq8k" path="res://ui/cursor/game_cursor_hand.png" id="3_1qf33"]
-[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="4_d4uqw"]
-[ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="5_ptxso"]
-[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="6_wbj6d"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1dai2"]
+[ext_resource type="PackedScene" uid="uid://b3xlpptughfmd" path="res://ui/cursor/floating_tooltip/floating_tooltip.tscn" id="4_u6yto"]
 
 [node name="GameCursor" type="Control"]
 process_mode = 3
@@ -15,76 +11,21 @@ layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_r61ph")
-pointer_texture = ExtResource("1_y5rov")
-hand_texture = ExtResource("3_1qf33")
+cursor_shape_textures = Dictionary[int, Texture2D]({
+0: ExtResource("1_y5rov"),
+2: ExtResource("3_1qf33")
+})
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 1
+[node name="FloatingTooltip" parent="." instance=ExtResource("4_u6yto")]
+unique_name_in_owner = true
+layout_mode = 0
 offset_left = 9.0
 offset_top = 12.0
 offset_right = 109.0
 offset_bottom = 47.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_1dai2")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
-modulate = Color(0, 0, 0, 0.592157)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-texture = ExtResource("4_d4uqw")
-region_rect = Rect2(0, 0, 48, 48)
-patch_margin_left = 8
-patch_margin_top = 8
-patch_margin_right = 8
-patch_margin_bottom = 8
-axis_stretch_horizontal = 1
-axis_stretch_vertical = 1
-
-[node name="ArrowRect" type="TextureRect" parent="PanelContainer/NinePatchRect"]
-visible = false
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-texture = ExtResource("5_ptxso")
-expand_mode = 1
-stretch_mode = 3
-
-[node name="ColorRect" type="ColorRect" parent="PanelContainer/NinePatchRect"]
-visible = false
-z_index = -1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 2.01
-offset_bottom = 2.01
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.639216)
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 11
-theme_override_constants/margin_top = 11
-theme_override_constants/margin_right = 11
-theme_override_constants/margin_bottom = 11
-
-[node name="TooltipText" type="RichTextLabel" parent="PanelContainer/MarginContainer"]
+[node name="CursorIcon" type="TextureRect" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-theme = ExtResource("6_wbj6d")
-bbcode_enabled = true
-text = "TOOLTIP TEXT!"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
 offset_right = 16.0
 offset_bottom = 16.0
