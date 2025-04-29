@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://bb1hfx6qp2nul" path="res://ui/screen_ui/pause_menu/pause_menu.tscn" id="2_g2xr2"]
 [ext_resource type="PackedScene" uid="uid://dqkyj7u64uhxk" path="res://ui/screen_ui/pause_menu/settings_menu/settings_menu.tscn" id="3_55tr8"]
 [ext_resource type="Script" uid="uid://rmgcuvum63sm" path="res://ui/screen_ui/version_label.gd" id="3_stx1l"]
-[ext_resource type="PackedScene" uid="uid://bkuuj58b1syaq" path="res://ui/screen_ui/save_and_load/load_menu/load_menu.tscn" id="4_17o5s"]
-[ext_resource type="PackedScene" uid="uid://bexvvsxohs5xm" path="res://ui/screen_ui/save_and_load/new_world_menu/new_world_menu.tscn" id="7_w6yb4"]
+[ext_resource type="PackedScene" uid="uid://bkuuj58b1syaq" path="res://ui/screen_ui/save_and_load_menu/load_menu/load_menu.tscn" id="4_17o5s"]
+[ext_resource type="PackedScene" uid="uid://bexvvsxohs5xm" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_menu.tscn" id="7_w6yb4"]
 
 [node name="ScreenUI" type="CanvasLayer"]
 process_mode = 3

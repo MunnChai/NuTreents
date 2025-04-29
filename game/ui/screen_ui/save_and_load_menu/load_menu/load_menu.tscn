@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bkuuj58b1syaq"]
 
-[ext_resource type="Script" uid="uid://cqxa2ir73r1cu" path="res://ui/screen_ui/save_and_load/load_menu/load_menu.gd" id="1_7xcav"]
+[ext_resource type="Script" uid="uid://cqxa2ir73r1cu" path="res://ui/screen_ui/save_and_load_menu/load_menu/load_menu.gd" id="1_7xcav"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_5jmck"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_3mv1y"]
-[ext_resource type="Texture2D" uid="uid://dov4u2h6mtcp8" path="res://ui/screen_ui/save_and_load/load_menu/top_decor.png" id="3_lf4xf"]
+[ext_resource type="Texture2D" uid="uid://dov4u2h6mtcp8" path="res://ui/screen_ui/save_and_load_menu/load_menu/title_text.png" id="3_lf4xf"]
 
 [node name="LoadMenu" type="Control"]
 layout_mode = 3

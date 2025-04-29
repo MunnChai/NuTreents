@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cuc37nusx6e0e"]
 
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="1_yp4uk"]
-[ext_resource type="Script" uid="uid://cgm4o80avttry" path="res://ui/screen_ui/save_and_load/load_menu/load_button/load_button.gd" id="2_x54al"]
+[ext_resource type="Script" uid="uid://cgm4o80avttry" path="res://ui/screen_ui/save_and_load_menu/load_menu/load_button/load_button.gd" id="2_x54al"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_yp4uk"]
 size = Vector2(40, 40)

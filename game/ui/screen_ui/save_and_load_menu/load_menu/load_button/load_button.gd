@@ -42,12 +42,15 @@ func _open_new_world_menu() -> void:
 	if not ScreenUI.new_world_menu.is_open:
 		ScreenUI.get_active_menu().close(ScreenUI.new_world_menu)
 		ScreenUI.add_menu(ScreenUI.new_world_menu)
+		Global.session_id = save_num
 
 func load_game(save_num: int, session_data: Dictionary) -> void:
 	Global.session_id = save_num
 	SceneLoader.transition_to_game(session_data)
 
 func delete_world() -> void:
+	SfxManager.play_sound_effect("ui_click")
+	
 	SessionData.clear_session_data(save_num)
 	
 	# Disconnect button signals

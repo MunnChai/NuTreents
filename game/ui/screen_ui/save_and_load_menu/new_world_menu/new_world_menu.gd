@@ -10,9 +10,16 @@ var is_open := false
 func _ready() -> void:
 	create_button.pressed.connect(create_new_world)
 	back_button.pressed.connect(_back)
+	world_name.focus_entered.connect(func(): 
+		SfxManager.play_sound_effect("ui_click"))
 	world_name.text_changed.connect(check_valid_world_name)
 
+func reset_inputs() -> void:
+	world_name.editable = true
+	world_name.text = "New Forest"
+
 func _back() -> void:
+	Global.session_id = 0
 	ScreenUI.exit_menu()
 
 ## SCREEN UI IMPLEMENTATIONS
@@ -22,11 +29,14 @@ func _back() -> void:
 func open(previous_menu: ScreenMenu) -> void:
 	is_open = true
 	show()
+	reset_inputs()
 	
 	position += Vector2.DOWN * 50.0
 	TweenUtil.whoosh(self, start_position, 0.4)
 	TweenUtil.fade(self, 1, 0.2)
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
+	
+	SfxManager.play_sound_effect("ui_click")
 
 func close(next_menu: ScreenMenu) -> void:
 	is_open = false
@@ -48,6 +58,8 @@ func check_valid_world_name():
 		create_button.disabled = false
 
 func create_new_world() -> void:
+	SfxManager.play_sound_effect("ui_pages")
+	
 	# Disable line edit
 	world_name.editable = false
 	

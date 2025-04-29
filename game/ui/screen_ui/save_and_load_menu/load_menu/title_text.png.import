@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bbhcyk1k6fkk"
-path="res://.godot/imported/new_world_decor.png-ef74c3be03d083dd37e8350364d2f38b.ctex"
+uid="uid://dov4u2h6mtcp8"
+path="res://.godot/imported/title_text.png-c8a0280e9f1105fb71a08b7b6ad30bc3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/screen_ui/save_and_load/new_world_menu/new_world_decor.png"
-dest_files=["res://.godot/imported/new_world_decor.png-ef74c3be03d083dd37e8350364d2f38b.ctex"]
+source_file="res://ui/screen_ui/save_and_load_menu/load_menu/title_text.png"
+dest_files=["res://.godot/imported/title_text.png-c8a0280e9f1105fb71a08b7b6ad30bc3.ctex"]
 
 [params]
 

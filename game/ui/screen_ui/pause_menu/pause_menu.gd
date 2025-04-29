@@ -42,9 +42,17 @@ func _finish_close() -> void:
 	unpause_game()
 
 func return_to(previous_menu: ScreenMenu) -> void:
-	## ANIMATION
-	TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.3)
-	TweenUtil.whoosh(self, starting_position, 0.4)
+	show()
+	if previous_menu == ScreenUI.settings_menu:
+		## ANIMATION
+		TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.3)
+		TweenUtil.whoosh(self, starting_position, 0.4)
+	else:
+		## ANIMATION
+		TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
+		position = starting_position + Vector2.DOWN * 100.0
+		TweenUtil.whoosh(self, starting_position, 0.4)
+		TweenUtil.fade(self, 1.0, 0.1)
 
 func _ready() -> void:
 	## TODO: Figure out how to scale for really small windows, and make sure right size...
@@ -61,7 +69,7 @@ func setup_button_signals() -> void:
 	
 	resume_button.focus_entered.connect(_on_enabled_button_focus)
 	settings_button.focus_entered.connect(_on_enabled_button_focus)
-	save_button.focus_entered.connect(_on_enabled_button_focus)
+	save_button.focus_entered.connect(_on_disabled_button_focus)
 	load_button.focus_entered.connect(_on_enabled_button_focus)
 	main_menu_button.focus_entered.connect(_on_enabled_button_focus)
 	quit_game_button.focus_entered.connect(_on_enabled_button_focus)
@@ -145,8 +153,20 @@ func _on_save_button_pressed() -> void:
 func _on_load_button_pressed() -> void:
 	load_button_pressed.emit()
 	
+	if ScreenUI.get_active_menu() == ScreenUI.settings_menu:
+		ScreenUI.exit_menu()
+	
 	SfxManager.play_sound_effect("ui_click")
+	
+	ScreenUI.add_menu(ScreenUI.load_menu)
+	
+	TweenUtil.scale_to(self, Vector2(0.9, 1.1), 0.05)
+	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.2, Tween.TRANS_CUBIC, Tween.EASE_IN)
+	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close_for_load)
+	
 	## TODO: Open a save games screen to prompt for selection
+func _finish_close_for_load() -> void:
+	hide()
 
 func _on_main_menu_button_pressed() -> void:
 	main_menu_button_pressed.emit()

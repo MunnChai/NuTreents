@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bexvvsxohs5xm"]
 
-[ext_resource type="Script" uid="uid://cvxvoqns1yg1c" path="res://ui/screen_ui/save_and_load/new_world_menu/new_world_menu.gd" id="1_0amx6"]
+[ext_resource type="Script" uid="uid://cvxvoqns1yg1c" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_menu.gd" id="1_0amx6"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_0amx6"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_5li0k"]
-[ext_resource type="Texture2D" uid="uid://bbhcyk1k6fkk" path="res://ui/screen_ui/save_and_load/new_world_menu/new_world_decor.png" id="3_mquka"]
+[ext_resource type="Texture2D" uid="uid://bbhcyk1k6fkk" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_text.png" id="3_mquka"]
 
 [node name="NewWorldMenu" type="Control"]
 layout_mode = 3

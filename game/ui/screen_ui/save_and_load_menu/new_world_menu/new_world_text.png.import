@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dov4u2h6mtcp8"
-path="res://.godot/imported/top_decor.png-4ae4bcdb75627a8e3e90527903ad2538.ctex"
+uid="uid://bbhcyk1k6fkk"
+path="res://.godot/imported/new_world_text.png-ad1f89c417f7aa762202aa2ddb18b9b0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/screen_ui/save_and_load/load_menu/top_decor.png"
-dest_files=["res://.godot/imported/top_decor.png-4ae4bcdb75627a8e3e90527903ad2538.ctex"]
+source_file="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_text.png"
+dest_files=["res://.godot/imported/new_world_text.png-ad1f89c417f7aa762202aa2ddb18b9b0.ctex"]
 
 [params]
 
