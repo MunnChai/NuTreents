@@ -10,6 +10,12 @@ const SAVE_NAME := "session_"
 
 var session_data: Dictionary = {}
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST and Global.game_state == Global.GameState.PLAYING:
+		save_session_data(Global.session_id)
+
+#region SavingFunctions
+
 # Create a new world, setting any initial metadata (name, seed, etc.)
 func create_new_session_data(save_num: int, world_name: String = "New World", seed: int = randi()):
 	var config = ConfigFile.new()
@@ -25,10 +31,6 @@ func save_session_data(save_num: int = 1):
 	var config = ConfigFile.new()
 	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"
 	var err = config.load(full_path)
-	if err != OK:
-		print("WARNING: Failed to save session data!")
-	else:
-		print("Saved session data to: ", full_path)
 	
 	# Save nutreents
 	var nutreents: int = TreeManager.nutreents
@@ -72,7 +74,15 @@ func save_session_data(save_num: int = 1):
 		structure_map[pos] = save_resource
 	config.set_value(SECTION_SESSION, "structure_map", structure_map)
 	
-	# TODO: Save enemies
+	# Save enemies + EnemyManager info
+	var enemy_map: Dictionary
+	for enemy: Enemy in EnemyManager.current_enemies:
+		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
+		if !save_resource:
+			continue
+		enemy_map[enemy.map_position] = save_resource
+	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
+	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.enemy_spawn_timer)
 	
 	create_save_directory()
 	
@@ -98,37 +108,87 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		return {}
 	
 	# Get world name
-	var world_name: String = config.get_value(SECTION_METADATA, "world_name")
-	session_data["world_name"] = world_name
+	var world_name = config.get_value(SECTION_METADATA, "world_name")
+	if world_name is String:
+		session_data["world_name"] = world_name
+	else:
+		session_data["world_name"] = "ERR_WORLD_NAME"
+		print("WARNING: Could not load value 'world_name' from ", full_path)
 	
 	# Get rng seed
-	var session_seed: int = config.get_value(SECTION_METADATA, "seed")
-	session_data["seed"] = session_seed
+	var session_seed = config.get_value(SECTION_METADATA, "seed")
+	if session_seed is int:
+		session_data["seed"] = session_seed
+	else:
+		session_data["seed"] = Global.new_seed()
+		print("WARNING: Could not load value 'seed' from ", full_path)
 	#print("Seed: ", session_seed)
 	
 	# Get nutreents
 	var nutreents = config.get_value(SECTION_SESSION, "nutreents")
-	session_data["nutreents"] = nutreents
+	if nutreents is int:
+		session_data["nutreents"] = nutreents
+	else:
+		session_data["nutreents"] = 0
+		print("WARNING: Could not load value 'nutreents' from ", full_path)
 	
 	# Get time and day
 	var current_day = config.get_value(SECTION_SESSION, "current_day")
 	var current_time = config.get_value(SECTION_SESSION, "current_time")
 	var total_time = config.get_value(SECTION_METADATA, "total_time")
-	session_data["current_day"] = current_day
-	session_data["current_time"] = current_time
-	session_data["total_time"] = total_time
+	if current_day is int:
+		session_data["current_day"] = current_day
+	else:
+		session_data["current_day"] = 1
+		print("WARNING: Could not load value 'current_day' from ", full_path)
+	if current_time is float:
+		session_data["current_time"] = current_time
+	else:
+		session_data["current_time"] = 0
+		print("WARNING: Could not load value 'current_time' from ", full_path)
+	if total_time is float:
+		session_data["total_time"] = total_time
+	else:
+		session_data["total_time"] = 0
+		print("WARNING: Could not load value 'total_time' from ", full_path)
+	
+	# Get EnemyManager info
+	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map")
+	var enemy_spawn_timer = config.get_value(SECTION_SESSION, "enemy_spawn_timer")
+	if enemy_map is Dictionary:
+		session_data["enemy_map"] = enemy_map
+	else:
+		session_data["enemy_map"] = {}
+		print("WARNING: Could not load value 'enemy_map' from ", full_path)
+	if enemy_spawn_timer is float:
+		session_data["enemy_spawn_timer"] = enemy_spawn_timer
+	else:
+		session_data["enemy_spawn_timer"] = 0
+		print("WARNING: Could not load value 'enemy_spawn_timer' from ", full_path)
 	
 	# Get tiles
-	var terrain_map: Dictionary = config.get_value(SECTION_SESSION, "terrain_map")
-	session_data["terrain_map"] = terrain_map
+	var terrain_map = config.get_value(SECTION_SESSION, "terrain_map")
+	if terrain_map is Dictionary:
+		session_data["terrain_map"] = terrain_map
+	else:
+		session_data["terrain_map"] = {}
+		print("WARNING: Could not load value 'terrain_map' from ", full_path)
 	
 	# Get trees
-	var tree_map: Dictionary = config.get_value(SECTION_SESSION, "tree_map")
-	session_data["tree_map"] = tree_map
+	var tree_map = config.get_value(SECTION_SESSION, "tree_map")
+	if tree_map is Dictionary:
+		session_data["tree_map"] = tree_map
+	else:
+		session_data["tree_map"] = {}
+		print("WARNING: Could not load value 'tree_map' from ", full_path)
 	
 	# Get structures
-	var structure_map: Dictionary = config.get_value(SECTION_SESSION, "structure_map")
-	session_data["structure_map"] = structure_map
+	var structure_map = config.get_value(SECTION_SESSION, "structure_map")
+	if structure_map is Dictionary:
+		session_data["structure_map"] = structure_map
+	else:
+		session_data["structure_map"] = {}
+		print("WARNING: Could not load value 'structure_map' from ", full_path)
 	
 	return session_data
 
@@ -158,18 +218,16 @@ func clear_session_data(save_num: int = 1):
 	
 	config.save(full_path)
 
+#endregion
+
+
 # Creates a directory in the User directory if it does not already exist
 func create_save_directory() -> void:
 	if !DirAccess.dir_exists_absolute(SAVE_PATH):
 		DirAccess.make_dir_absolute(SAVE_PATH)
 
 
-func _set_owner(node, root):
-	if node != root:
-		node.owner = root
-	for child in node.get_children():
-		_set_owner(child, root)
-
+#region SaveResources
 
 func _create_twee_save_resource(twee: Twee) -> TweeDataResource:
 	var save_resource: TweeDataResource = TweeDataResource.new()
@@ -209,4 +267,13 @@ func _create_structure_save_resource(structure: Structure) -> StructureDataResou
 		save_resource.type = structure.structure_type
 	
 	return save_resource
+
+func _create_enemy_save_resource(enemy: Enemy) -> EnemyDataResource:
+	var save_resource: EnemyDataResource = EnemyDataResource.new()
 	
+	save_resource.type = enemy.type
+	save_resource.hp = enemy.current_health
+	
+	return save_resource
+
+#endregion

@@ -21,6 +21,7 @@ func create_new_world() -> void:
 	TreeManager.start_game()
 	EnemyManager.start_game()
 	Global.terrain_map.generate_map()
+	Global.fog_map.init()
 
 func load_world(session_data: Dictionary) -> void:
 	# Set seed before world generation, for deterministic map gen
@@ -28,14 +29,13 @@ func load_world(session_data: Dictionary) -> void:
 	
 	TreeManager.start_game()
 	EnemyManager.start_game()
-	Global.terrain_map.generate_map(false) # Generate map without buildings (TEMP UNTIL I SAVE ALL DATA)
+	Global.terrain_map.generate_map(false) # Generate map without buildings
+	Global.fog_map.init()
 	
+	TreeManager.start_game()
 	
 	# Set nutreents
 	TreeManager.nutreents = session_data["nutreents"]
-	
-	session_data["structure_map"]
-	session_data["terrain_map"]
 	
 	# Set time and day
 	Global.clock.set_current_sec(session_data["total_time"])
@@ -58,4 +58,6 @@ func load_world(session_data: Dictionary) -> void:
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
 	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
-	#Global.structure_map.load_structures_from(session_data["structure_map"])
+	# Load enemies
+	EnemyManager.load_enemies_from(session_data["enemy_map"])
+	EnemyManager.enemy_spawn_timer = session_data["enemy_spawn_timer"]

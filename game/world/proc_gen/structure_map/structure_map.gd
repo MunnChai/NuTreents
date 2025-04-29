@@ -22,6 +22,9 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 		# Otherwise, destroy the decor and continue
 		remove_structure(map_coords)
 	
+	if structure is Factory:
+		Global.fog_map.remove_fog_around(map_coords)
+	
 	structure.position = map_to_local(map_coords)
 	
 	tile_scene_map[map_coords] = structure

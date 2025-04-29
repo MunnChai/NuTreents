@@ -19,14 +19,17 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 	EnemyType.SILK_SPITTER: SILK_SPITTER
 }
  
-var num_waves: int = 2
-var enemy_spawn_interval: float = Global.clock.HALF_DAY_SECONDS / num_waves
-var spawning_interval_tracker: float = 0
+const BASE_NUM_WAVES: int = 1
+const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # casted to an int, so effectively increase by 1 every 2 days
+
+const BASE_MIN_ENEMIES: int = 1
+const BASE_MAX_ENEMIES: int = 2
+const MIN_ENEMIES_INCREASE_PER_DAY: int = 1
+const MAX_ENEMIES_INCREASE_PER_DAY: int = 1
+
+var enemy_spawn_timer: float = 0
 var current_wave = 0
 var day_tracker = 1
-
-var min_enemies_per_wave: int = 1
-var max_enemies_per_wave: int = 2
 
 var current_enemies: Array[Enemy]
 
@@ -36,11 +39,8 @@ func _ready() -> void:
 
 func start_game():
 	current_enemies.clear()
-	current_wave = 0
 	day_tracker = 1
-	spawning_interval_tracker = 0
-	num_waves = 1
-	enemy_spawn_interval = Global.clock.HALF_DAY_SECONDS / num_waves
+	enemy_spawn_timer = 0
 
 func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -65,10 +65,10 @@ func _process(delta: float) -> void:
 		#increases difficulty based on day in game
 		increase_difficulty()
 		
-		spawning_interval_tracker -= delta
-		if (spawning_interval_tracker <= 0):
+		enemy_spawn_timer -= delta
+		if (enemy_spawn_timer <= 0):
 			spawn_enemies()
-			spawning_interval_tracker = enemy_spawn_interval
+			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
 		if (current_enemies.size() > 0):
@@ -78,25 +78,26 @@ func _process(delta: float) -> void:
 func increase_difficulty() -> void:
 	var curr_day = Global.clock.get_curr_day()
 	if (curr_day > day_tracker):
-		var isOdd: int = curr_day % 2
+		# Munn: Refactored to calculate these in functions so we don't have to keep track of them
+		#var isOdd: int = curr_day % 2
 		
 		#if day is an odd day, increase waves
-		if (isOdd != 0):
-			num_waves += 1
+		#if (isOdd != 0):
+			#num_waves += 1
 		
 		#if day is an even day, increase number of enemies per wave
-		else:
-			if (min_enemies_per_wave + 2 >= max_enemies_per_wave):
-				max_enemies_per_wave += 2
-			else:
-				min_enemies_per_wave += 2
+		#else:
+			#if (min_enemies_per_wave + 2 >= max_enemies_per_wave):
+				#max_enemies_per_wave += 2
+			#else:
+				#min_enemies_per_wave += 2
 		
 		# update day tracker, don't forget silly :)
 		day_tracker = curr_day
 
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemies() -> int:
-	var num_enemies = randi_range(min_enemies_per_wave, max_enemies_per_wave)
+	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
 	
 	for i in range(0, num_enemies):
 		var rand_enemy = EnemyType.values().pick_random()
@@ -113,6 +114,8 @@ func spawn_enemies() -> int:
 				allowed_cells.append(cell)
 		
 		var rand_pos = allowed_cells.pick_random()
+		if !rand_pos: # No allowed cells
+			continue
 		var world_pos = Global.fog_map.map_to_local(rand_pos)
 		var terrain_pos = Global.terrain_map.local_to_map(world_pos)
 		
@@ -120,8 +123,9 @@ func spawn_enemies() -> int:
 	
 	return num_enemies
 
+
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
-func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> void:
+func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
 	
 	var enemy_node: Enemy = enemy_dict[enemy_type].instantiate()
 	
@@ -131,14 +135,18 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> void:
 	
 	enemy_node.global_position = world_pos
 	enemy_node.map_position = map_coords
+	enemy_node.died.connect(on_enemy_death.bind(enemy_node))
 	
 	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
 	
 	enemy_map.add_child(enemy_node)
 	
 	current_enemies.append(enemy_node)
+	
+	return enemy_node
 
-
+func on_enemy_death(enemy: Enemy) -> void:
+	current_enemies.erase(enemy)
 
 func kill_all_enemies():
 	#print("Hello")
@@ -148,7 +156,6 @@ func kill_all_enemies():
 		
 		# UNCOMMENT THESE!!!!
 		enemy.die()
-		current_enemies.erase(enemy)
 
 
 func get_enemy_at(pos: Vector2i) -> Enemy:
@@ -161,3 +168,25 @@ func get_enemy_at(pos: Vector2i) -> Enemy:
 			return enemy
 	
 	return null
+
+
+func load_enemies_from(enemy_map: Dictionary):
+	for pos in enemy_map.keys():
+		var save_resource: EnemyDataResource = enemy_map[pos]
+		
+		var enemy: Enemy = spawn_enemy(save_resource.type, pos)
+		enemy.current_health = save_resource.hp
+
+
+# Functions for calculating difficulty based on the given day
+func get_num_waves(day: int = day_tracker):
+	return BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY)
+
+func get_max_enemies_per_wave(day: int = day_tracker) -> int:
+	return BASE_MAX_ENEMIES + (day - 1) * MAX_ENEMIES_INCREASE_PER_DAY
+
+func get_min_enemies_per_wave(day: int = day_tracker) -> int:
+	return BASE_MIN_ENEMIES + (day - 1) * MIN_ENEMIES_INCREASE_PER_DAY
+
+func get_enemy_spawn_interval(day: int = day_tracker):
+	return Global.clock.HALF_DAY_SECONDS / get_num_waves(day)

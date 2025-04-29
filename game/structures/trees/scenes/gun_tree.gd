@@ -6,7 +6,7 @@ const BULLET_SPEED = 200
 
 const ATTACK_FREQUENCY = 1
 
-var damage: int = 3
+var damage: int = 6
 var attack_range: int = 5
 var attack_cooldown: float = 0
 
