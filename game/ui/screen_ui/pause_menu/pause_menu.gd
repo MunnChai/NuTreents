@@ -43,6 +43,10 @@ func _finish_close() -> void:
 
 func return_to(previous_menu: ScreenMenu) -> void:
 	show()
+	
+	if previous_menu == ScreenUI.confirmation_menu:
+		return
+	
 	if previous_menu == ScreenUI.settings_menu:
 		## ANIMATION
 		TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.3)
@@ -170,18 +174,26 @@ func _finish_close_for_load() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	main_menu_button_pressed.emit()
-	
 	SfxManager.play_sound_effect("ui_click")
-	## TODO: Check for save game... confirmation!
-	SessionData.save_session_data(Global.session_id)
+	await _prompt_for_save_and_quit()
 	SceneLoader.transition_to_main_menu()
+
+func _prompt_for_save_and_quit() -> void:
+	ScreenUI.add_menu(ScreenUI.confirmation_menu)
+	ScreenUI.confirmation_menu.set_message("Would you like to save any unsaved progress?")
+	ScreenUI.confirmation_menu.set_accept_text("Save & Quit")
+	ScreenUI.confirmation_menu.set_decline_text("Quit Without Saving")
+	ScreenUI.confirmation_menu.connect_choice_to(_on_save_and_quit_choice)
+	await ScreenUI.confirmation_menu.choice_made
+
+func _on_save_and_quit_choice(choice: bool) -> void:
+	if choice:
+		SessionData.save_session_data(Global.session_id)
 
 func _on_quit_game_button_pressed() -> void:
 	quit_to_desktop_pressed.emit()
-	
 	SfxManager.play_sound_effect("ui_click")
-	## TODO: Check for save game... confirmation!
-	SessionData.save_session_data(Global.session_id)
+	await _prompt_for_save_and_quit()
 	get_tree().quit()
 
 func _on_enabled_button_focus() -> void:

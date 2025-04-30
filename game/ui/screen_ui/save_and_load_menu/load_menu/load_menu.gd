@@ -34,6 +34,9 @@ func _finish_close() -> void:
 	hide()
 
 func return_to(previous_menu: ScreenMenu) -> void:
+	if previous_menu == ScreenUI.confirmation_menu:
+		return
+	
 	## ANIMATION
 	open(previous_menu)
 

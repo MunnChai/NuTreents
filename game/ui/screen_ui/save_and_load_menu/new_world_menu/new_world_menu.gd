@@ -67,6 +67,6 @@ func create_new_world() -> void:
 	Global.new_seed()
 	
 	# Create new save
-	SessionData.create_new_session_data(Global.session_id, world_name.text, Global.get_seed())
+	SessionData.create_new_session_data(Global.session_id, world_name.text.strip_edges(), Global.get_seed())
 	
 	SceneLoader.transition_to_game()

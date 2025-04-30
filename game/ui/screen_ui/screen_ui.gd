@@ -11,6 +11,8 @@ extends CanvasLayer
 @onready var settings_menu: SettingsMenu = %SettingsMenu
 @onready var load_menu: LoadMenu = %LoadMenu
 @onready var new_world_menu: NewWorldMenu = %NewWorldMenu
+@onready var confirmation_menu: ConfirmationMenu = %ConfirmationMenu
+@onready var confirmation_dimmer: ColorRect = %ConfirmationDimmer
 
 var is_open := false
 
