@@ -32,15 +32,25 @@ func _process(delta: float) -> void:
 	else:
 		mouse_velocity = MathUtil.decay(mouse_velocity, new_mouse_velocity, 18.0, delta)
 	previous_mouse_position = global_position
-	
+
+	#if force_wait:
+		#_update_cursor_shape()
 	_update_cursor_shape()
+
+var force_wait := false
 
 ## Update the cursor shape based on Input's current cursor shape
 func _update_cursor_shape() -> void:
 	var current_shape = Input.get_current_cursor_shape()
+	if force_wait:
+		current_shape = Input.CURSOR_WAIT
 	var default_texture = cursor_shape_textures.get(CursorShape.CURSOR_ARROW)
 	var cursor_shape_texture = cursor_shape_textures.get(current_shape, default_texture)
 	cursor_icon.texture = cursor_shape_texture
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		_update_cursor_shape()
 
 ## Notification signal to detect entering/exiting the window
 ## and enable/disable accordingly

@@ -14,6 +14,8 @@ extends CanvasLayer
 @onready var confirmation_menu: ConfirmationMenu = %ConfirmationMenu
 @onready var confirmation_dimmer: ColorRect = %ConfirmationDimmer
 
+@onready var black_screen: ColorRect = %BlackScreen
+
 var is_open := false
 
 var menu_stack: Array[ScreenMenu] = []

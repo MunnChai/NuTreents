@@ -1,19 +1,51 @@
-[gd_scene load_steps=5 format=3 uid="uid://bhyyy6a55e8pp"]
+[gd_scene load_steps=15 format=3 uid="uid://bhyyy6a55e8pp"]
 
 [ext_resource type="Script" uid="uid://ba3os81gow2pp" path="res://ui/cursor/game_cursor.gd" id="1_r61ph"]
 [ext_resource type="Texture2D" uid="uid://osqxigfn8kag" path="res://ui/cursor/game_cursor_pointer.png" id="1_y5rov"]
 [ext_resource type="Texture2D" uid="uid://bx2ug7nhyiq8k" path="res://ui/cursor/game_cursor_hand.png" id="3_1qf33"]
+[ext_resource type="Texture2D" uid="uid://cqxwu3d51ca5a" path="res://ui/cursor/loading_frames/game_cursor_loading1.png" id="4_nacoq"]
 [ext_resource type="PackedScene" uid="uid://b3xlpptughfmd" path="res://ui/cursor/floating_tooltip/floating_tooltip.tscn" id="4_u6yto"]
+[ext_resource type="Texture2D" uid="uid://iip0xorbjf0" path="res://ui/cursor/loading_frames/game_cursor_loading2.png" id="5_xhg6o"]
+[ext_resource type="Texture2D" uid="uid://dag6fsddonqty" path="res://ui/cursor/loading_frames/game_cursor_loading3.png" id="6_if0oa"]
+[ext_resource type="Texture2D" uid="uid://c0jcwnxcv3xf8" path="res://ui/cursor/loading_frames/game_cursor_loading4.png" id="7_q8vmj"]
+[ext_resource type="Texture2D" uid="uid://c7y8htg2lgmiu" path="res://ui/cursor/loading_frames/game_cursor_loading5.png" id="8_aknyf"]
+[ext_resource type="Texture2D" uid="uid://dta8msfog34of" path="res://ui/cursor/loading_frames/game_cursor_loading6.png" id="9_2bcbi"]
+[ext_resource type="Texture2D" uid="uid://j7emdodlltmj" path="res://ui/cursor/loading_frames/game_cursor_loading7.png" id="10_nxtkf"]
+[ext_resource type="Texture2D" uid="uid://mgguw10rn3wk" path="res://ui/cursor/loading_frames/game_cursor_loading8.png" id="11_d85u0"]
+[ext_resource type="Texture2D" uid="uid://cbu8u8q3mqffr" path="res://ui/cursor/loading_frames/game_cursor_loading9.png" id="12_1txcs"]
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_wwvmv"]
+frames = 9
+speed_scale = 12.0
+frame_0/texture = ExtResource("4_nacoq")
+frame_1/texture = ExtResource("5_xhg6o")
+frame_1/duration = 1.0
+frame_2/texture = ExtResource("6_if0oa")
+frame_2/duration = 1.0
+frame_3/texture = ExtResource("7_q8vmj")
+frame_3/duration = 1.0
+frame_4/texture = ExtResource("8_aknyf")
+frame_4/duration = 1.0
+frame_5/texture = ExtResource("9_2bcbi")
+frame_5/duration = 1.0
+frame_6/texture = ExtResource("10_nxtkf")
+frame_6/duration = 1.0
+frame_7/texture = ExtResource("11_d85u0")
+frame_7/duration = 1.0
+frame_8/texture = ExtResource("12_1txcs")
+frame_8/duration = 1.0
 
 [node name="GameCursor" type="Control"]
 process_mode = 3
+z_index = 1000
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_r61ph")
 cursor_shape_textures = Dictionary[int, Texture2D]({
 0: ExtResource("1_y5rov"),
-2: ExtResource("3_1qf33")
+2: ExtResource("3_1qf33"),
+4: SubResource("AnimatedTexture_wwvmv")
 })
 
 [node name="FloatingTooltip" parent="." instance=ExtResource("4_u6yto")]
