@@ -1,0 +1,119 @@
+[gd_scene load_steps=14 format=3 uid="uid://cxej40hx3cxdc"]
+
+[ext_resource type="PackedScene" uid="uid://b1f0pb7wkyn1" path="res://ui/resource_indicator/resource_indicator.tscn" id="3_hrmpd"]
+[ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock/clock.tscn" id="3_wl5ax"]
+[ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="4_6i6ec"]
+[ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="4_hxq26"]
+[ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="5_anucx"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="6_08otm"]
+[ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="9_2ct0b"]
+[ext_resource type="PackedScene" uid="uid://brejyjscqrd5j" path="res://ui/tree_menu/tree_menu.tscn" id="9_08otm"]
+[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/screen_ui/tech_menu/tech_menu.tscn" id="9_bi8hs"]
+[ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="10_hrmpd"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
+[ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
+shader = ExtResource("4_6i6ec")
+shader_parameter/alpha = 0.75
+shader_parameter/inner_radius = 0.16
+shader_parameter/outer_radius = 1.34
+
+[node name="InGameUI" type="CanvasLayer"]
+layer = 5
+
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_anucx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_anucx")
+
+[node name="ResourceIndicator" parent="." instance=ExtResource("3_hrmpd")]
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -228.0
+offset_bottom = 67.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("6_08otm")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Clock" parent="NinePatchRect2" instance=ExtResource("3_wl5ax")]
+position = Vector2(163, 66)
+scale = Vector2(2, 2)
+
+[node name="FastForwardBtn" parent="NinePatchRect2" instance=ExtResource("4_hxq26")]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 82.0
+offset_right = 218.0
+offset_bottom = 114.0
+mouse_default_cursor_shape = 2
+
+[node name="OverlayButtons" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.245
+anchor_right = 1.0
+anchor_bottom = 0.245
+offset_left = -142.0
+offset_top = 1.23999
+offset_bottom = 73.24
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("9_2ct0b")
+
+[node name="WaterOverlayButton" type="Button" parent="OverlayButtons"]
+layout_mode = 2
+theme = ExtResource("10_kxjjr")
+text = "WATER VIEW"
+
+[node name="HealthOverlayButton2" type="Button" parent="OverlayButtons"]
+layout_mode = 2
+theme = ExtResource("10_kxjjr")
+text = "HEALTH VIEW"
+
+[node name="TechMenu" parent="." instance=ExtResource("9_bi8hs")]
+visible = false
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+
+[node name="InfoBox" parent="." instance=ExtResource("10_hrmpd")]
+visible = false
+
+[node name="TreeMenu" parent="." instance=ExtResource("9_08otm")]
+
+[node name="HoverInfoBox" parent="." instance=ExtResource("13_x7jpl")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 251.0
+offset_right = -100.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
+[connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]

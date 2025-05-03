@@ -1,0 +1,137 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpyl2aj5vemli"]
+
+[ext_resource type="Script" uid="uid://bd7dixcab5d0w" path="res://ui/screen_ui/screen_ui.gd" id="1_q5bun"]
+[ext_resource type="PackedScene" uid="uid://bhyyy6a55e8pp" path="res://ui/cursor/game_cursor.tscn" id="2_2e8l5"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_58s5c"]
+[ext_resource type="PackedScene" uid="uid://bb1hfx6qp2nul" path="res://ui/screen_ui/pause_menu/pause_menu.tscn" id="2_g2xr2"]
+[ext_resource type="PackedScene" uid="uid://dqkyj7u64uhxk" path="res://ui/screen_ui/pause_menu/settings_menu/settings_menu.tscn" id="3_55tr8"]
+[ext_resource type="Script" uid="uid://rmgcuvum63sm" path="res://ui/screen_ui/version_label.gd" id="3_stx1l"]
+[ext_resource type="PackedScene" uid="uid://bkuuj58b1syaq" path="res://ui/screen_ui/save_and_load_menu/load_menu/load_menu.tscn" id="4_17o5s"]
+[ext_resource type="PackedScene" uid="uid://bexvvsxohs5xm" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_menu.tscn" id="7_w6yb4"]
+[ext_resource type="PackedScene" uid="uid://btlr24f4nrt14" path="res://ui/screen_ui/confirmation_menu/confirmation_menu.tscn" id="8_j5ru3"]
+[ext_resource type="PackedScene" uid="uid://c4lpy1xm6ny0k" path="res://scene_loader/black_screen.tscn" id="9_nacs8"]
+
+[node name="ScreenUI" type="CanvasLayer"]
+process_mode = 3
+layer = 100
+script = ExtResource("1_q5bun")
+
+[node name="Dimmer" type="ColorRect" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.541176)
+
+[node name="VersionLabel" type="RichTextLabel" parent="."]
+modulate = Color(1, 1, 1, 0.494118)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -160.5
+offset_top = -40.0
+offset_right = 160.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_58s5c")
+bbcode_enabled = true
+text = "[center]NuTREEnts v0.0.1 by SI INTERACTIVE"
+script = ExtResource("3_stx1l")
+
+[node name="CenteredMenu" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="LoadMenu" parent="CenteredMenu" instance=ExtResource("4_17o5s")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NewWorldMenu" parent="CenteredMenu" instance=ExtResource("7_w6yb4")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseMenu" parent="CenteredMenu" instance=ExtResource("2_g2xr2")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsMenu" parent="CenteredMenu" instance=ExtResource("3_55tr8")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+
+[node name="ConfirmationDimmer" type="ColorRect" parent="."]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.541176)
+
+[node name="ConfirmationPivot" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfirmationMenu" parent="ConfirmationPivot" instance=ExtResource("8_j5ru3")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BlackScreen" parent="." instance=ExtResource("9_nacs8")]
+unique_name_in_owner = true
+z_index = 0
+
+[node name="GameCursor" parent="." instance=ExtResource("2_2e8l5")]

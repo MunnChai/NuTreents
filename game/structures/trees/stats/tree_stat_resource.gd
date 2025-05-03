@@ -5,6 +5,10 @@ extends Resource
 @export var id: String
 @export_multiline var description: String
 
+@export_group("TreeCard")
+@export var tree_icon: Texture2D
+@export var special_card_background_override: Texture2D
+
 @export_group("PrimaryTreeStats")
 @export var hp: int
 @export var max_water: int

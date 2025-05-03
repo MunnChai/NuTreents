@@ -11,16 +11,15 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbled"]
 resource_local_to_scene = true
 shader = ExtResource("5_my1gm")
-shader_parameter/flash_amount = 0.0
-shader_parameter/shake_amount = 10.0
-shader_parameter/alpha = 1.0
 shader_parameter/pos = Vector2(0, 0)
-shader_parameter/dehydrated = false
-shader_parameter/uv_y_offset = 0.1
+shader_parameter/wind_amount = 1.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 30.0
+shader_parameter/tint_amount = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/uv_y_offset = 0.62
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
-shader_parameter/fps = 0.0
-shader_parameter/frame_count = 0
 
 [node name="DefaultTree" type="Node2D"]
 script = ExtResource("1_f38t6")

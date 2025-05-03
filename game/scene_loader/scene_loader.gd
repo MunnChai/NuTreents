@@ -21,11 +21,7 @@ signal scene_changed
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	black_screen = BLACK_SCREEN.instantiate()
-	black_screen.z_index = 100
-	layer = 100
-	
-	add_child(black_screen)
+	black_screen = ScreenUI.black_screen
 
 func transition_to_main_menu():
 	transition_to_packed(MAIN_MENU)
@@ -57,11 +53,14 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	is_transitioning = true
 	var tween_in = create_tween()
 	
+	GameCursor.instance.force_wait = true
+	
 	tween_in.tween_property(black_screen, "modulate:a", 1.0, tween_in_duration)
 	
 	tween_in.finished.connect(
 		func():
 			get_tree().paused = false
+			ScreenUI.terminate_stack()
 			
 			var music: Node = get_tree().get_first_node_in_group("music")
 			if (music):
@@ -74,6 +73,8 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			
 			tween_out.tween_property(black_screen, "modulate:a", 0.0, tween_out_duration)
 			is_transitioning = false
+			
+			GameCursor.instance.force_wait = false
 			
 			scene_changed.emit()
 	)

@@ -31,13 +31,13 @@ var tile_name_dictionary = {
 }
 
 var desc_dictionary = {
-	"default_tree": "We have all seen a default tree sometime in our lives.",
-	"mother_tree": "The source of all trees. Protect it with your life.",
-	"gun_tree": "A sandbox tree. Fought in the Great War. Shoots at anything that moves.",
-	"explorer_tree": "A bubbly maple. Reaches far to adjacent lands.",
+	"default_tree": "We have all seen a default tree\nsometime in our lives.",
+	"mother_tree": "The source of all trees.\nProtect it with your life.",
+	"gun_tree": "A sandbox tree.\nFought in the Great War.\nShoots at anything that moves.",
+	"explorer_tree": "A bubbly maple.\nReaches far to adjacent lands.",
 	"tech_tree": "For all your technology needs.",
-	"water_tree": "Dredges up them aquifers for your forest's convenience.",
-	"tall_tree": "Sharp and sturdy. It'll take more than a few bugs to chop this one.",
+	"water_tree": "Dredges up them aquifers,\nfor your forest's convenience.",
+	"tall_tree": "Sharp and sturdy.\nIt'll take more than a few bugs to chop this one.",
 	
 	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
 	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
@@ -48,9 +48,9 @@ var desc_dictionary = {
 	
 	TerrainMap.TileType.DIRT: "Good old dirt. Nothing special.",
 	TerrainMap.TileType.GRASS: "Fertile grasslands, ripe for trees.",
-	TerrainMap.TileType.CITY: "Cold, hard asphalt. You'll have to remove it to plant.",
-	TerrainMap.TileType.WATER: "Hydrates your nearby trees. Don't fall in, though.",
-	TerrainMap.TileType.ROAD: "Well-worn tar. You'll have to remove it to plant.",
+	TerrainMap.TileType.CITY: "Cold, hard asphalt.\nYou'll have to remove it to plant.",
+	TerrainMap.TileType.WATER: "Hydrates your nearby trees.\nDon't fall in, though.",
+	TerrainMap.TileType.ROAD: "Well-worn tar.\nYou'll have to remove it to plant.",
 }
 
 func _ready():
@@ -96,8 +96,8 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 	
 	if (name_dictionary.has(id)):
 		var content = "[i]" + name_dictionary[id] + "[/i]";
-		content += "\n\n"
-		content += desc_dictionary[id]
+		content += "\n"
+		content += "[color=d9863e]" + desc_dictionary[id]
 		rich_text.text = content
 		
 		rich_text.text += "\n"
@@ -131,8 +131,8 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";
-			content += "\n\n"
-			content += desc_dictionary[tile_type]
+			content += "\n"
+			content += "[color=d9863e]" + desc_dictionary[tile_type]
 			rich_text.text = content
 		
 			rich_text.text += "\n"
@@ -147,3 +147,9 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			elif (tile_type == TerrainMap.TileType.CITY):
 				rich_text.text += "\n"
 				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_CITY_TILE)
+
+func _process(delta: float) -> void:
+	if not rich_text.text.is_empty():
+		FloatingTooltip.instance.show_content(rich_text.text)
+	else:
+		FloatingTooltip.instance.hide_content()

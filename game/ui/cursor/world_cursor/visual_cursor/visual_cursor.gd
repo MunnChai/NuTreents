@@ -10,7 +10,24 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
-	wooden_arrow.set_cursor_position(global_position)
+	
+	var building: Structure = Global.structure_map.get_building_node(cursor.iso_position)
+	
+	## BUILDING:
+	if building != null:
+		var positions := building.get_occupied_positions()
+		var average_pos := Vector2.ZERO
+		var sum := 0
+		for pos: Vector2i in positions:
+			var smooth_pos := Global.structure_map.map_to_local(pos)
+			average_pos += smooth_pos
+			sum += 1
+		average_pos /= sum
+		wooden_arrow.set_cursor_position(average_pos)
+	## TILE:
+	else:
+		wooden_arrow.set_cursor_position(global_position)
+
 	_update_visuals()
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
@@ -24,7 +41,7 @@ const YELLOW := Color("ca910081")
 const BLUE := Color("3fd7ff81")
 const RED := Color("ff578681")
 
-@onready var highlight: Sprite2D = %ModulationHighlight
+@onready var large_modulation_highlight: LargeModulationHighlight = %LargeModulationHighlight
 @onready var wooden_arrow: CursorWoodenArrow = %WoodenArrow
 
 var is_enabled := false
@@ -49,9 +66,13 @@ func disable() -> void:
 func _update_visuals() -> void:
 	var iso_position = cursor.iso_position
 	
+	large_modulation_highlight.highlight_tile_at(iso_position)
+	
 	var terrain_map = Global.terrain_map
 	var structure_map = Global.structure_map
 	var building_node = structure_map.get_building_node(iso_position)
+	
+	#Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	
 	# SET THE ARROW HEIGHT BASED ON WHAT IS ON THIS TILE...
 	if building_node == null:
@@ -60,7 +81,7 @@ func _update_visuals() -> void:
 		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
-	if building_node == null:
+	if building_node == null || not structure_map.does_obstructive_structure_exist(iso_position):
 		_set_arrow_bobbing(true)
 	else:
 		if (building_node as Structure).get_id() in BOBBING_BUILDING_IDS:
@@ -136,7 +157,7 @@ func _can_plant() -> bool:
 	return TreeManager.enough_n(tree_stat.cost_to_purchase)
 
 func _set_highlight_modulate(color: Color) -> void:
-	highlight.modulate = color
+	large_modulation_highlight.set_color(color)
 
 func _set_arrow_visible(value: bool) -> void:
 	if value:

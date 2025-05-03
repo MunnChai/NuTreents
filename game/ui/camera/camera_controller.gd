@@ -52,9 +52,8 @@ func _process(delta: float) -> void:
 		velocity = MathUtil.decay(velocity, direction * MAX_SPEED, ACCELERATION, TimeUtil.unscaled_delta(delta))
 	else:
 		velocity = MathUtil.decay(velocity, Vector2.ZERO, DECELERATION_RATE, TimeUtil.unscaled_delta(delta))
-	core_position += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * TimeUtil.unscaled_delta(delta)
-	move_position_by += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * TimeUtil.unscaled_delta(delta)
-	
+	#move_position_by += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * TimeUtil.unscaled_delta(delta)
+
 	if Input.is_action_pressed("move_cam"):
 		move_cam(TimeUtil.unscaled_delta(delta))
 	
@@ -70,6 +69,8 @@ func _process(delta: float) -> void:
 	## https://forum.godotengine.org/t/how-to-zoom-camera-to-mouse/37348
 	if zoom != prev_zoom:
 		core_position += before_pos - (get_global_mouse_position() - move_position_by)
+	
+	core_position += velocity * (1.0 / FIXED_ZOOM_SIZES[current_zoom_index]) * TimeUtil.unscaled_delta(delta)
 	
 	lock_camera()
 	
