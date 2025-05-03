@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=2 format=3 uid="uid://bluynlpf58mkf"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://bluynlpf58mkf"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_pvc8c"]
+[ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://ui/tree_menu/icons/explorer_tree.png" id="2_n8y6g"]
 
 [resource]
 script = ExtResource("1_pvc8c")
 name = "Explorer Tree"
 id = "explorer_tree"
 description = "Has +1 square placement range"
+tree_icon = ExtResource("2_n8y6g")
 hp = 10
 max_water = 2
 gain = Vector3(0, 0, 0)

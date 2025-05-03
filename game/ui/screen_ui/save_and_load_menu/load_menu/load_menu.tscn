@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=3 uid="uid://bkuuj58b1syaq"]
+
+[ext_resource type="Script" uid="uid://cqxa2ir73r1cu" path="res://ui/screen_ui/save_and_load_menu/load_menu/load_menu.gd" id="1_7xcav"]
+[ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_5jmck"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_3mv1y"]
+[ext_resource type="Texture2D" uid="uid://dov4u2h6mtcp8" path="res://ui/screen_ui/save_and_load_menu/load_menu/title_text.png" id="3_lf4xf"]
+
+[node name="LoadMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_7xcav")
+
+[node name="PanelContainerWrapper" parent="." instance=ExtResource("2_5jmck")]
+layout_mode = 1
+offset_left = -250.0
+offset_top = -58.0
+offset_right = 250.0
+offset_bottom = 58.0
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_lf4xf")
+stretch_mode = 3
+
+[node name="LoadTitle" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_3mv1y")
+bbcode_enabled = true
+text = "[center]Your Saves"
+fit_content = true
+
+[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="LoadButtons" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Control2" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("3_3mv1y")
+text = "Back"
+
+[connection signal="pressed" from="PanelContainerWrapper/MarginContainer/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

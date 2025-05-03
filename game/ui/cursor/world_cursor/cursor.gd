@@ -21,6 +21,9 @@ func _ready() -> void:
 	set_iso_position(Global.ORIGIN)
 	just_moved.connect(on_just_moved)
 
+func _process(delta: float) -> void:
+	$InfoBoxDetector.detect(iso_position)
+
 ## Perform LEFT MOUSE BUTTON action
 func do_primary_action() -> void:
 	if attempted_already:
@@ -218,5 +221,5 @@ func can_interact() -> bool:
 	return is_enabled
 
 func on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
-	$InfoBoxDetector.detect(iso_position)
+	#$InfoBoxDetector.detect(iso_position)
 	attempted_already = false

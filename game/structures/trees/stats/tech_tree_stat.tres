@@ -1,12 +1,16 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=2 format=3 uid="uid://cak861fnyx3xa"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=4 format=3 uid="uid://cak861fnyx3xa"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_8s7ni"]
+[ext_resource type="Texture2D" uid="uid://bifsmjt32xkrd" path="res://ui/tree_menu/card_sprites/tech_card.png" id="2_832p7"]
+[ext_resource type="Texture2D" uid="uid://dogdbwrs7cpmw" path="res://ui/tree_menu/icons/tech_tree.png" id="3_tj1lc"]
 
 [resource]
 script = ExtResource("1_8s7ni")
 name = "Tech Tree"
 id = "tech_tree"
 description = "???"
+tree_icon = ExtResource("3_tj1lc")
+special_card_background_override = ExtResource("2_832p7")
 hp = 10
 max_water = 0
 gain = Vector3(0, 0, 0)

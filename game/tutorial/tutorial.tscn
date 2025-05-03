@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://ccdm0vnayrxeg" path="res://tutorial/new_tile_maps/tutorial_terrain_map.gd" id="6_t57g5"]
 [ext_resource type="PackedScene" path="res://ui/menus/tree_menu/tree_menu.tscn" id="6_u47y0"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="7_jf5h8"]
-[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/tech_menu/tech_menu.tscn" id="7_jpd2v"]
+[ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/screen_ui/tech_menu/tech_menu.tscn" id="7_jpd2v"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="7_lvqxb"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="8_6bq4q"]
 [ext_resource type="PackedScene" path="res://ui/menus/settings_menu/settings.tscn" id="8_dpu50"]
