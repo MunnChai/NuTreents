@@ -5,6 +5,8 @@ extends Marker2D
 
 @export var cursor: Cursor
 
+var previous_position: Vector2i
+
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
 
@@ -28,7 +30,7 @@ func _process(delta: float) -> void:
 	else:
 		wooden_arrow.set_cursor_position(global_position)
 
-	_update_visuals()
+	_update_visuals(delta)
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	update_adjacent_tile_transparencies()
@@ -63,8 +65,13 @@ func disable() -> void:
 	_set_arrow_visible(false)
 
 ## Change visual details based on what is highlighted...
-func _update_visuals() -> void:
+func _update_visuals(delta: float) -> void:
 	var iso_position = cursor.iso_position
+	
+	if previous_position && previous_position != iso_position:
+		_hide_tree_outline(previous_position, delta)
+	
+	previous_position = iso_position
 	
 	large_modulation_highlight.highlight_tile_at(iso_position)
 	
@@ -105,6 +112,7 @@ func _update_visuals() -> void:
 		enable()
 		_set_highlight_modulate(YELLOW)
 		_set_arrow_visible(true)
+		_show_tree_outline(iso_position, delta)
 		return
 	
 	# We are too far away from any trees...
@@ -178,3 +186,15 @@ func _set_arrow_bobbing(value: bool) -> void:
 func update_adjacent_tile_transparencies() -> void:
 	var building_map: BuildingMap = Global.structure_map
 	building_map.update_transparencies_around(cursor.iso_position)
+
+func _show_tree_outline(iso_position: Vector2i, delta: float):
+	var tree_map = TreeManager.get_tree_map()
+	if tree_map.has(iso_position):
+		var twee: Twee = tree_map[iso_position]
+		twee.is_outline_active = true
+
+func _hide_tree_outline(iso_position: Vector2i, delta: float):
+	var tree_map = TreeManager.get_tree_map()
+	if tree_map.has(iso_position):
+		var twee: Twee = tree_map[iso_position]
+		twee.is_outline_active = false

@@ -18,6 +18,8 @@ shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/tint_color = Color(1, 1, 1, 1)
 shader_parameter/fps = 0.0
 shader_parameter/frame_count = 0
+shader_parameter/outline_alpha = 0.0
+shader_parameter/outline_width = 1
 
 [node name="MotherTree" type="Node2D"]
 script = ExtResource("1_thw2w")

@@ -29,6 +29,12 @@ uniform float uv_y_offset = 0.4;
 uniform vec3 flash_color: source_color = vec3(1.0, 1.0, 1.0);
 uniform vec3 tint_color: source_color = vec3(1.0, 1.0, 1.0);
 
+uniform float fps;
+uniform int frame_count;
+
+uniform float outline_alpha = 0.0;
+uniform int outline_width = 1;
+
 const int SPRITE_SHEET_UNIT_WIDTH = 9;
 const int SPRITE_SHEET_UNIT_HEIGHT = 2;
 const float UNIT_PIXEL_WIDTH = 32.0;
@@ -70,6 +76,28 @@ float noise(vec2 uv) {
                      dot( random(uv_index + vec2(1.0,0.0) ), uv_fract - vec2(1.0,0.0) ), blur.x),
                 mix( dot( random(uv_index + vec2(0.0,1.0) ), uv_fract - vec2(0.0,1.0) ),
                      dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) + 0.5;
+}
+
+bool is_on_edge(vec2 uv, sampler2D texture2d, vec2 texture_pixel_size) {
+	vec4 color = texture(texture2d, uv);
+
+	if (color.a > 0.0) {
+		return false;
+	}
+
+	for (int x = -outline_width; x <= outline_width; x++) {
+		for (int y = -outline_width; y <= outline_width; y++) {
+			if (abs(float(x)) + abs(float(y)) > float(outline_width)) { // For diamond shaped edge detection
+				continue;
+			}
+
+			vec4 surrounding_color = texture(texture2d, uv + vec2(float(x) * texture_pixel_size.x, float(y) * texture_pixel_size.y));
+			if (surrounding_color.a > 0.0) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 /* OPERATIONS */
@@ -123,6 +151,10 @@ void fragment() {
 	vec4 after_tint = apply_tint_to_color(after_flash);
 
  	COLOR = vec4(after_tint.rgb, COLOR.a * alpha);
+
+	if (is_on_edge(after_shake, TEXTURE, TEXTURE_PIXEL_SIZE)) {
+		COLOR = vec4(1.0, 1.0, 1.0, outline_alpha);
+	}
 
 	//COLOR = vec4(noise(pos), noise(pos), noise(pos), 1.0);
 }

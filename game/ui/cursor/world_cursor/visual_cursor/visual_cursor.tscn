@@ -1,9 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://uf3j0muxm4jw"]
+[gd_scene load_steps=14 format=3 uid="uid://uf3j0muxm4jw"]
 
 [ext_resource type="Script" uid="uid://jr8ypmglkdhx" path="res://ui/cursor/world_cursor/visual_cursor/visual_cursor.gd" id="1_u3n5w"]
 [ext_resource type="Script" uid="uid://bjb2k03euitel" path="res://ui/cursor/world_cursor/visual_cursor/modulation_highlight/large_modulation_highlight.gd" id="2_opyhb"]
 [ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow_sheet.png" id="4_5x7va"]
 [ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow.gd" id="5_8u83s"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45pwa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6v85"]
 atlas = ExtResource("4_5x7va")
@@ -67,7 +69,9 @@ script = ExtResource("1_u3n5w")
 
 [node name="LargeModulationHighlight" type="Node2D" parent="."]
 unique_name_in_owner = true
+modulate = Color(0.792567, 0.568552, 1.34766e-06, 0.505882)
 y_sort_enabled = true
+material = SubResource("ShaderMaterial_45pwa")
 script = ExtResource("2_opyhb")
 
 [node name="WoodenArrow" type="AnimatedSprite2D" parent="."]
