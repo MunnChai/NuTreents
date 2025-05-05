@@ -11,13 +11,14 @@ enum OverlayType {
 var overlays: Dictionary[OverlayType, Overlay]
 var current_overlay: Overlay
 
+static var instance: OverlayManager
 
 # Add new overlays here, and in the ENUM above
 func _ready() -> void:
 	overlays[OverlayType.WATER_OVERLAY] = $WorldCanvas/WaterOverlay
 	overlays[OverlayType.HEALTH_OVERLAY] = $WorldCanvas/HealthOverlay
-
-
+	
+	instance = self
 
 func show_overlay(overlay_type: OverlayType):
 	var overlay: Overlay = overlays[overlay_type]
