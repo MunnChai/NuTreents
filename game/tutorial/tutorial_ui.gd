@@ -16,6 +16,8 @@ const ANIMATION_LIBRARY_NAME: String = "tutorial_animation"
 # Various references to random parts of the UI
 @onready var cursor = $"../../../World/TileMaps/BuildingManager/Cursor"
 @onready var input_handler = $"../../../World/InputHandler"
+@onready var visual_cursor = $"../../../World/TileMaps/BuildingManager/VisualCursor"
+@onready var virtual_cursor = $"../../../World/VirtualCursor"
 
 # Animation stuff
 @onready var animation_player = $AnimationPlayer
@@ -33,8 +35,7 @@ func _ready() -> void:
 	# Connect 1 time signals
 	connect_tutorial_signals()
 	
-	cursor.is_visible = false
-	input_handler.is_enabled = false
+	turn_input_off()
 
 
 func connect_tutorial_signals() -> void:
@@ -72,12 +73,10 @@ func play_animation(index: int) -> void:
 	animation_player.play(ANIMATION_LIBRARY_NAME + "/" + str(get_animation_name(index)))
 	
 	# Show or hide cursor
-	if (index == 3 || index >= 5):
-		cursor.is_visible = true
-		input_handler.is_enabled = true
+	if (index == TutorialAnimation.PLANT_TREE || index >= TutorialAnimation.CAMERA_CONTROLS):
+		turn_input_on()
 	else:
-		cursor.is_visible = false
-		input_handler.is_enabled = false
+		turn_input_off()
 
 func get_animation_name(index: int) -> StringName:
 	var list = animation_library.get_animation_list()
@@ -99,3 +98,19 @@ func get_animation_name(index: int) -> StringName:
 func skip_tutorial() -> void:
 	SfxManager.play_sound_effect("ui_click")
 	SceneLoader.transition_to_game()
+
+#region InputControls
+func turn_input_on() -> void:
+	cursor.is_visible = true
+	input_handler.is_enabled = true
+	visual_cursor.visible = true
+	visual_cursor.is_process_enabled = true
+	virtual_cursor.visible = true
+
+func turn_input_off() -> void:
+	cursor.is_visible = false
+	input_handler.is_enabled = false
+	visual_cursor.visible = false
+	visual_cursor.is_process_enabled = false
+	virtual_cursor.visible = false
+#endregion

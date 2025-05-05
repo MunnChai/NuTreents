@@ -325,13 +325,14 @@ grow_vertical = 2
 z_index = 1000
 
 [node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
-offset_bottom = 285.0
+offset_bottom = 193.0
 
 [node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
-text = "You can fast-forward by pressing the small green button, but keep track of the time, as dangers lurk at night..."
+text = "Welcome to NuTreents!"
 
 [node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
-text = "Yikes!"
+text = "Hi!
+"
 autowrap_mode = 3
 
 [node name="FadeScreen" type="Control" parent="UI/UI/TutorialUI"]

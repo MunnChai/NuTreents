@@ -7,10 +7,15 @@ extends Marker2D
 
 var previous_position: Vector2i
 
+var is_process_enabled: bool = true
+
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
 
 func _process(delta: float) -> void:
+	if not is_process_enabled:
+		return
+	
 	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
 	
 	var building: Structure = Global.structure_map.get_building_node(cursor.iso_position)
