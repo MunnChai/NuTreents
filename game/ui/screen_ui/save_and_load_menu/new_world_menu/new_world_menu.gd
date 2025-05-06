@@ -69,4 +69,4 @@ func create_new_world() -> void:
 	# Create new save
 	SessionData.create_new_session_data(Global.session_id, world_name.text.strip_edges(), Global.get_seed())
 	
-	SceneLoader.transition_to_game()
+	SceneLoader.transition_to_tutorial()
