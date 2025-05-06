@@ -95,23 +95,32 @@ func increase_difficulty() -> void:
 		# update day tracker, don't forget silly :)
 		day_tracker = curr_day
 
+const CLOSEST_SPAWN_FROM_FOG_EDGE: float = 1.0
+const FURTHEST_SPAWN_FROM_FOG_EDGE: float = 50.0
+
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemies() -> int:
 	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
 	
+	# Munn: Changed a bit here, to make the lag spike less obvious
+	var possible_cells = Global.fog_map.get_used_cells()
+	print("Possible: ", possible_cells.size())
+	var near_cells = []
+	var distance := INF
+	for cell in possible_cells:
+		if cell.distance_squared_to(Global.ORIGIN) < distance:
+			distance = cell.distance_squared_to(Global.ORIGIN)
+			near_cells.append(cell)
+	print("Near: ", near_cells.size())
+	var allowed_cells = []
+	for cell in near_cells:
+		if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 50.0:
+			allowed_cells.append(cell)
+	
 	for i in range(0, num_enemies):
+		await get_tree().create_timer(0.1).timeout # Munn: Don't spawn every enemy on one frame, causes big lag spike
+		
 		var rand_enemy = EnemyType.values().pick_random()
-		
-		var possible_cells = Global.fog_map.get_used_cells()
-		var distance = INF
-		for cell in possible_cells:
-			if cell.distance_squared_to(Global.ORIGIN) < distance:
-				distance = cell.distance_squared_to(Global.ORIGIN)
-		
-		var allowed_cells = []
-		for cell in possible_cells:
-			if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 50.0:
-				allowed_cells.append(cell)
 		
 		var rand_pos = allowed_cells.pick_random()
 		if !rand_pos: # No allowed cells
@@ -129,7 +138,7 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
 	
 	var enemy_node: Enemy = enemy_dict[enemy_type].instantiate()
 	
-	var terrain_map: TerrainMap = get_tree().get_first_node_in_group("terrain_map")
+	var terrain_map: TerrainMap = Global.terrain_map
 	
 	var world_pos: Vector2 = terrain_map.map_to_local(map_coords)
 	

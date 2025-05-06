@@ -90,12 +90,12 @@ theme = ExtResource("10_kxjjr")
 text = "HEALTH VIEW"
 
 [node name="TechMenu" parent="." instance=ExtResource("9_bi8hs")]
-visible = false
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_top = -324.0
+offset_bottom = -324.0
 grow_vertical = 2
-scale = Vector2(0.35, 0.35)
 
 [node name="InfoBox" parent="." instance=ExtResource("10_hrmpd")]
 visible = false

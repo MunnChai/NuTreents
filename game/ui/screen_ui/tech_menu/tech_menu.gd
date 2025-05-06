@@ -13,6 +13,9 @@ enum TechSlots {
 	WINGS
 }
 
+const OBTAINED_ICON_MODULATE := Color.WHITE
+const UNOBTAINED_ICON_MODULATE := Color("5a5a5a")
+
 var unassigned_tech: Array[TechSlots]
 
 var current_tech: Array[TechSlots]
@@ -23,26 +26,24 @@ func _ready():
 
 func _process(delta: float) -> void:
 	
-	var text = "Technology Required: \n"
-	if (current_tech.has(TechSlots.BODY)):
-		rocket_body.modulate = Color.WHITE
-	else:
-		text += "- Rocket Body \n"
-		rocket_body.modulate = Color("5a5a5a")
-	if (current_tech.has(TechSlots.FUEL)):
-		rocket_fuel.modulate = Color.WHITE
-	else:
-		text += "- Rocket Fuel \n"
-		rocket_fuel.modulate = Color("5a5a5a")
-	if (current_tech.has(TechSlots.WINGS)):
-		rocket_wings.modulate = Color.WHITE
-	else:
-		text += "- Rocket Wings \n"
-		rocket_wings.modulate = Color("5a5a5a")
-	
-	check_victory()
+	update_icons()
+	check_victory_condition()
 
-func check_victory():
+func update_icons():
+	if (current_tech.has(TechSlots.BODY)):
+		rocket_body.modulate = OBTAINED_ICON_MODULATE
+	else:
+		rocket_body.modulate = UNOBTAINED_ICON_MODULATE
+	if (current_tech.has(TechSlots.FUEL)):
+		rocket_fuel.modulate = OBTAINED_ICON_MODULATE
+	else:
+		rocket_fuel.modulate = UNOBTAINED_ICON_MODULATE
+	if (current_tech.has(TechSlots.WINGS)):
+		rocket_wings.modulate = OBTAINED_ICON_MODULATE
+	else:
+		rocket_wings.modulate = UNOBTAINED_ICON_MODULATE
+
+func check_victory_condition():
 	if (current_tech.has(TechSlots.BODY) && current_tech.has(TechSlots.FUEL) && current_tech.has(TechSlots.WINGS)):
 		win_button.disabled = false
 	else:
