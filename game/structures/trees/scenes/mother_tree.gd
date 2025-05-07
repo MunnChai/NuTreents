@@ -7,7 +7,10 @@ func _ready():
 
 # Override Twee "growing" functionality
 func _process(delta: float) -> void:
-	pass
+	if is_outline_active:
+		show_outline(delta)
+	else:
+		hide_outline(delta)
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	pass

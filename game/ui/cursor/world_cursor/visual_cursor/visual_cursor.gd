@@ -74,7 +74,7 @@ func _update_visuals(delta: float) -> void:
 	var iso_position = cursor.iso_position
 	
 	if previous_position && previous_position != iso_position:
-		_hide_tree_outline(previous_position, delta)
+		_hide_structure_outline(previous_position, delta)
 	
 	previous_position = iso_position
 	
@@ -91,6 +91,7 @@ func _update_visuals(delta: float) -> void:
 		_set_arrow_height("low")
 	else:
 		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
+		_show_structure_outline(iso_position, delta)
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
 	if building_node == null || not structure_map.does_obstructive_structure_exist(iso_position):
@@ -100,7 +101,7 @@ func _update_visuals(delta: float) -> void:
 			_set_arrow_bobbing(true)
 		else:
 			_set_arrow_bobbing(false)
-
+	
 	# Don't highlight outside the map or on non-solid tiles...
 	if not terrain_map.is_solid(iso_position):
 		# Don't highlight void
@@ -117,7 +118,6 @@ func _update_visuals(delta: float) -> void:
 		enable()
 		_set_highlight_modulate(YELLOW)
 		_set_arrow_visible(true)
-		_show_tree_outline(iso_position, delta)
 		return
 	
 	# We are too far away from any trees...
@@ -192,14 +192,26 @@ func update_adjacent_tile_transparencies() -> void:
 	var building_map: BuildingMap = Global.structure_map
 	building_map.update_transparencies_around(cursor.iso_position)
 
-func _show_tree_outline(iso_position: Vector2i, delta: float):
+func _show_structure_outline(iso_position: Vector2i, delta: float):
 	var tree_map = TreeManager.get_tree_map()
 	if tree_map.has(iso_position):
 		var twee: Twee = tree_map[iso_position]
 		twee.is_outline_active = true
+		return
+	
+	var building_node = Global.structure_map.get_building_node(iso_position)
+	if building_node != null and building_node is CityStructure:
+		building_node.is_outline_active = true
+		return
 
-func _hide_tree_outline(iso_position: Vector2i, delta: float):
+func _hide_structure_outline(iso_position: Vector2i, delta: float):
 	var tree_map = TreeManager.get_tree_map()
 	if tree_map.has(iso_position):
 		var twee: Twee = tree_map[iso_position]
 		twee.is_outline_active = false
+		return
+	
+	var building_node = Global.structure_map.get_building_node(iso_position)
+	if building_node != null and building_node is CityStructure:
+		building_node.is_outline_active = false
+		return

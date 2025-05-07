@@ -104,14 +104,14 @@ func spawn_enemies() -> int:
 	
 	# Munn: Changed a bit here, to make the lag spike less obvious
 	var possible_cells = Global.fog_map.get_used_cells()
-	print("Possible: ", possible_cells.size())
+	#print("Possible: ", possible_cells.size())
 	var near_cells = []
 	var distance := INF
 	for cell in possible_cells:
 		if cell.distance_squared_to(Global.ORIGIN) < distance:
 			distance = cell.distance_squared_to(Global.ORIGIN)
 			near_cells.append(cell)
-	print("Near: ", near_cells.size())
+	#print("Near: ", near_cells.size())
 	var allowed_cells = []
 	for cell in near_cells:
 		if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 50.0:
