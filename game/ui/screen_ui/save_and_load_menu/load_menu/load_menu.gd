@@ -46,7 +46,8 @@ func _ready():
 	refresh()
 
 func refresh() -> void:
-	for btn in load_buttons.get_children():
+	var children: Array = load_buttons.get_children()
+	for btn in children:
 		remove_child(btn)
 		btn.queue_free()
 	create_load_buttons()

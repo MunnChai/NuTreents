@@ -25,7 +25,6 @@ func _ready():
 	current_tech = []
 
 func _process(delta: float) -> void:
-	
 	update_icons()
 	check_victory_condition()
 

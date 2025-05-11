@@ -6,6 +6,8 @@ extends CityStructure
 var tech_slot: int
 
 func _ready():
+	super._ready()
+	
 	var rand = randf()
 	if (rand > 0.5):
 		sprite_2d.flip_h = true

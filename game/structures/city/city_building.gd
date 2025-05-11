@@ -8,6 +8,8 @@ const NUM_CITY_SPRITES = 8
 @export var cost_to_remove: int = 0
 
 func _ready():
+	super._ready()
+	
 	sprite_2d.texture = sprite_2d.texture.duplicate()
 	var texture: AtlasTexture = sprite_2d.texture
 	

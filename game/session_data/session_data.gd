@@ -104,6 +104,9 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		print("Loaded session data from: ", full_path)
 	
 	# Returns if this save slot is empty
+	if not config.has_section(SECTION_METADATA):
+		return {}
+	
 	if config.get_section_keys(SECTION_METADATA).is_empty():
 		return {}
 	
