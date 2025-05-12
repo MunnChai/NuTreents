@@ -72,7 +72,8 @@ func does_obstructive_structure_exist(map_pos: Vector2i) -> bool:
 	return !object.id.ends_with("decor")
 
 const TWEEN_TIME = 0.2
-
+const ADJACENT_TILE_REACH = 1
+const TRANSPARENCY_ALPHA = 0.3
 ## Updates the transparencies of relevant tiles based on the given position
 func update_transparencies_around(map_pos: Vector2i) -> void:
 	var selected_structure = null
@@ -82,8 +83,8 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 	var adjacent_coords = []
 	var adjacent_structures = []
 	
-	for x in range(map_pos.x, map_pos.x + 2):
-		for y in range(map_pos.y, map_pos.y + 2):
+	for x in range(map_pos.x, map_pos.x + ADJACENT_TILE_REACH + 1):
+		for y in range(map_pos.y, map_pos.y + ADJACENT_TILE_REACH + 1):
 			var adj_pos = Vector2i(x, y)
 			if adj_pos == map_pos:
 				continue
@@ -99,7 +100,7 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 			tween.tween_property(node, "modulate", Color(node.modulate, 1.0), TWEEN_TIME)
 		else:
 			var tween: Tween = get_tree().create_tween()
-			tween.tween_property(node, "modulate", Color(node.modulate, 0.4), TWEEN_TIME)
+			tween.tween_property(node, "modulate", Color(node.modulate, TRANSPARENCY_ALPHA), TWEEN_TIME)
 
 
 func set_tree_transparency(alpha: float):

@@ -73,8 +73,8 @@ func disable() -> void:
 func _update_visuals(delta: float) -> void:
 	var iso_position = cursor.iso_position
 	
-	if previous_position && previous_position != iso_position:
-		_hide_structure_outline(previous_position, delta)
+	if previous_position != iso_position:
+		_hide_structure_outline(previous_position)
 	
 	previous_position = iso_position
 	
@@ -91,7 +91,7 @@ func _update_visuals(delta: float) -> void:
 		_set_arrow_height("low")
 	else:
 		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
-		_show_structure_outline(iso_position, delta)
+		_show_structure_outline(iso_position)
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
 	if building_node == null || not structure_map.does_obstructive_structure_exist(iso_position):
@@ -192,7 +192,7 @@ func update_adjacent_tile_transparencies() -> void:
 	var building_map: BuildingMap = Global.structure_map
 	building_map.update_transparencies_around(cursor.iso_position)
 
-func _show_structure_outline(iso_position: Vector2i, delta: float):
+func _show_structure_outline(iso_position: Vector2i):
 	var tree_map = TreeManager.get_tree_map()
 	if tree_map.has(iso_position):
 		var twee: Twee = tree_map[iso_position]
@@ -204,11 +204,14 @@ func _show_structure_outline(iso_position: Vector2i, delta: float):
 		building_node.is_outline_active = true
 		return
 
-func _hide_structure_outline(iso_position: Vector2i, delta: float):
+func _hide_structure_outline(iso_position: Vector2i):
 	var tree_map = TreeManager.get_tree_map()
+	print("HIding!")
 	if tree_map.has(iso_position):
 		var twee: Twee = tree_map[iso_position]
 		twee.is_outline_active = false
+		if twee is MotherTree:
+			print("Hiding mother tree")
 		return
 	
 	var building_node = Global.structure_map.get_building_node(iso_position)
