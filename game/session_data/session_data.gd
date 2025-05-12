@@ -111,12 +111,8 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		return {}
 	
 	# Get world name
-	var world_name = config.get_value(SECTION_METADATA, "world_name")
-	if world_name is String:
-		session_data["world_name"] = world_name
-	else:
-		session_data["world_name"] = "ERR_WORLD_NAME"
-		print("WARNING: Could not load value 'world_name' from ", full_path)
+	var world_name = config.get_value(SECTION_METADATA, "world_name", "ERR: WORLD_NAME")
+	session_data["world_name"] = world_name
 	
 	# Get rng seed
 	var session_seed = config.get_value(SECTION_METADATA, "seed")
@@ -128,70 +124,34 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	#print("Seed: ", session_seed)
 	
 	# Get nutreents
-	var nutreents = config.get_value(SECTION_SESSION, "nutreents")
-	if nutreents is int:
-		session_data["nutreents"] = nutreents
-	else:
-		session_data["nutreents"] = 0
-		print("WARNING: Could not load value 'nutreents' from ", full_path)
+	var nutreents = config.get_value(SECTION_SESSION, "nutreents", 0)
+	session_data["nutreents"] = nutreents
 	
 	# Get time and day
-	var current_day = config.get_value(SECTION_SESSION, "current_day")
-	var current_time = config.get_value(SECTION_SESSION, "current_time")
-	var total_time = config.get_value(SECTION_METADATA, "total_time")
-	if current_day is int:
-		session_data["current_day"] = current_day
-	else:
-		session_data["current_day"] = 1
-		print("WARNING: Could not load value 'current_day' from ", full_path)
-	if current_time is float:
-		session_data["current_time"] = current_time
-	else:
-		session_data["current_time"] = 0
-		print("WARNING: Could not load value 'current_time' from ", full_path)
-	if total_time is float:
-		session_data["total_time"] = total_time
-	else:
-		session_data["total_time"] = 0
-		print("WARNING: Could not load value 'total_time' from ", full_path)
+	var current_day = config.get_value(SECTION_SESSION, "current_day", 1)
+	var current_time = config.get_value(SECTION_SESSION, "current_time", 0)
+	var total_time = config.get_value(SECTION_METADATA, "total_time", 0)
+	session_data["current_day"] = current_day
+	session_data["current_time"] = current_time
+	session_data["total_time"] = total_time
 	
 	# Get EnemyManager info
-	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map")
-	var enemy_spawn_timer = config.get_value(SECTION_SESSION, "enemy_spawn_timer")
-	if enemy_map is Dictionary:
-		session_data["enemy_map"] = enemy_map
-	else:
-		session_data["enemy_map"] = {}
-		print("WARNING: Could not load value 'enemy_map' from ", full_path)
-	if enemy_spawn_timer is float:
-		session_data["enemy_spawn_timer"] = enemy_spawn_timer
-	else:
-		session_data["enemy_spawn_timer"] = 0
-		print("WARNING: Could not load value 'enemy_spawn_timer' from ", full_path)
+	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map", {})
+	var enemy_spawn_timer = config.get_value(SECTION_SESSION, "enemy_spawn_timer", 0)
+	session_data["enemy_map"] = enemy_map
+	session_data["enemy_spawn_timer"] = enemy_spawn_timer
 	
 	# Get tiles
-	var terrain_map = config.get_value(SECTION_SESSION, "terrain_map")
-	if terrain_map is Dictionary:
-		session_data["terrain_map"] = terrain_map
-	else:
-		session_data["terrain_map"] = {}
-		print("WARNING: Could not load value 'terrain_map' from ", full_path)
+	var terrain_map = config.get_value(SECTION_SESSION, "terrain_map", {})
+	session_data["terrain_map"] = terrain_map
 	
 	# Get trees
-	var tree_map = config.get_value(SECTION_SESSION, "tree_map")
-	if tree_map is Dictionary:
-		session_data["tree_map"] = tree_map
-	else:
-		session_data["tree_map"] = {}
-		print("WARNING: Could not load value 'tree_map' from ", full_path)
+	var tree_map = config.get_value(SECTION_SESSION, "tree_map", {})
+	session_data["tree_map"] = tree_map
 	
 	# Get structures
-	var structure_map = config.get_value(SECTION_SESSION, "structure_map")
-	if structure_map is Dictionary:
-		session_data["structure_map"] = structure_map
-	else:
-		session_data["structure_map"] = {}
-		print("WARNING: Could not load value 'structure_map' from ", full_path)
+	var structure_map = config.get_value(SECTION_SESSION, "structure_map", {})
+	session_data["structure_map"] = structure_map
 	
 	return session_data
 

@@ -300,6 +300,7 @@ cache/0/32/0/glyphs/59/texture_idx = 0
 [sub_resource type="LabelSettings" id="LabelSettings_5207d"]
 resource_local_to_scene = true
 font = SubResource("FontFile_u1ony")
+outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_kcn2c"]
@@ -320,6 +321,7 @@ vertical_alignment = 1
 script = ExtResource("1_i60km")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_left = -1.0
@@ -330,6 +332,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="."]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_left = 1.0
@@ -340,6 +343,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="."]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_top = 1.0
@@ -350,6 +354,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label4" type="Label" parent="."]
+visible = false
 z_index = -1
 layout_mode = 0
 offset_top = -1.0
