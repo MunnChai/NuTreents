@@ -1,11 +1,12 @@
 class_name TechMenu
 extends Control
 
-@onready var requirements_label: RichTextLabel = %RequirementsLabel
-@onready var win_button: Button = %WinButton
+@onready var container = $PanelContainer
+
 @onready var rocket_body: TextureRect = %RocketBody
 @onready var rocket_fuel: TextureRect = %RocketFuel
 @onready var rocket_wings: TextureRect = %RocketWings
+@onready var win_button: Button = %WinButton
 
 enum TechSlot {
 	BODY,
@@ -19,9 +20,28 @@ const UNOBTAINED_ICON_MODULATE := Color("5a5a5a")
 var unassigned_tech: Array
 var current_tech: Array[TechSlot]
 
+var starting_position = position
+
+var is_currently_animating := false
+var is_mouse_inside := false
+
+func open() -> void:
+	SfxManager.play_sound_effect("ui_click")
+	
+	## ANIMATION
+	TweenUtil.pop_delta(container, Vector2(0, -0.05), 0.3)
+	TweenUtil.whoosh(self, starting_position, 0.4)
+
+func close() -> void:
+	TweenUtil.pop_delta(container, Vector2(0, -0.05), 0.3)
+	TweenUtil.whoosh(self, starting_position + Vector2.LEFT * 125.0, 0.4)
+
+
 func _ready():
 	unassigned_tech = TechSlot.values()
 	current_tech = []
+	
+	close()
 
 func _process(delta: float) -> void:
 	update_icons()
@@ -52,3 +72,11 @@ func click_victory():
 	SessionData.save_session_data(Global.session_id)
 	Global.game_state = Global.GameState.VICTORY
 	SceneLoader.transition_to_victory_screen()
+
+
+func _on_mouse_entered():
+	open()
+
+
+func _on_mouse_exited():
+	close()
