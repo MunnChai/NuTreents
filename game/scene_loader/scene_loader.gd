@@ -29,9 +29,6 @@ func transition_to_main_menu():
 func transition_to_game(session_data: Dictionary = {}):
 	transition_to_packed(MAIN)
 	
-	if session_data.is_empty():
-		return
-	
 	# Pass session data to game
 	await scene_changed
 	

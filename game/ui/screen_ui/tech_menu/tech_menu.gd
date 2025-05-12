@@ -7,7 +7,7 @@ extends Control
 @onready var rocket_fuel: TextureRect = %RocketFuel
 @onready var rocket_wings: TextureRect = %RocketWings
 
-enum TechSlots {
+enum TechSlot {
 	BODY,
 	FUEL,
 	WINGS
@@ -16,12 +16,11 @@ enum TechSlots {
 const OBTAINED_ICON_MODULATE := Color.WHITE
 const UNOBTAINED_ICON_MODULATE := Color("5a5a5a")
 
-var unassigned_tech: Array[TechSlots]
-
-var current_tech: Array[TechSlots]
+var unassigned_tech: Array
+var current_tech: Array[TechSlot]
 
 func _ready():
-	unassigned_tech = [TechSlots.BODY, TechSlots.FUEL, TechSlots.WINGS]
+	unassigned_tech = TechSlot.values()
 	current_tech = []
 
 func _process(delta: float) -> void:
@@ -29,26 +28,27 @@ func _process(delta: float) -> void:
 	check_victory_condition()
 
 func update_icons():
-	if (current_tech.has(TechSlots.BODY)):
+	if (current_tech.has(TechSlot.BODY)):
 		rocket_body.modulate = OBTAINED_ICON_MODULATE
 	else:
 		rocket_body.modulate = UNOBTAINED_ICON_MODULATE
-	if (current_tech.has(TechSlots.FUEL)):
+	if (current_tech.has(TechSlot.FUEL)):
 		rocket_fuel.modulate = OBTAINED_ICON_MODULATE
 	else:
 		rocket_fuel.modulate = UNOBTAINED_ICON_MODULATE
-	if (current_tech.has(TechSlots.WINGS)):
+	if (current_tech.has(TechSlot.WINGS)):
 		rocket_wings.modulate = OBTAINED_ICON_MODULATE
 	else:
 		rocket_wings.modulate = UNOBTAINED_ICON_MODULATE
 
 func check_victory_condition():
-	if (current_tech.has(TechSlots.BODY) && current_tech.has(TechSlots.FUEL) && current_tech.has(TechSlots.WINGS)):
+	if (current_tech.has(TechSlot.BODY) && current_tech.has(TechSlot.FUEL) && current_tech.has(TechSlot.WINGS)):
 		win_button.disabled = false
 	else:
 		win_button.disabled = true
 
 
 func click_victory():
+	SessionData.save_session_data(Global.session_id)
 	Global.game_state = Global.GameState.VICTORY
 	SceneLoader.transition_to_victory_screen()

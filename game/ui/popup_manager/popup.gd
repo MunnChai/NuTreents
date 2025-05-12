@@ -18,6 +18,7 @@ func set_color(text_color: Color, outline_color: Color):
 	#$Label5.label_settings.duplicate(true)
 	
 	label_settings.font_color = text_color
+	label_settings.outline_color = outline_color
 	
 	#$Label.label_settings.font_color = outline_color
 	#$Label2.label_settings.font_color = outline_color

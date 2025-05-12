@@ -32,11 +32,11 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 const SOURCE_ID: int = 0
 const BIOME_FALLOFF = 2
 
-const MIN_CITIES: int = 5
-const MAX_CITIES: int = 8
+const MIN_CITIES: int = 3
+const MAX_CITIES: int = 5
 const CITY_DISTANCE: int = Global.MAP_SIZE.x / 2.5
-const DRUNKARD_LIFETIME: int = 25
-const NUM_DRUNKARDS: int = 20
+const DRUNKARD_LIFETIME: int = Global.MAP_SIZE.x / 3
+const NUM_DRUNKARDS: int = Global.MAP_SIZE.x / 4
 
 # City information
 const CITY_BUILDING = preload("res://structures/city/city_building.tscn")

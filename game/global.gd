@@ -2,7 +2,7 @@ extends Node
 
 const NUM_SAVES: int = 5
 
-const MAP_SIZE: Vector2i = Vector2i(1, 1) * 80
+const MAP_SIZE: Vector2i = Vector2i(1, 1) * 40
 const ORIGIN: Vector2i = Vector2(0, 0)
 
 
