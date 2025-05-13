@@ -85,10 +85,12 @@ func increase_difficulty() -> void:
 
 const CLOSEST_SPAWN_FROM_FOG_EDGE: float = 1.0
 const FURTHEST_SPAWN_FROM_FOG_EDGE: float = 50.0
-
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemy_wave() -> int:
 	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
+	
+	var target_tree = find_target_tree()
+	var target_pos = target_tree.get_occupied_positions().pick_random()
 	
 	# Munn: Changed a bit here, to make the lag spike less obvious
 	var possible_cells = Global.fog_map.get_used_cells()
@@ -116,10 +118,43 @@ func spawn_enemy_wave() -> int:
 		var world_pos = Global.fog_map.map_to_local(rand_pos)
 		var terrain_pos = Global.terrain_map.local_to_map(world_pos)
 		
-		spawn_enemy(rand_enemy, terrain_pos)
+		var enemy = spawn_enemy(rand_enemy, terrain_pos)
 	
 	return num_enemies
 
+# Searches forest for high priority trees
+# Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
+func find_target_tree(trees_to_avoid: Array[Twee] = []) -> Twee:
+	var tree_map = TreeManager.get_tree_map()
+	
+	# Find types of trees
+	var tech_trees: Array = []
+	var water_trees: Array = []
+	var mother_tree: Twee = null
+	for twee: Twee in tree_map.values():
+		# Don't count ignored trees
+		if trees_to_avoid.has(twee):
+			continue
+		
+		if twee is TechTree:
+			tech_trees.append(twee)
+		if twee is WaterTree:
+			water_trees.append(twee)
+		if twee is MotherTree:
+			mother_tree = twee
+	
+	# Sort tree arrays by distance to nearest tree to avoid (furthest -> closest)
+	# Munn: This is to spawn waves further from each other, so they don't all end up attacking the same tree
+	
+	# If any prioritized trees were found, target them!
+	if not tech_trees.is_empty():
+		return tech_trees.pick_random()
+	elif not water_trees.is_empty():
+		return water_trees.pick_random()
+	elif not mother_tree == null: # Munn: This should always happen?? 
+		return mother_tree
+	
+	return tree_map.pick_random()
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
 func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
@@ -132,7 +167,7 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
 	
 	enemy_node.global_position = world_pos
 	enemy_node.map_position = map_coords
-	enemy_node.died.connect(on_enemy_death.bind(enemy_node))
+	enemy_node.died.connect(_on_enemy_death.bind(enemy_node))
 	
 	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
 	
@@ -142,9 +177,6 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
 	
 	return enemy_node
 
-func on_enemy_death(enemy: Enemy) -> void:
-	current_enemies.erase(enemy)
-
 func kill_all_enemies():
 	#print("Hello")
 	for enemy: Enemy in current_enemies:
@@ -153,6 +185,9 @@ func kill_all_enemies():
 		
 		# UNCOMMENT THESE!!!!
 		enemy.die()
+
+func _on_enemy_death(enemy: Enemy) -> void:
+	current_enemies.erase(enemy)
 
 
 func get_enemy_at(pos: Vector2i) -> Enemy:
@@ -167,14 +202,16 @@ func get_enemy_at(pos: Vector2i) -> Enemy:
 	return null
 
 
+#region SaveAndLoad
 func load_enemies_from(enemy_map: Dictionary):
 	for pos in enemy_map.keys():
 		var save_resource: EnemyDataResource = enemy_map[pos]
 		
 		var enemy: Enemy = spawn_enemy(save_resource.type, pos)
 		enemy.current_health = save_resource.hp
+#endregion
 
-
+#region DifficultyFunctions
 # Functions for calculating difficulty based on the given day
 func get_num_waves(day: int = day_tracker):
 	return BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY)
@@ -187,3 +224,4 @@ func get_min_enemies_per_wave(day: int = day_tracker) -> int:
 
 func get_enemy_spawn_interval(day: int = day_tracker):
 	return Global.clock.HALF_DAY_SECONDS / get_num_waves(day)
+#endregion

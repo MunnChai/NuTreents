@@ -36,7 +36,6 @@ StructureRegistry="*res://structures/city/registry/structure_registry.tscn"
 [display]
 
 window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
 
 [editor]
 

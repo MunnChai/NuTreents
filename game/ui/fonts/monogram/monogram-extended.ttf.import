@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/monogram-extended.ttf-09079a9f38a3b1f9f6dc9bc
 [params]
 
 Rendering=null
-antialiasing=0
+antialiasing=2
 generate_mipmaps=false
 disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
