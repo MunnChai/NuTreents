@@ -19,7 +19,7 @@ func create_new_world() -> void:
 	Global.set_seed(Global.get_seed())
 	
 	TreeManager.start_game()
-	EnemyManager.start_game()
+	EnemyManager.instance.start_game()
 	Global.terrain_map.generate_map()
 	Global.fog_map.init()
 
@@ -28,7 +28,7 @@ func load_world(session_data: Dictionary) -> void:
 	Global.set_seed(session_data["seed"])
 	
 	TreeManager.start_game()
-	EnemyManager.start_game()
+	EnemyManager.instance.start_game()
 	Global.terrain_map.generate_map(false) # Generate map without buildings
 	Global.fog_map.init()
 	
@@ -59,5 +59,5 @@ func load_world(session_data: Dictionary) -> void:
 	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
 	# Load enemies
-	EnemyManager.load_enemies_from(session_data["enemy_map"])
-	EnemyManager.enemy_spawn_timer = session_data["enemy_spawn_timer"]
+	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
+	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]

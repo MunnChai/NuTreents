@@ -1,7 +1,10 @@
+class_name EnemyManager
 extends Node
 
 ## EnemyManager autoload
 ## Handles enemy spawning, enemy waves, etc.
+
+static var instance
 
 ## TODO: Refactor out EnemyRegistry
 ## Generally make logic more easy to understand
@@ -35,7 +38,7 @@ var current_enemies: Array[Enemy]
 
 
 func _ready() -> void:
-	pass
+	instance = self
 
 func start_game():
 	current_enemies.clear()
@@ -67,7 +70,7 @@ func _process(delta: float) -> void:
 		
 		enemy_spawn_timer -= delta
 		if (enemy_spawn_timer <= 0):
-			spawn_enemies()
+			spawn_enemy_wave()
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
@@ -78,28 +81,13 @@ func _process(delta: float) -> void:
 func increase_difficulty() -> void:
 	var curr_day = Global.clock.get_curr_day()
 	if (curr_day > day_tracker):
-		# Munn: Refactored to calculate these in functions so we don't have to keep track of them
-		#var isOdd: int = curr_day % 2
-		
-		#if day is an odd day, increase waves
-		#if (isOdd != 0):
-			#num_waves += 1
-		
-		#if day is an even day, increase number of enemies per wave
-		#else:
-			#if (min_enemies_per_wave + 2 >= max_enemies_per_wave):
-				#max_enemies_per_wave += 2
-			#else:
-				#min_enemies_per_wave += 2
-		
-		# update day tracker, don't forget silly :)
 		day_tracker = curr_day
 
 const CLOSEST_SPAWN_FROM_FOG_EDGE: float = 1.0
 const FURTHEST_SPAWN_FROM_FOG_EDGE: float = 50.0
 
 # Spawns enemies. returns number of enemies spawned
-func spawn_enemies() -> int:
+func spawn_enemy_wave() -> int:
 	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
 	
 	# Munn: Changed a bit here, to make the lag spike less obvious

@@ -76,13 +76,13 @@ func save_session_data(save_num: int = 1):
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
-	for enemy: Enemy in EnemyManager.current_enemies:
+	for enemy: Enemy in EnemyManager.instance.current_enemies:
 		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
 		if !save_resource:
 			continue
 		enemy_map[enemy.map_position] = save_resource
 	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
-	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.enemy_spawn_timer)
+	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.instance.enemy_spawn_timer)
 	
 	create_save_directory()
 	
