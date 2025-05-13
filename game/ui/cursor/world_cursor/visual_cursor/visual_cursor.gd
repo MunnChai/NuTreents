@@ -206,12 +206,9 @@ func _show_structure_outline(iso_position: Vector2i):
 
 func _hide_structure_outline(iso_position: Vector2i):
 	var tree_map = TreeManager.get_tree_map()
-	print("HIding!")
 	if tree_map.has(iso_position):
 		var twee: Twee = tree_map[iso_position]
 		twee.is_outline_active = false
-		if twee is MotherTree:
-			print("Hiding mother tree")
 		return
 	
 	var building_node = Global.structure_map.get_building_node(iso_position)
