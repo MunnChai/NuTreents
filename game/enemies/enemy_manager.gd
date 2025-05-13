@@ -98,13 +98,13 @@ func spawn_enemy_wave() -> int:
 	var near_cells = []
 	var distance := INF
 	for cell in possible_cells:
-		if cell.distance_squared_to(Global.ORIGIN) < distance:
-			distance = cell.distance_squared_to(Global.ORIGIN)
+		if cell.distance_squared_to(target_pos) < distance:
+			distance = cell.distance_squared_to(target_pos)
 			near_cells.append(cell)
 	#print("Near: ", near_cells.size())
 	var allowed_cells = []
 	for cell in near_cells:
-		if cell.distance_squared_to(Global.ORIGIN) > distance + 1.0 and cell.distance_squared_to(Global.ORIGIN) < distance + 50.0:
+		if cell.distance_squared_to(target_pos) > distance + 1.0 and cell.distance_squared_to(target_pos) < distance + 50.0:
 			allowed_cells.append(cell)
 	
 	for i in range(0, num_enemies):
