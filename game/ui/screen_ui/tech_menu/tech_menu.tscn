@@ -24,15 +24,18 @@ layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_uhide")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 0
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
 offset_left = -1.0
 offset_top = 97.0
 offset_right = 163.0
 offset_bottom = 499.0
-pivot_offset = Vector2(82, 201)
 
-[node name="Panel" type="NinePatchRect" parent="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="NinePatchRect" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 texture = ExtResource("2_4ugt5")
 patch_margin_left = 16
@@ -40,17 +43,17 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="Title" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Title" type="RichTextLabel" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("3_gqlew")
@@ -59,7 +62,7 @@ text = "Technology"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="Description" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Description" type="RichTextLabel" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("3_gqlew")
@@ -67,7 +70,7 @@ text = "Plant 3 Tech Trees!"
 fit_content = true
 horizontal_alignment = 1
 
-[node name="RocketBody" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RocketBody" type="TextureRect" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -75,7 +78,7 @@ size_flags_vertical = 3
 texture = SubResource("AtlasTexture_gqlew")
 stretch_mode = 5
 
-[node name="RocketWings" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RocketWings" type="TextureRect" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -83,7 +86,7 @@ size_flags_vertical = 3
 texture = SubResource("AtlasTexture_uvh08")
 stretch_mode = 5
 
-[node name="RocketFuel" type="TextureRect" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="RocketFuel" type="TextureRect" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -91,13 +94,16 @@ size_flags_vertical = 3
 texture = SubResource("AtlasTexture_rt57v")
 stretch_mode = 5
 
-[node name="WinButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="WinButton" type="Button" parent="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("3_gqlew")
 text = "To the Moon!"
 
-[connection signal="mouse_entered" from="PanelContainer" to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="PanelContainer" to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/WinButton" to="." method="click_victory"]
+[node name="NinePatchRect" type="NinePatchRect" parent="HBoxContainer"]
+layout_mode = 2
+
+[connection signal="mouse_entered" from="HBoxContainer/PanelContainer" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/PanelContainer" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/WinButton" to="." method="click_victory"]

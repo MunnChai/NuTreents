@@ -1,7 +1,7 @@
 class_name TechMenu
 extends Control
-
-@onready var container = $PanelContainer
+ 
+@onready var container = $HBoxContainer
 
 @onready var rocket_body: TextureRect = %RocketBody
 @onready var rocket_fuel: TextureRect = %RocketFuel

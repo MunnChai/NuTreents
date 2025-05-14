@@ -13,6 +13,7 @@ extends CanvasLayer
 @onready var new_world_menu: NewWorldMenu = %NewWorldMenu
 @onready var confirmation_menu: ConfirmationMenu = %ConfirmationMenu
 @onready var confirmation_dimmer: ColorRect = %ConfirmationDimmer
+@onready var shop_menu = %ShopMenu
 
 @onready var black_screen: ColorRect = %BlackScreen
 
