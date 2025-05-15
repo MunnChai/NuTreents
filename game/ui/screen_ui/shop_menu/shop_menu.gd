@@ -19,6 +19,8 @@ var currently_selected_card: ShopCard = null
 signal on_tree_purchased(twee: Twee)
 
 func _ready():
+	show_card_details(null)
+	
 	_connect_button_signals()
 
 func _connect_button_signals():
@@ -36,7 +38,13 @@ func _on_back_button_pressed():
 	ScreenUI.exit_menu()
 
 func _on_purchase_button_pressed():
+	# TODO: Check and decrement nutreent cost of cards
+	
 	SfxManager.play_sound_effect("ui_click")
+	TreeMenu.instance.add_tree_card(currently_selected_card.tree_type)
+	
+	disable_card(currently_selected_card)
+	show_card_details(null)
 
 func _on_shop_card_pressed(shop_card: ShopCard):
 	if currently_selected_card != null:
@@ -48,7 +56,15 @@ func _on_shop_card_pressed(shop_card: ShopCard):
 	show_card_details(shop_card)
 
 func show_card_details(shop_card: ShopCard):
+	if shop_card == null:
+		purchase_button.disabled = true
+	else:
+		purchase_button.disabled = false
+	
 	detail_panel.set_details(shop_card)
+
+func disable_card(shop_card: ShopCard):
+	shop_card.disable()
 
 func open(previous_menu: ScreenMenu):
 	pause_game()

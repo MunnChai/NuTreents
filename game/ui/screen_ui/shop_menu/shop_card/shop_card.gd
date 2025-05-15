@@ -7,11 +7,14 @@ extends PanelContainer
 @onready var title: RichTextLabel = %Title
 @onready var icon: TextureRect = %Icon
 
+@onready var nine_patch_rect: NinePatchRect = $NinePatchRect
+@onready var margin_container = $MarginContainer
+@onready var hidden_button = $HiddenButton
 
 var is_hovering := false
 var is_pressed := false
 var is_selected := false
-
+var is_disabled := false
 
 signal pressed
 
@@ -25,12 +28,6 @@ func _init_visuals():
 
 func _input(event: InputEvent):
 	return
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and is_hovering:
-		if event.is_action_pressed("lmb"):
-			_on_mouse_pressed()
-		
-		if event.is_action_released("lmb"):
-			_on_mouse_released()
 
 func select():
 	is_selected = true
@@ -42,15 +39,46 @@ func deselect():
 	TweenUtil.scale_to(self, Vector2(1, 1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 	TweenUtil.fade(self, 1, 0.3)
 
+func disable():
+	is_disabled = true
+	
+	# Munn: This is all jank so the other cards can move smoothly when this is deleted
+	margin_container.queue_free()
+	nine_patch_rect.queue_free()
+	
+	var tween = TweenUtil.get_new_tween(self, "custom_minimum_size")
+	tween.set_trans(Tween.TRANS_EXPO)
+	tween.set_ease(Tween.EASE_OUT)
+	tween.tween_property(self, "custom_minimum_size", Vector2(0, custom_minimum_size.y), 0.4)
+	
+	await get_tree().create_timer(0.25).timeout
+	
+	queue_free()
+
 func _on_mouse_pressed():
+	if is_disabled:
+		return
+	
+	if not is_hovering:
+		return
+	
 	SfxManager.play_sound_effect("ui_click")
 	TweenUtil.scale_to(self, Vector2(0.9, 0.9), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 
 func _on_mouse_released():
+	if is_disabled:
+		return
+	
+	if not is_hovering:
+		return
+	
 	TweenUtil.scale_to(self, Vector2(1, 1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 	pressed.emit()
 
 func _on_mouse_entered():
+	if is_disabled:
+		return
+	
 	is_hovering = true
 	
 	if is_selected:
@@ -60,7 +88,11 @@ func _on_mouse_entered():
 	TweenUtil.scale_to(self, Vector2(1.1, 1.1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 
 func _on_mouse_exited():
+	if is_disabled:
+		return
+	
 	is_hovering = false
+	
 	if is_selected:
 		return
 	

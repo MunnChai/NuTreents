@@ -73,6 +73,7 @@ fit_content = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox"]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_kys1l")
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
@@ -97,6 +98,18 @@ layout_mode = 2
 tree_type = 2
 
 [node name="TechTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+layout_mode = 2
+tree_type = 4
+
+[node name="TechTree2" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+layout_mode = 2
+tree_type = 4
+
+[node name="TechTree3" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+layout_mode = 2
+tree_type = 4
+
+[node name="TechTree4" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
 layout_mode = 2
 tree_type = 4
 
