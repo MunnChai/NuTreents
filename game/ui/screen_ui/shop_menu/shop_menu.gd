@@ -2,17 +2,51 @@ class_name ShopMenu
 extends ScreenMenu
 
 @onready var back_button = %BackButton
+@onready var tree_cards = %TreeCards
+@onready var power_cards = %PowerCards
+@onready var detail_panel = %DetailPanel
+@onready var purchase_button = %PurchaseButton
 
+# Pasuing Stuff
 var is_paused: bool
 var previous_time_scale: float
 
+# For open/close tweens
 var starting_position := position
+
+var currently_selected_card: ShopCard = null
+
+signal on_tree_purchased(twee: Twee)
 
 func _ready():
 	_connect_button_signals()
 
 func _connect_button_signals():
+	for shop_card: ShopCard in tree_cards.get_children():
+		shop_card.pressed.connect(_on_shop_card_pressed.bind(shop_card))
+	
+	for shop_card: ShopCard in power_cards.get_children():
+		shop_card.pressed.connect(_on_shop_card_pressed.bind(shop_card))
+	
 	back_button.pressed.connect(_on_back_button_pressed)
+
+func _on_back_button_pressed():
+	ScreenUI.exit_menu()
+
+func _on_shop_card_pressed(shop_card: ShopCard):
+	print("Pressed: ", shop_card)
+	if currently_selected_card != null:
+		currently_selected_card.deselect()
+	
+	currently_selected_card = shop_card
+	shop_card.select()
+	
+	print("Selected: ", currently_selected_card)
+	
+	show_card_details(shop_card)
+
+func show_card_details(shop_card: ShopCard):
+	pass
 
 func open(previous_menu: ScreenMenu):
 	pause_game()
@@ -29,6 +63,8 @@ func close(next_menu: ScreenMenu):
 func _finish_close():
 	unpause_game() 
 
+
+#region Pausing
 
 ## Pauses the game
 func pause_game() -> void:
@@ -66,5 +102,4 @@ func unpause_game() -> void:
 	
 	hide()
 
-func _on_back_button_pressed():
-	ScreenUI.exit_menu()
+#endregion

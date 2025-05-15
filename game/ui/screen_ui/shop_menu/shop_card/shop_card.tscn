@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://k587a7d6l33g"]
+
+[ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_iuqow"]
+[ext_resource type="Script" uid="uid://c3g1hohb2ium1" path="res://ui/screen_ui/shop_menu/shop_card/shop_card.gd" id="2_0haws"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_u6y1w"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/tree_menu/icons/default_tree.png" id="3_mm85h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1dll"]
+atlas = ExtResource("3_mm85h")
+region = Rect2(0, 16, 32, 40)
+
+[node name="ShopCard" instance=ExtResource("1_iuqow")]
+custom_minimum_size = Vector2(80, 120)
+offset_left = -40.0
+offset_top = -60.0
+offset_right = 40.0
+offset_bottom = 60.0
+pivot_offset = Vector2(40, 60)
+size_flags_vertical = 0
+script = ExtResource("2_0haws")
+
+[node name="MarginContainer" type="MarginContainer" parent="." index="1"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
+layout_mode = 2
+
+[node name="CardName" type="RichTextLabel" parent="MarginContainer/VBoxContainer" index="0"]
+layout_mode = 2
+theme = ExtResource("2_u6y1w")
+text = "Name"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CardTexture" type="TextureRect" parent="MarginContainer/VBoxContainer" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_k1dll")
+stretch_mode = 5
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
