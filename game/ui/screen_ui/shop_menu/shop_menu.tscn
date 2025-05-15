@@ -89,13 +89,16 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_bottom = NodePath("../../../ScrollContainer2/MarginContainer/PowerCards")
 theme_override_constants/separation = 10
 
-[node name="1" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+[node name="GunTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
 layout_mode = 2
+tree_type = 2
 
-[node name="2" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+[node name="TechTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
 layout_mode = 2
+tree_type = 4
 
 [node name="PowersLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox"]
 layout_mode = 2
@@ -123,10 +126,12 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+focus_neighbor_top = NodePath("../../../ScrollContainer/MarginContainer/TreeCards")
 theme_override_constants/separation = 10
 
-[node name="3" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer2/MarginContainer/PowerCards" instance=ExtResource("4_kys1l")]
+[node name="WaterTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer2/MarginContainer/PowerCards" instance=ExtResource("4_kys1l")]
 layout_mode = 2
+tree_type = 3
 
 [node name="PurchaseVBox" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(160, 0)

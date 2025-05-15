@@ -2,16 +2,16 @@
 
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_52gbq"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_ow50j"]
-[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/tree_menu/icons/default_tree.png" id="3_xld1w"]
+[ext_resource type="Script" uid="uid://fkfy2y3fp7r8" path="res://ui/screen_ui/shop_menu/shop_detail_panel/shop_detail_panel.gd" id="2_q37el"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_q37el"]
-atlas = ExtResource("3_xld1w")
 region = Rect2(0, 16, 32, 40)
 
 [node name="DetailPanel" instance=ExtResource("1_52gbq")]
 offset_right = 218.0
 offset_bottom = 131.0
 size_flags_vertical = 3
+script = ExtResource("2_q37el")
 
 [node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 layout_mode = 2
@@ -24,22 +24,24 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="Title" type="RichTextLabel" parent="MarginContainer/HBoxContainer" index="0"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ow50j")
 theme_override_font_sizes/normal_font_size = 32
-text = "Title"
+text = "Select a Tree or Power"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Texture" type="TextureRect" parent="MarginContainer/HBoxContainer" index="1"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 texture = SubResource("AtlasTexture_q37el")
 stretch_mode = 5
 
 [node name="Description" type="RichTextLabel" parent="MarginContainer/HBoxContainer" index="2"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_ow50j")
-text = "Description"
 fit_content = true

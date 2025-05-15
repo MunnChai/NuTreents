@@ -1,11 +1,11 @@
 class_name ShopMenu
 extends ScreenMenu
 
-@onready var back_button = %BackButton
-@onready var tree_cards = %TreeCards
-@onready var power_cards = %PowerCards
-@onready var detail_panel = %DetailPanel
-@onready var purchase_button = %PurchaseButton
+@onready var back_button: Button = %BackButton
+@onready var tree_cards: HBoxContainer = %TreeCards
+@onready var power_cards: HBoxContainer = %PowerCards
+@onready var detail_panel: ShopDetailPanel = %DetailPanel
+@onready var purchase_button: Button = %PurchaseButton
 
 # Pasuing Stuff
 var is_paused: bool
@@ -29,24 +29,26 @@ func _connect_button_signals():
 		shop_card.pressed.connect(_on_shop_card_pressed.bind(shop_card))
 	
 	back_button.pressed.connect(_on_back_button_pressed)
+	purchase_button.pressed.connect(_on_purchase_button_pressed)
 
 func _on_back_button_pressed():
+	SfxManager.play_sound_effect("ui_click")
 	ScreenUI.exit_menu()
 
+func _on_purchase_button_pressed():
+	SfxManager.play_sound_effect("ui_click")
+
 func _on_shop_card_pressed(shop_card: ShopCard):
-	print("Pressed: ", shop_card)
 	if currently_selected_card != null:
 		currently_selected_card.deselect()
 	
 	currently_selected_card = shop_card
 	shop_card.select()
 	
-	print("Selected: ", currently_selected_card)
-	
 	show_card_details(shop_card)
 
 func show_card_details(shop_card: ShopCard):
-	pass
+	detail_panel.set_details(shop_card)
 
 func open(previous_menu: ScreenMenu):
 	pause_game()

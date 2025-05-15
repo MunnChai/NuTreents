@@ -29,19 +29,31 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
 layout_mode = 2
 
-[node name="CardName" type="RichTextLabel" parent="MarginContainer/VBoxContainer" index="0"]
+[node name="Title" type="RichTextLabel" parent="MarginContainer/VBoxContainer" index="0"]
+unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 1
 theme = ExtResource("2_u6y1w")
 text = "Name"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="CardTexture" type="TextureRect" parent="MarginContainer/VBoxContainer" index="1"]
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer" index="1"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 texture = SubResource("AtlasTexture_k1dll")
 stretch_mode = 5
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[node name="HiddenButton" type="TextureButton" parent="." index="2"]
+layout_mode = 2
+theme = ExtResource("2_u6y1w")
+stretch_mode = 3
+
+[connection signal="button_down" from="HiddenButton" to="." method="_on_mouse_pressed"]
+[connection signal="button_up" from="HiddenButton" to="." method="_on_mouse_released"]
+[connection signal="focus_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="focus_exited" from="HiddenButton" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HiddenButton" to="." method="_on_mouse_exited"]
