@@ -84,6 +84,10 @@ func save_session_data(save_num: int = 1):
 	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
 	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.instance.enemy_spawn_timer)
 	
+	# Save currently purchased cards
+	var purchased_cards: Array = ScreenUI.shop_menu.purchased_cards
+	config.set_value(SECTION_SESSION, "purchased_cards", purchased_cards)
+	
 	create_save_directory()
 	
 	err = config.save(full_path)
@@ -152,6 +156,9 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	# Get structures
 	var structure_map = config.get_value(SECTION_SESSION, "structure_map", {})
 	session_data["structure_map"] = structure_map
+	
+	var purchased_cards = config.get_value(SECTION_SESSION, "purchased_cards", [])
+	session_data["purchased_cards"] = purchased_cards
 	
 	return session_data
 

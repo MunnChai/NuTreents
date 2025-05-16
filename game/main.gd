@@ -55,9 +55,15 @@ func load_world(session_data: Dictionary) -> void:
 		
 		tree.apply_data_resource(tree_resource)
 	
+	# Set terrain and structures
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
 	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
 	# Load enemies
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
 	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]
+	
+	# Add purchased cards to tree menu
+	for tree_type: Global.TreeType in session_data["purchased_cards"]:
+		TreeMenu.instance.add_tree_card(tree_type)
+		ScreenUI.shop_menu.disable_card_of_type(tree_type)

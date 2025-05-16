@@ -75,6 +75,7 @@ fit_content = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_kys1l")
+follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
@@ -113,6 +114,14 @@ tree_type = 4
 layout_mode = 2
 tree_type = 4
 
+[node name="TechTree5" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+layout_mode = 2
+tree_type = 4
+
+[node name="TechTree6" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
+layout_mode = 2
+tree_type = 4
+
 [node name="PowersLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox"]
 layout_mode = 2
 theme = ExtResource("2_t5edc")
@@ -124,6 +133,7 @@ fit_content = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_kys1l")
+follow_focus = true
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 

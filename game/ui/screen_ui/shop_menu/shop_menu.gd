@@ -16,6 +16,7 @@ var previous_time_scale: float
 var starting_position := position
 
 var currently_selected_card: ShopCard = null
+var purchased_cards: Array[Global.TreeType] = []
 
 signal on_tree_purchased(twee: Twee)
 
@@ -51,6 +52,8 @@ func _on_purchase_button_pressed():
 	
 	disable_card(currently_selected_card)
 	show_card_details(null)
+	
+	purchased_cards.append(currently_selected_card.tree_type)
 
 func _on_shop_card_pressed(shop_card: ShopCard):
 	if currently_selected_card != null:
@@ -73,6 +76,15 @@ func show_card_details(shop_card: ShopCard):
 
 func disable_card(shop_card: ShopCard):
 	shop_card.disable()
+
+func disable_card_of_type(tree_type: Global.TreeType):
+	for shop_card: ShopCard in tree_cards.get_children():
+		if shop_card.tree_type == tree_type:
+			disable_card(shop_card)
+	
+	for shop_card: ShopCard in power_cards.get_children():
+		if shop_card.tree_type == tree_type:
+			disable_card(shop_card)
 
 func open(previous_menu: ScreenMenu):
 	pause_game()

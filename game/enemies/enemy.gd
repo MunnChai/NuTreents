@@ -56,9 +56,9 @@ func update_movement(delta: float) -> void:
 		movement_cooldown -= delta
 		return
 	
-	do_action()
-	
 	movement_cooldown = move_speed
+	
+	do_action()
 
 func do_action():
 	# If the target tree doesn't exist
@@ -221,7 +221,8 @@ func find_path_to_tree(tree: Twee) -> Array:
 				new_path.append(next_pos)
 				paths.append(new_path)
 		
-		if (visited.size() > 200):
+		if (visited.size() > 400):
+			print("Total tiles visited during enemy pathfinding: ", visited.size())
 			break
 	
 	return [] # could not find path
@@ -305,6 +306,16 @@ func get_nearest_tree() -> Twee:
 			continue
 		
 		for pos in tree.get_occupied_positions():
+			var surrounding_directions := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
+			var completely_obstructed = true
+			for direction in surrounding_directions:
+				if not Global.structure_map.does_obstructive_structure_exist(pos + direction):
+					completely_obstructed = false
+					break
+			
+			if completely_obstructed:
+				continue
+			
 			var dist = get_taxicab_distance(pos, map_position)
 			if (dist < nearest_dist):
 				nearest_tree = tree
