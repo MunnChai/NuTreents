@@ -5,6 +5,7 @@ extends ScreenMenu
 @onready var tree_cards: HBoxContainer = %TreeCards
 @onready var power_cards: HBoxContainer = %PowerCards
 @onready var detail_panel: ShopDetailPanel = %DetailPanel
+@onready var cost_label: RichTextLabel = %CostLabel
 @onready var purchase_button: Button = %PurchaseButton
 
 # Pasuing Stuff
@@ -39,6 +40,11 @@ func _on_back_button_pressed():
 
 func _on_purchase_button_pressed():
 	# TODO: Check and decrement nutreent cost of cards
+	if not TreeManager.enough_n(currently_selected_card.tree_stat.cost_to_purchase):
+		SfxManager.play_sound_effect("ui_fail")
+		return
+	
+	TreeManager.consume_n(currently_selected_card.tree_stat.cost_to_purchase)
 	
 	SfxManager.play_sound_effect("ui_click")
 	TreeMenu.instance.add_tree_card(currently_selected_card.tree_type)
@@ -58,8 +64,10 @@ func _on_shop_card_pressed(shop_card: ShopCard):
 func show_card_details(shop_card: ShopCard):
 	if shop_card == null:
 		purchase_button.disabled = true
+		cost_label.text = ""
 	else:
 		purchase_button.disabled = false
+		cost_label.text = "Cost: " + str(shop_card.tree_stat.cost_to_purchase)
 	
 	detail_panel.set_details(shop_card)
 
