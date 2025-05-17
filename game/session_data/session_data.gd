@@ -17,12 +17,13 @@ func _notification(what: int) -> void:
 #region SavingFunctions
 
 # Create a new world, setting any initial metadata (name, seed, etc.)
-func create_new_session_data(save_num: int, world_name: String = "New World", seed: int = randi()):
+func create_new_session_data(metadata: Dictionary):
 	var config = ConfigFile.new()
-	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"
+	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(metadata["session_id"]) + ".cfg"
 	
-	config.set_value(SECTION_METADATA, "world_name", world_name)
-	config.set_value(SECTION_METADATA, "seed", seed)
+	config.set_value(SECTION_METADATA, "world_name", metadata["world_name"])
+	config.set_value(SECTION_METADATA, "seed", metadata["seed"])
+	config.set_value(SECTION_METADATA, "world_size", metadata["world_size"])
 	
 	config.save(full_path)
 

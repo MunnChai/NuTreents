@@ -1,9 +1,66 @@
-[gd_scene load_steps=5 format=3 uid="uid://bexvvsxohs5xm"]
+[gd_scene load_steps=23 format=3 uid="uid://bexvvsxohs5xm"]
 
 [ext_resource type="Script" uid="uid://cvxvoqns1yg1c" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_menu.gd" id="1_0amx6"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_0amx6"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_5li0k"]
 [ext_resource type="Texture2D" uid="uid://bbhcyk1k6fkk" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_text.png" id="3_mquka"]
+[ext_resource type="Texture2D" uid="uid://bqookpbbsmui5" path="res://world/proc_gen/terrain_map/Tiles_1.png" id="5_nhexk"]
+[ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="7_qnpkc"]
+[ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/speedle/speedle_sheet.png" id="7_yqlfy"]
+[ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="8_33wmp"]
+[ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="9_s5xbb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqlfy"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mht4c"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5xbb"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j8lxg"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mpl8o"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mor3"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hv1dw"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk5hu"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wr7vw"]
+atlas = ExtResource("5_nhexk")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33wmp"]
+atlas = ExtResource("7_yqlfy")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnpkc"]
+atlas = ExtResource("7_qnpkc")
+region = Rect2(256, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8yur2"]
+atlas = ExtResource("8_33wmp")
+region = Rect2(256, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_40rtf"]
+atlas = ExtResource("9_s5xbb")
+region = Rect2(256, 0, 32, 64)
 
 [node name="NewWorldMenu" type="Control"]
 layout_mode = 3
@@ -12,10 +69,10 @@ script = ExtResource("1_0amx6")
 
 [node name="PanelContainerWrapper" parent="." instance=ExtResource("2_5li0k")]
 layout_mode = 1
-offset_left = -200.0
-offset_top = -150.0
-offset_right = 200.0
-offset_bottom = 150.0
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
 layout_mode = 2
@@ -63,46 +120,333 @@ custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="WorldType" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WorldSizeLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 bbcode_enabled = true
-text = "World Type"
+text = "World Size"
 fit_content = true
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="WorldSizeButtons" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="SmallButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/WorldSizeButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
 text = "Grove"
 
-[node name="Button2" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="MediumButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/WorldSizeButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 toggle_mode = true
 text = "Forest"
 
-[node name="Button3" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer2"]
+[node name="LargeButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/WorldSizeButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 toggle_mode = true
 text = "Woodland"
 
-[node name="Control3" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="Control3" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer"]
+[node name="DifficultyLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 bbcode_enabled = true
-text = "[color=d9863e]Maybe some other world settings????"
+text = "Difficulty"
 fit_content = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="DifficultyButtons" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EasyButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/DifficultyButtons"]
+layout_mode = 2
+theme = ExtResource("2_0amx6")
+theme_override_font_sizes/font_size = 16
+toggle_mode = true
+text = "Nest"
+
+[node name="NormalButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/DifficultyButtons"]
+layout_mode = 2
+theme = ExtResource("2_0amx6")
+toggle_mode = true
+text = "Hive"
+
+[node name="HardButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/DifficultyButtons"]
+layout_mode = 2
+theme = ExtResource("2_0amx6")
+toggle_mode = true
+text = "Colony"
+
+[node name="PeacefulButton" type="CheckBox" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_0amx6")
+text = "Turn Bugs Off"
+
+[node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_5li0k")]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer"]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TileBack" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -5.5
+offset_right = 16.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_yqlfy")
+stretch_mode = 5
+
+[node name="TileBackLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 2.5
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_mht4c")
+stretch_mode = 5
+
+[node name="TileBackRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 2.5
+offset_right = 32.0
+offset_bottom = 34.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_s5xbb")
+stretch_mode = 5
+
+[node name="TileCenter" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 10.5
+offset_right = 16.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_j8lxg")
+stretch_mode = 5
+
+[node name="TileLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = 10.5
+offset_right = -16.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_mpl8o")
+stretch_mode = 5
+
+[node name="TileRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = 10.5
+offset_right = 48.0
+offset_bottom = 42.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_3mor3")
+stretch_mode = 5
+
+[node name="TileFrontLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 18.5
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_hv1dw")
+stretch_mode = 5
+
+[node name="TileFrontRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = 18.5
+offset_right = 32.0
+offset_bottom = 50.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_uk5hu")
+stretch_mode = 5
+
+[node name="TileFront" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 26.5
+offset_right = 16.0
+offset_bottom = 58.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_wr7vw")
+stretch_mode = 5
+
+[node name="BugLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -22.5
+offset_right = -16.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_33wmp")
+stretch_mode = 5
+
+[node name="BugRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -22.5
+offset_right = 48.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_33wmp")
+stretch_mode = 5
+flip_h = true
+
+[node name="TreeCenter" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -22.5
+offset_right = 16.0
+offset_bottom = 41.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_qnpkc")
+stretch_mode = 5
+
+[node name="TreeFrontLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -14.5
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_8yur2")
+stretch_mode = 5
+
+[node name="TreeFrontRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -14.5
+offset_right = 32.0
+offset_bottom = 49.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_40rtf")
+stretch_mode = 5
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer"]
 layout_mode = 2
