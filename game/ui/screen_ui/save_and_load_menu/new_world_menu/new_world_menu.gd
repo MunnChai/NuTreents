@@ -14,14 +14,10 @@ var is_open := false
 @onready var front_left_tree_animation: AnimationPlayer = %FrontLeftTreeAnimation
 @onready var front_right_tree_animation: AnimationPlayer = %FrontRightTreeAnimation
 
-enum WorldSize {
-	SMALL = 1,
-	MEDIUM = 2,
-	LARGE = 3,
-}
 
-const DEFAULT_WORLD_SIZE: WorldSize = WorldSize.MEDIUM
-var current_world_size: WorldSize = DEFAULT_WORLD_SIZE
+
+const DEFAULT_WORLD_SIZE: WorldSettings.WorldSize = WorldSettings.WorldSize.MEDIUM
+var current_world_size: WorldSettings.WorldSize = DEFAULT_WORLD_SIZE
 
 func _ready() -> void:
 	create_button.pressed.connect(create_new_world)
@@ -42,11 +38,11 @@ func _connect_button_signals():
 		button.pressed.connect(_on_world_size_button_pressed.bind(index))
 		index += 1
 
-func _on_world_size_button_pressed(world_size: WorldSize):
+func _on_world_size_button_pressed(world_size: WorldSettings.WorldSize):
 	select_world_size(world_size)
 	SfxManager.play_sound_effect("ui_click")
 
-func select_world_size(world_size: WorldSize):
+func select_world_size(world_size: WorldSettings.WorldSize):
 	var i = 1
 	for button: Button in world_size_buttons.get_children():
 		button.button_pressed = (i == world_size)
@@ -54,15 +50,16 @@ func select_world_size(world_size: WorldSize):
 	
 	current_world_size = world_size
 	
-	if world_size == WorldSize.SMALL:
+	# Munn: A bunch of animation stuff, not really necessary
+	if world_size == WorldSettings.WorldSize.SMALL:
 		transition_tree_state(center_tree_animation, TreeAnimationState.SMALL)
 		transition_tree_state(front_left_tree_animation, TreeAnimationState.HIDDEN)
 		transition_tree_state(front_right_tree_animation, TreeAnimationState.HIDDEN)
-	elif world_size == WorldSize.MEDIUM:
+	elif world_size == WorldSettings.WorldSize.MEDIUM:
 		transition_tree_state(center_tree_animation, TreeAnimationState.LARGE)
 		transition_tree_state(front_left_tree_animation, TreeAnimationState.SMALL)
 		transition_tree_state(front_right_tree_animation, TreeAnimationState.SMALL)
-	elif world_size == WorldSize.LARGE:
+	elif world_size == WorldSettings.WorldSize.LARGE:
 		transition_tree_state(center_tree_animation, TreeAnimationState.LARGE)
 		transition_tree_state(front_left_tree_animation, TreeAnimationState.LARGE)
 		transition_tree_state(front_right_tree_animation, TreeAnimationState.LARGE)

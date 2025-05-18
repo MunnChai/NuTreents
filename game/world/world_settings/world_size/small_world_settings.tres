@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WorldSizeSettings" load_steps=2 format=3 uid="uid://ck2o538jiaro0"]
+
+[ext_resource type="Script" uid="uid://bf1t7r5rwafpr" path="res://world/world_settings/world_size/world_size_settings.gd" id="1_b7y07"]
+
+[resource]
+script = ExtResource("1_b7y07")
+world_size = 1
+map_size = Vector2i(40, 40)
+min_cities = 0
+max_cities = 0
+city_distance_from_origin = 16
+num_city_drunkards = 13
+drunkard_lifetime = 10
+min_buildings_per_city = 5
+max_buildings_per_city = 7
+min_roads_per_city = 3
+max_roads_per_city = 4
+road_drunkard_lifetime = 5
+min_road_length = 0
+max_road_length = 0
+metadata/_custom_type_script = "uid://bf1t7r5rwafpr"
