@@ -164,9 +164,9 @@ func return_to(previous_menu: ScreenMenu) -> void:
 
 
 
-func check_valid_world_name():
+func check_valid_world_name(new_text: String):
 	# Ensure naem
-	if world_name.text.length() == 0:
+	if new_text.length() == 0:
 		create_button.disabled = true
 	else:
 		create_button.disabled = false

@@ -22,6 +22,10 @@ func create_new_world() -> void:
 	EnemyManager.instance.start_game()
 	Global.terrain_map.generate_map(Global.current_world_size)
 	Global.fog_map.init()
+	
+	# Save data after first world initialization, so we don't end up with 
+	# a save file that has metadata, but no session data
+	SessionData.call_deferred("save_session_data", Global.session_id)
 
 func load_world(session_data: Dictionary) -> void:
 	# Set seed before world generation, for (hopefully) deterministic map gen
