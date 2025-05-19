@@ -20,16 +20,17 @@ func create_new_world() -> void:
 	
 	TreeManager.start_game()
 	EnemyManager.instance.start_game()
-	Global.terrain_map.generate_map()
+	Global.terrain_map.generate_map(Global.current_world_size)
 	Global.fog_map.init()
 
 func load_world(session_data: Dictionary) -> void:
-	# Set seed before world generation, for deterministic map gen
+	# Set seed before world generation, for (hopefully) deterministic map gen
 	Global.set_seed(session_data["seed"])
+	Global.current_world_size = session_data["world_size"]
 	
 	TreeManager.start_game()
 	EnemyManager.instance.start_game()
-	Global.terrain_map.generate_map(false) # Generate map without buildings
+	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	Global.fog_map.init()
 	
 	TreeManager.start_game()

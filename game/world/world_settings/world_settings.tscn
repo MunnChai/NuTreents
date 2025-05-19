@@ -1,0 +1,13 @@
+[gd_scene load_steps=5 format=3 uid="uid://xe5jy5p80e8x"]
+
+[ext_resource type="Script" uid="uid://b86jgw5nf8c16" path="res://world/world_settings/world_settings.gd" id="1_lr6b5"]
+[ext_resource type="Script" uid="uid://bf1t7r5rwafpr" path="res://world/world_settings/world_size/world_size_settings.gd" id="2_smoam"]
+[ext_resource type="Resource" uid="uid://ck2o538jiaro0" path="res://world/world_settings/world_size/small_world_size.tres" id="3_x2y6a"]
+[ext_resource type="Resource" uid="uid://0jja1dbril2e" path="res://world/world_settings/world_size/medium_world_size.tres" id="4_x2y6a"]
+
+[node name="WorldSettings" type="Node"]
+script = ExtResource("1_lr6b5")
+world_size_settings = Dictionary[int, ExtResource("2_smoam")]({
+1: ExtResource("3_x2y6a"),
+2: ExtResource("4_x2y6a")
+})

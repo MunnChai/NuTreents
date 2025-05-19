@@ -128,6 +128,9 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		print("WARNING: Could not load value 'seed' from ", full_path)
 	#print("Seed: ", session_seed)
 	
+	var world_size = config.get_value(SECTION_METADATA, "world_size", Global.WorldSize.MEDIUM)
+	session_data["world_size"] = world_size
+	
 	# Get nutreents
 	var nutreents = config.get_value(SECTION_SESSION, "nutreents", 0)
 	session_data["nutreents"] = nutreents

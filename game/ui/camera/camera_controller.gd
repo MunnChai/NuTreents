@@ -80,11 +80,13 @@ func _process(delta: float) -> void:
 	else:
 		global_position = core_position
 
-const X_MAX: float = 32 * Global.MAP_SIZE.x / 2
-const Y_MAX: float = 16 * Global.MAP_SIZE.y / 2
+const TILE_SIZE := Vector2i(32, 16) 
 func lock_camera():
-	core_position.x = clamp(core_position.x, Global.ORIGIN.x - X_MAX, Global.ORIGIN.x + X_MAX)
-	core_position.y = clamp(core_position.y, Global.ORIGIN.y - Y_MAX, Global.ORIGIN.y + Y_MAX)
+	var map_size: Vector2i = WorldSettings.world_size_settings[Global.current_world_size].map_size
+	var x_max = TILE_SIZE.x * map_size.x / 2
+	var y_max = TILE_SIZE.y * map_size.y / 2
+	core_position.x = clamp(core_position.x, Global.ORIGIN.x - x_max, Global.ORIGIN.x + x_max)
+	core_position.y = clamp(core_position.y, Global.ORIGIN.y - y_max, Global.ORIGIN.y + y_max)
 
 func move_cam(delta: float) -> void:
 	var curr_mouse_pos: Vector2 = get_viewport().get_mouse_position()

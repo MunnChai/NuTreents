@@ -32,6 +32,7 @@ SceneLoader="*res://scene_loader/scene_loader.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 SessionData="*res://session_data/session_data.gd"
 StructureRegistry="*res://structures/city/registry/structure_registry.tscn"
+WorldSettings="*res://world/world_settings/world_settings.tscn"
 
 [display]
 

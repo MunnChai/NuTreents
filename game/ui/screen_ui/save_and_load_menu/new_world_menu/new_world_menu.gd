@@ -15,9 +15,8 @@ var is_open := false
 @onready var front_right_tree_animation: AnimationPlayer = %FrontRightTreeAnimation
 
 
-
-const DEFAULT_WORLD_SIZE: WorldSettings.WorldSize = WorldSettings.WorldSize.MEDIUM
-var current_world_size: WorldSettings.WorldSize = DEFAULT_WORLD_SIZE
+const DEFAULT_WORLD_SIZE: Global.WorldSize = Global.WorldSize.MEDIUM
+var current_world_size: Global.WorldSize = DEFAULT_WORLD_SIZE
 
 func _ready() -> void:
 	create_button.pressed.connect(create_new_world)
@@ -33,16 +32,16 @@ func _ready() -> void:
 
 func _connect_button_signals():
 	
-	var index = 1 # Small = 1, Medium = 2, Large = 3
+	var index = Global.WorldSize.values()[0] # Start at smallest world size, then increment
 	for button: Button in world_size_buttons.get_children():
 		button.pressed.connect(_on_world_size_button_pressed.bind(index))
 		index += 1
 
-func _on_world_size_button_pressed(world_size: WorldSettings.WorldSize):
+func _on_world_size_button_pressed(world_size: Global.WorldSize):
 	select_world_size(world_size)
 	SfxManager.play_sound_effect("ui_click")
 
-func select_world_size(world_size: WorldSettings.WorldSize):
+func select_world_size(world_size: Global.WorldSize):
 	var i = 1
 	for button: Button in world_size_buttons.get_children():
 		button.button_pressed = (i == world_size)
@@ -51,15 +50,15 @@ func select_world_size(world_size: WorldSettings.WorldSize):
 	current_world_size = world_size
 	
 	# Munn: A bunch of animation stuff, not really necessary
-	if world_size == WorldSettings.WorldSize.SMALL:
+	if world_size == Global.WorldSize.SMALL:
 		transition_tree_state(center_tree_animation, TreeAnimationState.SMALL)
 		transition_tree_state(front_left_tree_animation, TreeAnimationState.HIDDEN)
 		transition_tree_state(front_right_tree_animation, TreeAnimationState.HIDDEN)
-	elif world_size == WorldSettings.WorldSize.MEDIUM:
+	elif world_size == Global.WorldSize.MEDIUM:
 		transition_tree_state(center_tree_animation, TreeAnimationState.LARGE)
 		transition_tree_state(front_left_tree_animation, TreeAnimationState.SMALL)
 		transition_tree_state(front_right_tree_animation, TreeAnimationState.SMALL)
-	elif world_size == WorldSettings.WorldSize.LARGE:
+	elif world_size == Global.WorldSize.LARGE:
 		transition_tree_state(center_tree_animation, TreeAnimationState.LARGE)
 		transition_tree_state(front_left_tree_animation, TreeAnimationState.LARGE)
 		transition_tree_state(front_right_tree_animation, TreeAnimationState.LARGE)
@@ -145,6 +144,9 @@ func open(previous_menu: ScreenMenu) -> void:
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 	
 	SfxManager.play_sound_effect("ui_click")
+	
+	select_world_size(DEFAULT_WORLD_SIZE)
+	create_button.disabled = false
 
 func close(next_menu: ScreenMenu) -> void:
 	is_open = false
@@ -178,6 +180,9 @@ func create_new_world() -> void:
 	
 	# Generate a random seed
 	Global.new_seed()
+	
+	# Pass world size to global............ we love horrific coding practices
+	Global.current_world_size = current_world_size
 	
 	var metadata := {
 		"session_id": Global.session_id,
