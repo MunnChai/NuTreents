@@ -18,4 +18,4 @@ func _on_shop_button_pressed():
 
 func _on_almanac_button_pressed():
 	SfxManager.play_sound_effect("ui_click")
-	pass
+	ScreenUI.add_menu(ScreenUI.almanac_menu)

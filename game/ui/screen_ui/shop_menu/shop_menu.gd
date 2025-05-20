@@ -36,7 +36,6 @@ func _connect_button_signals():
 	purchase_button.pressed.connect(_on_purchase_button_pressed)
 
 func _on_back_button_pressed():
-	SfxManager.play_sound_effect("ui_click")
 	ScreenUI.exit_menu()
 
 func _on_purchase_button_pressed():
@@ -87,6 +86,7 @@ func disable_card_of_type(tree_type: Global.TreeType):
 			disable_card(shop_card)
 
 func open(previous_menu: ScreenMenu):
+	SfxManager.play_sound_effect("ui_pages")
 	pause_game()
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 	position = position + Vector2.DOWN * 100.0
@@ -94,6 +94,7 @@ func open(previous_menu: ScreenMenu):
 	TweenUtil.fade(self, 1.0, 0.1)
 
 func close(next_menu: ScreenMenu):
+	SfxManager.play_sound_effect("ui_pages")
 	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
 	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.4)
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)

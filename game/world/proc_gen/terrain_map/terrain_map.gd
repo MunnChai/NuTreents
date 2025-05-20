@@ -75,6 +75,9 @@ func get_mouse_coords() -> Vector2:
 func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_structures: bool = true) -> void:
 	print("Generating map...") 
 	
+	if not world_size in Global.WorldSize.values():
+		world_size = Global.WorldSize.SMALL
+	
 	world_size_settings = WorldSettings.world_size_settings[world_size]
 	
 	# Fill map with grass

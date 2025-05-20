@@ -58,7 +58,7 @@ var game_state
 var session_id: int
 var session_seed: int
 var session_data: Dictionary
-var current_world_size: WorldSize
+var current_world_size: WorldSize = WorldSize.SMALL
 
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU

@@ -82,6 +82,9 @@ func _process(delta: float) -> void:
 
 const TILE_SIZE := Vector2i(32, 16) 
 func lock_camera():
+	var world_size = Global.current_world_size
+	if not world_size in Global.WorldSize.values():
+		world_size = Global.WorldSize.SMALL
 	var map_size: Vector2i = WorldSettings.world_size_settings[Global.current_world_size].map_size
 	var x_max = TILE_SIZE.x * map_size.x / 2
 	var y_max = TILE_SIZE.y * map_size.y / 2
