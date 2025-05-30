@@ -11,6 +11,18 @@ var is_open := false
 
 @onready var starting_position := position
 
+var threads: Array[Thread]
+
+
+func _ready():
+	# Initialize threads
+	threads.resize(Global.NUM_SAVES + 1)
+	for i in range(1, Global.NUM_SAVES + 1):
+		threads[i] = Thread.new()
+	
+	# Create buttons
+	create_load_buttons()
+
 ## SCREEN MENU IMPLEMENTATION
 
 func open(previous_menu: ScreenMenu) -> void:
@@ -40,34 +52,49 @@ func return_to(previous_menu: ScreenMenu) -> void:
 	## ANIMATION
 	open(previous_menu)
 
-
-
-func _ready():
-	refresh()
-
 func refresh() -> void:
-	for btn in load_buttons.get_children():
-		remove_child(btn)
-		btn.queue_free()
-	create_load_buttons()
+	for i in range(1, Global.NUM_SAVES + 1):
+		load_button_info_threaded(i)
 
 func create_load_buttons():
+	# Create the buttons first
 	for i in range(1, Global.NUM_SAVES + 1): # 1-NUM_SAVES, inclusive
 		create_load_button(i)
+	
+	# Then load button info
+	refresh()
 
 func create_load_button(save_num: int = 1):
-	var session_data = SessionData.load_session_data(save_num)
-	
 	var load_button = LOAD_BUTTON.instantiate()
 	load_button.theme = MENU_THEME
 	load_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	
 	load_buttons.add_child(load_button)
-	load_button.set_button_info(save_num, session_data)
+
+func load_button_info_threaded(save_num: int):
+	threads[save_num].start(_get_button_info.bind(save_num))
+
+func _get_button_info(save_num: int):
+	var session_data = SessionData.load_session_data(save_num)
+	call_deferred("_set_button_info", save_num)
+	return session_data
+
+# Munn: Don't call this manually lol
+func _set_button_info(save_num: int):
+	var session_data = threads[save_num].wait_to_finish()
+	var load_button = get_load_button(save_num)
+	load_button.call_deferred("set_button_info", save_num, session_data)
 
 func get_load_buttons() -> Array:
 	return load_buttons.get_children()
 
+func get_load_button(save_num: int):
+	return get_load_buttons()[save_num - 1]
+
 func _on_back_button_pressed() -> void:
 	SfxManager.play_sound_effect("ui_click")
 	ScreenUI.exit_menu()
+
+func _exit_tree():
+	for i in range(1, Global.NUM_SAVES + 1):
+		threads[i].wait_to_finish()

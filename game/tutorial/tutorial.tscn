@@ -1,108 +1,35 @@
-[gd_scene load_steps=70 format=3 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=43 format=4 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
-[ext_resource type="Script" uid="uid://cpegi8xung0dm" path="res://ui/menus/tutorial_menu.gd" id="3_30bqp"]
 [ext_resource type="PackedScene" uid="uid://c4y6pxijsm16g" path="res://tutorial/tutorial_ui.tscn" id="3_811q2"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="3_e4vot"]
-[ext_resource type="Texture2D" uid="uid://d3vjgwi8co80j" path="res://ui/menus/menu_button_unselected_2x.png" id="3_e8ato"]
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="4_3e0vf"]
-[ext_resource type="PackedScene" uid="uid://buns43sl7chej" path="res://ui/player_interface/resources_ui.tscn" id="4_30bqp"]
-[ext_resource type="Texture2D" uid="uid://cp6u4ys1uoqt1" path="res://ui/menus/menu_button_selected_2x.png" id="4_dgq6q"]
+[ext_resource type="PackedScene" uid="uid://b1f0pb7wkyn1" path="res://ui/resource_indicator/resource_indicator.tscn" id="4_dpu50"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="4_t4yv6"]
 [ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock/clock.tscn" id="5_8mlcc"]
-[ext_resource type="FontFile" uid="uid://cc6r2ujntj8np" path="res://ui/fonts/Angel Code Format (v1.2)/Sol Schori (White/Sol Schori (White).fnt" id="5_eu4un"]
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="5_a7wyg"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="5_q7tcw"]
-[ext_resource type="PackedScene" uid="uid://dnlplabvpyu4g" path="res://tutorial/new_tile_maps/tutorial_terrain_map.tscn" id="5_rcm07"]
 [ext_resource type="PackedScene" uid="uid://pk6h7e8bh5y6" path="res://ui/player_interface/fast_forward_btn.tscn" id="6_idkkj"]
-[ext_resource type="Script" uid="uid://ccdm0vnayrxeg" path="res://tutorial/new_tile_maps/tutorial_terrain_map.gd" id="6_t57g5"]
-[ext_resource type="PackedScene" path="res://ui/menus/tree_menu/tree_menu.tscn" id="6_u47y0"]
 [ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="7_jf5h8"]
 [ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/screen_ui/tech_menu/tech_menu.tscn" id="7_jpd2v"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="7_lvqxb"]
 [ext_resource type="Script" uid="uid://chr4i30igmkp6" path="res://world/lighting/vignette.gd" id="8_6bq4q"]
-[ext_resource type="PackedScene" path="res://ui/menus/settings_menu/settings.tscn" id="8_dpu50"]
-[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/fog_tiles_1.png" id="8_u4yp8"]
-[ext_resource type="Texture2D" uid="uid://cwhdt4oefoyib" path="res://ui/menus/menu_exit_button.png" id="9_a7wyg"]
+[ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="8_a8se6"]
+[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="8_u4yp8"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="9_2780h"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="9_enf0y"]
-[ext_resource type="Script" uid="uid://b6sfow8vl7dc6" path="res://ui/camera/camera_controller.gd" id="10_h8kaa"]
+[ext_resource type="Script" uid="uid://baih8o03he1bg" path="res://ui/tree_menu/tree_menu.gd" id="12_eu4un"]
+[ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/hover_info_box/hover_info_box.tscn" id="13_4s5nj"]
+[ext_resource type="PackedScene" uid="uid://bsfy4ir4jyguw" path="res://ui/tree_menu/tree_card/tree_card.tscn" id="13_u47y0"]
+[ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="16_e8ato"]
+[ext_resource type="PackedScene" uid="uid://c5ab514k8x8dc" path="res://overlays/overlays.tscn" id="16_u47y0"]
 [ext_resource type="Script" uid="uid://6ku20yk0jera" path="res://tutorial/tutorial_cursor.gd" id="20_jpd2v"]
-[ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="21_dpu50"]
-[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/cursor/world_cursor/info_box_detection.gd" id="22_a7wyg"]
-[ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow_sheet.png" id="23_a8se6"]
-[ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/world_cursor/visual_cursor/wooden_arrow/wooden_arrow.gd" id="24_2780h"]
-[ext_resource type="Texture2D" uid="uid://p5141fumd1kg" path="res://world/proc_gen/test_stuff.png" id="26_a8se6"]
-[ext_resource type="PackedScene" uid="uid://c7dgu5w3y8i6u" path="res://world/proc_gen/test_scene.tscn" id="27_2780h"]
-[ext_resource type="PackedScene" uid="uid://c1bfluudjblxk" path="res://world/proc_gen/test_scene2.tscn" id="28_lh3vr"]
+[ext_resource type="PackedScene" uid="uid://bnfqehf31racc" path="res://ui/cursor/world_cursor/cursor.tscn" id="22_u47y0"]
+[ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="23_dgq6q"]
+[ext_resource type="PackedScene" uid="uid://uf3j0muxm4jw" path="res://ui/cursor/world_cursor/visual_cursor/visual_cursor.tscn" id="23_jpd2v"]
+[ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="24_dgq6q"]
+[ext_resource type="PackedScene" uid="uid://5xnl4wkxo80k" path="res://ui/cursor/virtual_cursor/virtual_cursor.tscn" id="31_a7wyg"]
 [ext_resource type="Script" uid="uid://bp3dai7xhyayw" path="res://tutorial/tutorial_input_handler.gd" id="31_jpd2v"]
-
-[sub_resource type="ButtonGroup" id="ButtonGroup_811q2"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_maj2m"]
-atlas = ExtResource("3_e8ato")
-region = Rect2(48, 96, 160, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wwjwq"]
-atlas = ExtResource("4_dgq6q")
-region = Rect2(48, 96, 160, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5ai1f"]
-atlas = ExtResource("3_e8ato")
-region = Rect2(48, 96, 160, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6364y"]
-atlas = ExtResource("4_dgq6q")
-region = Rect2(48, 96, 160, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cg7j7"]
-atlas = ExtResource("3_e8ato")
-region = Rect2(48, 96, 160, 34)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l1cna"]
-atlas = ExtResource("4_dgq6q")
-region = Rect2(48, 96, 160, 34)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5ai1f"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d7jds"]
-atlas = ExtResource("9_a7wyg")
-region = Rect2(48, 48, 32, 16)
-
-[sub_resource type="Animation" id="Animation_mrn3s"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 696)]
-}
-
-[sub_resource type="Animation" id="Animation_hyvv2"]
-resource_name = "menu_appear"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 696), Vector2(0, 396)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mrn3s"]
-_data = {
-&"RESET": SubResource("Animation_mrn3s"),
-&"menu_appear": SubResource("Animation_hyvv2")
-}
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("7_jf5h8")
@@ -142,92 +69,7 @@ gradient = SubResource("Gradient_30bqp")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 0)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_v6v85"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(0, 0, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cjmk3"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(32, 0, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_t3d4o"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(64, 0, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_61smt"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(96, 0, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jrq54"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(128, 0, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_trmi3"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(160, 0, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_umjfs"]
-atlas = ExtResource("23_a8se6")
-region = Rect2(192, 0, 32, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_f33o1"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_v6v85")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cjmk3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_t3d4o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_61smt")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jrq54")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_trmi3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_umjfs")
-}],
-"loop": true,
-"name": &"default",
-"speed": 12.0
-}]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_56hbk"]
-texture = ExtResource("26_a8se6")
-texture_region_size = Vector2i(32, 16)
-0:1/size_in_atlas = Vector2i(1, 2)
-0:1/0 = 0
-0:1/0/texture_origin = Vector2i(0, 8)
-1:1/size_in_atlas = Vector2i(1, 2)
-1:1/0 = 0
-1:1/0/texture_origin = Vector2i(0, 8)
-2:0/size_in_atlas = Vector2i(1, 3)
-2:0/0 = 0
-2:0/0/texture_origin = Vector2i(0, 16)
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_u0b2m"]
-scenes/1/scene = ExtResource("27_2780h")
-scenes/2/scene = ExtResource("28_lh3vr")
-
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yf235"]
-resource_name = "Trees"
-
-[sub_resource type="TileSet" id="TileSet_sjv4q"]
-tile_shape = 1
-tile_layout = 5
-tile_size = Vector2i(32, 16)
-sources/0 = SubResource("TileSetAtlasSource_56hbk")
-sources/1 = SubResource("TileSetScenesCollectionSource_u0b2m")
-sources/2 = SubResource("TileSetScenesCollectionSource_yf235")
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_00b0i"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_118ts"]
 texture = ExtResource("8_u4yp8")
 texture_region_size = Vector2i(32, 16)
 0:0/size_in_atlas = Vector2i(1, 2)
@@ -295,11 +137,13 @@ texture_region_size = Vector2i(32, 16)
 7:6/size_in_atlas = Vector2i(1, 2)
 7:6/0 = 0
 
-[sub_resource type="TileSet" id="TileSet_nrgr8"]
+[sub_resource type="TileSet" id="TileSet_1bgfd"]
 tile_shape = 1
 tile_layout = 5
 tile_size = Vector2i(32, 16)
-sources/0 = SubResource("TileSetAtlasSource_00b0i")
+sources/0 = SubResource("TileSetAtlasSource_118ts")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nm23b"]
 
 [node name="Tutorial" type="Node"]
 script = ExtResource("1_p47bv")
@@ -314,191 +158,7 @@ mouse_filter = 1
 [node name="UI" type="CanvasLayer" parent="UI"]
 layer = 5
 
-[node name="Menu" type="Control" parent="UI/UI" node_paths=PackedStringArray("tree_menu", "tech_menu", "settings_menu")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 696.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("3_30bqp")
-tree_menu = NodePath("TreeMenu")
-tech_menu = NodePath("TechMenu")
-settings_menu = NodePath("Settings")
-
-[node name="MenuButtons" type="HBoxContainer" parent="UI/UI/Menu"]
-layout_mode = 0
-offset_left = 7.0
-offset_top = -77.81
-offset_right = 487.0
-offset_bottom = -43.81
-theme_override_constants/separation = 0
-
-[node name="Trees" type="TextureButton" parent="UI/UI/Menu/MenuButtons"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_811q2")
-texture_normal = SubResource("AtlasTexture_maj2m")
-texture_hover = SubResource("AtlasTexture_wwjwq")
-
-[node name="Label" type="Label" parent="UI/UI/Menu/MenuButtons/Trees"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -14.19
-offset_right = 30.0
-offset_bottom = 37.81
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_eu4un")
-theme_override_font_sizes/font_size = 64
-text = "Trees"
-vertical_alignment = 1
-
-[node name="Technology" type="TextureButton" parent="UI/UI/Menu/MenuButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_811q2")
-texture_normal = SubResource("AtlasTexture_5ai1f")
-texture_hover = SubResource("AtlasTexture_6364y")
-
-[node name="Label" type="Label" parent="UI/UI/Menu/MenuButtons/Technology"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -58.0
-offset_top = -14.19
-offset_right = 58.0
-offset_bottom = 37.81
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_eu4un")
-theme_override_font_sizes/font_size = 64
-text = "Tech"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Settings" type="TextureButton" parent="UI/UI/Menu/MenuButtons"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.6
-mouse_default_cursor_shape = 2
-toggle_mode = true
-button_group = SubResource("ButtonGroup_811q2")
-texture_normal = SubResource("AtlasTexture_cg7j7")
-texture_hover = SubResource("AtlasTexture_l1cna")
-
-[node name="Label" type="Label" parent="UI/UI/Menu/MenuButtons/Settings"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -45.0
-offset_top = -14.19
-offset_right = 45.0
-offset_bottom = 37.81
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("5_eu4un")
-theme_override_font_sizes/font_size = 64
-text = "Settings"
-vertical_alignment = 1
-
-[node name="TreeMenu" parent="UI/UI/Menu" instance=ExtResource("6_u47y0")]
-offset_top = -48.0
-offset_bottom = -48.0
-
-[node name="TechMenu" parent="UI/UI/Menu" instance=ExtResource("7_jpd2v")]
-visible = false
-offset_top = -48.0
-offset_bottom = -48.0
-
-[node name="Settings" parent="UI/UI/Menu" instance=ExtResource("8_dpu50")]
-visible = false
-offset_top = -48.0
-offset_bottom = -48.0
-
-[node name="CloseMenu" type="Button" parent="UI/UI/Menu"]
-layout_mode = 2
-offset_left = 680.0
-offset_top = -81.0
-offset_right = 748.0
-offset_bottom = -47.0
-mouse_default_cursor_shape = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_5ai1f")
-toggle_mode = true
-button_group = SubResource("ButtonGroup_811q2")
-
-[node name="TextureRect" type="TextureRect" parent="UI/UI/Menu/CloseMenu"]
-layout_mode = 0
-offset_top = -1.0
-offset_right = 72.0
-offset_bottom = 36.0
-mouse_filter = 2
-texture = SubResource("AtlasTexture_d7jds")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="UI/UI/Menu"]
-libraries = {
-&"": SubResource("AnimationLibrary_mrn3s")
-}
-
-[node name="InfoBox" parent="UI/UI/Menu" instance=ExtResource("3_e4vot")]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -78.0
-offset_right = -400.0
-offset_bottom = -78.0
-grow_horizontal = 0
-
-[node name="ResourcesUI" parent="UI/UI" instance=ExtResource("4_30bqp")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 16.0
-offset_bottom = 16.0
-grow_horizontal = 1
-grow_vertical = 1
-size_flags_horizontal = 0
-size_flags_vertical = 4
-mouse_filter = 1
-
-[node name="Clock" parent="UI/UI" instance=ExtResource("5_8mlcc")]
-visible = false
-position = Vector2(1086, 66)
-scale = Vector2(2, 2)
-texture = null
-
-[node name="FastForwardBtn" parent="UI/UI" instance=ExtResource("6_idkkj")]
-visible = false
-offset_left = 1102.0
-offset_top = 90.0
-offset_right = 1135.0
-offset_bottom = 122.0
-mouse_default_cursor_shape = 2
-
 [node name="Vignette" type="ColorRect" parent="UI/UI"]
-visible = false
 material = SubResource("ShaderMaterial_anucx")
 anchors_preset = 15
 anchor_right = 1.0
@@ -508,14 +168,167 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("8_6bq4q")
 
+[node name="ResourceIndicator" parent="UI/UI" instance=ExtResource("4_dpu50")]
+
+[node name="NinePatchRect2" type="NinePatchRect" parent="UI/UI"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -228.0
+offset_bottom = 67.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_a7wyg")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Clock" parent="UI/UI/NinePatchRect2" instance=ExtResource("5_8mlcc")]
+position = Vector2(163, 66)
+scale = Vector2(2, 2)
+
+[node name="FastForwardBtn" parent="UI/UI/NinePatchRect2" instance=ExtResource("6_idkkj")]
+layout_mode = 0
+offset_left = 185.0
+offset_top = 82.0
+offset_right = 218.0
+offset_bottom = 114.0
+mouse_default_cursor_shape = 2
+
+[node name="OverlayButtons" type="VBoxContainer" parent="UI/UI"]
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.245
+anchor_right = 1.0
+anchor_bottom = 0.245
+offset_left = -142.0
+offset_top = 1.23999
+offset_bottom = 73.24
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+script = ExtResource("8_a8se6")
+
+[node name="WaterOverlayButton" type="Button" parent="UI/UI/OverlayButtons"]
+layout_mode = 2
+theme = ExtResource("9_2780h")
+text = "WATER VIEW"
+
+[node name="HealthOverlayButton2" type="Button" parent="UI/UI/OverlayButtons"]
+layout_mode = 2
+theme = ExtResource("9_2780h")
+text = "HEALTH VIEW"
+
+[node name="TechMenu" parent="UI/UI" instance=ExtResource("7_jpd2v")]
+visible = false
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+scale = Vector2(0.35, 0.35)
+
+[node name="InfoBox" parent="UI/UI" instance=ExtResource("3_e4vot")]
+visible = false
+
+[node name="TreeMenu" type="Control" parent="UI/UI"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("12_eu4un")
+
+[node name="PanelBar" type="NinePatchRect" parent="UI/UI/TreeMenu"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -32.0
+offset_right = 256.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_a7wyg")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/UI/TreeMenu"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -118.0
+offset_right = 118.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 38
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI/TreeMenu/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="DefaultTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+layout_mode = 2
+tree_type = 1
+
+[node name="ExplorerTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+layout_mode = 2
+tree_type = 5
+
+[node name="TallTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+layout_mode = 2
+tree_type = 6
+
+[node name="WaterTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+layout_mode = 2
+tree_type = 3
+
+[node name="GunTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+layout_mode = 2
+tree_type = 2
+
+[node name="HoverInfoBox" parent="UI/UI" instance=ExtResource("13_4s5nj")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 251.0
+offset_right = -100.0
+offset_bottom = 251.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="TutorialUI" parent="UI/UI" instance=ExtResource("3_811q2")]
 z_index = 1000
 
 [node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
-offset_bottom = 1507.0
+offset_bottom = 193.0
 
 [node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
-text = "Click on a tile adjacent to your forest to plant a new tree. "
+text = "Welcome to NuTreents!"
 
 [node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
 text = "Hi!
@@ -531,20 +344,20 @@ offset_bottom = 40.0
 [node name="CanvasGroup" type="CanvasGroup" parent="UI/UI/TutorialUI/FadeScreen"]
 
 [node name="BlackScreen" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
-visible = false
 offset_left = -240.0
 offset_top = -98.0
 offset_right = 1405.0
 offset_bottom = 753.0
 mouse_filter = 2
 texture = SubResource("GradientTexture1D_e4vot")
+metadata/_edit_lock_ = true
 
 [node name="CircleClip" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
 material = SubResource("CanvasItemMaterial_l38k8")
-offset_left = -155.0
-offset_top = -121.0
-offset_right = 245.0
-offset_bottom = 279.0
+offset_left = 882.0
+offset_top = 1.0
+offset_right = 1282.0
+offset_bottom = 401.0
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_30bqp")
 
@@ -559,53 +372,120 @@ texture = SubResource("GradientTexture2D_8mlcc")
 
 [node name="World" type="Node2D" parent="."]
 
+[node name="Overlays" parent="World" instance=ExtResource("16_u47y0")]
+
 [node name="TileMaps" type="Node2D" parent="World"]
 
 [node name="BuildingManager" type="Node2D" parent="World/TileMaps" groups=["tile_manager"]]
 y_sort_enabled = true
 script = ExtResource("4_3e0vf")
 
-[node name="GroundLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("5_rcm07")]
-script = ExtResource("6_t57g5")
+[node name="GroundLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("16_e8ato")]
+z_index = -5
+tile_map_data = PackedByteArray("AAD+/wEAAAABAAAAAAD//wEAAAADAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAABAAAAAAACAAAAAAAAAAAAAAAAAAAAAAD//wAAAAADAAAAAAD+/wAAAAABAAAAAAD+////AAAAAAAAAAD/////AAADAAAAAAAAAP//AAACAAAAAAABAP//AAACAAAAAAABAP7/AAADAAAAAAAAAP7/AAAAAAAAAAD///7/AAAAAAAAAAD+//7/AAACAAAAAAD9//3/AAACAAAAAAD9//7/AAACAAAAAAD9////AAAAAAAAAAD9/wAAAAADAAAAAAD9/wEAAAABAAAAAAD+//3/AAABAAAAAAD///3/AAABAAAAAAAAAP3/AAADAAAAAAABAP3/AAAAAAAAAAACAP3/AAAAAAAAAAACAP7/AAACAAAAAAACAP//AAABAAAAAAACAAAAAAACAAAAAAACAAEAAAAAAAAAAAACAAIAAAABAAAAAAABAAIAAAABAAAAAAAAAAIAAAAAAAAAAAD//wIAAAAAAAAAAAD+/wIAAAADAAAAAAD9/wIAAAACAAAAAAA=")
 
-[node name="Cursor" type="Marker2D" parent="World/TileMaps/BuildingManager"]
+[node name="Cursor" parent="World/TileMaps/BuildingManager" instance=ExtResource("22_u47y0")]
 script = ExtResource("20_jpd2v")
 
-[node name="ModulationHighlight" type="Sprite2D" parent="World/TileMaps/BuildingManager/Cursor"]
-unique_name_in_owner = true
-modulate = Color(0.792567, 0.568552, 1.34766e-06, 0.505882)
-texture = ExtResource("21_dpu50")
-
-[node name="InfoBoxDetector" type="Node" parent="World/TileMaps/BuildingManager/Cursor"]
-script = ExtResource("22_a7wyg")
-
-[node name="WoodenArrow" type="AnimatedSprite2D" parent="World/TileMaps/BuildingManager/Cursor"]
-unique_name_in_owner = true
-z_index = 25
-sprite_frames = SubResource("SpriteFrames_f33o1")
-frame_progress = 0.531519
-script = ExtResource("24_2780h")
+[node name="VisualCursor" parent="World/TileMaps/BuildingManager" node_paths=PackedStringArray("cursor") instance=ExtResource("23_jpd2v")]
+cursor = NodePath("../Cursor")
 
 [node name="BuildingLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("7_lvqxb")]
 y_sort_enabled = true
-tile_set = SubResource("TileSet_sjv4q")
 
 [node name="EnemyLayer" type="Node2D" parent="World/TileMaps/BuildingManager" groups=["enemy_map"]]
 y_sort_enabled = true
 
 [node name="FogLayer" type="TileMapLayer" parent="World/TileMaps/BuildingManager" groups=["fog_map"]]
-visible = false
 z_index = 5
-tile_set = SubResource("TileSet_nrgr8")
+tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("9_enf0y")
 
-[node name="Camera2D" type="Camera2D" parent="World/TileMaps"]
-zoom = Vector2(2, 2)
-script = ExtResource("10_h8kaa")
+[node name="HoverInfoBox" type="Control" parent="World/TileMaps/BuildingManager"]
+visible = false
+z_index = 1000
+layout_mode = 3
+anchors_preset = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="World/TileMaps/BuildingManager/HoverInfoBox"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -24.0
+offset_right = 12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_nm23b")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="World/TileMaps/BuildingManager/HoverInfoBox/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("5_a7wyg")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="ArrowRect" type="TextureRect" parent="World/TileMaps/BuildingManager/HoverInfoBox/PanelContainer/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("23_dgq6q")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="World/TileMaps/BuildingManager/HoverInfoBox/PanelContainer/NinePatchRect"]
+visible = false
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.01
+offset_bottom = 2.01
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.639216)
+
+[node name="MarginContainer" type="MarginContainer" parent="World/TileMaps/BuildingManager/HoverInfoBox/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="RichTextLabel" type="RichTextLabel" parent="World/TileMaps/BuildingManager/HoverInfoBox/PanelContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("9_2780h")
+bbcode_enabled = true
+text = "DEFAULT TREE
+Normie tree.
+"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="Camera" parent="World" instance=ExtResource("24_dgq6q")]
 
 [node name="AmbientLighting" parent="World" instance=ExtResource("4_t4yv6")]
 visible = false
 night_color = Color(0.220747, 0.405964, 0.660919, 1)
+
+[node name="VirtualCursor" parent="World" instance=ExtResource("31_a7wyg")]
 
 [node name="Music" parent="World" instance=ExtResource("5_q7tcw")]
 play_tutorial = true
@@ -613,10 +493,7 @@ play_tutorial = true
 [node name="InputHandler" type="Node" parent="World"]
 script = ExtResource("31_jpd2v")
 
-[connection signal="pressed" from="UI/UI/Menu/MenuButtons/Trees" to="UI/UI/Menu" method="_on_trees_pressed"]
-[connection signal="pressed" from="UI/UI/Menu/MenuButtons/Technology" to="UI/UI/Menu" method="_on_technology_pressed"]
-[connection signal="pressed" from="UI/UI/Menu/MenuButtons/Settings" to="UI/UI/Menu" method="_on_settings_pressed"]
-[connection signal="pressed" from="UI/UI/Menu/CloseMenu" to="UI/UI/Menu" method="_on_close_menu_pressed"]
+[connection signal="pressed" from="UI/UI/OverlayButtons/WaterOverlayButton" to="UI/UI/OverlayButtons" method="_on_water_overlay_pressed"]
+[connection signal="pressed" from="UI/UI/OverlayButtons/HealthOverlayButton2" to="UI/UI/OverlayButtons" method="_on_health_overlay_pressed"]
 
-[editable path="UI/UI/Menu/TreeMenu"]
 [editable path="UI/UI/TutorialUI"]

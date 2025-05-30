@@ -17,12 +17,13 @@ func _notification(what: int) -> void:
 #region SavingFunctions
 
 # Create a new world, setting any initial metadata (name, seed, etc.)
-func create_new_session_data(save_num: int, world_name: String = "New World", seed: int = randi()):
+func create_new_session_data(metadata: Dictionary):
 	var config = ConfigFile.new()
-	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(save_num) + ".cfg"
+	var full_path = SAVE_PATH + "/" + SAVE_NAME + str(metadata["session_id"]) + ".cfg"
 	
-	config.set_value(SECTION_METADATA, "world_name", world_name)
-	config.set_value(SECTION_METADATA, "seed", seed)
+	config.set_value(SECTION_METADATA, "world_name", metadata["world_name"])
+	config.set_value(SECTION_METADATA, "seed", metadata["seed"])
+	config.set_value(SECTION_METADATA, "world_size", metadata["world_size"])
 	
 	config.save(full_path)
 
@@ -76,13 +77,17 @@ func save_session_data(save_num: int = 1):
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
-	for enemy: Enemy in EnemyManager.current_enemies:
+	for enemy: Enemy in EnemyManager.instance.current_enemies:
 		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
 		if !save_resource:
 			continue
 		enemy_map[enemy.map_position] = save_resource
 	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
-	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.enemy_spawn_timer)
+	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.instance.enemy_spawn_timer)
+	
+	# Save currently purchased cards
+	var purchased_cards: Array = ScreenUI.shop_menu.purchased_cards
+	config.set_value(SECTION_SESSION, "purchased_cards", purchased_cards)
 	
 	create_save_directory()
 	
@@ -104,16 +109,15 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		print("Loaded session data from: ", full_path)
 	
 	# Returns if this save slot is empty
+	if not config.has_section(SECTION_METADATA):
+		return {}
+	
 	if config.get_section_keys(SECTION_METADATA).is_empty():
 		return {}
 	
 	# Get world name
-	var world_name = config.get_value(SECTION_METADATA, "world_name")
-	if world_name is String:
-		session_data["world_name"] = world_name
-	else:
-		session_data["world_name"] = "ERR_WORLD_NAME"
-		print("WARNING: Could not load value 'world_name' from ", full_path)
+	var world_name = config.get_value(SECTION_METADATA, "world_name", "ERR: WORLD_NAME")
+	session_data["world_name"] = world_name
 	
 	# Get rng seed
 	var session_seed = config.get_value(SECTION_METADATA, "seed")
@@ -124,71 +128,41 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 		print("WARNING: Could not load value 'seed' from ", full_path)
 	#print("Seed: ", session_seed)
 	
+	var world_size = config.get_value(SECTION_METADATA, "world_size", Global.WorldSize.MEDIUM)
+	session_data["world_size"] = world_size
+	
 	# Get nutreents
-	var nutreents = config.get_value(SECTION_SESSION, "nutreents")
-	if nutreents is int:
-		session_data["nutreents"] = nutreents
-	else:
-		session_data["nutreents"] = 0
-		print("WARNING: Could not load value 'nutreents' from ", full_path)
+	var nutreents = config.get_value(SECTION_SESSION, "nutreents", 0)
+	session_data["nutreents"] = nutreents
 	
 	# Get time and day
-	var current_day = config.get_value(SECTION_SESSION, "current_day")
-	var current_time = config.get_value(SECTION_SESSION, "current_time")
-	var total_time = config.get_value(SECTION_METADATA, "total_time")
-	if current_day is int:
-		session_data["current_day"] = current_day
-	else:
-		session_data["current_day"] = 1
-		print("WARNING: Could not load value 'current_day' from ", full_path)
-	if current_time is float:
-		session_data["current_time"] = current_time
-	else:
-		session_data["current_time"] = 0
-		print("WARNING: Could not load value 'current_time' from ", full_path)
-	if total_time is float:
-		session_data["total_time"] = total_time
-	else:
-		session_data["total_time"] = 0
-		print("WARNING: Could not load value 'total_time' from ", full_path)
+	var current_day = config.get_value(SECTION_SESSION, "current_day", 1)
+	var current_time = config.get_value(SECTION_SESSION, "current_time", 0)
+	var total_time = config.get_value(SECTION_METADATA, "total_time", 0)
+	session_data["current_day"] = current_day
+	session_data["current_time"] = current_time
+	session_data["total_time"] = total_time
 	
 	# Get EnemyManager info
-	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map")
-	var enemy_spawn_timer = config.get_value(SECTION_SESSION, "enemy_spawn_timer")
-	if enemy_map is Dictionary:
-		session_data["enemy_map"] = enemy_map
-	else:
-		session_data["enemy_map"] = {}
-		print("WARNING: Could not load value 'enemy_map' from ", full_path)
-	if enemy_spawn_timer is float:
-		session_data["enemy_spawn_timer"] = enemy_spawn_timer
-	else:
-		session_data["enemy_spawn_timer"] = 0
-		print("WARNING: Could not load value 'enemy_spawn_timer' from ", full_path)
+	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map", {})
+	var enemy_spawn_timer = config.get_value(SECTION_SESSION, "enemy_spawn_timer", 0)
+	session_data["enemy_map"] = enemy_map
+	session_data["enemy_spawn_timer"] = enemy_spawn_timer
 	
 	# Get tiles
-	var terrain_map = config.get_value(SECTION_SESSION, "terrain_map")
-	if terrain_map is Dictionary:
-		session_data["terrain_map"] = terrain_map
-	else:
-		session_data["terrain_map"] = {}
-		print("WARNING: Could not load value 'terrain_map' from ", full_path)
+	var terrain_map = config.get_value(SECTION_SESSION, "terrain_map", {})
+	session_data["terrain_map"] = terrain_map
 	
 	# Get trees
-	var tree_map = config.get_value(SECTION_SESSION, "tree_map")
-	if tree_map is Dictionary:
-		session_data["tree_map"] = tree_map
-	else:
-		session_data["tree_map"] = {}
-		print("WARNING: Could not load value 'tree_map' from ", full_path)
+	var tree_map = config.get_value(SECTION_SESSION, "tree_map", {})
+	session_data["tree_map"] = tree_map
 	
 	# Get structures
-	var structure_map = config.get_value(SECTION_SESSION, "structure_map")
-	if structure_map is Dictionary:
-		session_data["structure_map"] = structure_map
-	else:
-		session_data["structure_map"] = {}
-		print("WARNING: Could not load value 'structure_map' from ", full_path)
+	var structure_map = config.get_value(SECTION_SESSION, "structure_map", {})
+	session_data["structure_map"] = structure_map
+	
+	var purchased_cards = config.get_value(SECTION_SESSION, "purchased_cards", [])
+	session_data["purchased_cards"] = purchased_cards
 	
 	return session_data
 
@@ -241,6 +215,9 @@ func _create_twee_save_resource(twee: Twee) -> TweeDataResource:
 	save_resource.sheet_id = twee.sheets.find(twee.sprite.texture)
 	
 	save_resource.forest_water = TreeManager.forests[twee.forest].water
+	
+	if twee is TechTree:
+		save_resource.tech_slot = twee.tech_slot
 	
 	return save_resource
 

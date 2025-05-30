@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=15 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://b1f0pb7wkyn1" path="res://ui/resource_indicator/resource_indicator.tscn" id="3_hrmpd"]
 [ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock/clock.tscn" id="3_wl5ax"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cawvireiybr1l" path="res://ui/player_interface/overlay_buttons.gd" id="9_2ct0b"]
 [ext_resource type="PackedScene" uid="uid://brejyjscqrd5j" path="res://ui/tree_menu/tree_menu.tscn" id="9_08otm"]
 [ext_resource type="PackedScene" uid="uid://dnqphbl5e44tn" path="res://ui/screen_ui/tech_menu/tech_menu.tscn" id="9_bi8hs"]
+[ext_resource type="Script" uid="uid://t3rh6n673tko" path="res://ui/menu_buttons.gd" id="9_oqbvt"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="10_hrmpd"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
 [ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
@@ -70,9 +71,10 @@ anchor_left = 1.0
 anchor_top = 0.245
 anchor_right = 1.0
 anchor_bottom = 0.245
-offset_left = -142.0
-offset_top = 1.23999
-offset_bottom = 73.24
+offset_left = -158.0
+offset_top = -15.76
+offset_right = -16.0
+offset_bottom = 56.24
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 10
@@ -89,13 +91,41 @@ layout_mode = 2
 theme = ExtResource("10_kxjjr")
 text = "HEALTH VIEW"
 
+[node name="MenuButtons" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1038.0
+offset_top = 588.0
+offset_right = 1078.0
+offset_bottom = 628.0
+script = ExtResource("9_oqbvt")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuButtons"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AlmanacButton" type="Button" parent="MenuButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("10_kxjjr")
+text = "ALMANAC"
+
+[node name="ShopButton" type="Button" parent="MenuButtons/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("10_kxjjr")
+text = "SHOP"
+
 [node name="TechMenu" parent="." instance=ExtResource("9_bi8hs")]
-visible = false
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
+offset_top = -324.0
+offset_bottom = -324.0
 grow_vertical = 2
-scale = Vector2(0.35, 0.35)
 
 [node name="InfoBox" parent="." instance=ExtResource("10_hrmpd")]
 visible = false

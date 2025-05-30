@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 uniform int outline_width = 1;
-uniform float outline_alpha = 1.0;
+uniform float outline_alpha: hint_range(0.0, 1.0) = 1.0;
 uniform vec3 outline_color: source_color = vec3(1.0, 1.0, 1.0);
 
 bool is_on_edge(vec2 uv, sampler2D texture2d, vec2 texture_pixel_size) {

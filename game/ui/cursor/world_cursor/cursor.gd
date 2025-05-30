@@ -61,7 +61,7 @@ func do_primary_action() -> void:
 		SfxManager.play_sound_effect("ui_fail")
 		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
 		return
-
+	
 	if type == Global.TreeType.TECH_TREE:
 		var can_place = true
 		

@@ -8,11 +8,12 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hta6u"]
 shader = ExtResource("3_36npe")
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 1.0
 shader_parameter/shake_amount = 10.0
+shader_parameter/tint_amount = 0.0
 shader_parameter/alpha = 1.0
-shader_parameter/pos = Vector2(0, 0)
-shader_parameter/dehydrated = false
 shader_parameter/uv_y_offset = 4.69
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/tint_color = Color(1, 1, 1, 1)

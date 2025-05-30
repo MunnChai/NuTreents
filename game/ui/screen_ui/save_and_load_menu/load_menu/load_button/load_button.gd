@@ -15,6 +15,10 @@ func _ready() -> void:
 func set_button_info(save_num: int, session_data: Dictionary): 
 	self.save_num = save_num
 	
+	# Disconnect all callables
+	for connection in button.pressed.get_connections():
+		button.pressed.disconnect(connection["callable"])
+	
 	if session_data.is_empty():
 		set_button_info_empty(save_num)
 		return

@@ -19,17 +19,22 @@ func create_new_world() -> void:
 	Global.set_seed(Global.get_seed())
 	
 	TreeManager.start_game()
-	EnemyManager.start_game()
-	Global.terrain_map.generate_map()
+	EnemyManager.instance.start_game()
+	Global.terrain_map.generate_map(Global.current_world_size)
 	Global.fog_map.init()
+	
+	# Save data after first world initialization, so we don't end up with 
+	# a save file that has metadata, but no session data
+	SessionData.call_deferred("save_session_data", Global.session_id)
 
 func load_world(session_data: Dictionary) -> void:
-	# Set seed before world generation, for deterministic map gen
+	# Set seed before world generation, for (hopefully) deterministic map gen
 	Global.set_seed(session_data["seed"])
+	Global.current_world_size = session_data["world_size"]
 	
 	TreeManager.start_game()
-	EnemyManager.start_game()
-	Global.terrain_map.generate_map(false) # Generate map without buildings
+	EnemyManager.instance.start_game()
+	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	Global.fog_map.init()
 	
 	TreeManager.start_game()
@@ -55,9 +60,15 @@ func load_world(session_data: Dictionary) -> void:
 		
 		tree.apply_data_resource(tree_resource)
 	
+	# Set terrain and structures
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
 	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
 	# Load enemies
-	EnemyManager.load_enemies_from(session_data["enemy_map"])
-	EnemyManager.enemy_spawn_timer = session_data["enemy_spawn_timer"]
+	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
+	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]
+	
+	# Add purchased cards to tree menu
+	for tree_type: Global.TreeType in session_data["purchased_cards"]:
+		TreeMenu.instance.add_tree_card(tree_type)
+		ScreenUI.shop_menu.disable_card_of_type(tree_type)

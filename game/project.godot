@@ -25,7 +25,6 @@ Global="*res://global.gd"
 Settings="*res://settings/settings.gd"
 TreeRegistry="*res://structures/trees/registry/twee_registry.tscn"
 TreeManager="*res://structures/trees/twee_manager.gd"
-EnemyManager="*res://enemies/enemy_manager.gd"
 SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
 PopupManager="*res://ui/popup_manager/popup_manager.gd"
 ScreenUI="*res://ui/screen_ui/screen_ui.tscn"
@@ -33,11 +32,11 @@ SceneLoader="*res://scene_loader/scene_loader.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 SessionData="*res://session_data/session_data.gd"
 StructureRegistry="*res://structures/city/registry/structure_registry.tscn"
+WorldSettings="*res://world/world_settings/world_settings.tscn"
 
 [display]
 
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/stretch/mode="viewport"
 
 [editor]
 

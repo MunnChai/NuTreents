@@ -12,7 +12,7 @@ func _on_health_overlay_pressed() -> void:
 
 
 func show_overlay(overlay_type: OverlayManager.OverlayType):
-	var overlay_manager = Global.overlay_manager
+	var overlay_manager = OverlayManager.instance
 	
 	var overlay: Overlay = overlay_manager.overlays[overlay_type]
 	

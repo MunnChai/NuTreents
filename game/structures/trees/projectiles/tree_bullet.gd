@@ -21,11 +21,6 @@ func _process(delta: float) -> void:
 	if (!enemy):
 		return
 	
-	var distance = (enemy.global_position - global_position).length()
-	
-	var direction = (enemy.global_position - global_position).normalized()
-	#global_position += direction * SPEED * delta * (distance / 32)
-	
 	global_position = lerp(global_position, enemy.global_position, 2 * delta / BULLET_DURATION)
 	
 	var sprite_distance = (enemy.global_position - sprite_2d.global_position).length()
@@ -34,15 +29,12 @@ func _process(delta: float) -> void:
 		end_bullet_life()
 
 func begin_tween():
-	var tween = get_tree().create_tween() 
+	var tween = get_tree().create_tween()
 	tween.set_ease(Tween.EASE_OUT) 
 	tween.set_trans(Tween.TRANS_SINE)
 	tween.tween_property(sprite_2d, "position:y", -ARC_HEIGHT, BULLET_DURATION / 2)
 	tween.set_ease(Tween.EASE_IN) 
 	tween.tween_property(sprite_2d, "position:y", 0, BULLET_DURATION / 2)
-	
-	var tween_2 = get_tree().create_tween() 
-	tween_2.set_ease(Tween.EASE_IN) 
 
 func end_bullet_life() -> void:
 	enemy.take_damage(damage)

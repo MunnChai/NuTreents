@@ -16,8 +16,8 @@ func _init(t: int, p: Vector2):
 	
 	sprite_id = randi_range(0, NUM_CITY_SPRITES - 1)
 	sprite_2d.texture.region.x + sprite_id * TILE_SIZE.x
-
-func breakdown() -> Ground:
-	var fac = (type == 3)
-	var ground = Ground.new(1, fac, pos)
-	return ground
+#
+#func breakdown() -> Ground:
+	#var fac = (type == 3)
+	#var ground = Ground.new(1, fac, pos)
+	#return ground

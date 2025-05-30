@@ -10,6 +10,12 @@ extends Control
 ## - Remove/load cards from the selection options
 ## - Different tabs
 
+const TREE_CARD = preload("res://ui/tree_menu/tree_card/tree_card.tscn")
+
+@onready var tree_card_container = %TreeCardContainer
+
+var starting_min_size = custom_minimum_size
+
 ## Tree types of cards, in the order that they are placed on the bar
 var tree_order = [Global.TreeType.DEFAULT_TREE,
 	Global.TreeType.EXPLORER_TREE,
@@ -42,3 +48,10 @@ func previous_tree() -> void:
 	currently_selected_tree = currently_selected_tree % tree_order.size()
 	SfxManager.play_sound_effect("ui_click")
 	#InfoBox.get_instance().show_content_for_tree(node_order[currently_selected_tree].tree_stat)
+
+
+func add_tree_card(tree_type: Global.TreeType):
+	var new_card = TREE_CARD.instantiate()
+	new_card.tree_type = tree_type
+	
+	tree_card_container.add_child(new_card)

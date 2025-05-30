@@ -1,7 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://ney755v7lyxy"]
+[gd_scene load_steps=8 format=3 uid="uid://ney755v7lyxy"]
 
 [ext_resource type="Script" uid="uid://bxk30kqg4mueg" path="res://structures/city/factory/factory.gd" id="1_sobn2"]
+[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="2_bk0h8"]
 [ext_resource type="Texture2D" uid="uid://cafkj4qot2ato" path="res://world/proc_gen/structure_map/factory_sheet.png" id="2_c8575"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y7bwo"]
+shader = ExtResource("2_bk0h8")
+shader_parameter/outline_width = 1
+shader_parameter/outline_alpha = 0.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [sub_resource type="Animation" id="Animation_8g0gh"]
 length = 0.001
@@ -47,6 +54,7 @@ script = ExtResource("1_sobn2")
 cost_to_remove = 500
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_y7bwo")
 texture = ExtResource("2_c8575")
 offset = Vector2(0, -16)
 hframes = 6

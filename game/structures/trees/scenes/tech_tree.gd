@@ -72,3 +72,10 @@ func upgrade_tree() -> void:
 	
 	# Do stuff related to TechMenu
 	Global.tech_menu.current_tech.append(tech_slot)
+
+func apply_data_resource(tree_resource: Resource):
+	super.apply_data_resource(tree_resource)
+	
+	tech_slot = tree_resource.tech_slot
+	if is_large:
+		Global.tech_menu.current_tech.append(tech_slot)

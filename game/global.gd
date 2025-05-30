@@ -2,7 +2,7 @@ extends Node
 
 const NUM_SAVES: int = 5
 
-const MAP_SIZE: Vector2i = Vector2i(1, 1) * 80
+const MAP_SIZE: Vector2i = Vector2i(1, 1) * 40
 const ORIGIN: Vector2i = Vector2(0, 0)
 
 
@@ -46,12 +46,19 @@ enum GameState {
 	GAME_OVER = MAIN_MENU + 1,
 }
 
+enum WorldSize {
+	SMALL = 1,
+	MEDIUM = 2,
+	LARGE = 3,
+}
+
 var game_state
 
 # SESSION_DATA
 var session_id: int
 var session_seed: int
 var session_data: Dictionary
+var current_world_size: WorldSize = WorldSize.SMALL
 
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU
