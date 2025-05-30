@@ -86,6 +86,7 @@ horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer"]
+custom_minimum_size = Vector2(0, 130)
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
@@ -108,26 +109,6 @@ tree_type = 2
 layout_mode = 2
 tree_type = 4
 
-[node name="TechTree2" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 4
-
-[node name="TechTree3" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 4
-
-[node name="TechTree4" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 4
-
-[node name="TechTree5" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 4
-
-[node name="TechTree6" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 4
-
 [node name="PowersLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox"]
 layout_mode = 2
 theme = ExtResource("2_t5edc")
@@ -144,7 +125,10 @@ horizontal_scroll_mode = 3
 vertical_scroll_mode = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer2"]
+custom_minimum_size = Vector2(0, 130)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -158,9 +142,14 @@ size_flags_vertical = 3
 focus_neighbor_top = NodePath("../../../ScrollContainer/MarginContainer/TreeCards")
 theme_override_constants/separation = 10
 
-[node name="WaterTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer2/MarginContainer/PowerCards" instance=ExtResource("4_kys1l")]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer2/MarginContainer"]
 layout_mode = 2
-tree_type = 3
+theme = ExtResource("2_t5edc")
+theme_override_font_sizes/normal_font_size = 32
+text = "Coming soon!"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="PurchaseVBox" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(160, 0)
