@@ -15,6 +15,7 @@ var fog_map: FogMap
 var clock: Clock
 var tech_menu: TechMenu
 var overlay_manager: OverlayManager
+var camera: Camera2D
 #var screen_ui: ScreenUI
 
 ## STRUCTURE IDS
@@ -75,6 +76,7 @@ func update_globals():
 	clock = get_tree().get_first_node_in_group("clock")
 	tech_menu = get_tree().get_first_node_in_group("tech_menu")
 	overlay_manager = get_tree().get_first_node_in_group("overlay_manager")
+	camera = get_tree().get_first_node_in_group("camera")
 
 func new_seed() -> int:
 	# Set seed as a semi random number (time since unix epoch or whatever)

@@ -1,13 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl0gnb847s7bv"]
+[gd_scene load_steps=3 format=3 uid="uid://dl0gnb847s7bv"]
 
 [ext_resource type="Texture2D" uid="uid://dqsm1yn1puk7g" path="res://world/proc_gen/highlight.png" id="1_tw8sa"]
-[ext_resource type="Shader" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_y34vw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1thgo"]
-shader = ExtResource("1_y34vw")
-shader_parameter/outline_width = 1
-shader_parameter/outline_alpha = 1.0
-shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [node name="ModulationHighlight" type="Sprite2D"]
 y_sort_enabled = true

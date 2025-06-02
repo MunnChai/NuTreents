@@ -34,7 +34,7 @@ night_color = Color(0.220747, 0.405964, 0.660919, 1)
 
 [node name="VirtualCursor" parent="World" instance=ExtResource("6_4c57u")]
 
-[node name="Camera" parent="World" instance=ExtResource("7_4c57u")]
+[node name="Camera" parent="World" groups=["camera"] instance=ExtResource("7_4c57u")]
 
 [node name="Music" parent="World" instance=ExtResource("3_1bvp3")]
 
