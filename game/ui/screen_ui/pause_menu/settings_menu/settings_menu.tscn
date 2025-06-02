@@ -365,6 +365,7 @@ step = 0.05
 value = 0.4
 
 [node name="VibrationLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(55, 0)
 layout_mode = 2
 theme = ExtResource("2_ih0hb")
@@ -372,6 +373,7 @@ text = "Controller Vibration"
 vertical_alignment = 1
 
 [node name="ControllerVibrationContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="VibrationSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer"]
