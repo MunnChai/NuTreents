@@ -260,6 +260,7 @@ popup/item_0/text = "1920x1080"
 popup/item_0/id = 2
 
 [node name="GUIScaleContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="GUIScaleLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]

@@ -1,9 +1,11 @@
-[gd_resource type="Theme" load_steps=18 format=3 uid="uid://b6tppincjordy"]
+[gd_resource type="Theme" load_steps=21 format=3 uid="uid://b6tppincjordy"]
 
 [ext_resource type="Texture2D" uid="uid://d1n5fww85xqk4" path="res://ui/screen_ui/pause_menu/settings_menu/grabber.png" id="1_p4mxh"]
 [ext_resource type="FontFile" uid="uid://cndyubir4djau" path="res://ui/fonts/monogram/monogram-extended.ttf" id="1_xkqen"]
 [ext_resource type="Texture2D" uid="uid://chnnft0aob3nq" path="res://ui/screen_ui/pause_menu/settings_menu/grabber_highlighted.png" id="2_qc17u"]
 [ext_resource type="Texture2D" uid="uid://d34x1v5po7rjp" path="res://ui/screen_ui/pause_menu/settings_menu/down_arrow.png" id="3_p7pnn"]
+[ext_resource type="Texture2D" uid="uid://bupdsv8bcqsqu" path="res://ui/screen_ui/pause_menu/settings_menu/checkbox_filled.png" id="4_57h6j"]
+[ext_resource type="Texture2D" uid="uid://d1yryvg8seu01" path="res://ui/screen_ui/pause_menu/settings_menu/checkbox_empty.png" id="5_ty86x"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xkqen"]
 content_margin_left = 4.0
@@ -128,8 +130,17 @@ border_color = Color(0.666667, 0.313726, 0.0745098, 1)
 corner_detail = 6
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_50w50"]
+bg_color = Color(0.4, 0.113725, 0.0627451, 1)
+border_color = Color(1, 1, 1, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p7pnn"]
 bg_color = Color(0.666667, 0.313726, 0.0745098, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
 
 [resource]
 default_font = ExtResource("1_xkqen")
@@ -166,4 +177,7 @@ HSlider/styles/grabber_area = SubResource("StyleBoxFlat_yf3kb")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_o1o38")
 HSlider/styles/slider = SubResource("StyleBoxFlat_a3g6f")
 OptionButton/icons/arrow = ExtResource("3_p7pnn")
+PopupMenu/icons/radio_checked = ExtResource("4_57h6j")
+PopupMenu/icons/radio_unchecked = ExtResource("5_ty86x")
+PopupMenu/styles/hover = SubResource("StyleBoxFlat_50w50")
 PopupMenu/styles/panel = SubResource("StyleBoxFlat_p7pnn")

@@ -25,15 +25,16 @@ func save_graphics_settings() -> void:
 	Settings.save_to_config()
 
 func load_graphics_settings() -> void:
-	gui_scale_slider.value = Settings.get_setting_or_default("gui_scale", 1.0)
+	#gui_scale_slider.value = Settings.get_setting_or_default("gui_scale", 1.0)
+	gui_scale_slider.value = 1.0
 	window_option_button.selected = Settings.get_setting_or_default("window_option", 0)
 	
 	get_tree().root.content_scale_factor = gui_scale_slider.value
-	#get_tree().root.content_scale_factor = 1.2
-
-func _on_window_option_button_item_selected(index: int) -> void:
-	SfxManager.play_sound_effect("ui_click")
 	
+	await get_tree().process_frame # For some reason, there's a bug if you call it on the first frame...
+	set_window_mode(window_option_button.selected) # Set the saved window setting!
+
+func set_window_mode(index: int) -> void:
 	if index == 0:
 		## WINDOWED
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
@@ -43,6 +44,11 @@ func _on_window_option_button_item_selected(index: int) -> void:
 	elif index == 2:
 		## FULLSCREEN
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+
+func _on_window_option_button_item_selected(index: int) -> void:
+	SfxManager.play_sound_effect("ui_click")
+	
+	set_window_mode(index)
 	
 	save_graphics_settings()
 
