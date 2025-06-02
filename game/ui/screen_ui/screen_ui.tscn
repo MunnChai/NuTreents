@@ -153,4 +153,10 @@ grow_vertical = 2
 unique_name_in_owner = true
 z_index = 0
 
-[node name="GameCursor" parent="." instance=ExtResource("2_2e8l5")]
+[node name="CursorLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = 128
+
+[node name="GameCursor" parent="CursorLayer" instance=ExtResource("2_2e8l5")]
+z_index = 4096
+z_as_relative = false
