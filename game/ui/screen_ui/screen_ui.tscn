@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dpyl2aj5vemli"]
+[gd_scene load_steps=14 format=3 uid="uid://dpyl2aj5vemli"]
 
 [ext_resource type="Script" uid="uid://bd7dixcab5d0w" path="res://ui/screen_ui/screen_ui.gd" id="1_q5bun"]
 [ext_resource type="PackedScene" uid="uid://bhyyy6a55e8pp" path="res://ui/cursor/game_cursor.tscn" id="2_2e8l5"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://ctcfj84w32fdo" path="res://ui/screen_ui/shop_menu/shop_menu.tscn" id="8_jtxun"]
 [ext_resource type="PackedScene" uid="uid://cclbsu58ct2ku" path="res://ui/screen_ui/almanac_menu/almanac_menu.tscn" id="9_irruo"]
 [ext_resource type="PackedScene" uid="uid://c4lpy1xm6ny0k" path="res://scene_loader/black_screen.tscn" id="9_nacs8"]
+[ext_resource type="PackedScene" uid="uid://d6jmaok0ivmi" path="res://ui/screen_ui/pause_menu/settings_menu/keybinds_menu/keybinds_menu.tscn" id="10_yebrt"]
 
 [node name="ScreenUI" type="CanvasLayer"]
 process_mode = 3
@@ -115,6 +116,11 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="KeybindsMenu" parent="CenteredMenu" instance=ExtResource("10_yebrt")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
 
 [node name="ConfirmationDimmer" type="ColorRect" parent="."]
 unique_name_in_owner = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqkyj7u64uhxk"]
+[gd_scene load_steps=9 format=3 uid="uid://dqkyj7u64uhxk"]
 
 [ext_resource type="Script" uid="uid://bahpw1sj2v1u5" path="res://ui/screen_ui/pause_menu/settings_menu/settings_menu.gd" id="1_ih0hb"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_ih0hb"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d3gp3l1suyr86" path="res://ui/screen_ui/pause_menu/settings_menu/system_settings.gd" id="4_41hw7"]
 [ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/screen_ui/pause_menu/settings_menu/audio_settings.gd" id="4_iegsy"]
 [ext_resource type="Script" uid="uid://c435o5gs03y0m" path="res://ui/screen_ui/pause_menu/settings_menu/graphics_settings.gd" id="6_82n5i"]
+[ext_resource type="PackedScene" uid="uid://wt1hrs7civkc" path="res://ui/screen_ui/elements/screen_button.tscn" id="7_hsjom"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ih0hb"]
 
@@ -204,6 +205,7 @@ horizontal_alignment = 1
 
 [node name="GraphicsSettings" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer" node_paths=PackedStringArray("window_option_button", "resolution_option_button", "gui_scale_slider", "brightness_slider", "shake_slider")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
 script = ExtResource("6_82n5i")
@@ -325,7 +327,6 @@ value = 0.4
 
 [node name="ControlsSettings" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
 
@@ -338,7 +339,20 @@ theme = ExtResource("2_ih0hb")
 text = "CONTROLS"
 fit_content = true
 
+[node name="Gap1" type="Control" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="RebindButton" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer" instance=ExtResource("7_hsjom")]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Rebind Controls"
+
+[node name="Gap2" type="Control" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
 [node name="RebindingLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_ih0hb")
 text = "Rebinding coming soon!"
@@ -398,5 +412,6 @@ value = 0.4
 [connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer/BrightnessSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer/ShakeSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/RebindButton" to="." method="_on_rebind_button_pressed"]
 [connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer/GUIScaleSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer/VibrationSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]

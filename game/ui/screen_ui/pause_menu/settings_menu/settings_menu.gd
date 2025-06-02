@@ -53,7 +53,12 @@ func _finish_close() -> void:
 	hide()
 
 func return_to(previous_menu: ScreenMenu) -> void:
-	pass
+	show()
+	
+	position += Vector2.DOWN * 50.0
+	TweenUtil.whoosh(self, start_position, 0.4)
+	TweenUtil.fade(self, 1, 0.2)
+	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 
 func switch_to(section_type: SectionType) -> void:
 	section = section_type
@@ -94,3 +99,11 @@ func _on_controls_button_pressed() -> void:
 
 func _on_button_focused() -> void:
 	SfxManager.play_sound_effect("ui_click")
+
+
+func _on_rebind_button_pressed() -> void:
+	TweenUtil.whoosh(self, start_position + Vector2.DOWN * 50.0, 0.4)
+	TweenUtil.fade(self, 0, 0.1).finished.connect(_finish_close)
+	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
+	
+	ScreenUI.add_menu(ScreenUI.keybinds_menu)

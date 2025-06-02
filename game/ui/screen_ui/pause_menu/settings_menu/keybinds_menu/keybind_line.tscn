@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://bexngvubt04b"]
+
+[ext_resource type="PackedScene" uid="uid://wt1hrs7civkc" path="res://ui/screen_ui/elements/screen_button.tscn" id="1_npec5"]
+[ext_resource type="Script" uid="uid://qnx2uo0rbjx4" path="res://ui/screen_ui/pause_menu/settings_menu/keybinds_menu/keybind_line.gd" id="1_vdm4f"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_vdm4f"]
+
+[node name="KeybindLine" type="HBoxContainer"]
+script = ExtResource("1_vdm4f")
+
+[node name="RebindButton" parent="." instance=ExtResource("1_npec5")]
+layout_mode = 2
+text = "[DISPLAY NAME]"
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 2
+
+[node name="CurrentKey" type="RichTextLabel" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_vdm4f")
+text = "[CURRENT KEY]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 2
+vertical_alignment = 1

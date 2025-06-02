@@ -157,6 +157,9 @@ func _on_save_button_pressed() -> void:
 func _on_load_button_pressed() -> void:
 	load_button_pressed.emit()
 	
+	if ScreenUI.get_active_menu() == ScreenUI.keybinds_menu:
+		ScreenUI.exit_menu()
+	
 	if ScreenUI.get_active_menu() == ScreenUI.settings_menu:
 		ScreenUI.exit_menu()
 	

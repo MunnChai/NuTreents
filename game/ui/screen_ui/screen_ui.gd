@@ -15,6 +15,7 @@ extends CanvasLayer
 @onready var confirmation_dimmer: ColorRect = %ConfirmationDimmer
 @onready var shop_menu: ShopMenu = %ShopMenu
 @onready var almanac_menu: AlmanacMenu = %AlmanacMenu
+@onready var keybinds_menu: KeybindsMenu = %KeybindsMenu
 
 @onready var black_screen: ColorRect = %BlackScreen
 
@@ -73,6 +74,8 @@ func _ready() -> void:
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	jump_to_closed()
+	
+	add_menu(keybinds_menu)
 
 func open() -> void:
 	if is_open:
