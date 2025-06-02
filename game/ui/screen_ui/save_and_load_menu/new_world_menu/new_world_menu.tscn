@@ -227,10 +227,10 @@ script = ExtResource("1_0amx6")
 
 [node name="PanelContainerWrapper" parent="." instance=ExtResource("2_5li0k")]
 layout_mode = 1
-offset_left = -300.0
-offset_top = -200.0
-offset_right = 300.0
-offset_bottom = 200.0
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
 layout_mode = 2
@@ -302,19 +302,19 @@ layout_mode = 2
 theme = ExtResource("2_0amx6")
 theme_override_font_sizes/font_size = 16
 toggle_mode = true
-text = "Grove"
+text = "Small"
 
 [node name="MediumButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/WorldSizeButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 toggle_mode = true
-text = "Forest"
+text = "Medium"
 
 [node name="LargeButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/WorldSizeButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 toggle_mode = true
-text = "Woodland"
+text = "Large"
 
 [node name="Control3" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 8)
@@ -325,7 +325,7 @@ mouse_filter = 2
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 bbcode_enabled = true
-text = "Difficulty"
+text = "Difficulty (Coming soon!)"
 fit_content = true
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
@@ -343,20 +343,23 @@ layout_mode = 2
 layout_mode = 2
 theme = ExtResource("2_0amx6")
 theme_override_font_sizes/font_size = 16
+disabled = true
 toggle_mode = true
-text = "Nest"
+text = "Easy"
 
 [node name="NormalButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/DifficultyButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
+disabled = true
 toggle_mode = true
-text = "Hive"
+text = "Normal"
 
 [node name="HardButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer/DifficultyButtons"]
 layout_mode = 2
 theme = ExtResource("2_0amx6")
+disabled = true
 toggle_mode = true
-text = "Colony"
+text = "Infested"
 
 [node name="PeacefulButton" type="CheckBox" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/VBoxContainer/MarginContainer/VBoxContainer"]
 visible = false
@@ -364,21 +367,21 @@ layout_mode = 2
 theme = ExtResource("2_0amx6")
 text = "Turn Bugs Off"
 
-[node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_5li0k")]
+[node name="DioramaPanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer" instance=ExtResource("2_5li0k")]
 custom_minimum_size = Vector2(125, 0)
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer"]
+[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="Panel" type="Panel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control"]
+[node name="Panel" type="Panel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control"]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -387,7 +390,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TileBack" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileBack" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -403,7 +406,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_yqlfy")
 stretch_mode = 5
 
-[node name="TileBackLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileBackLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -418,7 +421,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_mht4c")
 stretch_mode = 5
 
-[node name="TileBackRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileBackRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -433,7 +436,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_s5xbb")
 stretch_mode = 5
 
-[node name="TileCenter" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileCenter" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -449,7 +452,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_j8lxg")
 stretch_mode = 5
 
-[node name="TileLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -465,7 +468,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_mpl8o")
 stretch_mode = 5
 
-[node name="TileRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -481,7 +484,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_3mor3")
 stretch_mode = 5
 
-[node name="TileFrontLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileFrontLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -496,7 +499,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_hv1dw")
 stretch_mode = 5
 
-[node name="TileFrontRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileFrontRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -511,7 +514,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_uk5hu")
 stretch_mode = 5
 
-[node name="TileFront" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TileFront" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -527,7 +530,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_wr7vw")
 stretch_mode = 5
 
-[node name="BugLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="BugLeft" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -543,7 +546,7 @@ grow_vertical = 2
 texture = SubResource("AtlasTexture_33wmp")
 stretch_mode = 5
 
-[node name="BugRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="BugRight" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -560,12 +563,12 @@ texture = SubResource("AtlasTexture_33wmp")
 stretch_mode = 5
 flip_h = true
 
-[node name="TreeCenter" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TreeCenter" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TreeTexture" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel/TreeCenter"]
+[node name="TreeTexture" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel/TreeCenter"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -573,26 +576,26 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 21.5
-offset_top = 77.0
+offset_top = 28.0
 offset_right = 53.5
-offset_bottom = 141.0
+offset_bottom = 92.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_qnpkc")
 stretch_mode = 5
 
-[node name="CenterTreeAnimation" type="AnimationPlayer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel/TreeCenter"]
+[node name="CenterTreeAnimation" type="AnimationPlayer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel/TreeCenter"]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_j8lxg")
 }
 
-[node name="TreeFrontLeft" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TreeFrontLeft" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TreeTexture" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel/TreeFrontLeft"]
+[node name="TreeTexture" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel/TreeFrontLeft"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -600,27 +603,27 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 5.5
-offset_top = 85.0
+offset_top = 36.0
 offset_right = 37.5
-offset_bottom = 149.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_8yur2")
 stretch_mode = 5
 
-[node name="FrontLeftTreeAnimation" type="AnimationPlayer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel/TreeFrontLeft"]
+[node name="FrontLeftTreeAnimation" type="AnimationPlayer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel/TreeFrontLeft"]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_j8lxg")
 }
 autoplay = "hidden"
 
-[node name="TreeFrontRight" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel"]
+[node name="TreeFrontRight" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="TreeTexture" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel/TreeFrontRight"]
+[node name="TreeTexture" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel/TreeFrontRight"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -628,15 +631,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 37.5
-offset_top = 85.0
+offset_top = 36.0
 offset_right = 69.5
-offset_bottom = 149.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("AtlasTexture_40rtf")
 stretch_mode = 5
 
-[node name="FrontRightTreeAnimation" type="AnimationPlayer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/PanelContainerWrapper/MarginContainer/Control/Panel/TreeFrontRight"]
+[node name="FrontRightTreeAnimation" type="AnimationPlayer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/VBoxContainer/HBoxContainer/DioramaPanel/MarginContainer/Control/Panel/TreeFrontRight"]
 unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_j8lxg")
