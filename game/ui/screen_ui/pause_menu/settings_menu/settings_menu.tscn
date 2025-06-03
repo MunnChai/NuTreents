@@ -235,12 +235,14 @@ popup/item_2/text = "Fullscreen"
 popup/item_2/id = 2
 
 [node name="ResolutionLabel" type="RichTextLabel" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme = ExtResource("2_ih0hb")
 text = "Resolution"
 fit_content = true
 
 [node name="ResolutionOptionButton" type="OptionButton" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("2_ih0hb")
