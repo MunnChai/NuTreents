@@ -74,8 +74,6 @@ func _ready() -> void:
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	jump_to_closed()
-	
-	add_menu(keybinds_menu)
 
 func open() -> void:
 	if is_open:

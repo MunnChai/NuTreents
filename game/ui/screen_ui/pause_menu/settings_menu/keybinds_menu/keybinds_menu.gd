@@ -3,7 +3,6 @@ extends ScreenMenu
 
 ## TODO
 ## - Log changes, and ask for confirmation upon exiting...
-## - SAVE REBINDED KEYS AND LOAD THEM UPON STARTUP!
 
 ## SCREEN MENU IMPLEMENTATION
 
@@ -60,3 +59,10 @@ func _process(delta: float) -> void:
 func _on_back_button_pressed() -> void:
 	SfxManager.play_sound_effect("ui_click")
 	ScreenUI.exit_menu()
+
+
+func _on_reset_button_pressed() -> void:
+	for child in %KeybindContainer.get_children():
+		if child is KeybindLine:
+			child.reset_value()
+			SfxManager.play_sound_effect("ui_pages")
