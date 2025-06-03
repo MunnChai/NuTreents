@@ -3,6 +3,7 @@ extends ScreenMenu
 
 ## TODO
 ## - Log changes, and ask for confirmation upon exiting...
+## - SAVE REBINDED KEYS AND LOAD THEM UPON STARTUP!
 
 ## SCREEN MENU IMPLEMENTATION
 
@@ -43,10 +44,17 @@ func _ready() -> void:
 	instance = self
 	is_rebinding = false
 
+var just_rebinded := false
 func _process(delta: float) -> void:
 	if is_rebinding:
+		if not just_rebinded:
+			ScreenUI.confirmation_dimmer.show()
+		just_rebinded = true
 		%BackButton.disabled = true
 	else:
+		if just_rebinded:
+			ScreenUI.confirmation_dimmer.hide()
+		just_rebinded = false
 		%BackButton.disabled = false
 
 func _on_back_button_pressed() -> void:

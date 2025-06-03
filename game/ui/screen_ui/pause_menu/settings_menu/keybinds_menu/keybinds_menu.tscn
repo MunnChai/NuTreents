@@ -18,100 +18,184 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3tnxu")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Controller" type="Control" parent="."]
+visible = false
+layout_mode = 2
+anchors_preset = 0
+offset_left = -93.0
+offset_top = -81.5
+offset_right = -93.0
+offset_bottom = -81.5
+
+[node name="PanelContainerWrapper" parent="Controller" instance=ExtResource("3_i5wpe")]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -104.5
-offset_top = -138.0
-offset_right = 104.5
-offset_bottom = 138.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 202.0
+offset_bottom = 112.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Controller/PanelContainerWrapper"]
 layout_mode = 2
-theme_override_constants/separation = 5
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="BackButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_qjqc3")
-text = "Back"
-
-[node name="PanelContainerWrapper" parent="VBoxContainer" instance=ExtResource("3_i5wpe")]
+[node name="VBoxContainer" type="VBoxContainer" parent="Controller/PanelContainerWrapper/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainerWrapper"]
+[node name="KeybindLine" parent="Controller/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+
+[node name="KeybindLine2" parent="Controller/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "rmb"
+display_name = "Dig/Remove"
+
+[node name="KeybindLine3" parent="Controller/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "up"
+display_name = "Camera Up"
+
+[node name="KeybindLine4" parent="Controller/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "down"
+display_name = "Camera Down"
+
+[node name="PanelContainerWrapper" parent="." instance=ExtResource("3_i5wpe")]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -132.5
+offset_right = 107.0
+offset_bottom = 163.5
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
 layout_mode = 2
 theme_override_constants/margin_left = 14
 theme_override_constants/margin_top = 14
 theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 24
 
-[node name="MainKeybinds" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer"]
+[node name="MainKeybinds" type="PanelContainer" parent="PanelContainerWrapper/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds"]
 layout_mode = 2
 
-[node name="GraphicsLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+layout_mode = 2
+
+[node name="GraphicsLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_qjqc3")
 text = "KEYBINDS"
 fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
 
-[node name="Gap" type="Control" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+[node name="BackButton" type="Button" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_qjqc3")
+text = "X"
+
+[node name="Gap" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
 custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
-[node name="KeybindLine" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="TabContainer" type="TabContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_qjqc3")
+current_tab = 0
+clip_tabs = false
+
+[node name="Keyboard" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard" instance=ExtResource("3_i5wpe")]
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 206.0
+offset_bottom = 241.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer"]
 layout_mode = 2
 
-[node name="KeybindLine2" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+
+[node name="KeybindLine2" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "rmb"
 display_name = "Dig/Remove"
 
-[node name="KeybindLine3" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine3" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "up"
 display_name = "Camera Up"
 
-[node name="KeybindLine4" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine4" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "down"
 display_name = "Camera Down"
 
-[node name="KeybindLine5" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine5" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "left"
 display_name = "Camera Left"
 
-[node name="KeybindLine6" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine6" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "right"
 display_name = "Camera Right"
 
-[node name="KeybindLine7" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine7" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "zoom_cam_in"
 display_name = "Zoom In"
 
-[node name="KeybindLine8" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine8" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "zoom_cam_out"
 display_name = "Zoom Out"
 
-[node name="KeybindLine9" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer" instance=ExtResource("4_1xqge")]
+[node name="KeybindLine9" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/VBoxContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "pause"
 display_name = "Pause/Back"
 
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
