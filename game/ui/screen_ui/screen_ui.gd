@@ -16,6 +16,7 @@ extends CanvasLayer
 @onready var shop_menu: ShopMenu = %ShopMenu
 @onready var almanac_menu: AlmanacMenu = %AlmanacMenu
 @onready var keybinds_menu: KeybindsMenu = %KeybindsMenu
+@onready var keybinding_dimmer: ColorRect = %KeybindingDimmer
 
 @onready var black_screen: ColorRect = %BlackScreen
 
