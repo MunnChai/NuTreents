@@ -52,6 +52,9 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	
 	GameCursor.instance.force_wait = true
 	
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = true
+	
 	tween_in.tween_property(black_screen, "modulate:a", 1.0, tween_in_duration)
 	
 	tween_in.finished.connect(
@@ -72,6 +75,9 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			is_transitioning = false
 			
 			GameCursor.instance.force_wait = false
+			
+			if FloatingTooltip.instance:
+				FloatingTooltip.instance.force_hidden = false
 			
 			scene_changed.emit()
 	)
