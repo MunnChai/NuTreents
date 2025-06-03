@@ -8,6 +8,8 @@ enum SectionType {
 	CONTROLS,
 }
 
+@onready var tab_container: TabContainer = %TabContainer
+
 @onready var system_button: Button = %SystemButton
 @onready var audio_button: Button = %AudioButton
 @onready var graphics_button: Button = %GraphicsButton
@@ -22,6 +24,7 @@ enum SectionType {
 
 var is_open := false
 var section := SectionType.SYSTEM
+var ready_finished := false
 
 func _ready() -> void:
 	system_button.focus_entered.connect(_on_button_focused)
@@ -29,13 +32,14 @@ func _ready() -> void:
 	graphics_button.focus_entered.connect(_on_button_focused)
 	controls_button.focus_entered.connect(_on_button_focused)
 	hide()
+	ready_finished = true
 
 ## SCREEN UI IMPLEMENTATIONS
 
 func open(previous_menu: ScreenMenu) -> void:
 	switch_to(SectionType.SYSTEM)
 	is_open = true
-	system_button.grab_focus()
+	tab_container.grab_focus()
 	show()
 	
 	position += Vector2.DOWN * 50.0
@@ -60,6 +64,13 @@ func return_to(previous_menu: ScreenMenu) -> void:
 	TweenUtil.fade(self, 1, 0.2)
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 
+func switch_effect() -> void:
+	SfxManager.play_sound_effect("ui_pages")
+	
+	if is_open:
+		scale = Vector2(1.1, 1.1)
+		create_tween().tween_property(self, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
+
 func switch_to(section_type: SectionType) -> void:
 	section = section_type
 	
@@ -69,20 +80,20 @@ func switch_to(section_type: SectionType) -> void:
 		scale = Vector2(1.1, 1.1)
 		create_tween().tween_property(self, "scale", Vector2.ONE, 0.15).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_EXPO)
 	
-	system_settings.hide()
-	audio_settings.hide()
-	graphics_settings.hide()
-	controls_settings.hide()
-	
-	match section:
-		SectionType.SYSTEM:
-			system_settings.show()
-		SectionType.AUDIO:
-			audio_settings.show()
-		SectionType.GRAPHICS:
-			graphics_settings.show()
-		SectionType.CONTROLS:
-			controls_settings.show()
+	#system_settings.hide()
+	#audio_settings.hide()
+	#graphics_settings.hide()
+	#controls_settings.hide()
+	#
+	#match section:
+		#SectionType.SYSTEM:
+			#system_settings.show()
+		#SectionType.AUDIO:
+			#audio_settings.show()
+		#SectionType.GRAPHICS:
+			#graphics_settings.show()
+		#SectionType.CONTROLS:
+			#controls_settings.show()
 
 
 func _on_system_button_pressed() -> void:
@@ -107,3 +118,8 @@ func _on_rebind_button_pressed() -> void:
 	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
 	
 	ScreenUI.add_menu(ScreenUI.keybinds_menu)
+
+
+func _on_tab_container_tab_selected(tab: int) -> void:
+	if ready_finished:
+		switch_effect()
