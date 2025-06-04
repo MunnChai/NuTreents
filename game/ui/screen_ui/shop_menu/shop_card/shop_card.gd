@@ -14,7 +14,7 @@ extends PanelContainer
 var is_hovering := false
 var is_pressed := false
 var is_selected := false
-var is_disabled := false
+var is_removed := false
 
 signal pressed
 
@@ -39,8 +39,8 @@ func deselect():
 	TweenUtil.scale_to(self, Vector2(1, 1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 	TweenUtil.fade(self, 1, 0.3)
 
-func disable():
-	is_disabled = true
+func remove():
+	is_removed = true
 	
 	# Munn: This is all jank so the other cards can move smoothly when this is deleted
 	margin_container.queue_free()
@@ -56,7 +56,7 @@ func disable():
 	queue_free()
 
 func _on_mouse_pressed():
-	if is_disabled:
+	if is_removed:
 		return
 	
 	if not is_hovering:
@@ -66,7 +66,7 @@ func _on_mouse_pressed():
 	TweenUtil.scale_to(self, Vector2(0.9, 0.9), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 
 func _on_mouse_released():
-	if is_disabled:
+	if is_removed:
 		return
 	
 	if not is_hovering:
@@ -76,7 +76,7 @@ func _on_mouse_released():
 	pressed.emit()
 
 func _on_mouse_entered():
-	if is_disabled:
+	if is_removed:
 		return
 	
 	is_hovering = true
@@ -88,7 +88,7 @@ func _on_mouse_entered():
 	TweenUtil.scale_to(self, Vector2(1.1, 1.1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 
 func _on_mouse_exited():
-	if is_disabled:
+	if is_removed:
 		return
 	
 	is_hovering = false
