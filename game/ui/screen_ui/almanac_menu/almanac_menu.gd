@@ -30,14 +30,7 @@ func _finish_close():
 
 ## Pauses the game
 func pause_game() -> void:
-	is_paused = true
-	get_tree().paused = true 
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = true
-	
-	previous_time_scale = Engine.time_scale
-	Engine.time_scale = 1.0
+	Global.pause_game()
 	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
@@ -49,13 +42,7 @@ func pause_game() -> void:
 	back_button.grab_focus() ## TEMP: So controller can navigate the menu...
 
 func unpause_game() -> void:
-	Engine.time_scale = previous_time_scale
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = false
-	
-	is_paused = false
-	get_tree().paused = false 
+	Global.unpause_game()
 	
 	NutreentsDiscordRPC.update_details("Growing a forest")
 	

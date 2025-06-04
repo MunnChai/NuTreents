@@ -79,26 +79,16 @@ func setup_button_signals() -> void:
 	quit_game_button.focus_entered.connect(_on_enabled_button_focus)
 
 ## Pauses if unpaused, unpauses if paused
-func toggle_pause() -> void:
-	if is_paused:
-		unpause_game()
-		SfxManager.play_sound_effect("ui_click")
-	else:
-		pause_game()
-
-var previous_time_scale := 1.0
+#func toggle_pause() -> void:
+	#if is_paused:
+		#unpause_game()
+		#SfxManager.play_sound_effect("ui_click")
+	#else:
+		#pause_game()
 
 ## Pauses the game
 func pause_game() -> void:
-	is_paused = true
-	get_tree().paused = true
-	game_paused.emit()
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = true
-	
-	previous_time_scale = Engine.time_scale
-	Engine.time_scale = 1.0
+	Global.pause_game()
 	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
@@ -110,14 +100,7 @@ func pause_game() -> void:
 	resume_button.grab_focus() ## TEMP: So controller can navigate the menu...
 
 func unpause_game() -> void:
-	Engine.time_scale = previous_time_scale
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = false
-	
-	is_paused = false
-	get_tree().paused = false
-	game_resumed.emit()
+	Global.unpause_game()
 	
 	NutreentsDiscordRPC.update_details("Growing a forest")
 	

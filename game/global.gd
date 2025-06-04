@@ -61,6 +61,10 @@ var session_seed: int
 var session_data: Dictionary
 var current_world_size: WorldSize = WorldSize.SMALL
 
+# Pausing info
+var previous_time_scale: float
+var is_paused := false
+
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU
 	
@@ -96,3 +100,32 @@ func set_seed(seed: int) -> void:
 
 func get_seed() -> int:
 	return session_seed
+
+#region Pausing
+
+func pause_game(hide_tooltip := true) -> void:
+	if is_paused:
+		return
+	
+	is_paused = true
+	get_tree().paused = true 
+	
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = hide_tooltip
+	
+	previous_time_scale = Engine.time_scale
+	Engine.time_scale = 1.0
+
+func unpause_game(show_tooltip := true) -> void:
+	if not is_paused:
+		return
+	
+	is_paused = false
+	Engine.time_scale = previous_time_scale
+	
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = !show_tooltip
+	
+	get_tree().paused = false
+
+#endregion

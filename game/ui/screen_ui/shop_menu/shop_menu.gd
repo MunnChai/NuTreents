@@ -8,10 +8,6 @@ extends ScreenMenu
 @onready var cost_label: RichTextLabel = %CostLabel
 @onready var purchase_button: Button = %PurchaseButton
 
-# Pasuing Stuff
-var is_paused: bool
-var previous_time_scale: float
-
 # For open/close tweens
 var starting_position := position
 
@@ -111,14 +107,7 @@ func _finish_close():
 
 ## Pauses the game
 func pause_game() -> void:
-	is_paused = true
-	get_tree().paused = true 
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = true
-	
-	previous_time_scale = Engine.time_scale
-	Engine.time_scale = 1.0
+	Global.pause_game()
 	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
@@ -130,13 +119,7 @@ func pause_game() -> void:
 	back_button.grab_focus() ## TEMP: So controller can navigate the menu...
 
 func unpause_game() -> void:
-	Engine.time_scale = previous_time_scale
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = false
-	
-	is_paused = false
-	get_tree().paused = false 
+	Global.unpause_game()
 	
 	NutreentsDiscordRPC.update_details("Growing a forest")
 	
