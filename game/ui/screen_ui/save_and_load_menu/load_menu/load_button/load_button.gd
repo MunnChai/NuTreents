@@ -5,12 +5,22 @@ extends PanelContainer
 @onready var day_label: RichTextLabel = %DayLabel
 @onready var seed_label: RichTextLabel = %SeedLabel
 @onready var delete_button: Button = %DeleteButton
+@onready var tree_icon: TextureRect = %TreeIcon
+@onready var icon_animator: AnimationPlayer = %IconAnimator
+@onready var ground_icon: TextureRect = %GroundIcon
+
+const LARGE_TREE_ICON_THRESHOLD: int = 20
+const TILE_SIZE_PX := Vector2i(32, 32)
 
 var has_save_file: bool = false
 var save_num: int
 
 func _ready() -> void:
 	delete_button.pressed.connect(_on_delete_pressed)
+	tree_icon.texture = tree_icon.texture.duplicate()
+	ground_icon.texture = ground_icon.texture.duplicate()
+	
+	ground_icon.texture.region.position.x = randi_range(0, 3) * TILE_SIZE_PX.x
 
 func set_button_info(save_num: int, session_data: Dictionary): 
 	self.save_num = save_num
@@ -37,6 +47,12 @@ func set_button_info(save_num: int, session_data: Dictionary):
 	if save_num == Global.session_id:
 		button.disabled = true
 		delete_button.disabled = true
+	
+	if session_data["tree_map"].size() >= LARGE_TREE_ICON_THRESHOLD:
+		icon_animator.play("large")
+	else:
+		icon_animator.play("small")
+	ground_icon.texture.region.position.y = 0
 
 func set_button_info_empty(save_num: int):
 	delete_button.visible = false
@@ -47,6 +63,9 @@ func set_button_info_empty(save_num: int):
 	seed_label.text = ""
 	
 	button.pressed.connect(_open_new_world_menu)
+	
+	icon_animator.play("stump")
+	ground_icon.texture.region.position.y = TILE_SIZE_PX.y
 
 func _open_new_world_menu() -> void:
 	if Global.game_state == Global.GameState.PLAYING:
