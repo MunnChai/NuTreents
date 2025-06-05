@@ -19,8 +19,6 @@ const DEFAULT_WORLD_SIZE: Global.WorldSize = Global.WorldSize.MEDIUM
 var current_world_size: Global.WorldSize = DEFAULT_WORLD_SIZE
 
 func _ready() -> void:
-	create_button.pressed.connect(create_new_world)
-	back_button.pressed.connect(_back)
 	world_name.focus_entered.connect(func(): 
 		SfxManager.play_sound_effect("ui_click"))
 	world_name.text_changed.connect(check_valid_world_name)
@@ -31,6 +29,8 @@ func _ready() -> void:
 	select_world_size(DEFAULT_WORLD_SIZE)
 
 func _connect_button_signals():
+	create_button.pressed.connect(create_new_world)
+	back_button.pressed.connect(_back)
 	
 	var index = Global.WorldSize.values()[0] # Start at smallest world size, then increment
 	for button: Button in world_size_buttons.get_children():
@@ -86,9 +86,14 @@ enum TreeAnimationState {
 }
 
 func transition_tree_state(animation_player: AnimationPlayer, next_state: TreeAnimationState):
+	# Clear existing queue
+	animation_player.clear_queue()
+	
+	# If no animation is playing, hide
 	if animation_player.current_animation == "":
 		animation_player.play("hidden")
 	
+	# 
 	if animation_player.current_animation == "hidden":
 		if next_state == TreeAnimationState.SMALL:
 			animation_player.speed_scale = 1
@@ -114,6 +119,24 @@ func transition_tree_state(animation_player: AnimationPlayer, next_state: TreeAn
 		elif next_state == TreeAnimationState.SMALL:
 			animation_player.speed_scale = -1
 			animation_player.play("grow_large", -1, 1, true)
+		
+	elif animation_player.current_animation == "grow_small":
+		if next_state == TreeAnimationState.HIDDEN:
+			animation_player.speed_scale = -1
+		elif next_state == TreeAnimationState.SMALL:
+			animation_player.speed_scale = 1
+		elif next_state == TreeAnimationState.LARGE:
+			animation_player.speed_scale = 1
+			animation_player.queue("grow_large")
+		
+	elif animation_player.current_animation == "grow_large":
+		if next_state == TreeAnimationState.HIDDEN:
+			animation_player.speed_scale = -1
+			animation_player.play("grow_small", -1, 1, true)
+		elif next_state == TreeAnimationState.SMALL:
+			animation_player.speed_scale = -1
+		elif next_state == TreeAnimationState.LARGE:
+			animation_player.speed_scale = 1
 
 func _on_animation_finished(animation_name: String, animation_player: AnimationPlayer):
 	

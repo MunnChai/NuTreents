@@ -15,6 +15,7 @@ var fog_map: FogMap
 var clock: Clock
 var tech_menu: TechMenu
 var overlay_manager: OverlayManager
+var camera: Camera2D
 #var screen_ui: ScreenUI
 
 ## STRUCTURE IDS
@@ -60,6 +61,10 @@ var session_seed: int
 var session_data: Dictionary
 var current_world_size: WorldSize = WorldSize.SMALL
 
+# Pausing info
+var previous_time_scale: float
+var is_paused := false
+
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU
 	
@@ -75,6 +80,7 @@ func update_globals():
 	clock = get_tree().get_first_node_in_group("clock")
 	tech_menu = get_tree().get_first_node_in_group("tech_menu")
 	overlay_manager = get_tree().get_first_node_in_group("overlay_manager")
+	camera = get_tree().get_first_node_in_group("camera")
 
 func new_seed() -> int:
 	# Set seed as a semi random number (time since unix epoch or whatever)
@@ -94,3 +100,32 @@ func set_seed(seed: int) -> void:
 
 func get_seed() -> int:
 	return session_seed
+
+#region Pausing
+
+func pause_game(hide_tooltip := true) -> void:
+	if is_paused:
+		return
+	
+	is_paused = true
+	get_tree().paused = true 
+	
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = hide_tooltip
+	
+	previous_time_scale = Engine.time_scale
+	Engine.time_scale = 1.0
+
+func unpause_game(show_tooltip := true) -> void:
+	if not is_paused:
+		return
+	
+	is_paused = false
+	Engine.time_scale = previous_time_scale
+	
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = !show_tooltip
+	
+	get_tree().paused = false
+
+#endregion

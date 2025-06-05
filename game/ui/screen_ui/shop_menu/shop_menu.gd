@@ -8,10 +8,6 @@ extends ScreenMenu
 @onready var cost_label: RichTextLabel = %CostLabel
 @onready var purchase_button: Button = %PurchaseButton
 
-# Pasuing Stuff
-var is_paused: bool
-var previous_time_scale: float
-
 # For open/close tweens
 var starting_position := position
 
@@ -39,7 +35,6 @@ func _on_back_button_pressed():
 	ScreenUI.exit_menu()
 
 func _on_purchase_button_pressed():
-	# TODO: Check and decrement nutreent cost of cards
 	if not TreeManager.enough_n(currently_selected_card.tree_stat.cost_to_purchase):
 		SfxManager.play_sound_effect("ui_fail")
 		return
@@ -49,7 +44,7 @@ func _on_purchase_button_pressed():
 	SfxManager.play_sound_effect("ui_click")
 	TreeMenu.instance.add_tree_card(currently_selected_card.tree_type)
 	
-	disable_card(currently_selected_card)
+	remove_card(currently_selected_card)
 	show_card_details(null)
 	
 	purchased_cards.append(currently_selected_card.tree_type)
@@ -57,6 +52,11 @@ func _on_purchase_button_pressed():
 func _on_shop_card_pressed(shop_card: ShopCard):
 	if currently_selected_card != null:
 		currently_selected_card.deselect()
+	
+	if currently_selected_card == shop_card:
+		currently_selected_card = null
+		show_card_details(null)
+		return
 	
 	currently_selected_card = shop_card
 	shop_card.select()
@@ -73,17 +73,17 @@ func show_card_details(shop_card: ShopCard):
 	
 	detail_panel.set_details(shop_card)
 
-func disable_card(shop_card: ShopCard):
-	shop_card.disable()
+func remove_card(shop_card: ShopCard):
+	shop_card.remove()
 
 func disable_card_of_type(tree_type: Global.TreeType):
 	for shop_card: ShopCard in tree_cards.get_children():
 		if shop_card.tree_type == tree_type:
-			disable_card(shop_card)
+			remove_card(shop_card)
 	
 	for shop_card: ShopCard in power_cards.get_children():
 		if shop_card.tree_type == tree_type:
-			disable_card(shop_card)
+			remove_card(shop_card)
 
 func open(previous_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
@@ -107,14 +107,7 @@ func _finish_close():
 
 ## Pauses the game
 func pause_game() -> void:
-	is_paused = true
-	get_tree().paused = true 
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = true
-	
-	previous_time_scale = Engine.time_scale
-	Engine.time_scale = 1.0
+	Global.pause_game()
 	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
@@ -126,13 +119,7 @@ func pause_game() -> void:
 	back_button.grab_focus() ## TEMP: So controller can navigate the menu...
 
 func unpause_game() -> void:
-	Engine.time_scale = previous_time_scale
-	
-	if FloatingTooltip.instance:
-		FloatingTooltip.instance.force_hidden = false
-	
-	is_paused = false
-	get_tree().paused = false 
+	Global.unpause_game()
 	
 	NutreentsDiscordRPC.update_details("Growing a forest")
 	

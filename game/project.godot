@@ -58,6 +58,7 @@ tech_menu=""
 tile_manager=""
 music=""
 overlay_manager=""
+camera=""
 
 [input]
 

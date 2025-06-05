@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://epqiyqjclpxl"]
+[gd_scene load_steps=44 format=4 uid="uid://epqiyqjclpxl"]
 
 [ext_resource type="Script" uid="uid://7ruadeqlu3lg" path="res://tutorial/tutorial.gd" id="1_p47bv"]
 [ext_resource type="PackedScene" uid="uid://c4y6pxijsm16g" path="res://tutorial/tutorial_ui.tscn" id="3_811q2"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" uid="uid://6ku20yk0jera" path="res://tutorial/tutorial_cursor.gd" id="20_jpd2v"]
 [ext_resource type="PackedScene" uid="uid://bnfqehf31racc" path="res://ui/cursor/world_cursor/cursor.tscn" id="22_u47y0"]
 [ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="23_dgq6q"]
+[ext_resource type="Script" uid="uid://fbge5fbxmgmi" path="res://enemies/enemy_manager.gd" id="23_dpu50"]
 [ext_resource type="PackedScene" uid="uid://uf3j0muxm4jw" path="res://ui/cursor/world_cursor/visual_cursor/visual_cursor.tscn" id="23_jpd2v"]
 [ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="24_dgq6q"]
 [ext_resource type="PackedScene" uid="uid://5xnl4wkxo80k" path="res://ui/cursor/virtual_cursor/virtual_cursor.tscn" id="31_a7wyg"]
@@ -395,6 +396,7 @@ y_sort_enabled = true
 
 [node name="EnemyLayer" type="Node2D" parent="World/TileMaps/BuildingManager" groups=["enemy_map"]]
 y_sort_enabled = true
+script = ExtResource("23_dpu50")
 
 [node name="FogLayer" type="TileMapLayer" parent="World/TileMaps/BuildingManager" groups=["fog_map"]]
 z_index = 5
@@ -479,7 +481,7 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="Camera" parent="World" instance=ExtResource("24_dgq6q")]
+[node name="Camera" parent="World" groups=["camera"] instance=ExtResource("24_dgq6q")]
 
 [node name="AmbientLighting" parent="World" instance=ExtResource("4_t4yv6")]
 visible = false
