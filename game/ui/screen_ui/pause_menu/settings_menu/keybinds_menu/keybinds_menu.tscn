@@ -1,0 +1,169 @@
+[gd_scene load_steps=6 format=3 uid="uid://d6jmaok0ivmi"]
+
+[ext_resource type="Script" uid="uid://bxtfhtcgwp1i7" path="res://ui/screen_ui/pause_menu/settings_menu/keybinds_menu/keybinds_menu.gd" id="1_3tnxu"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_qjqc3"]
+[ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="3_i5wpe"]
+[ext_resource type="PackedScene" uid="uid://bexngvubt04b" path="res://ui/screen_ui/pause_menu/settings_menu/keybinds_menu/keybind_line.tscn" id="4_1xqge"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ih0hb"]
+
+[node name="KeybindsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3tnxu")
+
+[node name="PanelContainerWrapper" parent="." instance=ExtResource("3_i5wpe")]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -132.5
+offset_right = 107.0
+offset_bottom = 163.5
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="MainKeybinds" type="PanelContainer" parent="PanelContainerWrapper/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+layout_mode = 2
+
+[node name="GraphicsLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_qjqc3")
+text = "KEYBINDS"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="BackButton" type="Button" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_qjqc3")
+text = "Back"
+
+[node name="Gap" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("2_qjqc3")
+current_tab = 0
+clip_tabs = false
+
+[node name="Keyboard" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard" instance=ExtResource("3_i5wpe")]
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 206.0
+offset_bottom = 241.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="KeybindContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="PlantLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+
+[node name="DigLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "rmb"
+display_name = "Dig/Remove"
+
+[node name="UpLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "up"
+display_name = "Camera Up"
+
+[node name="DownLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "down"
+display_name = "Camera Down"
+
+[node name="LeftLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "left"
+display_name = "Camera Left"
+
+[node name="RightLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "right"
+display_name = "Camera Right"
+
+[node name="ZoomInLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "zoom_cam_in"
+display_name = "Zoom In"
+
+[node name="ZoomOutLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "zoom_cam_out"
+display_name = "Zoom Out"
+
+[node name="EscapeLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+layout_mode = 2
+input_binding_id = "pause"
+display_name = "Pause/Back"
+
+[node name="TopGap" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_qjqc3")
+text = "Reset to Defaults"
+
+[node name="BotGap" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[connection signal="pressed" from="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer/ResetButton" to="." method="_on_reset_button_pressed"]
