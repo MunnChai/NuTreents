@@ -14,6 +14,7 @@ var is_open := false
 @onready var front_left_tree_animation: AnimationPlayer = %FrontLeftTreeAnimation
 @onready var front_right_tree_animation: AnimationPlayer = %FrontRightTreeAnimation
 
+var current_session_id: int = 0
 
 const DEFAULT_WORLD_SIZE: Global.WorldSize = Global.WorldSize.MEDIUM
 var current_world_size: Global.WorldSize = DEFAULT_WORLD_SIZE
@@ -68,7 +69,7 @@ func reset_inputs() -> void:
 	world_name.text = "New Forest"
 
 func _back() -> void:
-	Global.session_id = 0
+	current_session_id = 0
 	ScreenUI.exit_menu()
 
 
@@ -208,11 +209,13 @@ func create_new_world() -> void:
 	Global.current_world_size = current_world_size
 	
 	var metadata := {
-		"session_id": Global.session_id,
+		"session_id": current_session_id,
 		"world_name": world_name.text.strip_edges(),
 		"seed": Global.get_seed(),
 		"world_size": current_world_size
 	}
+	
+	Global.session_id = current_session_id
 	
 	# Create new save
 	SessionData.create_new_session_data(metadata)

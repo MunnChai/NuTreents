@@ -49,14 +49,19 @@ func set_button_info_empty(save_num: int):
 	button.pressed.connect(_open_new_world_menu)
 
 func _open_new_world_menu() -> void:
+	if Global.game_state == Global.GameState.PLAYING:
+		await _prompt_for_loading_world()
+	
 	if not ScreenUI.new_world_menu.is_open:
 		ScreenUI.get_active_menu().close(ScreenUI.new_world_menu)
 		ScreenUI.add_menu(ScreenUI.new_world_menu)
-		Global.session_id = save_num
+		ScreenUI.new_world_menu.current_session_id = save_num
 
 func load_game(save_num: int, session_data: Dictionary) -> void:
 	Global.session_id = save_num
 	SfxManager.play_sound_effect("ui_click")
+	if Global.game_state == Global.GameState.PLAYING:
+		await _prompt_for_loading_world()
 	SceneLoader.transition_to_game(session_data)
 
 func _on_delete_pressed() -> void:
@@ -74,6 +79,18 @@ func prompt_for_deletion() -> void:
 func _on_deletion_choice(choice: bool) -> void:
 	if choice:
 		delete_world()
+
+func _prompt_for_loading_world() -> void:
+	ScreenUI.add_menu(ScreenUI.confirmation_menu)
+	ScreenUI.confirmation_menu.set_message("Would you like to save any unsaved progress?")
+	ScreenUI.confirmation_menu.set_accept_text("Save")
+	ScreenUI.confirmation_menu.set_decline_text("Load Without Saving")
+	ScreenUI.confirmation_menu.connect_choice_to(_on_save_and_quit_choice)
+	await ScreenUI.confirmation_menu.choice_made
+
+func _on_save_and_quit_choice(choice: bool):
+	if choice:
+		SessionData.save_session_data(Global.session_id)
 
 func delete_world() -> void:
 	SessionData.clear_session_data(save_num)
