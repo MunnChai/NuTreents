@@ -70,6 +70,7 @@ custom_minimum_size = Vector2(0, 8)
 layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_qjqc3")
 current_tab = 0
@@ -104,50 +105,50 @@ theme_override_constants/margin_bottom = 10
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="KeybindLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="PlantLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 
-[node name="KeybindLine2" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="DigLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "rmb"
 display_name = "Dig/Remove"
 
-[node name="KeybindLine3" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="UpLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "up"
 display_name = "Camera Up"
 
-[node name="KeybindLine4" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="DownLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "down"
 display_name = "Camera Down"
 
-[node name="KeybindLine5" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="LeftLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "left"
 display_name = "Camera Left"
 
-[node name="KeybindLine6" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="RightLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "right"
 display_name = "Camera Right"
 
-[node name="KeybindLine7" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="ZoomInLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "zoom_cam_in"
 display_name = "Zoom In"
 
-[node name="KeybindLine8" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="ZoomOutLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "zoom_cam_out"
 display_name = "Zoom Out"
 
-[node name="KeybindLine9" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
+[node name="EscapeLine" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer" instance=ExtResource("4_1xqge")]
 layout_mode = 2
 input_binding_id = "pause"
 display_name = "Pause/Back"
 
-[node name="Control2" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
+[node name="TopGap" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
@@ -160,7 +161,7 @@ mouse_default_cursor_shape = 2
 theme = ExtResource("2_qjqc3")
 text = "Reset to Defaults"
 
-[node name="Control3" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
+[node name="BotGap" type="Control" parent="PanelContainerWrapper/MarginContainer/MainKeybinds/VBoxContainer/TabContainer/Keyboard/PanelContainerWrapper/MarginContainer/KeybindContainer"]
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 
