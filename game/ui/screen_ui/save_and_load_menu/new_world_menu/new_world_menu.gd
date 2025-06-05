@@ -205,9 +205,6 @@ func create_new_world() -> void:
 	# Generate a random seed
 	Global.new_seed()
 	
-	# Pass world size to global............ we love horrific coding practices
-	Global.current_world_size = current_world_size
-	
 	var metadata := {
 		"session_id": current_session_id,
 		"world_name": world_name.text.strip_edges(),
@@ -215,9 +212,7 @@ func create_new_world() -> void:
 		"world_size": current_world_size
 	}
 	
-	Global.session_id = current_session_id
-	
-	# Create new save
-	SessionData.create_new_session_data(metadata)
+	# Sets the metadata, but does not save it
+	Global.set_metadata(metadata)
 	
 	SceneLoader.transition_to_tutorial()

@@ -71,15 +71,17 @@ func create_load_button(save_num: int = 1):
 	
 	load_buttons.add_child(load_button)
 
+# Loads session data for this save_num on a separate thread
 func load_button_info_threaded(save_num: int):
 	threads[save_num].start(_get_button_info.bind(save_num))
 
+# Gets session data, returns it
 func _get_button_info(save_num: int):
 	var session_data = SessionData.load_session_data(save_num)
 	call_deferred("_set_button_info", save_num)
 	return session_data
 
-# Munn: Don't call this manually lol
+# Retrieves the session data from _get_button_info(), and sets the load button info
 func _set_button_info(save_num: int):
 	var session_data = threads[save_num].wait_to_finish()
 	var load_button = get_load_button(save_num)

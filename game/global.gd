@@ -55,7 +55,8 @@ enum WorldSize {
 
 var game_state
 
-# SESSION_DATA
+# Session Metadata
+var world_name: String
 var session_id: int
 var session_seed: int
 var session_data: Dictionary
@@ -82,6 +83,9 @@ func update_globals():
 	overlay_manager = get_tree().get_first_node_in_group("overlay_manager")
 	camera = get_tree().get_first_node_in_group("camera")
 
+
+#region Metadata
+
 func new_seed() -> int:
 	# Set seed as a semi random number (time since unix epoch or whatever)
 	var new_seed = int(Time.get_unix_time_from_system())
@@ -100,6 +104,41 @@ func set_seed(seed: int) -> void:
 
 func get_seed() -> int:
 	return session_seed
+
+func set_world_name(name: String) -> void:
+	world_name = name
+
+func get_world_name() -> String:
+	return world_name
+
+func set_session_id(id: int) -> void:
+	session_id = id
+
+func get_session_id() -> int:
+	return session_id
+
+func set_metadata(metadata: Dictionary):
+	if not metadata.has_all(["world_name", "session_id", "seed", "world_size"]):
+		printerr("WARNING: Attempted to set Global metadata without proper keys!")
+		return
+	
+	world_name = metadata["world_name"]
+	session_id = metadata["session_id"]
+	session_seed = metadata["seed"]
+	current_world_size = metadata["world_size"]
+
+func get_metadata() -> Dictionary:
+	var metadata = {
+		"world_name": world_name,
+		"session_id": session_id,
+		"seed": session_seed,
+		"world_size": current_world_size,
+	}
+	
+	return metadata
+
+#endregion
+
 
 #region Pausing
 
