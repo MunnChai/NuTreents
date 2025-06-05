@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dqkyj7u64uhxk"]
+[gd_scene load_steps=9 format=3 uid="uid://dqkyj7u64uhxk"]
 
 [ext_resource type="Script" uid="uid://bahpw1sj2v1u5" path="res://ui/screen_ui/pause_menu/settings_menu/settings_menu.gd" id="1_ih0hb"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_ih0hb"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://d3gp3l1suyr86" path="res://ui/screen_ui/pause_menu/settings_menu/system_settings.gd" id="4_41hw7"]
 [ext_resource type="Script" uid="uid://5bam3srx4n4m" path="res://ui/screen_ui/pause_menu/settings_menu/audio_settings.gd" id="4_iegsy"]
 [ext_resource type="Script" uid="uid://c435o5gs03y0m" path="res://ui/screen_ui/pause_menu/settings_menu/graphics_settings.gd" id="6_82n5i"]
+[ext_resource type="PackedScene" uid="uid://wt1hrs7civkc" path="res://ui/screen_ui/elements/screen_button.tscn" id="7_hsjom"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ih0hb"]
 
@@ -20,7 +21,393 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ih0hb")
 
+[node name="TabContainer" type="TabContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ih0hb")
+current_tab = 0
+clip_tabs = false
+
+[node name="System" parent="TabContainer" instance=ExtResource("3_m6kit")]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/System"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="SystemSettings" type="PanelContainer" parent="TabContainer/System/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+script = ExtResource("4_41hw7")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/System/MarginContainer/SystemSettings"]
+layout_mode = 2
+
+[node name="SystemsLabel" type="RichTextLabel" parent="TabContainer/System/MarginContainer/SystemSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "SYSTEM"
+fit_content = true
+
+[node name="LanguageLabel" type="RichTextLabel" parent="TabContainer/System/MarginContainer/SystemSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Language"
+fit_content = true
+
+[node name="OptionButton" type="OptionButton" parent="TabContainer/System/MarginContainer/SystemSettings/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+disabled = true
+selected = 0
+allow_reselect = true
+item_count = 2
+popup/item_0/text = "English"
+popup/item_0/id = 0
+popup/item_1/text = "Tree"
+popup/item_1/id = 1
+
+[node name="Audio" parent="TabContainer" instance=ExtResource("3_m6kit")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Audio"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="AudioSettings" type="PanelContainer" parent="TabContainer/Audio/MarginContainer" node_paths=PackedStringArray("master_slider", "music_slider", "sfx_slider", "slider_label")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+script = ExtResource("4_iegsy")
+master_slider = NodePath("VBoxContainer/AudioSettings/MasterContainer/MasterSlider")
+music_slider = NodePath("VBoxContainer/AudioSettings/MusicContainer/MusicSlider")
+sfx_slider = NodePath("VBoxContainer/AudioSettings/SFXContainer/SFXSlider")
+slider_label = NodePath("Label")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Audio/MarginContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="AudioLabel" type="RichTextLabel" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "AUDIO
+"
+fit_content = true
+
+[node name="AudioSettings" type="VBoxContainer" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="MasterContainer" type="HBoxContainer" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Master "
+vertical_alignment = 1
+
+[node name="MasterSlider" type="HSlider" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="MusicContainer" type="HBoxContainer" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="MusicLabel" type="Label" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Music  "
+vertical_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="SFXContainer" type="HBoxContainer" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
+layout_mode = 2
+
+[node name="SFXLabel" type="Label" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "SFX    "
+vertical_alignment = 1
+
+[node name="SFXSlider" type="HSlider" parent="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="Label" type="Label" parent="TabContainer/Audio/MarginContainer/AudioSettings"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "100"
+horizontal_alignment = 1
+
+[node name="Graphics" parent="TabContainer" instance=ExtResource("3_m6kit")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Graphics"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="GraphicsSettings" type="PanelContainer" parent="TabContainer/Graphics/MarginContainer" node_paths=PackedStringArray("window_option_button", "resolution_option_button", "gui_scale_slider", "brightness_slider", "shake_slider")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+script = ExtResource("6_82n5i")
+window_option_button = NodePath("VBoxContainer/WindowOptionButton")
+resolution_option_button = NodePath("VBoxContainer/ResolutionOptionButton")
+gui_scale_slider = NodePath("VBoxContainer/GUIScaleContainer/GUIScaleSlider")
+brightness_slider = NodePath("VBoxContainer/BrightnessContainer/BrightnessSlider")
+shake_slider = NodePath("VBoxContainer/ScreenShakeContainer/ShakeSlider")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings"]
+layout_mode = 2
+
+[node name="GraphicsLabel" type="RichTextLabel" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "GRAPHICS"
+fit_content = true
+
+[node name="WindowLabel" type="RichTextLabel" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Window Mode"
+fit_content = true
+
+[node name="WindowOptionButton" type="OptionButton" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+selected = 0
+allow_reselect = true
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Maximized"
+popup/item_1/id = 1
+popup/item_2/text = "Fullscreen"
+popup/item_2/id = 2
+
+[node name="ResolutionLabel" type="RichTextLabel" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Resolution"
+fit_content = true
+
+[node name="ResolutionOptionButton" type="OptionButton" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+disabled = true
+selected = 0
+allow_reselect = true
+item_count = 1
+popup/item_0/text = "1920x1080"
+popup/item_0/id = 2
+
+[node name="GUIScaleContainer" type="HBoxContainer" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="GUIScaleLabel" type="Label" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "GUI Scale   "
+vertical_alignment = 1
+
+[node name="GUIScaleSlider" type="HSlider" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+min_value = 1.0
+max_value = 2.0
+step = 0.25
+value = 1.0
+
+[node name="BrightnessContainer" type="HBoxContainer" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="BrightnessLabel" type="Label" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Brightness  "
+vertical_alignment = 1
+
+[node name="BrightnessSlider" type="HSlider" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="ScreenShakeContainer" type="HBoxContainer" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="ShakeLabel" type="Label" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer"]
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Screen Shake"
+vertical_alignment = 1
+
+[node name="ShakeSlider" type="HSlider" parent="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="Controls" parent="TabContainer" instance=ExtResource("3_m6kit")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="TabContainer/Controls"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 14
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 24
+
+[node name="ControlsSettings" type="PanelContainer" parent="TabContainer/Controls/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Controls/MarginContainer/ControlsSettings"]
+layout_mode = 2
+
+[node name="ControlsLabel" type="RichTextLabel" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "CONTROLS"
+fit_content = true
+
+[node name="Gap1" type="Control" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+layout_mode = 2
+
+[node name="RebindButton" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer" instance=ExtResource("7_hsjom")]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Rebind Controls"
+
+[node name="Gap2" type="Control" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="RebindingLabel" type="RichTextLabel" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Rebinding coming soon!"
+fit_content = true
+
+[node name="MouseSensitivityLabel" type="Label" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Mouse Sensitivity"
+vertical_alignment = 1
+
+[node name="MouseSensitivityContainer" type="HBoxContainer" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="GUIScaleSlider" type="HSlider" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
+[node name="VibrationLabel" type="Label" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
+custom_minimum_size = Vector2(55, 0)
+layout_mode = 2
+theme = ExtResource("2_ih0hb")
+text = "Controller Vibration"
+vertical_alignment = 1
+
+[node name="ControllerVibrationContainer" type="HBoxContainer" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VibrationSlider" type="HSlider" parent="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_ih0hb")
+max_value = 1.0
+step = 0.05
+value = 0.4
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -66,334 +453,15 @@ mouse_default_cursor_shape = 2
 theme = ExtResource("2_ih0hb")
 text = "Controls"
 
-[node name="PanelContainerWrapper" parent="VBoxContainer" instance=ExtResource("3_m6kit")]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/PanelContainerWrapper"]
-layout_mode = 2
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_top = 14
-theme_override_constants/margin_right = 14
-theme_override_constants/margin_bottom = 24
-
-[node name="SystemSettings" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
-script = ExtResource("4_41hw7")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/SystemSettings"]
-layout_mode = 2
-
-[node name="SystemsLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/SystemSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "SYSTEM"
-fit_content = true
-
-[node name="LanguageLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/SystemSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Language"
-fit_content = true
-
-[node name="OptionButton" type="OptionButton" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/SystemSettings/VBoxContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-disabled = true
-selected = 0
-allow_reselect = true
-item_count = 2
-popup/item_0/text = "English"
-popup/item_0/id = 0
-popup/item_1/text = "Tree"
-popup/item_1/id = 1
-
-[node name="AudioSettings" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer" node_paths=PackedStringArray("master_slider", "music_slider", "sfx_slider", "slider_label")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
-script = ExtResource("4_iegsy")
-master_slider = NodePath("VBoxContainer/AudioSettings/MasterContainer/MasterSlider")
-music_slider = NodePath("VBoxContainer/AudioSettings/MusicContainer/MusicSlider")
-sfx_slider = NodePath("VBoxContainer/AudioSettings/SFXContainer/SFXSlider")
-slider_label = NodePath("Label")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings"]
-layout_mode = 2
-
-[node name="AudioLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "AUDIO
-"
-fit_content = true
-
-[node name="AudioSettings" type="VBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="MasterContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
-layout_mode = 2
-
-[node name="MasterLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Master "
-vertical_alignment = 1
-
-[node name="MasterSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
-[node name="MusicContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
-layout_mode = 2
-
-[node name="MusicLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Music  "
-vertical_alignment = 1
-
-[node name="MusicSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
-[node name="SFXContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings"]
-layout_mode = 2
-
-[node name="SFXLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "SFX    "
-vertical_alignment = 1
-
-[node name="SFXSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
-[node name="Label" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "100"
-horizontal_alignment = 1
-
-[node name="GraphicsSettings" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer" node_paths=PackedStringArray("window_option_button", "resolution_option_button", "gui_scale_slider", "brightness_slider", "shake_slider")]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
-script = ExtResource("6_82n5i")
-window_option_button = NodePath("VBoxContainer/WindowOptionButton")
-resolution_option_button = NodePath("VBoxContainer/ResolutionOptionButton")
-gui_scale_slider = NodePath("VBoxContainer/GUIScaleContainer/GUIScaleSlider")
-brightness_slider = NodePath("VBoxContainer/BrightnessContainer/BrightnessSlider")
-shake_slider = NodePath("VBoxContainer/ScreenShakeContainer/ShakeSlider")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings"]
-layout_mode = 2
-
-[node name="GraphicsLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "GRAPHICS"
-fit_content = true
-
-[node name="WindowLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Window Mode"
-fit_content = true
-
-[node name="WindowOptionButton" type="OptionButton" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-selected = 0
-allow_reselect = true
-item_count = 3
-popup/item_0/text = "Windowed"
-popup/item_0/id = 0
-popup/item_1/text = "Maximized"
-popup/item_1/id = 1
-popup/item_2/text = "Fullscreen"
-popup/item_2/id = 2
-
-[node name="ResolutionLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Resolution"
-fit_content = true
-
-[node name="ResolutionOptionButton" type="OptionButton" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-layout_mode = 2
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-disabled = true
-selected = 0
-allow_reselect = true
-item_count = 1
-popup/item_0/text = "1920x1080"
-popup/item_0/id = 2
-
-[node name="GUIScaleContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-layout_mode = 2
-
-[node name="GUIScaleLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "GUI Scale   "
-vertical_alignment = 1
-
-[node name="GUIScaleSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-min_value = 1.0
-max_value = 2.0
-step = 0.25
-value = 1.0
-
-[node name="BrightnessContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="BrightnessLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Brightness  "
-vertical_alignment = 1
-
-[node name="BrightnessSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
-[node name="ScreenShakeContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer"]
-visible = false
-layout_mode = 2
-
-[node name="ShakeLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Screen Shake"
-vertical_alignment = 1
-
-[node name="ShakeSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
-[node name="ControlsSettings" type="PanelContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_ih0hb")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings"]
-layout_mode = 2
-
-[node name="ControlsLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "CONTROLS"
-fit_content = true
-
-[node name="RebindingLabel" type="RichTextLabel" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Rebinding coming soon!"
-fit_content = true
-
-[node name="MouseSensitivityLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Mouse Sensitivity"
-vertical_alignment = 1
-
-[node name="MouseSensitivityContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
-layout_mode = 2
-
-[node name="GUIScaleSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
-[node name="VibrationLabel" type="Label" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
-custom_minimum_size = Vector2(55, 0)
-layout_mode = 2
-theme = ExtResource("2_ih0hb")
-text = "Controller Vibration"
-vertical_alignment = 1
-
-[node name="ControllerVibrationContainer" type="HBoxContainer" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer"]
-layout_mode = 2
-
-[node name="VibrationSlider" type="HSlider" parent="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-mouse_default_cursor_shape = 2
-theme = ExtResource("2_ih0hb")
-max_value = 1.0
-step = 0.05
-value = 0.4
-
+[connection signal="tab_selected" from="TabContainer" to="." method="_on_tab_container_tab_selected"]
+[connection signal="value_changed" from="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer/MasterSlider" to="TabContainer/Audio/MarginContainer/AudioSettings" method="_on_master_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer/MusicSlider" to="TabContainer/Audio/MarginContainer/AudioSettings" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="TabContainer/Audio/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer/SFXSlider" to="TabContainer/Audio/MarginContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
+[connection signal="item_selected" from="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/WindowOptionButton" to="TabContainer/Graphics/MarginContainer/GraphicsSettings" method="_on_window_option_button_item_selected"]
+[connection signal="drag_ended" from="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="TabContainer/Graphics/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_drag_ended"]
+[connection signal="value_changed" from="TabContainer/Graphics/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="TabContainer/Graphics/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_value_changed"]
+[connection signal="pressed" from="TabContainer/Controls/MarginContainer/ControlsSettings/VBoxContainer/RebindButton" to="." method="_on_rebind_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/SystemButton" to="." method="_on_system_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/AudioButton" to="." method="_on_audio_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/GraphicsButton" to="." method="_on_graphics_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/ControlsButton" to="." method="_on_controls_button_pressed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MasterContainer/MasterSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings" method="_on_master_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/MusicContainer/MusicSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings" method="_on_music_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings/SFXContainer/SFXSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
-[connection signal="item_selected" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/WindowOptionButton" to="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings" method="_on_window_option_button_item_selected"]
-[connection signal="drag_ended" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_drag_ended"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/GUIScaleContainer/GUIScaleSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings" method="_on_gui_scale_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/BrightnessContainer/BrightnessSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/GraphicsSettings/VBoxContainer/ScreenShakeContainer/ShakeSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/MouseSensitivityContainer/GUIScaleSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]
-[connection signal="value_changed" from="VBoxContainer/PanelContainerWrapper/MarginContainer/ControlsSettings/VBoxContainer/ControllerVibrationContainer/VibrationSlider" to="VBoxContainer/PanelContainerWrapper/MarginContainer/AudioSettings/VBoxContainer/AudioSettings" method="_on_sfx_slider_value_changed"]

@@ -50,6 +50,7 @@ func _open_new_world_menu() -> void:
 
 func load_game(save_num: int, session_data: Dictionary) -> void:
 	Global.session_id = save_num
+	SfxManager.play_sound_effect("ui_click")
 	SceneLoader.transition_to_game(session_data)
 
 func _on_delete_pressed() -> void:

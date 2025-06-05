@@ -15,8 +15,12 @@ extends CanvasLayer
 @onready var confirmation_dimmer: ColorRect = %ConfirmationDimmer
 @onready var shop_menu: ShopMenu = %ShopMenu
 @onready var almanac_menu: AlmanacMenu = %AlmanacMenu
+@onready var keybinds_menu: KeybindsMenu = %KeybindsMenu
+@onready var keybinding_dimmer: ColorRect = %KeybindingDimmer
 
 @onready var black_screen: ColorRect = %BlackScreen
+
+@onready var cursor_layer: CanvasLayer = %CursorLayer
 
 var is_open := false
 
@@ -65,6 +69,10 @@ func get_previously_active_menu() -> ScreenMenu:
 
 func _ready() -> void:
 	#Global.screen_ui = self
+	
+	cursor_layer.set_layer(1025) # Make the CURSOR layer super high up so that it displays above popup menus
+	# https://forum.godotengine.org/t/z-ordering-of-popup-menu/55700/10
+	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	jump_to_closed()
 
