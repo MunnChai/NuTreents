@@ -25,6 +25,11 @@ func _ready():
 
 func transition_to_main_menu():
 	transition_to_packed(MAIN_MENU)
+	
+	await scene_changed
+	
+	# Reset session id when returning to main menu
+	Global.session_id = 0
 
 func transition_to_game(session_data: Dictionary = {}):
 	transition_to_packed(MAIN)
@@ -61,7 +66,6 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			
 			var music: Node = get_tree().get_first_node_in_group("music")
 			if (music):
-				print("STOPPING_MUSIC")
 				music.audio_stream_player.stop()
 			
 			get_tree().change_scene_to_packed(scene)

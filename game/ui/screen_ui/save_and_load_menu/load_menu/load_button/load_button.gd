@@ -14,6 +14,8 @@ func _ready() -> void:
 
 func set_button_info(save_num: int, session_data: Dictionary): 
 	self.save_num = save_num
+	button.disabled = false
+	delete_button.disabled = false
 	
 	# Disconnect all callables
 	for connection in button.pressed.get_connections():
@@ -31,6 +33,10 @@ func set_button_info(save_num: int, session_data: Dictionary):
 	day_label.text = "Day " + str(session_data["current_day"])
 	
 	button.pressed.connect(load_game.bind(save_num, session_data))
+	
+	if save_num == Global.session_id:
+		button.disabled = true
+		delete_button.disabled = true
 
 func set_button_info_empty(save_num: int):
 	delete_button.visible = false
