@@ -22,21 +22,6 @@ region = Rect2(0, 0, 32, 32)
 atlas = ExtResource("3_4rqv8")
 region = Rect2(64, 16, 32, 40)
 
-[sub_resource type="Animation" id="Animation_4rqv8"]
-resource_name = "stump"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture:region")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Rect2(64, 16, 32, 40)]
-}
-
 [sub_resource type="Animation" id="Animation_i00nt"]
 length = 0.001
 tracks/0/type = "value"
@@ -50,6 +35,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Rect2(64, 16, 32, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_ihmnb"]
+resource_name = "large"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture:region")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(256, 80, 32, 40)]
 }
 
 [sub_resource type="Animation" id="Animation_505hy"]
@@ -67,8 +67,8 @@ tracks/0/keys = {
 "values": [Rect2(256, 16, 32, 40)]
 }
 
-[sub_resource type="Animation" id="Animation_ihmnb"]
-resource_name = "large"
+[sub_resource type="Animation" id="Animation_4rqv8"]
+resource_name = "stump"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -79,7 +79,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Rect2(256, 80, 32, 40)]
+"values": [Rect2(64, 16, 32, 40)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5t37b"]

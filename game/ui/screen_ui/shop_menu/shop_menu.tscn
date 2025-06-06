@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://ctcfj84w32fdo"]
+[gd_scene load_steps=6 format=3 uid="uid://ctcfj84w32fdo"]
 
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_1wogu"]
 [ext_resource type="Script" uid="uid://brohw4lf341cq" path="res://ui/screen_ui/shop_menu/shop_menu.gd" id="1_t5edc"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_t5edc"]
-[ext_resource type="PackedScene" uid="uid://k587a7d6l33g" path="res://ui/screen_ui/shop_menu/shop_card/shop_card.tscn" id="4_kys1l"]
 [ext_resource type="PackedScene" uid="uid://cdopbr243q1eh" path="res://ui/screen_ui/shop_menu/shop_detail_panel/shop_detail_panel.tscn" id="5_kys1l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kys1l"]
@@ -19,6 +18,7 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_t5edc")
+initial_tree_cards = Array[int]([2, 4])
 
 [node name="PanelContainerWrapper" parent="." instance=ExtResource("1_1wogu")]
 layout_mode = 1
@@ -100,14 +100,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_neighbor_bottom = NodePath("../../../ScrollContainer2/MarginContainer/PowerCards")
 theme_override_constants/separation = 10
-
-[node name="GunTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 2
-
-[node name="TechTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox/ScrollContainer/MarginContainer/TreeCards" instance=ExtResource("4_kys1l")]
-layout_mode = 2
-tree_type = 4
 
 [node name="PowersLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/SelectionVBox"]
 layout_mode = 2
