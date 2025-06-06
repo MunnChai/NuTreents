@@ -9,6 +9,7 @@ signal choice_made(choice: bool)
 @onready var message: RichTextLabel = %Message
 @onready var accept_button: ScreenButton = %AcceptButton
 @onready var decline_button: ScreenButton = %DeclineButton
+@onready var back_button: ScreenButton = %BackButton
 
 @onready var starting_position := position
 
@@ -18,6 +19,7 @@ func _ready() -> void:
 	
 	accept_button.pressed.connect(_accept_pressed)
 	decline_button.pressed.connect(_decline_pressed)
+	back_button.pressed.connect(_back_pressed)
 
 func _accept_pressed() -> void:
 	SfxManager.play_sound_effect("ui_click")
@@ -30,6 +32,10 @@ func _decline_pressed() -> void:
 	ScreenUI.exit_menu()
 	declined.emit()
 	choice_made.emit(false)
+
+func _back_pressed() -> void:
+	SfxManager.play_sound_effect("ui_click")
+	ScreenUI.exit_menu()
 
 ## SCREEN MENU IMPLEMENTATION
 

@@ -26,6 +26,8 @@ func create_new_session_data(metadata: Dictionary):
 	config.set_value(SECTION_METADATA, "world_size", metadata["world_size"])
 	
 	config.save(full_path)
+	
+	print("Created new metadata in: ", full_path)
 
 # Save any information that has changed (tiles, structures, enemies, etc.)
 func save_session_data(save_num: int = 1):
@@ -106,7 +108,8 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	if err != OK:
 		return {}
 	else:
-		print("Loaded session data from: ", full_path)
+		#print("Loaded session data from: ", full_path)
+		pass
 	
 	# Returns if this save slot is empty
 	if not config.has_section(SECTION_METADATA):

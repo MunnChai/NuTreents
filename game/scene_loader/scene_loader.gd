@@ -25,6 +25,11 @@ func _ready():
 
 func transition_to_main_menu():
 	transition_to_packed(MAIN_MENU)
+	
+	await scene_changed
+	
+	# Reset session id when returning to main menu
+	Global.session_id = 0
 
 func transition_to_game(session_data: Dictionary = {}):
 	transition_to_packed(MAIN)
@@ -52,6 +57,9 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	
 	GameCursor.instance.force_wait = true
 	
+	if FloatingTooltip.instance:
+		FloatingTooltip.instance.force_hidden = true
+	
 	tween_in.tween_property(black_screen, "modulate:a", 1.0, tween_in_duration)
 	
 	tween_in.finished.connect(
@@ -61,7 +69,6 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			
 			var music: Node = get_tree().get_first_node_in_group("music")
 			if (music):
-				print("STOPPING_MUSIC")
 				music.audio_stream_player.stop()
 			
 			get_tree().change_scene_to_packed(scene)
@@ -72,6 +79,9 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			is_transitioning = false
 			
 			GameCursor.instance.force_wait = false
+			
+			if FloatingTooltip.instance:
+				FloatingTooltip.instance.force_hidden = false
 			
 			scene_changed.emit()
 	)
