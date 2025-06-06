@@ -98,7 +98,7 @@ mouse_filter = 2
 
 [node name="DeleteButton" type="Button" parent="MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
-modulate = Color(1, 0, 0, 1)
+modulate = Color(0.457544, 0.585081, 0.28222, 1)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme = ExtResource("1_yp4uk")
