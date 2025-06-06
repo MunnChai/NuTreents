@@ -20,6 +20,8 @@ var silk_spitter: AudioStreamPlayer
 const SILK_SPITTER = preload("res://sound/sfx/AudioPlayers/silk_spitter.tscn")
 var ui_pages: AudioStreamPlayer
 const UI_PAGES = preload("res://sound/sfx/AudioPlayers/ui_pages.tscn")
+var splash_wind: AudioStreamPlayer
+const SPLASH_WIND = preload("res://sound/sfx/AudioPlayers/splash_wind.tscn")
 var SFX_DICT: Dictionary[String, AudioStreamPlayer]  
 
 func _ready() -> void:
@@ -72,12 +74,17 @@ func _ready() -> void:
 	ui_pages = UI_PAGES.instantiate()
 	add_child(ui_pages)
 	SFX_DICT["ui_pages"] = ui_pages
+	
+	splash_wind = SPLASH_WIND.instantiate()
+	add_child(splash_wind)
+	SFX_DICT["splash_wind"] = splash_wind
 
-func play_sound_effect(name: String) -> void:
+func play_sound_effect(name: String, vary_pitch: bool = true) -> void:
 	var sound_effect: AudioStreamPlayer = SFX_DICT[name]
 	if (sound_effect != null): 
 		sound_effect.bus = "SFX"
 		sound_effect.playing = true
 	
 	# pitch variation
-	sound_effect.pitch_scale = RandomNumberGenerator.new().randf_range(0.9, 1.1)
+	if vary_pitch:
+		sound_effect.pitch_scale = RandomNumberGenerator.new().randf_range(0.9, 1.1)

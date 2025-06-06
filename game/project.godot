@@ -11,8 +11,10 @@ config_version=5
 [application]
 
 config/name="NuTREEnts"
-run/main_scene="uid://cedh52sbdvy3x"
+run/main_scene="uid://dnx3yyd5gur8s"
 config/features=PackedStringArray("4.4", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/show_image=false
 config/icon="uid://b58wlyiwuebmb"
 
 [audio]
