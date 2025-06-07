@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://dnx3yyd5gur8s"]
+
+[ext_resource type="Script" uid="uid://etvpduor4b8t" path="res://ui/splash/splash_screen.gd" id="1_k5e5h"]
+[ext_resource type="Texture2D" uid="uid://isr5hx2m8rqm" path="res://ui/splash/splash_assets/tree_splash/tree_dark.png" id="2_x1etm"]
+[ext_resource type="Texture2D" uid="uid://bv3ogrk2lpnuf" path="res://ui/splash/splash_assets/tree_splash/wordmark_dark.png" id="3_x1etm"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="4_bb83l"]
+[ext_resource type="Texture2D" uid="uid://cki8v72ollixf" path="res://ui/splash/splash_assets/godot_splash/logo_large_color_dark.png" id="4_x1etm"]
+
+[node name="SplashScreen" type="Node2D"]
+script = ExtResource("1_k5e5h")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5000.0
+offset_top = -5000.0
+offset_right = 5000.0
+offset_bottom = 5000.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="SIInteractiveLogo" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="TreeIcon" type="Sprite2D" parent="SIInteractiveLogo"]
+unique_name_in_owner = true
+position = Vector2(0, -43)
+texture = ExtResource("2_x1etm")
+
+[node name="Wordmark" type="Sprite2D" parent="SIInteractiveLogo"]
+unique_name_in_owner = true
+position = Vector2(0, 109)
+texture = ExtResource("3_x1etm")
+
+[node name="GodotLogo" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="GodotIcon" type="Sprite2D" parent="GodotLogo"]
+unique_name_in_owner = true
+texture = ExtResource("4_x1etm")
+
+[node name="OverLayer" type="CanvasLayer" parent="."]
+
+[node name="FadeIn" type="ColorRect" parent="OverLayer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5576.0
+offset_top = -5324.0
+offset_right = 4424.0
+offset_bottom = 4676.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="SkipLabel" type="RichTextLabel" parent="OverLayer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.505882)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -40.0
+offset_right = 63.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("4_bb83l")
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+bbcode_enabled = true
+text = "[center](Press any key to skip)"
+fit_content = true
+autowrap_mode = 0
+vertical_alignment = 1
+
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
