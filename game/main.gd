@@ -62,6 +62,7 @@ func load_world(session_data: Dictionary) -> void:
 	
 	# Set terrain and structures
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
+	Global.terrain_map.randomize_tiles()
 	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
 	# Load enemies
