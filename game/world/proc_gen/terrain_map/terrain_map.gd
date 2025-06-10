@@ -141,7 +141,7 @@ func initialize_map() -> void:
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var TileType: int = TileType.GRASS
+			var TileType: int = TileType.DIRT
 			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[TileType]
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)

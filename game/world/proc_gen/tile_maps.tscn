@@ -111,6 +111,7 @@ script = ExtResource("6_gwmkj")
 
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
 z_index = 5
+position = Vector2(0, 8)
 tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")
 
