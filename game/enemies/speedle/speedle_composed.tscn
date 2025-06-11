@@ -42,6 +42,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="HealthComponent" parent="." instance=ExtResource("1_qw3f2")]
+max_health = 20.0
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("6_iifq8")]
 collision_layer = 2
@@ -50,6 +51,7 @@ collision_mask = 5
 [node name="HitboxComponent" parent="." instance=ExtResource("7_7ra7c")]
 collision_layer = 2
 collision_mask = 5
+damage = 4.0
 
 [node name="PopupEmitterComponent" parent="." instance=ExtResource("7_b2xnc")]
 
@@ -61,7 +63,7 @@ movement_duration = 0.5
 bounce_amount = 8.0
 
 [node name="GridRangeComponent" parent="." instance=ExtResource("12_h133x")]
-range = 1
+range = 2
 
 [node name="TargetingComponent" parent="." instance=ExtResource("12_kxdtq")]
 

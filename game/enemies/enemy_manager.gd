@@ -9,7 +9,7 @@ static var instance
 ## TODO: Refactor out EnemyRegistry
 ## Generally make logic more easy to understand
 
-const SILK_SPITTER: PackedScene = preload("res://enemies/silk_spitter/silk_spitter.tscn")
+const SILK_SPITTER: PackedScene = preload("res://enemies/silk_spitter/silk_spitter_composed.tscn")
 const SPEEDLE: PackedScene = preload("res://enemies/speedle/speedle_composed.tscn")
 
 enum EnemyType {
