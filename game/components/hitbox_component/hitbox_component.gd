@@ -1,0 +1,2 @@
+class_name HitboxComponent
+extends Node2D

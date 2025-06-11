@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 		attack_nearest_enemy()
 
 func check_attack_range():
-	for enemy: Enemy in get_tree().get_nodes_in_group("enemies"):
+	for enemy: Enemy in EnemyManager.instance.get_enemies():
 			if (enemy.is_dead):
 				continue
 			

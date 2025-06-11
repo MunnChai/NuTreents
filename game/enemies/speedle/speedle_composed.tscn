@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://dx31qo8ntqbho"]
+
+[ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/speedle/speedle_sheet.png" id="1_i3noe"]
+[ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_qw3f2"]
+[ext_resource type="Texture2D" uid="uid://ciqackaiahdkm" path="res://enemies/speedle/speedle_eyes_sheet.png" id="2_iifq8"]
+[ext_resource type="Script" uid="uid://btt3wf72o4sst" path="res://enemies/common/copy_frame_sprite.gd" id="3_b2xnc"]
+[ext_resource type="AnimationLibrary" uid="uid://dxw6d6vomro1c" path="res://enemies/enemy_animations.res" id="4_7ra7c"]
+[ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/hurtbox_component/hurtbox_component.tscn" id="6_iifq8"]
+[ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="7_b2xnc"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0vre5"]
+light_mode = 1
+
+[node name="SpeedleComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("1_i3noe")
+hframes = 8
+vframes = 4
+
+[node name="Eyes" type="Sprite2D" parent="." node_paths=PackedStringArray("copy_from")]
+material = SubResource("CanvasItemMaterial_0vre5")
+position = Vector2(0, -12)
+texture = ExtResource("2_iifq8")
+hframes = 8
+vframes = 4
+script = ExtResource("3_b2xnc")
+copy_from = NodePath("../Sprite2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": ExtResource("4_7ra7c")
+}
+autoplay = "idle"
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_qw3f2")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("6_iifq8")]
+
+[node name="PopupEmitterComponent" parent="." instance=ExtResource("7_b2xnc")]

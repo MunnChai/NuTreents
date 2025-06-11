@@ -32,6 +32,7 @@ var current_path: Array
 var movement_cooldown: float
 
 func _ready() -> void:
+	add_to_group("enemies")
 	init()
 	sprite_2d.vframes = 4
 

@@ -79,7 +79,7 @@ func save_session_data(save_num: int = 1):
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
-	for enemy: Enemy in EnemyManager.instance.current_enemies:
+	for enemy: Enemy in EnemyManager.instance.get_enemies():
 		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
 		if !save_resource:
 			continue

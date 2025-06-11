@@ -34,14 +34,10 @@ var enemy_spawn_timer: float = 0
 var current_wave = 0
 var day_tracker = 1
 
-var current_enemies: Array[Enemy]
-
-
 func _ready() -> void:
 	instance = self
 
 func start_game():
-	current_enemies.clear()
 	day_tracker = 1
 	enemy_spawn_timer = 0
 
@@ -74,8 +70,7 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		if (current_enemies.size() > 0):
-			kill_all_enemies()
+		kill_all_enemies()
  
 # increases the severity of bug spawns based on the day
 func increase_difficulty() -> void:
@@ -151,7 +146,7 @@ func find_target_tree(trees_to_avoid: Array[Twee] = []) -> Twee:
 		return tech_trees.pick_random()
 	elif not water_trees.is_empty():
 		return water_trees.pick_random()
-	elif not mother_tree == null: # Munn: This should always happen?? 
+	elif mother_tree != null: # Munn: This should always happen?? 
 		return mother_tree
 	
 	return tree_map.pick_random()
@@ -167,31 +162,27 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
 	
 	enemy_node.global_position = world_pos
 	enemy_node.map_position = map_coords
-	enemy_node.died.connect(_on_enemy_death.bind(enemy_node))
 	
 	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
 	
 	enemy_map.add_child(enemy_node)
 	
-	current_enemies.append(enemy_node)
-	
 	return enemy_node
 
 func kill_all_enemies():
 	#print("Hello")
-	for enemy: Enemy in current_enemies:
+	for enemy: Enemy in get_enemies():
 		if (!enemy):
 			continue
 		
 		# UNCOMMENT THESE!!!!
 		enemy.die()
 
-func _on_enemy_death(enemy: Enemy) -> void:
-	current_enemies.erase(enemy)
-
+func get_enemies() -> Array:
+	return get_tree().get_nodes_in_group("enemies")
 
 func get_enemy_at(pos: Vector2i) -> Enemy:
-	for enemy in current_enemies:
+	for enemy in get_enemies():
 		if (!enemy):
 			continue
 		if (enemy.is_dead):

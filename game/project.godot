@@ -61,6 +61,7 @@ tile_manager=""
 music=""
 overlay_manager=""
 camera=""
+enemies=""
 
 [input]
 

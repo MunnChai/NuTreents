@@ -8,7 +8,7 @@ func detect(pos: Vector2i) -> void:
 	var building_map = Global.structure_map
 	var tile_type: TerrainMap.TileType = terrain_map.get_tile_biome(pos)
 	var building_node: Node2D = building_map.get_building_node(pos)
-	var enemies: Array[Enemy] = EnemyManager.instance.current_enemies
+	var enemies: Array = EnemyManager.instance.get_enemies()
 	
 	# Munn: shouldn't actually be too performance heavy, since we should have like < 50 enemies at a time
 	var is_hovering_enemy: bool = false
