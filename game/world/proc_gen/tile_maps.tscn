@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bnfqehf31racc" path="res://ui/cursor/world_cursor/cursor.tscn" id="4_118ts"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
-[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/fog_tiles_1.png" id="5_118ts"]
+[ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
 [ext_resource type="Script" uid="uid://fbge5fbxmgmi" path="res://enemies/enemy_manager.gd" id="6_gwmkj"]
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="8_jvuq2"]
 [ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="9_gwmkj"]
@@ -102,18 +102,18 @@ z_index = -5
 [node name="VisualCursor" parent="BuildingManager" node_paths=PackedStringArray("cursor") instance=ExtResource("4_0rry4")]
 cursor = NodePath("../Cursor")
 
+[node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
+z_index = 5
+position = Vector2(0, -8)
+tile_set = SubResource("TileSet_1bgfd")
+script = ExtResource("5_1bgfd")
+
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
 y_sort_enabled = true
 
 [node name="EnemyLayer" type="Node2D" parent="BuildingManager" groups=["enemy_map"]]
 y_sort_enabled = true
 script = ExtResource("6_gwmkj")
-
-[node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
-z_index = 5
-position = Vector2(0, 8)
-tile_set = SubResource("TileSet_1bgfd")
-script = ExtResource("5_1bgfd")
 
 [node name="HoverInfoBox" type="Control" parent="BuildingManager"]
 visible = false
