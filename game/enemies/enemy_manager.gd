@@ -178,13 +178,13 @@ func kill_all_enemies():
 func get_enemies() -> Array:
 	return get_tree().get_nodes_in_group("enemies")
 
-func get_enemy_at(pos: Vector2i) -> Enemy:
+func get_enemy_at(pos: Vector2i):
 	for enemy in get_enemies():
 		if (!enemy):
 			continue
-		if (enemy.is_dead):
+		if (enemy.health_component.is_dead):
 			continue
-		if (enemy.map_position == pos):
+		if (enemy.grid_movement_component.current_position == pos):
 			return enemy
 	
 	return null
