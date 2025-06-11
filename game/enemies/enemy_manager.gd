@@ -99,8 +99,9 @@ func spawn_enemy_wave() -> int:
 	var distance := INF
 	for cell in possible_cells:
 		if cell.distance_squared_to(target_pos) < distance:
-			distance = cell.distance_squared_to(target_pos)
-			near_cells.append(cell)
+			if Global.fog_map.is_tile_foggy(cell):
+				distance = cell.distance_squared_to(target_pos)
+				near_cells.append(cell)
 	#print("Near: ", near_cells.size())
 	var allowed_cells = []
 	for cell in near_cells:
