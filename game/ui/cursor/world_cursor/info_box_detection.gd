@@ -13,17 +13,17 @@ func detect(pos: Vector2i) -> void:
 	# Munn: shouldn't actually be too performance heavy, since we should have like < 50 enemies at a time
 	var is_hovering_enemy: bool = false
 	var hovered_enemy: Enemy
-	for enemy: Enemy in enemies:
-		if (!enemy):
-			continue
-		if (enemy.map_position == pos):
-			hovered_enemy = enemy
-			is_hovering_enemy = true
-			break
+	#for enemy: Enemy in enemies:
+		#if (!enemy):
+			#continue
+		#if (enemy.map_position == pos):
+			#hovered_enemy = enemy
+			#is_hovering_enemy = true
+			#break
 	
-	if (is_hovering_enemy):
-		InfoBox.get_instance().show_content_for(pos, hovered_enemy.id, tile_type)
-	elif building_node != null:
-		InfoBox.get_instance().show_content_for(pos, building_node.get_id(), tile_type)
-	else:
-		InfoBox.get_instance().show_content_for(pos, "no_building", tile_type)
+	#if (is_hovering_enemy):
+		#InfoBox.get_instance().show_content_for(pos, hovered_enemy.id, tile_type)
+	#elif building_node != null:
+		#InfoBox.get_instance().show_content_for(pos, building_node.get_id(), tile_type)
+	#else:
+		#InfoBox.get_instance().show_content_for(pos, "no_building", tile_type)

@@ -10,7 +10,7 @@ static var instance
 ## Generally make logic more easy to understand
 
 const SILK_SPITTER: PackedScene = preload("res://enemies/silk_spitter/silk_spitter.tscn")
-const SPEEDLE: PackedScene = preload("res://enemies/speedle/speedle.tscn")
+const SPEEDLE: PackedScene = preload("res://enemies/speedle/speedle_composed.tscn")
 
 enum EnemyType {
 	SPEEDLE,
@@ -45,10 +45,10 @@ func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	#if (Input.is_action_just_pressed("debug_button")):
-		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
-		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		#spawn_enemy(EnemyType.SPEEDLE, map_coord)
+	if (Input.is_action_just_pressed("debug_button")):
+		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
+		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
+		spawn_enemy(EnemyType.SPEEDLE, map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		kill_all_enemies()
+		#kill_all_enemies()
  
 # increases the severity of bug spawns based on the day
 func increase_difficulty() -> void:
@@ -152,22 +152,19 @@ func find_target_tree(trees_to_avoid: Array[Twee] = []) -> Twee:
 	return tree_map.pick_random()
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
-func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> Enemy:
+func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i):
 	
-	var enemy_node: Enemy = enemy_dict[enemy_type].instantiate()
+	var enemy_node: EnemyComposed = enemy_dict[enemy_type].instantiate()
 	
 	var terrain_map: TerrainMap = Global.terrain_map
 	
 	var world_pos: Vector2 = terrain_map.map_to_local(map_coords)
 	
-	enemy_node.global_position = world_pos
-	enemy_node.map_position = map_coords
-	
 	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
-	
 	enemy_map.add_child(enemy_node)
 	
-	return enemy_node
+	enemy_node.global_position = world_pos
+	enemy_node.grid_movement_component.current_position = map_coords
 
 func kill_all_enemies():
 	#print("Hello")

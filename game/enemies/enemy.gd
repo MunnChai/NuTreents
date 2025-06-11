@@ -131,16 +131,19 @@ func move_along_path() -> bool:
 	var direction: Vector2i = next_tile - map_position
 	face_direction(direction)
 	
+	var midpoint = global_position + (global_pos - global_position) / 2
+	
 	var pos_tween: Tween = get_tree().create_tween()
 	pos_tween.set_ease(Tween.EASE_IN_OUT)
 	pos_tween.set_trans(Tween.TRANS_CUBIC)
-	pos_tween.tween_property(self, "position", global_pos, MOVE_DURATION)
+	pos_tween.tween_property(self, "position:x", global_pos.x, MOVE_DURATION)
 	
 	var offset_tween: Tween = get_tree().create_tween()
-	offset_tween.set_ease(Tween.EASE_IN_OUT)
+	offset_tween.set_ease(Tween.EASE_IN)
 	offset_tween.set_trans(Tween.TRANS_CUBIC)
-	offset_tween.tween_property(sprite_2d, "position:y", -20, MOVE_DURATION / 2)
-	offset_tween.tween_property(sprite_2d, "position:y", -16, MOVE_DURATION / 2)
+	offset_tween.tween_property(self, "position:y", midpoint.y - 8, MOVE_DURATION / 2)
+	offset_tween.set_ease(Tween.EASE_OUT)
+	offset_tween.tween_property(self, "position:y", global_pos.y, MOVE_DURATION / 2)
 	
 	map_position = next_tile
 	
