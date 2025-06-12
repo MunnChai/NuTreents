@@ -30,9 +30,10 @@ func init_occupied_positions(positions: Array[Vector2i]) -> void:
 func get_pos() -> Vector2i:
 	if occupied_positions.is_empty():
 		printerr("Error! Getting position of structure with no positions.")
+		print_stack()
 		return Vector2i.ZERO
 	return occupied_positions[0]
 
 ## Returns the list of occupied positions of this structure...
-func get_occupied_positions() -> Array[Vector2i]:
+func get_occupied_positions() -> Array:
 	return occupied_positions

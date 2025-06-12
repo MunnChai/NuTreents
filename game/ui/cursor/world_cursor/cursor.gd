@@ -90,10 +90,10 @@ func do_primary_action() -> void:
 				PopupManager.create_popup("Only Tech Trees grow on factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
 				return
 	
-	var tree: Twee = TreeRegistry.get_new_twee(type)
+	var tree: TweeComposed = TreeRegistry.get_new_twee(type)
 	
-	if tree is TechTree:
-		tree.tech_slot = tech_slot
+	#if tree is TechTree:
+		#tree.tech_slot = tech_slot
 	
 	TreeManager.consume_n(tree.tree_stat.cost_to_purchase)
 	SfxManager.play_sound_effect("tree_plant")
@@ -115,11 +115,11 @@ func do_secondary_action() -> void:
 	
 	# Get any building on the tile
 	if (structure_map.does_obstructive_structure_exist(map_pos)):
-		var structure: Structure = structure_map.tile_scene_map[map_pos]
+		var structure: Node2D = structure_map.tile_scene_map[map_pos]
 		
 		# If building is tree, remove tree and return (unless it's the mother tree)
-		if (structure is Twee):
-			if (structure is MotherTree):
+		if (structure is TweeComposed):
+			if (structure is MotherTweeComposed):
 				PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(map_pos))
 				SfxManager.play_sound_effect("ui_fail")
 				return

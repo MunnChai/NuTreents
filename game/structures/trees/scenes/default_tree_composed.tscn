@@ -78,7 +78,4 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 [node name="GridRangeComponent" parent="." instance=ExtResource("10_4oe0m")]
 range = 1
 
-[connection signal="died" from="HealthComponent" to="." method="_on_death"]
-[connection signal="health_subtracted" from="HealthComponent" to="." method="take_damage"]
-[connection signal="health_subtracted" from="HealthComponent" to="PopupEmitterComponent" method="popup_number"]
-[connection signal="hit_taken" from="HurtboxComponent" to="HealthComponent" method="subtract_health"]
+[editable path="HurtboxComponent"]

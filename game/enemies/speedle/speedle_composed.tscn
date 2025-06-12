@@ -80,11 +80,6 @@ range = 1
 [node name="ActionTimer" type="Timer" parent="."]
 autostart = true
 
-[connection signal="died" from="HealthComponent" to="." method="die"]
-[connection signal="health_subtracted" from="HealthComponent" to="PopupEmitterComponent" method="popup_number"]
-[connection signal="hit_taken" from="HurtboxComponent" to="." method="play_hurt_animation"]
-[connection signal="hit_taken" from="HurtboxComponent" to="HealthComponent" method="subtract_health"]
-[connection signal="move_in_direction" from="GridMovementComponent" to="." method="face_direction"]
 [connection signal="timeout" from="ActionTimer" to="." method="perform_action"]
 
 [editable path="HurtboxComponent"]

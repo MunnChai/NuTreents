@@ -21,7 +21,17 @@ extends Node2D
 
 func _ready() -> void:
 	add_to_group("enemies")
+	
+	_connect_component_signals()
 
+func _connect_component_signals():
+	hurtbox_component.hit_taken.connect(health_component.subtract_health)
+	hurtbox_component.hit_taken.connect(play_hurt_animation)
+	
+	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
+	health_component.died.connect(die)
+	
+	grid_movement_component.move_in_direction.connect(face_direction)
 
 # Munn: This is where all the components get connected together? Seems weird...
 

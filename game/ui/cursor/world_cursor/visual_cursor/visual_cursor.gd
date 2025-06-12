@@ -18,11 +18,12 @@ func _process(delta: float) -> void:
 	
 	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
 	
-	var building: Structure = Global.structure_map.get_building_node(cursor.iso_position)
+	var building: Node2D = Global.structure_map.get_building_node(cursor.iso_position)
 	
 	## BUILDING:
-	if building != null:
-		var positions := building.get_occupied_positions()
+	if building != null and Components.has_component(building, GridPositionComponent):
+		var position_component: GridPositionComponent = Components.get_component(building, GridPositionComponent)
+		var positions := position_component.get_occupied_positions()
 		var average_pos := Vector2.ZERO
 		var sum := 0
 		for pos: Vector2i in positions:
@@ -90,15 +91,19 @@ func _update_visuals(delta: float) -> void:
 	if building_node == null:
 		_set_arrow_height("low")
 	else:
-		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
+		_set_arrow_height(building_node.get_arrow_cursor_height())
 		_show_structure_outline(iso_position)
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
 	if building_node == null || not structure_map.does_obstructive_structure_exist(iso_position):
 		_set_arrow_bobbing(true)
 	else:
-		if (building_node as Structure).get_id() in BOBBING_BUILDING_IDS:
-			_set_arrow_bobbing(true)
+		if Components.has_component(building_node, TooltipIdentifierComponent):
+			var id = Components.get_component(building_node, TooltipIdentifierComponent)
+			if id in BOBBING_BUILDING_IDS:
+				_set_arrow_bobbing(true)
+			else:
+				_set_arrow_bobbing(false)
 		else:
 			_set_arrow_bobbing(false)
 	
@@ -195,7 +200,7 @@ func update_adjacent_tile_transparencies() -> void:
 func _show_structure_outline(iso_position: Vector2i):
 	var tree_map = TreeManager.get_tree_map()
 	if tree_map.has(iso_position):
-		var twee: Twee = tree_map[iso_position]
+		var twee: TweeComposed = tree_map[iso_position]
 		twee.is_outline_active = true
 		return
 	
@@ -207,7 +212,7 @@ func _show_structure_outline(iso_position: Vector2i):
 func _hide_structure_outline(iso_position: Vector2i):
 	var tree_map = TreeManager.get_tree_map()
 	if tree_map.has(iso_position):
-		var twee: Twee = tree_map[iso_position]
+		var twee: TweeComposed = tree_map[iso_position]
 		twee.is_outline_active = false
 		return
 	

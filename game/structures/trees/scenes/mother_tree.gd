@@ -25,37 +25,6 @@ func take_damage(damage: int) -> bool:
 	CameraShake.instance.add_trauma(0.1)
 	return super.take_damage(damage)
 
-func die():
-	died = true
-	Global.game_state = Global.GameState.GAME_OVER
-	SceneLoader.transition_to_game_over()
-
-## update local storage and use water for maintainence
-## returns the right amount of res to system
-func update(delta: float) -> Vector3:
-	var prev = storage # record old storage number
-	
-	# add new water to storage, storage equals at most max_water
-	storage = min(storage + gain.y, max_water)
-	
-	# take maint from storage
-	if (storage >= maint):
-		storage -= maint
-	else:
-		var f: Forest = TreeManager.get_forest(forest)
-		if (!f.get_water(maint - storage)):
-			# if game doesn't have enough water either
-			hp -= 2 * delta
-		else:
-			# game has enough water
-			storage = 0
-	var g = Vector3(gain.x, storage - prev, gain.z)
-	return g
-
-func update_maint():
-	# TODO
-	return
-
 ## Gets the four directly adjacent tiles next to this twee
 ## Override this if reachable tiles are different
 func get_reachable_offsets() -> Array[Vector2i]:

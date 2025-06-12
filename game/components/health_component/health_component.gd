@@ -18,6 +18,7 @@ func _ready() -> void:
 
 func set_max_health(health: float) -> void:
 	max_health = health
+	current_health = health
 
 func get_max_health() -> float:
 	return max_health

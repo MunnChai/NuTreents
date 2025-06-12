@@ -103,7 +103,7 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		rich_text.text += "\n"
 		
 		var enemy = EnemyManager.instance.get_enemy_at(pos)
-		var structure: Structure = null
+		var structure: Node2D = null
 		if (Global.structure_map.tile_scene_map.has(pos)):
 			structure = Global.structure_map.tile_scene_map[pos]
 		

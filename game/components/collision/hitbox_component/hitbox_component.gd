@@ -11,4 +11,4 @@ func connect_signals() -> void:
 
 func _on_area_entered(area: Area2D) -> void:
 	if area is HurtboxComponent:
-		area.hit_taken.emit(damage, self)
+		area.hit_taken.emit(damage)

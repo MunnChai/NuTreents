@@ -22,6 +22,8 @@ extends Node2D
 @onready var water_production_component: WaterProductionComponent = $WaterProductionComponent
 @onready var grid_range_component: GridRangeComponent = $GridRangeComponent
 @onready var grid_position_component: GridPositionComponent = $GridPositionComponent
+@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent
+@onready var popup_emitter_component: PopupEmitterComponent = $PopupEmitterComponent
 
 ## State variables
 var died: bool
@@ -38,7 +40,13 @@ var time_to_grow: float
 ## TODO: This might introduce bugs..? Possibly use TIMERS instead
 var life_time_seconds := 0.0
 
+# Water stuff...
 const BASE_WATER_RANGE = 1
+const WATER_DAMAGE_DELAY = 3.0
+var water_damage_time := 0.0
+
+const DEHYDRATION_DAMAGE = 2
+
 
 const OUTLINE_FADE_DURATION: float = 0.1
 var is_outline_active: bool = false
@@ -60,10 +68,14 @@ func _ready():
 	
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("outline_width", 1)
 	
-	# Trees do not consume water near water
-	if is_water_adjacent():
-		water_production_component.set_water_production(max(0, water_production_component.get_water_production()))
+	_connect_component_signals()
 
+func _connect_component_signals():
+	hurtbox_component.hit_taken.connect(health_component.subtract_health)
+	
+	health_component.health_subtracted.connect(take_damage)
+	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
+	health_component.died.connect(_on_death)
 
 
 
@@ -90,7 +102,7 @@ func remove() -> void:
 		return
 	marked_for_removal = true
 	
-	for pos: Vector2i in get_occupied_positions():
+	for pos: Vector2i in grid_position_component.get_occupied_positions():
 		TreeManager.remove_tree(pos)
 
 
@@ -123,9 +135,8 @@ func _update_shader(delta: float) -> void:
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("alpha", modulate.a)
-	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("pos", get_pos())
+	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("pos", grid_position_component.get_pos())
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("tint_amount", 1.0 if is_dehydrated else 0.0)
-	#print(is_dehydrated)
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
 	# IF MORE SPRITES ARE ADDED BELOW THE SHEET, BEWARE, MUST TWEAK VALUES!
@@ -203,6 +214,9 @@ func get_nutrient_gain() -> float:
 	return nutreent_production_component.get_nutreent_production()
 
 func get_water_gain() -> float:
+	if is_water_adjacent():
+		water_production_component.set_water_production(max(0, water_production_component.get_water_production()))
+	
 	return water_production_component.get_water_production()
 
 ## "medium" if small, "high" if large...
@@ -214,7 +228,11 @@ func get_arrow_cursor_height() -> String:
 ## Gets the four directly adjacent tiles next to this twee
 ## Override this if reachable tiles are different
 func get_reachable_offsets() -> Array[Vector2i]:
-	return [Vector2i.UP, Vector2i.DOWN, Vector2i.RIGHT, Vector2i.LEFT]
+	return grid_range_component.get_tiles_in_range()
+
+func get_occupied_positions() -> Array:
+	return grid_position_component.get_occupied_positions()
+
 
 
 func apply_data_resource(tree_resource: Resource):
@@ -260,8 +278,8 @@ func take_damage(damage: int) -> bool:
 const GREEN_TREE_DIE = preload("res://structures/trees/scenes/death/green_tree_death_vfx.tscn")
 
 func _on_death():
-	if TreeManager.get_tree_map()[get_pos()]:
-		TreeManager.remove_tree(get_pos())
+	if TreeManager.get_tree_map().has(grid_position_component.get_pos()):
+		TreeManager.remove_tree(grid_position_component.get_pos())
 
 func die():
 	died = true
@@ -284,14 +302,13 @@ func die():
 
 #endregion
 
-func initialize(p: Vector2i, f: int):
+func set_forest(f: int):
 	forest = f
-	grid_movement_component.current_position = p
 
 func is_water_adjacent() -> bool:
 	for x in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
 		for y in range(-BASE_WATER_RANGE, BASE_WATER_RANGE + 1):
-			var coord: Vector2i = get_pos() + Vector2i(x, y)
+			var coord: Vector2i = grid_position_component.get_pos() + Vector2i(x, y)
 			
 			var tile_type: int = Global.terrain_map.get_tile_biome(coord)
 			

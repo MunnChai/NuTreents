@@ -62,7 +62,7 @@ func save_session_data(save_num: int = 1):
 	# Save trees
 	var tree_map: Dictionary
 	for pos in TreeManager.tree_map:
-		var tree: Twee = TreeManager.tree_map[pos]
+		var tree: TweeComposed = TreeManager.tree_map[pos]
 		
 		tree_map[pos] = _create_twee_save_resource(tree)
 	config.set_value(SECTION_SESSION, "tree_map", tree_map)
@@ -70,7 +70,7 @@ func save_session_data(save_num: int = 1):
 	# Save structures (including decor)
 	var structure_map: Dictionary
 	for pos in Global.structure_map.tile_scene_map:
-		var structure: Structure = Global.structure_map.tile_scene_map[pos]
+		var structure: Node2D = Global.structure_map.tile_scene_map[pos]
 		var save_resource = _create_structure_save_resource(structure)
 		if !save_resource:
 			continue
@@ -206,27 +206,27 @@ func create_save_directory() -> void:
 
 #region SaveResources
 
-func _create_twee_save_resource(twee: Twee) -> TweeDataResource:
+func _create_twee_save_resource(twee: TweeComposed) -> TweeDataResource:
 	var save_resource: TweeDataResource = TweeDataResource.new()
 	
 	save_resource.type = twee.type
 	
-	save_resource.hp = twee.hp
+	save_resource.hp = twee.health_component.current_health
 	save_resource.life_time_seconds = twee.life_time_seconds
 	save_resource.is_large = twee.is_large
 	
-	save_resource.sheet_id = twee.sheets.find(twee.sprite.texture)
+	save_resource.sheet_id = twee.sheets.find(twee.sprite_2d.texture)
 	
 	save_resource.forest_water = TreeManager.forests[twee.forest].water
 	
-	if twee is TechTree:
-		save_resource.tech_slot = twee.tech_slot
+	#if twee is TechTree:
+		#save_resource.tech_slot = twee.tech_slot
 	
 	return save_resource
 
-func _create_structure_save_resource(structure: Structure) -> StructureDataResource:
+func _create_structure_save_resource(structure: Node2D) -> StructureDataResource:
 	# Don't save trees
-	if structure is Twee:
+	if structure is TweeComposed:
 		return null
 	
 	var save_resource: StructureDataResource = StructureDataResource.new()
