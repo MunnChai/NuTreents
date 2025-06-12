@@ -21,14 +21,6 @@ var enemy_dict: Dictionary [EnemyType, PackedScene] = {
 	EnemyType.SPEEDLE: SPEEDLE,
 	EnemyType.SILK_SPITTER: SILK_SPITTER
 }
- 
-const BASE_NUM_WAVES: int = 1
-const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # casted to an int, so effectively increase by 1 every 2 days
-
-const BASE_MIN_ENEMIES: int = 1
-const BASE_MAX_ENEMIES: int = 2
-const MIN_ENEMIES_INCREASE_PER_DAY: int = 1
-const MAX_ENEMIES_INCREASE_PER_DAY: int = 1
 
 var enemy_spawn_timer: float = 0
 var current_wave = 0
@@ -152,7 +144,7 @@ func find_target_tree(trees_to_avoid: Array[Twee] = []) -> Twee:
 	return tree_map.pick_random()
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
-func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i):
+func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> EnemyComposed:
 	
 	var enemy_node: EnemyComposed = enemy_dict[enemy_type].instantiate()
 	
@@ -164,11 +156,14 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i):
 	enemy_map.add_child(enemy_node)
 	
 	enemy_node.global_position = world_pos
-	enemy_node.grid_movement_component.current_position = map_coords
+	var position_component: GridPositionComponent = Components.get_component(enemy_node, GridPositionComponent)
+	position_component.init_pos(map_coords)
+	
+	return enemy_node
 
 func kill_all_enemies():
 	#print("Hello")
-	for enemy: Enemy in get_enemies():
+	for enemy: EnemyComposed in get_enemies():
 		if (!enemy):
 			continue
 		
@@ -184,7 +179,7 @@ func get_enemy_at(pos: Vector2i):
 			continue
 		if (enemy.health_component.is_dead):
 			continue
-		if (enemy.grid_movement_component.current_position == pos):
+		if (enemy.grid_position_component.get_pos() == pos):
 			return enemy
 	
 	return null
@@ -195,11 +190,20 @@ func load_enemies_from(enemy_map: Dictionary):
 	for pos in enemy_map.keys():
 		var save_resource: EnemyDataResource = enemy_map[pos]
 		
-		var enemy: Enemy = spawn_enemy(save_resource.type, pos)
-		enemy.current_health = save_resource.hp
+		var enemy: EnemyComposed = spawn_enemy(save_resource.type, pos)
+		enemy.health_component.current_health = save_resource.hp
 #endregion
 
 #region DifficultyFunctions
+
+const BASE_NUM_WAVES: int = 1
+const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # casted to an int, so effectively increase by 1 every 2 days
+
+const BASE_MIN_ENEMIES: int = 1
+const BASE_MAX_ENEMIES: int = 2
+const MIN_ENEMIES_INCREASE_PER_DAY: int = 1
+const MAX_ENEMIES_INCREASE_PER_DAY: int = 1
+
 # Functions for calculating difficulty based on the given day
 func get_num_waves(day: int = day_tracker):
 	return BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY)

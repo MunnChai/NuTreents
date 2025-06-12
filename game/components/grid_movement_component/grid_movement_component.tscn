@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5s1m8423l0mf"]
-
-[ext_resource type="Script" uid="uid://bujmvrw6ic6sg" path="res://components/grid_movement_component/grid_movement_component.gd" id="1_vqvim"]
-
-[node name="GridMovementComponent" type="Node2D"]
-script = ExtResource("1_vqvim")

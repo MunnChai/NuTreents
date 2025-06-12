@@ -10,7 +10,7 @@ func tile_has_structure(map_pos: Vector2i) -> bool:
 
 func tile_has_entity(map_pos: Vector2i) -> bool:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
-		if (enemy.grid_movement_component.current_position == map_pos):
+		if (enemy.grid_position_component.get_pos() == map_pos):
 			return true
 	
 	return false
@@ -32,6 +32,20 @@ func is_tile_accessible(map_position: Vector2i) -> bool:
 
 
 #region TileGetters
+func get_entity_at(map_pos: Vector2i) -> Node2D:
+	# Check structures
+	var structure_map: BuildingMap = Global.structure_map
+	var structure = structure_map.get_building_node(map_pos)
+	if structure != null:
+		return structure
+	
+	# Check enemies
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if enemy.grid_position_component.get_pos() == map_pos:
+			return enemy
+	
+	return null
+
 func get_adjacent_tiles(pos: Vector2i) -> Array[Vector2i]:
 	var right_tile = pos + Vector2i(1, 0)
 	var left_tile = pos + Vector2i(-1, 0)

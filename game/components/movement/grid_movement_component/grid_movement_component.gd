@@ -10,18 +10,18 @@ extends Node2D
 @export var trans: Tween.TransitionType = Tween.TRANS_CUBIC
 @export var bounce_amount: float
 
-var current_position: Vector2i
+var grid_position_component: GridPositionComponent
 
 signal move_in_direction(direction: Vector2i)
 
 func _ready() -> void:
 	if not actor:
 		actor = get_parent()
-
-func set_current_position(pos: Vector2i) -> void:
-	current_position = pos
+	
+	grid_position_component = Components.get_component(actor, GridPositionComponent)
 
 func move_to_position(target_position: Vector2i) -> void:
+	var current_position = grid_position_component.get_pos()
 	var direction = target_position - current_position
 	move_in_direction.emit(direction)
 	
@@ -42,9 +42,10 @@ func move_to_position(target_position: Vector2i) -> void:
 	y_tween.tween_property(actor, "position:y", midpoint.y - bounce_amount, movement_duration / 2)
 	y_tween.tween_property(actor, "position:y", target_global_pos.y, movement_duration / 2)
 	
-	x_tween.finished.connect(set_current_position.bind(target_position))
+	x_tween.finished.connect(grid_position_component.move.bind(direction))
 
 func move_to_and_back(target_position: Vector2i) -> void:
+	var current_position = grid_position_component.get_pos()
 	var direction = target_position - current_position
 	move_in_direction.emit(direction)
 	

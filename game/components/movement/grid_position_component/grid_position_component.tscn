@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bt5ejyes4aheb"]
+
+[ext_resource type="Script" uid="uid://oq6wonddlgys" path="res://components/movement/grid_position_component/grid_position_component.gd" id="1_k73if"]
+
+[node name="GridPositionComponent" type="Node2D"]
+script = ExtResource("1_k73if")

@@ -33,6 +33,7 @@ func get_nearest_tree(map_position: Vector2i) -> Twee:
 	currently_targeting = nearest_tree
 	return nearest_tree
 
+## Returns the nearest position that has a tree on it
 func get_nearest_tree_pos(map_position: Vector2i):
 	var tree_map: Dictionary[Vector2i, Twee] = TreeManager.get_tree_map()
 	if (tree_map.is_empty()):

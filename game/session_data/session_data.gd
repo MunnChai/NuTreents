@@ -79,11 +79,11 @@ func save_session_data(save_num: int = 1):
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
-	for enemy: Enemy in EnemyManager.instance.get_enemies():
+	for enemy: EnemyComposed in EnemyManager.instance.get_enemies():
 		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
 		if !save_resource:
 			continue
-		enemy_map[enemy.map_position] = save_resource
+		enemy_map[enemy.grid_position_component.get_pos()] = save_resource
 	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
 	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.instance.enemy_spawn_timer)
 	
@@ -248,11 +248,11 @@ func _create_structure_save_resource(structure: Structure) -> StructureDataResou
 	
 	return save_resource
 
-func _create_enemy_save_resource(enemy: Enemy) -> EnemyDataResource:
+func _create_enemy_save_resource(enemy: EnemyComposed) -> EnemyDataResource:
 	var save_resource: EnemyDataResource = EnemyDataResource.new()
 	
 	save_resource.type = enemy.type
-	save_resource.hp = enemy.current_health
+	save_resource.hp = enemy.health_component.current_health
 	
 	return save_resource
 

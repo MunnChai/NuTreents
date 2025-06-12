@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bd1lvgtnjvu3d"]
 
-[ext_resource type="Script" uid="uid://dsfy4qq1wq76j" path="res://components/hitbox_component/hitbox_component.gd" id="1_3t5pk"]
+[ext_resource type="Script" uid="uid://dsfy4qq1wq76j" path="res://components/collision/hitbox_component/hitbox_component.gd" id="1_3t5pk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3t5pk"]
 radius = 1.0

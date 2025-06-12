@@ -11,9 +11,13 @@ extends Node2D
 @onready var popup_emitter_component: PopupEmitterComponent = $PopupEmitterComponent
 @onready var pathfinding_component: PathfindingComponent = $PathfindingComponent
 @onready var grid_movement_component: GridMovementComponent = $GridMovementComponent
+@onready var grid_position_component: GridPositionComponent = $GridPositionComponent
 @onready var grid_range_component: GridRangeComponent = $GridRangeComponent
 @onready var targeting_component: TargetingComponent = $TargetingComponent
 @onready var action_timer: Timer = $ActionTimer
+
+
+@export var type: EnemyManager.EnemyType
 
 func _ready() -> void:
 	add_to_group("enemies")
@@ -23,19 +27,19 @@ func _ready() -> void:
 
 func perform_action() -> void:
 	# Target a tree
-	var target_pos = targeting_component.get_nearest_tree_pos(grid_movement_component.current_position)
+	var target_pos = targeting_component.get_nearest_tree_pos(grid_position_component.get_pos())
 	
 	if target_pos == null:
 		return
 	
 	# Attack if in range
-	if grid_range_component.is_in_range(grid_movement_component.current_position, target_pos):
+	if grid_range_component.is_in_range(grid_position_component.get_pos(), target_pos):
 		attack_tree(target_pos)
 		return
 	
 	# If target tree is surrounded, get the best position
 	if not MapUtility.is_tile_accessible(target_pos):
-		target_pos = pathfinding_component.get_closest_valid_position(grid_movement_component.current_position, target_pos)
+		target_pos = pathfinding_component.get_closest_valid_position(grid_position_component.get_pos(), target_pos)
 	
 	move(target_pos)
 
@@ -47,12 +51,12 @@ func attack_tree(target_pos: Vector2i) -> void:
 
 func move(target_pos: Vector2i) -> void:
 	# Already there
-	if grid_movement_component.current_position == target_pos:
+	if grid_position_component.get_pos() == target_pos:
 		return
 	
 	# Find a path
 	if not pathfinding_component.has_path():
-		pathfinding_component.find_path(grid_movement_component.current_position, target_pos)
+		pathfinding_component.find_path(grid_position_component.get_pos(), target_pos)
 	
 	# Get next position in the path
 	var next_pos = pathfinding_component.get_next_position()
@@ -62,7 +66,7 @@ func move(target_pos: Vector2i) -> void:
 	
 	# If it is obstructed by a bug, find a new path
 	if MapUtility.tile_has_entity(next_pos):
-		pathfinding_component.find_path(grid_movement_component.current_position, target_pos)
+		pathfinding_component.find_path(grid_position_component.get_pos(), target_pos)
 		next_pos = pathfinding_component.get_next_position()
 	
 	if next_pos:
@@ -71,9 +75,31 @@ func move(target_pos: Vector2i) -> void:
 
 #endregion
 
+func play_hurt_animation():
+	if animation_player.current_animation == "idle":
+		animation_player.play("hurt")
+		animation_player.queue("idle")
+	elif animation_player.current_animation == "idle_backwards":
+		animation_player.play("hurt_backwards")
+		animation_player.queue("idle_backwards")
 
+func die():
+	match (type):
+		EnemyManager.EnemyType.SPEEDLE:
+			SfxManager.play_sound_effect("speedle_die")
+		EnemyManager.EnemyType.SILK_SPITTER:
+			SfxManager.play_sound_effect("silk_spitter")
+	
+	animation_player.play("death")
+	animation_player.animation_finished.connect(
+		func(animation_name):
+			queue_free()
+	)
 
 func face_direction(direction: Vector2i):
+	if direction.length() > 1:
+		direction.clamp(Vector2i(-1, -1), Vector2i(1, 1))
+	
 	match (direction):
 		Vector2i.UP:
 			sprite_2d.flip_h = true

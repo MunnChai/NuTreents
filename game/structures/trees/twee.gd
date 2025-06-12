@@ -318,16 +318,6 @@ func apply_data_resource(tree_resource: Resource):
 		get_stats_from_resource(tree_stat)
 	
 	hp = tree_resource.hp
-	
-	#copy_sprite_to_outline_sprite()
-	# TODO: Set forest water...
-
-#func copy_sprite_to_outline_sprite():
-	#outline_sprite.hframes = sprite.hframes
-	#outline_sprite.vframes = sprite.vframes
-	#outline_sprite.position.y = sprite.position.y
-	#outline_sprite.texture = sprite.texture
-	#outline_sprite.material = outline_sprite.material.duplicate()
 
 func show_outline(delta: float):
 	var current_alpha = (sprite.get_material() as ShaderMaterial).get_shader_parameter("outline_alpha")
