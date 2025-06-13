@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://d4l1saxnn6efv" path="res://structures/trees/scenes/default_tree_composed.tscn" id="3_ytpl4"]
 [ext_resource type="PackedScene" uid="uid://doicha7u36klq" path="res://structures/trees/scenes/gun_tree_composed.tscn" id="4_ytpl4"]
 [ext_resource type="PackedScene" uid="uid://b5hdmb6e3u31i" path="res://structures/trees/scenes/water_tree_composed.tscn" id="5_ytpl4"]
-[ext_resource type="PackedScene" uid="uid://ba7kjg1310k3c" path="res://structures/trees/scenes/tech_tree.tscn" id="6_ifskk"]
+[ext_resource type="PackedScene" uid="uid://dookr1yus2k36" path="res://structures/trees/scenes/tech_tree_composed.tscn" id="6_ytpl4"]
 [ext_resource type="PackedScene" uid="uid://dlffry2n2gk46" path="res://structures/trees/scenes/explorer_tree_composed.tscn" id="7_ytpl4"]
 [ext_resource type="PackedScene" uid="uid://dlob0axb1wkq0" path="res://structures/trees/scenes/tall_tree_composed.tscn" id="8_ytpl4"]
 
@@ -16,7 +16,7 @@ twee_scene_registry = Dictionary[int, PackedScene]({
 1: ExtResource("3_ytpl4"),
 2: ExtResource("4_ytpl4"),
 3: ExtResource("5_ytpl4"),
-4: ExtResource("6_ifskk"),
+4: ExtResource("6_ytpl4"),
 5: ExtResource("7_ytpl4"),
 6: ExtResource("8_ytpl4")
 })

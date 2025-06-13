@@ -1,0 +1,85 @@
+[gd_scene load_steps=18 format=3 uid="uid://dookr1yus2k36"]
+
+[ext_resource type="Script" uid="uid://y457sb4ptt0j" path="res://structures/trees/scenes/tech_tree_composed.gd" id="1_pr16v"]
+[ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://structures/trees/stats/tech_tree_stat.tres" id="2_2577w"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="2_im0sa"]
+[ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="3_2577w"]
+[ext_resource type="Texture2D" uid="uid://sytknvsrwun" path="res://structures/trees/sheets/tree_tech_flywheel_sheet.png" id="3_mfip6"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="4_mfip6"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="5_hor77"]
+[ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="6_qioim"]
+[ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="7_d41gc"]
+[ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="8_24x1g"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="9_p0rwt"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="10_mhb14"]
+[ext_resource type="PackedScene" uid="uid://diqna20ydddnp" path="res://components/forest_modifiers/nutreent_production_component/nutreent_production_component.tscn" id="11_0whc8"]
+[ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="12_awd2e"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="13_hovjm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jnssm"]
+resource_local_to_scene = true
+shader = ExtResource("2_im0sa")
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/wind_amount = 1.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 30.0
+shader_parameter/tint_amount = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/uv_y_offset = 0.62
+shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
+shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+shader_parameter/outline_alpha = 1.0
+shader_parameter/outline_width = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6amr0"]
+resource_local_to_scene = true
+
+[node name="TechTreeComposed" type="Node2D"]
+script = ExtResource("1_pr16v")
+type = 4
+tree_stat = ExtResource("2_2577w")
+sheets = Array[Texture2D]([ExtResource("3_mfip6")])
+v_frames = 3
+large_animation_name = "pump"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_jnssm")
+position = Vector2(0, -16)
+texture = ExtResource("3_2577w")
+hframes = 9
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("4_mfip6")
+}
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("5_hor77")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("6_qioim")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("7_d41gc")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_6amr0")
+
+[node name="PopupEmitterComponent" parent="." instance=ExtResource("8_24x1g")]
+popup_color = Color(0.996078, 0.596078, 0.533333, 1)
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("9_p0rwt")]
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("10_mhb14")]
+
+[node name="NutreentProductionComponent" parent="." instance=ExtResource("11_0whc8")]
+
+[node name="WaterProductionComponent" parent="." instance=ExtResource("12_awd2e")]
+
+[node name="GridRangeComponent" parent="." instance=ExtResource("13_hovjm")]
+range = 1
+
+[editable path="HurtboxComponent"]
