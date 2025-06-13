@@ -1,0 +1,24 @@
+{
+  "column_properties": {
+    "res://structures/trees/stats/": {
+      "metadata/_custom_type_script": {
+        "visibility": 0
+      },
+      "resource_local_to_scene": {
+        "visibility": 0
+      },
+      "resource_name": {
+        "visibility": 0
+      },
+      "special_card_background_override": {
+        "visibility": 1
+      }
+    }
+  },
+  "recent_paths": [
+    "res://structures/trees/stats/"
+  ],
+  "table_functions": {
+
+  }
+}
