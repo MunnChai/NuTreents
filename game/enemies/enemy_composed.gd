@@ -96,7 +96,6 @@ func move(target_pos: Vector2i) -> void:
 #endregion
 
 func play_hurt_animation():
-	print("Playing Hurt")
 	if animation_player.current_animation == "idle":
 		animation_player.play("hurt")
 		animation_player.queue("idle")
