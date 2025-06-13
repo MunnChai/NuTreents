@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://ney755v7lyxy"]
 
-[ext_resource type="Script" uid="uid://bxk30kqg4mueg" path="res://structures/city/factory/factory.gd" id="1_sobn2"]
+[ext_resource type="Script" uid="uid://bxk30kqg4mueg" path="res://structures/_archive/factory.gd" id="1_sobn2"]
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="2_bk0h8"]
 [ext_resource type="Texture2D" uid="uid://cafkj4qot2ato" path="res://world/proc_gen/structure_map/factory_sheet.png" id="2_c8575"]
 

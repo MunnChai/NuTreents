@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ba7kjg1310k3c"]
 
-[ext_resource type="Script" uid="uid://e4356lpy73tp" path="res://structures/trees/scenes/tech_tree.gd" id="1_l8d8v"]
+[ext_resource type="Script" uid="uid://e4356lpy73tp" path="res://structures/trees/_archive/tech_tree.gd" id="1_l8d8v"]
 [ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://structures/trees/stats/tech_tree_stat.tres" id="2_hmfl0"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="2_ndkoj"]
 [ext_resource type="Texture2D" uid="uid://sytknvsrwun" path="res://structures/trees/sheets/tree_tech_flywheel_sheet.png" id="3_tnjkq"]
