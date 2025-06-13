@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_death():
-	pass
+	die()
 
 func die():
 	died = true
