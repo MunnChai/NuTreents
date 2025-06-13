@@ -1,8 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://dx31qo8ntqbho"]
+[gd_scene load_steps=21 format=3 uid="uid://dx31qo8ntqbho"]
 
 [ext_resource type="Script" uid="uid://bdotlfxvb7j6r" path="res://enemies/enemy_composed.gd" id="1_0vre5"]
 [ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/speedle/speedle_sheet.png" id="1_i3noe"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_qw3f2"]
+[ext_resource type="Resource" uid="uid://dfh1kms265c8l" path="res://enemies/stats/speedle_stat.tres" id="2_ehors"]
 [ext_resource type="Texture2D" uid="uid://ciqackaiahdkm" path="res://enemies/speedle/speedle_eyes_sheet.png" id="2_iifq8"]
 [ext_resource type="Script" uid="uid://btt3wf72o4sst" path="res://enemies/common/copy_frame_sprite.gd" id="3_b2xnc"]
 [ext_resource type="AnimationLibrary" uid="uid://dxw6d6vomro1c" path="res://enemies/enemy_animations.res" id="4_7ra7c"]
@@ -30,6 +31,7 @@ radius = 1.0
 
 [node name="SpeedleComposed" type="Node2D"]
 script = ExtResource("1_0vre5")
+enemy_stat = ExtResource("2_ehors")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -12)

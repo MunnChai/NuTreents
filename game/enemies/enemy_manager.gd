@@ -12,16 +12,6 @@ static var instance
 const SILK_SPITTER: PackedScene = preload("res://enemies/silk_spitter/silk_spitter_composed.tscn")
 const SPEEDLE: PackedScene = preload("res://enemies/speedle/speedle_composed.tscn")
 
-enum EnemyType {
-	SPEEDLE,
-	SILK_SPITTER,
-}
-
-var enemy_dict: Dictionary [EnemyType, PackedScene] = {
-	EnemyType.SPEEDLE: SPEEDLE,
-	EnemyType.SILK_SPITTER: SILK_SPITTER
-}
-
 var enemy_spawn_timer: float = 0
 var current_wave = 0
 var day_tracker = 1
@@ -40,7 +30,7 @@ func _input(event: InputEvent) -> void:
 	if (Input.is_action_just_pressed("debug_button")):
 		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		spawn_enemy(EnemyType.SPEEDLE, map_coord)
+		spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -97,7 +87,7 @@ func spawn_enemy_wave() -> int:
 	for i in range(0, num_enemies):
 		await get_tree().create_timer(0.1).timeout # Munn: Don't spawn every enemy on one frame, causes big lag spike
 		
-		var rand_enemy = EnemyType.values().pick_random()
+		var rand_enemy = Global.EnemyType.values().pick_random()
 		
 		var rand_pos = allowed_cells.pick_random()
 		if !rand_pos: # No allowed cells
@@ -144,9 +134,9 @@ func find_target_tree(trees_to_avoid: Array[Twee] = []) -> TweeComposed:
 	return tree_map.pick_random()
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
-func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> EnemyComposed:
+func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> EnemyComposed:
 	
-	var enemy_node: EnemyComposed = enemy_dict[enemy_type].instantiate()
+	var enemy_node: EnemyComposed = EnemyRegistry.get_new_enemy(enemy_type)
 	
 	var terrain_map: TerrainMap = Global.terrain_map
 	
@@ -162,12 +152,10 @@ func spawn_enemy(enemy_type: EnemyType, map_coords: Vector2i) -> EnemyComposed:
 	return enemy_node
 
 func kill_all_enemies():
-	#print("Hello")
 	for enemy: EnemyComposed in get_enemies():
 		if (!enemy):
 			continue
 		
-		# UNCOMMENT THESE!!!!
 		enemy.die()
 
 func get_enemies() -> Array:

@@ -1,6 +1,9 @@
 class_name EnemyComposed
 extends Node2D
 
+@export var type: Global.EnemyType
+@export var enemy_stat: EnemyStatResource
+
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
 
@@ -17,12 +20,12 @@ extends Node2D
 @onready var action_timer: Timer = $ActionTimer
 
 
-@export var type: EnemyManager.EnemyType
-
 func _ready() -> void:
 	add_to_group("enemies")
 	
 	_connect_component_signals()
+	
+	set_stats_from_resource(enemy_stat)
 
 func _connect_component_signals():
 	hurtbox_component.hit_taken.connect(health_component.subtract_health)
@@ -106,9 +109,9 @@ func die():
 	hurtbox_component.monitoring = false
 	
 	match (type):
-		EnemyManager.EnemyType.SPEEDLE:
+		Global.EnemyType.SPEEDLE:
 			SfxManager.play_sound_effect("speedle_die")
-		EnemyManager.EnemyType.SILK_SPITTER:
+		Global.EnemyType.SILK_SPITTER:
 			SfxManager.play_sound_effect("silk_spitter")
 	
 	animation_player.play("death")
@@ -134,3 +137,9 @@ func face_direction(direction: Vector2i):
 		Vector2i.RIGHT:
 			sprite_2d.flip_h = false
 			animation_player.play("idle")
+
+func set_stats_from_resource(resource: EnemyStatResource):
+	health_component.set_max_health(resource.hp)
+	hitbox_component.damage = resource.attack_damage
+	grid_range_component.range = resource.attack_range
+	action_timer.wait_time = resource.action_cooldown

@@ -39,6 +39,13 @@ enum TreeType {
 	TALL_TREE = EXPLORER_TREE + 1,
 }
 
+## ENEMY IDS 
+
+enum EnemyType {
+	SPEEDLE = 0,
+	SILK_SPITTER = SPEEDLE + 1,
+}
+
 ## GAME STATE
 
 enum GameState {
