@@ -23,7 +23,8 @@ var camera: Camera2D
 enum StructureType {
 	CITY_BUILDING = 0,
 	FACTORY = CITY_BUILDING + 1,
-	DECOR = FACTORY + 1
+	FACTORY_REMAINS = FACTORY + 1,
+	DECOR = FACTORY_REMAINS + 1
 }
 
 ## TREE IDS

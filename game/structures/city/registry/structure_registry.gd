@@ -3,7 +3,8 @@ extends Node
 @export var structure_scene_registry: Dictionary[Global.StructureType, PackedScene]
 
 func _ready() -> void:
-	pass
+	print("")
+	return
 
 ## Returns the packed scene asset for the given StructureType
 func get_structure_packed_scene(type: Global.StructureType) -> PackedScene:
