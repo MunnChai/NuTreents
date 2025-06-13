@@ -37,13 +37,13 @@ enemy_stat = ExtResource("2_mkqlk")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_orfgt")
 hframes = 8
-vframes = 3
+vframes = 4
 
 [node name="Eyes" type="Sprite2D" parent="." node_paths=PackedStringArray("copy_from")]
 material = SubResource("CanvasItemMaterial_mkqlk")
 texture = ExtResource("3_qeufh")
 hframes = 8
-vframes = 3
+vframes = 4
 script = ExtResource("4_trkum")
 copy_from = NodePath("../Sprite2D")
 

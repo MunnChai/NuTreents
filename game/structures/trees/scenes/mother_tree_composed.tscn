@@ -34,9 +34,8 @@ shader_parameter/frame_count = 0
 shader_parameter/outline_alpha = 0.0
 shader_parameter/outline_width = 1
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_emprh"]
-radius = 13.0
-height = 50.0
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ojpxj"]
+points = PackedVector2Array(4.00008, 23, 15, -5.42999e-05, 3.99991, -25, -8, 2.89599e-05)
 
 [node name="MotherTreeComposed" type="Node2D"]
 script = ExtResource("1_urnhw")
@@ -65,7 +64,7 @@ collision_mask = 6
 [node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
 position = Vector2(0, -13)
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_emprh")
+shape = SubResource("ConvexPolygonShape2D_ojpxj")
 
 [node name="PopupEmitterComponent" parent="." instance=ExtResource("7_ojpxj")]
 popup_color = Color(0.996078, 0.596078, 0.533333, 1)
