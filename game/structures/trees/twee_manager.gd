@@ -103,9 +103,6 @@ func add_tree(twee: TweeComposed, pos: Vector2i) -> void:
 	# Structure map...
 	structure_map.add_structure(pos, twee)
 	
-	# Fog...
-	fog_map.remove_fog_around(pos)
-	 
 	# Signal!
 	tree_placed.emit(twee)
  

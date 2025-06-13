@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cwkrka44uhq85"
-path="res://.godot/imported/world_decor_sheet.png-ae2786fd6d8bcc77f6671bf1f2177919.ctex"
+path="res://.godot/imported/world_decor_sheet.png-d39473f06cadf53b9c729a177bf13b5f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/decor/world_decor_sheet.png"
-dest_files=["res://.godot/imported/world_decor_sheet.png-ae2786fd6d8bcc77f6671bf1f2177919.ctex"]
+source_file="res://structures/decor/world_decor_sheet.png"
+dest_files=["res://.godot/imported/world_decor_sheet.png-d39473f06cadf53b9c729a177bf13b5f.ctex"]
 
 [params]
 

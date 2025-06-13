@@ -80,8 +80,8 @@ func do_primary_action() -> void:
 	var tech_slot: int
 	# SPECIAL CASE FOR PLANTING TECH TREES ON FACTORY REMAINS:
 	if structure_map.tile_scene_map.has(p):
-		var structure: Structure = structure_map.tile_scene_map[p]
-		if structure is FactoryRemains:
+		var structure: Node2D = structure_map.tile_scene_map[p]
+		if structure is FactoryRemainsComposed:
 			if type == Global.TreeType.TECH_TREE:
 				tech_slot = structure.tech_slot
 				structure_map.remove_structure(p)

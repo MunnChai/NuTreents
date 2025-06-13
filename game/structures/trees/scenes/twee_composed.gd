@@ -52,10 +52,6 @@ var water_damage_time := 0.0
 
 const DEHYDRATION_DAMAGE = 2
 
-
-const OUTLINE_FADE_DURATION: float = 0.1
-var is_outline_active: bool = false
-
 var occupied_positions: Array[Vector2i]
 
 func _ready():
@@ -93,11 +89,6 @@ func _process(delta: float) -> void:
 	if life_time_seconds > time_to_grow:
 		if not is_large:
 			upgrade_tree()
-	
-	if is_outline_active:
-		show_outline(delta)
-	else:
-		hide_outline(delta)
 
 
 
@@ -152,18 +143,6 @@ func get_uv_y_offset() -> float:
 		return 0.1
 	else:
 		return 0.62
-
-func show_outline(delta: float):
-	var current_alpha = (sprite_2d.get_material() as ShaderMaterial).get_shader_parameter("outline_alpha")
-	var target_alpha = 1.0
-	var lerped_alpha = lerp(current_alpha, target_alpha, delta / OUTLINE_FADE_DURATION)
-	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("outline_alpha", lerped_alpha)
-
-func hide_outline(delta: float):
-	var current_alpha = (sprite_2d.get_material() as ShaderMaterial).get_shader_parameter("outline_alpha")
-	var target_alpha = 0.0
-	var lerped_alpha = lerp(current_alpha, target_alpha, delta / OUTLINE_FADE_DURATION)
-	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("outline_alpha", lerped_alpha)
 
 #endregion
 

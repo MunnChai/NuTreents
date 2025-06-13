@@ -232,19 +232,19 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 	var save_resource: StructureDataResource = StructureDataResource.new()
 	
 	save_resource.flip_h = structure.sprite_2d.flip_h
+	save_resource.type = structure.type
 	
-	if structure is Factory:
+	if structure.type == Global.StructureType.FACTORY:
 		save_resource.tech_slot = structure.tech_slot
-		save_resource.type = structure.structure_type
-	elif structure is CityStructure:
+	elif structure.type == Global.StructureType.FACTORY_REMAINS:
+		save_resource.tech_slot = structure.tech_slot
+	elif structure.type == Global.StructureType.CITY_BUILDING:
 		var atlas_texture: AtlasTexture = structure.sprite_2d.texture
 		save_resource.texture_region_position = atlas_texture.region.position
-		save_resource.type = structure.structure_type
-	elif structure is Decor:
+	elif structure.type == Global.StructureType.DECOR:
 		var atlas_texture: AtlasTexture = structure.sprite_2d.texture
 		save_resource.texture_region_position = atlas_texture.region.position
 		save_resource.tile_type = structure.tile_type
-		save_resource.type = structure.structure_type
 	
 	return save_resource
 

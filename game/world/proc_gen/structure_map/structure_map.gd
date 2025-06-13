@@ -13,16 +13,16 @@ func _ready() -> void:
 	y_sort_enabled = true
 
 func add_structure(map_coords: Vector2i, structure: Node2D) -> bool:
-	if (tile_scene_map.has(map_coords)):
+	if tile_scene_map.has(map_coords):
 		# Check if it is a decor structure
-		var curr_structure: Structure = tile_scene_map[map_coords]
-		if (!curr_structure.id.ends_with("decor")): # If it is not decor, you CANT BUILD HERE!
+		var curr_structure: Node2D = tile_scene_map[map_coords]
+		if Components.has_component(curr_structure, ObstructionComponent): # Don't build on obstructive tiles
 			structure.queue_free()
 			return false
 		# Otherwise, destroy the decor and continue
 		remove_structure(map_coords)
 	
-	if structure is Factory:
+	if Components.has_component(structure, FogRevealerComponent):
 		Global.fog_map.remove_fog_around(map_coords)
 	
 	structure.position = map_to_local(map_coords)
@@ -142,7 +142,7 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 	for pos: Vector2i in data.keys():
 		var save_resource: StructureDataResource = data[pos]
 		
-		var structure: Structure = StructureRegistry.get_new_structure(save_resource.type)
+		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
 		add_structure(pos, structure)
 		structure.apply_data_resource(save_resource)

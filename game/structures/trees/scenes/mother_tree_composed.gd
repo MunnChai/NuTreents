@@ -10,10 +10,7 @@ func _ready():
 
 # Override Twee "growing" functionality
 func _process(delta: float) -> void:
-	if is_outline_active:
-		show_outline(delta)
-	else:
-		hide_outline(delta)
+	pass
 
 func _on_death():
 	pass

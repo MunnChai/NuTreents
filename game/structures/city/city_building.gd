@@ -1,9 +1,7 @@
 class_name CityBuilding
 extends CityStructure
 
-
 const NUM_CITY_SPRITES = 8
-
 
 @export var cost_to_remove: int = 0
 

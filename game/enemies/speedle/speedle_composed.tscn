@@ -23,7 +23,6 @@ light_mode = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_p0yog"]
 resource_local_to_scene = true
-radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ehors"]
 resource_local_to_scene = true

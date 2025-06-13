@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dlffry2n2gk46"]
+[gd_scene load_steps=20 format=3 uid="uid://dlffry2n2gk46"]
 
 [ext_resource type="Script" uid="uid://dxfedvt20mvie" path="res://structures/trees/scenes/twee_composed.gd" id="1_e2s4h"]
 [ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://structures/trees/stats/explorer_tree_stat.tres" id="2_5qot7"]
@@ -14,7 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="13_mo1h3"]
 [ext_resource type="PackedScene" uid="uid://diqna20ydddnp" path="res://components/forest_modifiers/nutreent_production_component/nutreent_production_component.tscn" id="14_x6b7m"]
 [ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="15_cdhv4"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="16_e2s4h"]
 [ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="16_oc4jx"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="17_x0s86"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -32,6 +34,9 @@ shader_parameter/fps = 0.0
 shader_parameter/frame_count = 0
 shader_parameter/outline_alpha = 1.0
 shader_parameter/outline_width = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x0s86"]
+resource_local_to_scene = true
 
 [node name="ExplorerTreeComposed" type="Node2D"]
 script = ExtResource("1_e2s4h")
@@ -60,6 +65,9 @@ libraries = {
 [node name="HurtboxComponent" parent="." instance=ExtResource("10_e6p23")]
 collision_mask = 6
 
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_x0s86")
+
 [node name="PopupEmitterComponent" parent="." instance=ExtResource("11_nj4ok")]
 popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 
@@ -74,5 +82,9 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 [node name="GridRangeComponent" parent="." instance=ExtResource("16_oc4jx")]
 shape = "Square"
 range = 2
+
+[node name="FogRevealerComponent" parent="." instance=ExtResource("16_e2s4h")]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("17_x0s86")]
 
 [editable path="HurtboxComponent"]

@@ -198,25 +198,15 @@ func update_adjacent_tile_transparencies() -> void:
 	building_map.update_transparencies_around(cursor.iso_position)
 
 func _show_structure_outline(iso_position: Vector2i):
-	var tree_map = TreeManager.get_tree_map()
-	if tree_map.has(iso_position):
-		var twee: TweeComposed = tree_map[iso_position]
-		twee.is_outline_active = true
-		return
-	
-	var building_node = Global.structure_map.get_building_node(iso_position)
-	if building_node != null and building_node is CityStructure:
-		building_node.is_outline_active = true
+	var entity: Node2D = MapUtility.get_entity_at(iso_position)
+	if entity and Components.has_component(entity, OutlineComponent):
+		var outline_component = Components.get_component(entity, OutlineComponent)
+		outline_component.show_outline()
 		return
 
 func _hide_structure_outline(iso_position: Vector2i):
-	var tree_map = TreeManager.get_tree_map()
-	if tree_map.has(iso_position):
-		var twee: TweeComposed = tree_map[iso_position]
-		twee.is_outline_active = false
-		return
-	
-	var building_node = Global.structure_map.get_building_node(iso_position)
-	if building_node != null and building_node is CityStructure:
-		building_node.is_outline_active = false
+	var entity: Node2D = MapUtility.get_entity_at(iso_position)
+	if entity and Components.has_component(entity, OutlineComponent):
+		var outline_component = Components.get_component(entity, OutlineComponent)
+		outline_component.hide_outline()
 		return

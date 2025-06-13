@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://doicha7u36klq"]
+[gd_scene load_steps=22 format=3 uid="uid://doicha7u36klq"]
 
 [ext_resource type="Script" uid="uid://ctr8l244jxcju" path="res://structures/trees/scenes/gun_tree_composed.gd" id="1_fhiux"]
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_hra2j"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://cm4ndh5xmoip5" path="res://components/targeting_component/targeting_component.tscn" id="16_p5e44"]
 [ext_resource type="PackedScene" uid="uid://ca3o4xiaauhyi" path="res://components/spawner_component/spawner_component.tscn" id="17_1jlhe"]
 [ext_resource type="PackedScene" uid="uid://bea0oq8ld4gr" path="res://structures/trees/projectiles/tree_bullet_composed.tscn" id="18_3uf8o"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="18_5fmn3"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="19_5fmn3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -93,6 +95,10 @@ range = 4
 position = Vector2(0, -34)
 spawn = ExtResource("18_3uf8o")
 
+[node name="FogRevealerComponent" parent="." instance=ExtResource("18_5fmn3")]
+
 [node name="ActionTimer" type="Timer" parent="."]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("19_5fmn3")]
 
 [editable path="HurtboxComponent"]
