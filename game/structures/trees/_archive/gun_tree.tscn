@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cuuxnj6p50s3g"]
+
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_18yy7"]
+[ext_resource type="Script" uid="uid://w6imeajyursp" path="res://structures/trees/_archive/gun_tree.gd" id="1_b4h83"]
+[ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_p5an4"]
+[ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="3_18yy7"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="4_mbreq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_18yy7"]
+shader = ExtResource("1_18yy7")
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/wind_amount = 1.0
+shader_parameter/flash_amount = 1.0
+shader_parameter/shake_amount = 10.0
+shader_parameter/tint_amount = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/uv_y_offset = 1.0
+shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
+shader_parameter/tint_color = Color(0.996078, 0.596078, 0.533333, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+shader_parameter/outline_alpha = 0.0
+shader_parameter/outline_width = 1
+
+[node name="GunTree" type="Node2D"]
+script = ExtResource("1_b4h83")
+type = 2
+tree_stat = ExtResource("2_p5an4")
+sheets = Array[Texture2D]([ExtResource("3_18yy7")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_18yy7")
+position = Vector2(0, -16)
+texture = ExtResource("3_18yy7")
+hframes = 9
+vframes = 3
+region_rect = Rect2(32, 16, 32, 40)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("4_mbreq")
+}

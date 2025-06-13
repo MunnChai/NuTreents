@@ -1,22 +1,22 @@
 [gd_scene load_steps=9 format=3 uid="uid://ctuxphh5vm582"]
 
 [ext_resource type="Script" uid="uid://dnayrutw5452u" path="res://structures/trees/registry/twee_registry.gd" id="1_m8guu"]
-[ext_resource type="PackedScene" uid="uid://d21aaigi3uwrw" path="res://structures/trees/scenes/mother_tree.tscn" id="2_85kqc"]
-[ext_resource type="PackedScene" uid="uid://c8kbt51qdolu3" path="res://structures/trees/scenes/default_tree.tscn" id="3_glvak"]
-[ext_resource type="PackedScene" uid="uid://cuuxnj6p50s3g" path="res://structures/trees/scenes/gun_tree.tscn" id="4_e3kfh"]
-[ext_resource type="PackedScene" uid="uid://bkkyw61ya8xr7" path="res://structures/trees/scenes/water_tree.tscn" id="5_1d37l"]
-[ext_resource type="PackedScene" uid="uid://ba7kjg1310k3c" path="res://structures/trees/scenes/tech_tree.tscn" id="6_ifskk"]
-[ext_resource type="PackedScene" uid="uid://dagtk01aebfae" path="res://structures/trees/scenes/explorer_tree.tscn" id="7_7t018"]
-[ext_resource type="PackedScene" uid="uid://yufx63s5h3lt" path="res://structures/trees/scenes/tall_tree.tscn" id="8_7aspw"]
+[ext_resource type="PackedScene" uid="uid://btc8w4mfmtrb1" path="res://structures/trees/scenes/mother_tree_composed.tscn" id="2_ytpl4"]
+[ext_resource type="PackedScene" uid="uid://d4l1saxnn6efv" path="res://structures/trees/scenes/default_tree_composed.tscn" id="3_ytpl4"]
+[ext_resource type="PackedScene" uid="uid://doicha7u36klq" path="res://structures/trees/scenes/gun_tree_composed.tscn" id="4_ytpl4"]
+[ext_resource type="PackedScene" uid="uid://b5hdmb6e3u31i" path="res://structures/trees/scenes/water_tree_composed.tscn" id="5_ytpl4"]
+[ext_resource type="PackedScene" uid="uid://dookr1yus2k36" path="res://structures/trees/scenes/tech_tree_composed.tscn" id="6_ytpl4"]
+[ext_resource type="PackedScene" uid="uid://dlffry2n2gk46" path="res://structures/trees/scenes/explorer_tree_composed.tscn" id="7_ytpl4"]
+[ext_resource type="PackedScene" uid="uid://dlob0axb1wkq0" path="res://structures/trees/scenes/tall_tree_composed.tscn" id="8_ytpl4"]
 
 [node name="TweeRegistry" type="Node"]
 script = ExtResource("1_m8guu")
 twee_scene_registry = Dictionary[int, PackedScene]({
-0: ExtResource("2_85kqc"),
-1: ExtResource("3_glvak"),
-2: ExtResource("4_e3kfh"),
-3: ExtResource("5_1d37l"),
-4: ExtResource("6_ifskk"),
-5: ExtResource("7_7t018"),
-6: ExtResource("8_7aspw")
+0: ExtResource("2_ytpl4"),
+1: ExtResource("3_ytpl4"),
+2: ExtResource("4_ytpl4"),
+3: ExtResource("5_ytpl4"),
+4: ExtResource("6_ytpl4"),
+5: ExtResource("7_ytpl4"),
+6: ExtResource("8_ytpl4")
 })

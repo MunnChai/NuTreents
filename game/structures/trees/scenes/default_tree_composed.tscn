@@ -1,0 +1,90 @@
+[gd_scene load_steps=21 format=3 uid="uid://d4l1saxnn6efv"]
+
+[ext_resource type="Script" uid="uid://dxfedvt20mvie" path="res://structures/trees/scenes/twee_composed.gd" id="1_istyr"]
+[ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_tjy4u"]
+[ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="2_istyr"]
+[ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://structures/trees/stats/default_tree_stat.tres" id="2_xufj2"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="3_42ur6"]
+[ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="3_t2lqx"]
+[ext_resource type="Texture2D" uid="uid://eckdbj5rer4l" path="res://structures/trees/sheets/tree_circle_sheet.png" id="4_njuuy"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="7_42ur6"]
+[ext_resource type="PackedScene" uid="uid://diqna20ydddnp" path="res://components/forest_modifiers/nutreent_production_component/nutreent_production_component.tscn" id="8_43g53"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="8_njuuy"]
+[ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="9_4oe0m"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="10_4oe0m"]
+[ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="10_5t5ov"]
+[ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="11_yo8g6"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="13_jlx1d"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="17_jlx1d"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="18_wohpo"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
+resource_local_to_scene = true
+shader = ExtResource("1_tjy4u")
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/wind_amount = 1.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 30.0
+shader_parameter/tint_amount = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/uv_y_offset = 0.62
+shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
+shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+shader_parameter/outline_alpha = 1.0
+shader_parameter/outline_width = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yo8g6"]
+resource_local_to_scene = true
+
+[node name="DefaultTreeComposed" type="Node2D"]
+script = ExtResource("1_istyr")
+type = 1
+tree_stat = ExtResource("2_xufj2")
+sheets = Array[Texture2D]([ExtResource("3_t2lqx"), ExtResource("4_njuuy"), ExtResource("2_istyr")])
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_j4fxg")
+position = Vector2(0, -16)
+texture = ExtResource("2_istyr")
+hframes = 9
+vframes = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("3_42ur6")
+}
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("8_njuuy")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_t5oha")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("10_5t5ov")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_yo8g6")
+
+[node name="PopupEmitterComponent" parent="." instance=ExtResource("11_yo8g6")]
+popup_color = Color(0.996078, 0.596078, 0.533333, 1)
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("13_jlx1d")]
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("7_42ur6")]
+
+[node name="NutreentProductionComponent" parent="." instance=ExtResource("8_43g53")]
+
+[node name="WaterProductionComponent" parent="." instance=ExtResource("9_4oe0m")]
+
+[node name="GridRangeComponent" parent="." instance=ExtResource("10_4oe0m")]
+range = 1
+
+[node name="FogRevealerComponent" parent="." instance=ExtResource("17_jlx1d")]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("18_wohpo")]
+
+[editable path="HurtboxComponent"]

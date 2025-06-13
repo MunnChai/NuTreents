@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxmruf00te3al"]
+
+[ext_resource type="Script" uid="uid://dabqvs7dlbogw" path="res://components/movement/obstruction_component/obstruction_component.gd" id="1_0tnqc"]
+
+[node name="ObstructionComponent" type="Node2D"]
+script = ExtResource("1_0tnqc")

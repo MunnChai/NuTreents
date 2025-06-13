@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://b58nh1d7lvhem"]
+
+[ext_resource type="Texture2D" uid="uid://b7oe8yquy47bv" path="res://world/proc_gen/structure_map/factory_remains.png" id="1_2y1h7"]
+[ext_resource type="Script" uid="uid://q7070de3d08c" path="res://structures/city/factory/factory_remains_composed.gd" id="1_hao0v"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="2_7tmdr"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="3_hao0v"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="5_xgqou"]
+
+[node name="FactoryRemainsComposed" type="Node2D"]
+script = ExtResource("1_hao0v")
+type = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("1_2y1h7")
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("3_hao0v")]
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("2_7tmdr")]
+id = "factory_remains"
+
+[node name="OutlineComponent" parent="." instance=ExtResource("5_xgqou")]

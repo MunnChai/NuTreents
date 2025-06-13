@@ -33,11 +33,12 @@ func get_next_highlight() -> Node2D:
 
 func highlight_tile_at(iso_position: Vector2i) -> void:
 	reset_pool()
-	var building: Structure = Global.structure_map.get_building_node(iso_position)
+	var building: Node2D = Global.structure_map.get_building_node(iso_position)
 	
 	## BUILDING:
-	if building != null:
-		var positions := building.get_occupied_positions()
+	if building != null and Components.has_component(building, GridPositionComponent):
+		var position_component: GridPositionComponent = Components.get_component(building, GridPositionComponent)
+		var positions := position_component.get_occupied_positions()
 		for position: Vector2i in positions:
 			var highlight = get_next_highlight()
 			highlight.global_position = Global.structure_map.map_to_local(position)

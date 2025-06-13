@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://2acjuseqlsik"]
+
+[ext_resource type="Script" uid="uid://d4tic8rhhry4" path="res://components/forest_modifiers/water_production_component/water_production_component.gd" id="1_q4f8g"]
+
+[node name="WaterProductionComponent" type="Node2D"]
+script = ExtResource("1_q4f8g")

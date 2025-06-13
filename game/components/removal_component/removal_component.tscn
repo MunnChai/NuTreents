@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxn04aoyu52rj"]
+
+[ext_resource type="Script" uid="uid://caw38jerctbje" path="res://components/removal_component/removal_component.gd" id="1_n6x2r"]
+
+[node name="RemovalComponent" type="Node2D"]
+script = ExtResource("1_n6x2r")
