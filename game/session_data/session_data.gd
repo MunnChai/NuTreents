@@ -219,8 +219,8 @@ func _create_twee_save_resource(twee: TweeComposed) -> TweeDataResource:
 	
 	save_resource.forest_water = TreeManager.forests[twee.forest].water
 	
-	#if twee is TechTree:
-		#save_resource.tech_slot = twee.tech_slot
+	if twee is TechTweeComposed:
+		save_resource.tech_slot = twee.tech_slot
 	
 	return save_resource
 

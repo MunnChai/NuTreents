@@ -1,14 +1,13 @@
 class_name FactoryComposed
 extends StructureComposed
 
-var tech_slot
+var tech_slot: int
 
 func _ready():
-	# If tech_slots are still unassigned
 	if (Global.tech_menu.unassigned_tech.size() > 0):
 		tech_slot = Global.tech_menu.unassigned_tech.pick_random()
 		Global.tech_menu.unassigned_tech.erase(tech_slot)
-		#print("Assigned factory tech slot: ", tech_slot)
+		print("Assigned factory tech slot: ", tech_slot) 
 
 ## Returns the "height" that the arrow cursor should be above this structure...
 ## One of "low", "medium", and "high".

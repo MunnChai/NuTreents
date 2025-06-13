@@ -101,7 +101,7 @@ func spawn_enemy_wave() -> int:
 
 # Searches forest for high priority trees
 # Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
-func find_target_tree(trees_to_avoid: Array[Twee] = []) -> TweeComposed:
+func find_target_tree(trees_to_avoid: Array[TweeComposed] = []) -> TweeComposed:
 	var tree_map = TreeManager.get_tree_map()
 	
 	# Find types of trees

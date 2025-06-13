@@ -1,8 +1,6 @@
 class_name TechTree
 extends Twee
 
-const FACTORY_REMAINS = preload("res://structures/city/factory/factory_remains.tscn")
-
 var tech_slot: int = -1
 
 # i have no idea how tech tree works
@@ -58,7 +56,7 @@ func die():
 		Global.tech_menu.current_tech.erase(tech_slot)
 	
 	# Instantiate factory remains again
-	var factory_remains = FACTORY_REMAINS.instantiate()
+	var factory_remains = StructureRegistry.get_new_structure(Global.StructureType.FACTORY_REMAINS)
 	Global.structure_map.add_structure(get_pos(), factory_remains)
 	factory_remains.tech_slot = tech_slot
 	
