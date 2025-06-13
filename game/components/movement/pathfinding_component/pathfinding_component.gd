@@ -1,6 +1,8 @@
 class_name PathfindingComponent
 extends Node2D
 
+const MAX_TILE_TRAVERSAL: int = 200
+
 @export var obstructive_tiles: Array[TerrainMap.TileType]
 @export var ignore_structures: bool
 @export var ignore_entities: bool
@@ -66,7 +68,7 @@ func find_path(start_position: Vector2i, target_position: Vector2i) -> Array:
 				new_path.append(next_pos)
 				paths.append(new_path)
 		
-		if (visited.size() > 400):
+		if (visited.size() >= MAX_TILE_TRAVERSAL):
 			print("Total tiles visited during pathfinding: ", visited.size(), ", stopping pathfinding!")
 			break
 	
@@ -160,7 +162,7 @@ func get_closest_valid_position(start_position: Vector2i, target_position: Vecto
 				new_path.append(next_pos)
 				paths.append(new_path)
 		
-		if (visited.size() > 400):
+		if (visited.size() >= MAX_TILE_TRAVERSAL):
 			print("Could not find best closest tile!")
 			break
 	

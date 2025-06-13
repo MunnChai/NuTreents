@@ -1,6 +1,8 @@
 extends Twee
 class_name MotherTree
 
+#region Overrides
+
 func _ready():
 	get_stats_from_resource(tree_stat)
 	id = "mother_tree"
@@ -33,3 +35,5 @@ func get_reachable_offsets() -> Array[Vector2i]:
 ## Mother tree is always a medium
 func get_arrow_cursor_height() -> String:
 	return "medium"
+
+#endregion

@@ -41,7 +41,7 @@ func get_diamond_tiles(range: int) -> Array[Vector2i]:
 	return new_tiles
 
 func get_square_tiles() -> Array[Vector2i]:
-	var tiles = []
+	var tiles: Array[Vector2i] = []
 	
 	for x in range(-range, range + 1):
 		for y in range(-range, range + 1):

@@ -1,13 +1,37 @@
 class_name TargetingComponent
 extends Node2D
 
-@export var ignore_structures: bool
+func get_nearest_enemy(map_position: Vector2i) -> EnemyComposed:
+	var nearest_enemy: EnemyComposed = null
+	var nearest_enemy_pos = Vector2i.ZERO
+	var nearest_dist: float = INF
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		var enemy_pos_component = Components.get_component(enemy, GridPositionComponent)
+		
+		for pos in enemy_pos_component.get_occupied_positions():
+			var dist = MapUtility.get_taxicab_distance(pos, map_position)
+			if (dist < nearest_dist):
+				nearest_enemy = enemy
+				nearest_enemy_pos = pos
+				nearest_dist = dist
+	
+	return nearest_enemy
 
-var currently_targeting
-
-func get_nearest_enemy(map_position: Vector2i) -> Enemy:
-	# TODO: implement linear search
-	return null
+func get_nearest_enemy_pos(map_position: Vector2i) -> Vector2i:
+	var nearest_enemy: EnemyComposed = null
+	var nearest_enemy_pos = Vector2i.ZERO
+	var nearest_dist: float = INF
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		var enemy_pos_component = Components.get_component(enemy, GridPositionComponent)
+		
+		for pos in enemy_pos_component.get_occupied_positions():
+			var dist = MapUtility.get_taxicab_distance(pos, map_position)
+			if (dist < nearest_dist):
+				nearest_enemy = enemy
+				nearest_enemy_pos = pos
+				nearest_dist = dist
+	
+	return nearest_enemy_pos
 
 ## Returns the nearest tree from the given map position
 func get_nearest_tree(map_position: Vector2i) -> TweeComposed:
@@ -30,7 +54,6 @@ func get_nearest_tree(map_position: Vector2i) -> TweeComposed:
 				nearest_tree_pos = pos
 				nearest_dist = dist
 	
-	currently_targeting = nearest_tree
 	return nearest_tree
 
 ## Returns the nearest position that has a tree on it
@@ -54,5 +77,4 @@ func get_nearest_tree_pos(map_position: Vector2i):
 				nearest_tree_pos = pos
 				nearest_dist = dist
 	
-	currently_targeting = nearest_tree
 	return nearest_tree_pos

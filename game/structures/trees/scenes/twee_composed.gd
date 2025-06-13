@@ -10,13 +10,18 @@ extends Node2D
 ## defaults to a randomly chosen sheet at ready time
 @export var sheets: Array[Texture2D]
 
+@export_category("Animation")
+@export var h_frames: int = 9
+@export var v_frames: int = 2
+@export var small_animation_name: String = "small"
+@export var large_animation_name: String = "large"
+
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
 @onready var sprite_2d: Sprite2D = %Sprite2D
 
 # Components
 @onready var tooltip_identifier_component: TooltipIdentifierComponent = $TooltipIdentifierComponent
 @onready var health_component: HealthComponent = $HealthComponent
-@onready var grid_movement_component: GridMovementComponent = $GridMovementComponent
 @onready var obstruction_component: ObstructionComponent = $ObstructionComponent
 @onready var nutreent_production_component: NutreentProductionComponent = $NutreentProductionComponent
 @onready var water_production_component: WaterProductionComponent = $WaterProductionComponent
@@ -56,8 +61,8 @@ var occupied_positions: Array[Vector2i]
 func _ready():
 	set_stats_from_resource(tree_stat)
 	
-	sprite_2d.hframes = 9
-	sprite_2d.vframes = 2
+	sprite_2d.hframes = h_frames
+	sprite_2d.vframes = v_frames
 	sprite_2d.position.y = -16
 	# Equally likely... 
 	sprite_2d.texture = sheets.pick_random()
@@ -175,7 +180,7 @@ func play_grow_large_animation():
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if (anim_name == "grow_small"):
-		animation_player.play("small")
+		animation_player.play(small_animation_name)
 	if (anim_name == "grow_large"):
 		play_large_tree_animation()
 		is_growing = false
@@ -183,10 +188,10 @@ func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 		animation_player.play("stump")
 
 func play_large_tree_animation():
-	animation_player.play("large")
+	animation_player.play(large_animation_name)
 
 func play_small_tree_animation():
-	animation_player.play("small")
+	animation_player.play(small_animation_name)
 
 #endregion
 

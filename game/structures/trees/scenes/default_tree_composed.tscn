@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_tjy4u"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="2_istyr"]
-[ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="2_ofihr"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://structures/trees/stats/default_tree_stat.tres" id="2_xufj2"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="3_42ur6"]
 [ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="3_t2lqx"]
@@ -35,6 +34,9 @@ shader_parameter/frame_count = 0
 shader_parameter/outline_alpha = 1.0
 shader_parameter/outline_width = 1
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yo8g6"]
+resource_local_to_scene = true
+
 [node name="DefaultTreeComposed" type="Node2D"]
 script = ExtResource("1_istyr")
 type = 1
@@ -62,10 +64,11 @@ libraries = {
 [node name="HurtboxComponent" parent="." instance=ExtResource("10_5t5ov")]
 collision_mask = 6
 
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_yo8g6")
+
 [node name="PopupEmitterComponent" parent="." instance=ExtResource("11_yo8g6")]
 popup_color = Color(0.996078, 0.596078, 0.533333, 1)
-
-[node name="GridMovementComponent" parent="." instance=ExtResource("2_ofihr")]
 
 [node name="GridPositionComponent" parent="." instance=ExtResource("13_jlx1d")]
 

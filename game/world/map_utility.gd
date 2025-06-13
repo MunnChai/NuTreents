@@ -58,3 +58,6 @@ func get_adjacent_tiles(pos: Vector2i) -> Array[Vector2i]:
 
 func get_taxicab_distance(pos_a: Vector2i, pos_b: Vector2i) -> int:
 	return abs(pos_a.x - pos_b.x) + abs(pos_a.y - pos_b.y)
+
+func map_to_global(map_coords: Vector2i) -> Vector2:
+	return Global.terrain_map.map_to_local(map_coords)

@@ -2,7 +2,6 @@ class_name GunTree
 extends Twee
 
 const TREE_BULLET = preload("res://structures/trees/projectiles/tree_bullet.tscn")
-const BULLET_SPEED = 200
 
 const ATTACK_FREQUENCY = 1
 

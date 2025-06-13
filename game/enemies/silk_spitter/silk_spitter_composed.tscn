@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dguswqwhw6id"]
+[gd_scene load_steps=20 format=3 uid="uid://dguswqwhw6id"]
 
 [ext_resource type="Script" uid="uid://bdotlfxvb7j6r" path="res://enemies/enemy_composed.gd" id="1_fddph"]
 [ext_resource type="Texture2D" uid="uid://c1h3tk203clg7" path="res://enemies/silk_spitter/silk_spitter_anims.png" id="2_orfgt"]
@@ -19,6 +19,14 @@
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mkqlk"]
 light_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_023h3"]
+resource_local_to_scene = true
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mkqlk"]
+resource_local_to_scene = true
+radius = 1.0
 
 [node name="SilkSpitterComposed" type="Node2D"]
 script = ExtResource("1_fddph")
@@ -52,10 +60,16 @@ max_health = 15.0
 collision_layer = 2
 collision_mask = 5
 
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_023h3")
+
 [node name="HitboxComponent" parent="." instance=ExtResource("4_x6qby")]
 collision_layer = 2
 collision_mask = 5
 damage = 2.0
+
+[node name="CollisionShape2D" parent="HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_mkqlk")
 
 [node name="PopupEmitterComponent" parent="." instance=ExtResource("5_xpqvo")]
 

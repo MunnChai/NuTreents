@@ -24,6 +24,8 @@ func create_new_world() -> void:
 	
 	TreeManager.start_game()
 	
+	ScreenUI.shop_menu.reset_shop_cards()
+	
 	# Save metadata and session data together, so we don't end up with one without the other in a save file
 	SessionData.call_deferred("create_new_session_data", Global.get_metadata())
 	SessionData.call_deferred("save_session_data", Global.session_id)

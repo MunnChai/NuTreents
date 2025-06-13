@@ -111,23 +111,23 @@ func spawn_enemy_wave() -> int:
 
 # Searches forest for high priority trees
 # Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
-func find_target_tree(trees_to_avoid: Array[Twee] = []) -> Twee:
+func find_target_tree(trees_to_avoid: Array[Twee] = []) -> TweeComposed:
 	var tree_map = TreeManager.get_tree_map()
 	
 	# Find types of trees
 	var tech_trees: Array = []
 	var water_trees: Array = []
-	var mother_tree: Twee = null
-	for twee: Twee in tree_map.values():
+	var mother_tree: TweeComposed = null
+	for twee: TweeComposed in tree_map.values():
 		# Don't count ignored trees
 		if trees_to_avoid.has(twee):
 			continue
 		
-		if twee is TechTree:
+		if twee.type == Global.TreeType.TECH_TREE:
 			tech_trees.append(twee)
-		if twee is WaterTree:
+		if twee.type == Global.TreeType.WATER_TREE:
 			water_trees.append(twee)
-		if twee is MotherTree:
+		if twee.type == Global.TreeType.MOTHER_TREE:
 			mother_tree = twee
 	
 	# Sort tree arrays by distance to nearest tree to avoid (furthest -> closest)

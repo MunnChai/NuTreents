@@ -25,46 +25,48 @@ func move_to_position(target_position: Vector2i) -> void:
 	var direction = target_position - current_position
 	move_in_direction.emit(direction)
 	
-	var terrain_map: TerrainMap = Global.terrain_map
-	var global_pos = terrain_map.map_to_local(current_position)
-	var target_global_pos = terrain_map.map_to_local(target_position)
+	var global_pos = MapUtility.map_to_global(current_position)
+	var target_global_pos = MapUtility.map_to_global(target_position)
 	
-	var x_tween: Tween = get_tree().create_tween()
-	x_tween.set_ease(ease)
-	x_tween.set_trans(trans)
-	x_tween.tween_property(actor, "position:x", target_global_pos.x, movement_duration)
+	var pos_tween: Tween = get_tree().create_tween()
+	pos_tween.set_ease(ease)
+	pos_tween.set_trans(trans)
+	pos_tween.tween_property(actor, "global_position", target_global_pos, movement_duration)
 	
-	var midpoint = global_pos + (target_global_pos - global_pos) / 2
+	var sprite_2d: Sprite2D = Components.get_component(actor, Sprite2D)
 	
-	var y_tween: Tween = get_tree().create_tween()
-	y_tween.set_ease(ease)
-	y_tween.set_trans(trans)
-	y_tween.tween_property(actor, "position:y", midpoint.y - bounce_amount, movement_duration / 2)
-	y_tween.tween_property(actor, "position:y", target_global_pos.y, movement_duration / 2)
+	var bounce_tween: Tween = get_tree().create_tween()
+	bounce_tween.set_trans(trans)
+	bounce_tween.set_ease(Tween.EASE_OUT)
+	bounce_tween.tween_property(sprite_2d, "position:y", -bounce_amount, movement_duration / 2).as_relative()
+	bounce_tween.set_ease(Tween.EASE_IN)
+	bounce_tween.tween_property(sprite_2d, "position:y", bounce_amount, movement_duration / 2).as_relative()
 	
-	x_tween.finished.connect(grid_position_component.move.bind(direction))
+	grid_position_component.move(direction)
 
 func move_to_and_back(target_position: Vector2i) -> void:
 	var current_position = grid_position_component.get_pos()
 	var direction = target_position - current_position
 	move_in_direction.emit(direction)
 	
-	var terrain_map: TerrainMap = Global.terrain_map
-	var global_pos = terrain_map.map_to_local(current_position)
-	var target_global_pos = terrain_map.map_to_local(target_position)
+	var global_pos = MapUtility.map_to_global(current_position)
+	var target_global_pos = MapUtility.map_to_global(target_position)
 	
-	var x_tween: Tween = get_tree().create_tween()
-	x_tween.set_ease(ease)
-	x_tween.set_trans(trans)
-	x_tween.tween_property(actor, "position:x", target_global_pos.x, movement_duration / 2)
-	x_tween.tween_property(actor, "position:x", global_pos.x, movement_duration / 2)
+	var pos_tween: Tween = get_tree().create_tween()
+	pos_tween.set_ease(ease)
+	pos_tween.set_trans(trans)
+	pos_tween.tween_property(actor, "global_position", target_global_pos, movement_duration / 2)
+	pos_tween.tween_property(actor, "global_position", global_pos, movement_duration / 2)
 	
-	var midpoint = global_pos + (target_global_pos - global_pos) / 2
+	var sprite_2d: Sprite2D = Components.get_component(actor, Sprite2D)
 	
-	var y_tween: Tween = get_tree().create_tween()
-	y_tween.set_ease(ease)
-	y_tween.set_trans(trans)
-	y_tween.tween_property(actor, "position:y", midpoint.y - bounce_amount, movement_duration / 4)
-	y_tween.tween_property(actor, "position:y", target_global_pos.y, movement_duration / 4)
-	y_tween.tween_property(actor, "position:y", midpoint.y - bounce_amount, movement_duration / 4)
-	y_tween.tween_property(actor, "position:y", global_pos.y, movement_duration / 4)
+	var bounce_tween: Tween = get_tree().create_tween()
+	bounce_tween.set_trans(trans)
+	bounce_tween.set_ease(Tween.EASE_OUT)
+	bounce_tween.tween_property(sprite_2d, "position:y", -bounce_amount, movement_duration / 4).as_relative()
+	bounce_tween.set_ease(Tween.EASE_IN)
+	bounce_tween.tween_property(sprite_2d, "position:y", bounce_amount, movement_duration / 4).as_relative()
+	bounce_tween.set_ease(Tween.EASE_OUT)
+	bounce_tween.tween_property(sprite_2d, "position:y", -bounce_amount, movement_duration / 4).as_relative()
+	bounce_tween.set_ease(Tween.EASE_IN)
+	bounce_tween.tween_property(sprite_2d, "position:y", bounce_amount, movement_duration / 4).as_relative()

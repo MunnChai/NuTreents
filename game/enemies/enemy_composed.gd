@@ -26,16 +26,23 @@ func _ready() -> void:
 
 func _connect_component_signals():
 	hurtbox_component.hit_taken.connect(health_component.subtract_health)
-	hurtbox_component.hit_taken.connect(play_hurt_animation)
+	hurtbox_component.hit_taken.connect(play_hurt_animation.unbind(1))
 	
 	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
 	health_component.died.connect(die)
 	
 	grid_movement_component.move_in_direction.connect(face_direction)
+	
+	action_timer.timeout.connect(perform_action)
+	action_timer.one_shot = false
+	action_timer.start()
 
 # Munn: This is where all the components get connected together? Seems weird...
 
 func perform_action() -> void:
+	if health_component.is_dead:
+		return
+	
 	# Target a tree
 	var target_pos = targeting_component.get_nearest_tree_pos(grid_position_component.get_pos())
 	
@@ -86,6 +93,7 @@ func move(target_pos: Vector2i) -> void:
 #endregion
 
 func play_hurt_animation():
+	print("Playing Hurt")
 	if animation_player.current_animation == "idle":
 		animation_player.play("hurt")
 		animation_player.queue("idle")
@@ -94,6 +102,9 @@ func play_hurt_animation():
 		animation_player.queue("idle_backwards")
 
 func die():
+	hurtbox_component.monitorable = false
+	hurtbox_component.monitoring = false
+	
 	match (type):
 		EnemyManager.EnemyType.SPEEDLE:
 			SfxManager.play_sound_effect("speedle_die")
