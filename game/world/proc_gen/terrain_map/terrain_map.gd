@@ -141,7 +141,7 @@ func initialize_map() -> void:
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var TileType: int = TileType.GRASS
+			var TileType: int = TileType.DIRT
 			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[TileType]
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
@@ -250,7 +250,7 @@ func generate_highways(city_coords: Array[Vector2i]) -> void:
 func build_highway(city_i: Vector2i, city_j: Vector2i) -> void:
 	
 	for i in range(0, world_size_settings.num_highway_drunkards):
-		walk_drunkard_targeted(city_i, city_j, TileType.DIRT, world_size_settings.highway_drunkard_lifetime)
+		walk_drunkard_targeted(city_i, city_j, TileType.GRASS, world_size_settings.highway_drunkard_lifetime)
 
 
 func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
@@ -292,7 +292,7 @@ func generate_spawn() -> void:
 	var origin: Vector2i = Global.ORIGIN
 	
 	for i in range(0, world_size_settings.num_spawn_drunkards):
-		walk_drunkard(origin, TileType.GRASS, world_size_settings.spawn_drunkard_lifetime, [TileType.DIRT])
+		walk_drunkard(origin, TileType.GRASS, world_size_settings.spawn_drunkard_lifetime, [])
 
 
 func generate_factories(city_coords: Array[Vector2i]) -> void:
