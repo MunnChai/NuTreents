@@ -89,8 +89,7 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 	var world_pos = Global.terrain_map.map_to_local(pos)
 	var fog_pos = Global.fog_map.local_to_map(world_pos)
 
-	var tile_data = Global.fog_map.get_cell_tile_data(fog_pos)
-	if (tile_data != null):
+	if (Global.fog_map.is_tile_foggy(fog_pos)):
 		rich_text.text = ""
 		return
 	

@@ -15,7 +15,7 @@ bool is_on_edge(vec2 uv, sampler2D texture2d, vec2 texture_pixel_size) {
 	if (color.a > 0.0) {
 		return false;
 	}
-	
+
 	vec2 size = texture_pixel_size;
 	if (match_camera_zoom) {
 		size = vec2(size.x * camera_zoom.x, size.y * camera_zoom.y);
@@ -26,7 +26,7 @@ bool is_on_edge(vec2 uv, sampler2D texture2d, vec2 texture_pixel_size) {
 			if (abs(float(x)) + abs(float(y)) > float(outline_width)) {
 				continue;
 			}
-			
+
 			vec4 surrounding_color = texture(texture2d, uv + vec2(float(x) * size.x, float(y) * size.y));
 			if (surrounding_color.a > 0.0) {
 				return true;
