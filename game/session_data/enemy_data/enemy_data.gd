@@ -1,5 +1,5 @@
 class_name EnemyDataResource
 extends Resource
 
-var type: EnemyManager.EnemyType
+var type: Global.EnemyType
 var hp: float

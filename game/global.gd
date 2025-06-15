@@ -23,7 +23,8 @@ var camera: Camera2D
 enum StructureType {
 	CITY_BUILDING = 0,
 	FACTORY = CITY_BUILDING + 1,
-	DECOR = FACTORY + 1
+	FACTORY_REMAINS = FACTORY + 1,
+	DECOR = FACTORY_REMAINS + 1
 }
 
 ## TREE IDS
@@ -36,6 +37,13 @@ enum TreeType {
 	TECH_TREE = WATER_TREE + 1,
 	EXPLORER_TREE = TECH_TREE + 1,
 	TALL_TREE = EXPLORER_TREE + 1,
+}
+
+## ENEMY IDS 
+
+enum EnemyType {
+	SPEEDLE = 0,
+	SILK_SPITTER = SPEEDLE + 1,
 }
 
 ## GAME STATE

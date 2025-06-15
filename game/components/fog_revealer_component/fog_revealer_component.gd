@@ -1,0 +1,2 @@
+class_name FogRevealerComponent
+extends Node2D

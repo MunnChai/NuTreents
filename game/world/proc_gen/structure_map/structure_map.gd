@@ -12,17 +12,17 @@ func _ready() -> void:
 	#add_to_group("structure_map")
 	y_sort_enabled = true
 
-func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
-	if (tile_scene_map.has(map_coords)):
+func add_structure(map_coords: Vector2i, structure: Node2D) -> bool:
+	if tile_scene_map.has(map_coords):
 		# Check if it is a decor structure
-		var curr_structure: Structure = tile_scene_map[map_coords]
-		if (!curr_structure.id.ends_with("decor")): # If it is not decor, you CANT BUILD HERE!
+		var curr_structure: Node2D = tile_scene_map[map_coords]
+		if Components.has_component(curr_structure, ObstructionComponent): # Don't build on obstructive tiles
 			structure.queue_free()
 			return false
 		# Otherwise, destroy the decor and continue
 		remove_structure(map_coords)
 	
-	if structure is Factory:
+	if Components.has_component(structure, FogRevealerComponent):
 		Global.fog_map.remove_fog_around(map_coords)
 	
 	structure.position = map_to_local(map_coords)
@@ -30,8 +30,11 @@ func add_structure(map_coords: Vector2i, structure: Structure) -> bool:
 	tile_scene_map[map_coords] = structure
 	if structure.get_parent() == null:
 		add_child(structure)
-		if structure.occupied_positions.is_empty():
-			structure.init_pos(map_coords)
+		
+		if Components.has_component(structure, GridPositionComponent):
+			var position_component = Components.get_component(structure, GridPositionComponent)
+			if position_component.occupied_positions.is_empty():
+				position_component.init_pos(map_coords)
 	return true
 
 # Remove the node at the given map coordinates
@@ -44,7 +47,7 @@ func remove_structure(map_coords: Vector2i) -> bool:
 	
 	# Munn: kinda temp fix? twees handle freeing themselves, so we only need to free stuff like 
 	#       buildings, decor, etc.
-	if (not object is Twee):
+	if (not object is TweeComposed):
 		remove_child(object)
 	
 	tile_scene_map.erase(map_coords)
@@ -67,9 +70,13 @@ func does_obstructive_structure_exist(map_pos: Vector2i) -> bool:
 	if not does_structure_exist(map_pos):
 		return false
 	
-	var object: Structure = tile_scene_map[map_pos]
+	var object: Node2D = tile_scene_map[map_pos]
 	
-	return !object.id.ends_with("decor")
+	if not Components.has_component(object, ObstructionComponent):
+		return false
+	
+	var obstruction_component: ObstructionComponent = Components.get_component(object, ObstructionComponent)
+	return obstruction_component.is_obstructing
 
 const TWEEN_TIME = 0.2
 const ADJACENT_TILE_REACH = 1
@@ -135,7 +142,7 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 	for pos: Vector2i in data.keys():
 		var save_resource: StructureDataResource = data[pos]
 		
-		var structure: Structure = StructureRegistry.get_new_structure(save_resource.type)
+		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
 		add_structure(pos, structure)
 		structure.apply_data_resource(save_resource)

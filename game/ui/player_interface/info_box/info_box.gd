@@ -101,8 +101,8 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		
 		rich_text.text += "\n"
 		
-		var enemy: Enemy = EnemyManager.instance.get_enemy_at(pos)
-		var structure: Structure = null
+		var enemy = EnemyManager.instance.get_enemy_at(pos)
+		var structure: Node2D = null
 		if (Global.structure_map.tile_scene_map.has(pos)):
 			structure = Global.structure_map.tile_scene_map[pos]
 		
@@ -124,9 +124,9 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			rich_text.text += "Nutrients needed to destroy: " + str(structure.cost_to_remove)
 		elif (enemy != null):
 			rich_text.text +="\n"
-			rich_text.text += "HP: " + str(enemy.current_health)
-			rich_text.text += "\nDAMAGE: " + str(enemy.attack_damage)
-			rich_text.text += "\nRANGE: " + str(enemy.attack_range)
+			#rich_text.text += "HP: " + str(enemy.current_health)
+			#rich_text.text += "\nDAMAGE: " + str(enemy.attack_damage)
+			#rich_text.text += "\nRANGE: " + str(enemy.attack_range)
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";

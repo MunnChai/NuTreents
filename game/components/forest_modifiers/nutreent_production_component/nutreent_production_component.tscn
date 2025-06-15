@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://diqna20ydddnp"]
+
+[ext_resource type="Script" uid="uid://yn1w1vraoos8" path="res://components/forest_modifiers/nutreent_production_component/nutreent_production_component.gd" id="1_otxf0"]
+
+[node name="NutreentProductionComponent" type="Node2D"]
+script = ExtResource("1_otxf0")

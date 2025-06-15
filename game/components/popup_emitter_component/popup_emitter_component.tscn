@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8w0i4ah3vv4s"]
+
+[ext_resource type="Script" uid="uid://bti7gen4tdvpu" path="res://components/popup_emitter_component/popup_emitter_component.gd" id="1_sasrh"]
+
+[node name="PopupEmitterComponent" type="Node2D"]
+script = ExtResource("1_sasrh")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dwpl26cf6kleg"]
 
-[ext_resource type="Script" uid="uid://iavbe6xpcga4" path="res://structures/city/city_building.gd" id="1_342x3"]
-[ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://world/proc_gen/structure_map/City_Buildings_1.png" id="2_342x3"]
+[ext_resource type="Script" uid="uid://iavbe6xpcga4" path="res://structures/city/factory/city_building.gd" id="1_342x3"]
+[ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://structures/city/City_Buildings_1.png" id="2_342x3"]
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="2_i0ck8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cnien"]
@@ -19,6 +19,7 @@ script = ExtResource("1_342x3")
 cost_to_remove = 250
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 material = SubResource("ShaderMaterial_cnien")
 position = Vector2(0, -12)
 texture = SubResource("AtlasTexture_iku8c")

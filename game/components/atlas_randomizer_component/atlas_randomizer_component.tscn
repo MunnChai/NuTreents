@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxqge2gs2yndp"]
+
+[ext_resource type="Script" uid="uid://cptrrt1l2mh2d" path="res://components/atlas_randomizer_component/atlas_randomizer_component.gd" id="1_akubf"]
+
+[node name="AtlasRandomizerComponent" type="Node2D"]
+script = ExtResource("1_akubf")
