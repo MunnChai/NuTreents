@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EnemyStatResource" load_steps=2 format=3 uid="uid://dywgdb7muwpov"]
+
+[ext_resource type="Script" uid="uid://cq0shh8yxktgu" path="res://enemies/stats/enemy_stat_resource.gd" id="1_fi0bh"]
+
+[resource]
+script = ExtResource("1_fi0bh")
+name = "Speed  Speedle"
+id = "speed_speedle"
+description = "A speedy spider beetle...
+but faster"
+hp = 20.0
+action_cooldown = 0.5
+attack_damage = 4.0
+attack_range = 1
+metadata/_custom_type_script = "uid://cq0shh8yxktgu"
