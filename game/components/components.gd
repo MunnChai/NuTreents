@@ -1,19 +1,12 @@
 class_name Components
 extends Node
 
-static func get_component(node: Node, component_type: Variant, recursive: bool = true) -> Variant:
+## Returns a node of the given type if it exists as a descendent of the given node, null otherwise
+static func get_component(node: Node, component_type: Variant) -> Variant:
 	if not node:
 		return null
 	
-	if recursive:
-		return _search_for_component(node, component_type)
-	
-	var children = node.get_children()
-	for child in children:
-		if is_instance_of(child, component_type):
-			return child
-	
-	return null
+	return _search_for_component(node, component_type)
 
 static func _search_for_component(node: Node, component_type: Variant) -> Variant:
 	if is_instance_of(node, component_type):
@@ -37,10 +30,4 @@ static func has_component(node: Node, component_type: Variant) -> bool:
 	if not node:
 		return false
 	
-	var children = node.get_children()
-	
-	for child in children:
-		if is_instance_of(child, component_type):
-			return true
-	
-	return false
+	return get_component(node, component_type) != null
