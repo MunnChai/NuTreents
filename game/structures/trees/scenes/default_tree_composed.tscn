@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://d4l1saxnn6efv"]
+[gd_scene load_steps=22 format=3 uid="uid://d4l1saxnn6efv"]
 
 [ext_resource type="Script" uid="uid://dxfedvt20mvie" path="res://structures/trees/scenes/twee_composed.gd" id="1_istyr"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
@@ -18,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="13_jlx1d"]
 [ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="17_jlx1d"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="18_wohpo"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="19_vyjhx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -86,5 +87,8 @@ range = 1
 [node name="FogRevealerComponent" parent="." instance=ExtResource("17_jlx1d")]
 
 [node name="OutlineComponent" parent="." instance=ExtResource("18_wohpo")]
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("19_vyjhx")]
+arrow_height = 2
 
 [editable path="HurtboxComponent"]
