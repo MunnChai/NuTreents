@@ -62,7 +62,7 @@ func save_session_data(save_num: int = 1):
 	# Save trees
 	var tree_map: Dictionary
 	for pos in TreeManager.tree_map:
-		var tree: TweeComposed = TreeManager.tree_map[pos]
+		var tree: Node2D = TreeManager.tree_map[pos]
 		
 		tree_map[pos] = _create_twee_save_resource(tree)
 	config.set_value(SECTION_SESSION, "tree_map", tree_map)
@@ -207,12 +207,13 @@ func create_save_directory() -> void:
 
 #region SaveResources
 
-func _create_twee_save_resource(twee: TweeComposed) -> TweeDataResource:
+func _create_twee_save_resource(twee: Node2D) -> TweeDataResource:
 	var save_resource: TweeDataResource = TweeDataResource.new()
 	
 	save_resource.type = twee.type
 	
-	save_resource.hp = twee.health_component.current_health
+	var health_component: HealthComponent = Components.get_component(twee, HealthComponent)
+	save_resource.hp = health_component.current_health
 	save_resource.life_time_seconds = twee.life_time_seconds
 	save_resource.is_large = twee.is_large
 	
@@ -227,7 +228,7 @@ func _create_twee_save_resource(twee: TweeComposed) -> TweeDataResource:
 
 func _create_structure_save_resource(structure: Node2D) -> StructureDataResource:
 	# Don't save trees
-	if structure is TweeComposed:
+	if Components.has_component(structure, TweeStatComponent):
 		return null
 	
 	var save_resource: StructureDataResource = StructureDataResource.new()

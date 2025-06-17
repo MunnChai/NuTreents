@@ -18,6 +18,7 @@ extends Node2D
 @export var popup_emitter_component: PopupEmitterComponent
 @export var enemy_stat_component: EnemyStatComponent
 @export var enemy_animation_component: EnemyAnimationComponent
+@export var death_sound_emitter_component: SoundEmitterComponent
 
 ## The node that this component is acting on, usually the parent
 var actor: Node2D
@@ -28,6 +29,8 @@ func _ready() -> void:
 	
 	_get_components()
 	_connect_component_signals()
+
+#region Components and Signals
 
 # Gets the components if they are not set in the editor
 func _get_components() -> void:
@@ -58,6 +61,8 @@ func _get_components() -> void:
 		enemy_stat_component = Components.get_component(actor, EnemyStatComponent)
 	if not enemy_animation_component:
 		enemy_animation_component = Components.get_component(actor, EnemyAnimationComponent)
+	if not death_sound_emitter_component:
+		death_sound_emitter_component = Components.get_component(actor, SoundEmitterComponent)
 
 
 func _connect_component_signals() -> void:
@@ -66,6 +71,8 @@ func _connect_component_signals() -> void:
 	
 	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
 	health_component.died.connect(die)
+	health_component.died.connect(enemy_animation_component.play_death)
+	health_component.died.connect(death_sound_emitter_component.play_sound_effect)
 	
 	grid_movement_component.move_in_direction.connect(enemy_animation_component.face_direction)
 	
@@ -73,6 +80,7 @@ func _connect_component_signals() -> void:
 	action_timer.one_shot = false
 	action_timer.start()
 
+#endregion
 
 
 ## The main enemy behaviour function. This is called every time action_timer finishes
@@ -134,11 +142,3 @@ func die():
 	hurtbox_component.monitoring = false
 	hitbox_component.monitorable = false
 	hitbox_component.monitoring = false
-	
-	match (enemy_stat_component.type):
-		Global.EnemyType.SPEEDLE:
-			SfxManager.play_sound_effect("speedle_die")
-		Global.EnemyType.SILK_SPITTER:
-			SfxManager.play_sound_effect("silk_spitter")
-	
-	enemy_animation_component.play_death()

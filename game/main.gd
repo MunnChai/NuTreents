@@ -62,7 +62,7 @@ func load_world(session_data: Dictionary) -> void:
 		if (tree_resource.type == Global.TreeType.MOTHER_TREE):
 			continue
 		
-		var tree: TweeComposed = TreeRegistry.get_new_twee(tree_resource.type)
+		var tree: Node2D = TreeRegistry.get_new_twee(tree_resource.type)
 		TreeManager.place_tree(tree, pos)
 		
 		tree.apply_data_resource(tree_resource)

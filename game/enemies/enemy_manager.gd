@@ -64,7 +64,8 @@ func spawn_enemy_wave() -> int:
 	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
 	
 	var target_tree = find_target_tree()
-	var target_pos = target_tree.get_occupied_positions().pick_random()
+	var grid_position_component: GridPositionComponent = Components.get_component(target_tree, GridPositionComponent)
+	var target_pos = grid_position_component.get_occupied_positions().pick_random()
 	
 	# Munn: Changed a bit here, to make the lag spike less obvious
 	var possible_cells = Global.fog_map.get_used_cells()
@@ -99,23 +100,25 @@ func spawn_enemy_wave() -> int:
 
 # Searches forest for high priority trees
 # Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
-func find_target_tree(trees_to_avoid: Array[TweeComposed] = []) -> TweeComposed:
+func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 	var tree_map = TreeManager.get_tree_map()
 	
 	# Find types of trees
 	var tech_trees: Array = []
 	var water_trees: Array = []
-	var mother_tree: TweeComposed = null
-	for twee: TweeComposed in tree_map.values():
+	var mother_tree: Node2D = null
+	for twee: Node2D in tree_map.values():
 		# Don't count ignored trees
 		if trees_to_avoid.has(twee):
 			continue
 		
-		if twee.type == Global.TreeType.TECH_TREE:
+		var tree_stat_component: TweeStatComponent = Components.get_component(twee, TweeStatComponent)
+		
+		if tree_stat_component.type == Global.TreeType.TECH_TREE:
 			tech_trees.append(twee)
-		if twee.type == Global.TreeType.WATER_TREE:
+		if tree_stat_component.type == Global.TreeType.WATER_TREE:
 			water_trees.append(twee)
-		if twee.type == Global.TreeType.MOTHER_TREE:
+		if tree_stat_component.type == Global.TreeType.MOTHER_TREE:
 			mother_tree = twee
 	
 	# Sort tree arrays by distance to nearest tree to avoid (furthest -> closest)

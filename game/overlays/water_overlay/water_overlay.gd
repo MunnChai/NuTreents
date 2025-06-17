@@ -36,7 +36,7 @@ func update_highlights() -> void:
 	
 	# Update highlights according to forest
 	for pos: Vector2i in highlights:
-		var tree: TweeComposed = TreeManager.tree_map[pos]
+		var tree: Node2D = TreeManager.tree_map[pos]
 		var forest: Forest = TreeManager.forests[tree.forest]
 		
 		var highlight: WaterHighlight = highlights[pos]

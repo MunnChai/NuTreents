@@ -1,0 +1,28 @@
+class_name TechTweeBehaviourComponent
+extends TweeBehaviourComponent
+
+var tech_slot: int
+
+func die():
+	# Instantiate factory remains again
+	var factory_remains = StructureRegistry.get_new_structure(Global.StructureType.FACTORY_REMAINS)
+	Global.structure_map.add_structure(grid_position_component.get_pos(), factory_remains)
+	factory_remains.tech_slot = tech_slot
+	
+	if is_large:
+		Global.tech_menu.current_tech.erase(tech_slot)
+	
+	super.die() # Frees itself
+
+func upgrade_tree() -> void:
+	super.upgrade_tree()
+	
+	# Do stuff related to TechMenu
+	Global.tech_menu.current_tech.append(tech_slot)
+
+func apply_data_resource(tree_resource: Resource):
+	super.apply_data_resource(tree_resource)
+	
+	tech_slot = tree_resource.tech_slot
+	if is_large:
+		Global.tech_menu.current_tech.append(tech_slot)

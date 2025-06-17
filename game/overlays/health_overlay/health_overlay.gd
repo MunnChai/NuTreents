@@ -31,18 +31,18 @@ func update_highlights() -> void:
 	
 	# Update highlights according to forest
 	for pos: Vector2i in highlights:
-		var tree: TweeComposed  = TreeManager.tree_map[pos]
+		var tree: Node2D  = TreeManager.tree_map[pos]
 		var highlight: HealthHighlight = highlights[pos]
 		
-		var tree_max_hp: float = tree.tree_stat.hp
-		if (tree.is_large):
-			tree_max_hp = tree.tree_stat.hp_2
+		var health_component: HealthComponent = Components.get_component(tree, HealthComponent)
 		
-		var hp_percent = tree.health_component.get_current_health() / tree_max_hp
+		var tree_max_hp: float = health_component.get_max_health()
+		
+		var hp_percent = health_component.get_current_health() / tree_max_hp
 		
 		var color = lerp(UNHEALTHY_COLOR, HEALTHY_COLOR, hp_percent)
 		
 		highlight.self_modulate = color
 		highlight.self_modulate.a = 0.75
 		
-		highlight.set_label_number(tree.health_component.get_current_health())
+		highlight.set_label_number(health_component.get_current_health())

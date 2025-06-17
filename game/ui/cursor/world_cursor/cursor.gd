@@ -93,12 +93,14 @@ func do_primary_action() -> void:
 				PopupManager.create_popup("Only Tech Trees grow on factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
 				return
 	
-	var tree: TweeComposed = TreeRegistry.get_new_twee(type)
+	var tree: Node2D = TreeRegistry.get_new_twee(type)
+	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
 	
-	if tree is TechTweeComposed:
-		tree.tech_slot = tech_slot  
+	if type == Global.TreeType.TECH_TREE:
+		tree_behaviour_component.tech_slot = tech_slot
 	
-	TreeManager.consume_n(tree.tree_stat.cost_to_purchase)
+	var tree_stat_component: TweeStatComponent = Components.get_component(tree, TweeStatComponent)
+	TreeManager.consume_n(tree_stat_component.stat_resource.cost_to_purchase)
 	SfxManager.play_sound_effect("tree_plant")
 	TreeManager.place_tree(tree, p)
 
@@ -119,8 +121,8 @@ func do_secondary_action() -> void:
 		var structure: Node2D = structure_map.tile_scene_map[map_pos]
 		
 		# If building is tree, remove tree and return (unless it's the mother tree)
-		if (structure is TweeComposed):
-			if (structure is MotherTweeComposed):
+		if Components.has_component(structure, TweeStatComponent):
+			if Components.get_component(structure, TweeStatComponent).type == Global.TreeType.MOTHER_TREE:
 				PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(map_pos))
 				SfxManager.play_sound_effect("ui_fail")
 				return

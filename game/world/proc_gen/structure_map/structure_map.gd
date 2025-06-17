@@ -47,7 +47,7 @@ func remove_structure(map_coords: Vector2i) -> bool:
 	
 	# Munn: kinda temp fix? twees handle freeing themselves, so we only need to free stuff like 
 	#       buildings, decor, etc.
-	if (not object is TweeComposed):
+	if not Components.has_component(object, TweeStatComponent):
 		remove_child(object)
 	
 	tile_scene_map.erase(map_coords)

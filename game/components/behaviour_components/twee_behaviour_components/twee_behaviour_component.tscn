@@ -4,8 +4,3 @@
 
 [node name="TreeBehaviourComponent" type="Node2D"]
 script = ExtResource("1_a73y1")
-sheets = null
-h_frames = null
-v_frames = null
-small_animation_name = null
-large_animation_name = null

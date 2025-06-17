@@ -2,7 +2,7 @@ extends Node
 class_name Forest
 
 var trees: Dictionary[Vector2i, Node2D]
-var tree_set: Array[TweeComposed]
+var tree_set: Array[Node2D]
 var water: float
 var id: int
 var empty: bool
@@ -87,9 +87,10 @@ func update(delta: float) -> Vector3:
 func get_nutrient_gain() -> float:
 	var nutrient_sum: float = 0
 
-	for tree: TweeComposed in tree_set:
+	for tree: Node2D in tree_set:
 		if tree: # NO clue why this is needed BUT IT IS NEEDED
-			nutrient_sum += tree.get_nutrient_gain()
+			var nutreent_production_component = Components.get_component(tree, NutreentProductionComponent)
+			nutrient_sum += nutreent_production_component.get_nutreent_production()
 	
 	return nutrient_sum
 
@@ -107,38 +108,42 @@ func update_water_maintenance(delta: float) -> float:
 		if (!trees[key]):
 			trees.erase(key)
 			continue
-		var tree: TweeComposed = trees[key]
-		
-		var tree_water = tree.get_water_gain()
+		var tree: Node2D = trees[key]
+		var water_production_component = Components.get_component(tree, WaterProductionComponent)
+		var tree_water = water_production_component.get_water_production()
 		if tree_water > 0:
 			net_water += tree_water
 	
 	for key in sorted_trees:
 		if (!trees.has(key)):
 			continue
-		var tree: TweeComposed = trees[key]
+		var tree: Node2D = trees[key]
 		
-		var tree_water = tree.get_water_gain()
+		var water_production_component = Components.get_component(tree, WaterProductionComponent)
+		var tree_water = water_production_component.get_water_production()
 		if tree_water < 0:
 			net_water += tree_water
 		
+		var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		
 		if (net_water < 0): # If the gain for this forest does not outweigh the maintenance
 			if (water <= 0): # Check THIS forest's water supply
-				if (tree.is_water_adjacent()): # If the tree is next to water, don't be dehydrated
-					tree.is_dehydrated = false
+				if (twee_behaviour_component.is_water_adjacent()): # If the tree is next to water, don't be dehydrated
+					twee_behaviour_component.is_dehydrated = false
 				else:
-					tree.is_dehydrated = true
+					twee_behaviour_component.is_dehydrated = true
 					
-					while (tree.water_damage_time > tree.WATER_DAMAGE_DELAY):
-						tree.health_component.subtract_health(tree.DEHYDRATION_DAMAGE)
-						tree.water_damage_time -= RandomNumberGenerator.new().randf_range(tree.WATER_DAMAGE_DELAY, tree.WATER_DAMAGE_DELAY * 2)
-					tree.water_damage_time += delta
+					while (twee_behaviour_component.water_damage_time > twee_behaviour_component.WATER_DAMAGE_DELAY):
+						twee_behaviour_component.health_component.subtract_health(twee_behaviour_component.DEHYDRATION_DAMAGE)
+						twee_behaviour_component.water_damage_time -= RandomNumberGenerator.new().randf_range(twee_behaviour_component.WATER_DAMAGE_DELAY, twee_behaviour_component.WATER_DAMAGE_DELAY * 2)
+					twee_behaviour_component.water_damage_time += delta
 			else:
-				tree.is_dehydrated = false
+				twee_behaviour_component.is_dehydrated = false
 		else:
-			tree.is_dehydrated = false
+			twee_behaviour_component.is_dehydrated = false
 		
-		tree._update_shader(delta)
+		var twee_animation_component: TweeAnimationComponent = Components.get_component(tree, TweeAnimationComponent)
+		twee_animation_component._update_shader(delta)
 	
 	water += net_water * delta
 	water = clamp(water, 0, INF)
@@ -149,17 +154,18 @@ func update_water_maintenance(delta: float) -> float:
 
 
 ## add the given tree to this forest
-func add_tree(p: Vector2i, t: TweeComposed):
-	t.set_forest(id)
+func add_tree(p: Vector2i, t: Node2D):
+	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(t, TweeBehaviourComponent)
+	tree_behaviour_component.set_forest(id)
 	trees[p] = t
 	
 	add_tree_to_set(t)
 
-func add_tree_to_set(t: TweeComposed):
+func add_tree_to_set(t: Node2D):
 	if not tree_set.has(t):
 		tree_set.append(t)
 
-func remove_tree_from_set(t: TweeComposed):
+func remove_tree_from_set(t: Node2D):
 	tree_set.erase(t)
 
 ## remove the tree at given p
@@ -168,7 +174,7 @@ func remove_tree(p: Vector2i):
 	if (!trees.has(p)):
 		return
 	
-	var t: TweeComposed = trees[p]
+	var t: Node2D = trees[p]
 	t.die()
 	
 	trees.erase(p)
