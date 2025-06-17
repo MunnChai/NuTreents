@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biqrko5gffb5j"
-path="res://.godot/imported/City_Buildings_1.png-96e360efd7a1d364b83d29fd0c8f2084.ctex"
+uid="uid://cr13pcl8g8yqg"
+path="res://.godot/imported/speed_speedle_sheet.png-0bd8c04fd1294ac7be5270dfe2436164.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/structure_map/City_Buildings_1.png"
-dest_files=["res://.godot/imported/City_Buildings_1.png-96e360efd7a1d364b83d29fd0c8f2084.ctex"]
+source_file="res://enemies/speed_speedle/speed_speedle_sheet.png"
+dest_files=["res://.godot/imported/speed_speedle_sheet.png-0bd8c04fd1294ac7be5270dfe2436164.ctex"]
 
 [params]
 

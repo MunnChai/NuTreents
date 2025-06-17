@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://biqrko5gffb5j"
-path="res://.godot/imported/City_Buildings_1.png-96e360efd7a1d364b83d29fd0c8f2084.ctex"
+uid="uid://dyax385joht5m"
+path="res://.godot/imported/tank_speedle_sheet.png-f6cc38b0d46f06210c29d363e539e4bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/structure_map/City_Buildings_1.png"
-dest_files=["res://.godot/imported/City_Buildings_1.png-96e360efd7a1d364b83d29fd0c8f2084.ctex"]
+source_file="res://enemies/tank_speedle/tank_speedle_sheet.png"
+dest_files=["res://.godot/imported/tank_speedle_sheet.png-f6cc38b0d46f06210c29d363e539e4bf.ctex"]
 
 [params]
 
