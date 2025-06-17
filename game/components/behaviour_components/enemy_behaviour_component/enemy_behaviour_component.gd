@@ -4,9 +4,6 @@ extends Node2D
 # Components
 @export_group("Components")
 @export var health_component: HealthComponent
-@export_subgroup("Animation")
-@export var animation_player: AnimationPlayer
-@export var sprite_2d: Sprite2D
 @export_subgroup("Collision")
 @export var hurtbox_component: HurtboxComponent
 @export var hitbox_component: HitboxComponent
@@ -20,6 +17,7 @@ extends Node2D
 @export_subgroup("Other")
 @export var popup_emitter_component: PopupEmitterComponent
 @export var enemy_stat_component: EnemyStatComponent
+@export var enemy_animation_component: EnemyAnimationComponent
 
 ## The node that this component is acting on, usually the parent
 var actor: Node2D
@@ -35,11 +33,6 @@ func _ready() -> void:
 func _get_components() -> void:
 	if not health_component:
 		health_component = Components.get_component(actor, HealthComponent)
-	
-	if not animation_player:
-		animation_player = Components.get_component(actor, AnimationPlayer)
-	if not sprite_2d:
-		sprite_2d = Components.get_component(actor, Sprite2D)
 	
 	if not hurtbox_component:
 		hurtbox_component = Components.get_component(actor, HurtboxComponent)
@@ -63,16 +56,18 @@ func _get_components() -> void:
 		popup_emitter_component = Components.get_component(actor, PopupEmitterComponent)
 	if not enemy_stat_component:
 		enemy_stat_component = Components.get_component(actor, EnemyStatComponent)
+	if not enemy_animation_component:
+		enemy_animation_component = Components.get_component(actor, EnemyAnimationComponent)
 
 
 func _connect_component_signals() -> void:
 	hurtbox_component.hit_taken.connect(health_component.subtract_health)
-	hurtbox_component.hit_taken.connect(play_hurt_animation.unbind(1))
+	hurtbox_component.hit_taken.connect(enemy_animation_component.play_hurt_animation.unbind(1))
 	
 	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
 	health_component.died.connect(die)
 	
-	grid_movement_component.move_in_direction.connect(face_direction)
+	grid_movement_component.move_in_direction.connect(enemy_animation_component.face_direction)
 	
 	action_timer.timeout.connect(perform_action)
 	action_timer.one_shot = false
@@ -146,38 +141,4 @@ func die():
 		Global.EnemyType.SILK_SPITTER:
 			SfxManager.play_sound_effect("silk_spitter")
 	
-	animation_player.play("death")
-	animation_player.animation_finished.connect(
-		func(animation_name):
-			queue_free()
-	)
-
-#region Animation
-
-func play_hurt_animation():
-	if animation_player.current_animation == "idle":
-		animation_player.play("hurt")
-		animation_player.queue("idle")
-	elif animation_player.current_animation == "idle_backwards":
-		animation_player.play("hurt_backwards")
-		animation_player.queue("idle_backwards")
-
-func face_direction(direction: Vector2i):
-	if direction.length() > 1:
-		direction.clamp(Vector2i(-1, -1), Vector2i(1, 1))
-	
-	match (direction):
-		Vector2i.UP:
-			sprite_2d.flip_h = true
-			animation_player.play("idle_backwards")
-		Vector2i.DOWN:
-			sprite_2d.flip_h = true
-			animation_player.play("idle")
-		Vector2i.LEFT:
-			sprite_2d.flip_h = false
-			animation_player.play("idle_backwards")
-		Vector2i.RIGHT:
-			sprite_2d.flip_h = false
-			animation_player.play("idle")
-
-#endregion
+	enemy_animation_component.play_death()

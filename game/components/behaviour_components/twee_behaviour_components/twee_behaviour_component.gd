@@ -1,11 +1,6 @@
-class_name TweeComposed
+class_name TweeBehaviourComponent
 extends Node2D
 
-# Munn: I'm using this for an easier way to save tree data
-@export var type: Global.TreeType
-
-## Elementary stats resource for this tree
-@export var tree_stat: TreeStatResource 
 ## List of sprite sheet variations for this tree, 
 ## defaults to a randomly chosen sheet at ready time
 @export var sheets: Array[Texture2D]
@@ -55,8 +50,6 @@ const DEHYDRATION_DAMAGE = 2
 var occupied_positions: Array[Vector2i]
 
 func _ready():
-	set_stats_from_resource(tree_stat)
-	
 	sprite_2d.hframes = h_frames
 	sprite_2d.vframes = v_frames
 	sprite_2d.position.y = -16

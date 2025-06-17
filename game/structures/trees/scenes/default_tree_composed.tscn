@@ -43,7 +43,7 @@ resource_local_to_scene = true
 script = ExtResource("1_istyr")
 type = 1
 tree_stat = ExtResource("2_xufj2")
-sheets = Array[Texture2D]([ExtResource("3_t2lqx"), ExtResource("4_njuuy"), ExtResource("2_istyr")])
+sheets = Array[Texture2D]([ExtResource("4_njuuy"), ExtResource("2_istyr"), ExtResource("3_t2lqx")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

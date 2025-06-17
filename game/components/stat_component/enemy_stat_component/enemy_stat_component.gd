@@ -3,6 +3,7 @@ extends StatComponent
 
 @export var type: Global.EnemyType
 
+@export_group("Components")
 @export var tooltip_identifier_component: TooltipIdentifierComponent
 @export var health_component: HealthComponent
 @export var hitbox_component: HitboxComponent

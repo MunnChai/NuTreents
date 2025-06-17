@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bp8k7164r5661"]
+
+[ext_resource type="Script" uid="uid://c2remv1e44im6" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.gd" id="1_a73y1"]
+
+[node name="TreeBehaviourComponent" type="Node2D"]
+script = ExtResource("1_a73y1")
+sheets = null
+h_frames = null
+v_frames = null
+small_animation_name = null
+large_animation_name = null

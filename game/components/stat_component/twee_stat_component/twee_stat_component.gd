@@ -1,6 +1,9 @@
-class_name TreeStatComponent
+class_name TweeStatComponent
 extends StatComponent
 
+@export var type: Global.TreeType
+
+@export_group("Components")
 @export var tooltip_identifier_component: TooltipIdentifierComponent
 @export var health_component: HealthComponent
 @export var water_production_component: WaterProductionComponent
