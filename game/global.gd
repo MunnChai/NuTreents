@@ -44,6 +44,8 @@ enum TreeType {
 enum EnemyType {
 	SPEEDLE = 0,
 	SILK_SPITTER = SPEEDLE + 1,
+	TANK_SPEEDLE = SILK_SPITTER + 1,
+	SPEED_SPEEDLE = TANK_SPEEDLE + 1
 }
 
 ## GAME STATE
