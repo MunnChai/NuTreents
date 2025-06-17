@@ -1,6 +1,8 @@
 class_name EnemyStatComponent
 extends StatComponent
 
+@export var type: Global.EnemyType
+
 @export var tooltip_identifier_component: TooltipIdentifierComponent
 @export var health_component: HealthComponent
 @export var hitbox_component: HitboxComponent
@@ -20,6 +22,8 @@ func _ready() -> void:
 		grid_range_component = Components.get_component(actor, GridRangeComponent)
 	if not action_timer:
 		action_timer = Components.get_component(actor, Timer)
+	
+	set_stats_from_resource()
 
 func set_stats_from_resource(resource: StatResource = stat_resource) -> void:
 	health_component.set_max_health(resource.hp)

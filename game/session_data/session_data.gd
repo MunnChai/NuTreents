@@ -79,11 +79,12 @@ func save_session_data(save_num: int = 1):
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
-	for enemy: EnemyComposed in EnemyManager.instance.get_enemies():
+	for enemy: Node2D in EnemyManager.instance.get_enemies():
 		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
 		if !save_resource:
 			continue
-		enemy_map[enemy.grid_position_component.get_pos()] = save_resource
+		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
+		enemy_map[grid_position_component.get_pos()] = save_resource
 	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
 	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.instance.enemy_spawn_timer)
 	
@@ -248,11 +249,13 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 	
 	return save_resource
 
-func _create_enemy_save_resource(enemy: EnemyComposed) -> EnemyDataResource:
+func _create_enemy_save_resource(enemy: Node2D) -> EnemyDataResource:
 	var save_resource: EnemyDataResource = EnemyDataResource.new()
 	
-	save_resource.type = enemy.type
-	save_resource.hp = enemy.health_component.current_health
+	var stat_component: EnemyStatComponent = Components.get_component(enemy, EnemyStatComponent)
+	save_resource.type = stat_component.type
+	var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+	save_resource.hp = health_component.current_health
 	
 	return save_resource
 

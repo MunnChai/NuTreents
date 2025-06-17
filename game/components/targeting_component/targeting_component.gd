@@ -1,8 +1,8 @@
 class_name TargetingComponent
 extends Node2D
 
-func get_nearest_enemy(map_position: Vector2i) -> EnemyComposed:
-	var nearest_enemy: EnemyComposed = null
+func get_nearest_enemy(map_position: Vector2i) -> Node2D:
+	var nearest_enemy: Node2D = null
 	var nearest_enemy_pos = Vector2i.ZERO
 	var nearest_dist: float = INF
 	for enemy in get_tree().get_nodes_in_group("enemies"):
@@ -18,7 +18,7 @@ func get_nearest_enemy(map_position: Vector2i) -> EnemyComposed:
 	return nearest_enemy
 
 func get_nearest_enemy_pos(map_position: Vector2i) -> Vector2i:
-	var nearest_enemy: EnemyComposed = null
+	var nearest_enemy: Node2D = null
 	var nearest_enemy_pos = Vector2i.ZERO
 	var nearest_dist: float = INF
 	for enemy in get_tree().get_nodes_in_group("enemies"):

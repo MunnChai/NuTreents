@@ -20,6 +20,8 @@ func _ready() -> void:
 		nutreent_production_component = Components.get_component(actor, NutreentProductionComponent)
 	if not grow_timer:
 		grow_timer = Components.get_component(actor, Timer)
+	
+	#set_stats_from_resource()
 
 func set_stats_from_resource(resource: StatResource = stat_resource) -> void:
 	tooltip_identifier_component.set_id(resource.id)

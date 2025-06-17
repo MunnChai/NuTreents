@@ -124,9 +124,13 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			rich_text.text += "Nutrients needed to destroy: " + str(structure.cost_to_remove)
 		elif (enemy != null):
 			rich_text.text +="\n"
-			#rich_text.text += "HP: " + str(enemy.current_health)
-			#rich_text.text += "\nDAMAGE: " + str(enemy.attack_damage)
-			#rich_text.text += "\nRANGE: " + str(enemy.attack_range)
+			
+			var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+			rich_text.text += "HP: " + str(health_component.current_health)
+			
+			var stat_component: EnemyStatComponent = Components.get_component(enemy, EnemyStatComponent)
+			rich_text.text += "\nDAMAGE: " + str(stat_component.stat_resource.attack_damage)
+			rich_text.text += "\nRANGE: " + str(stat_component.stat_resource.attack_range)
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";

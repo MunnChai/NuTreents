@@ -42,12 +42,15 @@ func do_primary_action() -> void:
 	if terrain_map.is_void(p):
 		return
 	
-	if TreeManager.is_twee(p):
-		SfxManager.play_sound_effect("ui_fail")
-		PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
-		return
+	var entity = MapUtility.get_entity_at(p)
+	if Components.has_component(entity, ObstructionComponent):
+		var obstruction_component: ObstructionComponent = Components.get_component(entity, ObstructionComponent)
+		if obstruction_component.is_obstructing:
+			SfxManager.play_sound_effect("ui_fail")
+			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
+			return
 	
-	if not TreeManager.is_reachable(p):
+	if not TreeManager.is_reachable(p, true):
 		SfxManager.play_sound_effect("ui_fail")
 		PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
 		return
