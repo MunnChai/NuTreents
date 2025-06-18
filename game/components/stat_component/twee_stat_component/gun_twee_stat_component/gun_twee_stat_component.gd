@@ -34,4 +34,3 @@ func set_upgraded_stats_from_resource(resource: StatResource = stat_resource) ->
 	projectile_spawner_component.set_damage(resource.attack_damage_2)
 	action_timer.wait_time = resource.attack_cooldown_2
 	attack_range_component.range = resource.attack_range_2
-	print("Set Range to: ", attack_range_component.range)

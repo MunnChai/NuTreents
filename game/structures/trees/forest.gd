@@ -143,8 +143,8 @@ func update_water_maintenance(delta: float) -> float:
 		else:
 			twee_behaviour_component.is_dehydrated = false
 		
-		var twee_animation_component: TweeAnimationComponent = Components.get_component(tree, TweeAnimationComponent)
-		twee_animation_component._update_shader(delta)
+		#var twee_animation_component: TweeAnimationComponent = Components.get_component(tree, TweeAnimationComponent)
+		#twee_animation_component._update_shader(delta)
 	
 	water += net_water * delta
 	water = clamp(water, 0, INF)

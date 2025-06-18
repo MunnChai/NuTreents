@@ -43,6 +43,8 @@ resource_local_to_scene = true
 
 [node name="TallTreeComposed" type="Node2D"]
 
+[node name="WaterProductionComponent" parent="." instance=ExtResource("14_cu8ms")]
+
 [node name="TreeBehaviourComponent" parent="." instance=ExtResource("18_76io5")]
 
 [node name="TreeStatComponent" parent="." instance=ExtResource("19_csjnu")]
@@ -90,8 +92,6 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 [node name="ObstructionComponent" parent="." instance=ExtResource("12_hr06b")]
 
 [node name="NutreentProductionComponent" parent="." instance=ExtResource("13_hwjlj")]
-
-[node name="WaterProductionComponent" parent="." instance=ExtResource("14_cu8ms")]
 
 [node name="GridRangeComponent" parent="." instance=ExtResource("15_neanf")]
 range = 1

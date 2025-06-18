@@ -10,7 +10,7 @@ func die():
 	var factory_remains = StructureRegistry.get_new_structure(Global.StructureType.FACTORY_REMAINS)
 	Global.structure_map.add_structure(grid_position_component.get_pos(), factory_remains)
 	factory_remains.tech_slot = tech_slot
-	
+	print("Adding tech tree remains!")
 	if is_large:
 		Global.tech_menu.current_tech.erase(tech_slot)
 

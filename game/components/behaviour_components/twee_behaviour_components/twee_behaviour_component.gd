@@ -151,6 +151,9 @@ func apply_data_resource(tree_resource: Resource):
 #region StateModifiers
 
 func upgrade_tree() -> void:
+	if is_large:
+		return
+	
 	is_large = true
 	is_growing = true
 	tree_animation_component.play_grow_large_animation()

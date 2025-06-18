@@ -27,6 +27,16 @@ func consume_n(cost: int) -> void:
 
 #region CORE FUNCTIONALITY
 
+const RESOURCE_TICK_RATE: float = 0.5 # Time in seconds for each tick of resources
+var resource_timer: Timer
+
+func _ready() -> void:
+	resource_timer = Timer.new()
+	add_child(resource_timer)
+	resource_timer.one_shot = false
+	resource_timer.wait_time = RESOURCE_TICK_RATE
+	resource_timer.timeout.connect(get_resources)
+
 ## Start the game with a blank slate
 func start_game():
 	nutreents = 100000
@@ -59,6 +69,8 @@ func start_game():
 	
 	var grid_position_component = Components.get_component(mother_tree, GridPositionComponent)
 	grid_position_component.init_occupied_positions(mother_tree_positions)
+	
+	resource_timer.start()
 
 ## Returns the twee at the given position, null if there is none
 func get_twee(pos: Vector2i) -> Node2D:
@@ -113,6 +125,9 @@ func remove_tree(p: Vector2i) -> void:
 	if not forest_map.has(p): # No tree here. No sir.
 		return
 	
+	# Structure map...
+	structure_map.remove_structure(p)
+	
 	# Forest...
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
@@ -123,9 +138,6 @@ func remove_tree(p: Vector2i) -> void:
 	
 	# Map...
 	tree_map.erase(p)
-	
-	# Structure map...
-	structure_map.remove_structure(p)
 	
 	# Fog...
 	# TODO: Put fog back?
@@ -138,12 +150,16 @@ func remove_tree(p: Vector2i) -> void:
 #region PROCESSING
 
 func _process(delta: float) -> void:
-	nutreents_gain = get_nutrient_gain(delta)
-	nutreents += nutreents_gain * delta # Nutreents/second * time 
-	update_water_maintenance(delta)
-	
-	if Input.is_action_just_pressed("debug_button_2"):
-		print_orphan_nodes()
+	#nutreents_gain = get_nutrient_gain(delta)
+	#nutreents += nutreents_gain * delta # Nutreents/second * time 
+	#update_water_maintenance(delta)
+	pass
+
+# Occurs once per second
+func get_resources(tick_rate: float = RESOURCE_TICK_RATE) -> void:
+	nutreents_gain = get_nutrient_gain(tick_rate)
+	nutreents += nutreents_gain * tick_rate
+	update_water_maintenance(tick_rate)
 
 func get_nutrient_gain(delta: float) -> float:
 	var nutrient_sum: float = 0

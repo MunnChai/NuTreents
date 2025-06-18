@@ -43,6 +43,8 @@ resource_local_to_scene = true
 
 [node name="WaterTreeComposed" type="Node2D"]
 
+[node name="WaterProductionComponent" parent="." instance=ExtResource("14_no8lf")]
+
 [node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("18_ag2fa")]
 damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
 death_sound_emitter_component = NodePath("../DeathSoundEmitterComponent")
@@ -94,8 +96,6 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 [node name="ObstructionComponent" parent="." instance=ExtResource("12_whkhy")]
 
 [node name="NutreentProductionComponent" parent="." instance=ExtResource("13_it1uo")]
-
-[node name="WaterProductionComponent" parent="." instance=ExtResource("14_no8lf")]
 
 [node name="GridRangeComponent" parent="." instance=ExtResource("15_ya7fu")]
 range = 1

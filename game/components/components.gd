@@ -9,28 +9,39 @@ static func get_component(node: Node, component_type: Variant, string_name: Stri
 	return _search_for_component(node, component_type, string_name)
 
 static func _search_for_component(node: Node, component_type: Variant, string_name: String = "") -> Variant:
-	if is_instance_of(node, component_type):
-		return node
+	# Check self
+	if string_name != "":
+		if is_instance_of(node, component_type) and node.name == string_name:
+			return node
+	else:
+		if is_instance_of(node, component_type):
+			return node
 	
+	# No children and self is not node
 	if node.get_child_count() == 0:
 		return null
 	
+	# Loop over children
 	var children = node.get_children()
 	for child in children:
 		if string_name != "":
 			if is_instance_of(child, component_type) and child.name == string_name:
 				return child
-			else:
-				var result = _search_for_component(child, component_type)
-				if is_instance_of(result, component_type) and result.name == string_name:
-					return result
 		else:
 			if is_instance_of(child, component_type):
 				return child
-			else:
-				var result = _search_for_component(child, component_type)
-				if is_instance_of(result, component_type):
-					return result
+	
+	
+	# Recurse over grandchildren
+	children = node.get_children()
+	for child in children:
+		var result = _search_for_component(child, component_type)
+		if string_name != "":
+			if is_instance_of(result, component_type) and result.name == string_name:
+				return result
+		else:
+			if is_instance_of(result, component_type):
+				return result
 	
 	return null
 

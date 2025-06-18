@@ -46,6 +46,8 @@ resource_local_to_scene = true
 
 [node name="GunTreeComposed" type="Node2D"]
 
+[node name="WaterProductionComponent" parent="." instance=ExtResource("14_8fvse")]
+
 [node name="GunTweeBehaviourComponent" parent="." instance=ExtResource("20_dofad")]
 
 [node name="GunTreeStatComponent" parent="." instance=ExtResource("21_c5uq1")]
@@ -97,8 +99,6 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 [node name="ObstructionComponent" parent="." instance=ExtResource("12_54454")]
 
 [node name="NutreentProductionComponent" parent="." instance=ExtResource("13_spt2m")]
-
-[node name="WaterProductionComponent" parent="." instance=ExtResource("14_8fvse")]
 
 [node name="GridRangeComponent" parent="." instance=ExtResource("15_46ovy")]
 range = 1

@@ -43,6 +43,8 @@ resource_local_to_scene = true
 
 [node name="TechTreeComposed" type="Node2D"]
 
+[node name="WaterProductionComponent" parent="." instance=ExtResource("12_awd2e")]
+
 [node name="TechTweeBehaviourComponent" parent="." instance=ExtResource("18_p0rwt")]
 
 [node name="TreeStatComponent" parent="." instance=ExtResource("19_mhb14")]
@@ -93,8 +95,6 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 [node name="ObstructionComponent" parent="." instance=ExtResource("10_mhb14")]
 
 [node name="NutreentProductionComponent" parent="." instance=ExtResource("11_0whc8")]
-
-[node name="WaterProductionComponent" parent="." instance=ExtResource("12_awd2e")]
 
 [node name="GridRangeComponent" parent="." instance=ExtResource("13_hovjm")]
 range = 1
