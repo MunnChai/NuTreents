@@ -1,6 +1,8 @@
 class_name Fire
 extends Node2D
 
+## TODO: The particles on this thing (I think it's particles...) or something with the fire system currently LAGS REALLY BAD the more there are.
+
 ## A FIRE!
 
 signal burned_out ## Ended on its own accord

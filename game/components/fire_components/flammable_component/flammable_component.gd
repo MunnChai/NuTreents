@@ -4,6 +4,8 @@ extends Node2D
 ## A COMPONENT THAT REPRESENTS AN OBJECT WHICH CAN BE SET ON FIRE
 ## Tracks fire "state" on this object
 
+## TODO: How to get this onto like, 99% of the trees really easily?
+
 @export var fire_pivot: Marker2D ## Choose a spot to put the fire!
 
 @export var is_flammable := true
