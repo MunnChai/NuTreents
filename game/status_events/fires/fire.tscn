@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ehuiw0exguh3"]
+
+[ext_resource type="PackedScene" uid="uid://dpkj31vcp2jhh" path="res://status_events/fires/fire_particle_bundle.tscn" id="1_toilv"]
+
+[node name="Fire" type="Node2D"]
+
+[node name="FireParticleBundle" parent="." instance=ExtResource("1_toilv")]
+position = Vector2(5, -3)
+
+[node name="FireParticleBundle2" parent="." instance=ExtResource("1_toilv")]
+position = Vector2(-8, 3)
+
+[node name="FireParticleBundle3" parent="." instance=ExtResource("1_toilv")]
+position = Vector2(4, 10)

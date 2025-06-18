@@ -1,6 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://d4l1saxnn6efv"]
+[gd_scene load_steps=21 format=3 uid="uid://blhb3s1a4lkpx"]
 
-[ext_resource type="Script" uid="uid://dxfedvt20mvie" path="res://structures/trees/scenes/twee_composed.gd" id="1_istyr"]
+[ext_resource type="Script" path="res://structures/trees/scenes/twee_composed.gd" id="1_istyr"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_tjy4u"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="2_istyr"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8kbt51qdolu3"]
+[gd_scene load_steps=9 format=3 uid="uid://cex2j27mtndes"]
 
 [ext_resource type="Script" uid="uid://bnf8eche4rwwo" path="res://structures/trees/twee.gd" id="1_f38t6"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://structures/trees/stats/default_tree_stat.tres" id="2_mwnlu"]
