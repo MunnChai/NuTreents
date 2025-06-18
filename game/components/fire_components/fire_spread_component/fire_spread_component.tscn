@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkj5432pbunea"]
+
+[ext_resource type="Script" uid="uid://b8ak1m6id5852" path="res://components/fire_components/fire_spread_component/fire_spread_component.gd" id="1_la83o"]
+
+[node name="FireSpreadComponent" type="Node2D"]
+script = ExtResource("1_la83o")
+
+[node name="Timer" type="Timer" parent="."]
