@@ -39,7 +39,7 @@ func _ready() -> void:
 
 ## Start the game with a blank slate
 func start_game():
-	nutreents = 100000
+	nutreents = 25
 	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
@@ -291,7 +291,7 @@ func get_forest(id: int) -> Forest:
 ## given a pos, check if there's a need to split the forest, split if neccessary
 ## id is the forest_id of the original tree
 func forest_check(p: Vector2i, id: int):
-	print("forest_check called")
+	#print("forest_check called")
 	# check for split
 	var forest_groups: Array = check_for_split(p)
 	# split if needed

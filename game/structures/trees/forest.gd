@@ -127,24 +127,10 @@ func update_water_maintenance(delta: float) -> float:
 		
 		var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
 		
-		if (net_water < 0): # If the gain for this forest does not outweigh the maintenance
-			if (water <= 0): # Check THIS forest's water supply
-				if (twee_behaviour_component.is_water_adjacent()): # If the tree is next to water, don't be dehydrated
-					twee_behaviour_component.is_dehydrated = false
-				else:
-					twee_behaviour_component.is_dehydrated = true
-					
-					while (twee_behaviour_component.water_damage_time > twee_behaviour_component.WATER_DAMAGE_DELAY):
-						twee_behaviour_component.health_component.subtract_health(twee_behaviour_component.DEHYDRATION_DAMAGE)
-						twee_behaviour_component.water_damage_time -= RandomNumberGenerator.new().randf_range(twee_behaviour_component.WATER_DAMAGE_DELAY, twee_behaviour_component.WATER_DAMAGE_DELAY * 2)
-					twee_behaviour_component.water_damage_time += delta
-			else:
-				twee_behaviour_component.is_dehydrated = false
-		else:
+		if net_water >= 0 or water > 0 or water_production_component.is_water_adjacent():
 			twee_behaviour_component.is_dehydrated = false
-		
-		#var twee_animation_component: TweeAnimationComponent = Components.get_component(tree, TweeAnimationComponent)
-		#twee_animation_component._update_shader(delta)
+		else:
+			twee_behaviour_component.is_dehydrated = true
 	
 	water += net_water * delta
 	water = clamp(water, 0, INF)

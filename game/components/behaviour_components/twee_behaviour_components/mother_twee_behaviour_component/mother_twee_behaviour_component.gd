@@ -14,7 +14,6 @@ func _on_death():
 	die()
 
 func die():
-	died = true
 	Global.game_state = Global.GameState.GAME_OVER
 	SceneLoader.transition_to_game_over()
 
