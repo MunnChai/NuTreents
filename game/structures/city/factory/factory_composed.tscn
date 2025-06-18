@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://pwq6l348irkt"]
+[gd_scene load_steps=15 format=3 uid="uid://pwq6l348irkt"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_2ef26"]
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="1_l7t1q"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="6_257jg"]
 [ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="7_36ag0"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="9_nrg4w"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="10_snwho"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_36ag0"]
 shader = ExtResource("1_2ef26")
@@ -84,3 +85,6 @@ id = "factory"
 [node name="FogRevealerComponent" parent="." instance=ExtResource("7_36ag0")]
 
 [node name="OutlineComponent" parent="." instance=ExtResource("9_nrg4w")]
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("10_snwho")]
+arrow_height = 1

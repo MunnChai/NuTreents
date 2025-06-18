@@ -88,7 +88,6 @@ func reset_shop_cards():
 		shop_card.pressed.connect(_on_shop_card_pressed.bind(shop_card))
 		
 		tree_cards.add_child(shop_card)
-		print(tree_type)
 
 func remove_card(shop_card: ShopCard):
 	shop_card.remove()

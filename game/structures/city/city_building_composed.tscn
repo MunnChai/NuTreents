@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnwmoqcy1law8"]
+[gd_scene load_steps=13 format=3 uid="uid://dnwmoqcy1law8"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_0eofc"]
 [ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://structures/city/City_Buildings_1.png" id="1_186vr"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="5_6n1hg"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_8khhr"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="9_uc0t6"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="10_6h5io"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8khhr"]
 shader = ExtResource("1_0eofc")
@@ -43,3 +44,6 @@ cost_to_destroy = 250.0
 id = "city_building"
 
 [node name="OutlineComponent" parent="." instance=ExtResource("9_uc0t6")]
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("10_6h5io")]
+arrow_height = 1
