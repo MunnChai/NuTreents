@@ -82,10 +82,9 @@ func play_death_animation() -> void:
 	
 	await get_tree().create_timer(FLASH_DURATION).timeout
 	
-	if (animation_player.current_animation == large_animation_name and 
-		not animation_player.current_animation == "grow_large"): # Temp fix: Prevent small trees from spawning big tree die vfx
+	if animation_player.current_animation == large_animation_name: # Temp fix: Prevent small trees from spawning big tree die vfx
 		var death_vfx = GREEN_TREE_DIE.instantiate()
-		get_parent().add_child(death_vfx)
+		get_parent().get_parent().add_child(death_vfx) # Munn; So scuffed lol
 		death_vfx.global_position = global_position
 	
 	death_finished.emit()

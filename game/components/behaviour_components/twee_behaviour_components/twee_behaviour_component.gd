@@ -120,7 +120,9 @@ func _on_death():
 func die():
 	death_sound_emitter_component.play_sound_effect()
 	
-	await tree_animation_component.play_death_animation()
+	tree_animation_component.play_death_animation()
+	
+	await tree_animation_component.death_finished
 	
 	actor.queue_free()
 

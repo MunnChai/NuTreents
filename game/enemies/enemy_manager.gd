@@ -157,7 +157,8 @@ func kill_all_enemies():
 		if (!enemy):
 			continue
 		
-		enemy.die()
+		var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+		enemy_health_component.set_current_health(0)
 
 func get_enemies() -> Array:
 	return get_tree().get_nodes_in_group("enemies")
