@@ -62,6 +62,11 @@ func do_primary_action() -> void:
 		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
 		return
 	
+	if structure_map.does_obstructive_structure_exist(p):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Obstruction!", structure_map.map_to_local(p))
+		return
+	
 	if type == Global.TreeType.TECH_TREE:
 		var can_place = true
 		

@@ -103,7 +103,6 @@ range = 2
 flammable_component = NodePath("../FlammableComponent")
 grid_position_component = NodePath("../../GridPositionComponent")
 grid_range_component = NodePath("../FireGridRangeComponent")
-fire_spread_increment = 3.0
 
 [node name="FlammableComponent" parent="TreeFireComponents" instance=ExtResource("19_vyjhx")]
 
