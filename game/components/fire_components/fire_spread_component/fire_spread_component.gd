@@ -24,9 +24,15 @@ func _spread_tick() -> void:
 	try_spread()
 	$Timer.start(fire_spread_increment)
 
+@onready var rng := RandomNumberGenerator.new()
+
 ## Computational arson
 func try_spread() -> void:
 	var range_options := grid_range_component.get_tiles_in_range()
+	
+	#var random := rng.randi_range(0, 100)
+	#if random > 50: # 50% chance to just not do anything
+		#return
 	
 	var lit_something := false
 	while not lit_something: ## Loop until we light something or we are out of options
@@ -43,5 +49,6 @@ func try_spread() -> void:
 		if entity:
 			if Components.has_component(entity, FlammableComponent):
 				var flammable: FlammableComponent = Components.get_component(entity, FlammableComponent)
-				flammable.ignite()
-				lit_something = true
+				if flammable != self:
+					flammable.ignite()
+					lit_something = true

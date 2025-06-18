@@ -42,5 +42,9 @@ static func has_component(node: Node, component_type: Variant) -> bool:
 	for child in children:
 		if is_instance_of(child, component_type):
 			return true
+		else:
+			var search = has_component(child, component_type)
+			if search:
+				return true
 	
 	return false

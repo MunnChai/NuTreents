@@ -4,10 +4,13 @@ extends Node2D
 ## A COMPONENT THAT REPRESENTS AN OBJECT WHICH CAN BE SET ON FIRE
 ## Tracks fire "state" on this object
 
+@export var fire_pivot: Marker2D ## Choose a spot to put the fire!
+
 @export var is_flammable := true
 @export var can_fire_go_out := true ## Will the fire ever go out?
 @export var burn_time := 10.0 ## How long does this burn for? In seconds.
 @export var fire_tick_duration := 1.0
+@export var ignite_on_ready := false
 
 signal ignited(fire: Fire)
 signal burned_out
@@ -21,6 +24,10 @@ const FIRE = preload("res://status_events/fires/fire.tscn") # Figure some better
 
 func is_on_fire() -> bool:
 	return fire != null
+
+func _ready() -> void:
+	if ignite_on_ready:
+		call_deferred("ignite")
 
 var tick_countdown := 0.0
 func _process(delta: float) -> void:
@@ -36,11 +43,16 @@ func ignite() -> void:
 		return
 	if is_on_fire(): ## No double fires
 		return
+		
+	print("IGNITED!")
 	
 	## Spawn fire entity on top of this thing, with burn configuration details...
 	var new_fire: Fire = FIRE.instantiate()
 	add_child(new_fire)
-	new_fire.global_position = global_position
+	if fire_pivot:
+		new_fire.global_position = fire_pivot.global_position
+	else:
+		new_fire.global_position = global_position
 	fire = new_fire
 	
 	## Configuration...

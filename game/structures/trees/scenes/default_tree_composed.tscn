@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://blhb3s1a4lkpx"]
+[gd_scene load_steps=24 format=3 uid="uid://blhb3s1a4lkpx"]
 
 [ext_resource type="Script" path="res://structures/trees/scenes/twee_composed.gd" id="1_istyr"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
@@ -20,7 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="18_wohpo"]
 [ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="19_vyjhx"]
 [ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="20_6onuw"]
-[ext_resource type="PackedScene" uid="uid://bektkr1phsdg2" path="res://components/fire_components/spontaneous_combustion_component/spontanous_combustion_component.tscn" id="21_ofslc"]
 [ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="22_eq1ht"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
@@ -91,22 +90,21 @@ range = 1
 
 [node name="OutlineComponent" parent="." instance=ExtResource("18_wohpo")]
 
-[node name="FlammableComponent" parent="." instance=ExtResource("19_vyjhx")]
+[node name="TreeFireComponents" type="Node2D" parent="."]
 
-[node name="FireSpreadComponent" parent="." node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("20_6onuw")]
+[node name="FireDamageComponent" parent="TreeFireComponents" node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("22_eq1ht")]
 flammable_component = NodePath("../FlammableComponent")
-grid_position_component = NodePath("../GridPositionComponent")
-grid_range_component = NodePath("../FireGridRangeComponent")
-fire_spread_increment = 5.0
+health_component = NodePath("../../HealthComponent")
 
-[node name="FireGridRangeComponent" parent="." instance=ExtResource("10_4oe0m")]
+[node name="FireGridRangeComponent" parent="TreeFireComponents" instance=ExtResource("10_4oe0m")]
 range = 2
 
-[node name="SpontanousCombustionComponent" parent="." node_paths=PackedStringArray("flammable_component") instance=ExtResource("21_ofslc")]
+[node name="FireSpreadComponent" parent="TreeFireComponents" node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("20_6onuw")]
 flammable_component = NodePath("../FlammableComponent")
+grid_position_component = NodePath("../../GridPositionComponent")
+grid_range_component = NodePath("../FireGridRangeComponent")
+fire_spread_increment = 3.0
 
-[node name="FireDamageComponent" parent="." node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("22_eq1ht")]
-flammable_component = NodePath("../FlammableComponent")
-health_component = NodePath("../HealthComponent")
+[node name="FlammableComponent" parent="TreeFireComponents" instance=ExtResource("19_vyjhx")]
 
 [editable path="HurtboxComponent"]
