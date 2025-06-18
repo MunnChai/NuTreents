@@ -7,10 +7,12 @@ extends Node2D
 @export var is_flammable := true
 @export var can_fire_go_out := true ## Will the fire ever go out?
 @export var burn_time := 10.0 ## How long does this burn for? In seconds.
+@export var fire_tick_duration := 1.0
 
 signal ignited(fire: Fire)
 signal burned_out
 signal extinguished
+signal fire_tick
 
 var fire: Fire
 var extinguished_counter: int = 0
@@ -19,6 +21,14 @@ const FIRE = preload("res://status_events/fires/fire.tscn") # Figure some better
 
 func is_on_fire() -> bool:
 	return fire != null
+
+var tick_countdown := 0.0
+func _process(delta: float) -> void:
+	if is_on_fire():
+		while tick_countdown <= 0:
+			tick_countdown += fire_tick_duration 
+			fire_tick.emit()
+		tick_countdown -= delta
 
 ## Set this object ON FIRE!
 func ignite() -> void:
@@ -40,6 +50,7 @@ func ignite() -> void:
 	fire.burned_out.connect(_on_fire_burned_out)
 	fire.extinguished.connect(_on_fire_extinguished)
 	
+	tick_countdown = fire_tick_duration
 	ignited.emit(fire) ## Let the fire department know
 
 func _on_fire_burned_out() -> void:
