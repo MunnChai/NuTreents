@@ -63,6 +63,8 @@ sound_effect_name = "tree_remove"
 sheets = Array[Texture2D]([ExtResource("3_roexn")])
 v_frames = 3
 large_animation_name = "pump"
+large_uv_offset = 0.45
+small_uv_offset = 0.75
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
