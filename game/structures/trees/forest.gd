@@ -30,6 +30,7 @@ func sort_close_to_far(a, b):
 		return true
 	return false
 
+## DEPRECATED
 ## to be called each round, update everything in this Forest
 ## returns the res to be added to the game
 func update(delta: float) -> Vector3:
@@ -175,13 +176,15 @@ func remove_tree(p: Vector2i):
 		return
 	
 	var t: Node2D = trees[p]
-	t.die()
+	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(t, TweeBehaviourComponent)
+	tree_behaviour_component.die()
 	
 	trees.erase(p)
 	tree_set.erase(t)
 	
-	t.remove()
+	tree_behaviour_component.remove()
 
+## DEPRECATED
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 
 func upgrade(p: Vector2i) -> int:
@@ -193,6 +196,7 @@ func upgrade(p: Vector2i) -> int:
 	tree.free()
 	return true
 
+## DEPRECATED
 ## called by Tree when they don't have sufficient water to survive
 ## returns false if total_water < maint; otherwise deduct maint from storage
 func get_water(maint: int) -> bool:

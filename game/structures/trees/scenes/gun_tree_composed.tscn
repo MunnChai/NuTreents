@@ -1,6 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://doicha7u36klq"]
+[gd_scene load_steps=26 format=3 uid="uid://doicha7u36klq"]
 
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_hra2j"]
+[ext_resource type="Script" uid="uid://bdsr33i0o1a4j" path="res://components/stat_component/twee_stat_component/gun_twee_stat_component/gun_twee_stat_component.gd" id="3_c5uq1"]
 [ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="3_p5e44"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_3uf8o"]
 [ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_dofad"]
@@ -45,14 +46,11 @@ resource_local_to_scene = true
 
 [node name="GunTreeComposed" type="Node2D"]
 
-[node name="GunTweeBehaviourComponent" parent="." node_paths=PackedStringArray("action_timer", "damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("20_dofad")]
-action_timer = NodePath("../ActionTimer")
-damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
-death_sound_emitter_component = NodePath("../DeathSoundEmitterComponent")
+[node name="GunTweeBehaviourComponent" parent="." instance=ExtResource("20_dofad")]
 
-[node name="TreeStatComponent" parent="." node_paths=PackedStringArray("grow_timer") instance=ExtResource("21_c5uq1")]
+[node name="GunTreeStatComponent" parent="." instance=ExtResource("21_c5uq1")]
+script = ExtResource("3_c5uq1")
 type = 2
-grow_timer = NodePath("../GrowTimer")
 stat_resource = ExtResource("2_hra2j")
 
 [node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("22_tkyw5")]
@@ -64,6 +62,8 @@ sound_effect_name = "tree_remove"
 [node name="TreeAnimationComponent" parent="." instance=ExtResource("5_dofad")]
 sheets = Array[Texture2D]([ExtResource("3_p5e44")])
 v_frames = 3
+large_uv_offset = 0.45
+small_uv_offset = 0.75
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

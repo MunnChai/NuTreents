@@ -43,9 +43,7 @@ resource_local_to_scene = true
 
 [node name="TallTreeComposed" type="Node2D"]
 
-[node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("18_76io5")]
-damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
-death_sound_emitter_component = NodePath("../DeathSoundEmitterComponent")
+[node name="TreeBehaviourComponent" parent="." instance=ExtResource("18_76io5")]
 
 [node name="TreeStatComponent" parent="." instance=ExtResource("19_csjnu")]
 type = 6

@@ -1,6 +1,5 @@
-[gd_scene load_steps=25 format=3 uid="uid://dookr1yus2k36"]
+[gd_scene load_steps=23 format=3 uid="uid://dookr1yus2k36"]
 
-[ext_resource type="Script" uid="uid://y457sb4ptt0j" path="res://structures/trees/scenes/tech_tree_composed.gd" id="1_pr16v"]
 [ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://structures/trees/stats/tech_tree_stat.tres" id="2_2577w"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="2_im0sa"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="3_2577w"]
@@ -20,7 +19,6 @@
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="17_hor77"]
 [ext_resource type="PackedScene" uid="uid://7lkexv103hkc" path="res://components/behaviour_components/twee_behaviour_components/tech_twee_behaviour_component/tech_twee_behaviour_component.tscn" id="18_p0rwt"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="19_mhb14"]
-[ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://structures/trees/stats/tall_tree_stat.tres" id="20_0whc8"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="21_awd2e"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jnssm"]
@@ -44,18 +42,12 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="TechTreeComposed" type="Node2D"]
-script = ExtResource("1_pr16v")
-type = 4
-tree_stat = ExtResource("2_2577w")
-sheets = Array[Texture2D]([ExtResource("3_mfip6")])
-v_frames = 3
-large_animation_name = "pump"
 
 [node name="TechTweeBehaviourComponent" parent="." instance=ExtResource("18_p0rwt")]
 
 [node name="TreeStatComponent" parent="." instance=ExtResource("19_mhb14")]
-type = 6
-stat_resource = ExtResource("20_0whc8")
+type = 4
+stat_resource = ExtResource("2_2577w")
 
 [node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("21_awd2e")]
 sound_effect_name = "tree_damage"

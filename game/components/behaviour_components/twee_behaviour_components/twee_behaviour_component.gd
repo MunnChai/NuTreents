@@ -1,10 +1,6 @@
 class_name TweeBehaviourComponent
 extends Node2D
 
-## THESE MUST BE SET IN THE EDITOR, SINCE Components.get_component() ONLY GETS A COMPONENT BY TYPE
-@export var damage_sound_emitter_component: SoundEmitterComponent
-@export var death_sound_emitter_component: SoundEmitterComponent
-
 # Components
 @export_group("Components")
 @export var health_component: HealthComponent
@@ -17,6 +13,8 @@ extends Node2D
 @export var tree_stat_component: TweeStatComponent
 @export var tree_animation_component: TweeAnimationComponent
 @export var grow_timer: Timer
+@export var damage_sound_emitter_component: SoundEmitterComponent
+@export var death_sound_emitter_component: SoundEmitterComponent
 
 var actor: Node2D
 
@@ -35,8 +33,7 @@ var time_to_grow: float
 
 ## Seconds spent alive...
 ## TODO: This might introduce bugs..? Possibly use TIMERS instead
-var life_time_seconds := 0.0
-
+  
 # Water stuff...
 const BASE_WATER_RANGE = 1
 const WATER_DAMAGE_DELAY = 3.0
@@ -61,7 +58,7 @@ func _get_components() -> void:
 	if not water_production_component:
 		water_production_component = Components.get_component(actor, WaterProductionComponent)
 	if not grid_range_component:
-		grid_range_component = Components.get_component(actor, GridRangeComponent)
+		grid_range_component = Components.get_component(actor, GridRangeComponent, "GridRangeComponent")
 	if not grid_position_component:
 		grid_position_component = Components.get_component(actor, GridPositionComponent)
 	if not hurtbox_component:
@@ -73,29 +70,28 @@ func _get_components() -> void:
 	if not tree_animation_component:
 		tree_animation_component = Components.get_component(actor, TweeAnimationComponent)
 	if not grow_timer:
-		grow_timer = Components.get_component(actor, Timer)
+		grow_timer = Components.get_component(actor, Timer, "GrowTimer")
 	
 	if not damage_sound_emitter_component:
-		print("Damage SFX Emitter Component not set in ", actor.name)
-	
+		damage_sound_emitter_component = Components.get_component(actor, SoundEmitterComponent, "DamageSoundEmitterComponent")
 	if not death_sound_emitter_component:
-		print("Damage SFX Emitter Component not set in ", actor.name)
+		death_sound_emitter_component = Components.get_component(actor, SoundEmitterComponent, "DeathSoundEmitterComponent")
 
 func _connect_component_signals():
 	hurtbox_component.hit_taken.connect(health_component.subtract_health)
 	
-	health_component.health_subtracted.connect(damage_sound_emitter_component.play_sound_effect)
+	health_component.health_subtracted.connect(damage_sound_emitter_component.play_sound_effect.unbind(1))
 	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
 	health_component.health_subtracted.connect(tree_animation_component.play_damage_animation.unbind(1))
 	health_component.died.connect(_on_death)
-	health_component.died.connect(death_sound_emitter_component.play_sound_effect)
-	health_component.died.connect(tree_animation_component.play_death_animation)
 	
 	if grow_timer:
 		grow_timer.timeout.connect(upgrade_tree)
 		grow_timer.one_shot = true
 		
-		grow_timer.call_deferred("start")
+		await get_tree().process_frame # Await, stat_component can set grow_timer time
+		 
+		grow_timer.start()
 
 #endregion
 
@@ -139,7 +135,7 @@ func get_occupied_positions() -> Array:
 
 func apply_data_resource(tree_resource: Resource):
 	
-	life_time_seconds = tree_resource.life_time_seconds
+	grow_timer.wait_time = tree_resource.life_time_seconds
 	is_large = tree_resource.is_large
 	
 	if is_large:
@@ -167,7 +163,9 @@ func _on_death():
 func die():
 	died = true
 	
-	await tree_animation_component.death_finished
+	death_sound_emitter_component.play_sound_effect()
+	
+	await tree_animation_component.play_death_animation()
 	
 	actor.queue_free()
 

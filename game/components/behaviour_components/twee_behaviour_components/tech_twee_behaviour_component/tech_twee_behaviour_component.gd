@@ -4,6 +4,8 @@ extends TweeBehaviourComponent
 var tech_slot: int
 
 func die():
+	super.die() # Frees itself
+	
 	# Instantiate factory remains again
 	var factory_remains = StructureRegistry.get_new_structure(Global.StructureType.FACTORY_REMAINS)
 	Global.structure_map.add_structure(grid_position_component.get_pos(), factory_remains)
@@ -11,8 +13,6 @@ func die():
 	
 	if is_large:
 		Global.tech_menu.current_tech.erase(tech_slot)
-	
-	super.die() # Frees itself
 
 func upgrade_tree() -> void:
 	super.upgrade_tree()

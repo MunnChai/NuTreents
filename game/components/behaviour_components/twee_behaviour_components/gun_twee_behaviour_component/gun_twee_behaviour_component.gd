@@ -10,11 +10,11 @@ func _get_components() -> void:
 	super._get_components()
 	
 	if not attack_range_component:
-		attack_range_component = Components.get_component(actor, GridRangeComponent)
+		attack_range_component = Components.get_component(actor, GridRangeComponent, "AttackRangeComponent")
 	if not targeting_component:
 		targeting_component = Components.get_component(actor, TargetingComponent)
 	if not action_timer:
-		action_timer = Components.get_component(actor, Timer)
+		action_timer = Components.get_component(actor, Timer, "ActionTimer")
 	if not spawner_component:
 		spawner_component = Components.get_component(actor, SpawnerComponent)
 
@@ -24,6 +24,9 @@ func _connect_component_signals() -> void:
 	action_timer.timeout.connect(perform_action)
 	action_timer.one_shot = false
 	action_timer.start()
+
+
+
 
 func perform_action() -> void:
 	if not is_large:
@@ -52,5 +55,3 @@ func spawn_projectile(target_pos: Vector2i) -> void:
 	movement_component.move_to_position(target_pos)
 	
 	SfxManager.play_sound_effect("gun_tree_projectile")
-
-#region Overrides

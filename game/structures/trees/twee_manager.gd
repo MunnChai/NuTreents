@@ -29,7 +29,7 @@ func consume_n(cost: int) -> void:
 
 ## Start the game with a blank slate
 func start_game():
-	nutreents = 25
+	nutreents = 100000
 	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
@@ -207,7 +207,8 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 		
 		if forests_to_merge.has(tree_id):
 			var tree: Node2D = tree_map[pos]
-			tree.forest = forest_id
+			var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+			tree_behaviour_component.forest = forest_id
 			
 			# Add to forest
 			new_forest.trees[pos] = tree
@@ -340,7 +341,8 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 		## update some info
 		#if (pos == Global.ORIGIN):
 			#continue
-		tree.forest = id
+		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		tree_behaviour_component.forest = id
 		forest_map[pos] = id
 		
 		# add this to new forest

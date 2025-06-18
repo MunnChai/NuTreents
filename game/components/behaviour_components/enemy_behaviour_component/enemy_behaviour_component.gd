@@ -138,7 +138,7 @@ func move(target_pos: Vector2i) -> void:
 #endregion
 
 func die():
-	hurtbox_component.monitorable = false
+	hurtbox_component.set_deferred("monitorable", false)
 	hurtbox_component.monitoring = false
-	hitbox_component.monitorable = false
+	hitbox_component.set_deferred("monitorable", false)
 	hitbox_component.monitoring = false

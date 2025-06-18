@@ -48,7 +48,8 @@ func get_nearest_tree(map_position: Vector2i) -> Node2D:
 		if (health_component.is_dead):
 			continue
 		
-		for pos in tree.grid_position_component.get_occupied_positions():
+		var grid_position_component: GridPositionComponent = Components.get_component(tree, GridPositionComponent)
+		for pos in grid_position_component.get_occupied_positions():
 			var dist = MapUtility.get_taxicab_distance(pos, map_position)
 			if (dist < nearest_dist):
 				nearest_tree = tree
@@ -72,7 +73,8 @@ func get_nearest_tree_pos(map_position: Vector2i):
 		if (health_component.is_dead):
 			continue
 		
-		for pos in tree.grid_position_component.get_occupied_positions():
+		var grid_position_component: GridPositionComponent = Components.get_component(tree, GridPositionComponent)
+		for pos in grid_position_component.get_occupied_positions():
 			var dist = MapUtility.get_taxicab_distance(pos, map_position)
 			if (dist < nearest_dist):
 				nearest_tree = tree

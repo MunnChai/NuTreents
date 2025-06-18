@@ -17,14 +17,18 @@ static func _search_for_component(node: Node, component_type: Variant, string_na
 	
 	var children = node.get_children()
 	for child in children:
-		if is_instance_of(child, component_type):
-			return child
-		else:
-			var result = _search_for_component(child, component_type)
-			if string_name != "":
+		if string_name != "":
+			if is_instance_of(child, component_type) and child.name == string_name:
+				return child
+			else:
+				var result = _search_for_component(child, component_type)
 				if is_instance_of(result, component_type) and result.name == string_name:
 					return result
+		else:
+			if is_instance_of(child, component_type):
+				return child
 			else:
+				var result = _search_for_component(child, component_type)
 				if is_instance_of(result, component_type):
 					return result
 	

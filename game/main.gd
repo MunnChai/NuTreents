@@ -65,7 +65,8 @@ func load_world(session_data: Dictionary) -> void:
 		var tree: Node2D = TreeRegistry.get_new_twee(tree_resource.type)
 		TreeManager.place_tree(tree, pos)
 		
-		tree.apply_data_resource(tree_resource)
+		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		tree_behaviour_component.apply_data_resource(tree_resource)
 	
 	# Load enemies
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
