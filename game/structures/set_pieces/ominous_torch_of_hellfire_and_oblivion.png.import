@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ctv6dmrhuuyri"
-path="res://.godot/imported/omnious_torch_of_hellfire_and_oblivion.png-d45e7bf9119cc3988ea7648ea5935e60.ctex"
+path="res://.godot/imported/ominous_torch_of_hellfire_and_oblivion.png-a950fe4d742428e966a09fde6d673846.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/set_pieces/omnious_torch_of_hellfire_and_oblivion.png"
-dest_files=["res://.godot/imported/omnious_torch_of_hellfire_and_oblivion.png-d45e7bf9119cc3988ea7648ea5935e60.ctex"]
+source_file="res://structures/set_pieces/ominous_torch_of_hellfire_and_oblivion.png"
+dest_files=["res://.godot/imported/ominous_torch_of_hellfire_and_oblivion.png-a950fe4d742428e966a09fde6d673846.ctex"]
 
 [params]
 

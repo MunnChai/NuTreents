@@ -21,7 +21,7 @@ var name_dictionary = {
 	"speedle": "SPEEDLE",
 	"silk_spitter": "SILK SPITTER",
 	
-	"omnious_torch": "OMNIOUS TORCH",
+	"ominous_torch": "OMINOUS TORCH",
 }
 
 var tile_name_dictionary = {
@@ -48,7 +48,7 @@ var desc_dictionary = {
 	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
 	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
 	
-	"omnious_torch": "What the hell is that thing?",
+	"ominous_torch": "What the hell is that thing?",
 	
 	TerrainMap.TileType.DIRT: "Good old dirt. Nothing special.",
 	TerrainMap.TileType.GRASS: "Fertile grasslands, ripe for trees.",

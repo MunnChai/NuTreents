@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_tih5d"]
 [ext_resource type="PackedScene" uid="uid://b58nh1d7lvhem" path="res://structures/city/factory/factory_remains_composed.tscn" id="4_2lfd5"]
 [ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_tih5d"]
-[ext_resource type="PackedScene" uid="uid://duos5rnjoto4" path="res://structures/set_pieces/omnious_torch_composed.tscn" id="6_2lfd5"]
+[ext_resource type="PackedScene" uid="uid://duos5rnjoto4" path="res://structures/set_pieces/ominous_torch.tscn" id="6_2lfd5"]
 
 [node name="CityStructureRegistry" type="Node"]
 script = ExtResource("1_kgvgx")

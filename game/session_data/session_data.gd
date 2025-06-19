@@ -252,7 +252,7 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
 			save_resource.texture_region_position = atlas_texture.region.position
 			save_resource.tile_type = structure_behaviour_component.tile_type
-		Global.StructureType.OMNIOUS_TORCH:
+		Global.StructureType.OMINOUS_TORCH:
 			pass
 	
 	return save_resource

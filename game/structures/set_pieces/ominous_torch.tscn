@@ -1,0 +1,60 @@
+[gd_scene load_steps=13 format=3 uid="uid://duos5rnjoto4"]
+
+[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_nthcp"]
+[ext_resource type="Texture2D" uid="uid://ctv6dmrhuuyri" path="res://structures/set_pieces/ominous_torch_of_hellfire_and_oblivion.png" id="2_aybrw"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="3_s0y1s"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="4_yiawg"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="5_lvtvw"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="6_vxq7e"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="7_d8fkp"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="8_oc6dn"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="9_5nigw"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="10_vhu0d"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="11_7vksw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8khhr"]
+shader = ExtResource("1_nthcp")
+shader_parameter/outline_width = 1
+shader_parameter/outline_alpha = 0.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+
+[node name="OmniousTorchComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_8khhr")
+position = Vector2(0, -16)
+texture = ExtResource("2_aybrw")
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("3_s0y1s")]
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("4_yiawg")]
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("5_lvtvw")]
+id = "ominous_torch"
+
+[node name="FogRevealerComponent" parent="." instance=ExtResource("6_vxq7e")]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("7_d8fkp")]
+
+[node name="FireComponents" type="Node2D" parent="."]
+
+[node name="FireMarker" type="Marker2D" parent="FireComponents"]
+position = Vector2(0, -20)
+
+[node name="FireGridRangeComponent" parent="FireComponents" instance=ExtResource("8_oc6dn")]
+range = 3
+
+[node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("9_5nigw")]
+flammable_component = NodePath("../FlammableComponent")
+grid_position_component = NodePath("../../GridPositionComponent")
+grid_range_component = NodePath("../FireGridRangeComponent")
+
+[node name="FlammableComponent" parent="FireComponents" node_paths=PackedStringArray("fire_pivot") instance=ExtResource("10_vhu0d")]
+can_fire_go_out = false
+ignite_on_ready = true
+fire_pivot = NodePath("../FireMarker")
+
+[node name="StructureBehaviourComponent" parent="." node_paths=PackedStringArray("sprite_2d") instance=ExtResource("11_7vksw")]
+type = 4
+sprite_2d = NodePath("../Sprite2D")

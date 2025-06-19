@@ -355,7 +355,7 @@ func add_set_pieces() -> void:
 		var offset: Vector2i = Vector2i(x_dist * x_sign, y_dist * y_sign)
 		
 		var coord: Vector2i = origin + offset
-		successful_placement = structure_map.add_structure(coord, StructureRegistry.get_new_structure(Global.StructureType.OMNIOUS_TORCH))
+		successful_placement = structure_map.add_structure(coord, StructureRegistry.get_new_structure(Global.StructureType.OMINOUS_TORCH))
 
 func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irreplaceable_tiles: Array[TileType] = []) -> Array[Vector2i]:
 	var drunkard_life: int = lifetime
