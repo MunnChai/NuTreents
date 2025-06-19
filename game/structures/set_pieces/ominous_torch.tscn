@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://duos5rnjoto4"]
+[gd_scene load_steps=14 format=3 uid="uid://duos5rnjoto4"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_nthcp"]
 [ext_resource type="Texture2D" uid="uid://ctv6dmrhuuyri" path="res://structures/set_pieces/ominous_torch_of_hellfire_and_oblivion.png" id="2_aybrw"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="9_5nigw"]
 [ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="10_vhu0d"]
 [ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="11_7vksw"]
+[ext_resource type="PackedScene" uid="uid://bektkr1phsdg2" path="res://components/fire_components/spontaneous_combustion_component/spontanous_combustion_component.tscn" id="11_aybrw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8khhr"]
 shader = ExtResource("1_nthcp")
@@ -54,6 +55,10 @@ grid_range_component = NodePath("../FireGridRangeComponent")
 can_fire_go_out = false
 ignite_on_ready = true
 fire_pivot = NodePath("../FireMarker")
+
+[node name="SpontanousCombustionComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("11_aybrw")]
+flammable_component = NodePath("../FlammableComponent")
+percent_chance = 0.5
 
 [node name="StructureBehaviourComponent" parent="." node_paths=PackedStringArray("sprite_2d") instance=ExtResource("11_7vksw")]
 type = 4
