@@ -12,6 +12,11 @@ extends Node2D
 func _ready() -> void:
 	flammable_component.ignited.connect(_on_ignition)
 	$Timer.timeout.connect(_spread_tick)
+	
+	if grid_position_component == null:
+		grid_position_component = Components.get_component(get_owner(), GridPositionComponent, "", true)
+	if grid_range_component == null:
+		grid_range_component = Components.get_component(get_owner(), GridRangeComponent, "", true)
 
 func _on_ignition(fire: Fire) -> void:
 	$Timer.start(fire_spread_increment) # Test value

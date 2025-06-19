@@ -9,6 +9,10 @@ extends Node2D
 
 func _ready() -> void:
 	flammable_component.fire_tick.connect(_on_tick)
+	
+	if health_component == null:
+		health_component = Components.get_component(get_owner(), HealthComponent, "", true)
 
 func _on_tick() -> void:
-	health_component.subtract_health(damage_amount)
+	if health_component:
+		health_component.subtract_health(damage_amount)
