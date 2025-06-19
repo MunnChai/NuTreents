@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjehlmgi7l7ue"]
+
+[ext_resource type="Script" uid="uid://chwys4alu5i3o" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.gd" id="1_lwkoc"]
+
+[node name="StructureBehaviourComponent" type="Node2D"]
+script = ExtResource("1_lwkoc")

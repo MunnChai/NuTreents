@@ -27,8 +27,7 @@
     }
   },
   "recent_paths": [
-    "res://structures/trees/stats/",
-    "res://addons/example/Items/items/"
+    "res://structures/trees/stats/"
   ],
   "table_functions": {
     "filter": [

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4lyyomgumihh"]
+
+[ext_resource type="Script" uid="uid://dfnufbcg5lkob" path="res://components/behaviour_components/structure_behaviour_components/decor_behaviour_component/decor_behaviour_component.gd" id="1_rylax"]
+
+[node name="DecorBehaviourComponent" type="Node2D"]
+script = ExtResource("1_rylax")

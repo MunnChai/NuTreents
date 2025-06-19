@@ -72,7 +72,7 @@ func do_primary_action() -> void:
 			can_place = false
 		else:
 			var structure: Node2D = structure_map.tile_scene_map[p]
-			if (not structure is FactoryRemainsComposed):
+			if not Components.has_component(structure, FactoryRemainsBehaviourComponent):
 				can_place = false
 		
 		if !can_place:
@@ -84,9 +84,9 @@ func do_primary_action() -> void:
 	# SPECIAL CASE FOR PLANTING TECH TREES ON FACTORY REMAINS:
 	if structure_map.tile_scene_map.has(p):
 		var structure: Node2D = structure_map.tile_scene_map[p]
-		if structure is FactoryRemainsComposed:
+		if Components.has_component(structure, FactoryRemainsBehaviourComponent):
 			if type == Global.TreeType.TECH_TREE:
-				tech_slot = structure.tech_slot
+				tech_slot = Components.get_component(structure, FactoryRemainsBehaviourComponent).tech_slot
 				structure_map.remove_structure(p)
 			else:
 				SfxManager.play_sound_effect("ui_fail")
@@ -142,18 +142,15 @@ func do_secondary_action() -> void:
 				SfxManager.play_sound_effect("concrete_break")
 				TreeManager.consume_n(cost)
 				structure_map.remove_structure(map_pos)
-				PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
+				destructable_component.destroyed.emit()
 				
-				if entity is FactoryComposed:
-					var tech_slot = entity.tech_slot
-					terrain_map.set_cell_type(map_pos, terrain_map.TileType.DIRT)
-					
-					SfxManager.play_sound_effect("concrete_break")
-					PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
-					
-					var factory_remains: FactoryRemainsComposed = StructureRegistry.get_new_structure(Global.StructureType.FACTORY_REMAINS)
-					factory_remains.tech_slot = tech_slot
-					structure_map.add_structure(map_pos, factory_remains)
+				var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(entity, StructureBehaviourComponent)
+				
+				match structure_behaviour_component.type:
+					Global.StructureType.FACTORY:
+						PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
+					_:
+						PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))

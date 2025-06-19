@@ -110,14 +110,6 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 			tween.tween_property(node, "modulate", Color(node.modulate, TRANSPARENCY_ALPHA), TWEEN_TIME)
 
 
-func set_tree_transparency(alpha: float):
-	var structures = tile_scene_map.values()
-	
-	for structure: Node2D in structures:
-		if (structure is Twee):
-			structure.modulate.a = alpha # WE ADJUST THE TREE'S MODULATE IN update_transparencies_around............ maybe just set visible = false?
-
-
 # Removes all structures including trees, except for the mother tree
 func remove_all_structures() -> void:
 	for pos in tile_scene_map.keys():
@@ -131,8 +123,6 @@ func remove_all_structures() -> void:
 			#TreeManager.remove_tree(pos)
 		else:
 			remove_structure(pos)
-
-
 
 
 func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:

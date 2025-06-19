@@ -238,20 +238,21 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 	
 	var save_resource: StructureDataResource = StructureDataResource.new()
 	
-	save_resource.flip_h = structure.sprite_2d.flip_h
-	save_resource.type = structure.type
+	var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+	save_resource.flip_h = structure_behaviour_component.sprite_2d.flip_h
+	save_resource.type = structure_behaviour_component.type
 	
-	if structure.type == Global.StructureType.FACTORY:
-		save_resource.tech_slot = structure.tech_slot
-	elif structure.type == Global.StructureType.FACTORY_REMAINS:
-		save_resource.tech_slot = structure.tech_slot
-	elif structure.type == Global.StructureType.CITY_BUILDING:
-		var atlas_texture: AtlasTexture = structure.sprite_2d.texture
-		save_resource.texture_region_position = atlas_texture.region.position
-	elif structure.type == Global.StructureType.DECOR:
-		var atlas_texture: AtlasTexture = structure.sprite_2d.texture
-		save_resource.texture_region_position = atlas_texture.region.position
-		save_resource.tile_type = structure.tile_type
+	match structure_behaviour_component.type:
+		Global.StructureType.FACTORY, Global.StructureType.FACTORY_REMAINS:
+			save_resource.tech_slot = structure_behaviour_component.tech_slot
+		Global.StructureType.CITY_BUILDING:
+			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
+			save_resource.texture_region_position = atlas_texture.region.position
+		Global.StructureType.DECOR:
+			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
+			save_resource.texture_region_position = atlas_texture.region.position
+			save_resource.tile_type = structure_behaviour_component.tile_type
+		
 	
 	return save_resource
 

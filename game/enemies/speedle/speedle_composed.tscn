@@ -17,7 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="12_p0yog"]
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="14_kjgu2"]
 [ext_resource type="PackedScene" uid="uid://b83aqlj7be5nf" path="res://components/stat_component/enemy_stat_component/enemy_stat_component.tscn" id="16_ifpd8"]
-[ext_resource type="PackedScene" uid="uid://cmtqk8uud6t26" path="res://components/behaviour_components/enemy_behaviour_component/enemy_behaviour_component.tscn" id="17_ehors"]
+[ext_resource type="PackedScene" uid="uid://cmtqk8uud6t26" path="res://components/behaviour_components/enemy_behaviour_components/enemy_behaviour_component.tscn" id="17_ehors"]
 [ext_resource type="PackedScene" uid="uid://st4gpjvotjj2" path="res://components/animation_components/enemy_animation_components/enemy_animation_component.tscn" id="19_2corr"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="20_x8iiq"]
 

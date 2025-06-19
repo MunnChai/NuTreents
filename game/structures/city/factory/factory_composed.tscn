@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://pwq6l348irkt"]
+[gd_scene load_steps=16 format=3 uid="uid://pwq6l348irkt"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_2ef26"]
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="1_l7t1q"]
-[ext_resource type="Script" uid="uid://0epbo6i5nhds" path="res://structures/city/factory/factory_composed.gd" id="1_se4va"]
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="2_3ntak"]
 [ext_resource type="Texture2D" uid="uid://cafkj4qot2ato" path="res://world/proc_gen/structure_map/factory_sheet.png" id="2_257jg"]
 [ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="3_3ntak"]
@@ -10,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="7_36ag0"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="9_nrg4w"]
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="10_snwho"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="11_ttqd5"]
+[ext_resource type="Script" uid="uid://cieb0en7ggha4" path="res://components/behaviour_components/structure_behaviour_components/factory_behaviour_component/factory_behaviour_component.gd" id="12_ygjgk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_36ag0"]
 shader = ExtResource("1_2ef26")
@@ -57,8 +58,6 @@ _data = {
 }
 
 [node name="FactoryComposed" type="Node2D"]
-script = ExtResource("1_se4va")
-type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -78,6 +77,7 @@ autoplay = "idle"
 [node name="GridPositionComponent" parent="." instance=ExtResource("2_3ntak")]
 
 [node name="DestructableComponent" parent="." instance=ExtResource("3_3ntak")]
+cost_to_destroy = 500.0
 
 [node name="TooltipIdentifierComponent" parent="." instance=ExtResource("6_257jg")]
 id = "factory"
@@ -88,3 +88,7 @@ id = "factory"
 
 [node name="VisualArrowComponent" parent="." instance=ExtResource("10_snwho")]
 arrow_height = 1
+
+[node name="FactoryBehaviourComponent" parent="." instance=ExtResource("11_ttqd5")]
+script = ExtResource("12_ygjgk")
+type = 1
