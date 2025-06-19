@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dssskr60jcyxt"]
+
+[ext_resource type="Script" uid="uid://ca7n2fjl6r12t" path="res://components/visual_arrow_component/visual_arrow_component.gd" id="1_emo3u"]
+
+[node name="VisualArrowComponent" type="Node2D"]
+script = ExtResource("1_emo3u")

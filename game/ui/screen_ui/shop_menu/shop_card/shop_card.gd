@@ -74,6 +74,7 @@ func _on_mouse_released():
 	
 	TweenUtil.scale_to(self, Vector2(1, 1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 	pressed.emit()
+	print(tree_type)
 
 func _on_mouse_entered():
 	if is_removed:

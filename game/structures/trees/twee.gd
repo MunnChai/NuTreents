@@ -7,7 +7,7 @@ const TREE_DAMAGE_SHADER = preload("res://structures/trees/shaders/tree_damage.g
 @export var type: Global.TreeType
 
 ## Elementary stats resource for this tree
-@export var tree_stat: TreeStatResource 
+@export var tree_stat: TreeStatResource
 ## List of sprite sheet variations for this tree, 
 ## defaults to a randomly chosen sheet at ready time
 @export var sheets: Array[Texture2D]

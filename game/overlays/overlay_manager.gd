@@ -26,8 +26,6 @@ func show_overlay(overlay_type: OverlayType):
 	if (current_overlay == overlay):
 		return
 	
-	Global.structure_map.set_tree_transparency(0.35)
-	
 	if (current_overlay):
 		current_overlay.hide_overlay()
 	overlay.show_overlay()
@@ -39,8 +37,6 @@ func show_overlay(overlay_type: OverlayType):
 func hide_overlay():
 	if (!current_overlay):
 		return
-	
-	Global.structure_map.set_tree_transparency(1)
 	
 	current_overlay.hide_overlay()
 	current_overlay = null

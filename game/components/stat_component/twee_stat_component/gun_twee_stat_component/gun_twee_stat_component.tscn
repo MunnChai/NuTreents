@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://tlsd4spwedlx"]
+
+[ext_resource type="Script" uid="uid://bdsr33i0o1a4j" path="res://components/stat_component/twee_stat_component/gun_twee_stat_component/gun_twee_stat_component.gd" id="1_rjoqq"]
+
+[node name="GunTweeStatComponent" type="Node2D"]
+script = ExtResource("1_rjoqq")

@@ -1,5 +1,5 @@
 class_name EnemyStatResource
-extends Resource
+extends StatResource
 
 @export var name: String
 @export var id: String

@@ -11,6 +11,7 @@ extends Node2D
 @export var bounce_amount: float
 
 var grid_position_component: GridPositionComponent
+var sprite_2d: Sprite2D
 
 signal move_in_direction(direction: Vector2i)
 
@@ -19,6 +20,7 @@ func _ready() -> void:
 		actor = get_parent()
 	
 	grid_position_component = Components.get_component(actor, GridPositionComponent)
+	sprite_2d = Components.get_component(actor, Sprite2D, "", true)
 
 func move_to_position(target_position: Vector2i) -> void:
 	var current_position = grid_position_component.get_pos()
@@ -58,7 +60,8 @@ func move_to_and_back(target_position: Vector2i) -> void:
 	pos_tween.tween_property(actor, "global_position", target_global_pos, movement_duration / 2)
 	pos_tween.tween_property(actor, "global_position", global_pos, movement_duration / 2)
 	
-	var sprite_2d: Sprite2D = Components.get_component(actor, Sprite2D)
+	if not sprite_2d:
+		return
 	
 	var bounce_tween: Tween = get_tree().create_tween()
 	bounce_tween.set_trans(trans)

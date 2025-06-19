@@ -18,13 +18,19 @@ func _ready() -> void:
 
 func set_max_health(health: float) -> void:
 	max_health = health
-	current_health = health
+	set_current_health(health)
 
 func get_max_health() -> float:
 	return max_health
 
 func set_current_health(health: float) -> void:
 	current_health = health
+	if current_health <= 0:
+		current_health = 0
+		is_dead = true
+		died.emit()
+	else:
+		is_dead = false
 
 func get_current_health() -> float:
 	return current_health

@@ -43,6 +43,8 @@ func spawn_projectile(target_pos: Vector2i) -> void:
 	
 	var hitbox_component: HitboxComponent = Components.get_component(bullet, HitboxComponent)
 	hitbox_component.set_damage(damage)
+	
+	SfxManager.play_sound_effect("gun_tree_projectile")
 
 func play_shoot_animation() -> void:
 	animation_player.play("shoot")

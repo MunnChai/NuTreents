@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1q4l0by3f41f"]
+
+[ext_resource type="Script" uid="uid://ba0smcny5x6qm" path="res://components/behaviour_components/twee_behaviour_components/gun_twee_behaviour_component/gun_twee_behaviour_component.gd" id="1_ygk7v"]
+
+[node name="GunTweeBehaviourComponent" type="Node2D"]
+script = ExtResource("1_ygk7v")
