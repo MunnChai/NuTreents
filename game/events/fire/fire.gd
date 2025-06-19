@@ -1,7 +1,10 @@
 class_name Fire
 extends Node2D
 
-## TODO: The particles on this thing (I think it's particles...) or something with the fire system currently LAGS REALLY BAD the more there are.
+## TODO/BUG: The particles on this thing (I think it's particles...)
+## ...or something with the fire system currently LAGS REALLY BAD 
+## the more there are. Make it more performant and also more
+## visually stunning.
 
 ## A FIRE!
 
@@ -9,21 +12,8 @@ signal burned_out ## Ended on its own accord
 signal extinguished ## Was put out by an external force
 
 @export var will_go_out := true ## Disable this for an infinite flame
-var lifetime_countdown := 0.0
-var is_extinguished := false
-
-func _process(delta: float) -> void:
-	if is_extinguished:
-		return
-	
-	if not will_go_out:
-		return
-	
-	lifetime_countdown -= delta
-	
-	if lifetime_countdown <= 0.0:
-		burned_out.emit()
-		burn_away()
+var lifetime_countdown := 0.0 ## Time until the cold
+var is_extinguished := false ## The end of days is here
 
 ## Manual extinguishing, prevent destruction!
 func extinguish() -> void:
@@ -33,13 +23,27 @@ func extinguish() -> void:
 	extinguished.emit()
 	burn_away()
 
-#region LIFETIME SETUP
+func _process(delta: float) -> void:
+	_update_lifetime(delta)
+
+#region LIFETIME
 
 func start_lifetime(time: float) -> void:
 	lifetime_countdown = time
 
 func add_lifetime(time: float) -> void:
 	lifetime_countdown += time
+
+func _update_lifetime(delta: float) -> void:
+	if is_extinguished:
+		return
+	if not will_go_out:
+		return
+	
+	lifetime_countdown -= delta
+	if lifetime_countdown <= 0.0:
+		burned_out.emit()
+		burn_away()
 
 #endregion
 

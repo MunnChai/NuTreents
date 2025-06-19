@@ -1,18 +1,24 @@
 class_name FlammableComponent
 extends Node2D
 
-## A COMPONENT THAT REPRESENTS AN OBJECT WHICH CAN BE SET ON FIRE
-## Tracks fire "state" on this object
+## FIRE-ABILITY OF AN OBJECT
+## - Can this object be set on fire?
+## - What properties would the fire have?
 
-## TODO: How to get this onto like, 99% of the trees really easily?
+## TODO: Figure some better way to load this in...
+const FIRE = preload("res://events/fire/fire.tscn")
 
-@export var fire_pivot: Marker2D ## Choose a spot to put the fire!
-
+@export_category("Behaviour")
 @export var is_flammable := true
 @export var can_fire_go_out := true ## Will the fire ever go out?
+@export var ignite_on_ready := false
+
+@export_category("Burn")
 @export var burn_time := 10.0 ## How long does this burn for? In seconds.
 @export var fire_tick_duration := 1.0
-@export var ignite_on_ready := false
+
+@export_category("Visual")
+@export var fire_pivot: Marker2D ## Choose a spot to put the fire node!
 
 signal ignited(fire: Fire)
 signal burned_out
@@ -21,11 +27,6 @@ signal fire_tick
 
 var fire: Fire
 var extinguished_counter: int = 0
-
-const FIRE = preload("res://status_events/fires/fire.tscn") # Figure some better way to load this in...
-
-func is_on_fire() -> bool:
-	return fire != null
 
 func _ready() -> void:
 	if ignite_on_ready:
@@ -39,21 +40,32 @@ func _process(delta: float) -> void:
 			fire_tick.emit()
 		tick_countdown -= delta
 
+## Useful information
+func is_on_fire() -> bool:
+	return fire != null
+
+## Why would you want to get that?
+func get_fire() -> Fire:
+	return fire
+
+## Put out fire without destroying thing in process
+func extinguish() -> void:
+	if is_on_fire():
+		fire.extinguish()
+
 ## Set this object ON FIRE!
 func ignite() -> void:
 	if not is_flammable: ## How do you ignite something that was never meant to be?
 		return
 	if is_on_fire(): ## No double fires
 		return
-		
-	print("IGNITED!")
 	
 	## Spawn fire entity on top of this thing, with burn configuration details...
 	var new_fire: Fire = FIRE.instantiate()
 	add_child(new_fire)
-	if fire_pivot:
+	if fire_pivot: ## Move fire to requested location
 		new_fire.global_position = fire_pivot.global_position
-	else:
+	else: ## Fire is ok where it is
 		new_fire.global_position = global_position
 	fire = new_fire
 	
@@ -61,6 +73,7 @@ func ignite() -> void:
 	fire.will_go_out = can_fire_go_out
 	fire.start_lifetime(burn_time)
 	
+	## Keep up to date with the fire
 	fire.burned_out.connect(_on_fire_burned_out)
 	fire.extinguished.connect(_on_fire_extinguished)
 	
@@ -72,11 +85,4 @@ func _on_fire_burned_out() -> void:
 
 func _on_fire_extinguished() -> void:
 	extinguished.emit()
-
-## Why would you want to get that?
-func get_fire() -> Fire:
-	return fire
-
-func extinguish() -> void:
-	if is_on_fire():
-		fire.extinguish()
+	extinguished_counter += 1 ## Tally!

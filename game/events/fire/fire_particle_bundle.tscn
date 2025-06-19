@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://dpkj31vcp2jhh"]
 
-[ext_resource type="Texture2D" uid="uid://b4dx86c7qd3kj" path="res://status_events/fires/art/smoke_particle.png" id="1_al3dc"]
-[ext_resource type="Texture2D" uid="uid://8fghd3byaodf" path="res://status_events/fires/art/fire_particle.png" id="2_n60vp"]
+[ext_resource type="Texture2D" uid="uid://b4dx86c7qd3kj" path="res://events/fire/art/smoke_particle.png" id="1_al3dc"]
+[ext_resource type="Texture2D" uid="uid://8fghd3byaodf" path="res://events/fire/art/fire_particle.png" id="2_n60vp"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0r6la"]
 

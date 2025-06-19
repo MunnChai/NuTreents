@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8fghd3byaodf"
-path="res://.godot/imported/fire_particle.png-c352686e18acc1a430c320cffcfaea72.ctex"
+uid="uid://b4dx86c7qd3kj"
+path="res://.godot/imported/smoke_particle.png-ae0bd1c17de179cf2930c1c8bc8cfb15.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://status_events/fires/art/fire_particle.png"
-dest_files=["res://.godot/imported/fire_particle.png-c352686e18acc1a430c320cffcfaea72.ctex"]
+source_file="res://events/fire/art/smoke_particle.png"
+dest_files=["res://.godot/imported/smoke_particle.png-ae0bd1c17de179cf2930c1c8bc8cfb15.ctex"]
 
 [params]
 

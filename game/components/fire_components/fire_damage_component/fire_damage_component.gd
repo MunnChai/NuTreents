@@ -1,7 +1,7 @@
 class_name FireDamageComponent
 extends Node2D
 
-## Deals damage on fire tick
+## DEALS DAMAGE EVERY FIRE TICK
 
 @export var flammable_component: FlammableComponent
 @export var health_component: HealthComponent
