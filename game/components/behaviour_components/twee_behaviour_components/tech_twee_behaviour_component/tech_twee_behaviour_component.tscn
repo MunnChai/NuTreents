@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://7lkexv103hkc"]
+
+[ext_resource type="Script" uid="uid://d13qdq6h7gfaq" path="res://components/behaviour_components/twee_behaviour_components/tech_twee_behaviour_component/tech_twee_behaviour_component.gd" id="1_i1fx2"]
+
+[node name="TechTweeBehaviourComponent" type="Node2D"]
+script = ExtResource("1_i1fx2")

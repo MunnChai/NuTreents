@@ -47,8 +47,8 @@ func try_spread() -> void:
 		
 		var entity = MapUtility.get_entity_at(world_coord)
 		if entity:
-			if Components.has_component(entity, FlammableComponent):
-				var flammable: FlammableComponent = Components.get_component(entity, FlammableComponent)
+			if Components.has_component(entity, FlammableComponent, "", true):
+				var flammable: FlammableComponent = Components.get_component(entity, FlammableComponent, "", true)
 				if flammable != self:
 					flammable.ignite()
 					lit_something = true

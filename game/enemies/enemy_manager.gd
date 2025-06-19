@@ -9,9 +9,6 @@ static var instance
 ## TODO: Refactor out EnemyRegistry
 ## Generally make logic more easy to understand
 
-const SILK_SPITTER: PackedScene = preload("res://enemies/silk_spitter/silk_spitter_composed.tscn")
-const SPEEDLE: PackedScene = preload("res://enemies/speedle/speedle_composed.tscn")
-
 var enemy_spawn_timer: float = 0
 var current_wave = 0
 var day_tracker = 1
@@ -52,7 +49,7 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		#kill_all_enemies()
+		kill_all_enemies()
  
 # increases the severity of bug spawns based on the day
 func increase_difficulty() -> void:
@@ -67,7 +64,8 @@ func spawn_enemy_wave() -> int:
 	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
 	
 	var target_tree = find_target_tree()
-	var target_pos = target_tree.get_occupied_positions().pick_random()
+	var grid_position_component: GridPositionComponent = Components.get_component(target_tree, GridPositionComponent)
+	var target_pos = grid_position_component.get_occupied_positions().pick_random()
 	
 	# Munn: Changed a bit here, to make the lag spike less obvious
 	var possible_cells = Global.fog_map.get_used_cells()
@@ -102,23 +100,25 @@ func spawn_enemy_wave() -> int:
 
 # Searches forest for high priority trees
 # Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
-func find_target_tree(trees_to_avoid: Array[TweeComposed] = []) -> TweeComposed:
+func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 	var tree_map = TreeManager.get_tree_map()
 	
 	# Find types of trees
 	var tech_trees: Array = []
 	var water_trees: Array = []
-	var mother_tree: TweeComposed = null
-	for twee: TweeComposed in tree_map.values():
+	var mother_tree: Node2D = null
+	for twee: Node2D in tree_map.values():
 		# Don't count ignored trees
 		if trees_to_avoid.has(twee):
 			continue
 		
-		if twee.type == Global.TreeType.TECH_TREE:
+		var tree_stat_component: TweeStatComponent = Components.get_component(twee, TweeStatComponent)
+		
+		if tree_stat_component.type == Global.TreeType.TECH_TREE:
 			tech_trees.append(twee)
-		if twee.type == Global.TreeType.WATER_TREE:
+		if tree_stat_component.type == Global.TreeType.WATER_TREE:
 			water_trees.append(twee)
-		if twee.type == Global.TreeType.MOTHER_TREE:
+		if tree_stat_component.type == Global.TreeType.MOTHER_TREE:
 			mother_tree = twee
 	
 	# Sort tree arrays by distance to nearest tree to avoid (furthest -> closest)
@@ -135,9 +135,9 @@ func find_target_tree(trees_to_avoid: Array[TweeComposed] = []) -> TweeComposed:
 	return tree_map.pick_random()
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
-func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> EnemyComposed:
+func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> Node2D:
 	
-	var enemy_node: EnemyComposed = EnemyRegistry.get_new_enemy(enemy_type)
+	var enemy_node: Node2D = EnemyRegistry.get_new_enemy(enemy_type)
 	
 	var terrain_map: TerrainMap = Global.terrain_map
 	
@@ -153,22 +153,27 @@ func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> EnemyCom
 	return enemy_node
 
 func kill_all_enemies():
-	for enemy: EnemyComposed in get_enemies():
+	for enemy: Node2D in get_enemies():
 		if (!enemy):
 			continue
 		
-		enemy.die()
+		var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+		enemy_health_component.set_current_health(0)
 
 func get_enemies() -> Array:
 	return get_tree().get_nodes_in_group("enemies")
 
 func get_enemy_at(pos: Vector2i):
 	for enemy in get_enemies():
-		if (!enemy):
+		if not enemy:
 			continue
-		if (enemy.health_component.is_dead):
+		
+		var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+		if health_component.is_dead:
 			continue
-		if (enemy.grid_position_component.get_pos() == pos):
+		
+		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
+		if grid_position_component.get_pos() == pos:
 			return enemy
 	
 	return null
@@ -179,8 +184,9 @@ func load_enemies_from(enemy_map: Dictionary):
 	for pos in enemy_map.keys():
 		var save_resource: EnemyDataResource = enemy_map[pos]
 		
-		var enemy: EnemyComposed = spawn_enemy(save_resource.type, pos)
-		enemy.health_component.current_health = save_resource.hp
+		var enemy: Node2D = spawn_enemy(save_resource.type, pos)
+		var health_component = Components.get_component(enemy, HealthComponent)
+		health_component.current_health = save_resource.hp
 #endregion
 
 #region DifficultyFunctions

@@ -1,6 +1,5 @@
 [gd_scene load_steps=13 format=3 uid="uid://duos5rnjoto4"]
 
-[ext_resource type="Script" uid="uid://dk14fqitaubn8" path="res://structures/set_pieces/omnious_torch_composed.gd" id="1_5qvib"]
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="2_opyov"]
 [ext_resource type="Texture2D" uid="uid://ctv6dmrhuuyri" path="res://structures/set_pieces/omnious_torch_of_hellfire_and_oblivion.png" id="3_o0bgr"]
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="4_od1dh"]
@@ -11,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="10_rxnjf"]
 [ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="11_43goy"]
 [ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="12_baf7n"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="12_o0bgr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8khhr"]
 shader = ExtResource("2_opyov")
@@ -19,8 +19,6 @@ shader_parameter/outline_alpha = 0.0
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [node name="OmniousTorchComposed" type="Node2D"]
-script = ExtResource("1_5qvib")
-type = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -56,3 +54,7 @@ grid_range_component = NodePath("../FireGridRangeComponent")
 fire_pivot = NodePath("../FireMarker")
 can_fire_go_out = false
 ignite_on_ready = true
+
+[node name="StructureBehaviourComponent" parent="." node_paths=PackedStringArray("sprite_2d") instance=ExtResource("12_o0bgr")]
+type = 4
+sprite_2d = NodePath("../Sprite2D")

@@ -43,8 +43,9 @@ func connect_tutorial_signals() -> void:
 	TreeManager.tree_placed.connect(_on_first_tree_placed)
 
 #region SignalCallbacks
-func _on_first_tree_placed(tree: TweeComposed):
-	if tree is MotherTweeComposed:
+func _on_first_tree_placed(tree: Node2D):
+	var tree_stat_component: TweeStatComponent = Components.get_component(tree, TweeStatComponent)
+	if tree_stat_component.type == Global.TreeType.MOTHER_TREE:
 		return
 	
 	play_next_animation()

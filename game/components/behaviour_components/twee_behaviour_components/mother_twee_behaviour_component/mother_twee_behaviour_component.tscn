@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bggmdqy2h0ty7"]
+
+[ext_resource type="Script" uid="uid://btfqlwwlxuysf" path="res://components/behaviour_components/twee_behaviour_components/mother_twee_behaviour_component/mother_twee_behaviour_component.gd" id="1_0bq01"]
+
+[node name="MotherTweeBehaviourComponent" type="Node2D"]
+script = ExtResource("1_0bq01")

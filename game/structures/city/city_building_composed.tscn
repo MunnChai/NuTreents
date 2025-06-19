@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://csaj7yq8wwtu2"]
+[gd_scene load_steps=13 format=3 uid="uid://dnwmoqcy1law8"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_0eofc"]
 [ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://structures/city/City_Buildings_1.png" id="1_186vr"]
-[ext_resource type="Script" path="res://structures/structure_composed.gd" id="1_mv734"]
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="1_wosx6"]
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="2_186vr"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="2_vgmj2"]
 [ext_resource type="PackedScene" uid="uid://bxqge2gs2yndp" path="res://components/atlas_randomizer_component/atlas_randomizer_component.tscn" id="4_flrvg"]
 [ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="5_6n1hg"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_8khhr"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="9_uc0t6"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="10_6h5io"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8khhr"]
 shader = ExtResource("1_0eofc")
@@ -20,7 +21,6 @@ shader_parameter/outline_color = Color(1, 1, 1, 1)
 atlas = ExtResource("1_186vr")
 
 [node name="CityBuildingComposed" type="Node2D"]
-script = ExtResource("1_mv734")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -43,3 +43,8 @@ cost_to_destroy = 250.0
 id = "city_building"
 
 [node name="OutlineComponent" parent="." instance=ExtResource("9_uc0t6")]
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("10_6h5io")]
+arrow_height = 1
+
+[node name="StructureBehaviourComponent" parent="." instance=ExtResource("2_vgmj2")]

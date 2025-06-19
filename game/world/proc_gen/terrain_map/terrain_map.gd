@@ -335,7 +335,8 @@ func add_decor() -> void:
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
 					if success:
-						decor.set_decor_type(type)
+						var decor_behaviour_component: DecorBehaviourComponent = Components.get_component(decor, DecorBehaviourComponent)
+						decor_behaviour_component.set_decor_type(type)
 				
 
 func add_set_pieces() -> void:
@@ -346,9 +347,9 @@ func add_set_pieces() -> void:
 	var attempts := 0
 	
 	while not successful_placement and attempts < 10:
-		var x_dist = randi_range(5, 10)
+		var x_dist = randi_range(4, 6)
 		var x_sign = 1 if randf_range(0.0, 1.0) > 0.5 else -1
-		var y_dist = randi_range(5, 10)
+		var y_dist = randi_range(4, 6)
 		var y_sign = 1 if randf_range(0.0, 1.0) > 0.5 else -1
 	
 		var offset: Vector2i = Vector2i(x_dist * x_sign, y_dist * y_sign)
