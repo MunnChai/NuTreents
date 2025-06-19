@@ -11,6 +11,17 @@
         "visibility": 0.0
       }
     },
+    "res://enemies/stats/": {
+      "metadata/_custom_type_script": {
+        "visibility": 0
+      },
+      "resource_local_to_scene": {
+        "visibility": 0
+      },
+      "resource_name": {
+        "visibility": 0
+      }
+    },
     "res://structures/trees/stats/": {
       "metadata/_custom_type_script": {
         "visibility": 0.0
@@ -27,7 +38,8 @@
     }
   },
   "recent_paths": [
-    "res://structures/trees/stats/"
+    "res://structures/trees/stats/",
+    "res://enemies/stats/"
   ],
   "table_functions": {
     "filter": [

@@ -79,6 +79,8 @@ func _connect_component_signals() -> void:
 	action_timer.timeout.connect(perform_action)
 	action_timer.one_shot = false
 	action_timer.start()
+	
+	pathfinding_component.max_tiles_traversed.connect(_on_pathfinding_max_path_traversed)
 
 #endregion
 
@@ -151,3 +153,15 @@ func die():
 	hurtbox_component.monitoring = false
 	hitbox_component.set_deferred("monitorable", false)
 	hitbox_component.monitoring = false
+
+
+const ENEMY_REBOOT_TIME: float = 30
+# Performance stuff...
+func _on_pathfinding_max_path_traversed(num_tiles_traversed: int) -> void:
+	action_timer.paused = true
+	print("Pausing enemy action for ", ENEMY_REBOOT_TIME, " seconds due to pathfinding error...")
+	
+	await get_tree().create_timer(ENEMY_REBOOT_TIME).timeout
+	
+	print("Resuming enemy action!")
+	action_timer.paused = false

@@ -117,12 +117,7 @@ func remove_all_structures() -> void:
 			continue
 		
 		var structure = tile_scene_map[pos]
-		if (structure is Twee): # Don't remove trees
-			continue
-		#elif (structure is Twee):
-			#TreeManager.remove_tree(pos)
-		else:
-			remove_structure(pos)
+		remove_structure(pos)
 
 
 func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:

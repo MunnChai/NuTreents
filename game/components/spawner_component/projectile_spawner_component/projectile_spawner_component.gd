@@ -11,8 +11,8 @@ func spawn_node(grid_offset: Vector2i = Vector2i.ZERO) -> Node2D:
 	
 	if new_spawn.has_method("set_damage"):
 		new_spawn.set_damage(damage)
-	if Components.has_component(new_spawn, HitboxComponent):
-		Components.get_component(new_spawn, HitboxComponent).set_damage(damage)
+	if Components.has_component(new_spawn, HitboxComponent, "", true):
+		Components.get_component(new_spawn, HitboxComponent, "", true).set_damage(damage)
 	
 	return new_spawn
 

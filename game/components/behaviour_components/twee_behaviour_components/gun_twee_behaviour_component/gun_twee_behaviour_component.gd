@@ -23,6 +23,7 @@ func _connect_component_signals() -> void:
 	
 	action_timer.timeout.connect(perform_action)
 	action_timer.one_shot = false
+	await get_tree().create_timer(randf_range(0, action_timer.wait_time)).timeout
 	action_timer.start()
 
 
