@@ -1,0 +1,47 @@
+[gd_scene load_steps=9 format=3 uid="uid://ba1323u33dy8v"]
+
+[ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://structures/trees/sheets/projectiles/tree_bullet.png" id="1_rw02i"]
+[ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="2_fk4nl"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="3_gyl6c"]
+[ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="4_fcsjw"]
+[ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_21ns3"]
+[ext_resource type="PackedScene" uid="uid://c7bm4e2244omm" path="res://components/status_effects/status_inflictor_component/status_inflictor_component.tscn" id="6_fk4nl"]
+[ext_resource type="Resource" uid="uid://bfwx873k8yrj1" path="res://components/status_effects/status_effect_resources/slowing_status_effect.tres" id="7_gyl6c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
+resource_local_to_scene = true
+
+[node name="TreeBulletComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rw02i")
+
+[node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("2_fk4nl")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="Sprite2D/HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_05k2p")
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("3_gyl6c")]
+
+[node name="GridMovementComponent" parent="." instance=ExtResource("4_fcsjw")]
+movement_duration = 0.5
+ease = 1
+trans = 1
+bounce_amount = 24.0
+
+[node name="RemovalComponent" parent="." instance=ExtResource("5_21ns3")]
+
+[node name="RemovalTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="StatusInflictorComponent" parent="." instance=ExtResource("6_fk4nl")]
+status_effect = ExtResource("7_gyl6c")
+
+[connection signal="area_entered" from="Sprite2D/HitboxComponent" to="RemovalComponent" method="free_actor" unbinds=1]
+[connection signal="hit_entity" from="Sprite2D/HitboxComponent" to="StatusInflictorComponent" method="apply_status_effect"]
+[connection signal="timeout" from="RemovalTimer" to="RemovalComponent" method="free_actor"]
+
+[editable path="Sprite2D/HitboxComponent"]

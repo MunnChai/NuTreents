@@ -69,3 +69,7 @@ tree_type = 3
 [node name="GunTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
 layout_mode = 2
 tree_type = 2
+
+[node name="SpikyTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
+layout_mode = 2
+tree_type = 7

@@ -3,6 +3,8 @@ extends Area2D
 
 @export var damage: float
 
+signal hit_entity(entity: Node2D)
+
 func _ready() -> void:
 	connect_signals()
 
@@ -12,6 +14,9 @@ func connect_signals() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area is HurtboxComponent:
 		area.hit_taken.emit(damage)
+		
+		var entity: Node2D = area.owner
+		hit_entity.emit(entity)
 
 func set_damage(new_damage: float) -> void:
 	damage = new_damage

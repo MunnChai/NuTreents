@@ -1,7 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://doicha7u36klq"]
+[gd_scene load_steps=25 format=3 uid="uid://doicha7u36klq"]
 
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_hra2j"]
-[ext_resource type="Script" uid="uid://bdsr33i0o1a4j" path="res://components/stat_component/twee_stat_component/gun_twee_stat_component/gun_twee_stat_component.gd" id="3_c5uq1"]
 [ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="3_p5e44"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_3uf8o"]
 [ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_dofad"]
@@ -32,7 +31,7 @@ shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 30.0
 shader_parameter/tint_amount = 0.0
-shader_parameter/alpha = 1.0
+shader_parameter/modulate = Vector4(1, 1, 1, 1)
 shader_parameter/uv_y_offset = 0.62
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
@@ -50,9 +49,11 @@ resource_local_to_scene = true
 
 [node name="GunTweeBehaviourComponent" parent="." instance=ExtResource("20_dofad")]
 
-[node name="GunTreeStatComponent" parent="." instance=ExtResource("21_c5uq1")]
-script = ExtResource("3_c5uq1")
+[node name="TreeStatComponent" parent="." node_paths=PackedStringArray("attack_damage_node", "attack_range_node", "attack_cooldown_timer") instance=ExtResource("21_c5uq1")]
 type = 2
+attack_damage_node = NodePath("../ProjectileSpawnerComponent")
+attack_range_node = NodePath("../GridRangeComponent")
+attack_cooldown_timer = NodePath("../ActionTimer")
 stat_resource = ExtResource("2_hra2j")
 
 [node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("22_tkyw5")]

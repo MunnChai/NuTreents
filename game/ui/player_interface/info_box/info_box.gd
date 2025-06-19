@@ -68,7 +68,7 @@ func show_content_for_tree(tree_stat: TreeStatResource):
 		rich_text.text = ""
 		return
 	
-	var content = "[i]" + name_dictionary[tree_stat.id] + "[/i]";
+	var content = "[i]" + tree_stat.name.to_upper() + "[/i]";
 	content += "\n\n"
 	content += desc_dictionary[tree_stat.id]
 	rich_text.text = content

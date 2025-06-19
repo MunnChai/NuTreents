@@ -129,7 +129,7 @@ func _update_shader(delta: float) -> void:
 	shake_amount = move_toward(shake_amount, 0.0, delta * SHAKE_DECAY_RATE)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
-	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("alpha", actor.modulate.a)
+	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("modulate", actor.modulate)
 	var grid_position_component: GridPositionComponent = Components.get_component(actor, GridPositionComponent)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("pos", grid_position_component.get_pos())
 	var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(actor, TweeBehaviourComponent)
