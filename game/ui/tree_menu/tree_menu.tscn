@@ -70,6 +70,14 @@ tree_type = 3
 layout_mode = 2
 tree_type = 2
 
-[node name="SpikyTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
+[node name="SlowingTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
 layout_mode = 2
 tree_type = 7
+
+[node name="SpikyTreeCard2" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
+layout_mode = 2
+tree_type = 9
+
+[node name="SpikyTreeCard3" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
+layout_mode = 2
+tree_type = 8
