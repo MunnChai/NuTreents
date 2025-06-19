@@ -202,6 +202,17 @@ func do_secondary_action() -> void:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
 
+## Put out fires in a 3x3 square
+func do_water_bucket_from_god() -> void:
+	for x: int in range(iso_position.x - 1, iso_position.x + 1):
+		for y: int in range(iso_position.y - 1, iso_position.y + 1):
+			var coord := Vector2i(x, y)
+			var entity = MapUtility.get_entity_at(coord)
+			if entity != null:
+				if Components.has_component(entity, FlammableComponent, "", true):
+					var flammable := Components.get_component(entity, FlammableComponent, "", true) as FlammableComponent
+					flammable.extinguish()
+
 ## Moves the cursor to the given LOCAL WORLD COORDINATE
 func move_to(local_world_pos: Vector2) -> void:
 	set_iso_position(Global.terrain_map.local_to_map(local_world_pos))

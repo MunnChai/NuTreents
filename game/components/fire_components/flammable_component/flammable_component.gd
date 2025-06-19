@@ -78,4 +78,5 @@ func get_fire() -> Fire:
 	return fire
 
 func extinguish() -> void:
-	fire.extinguish()
+	if is_on_fire():
+		fire.extinguish()
