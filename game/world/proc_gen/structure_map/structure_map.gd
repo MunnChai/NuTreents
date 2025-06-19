@@ -135,4 +135,5 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
 		add_structure(pos, structure)
-		structure.apply_data_resource(save_resource)
+		var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+		structure_behaviour_component.apply_data_resource(save_resource)
