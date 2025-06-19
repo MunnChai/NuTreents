@@ -112,13 +112,15 @@ func attack_tree(target_pos: Vector2i) -> void:
 	grid_movement_component.move_to_and_back(target_pos)
 
 func move(target_pos: Vector2i) -> void:
+	var current_pos: Vector2i = grid_position_component.get_pos()
+	
 	# Already there
-	if grid_position_component.get_pos() == target_pos:
+	if current_pos == target_pos:
 		return
 	
 	# Find a path
 	if not pathfinding_component.has_path():
-		pathfinding_component.find_path(grid_position_component.get_pos(), target_pos)
+		pathfinding_component.find_path(current_pos, target_pos)
 	
 	# Get next position in the path
 	var next_pos = pathfinding_component.get_next_position()
@@ -126,9 +128,16 @@ func move(target_pos: Vector2i) -> void:
 	if next_pos == null:
 		return
 	
+	while next_pos == current_pos:
+		pathfinding_component.pop_next_position()
+		next_pos = pathfinding_component.get_next_position()
+		
+		if next_pos == null:
+			return
+	
 	# If it is obstructed by a bug, find a new path
 	if MapUtility.tile_has_entity(next_pos):
-		pathfinding_component.find_path(grid_position_component.get_pos(), target_pos)
+		pathfinding_component.find_path(current_pos, target_pos)
 		next_pos = pathfinding_component.get_next_position()
 	
 	if next_pos:

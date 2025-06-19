@@ -127,7 +127,8 @@ func do_secondary_action() -> void:
 				SfxManager.play_sound_effect("ui_fail")
 				return
 			
-			TreeManager.remove_tree(map_pos)
+			var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(structure, TweeBehaviourComponent)
+			tree_behaviour_component.remove()
 			PopupManager.create_popup("Tree removed!", structure_map.map_to_local(map_pos))
 		
 		# If building is not tree, but is destructable

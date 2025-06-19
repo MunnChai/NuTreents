@@ -162,13 +162,8 @@ func remove_tree(p: Vector2i):
 		return
 	
 	var t: Node2D = trees[p]
-	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(t, TweeBehaviourComponent)
-	tree_behaviour_component.die()
-	
 	trees.erase(p)
 	tree_set.erase(t)
-	
-	tree_behaviour_component.remove()
 
 ## DEPRECATED
 ## upgrade the tree at given p

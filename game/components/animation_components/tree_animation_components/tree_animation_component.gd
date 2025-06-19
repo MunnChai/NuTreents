@@ -75,7 +75,7 @@ func play_damage_animation() -> void:
 	shake_amount = 30.0
 
 func play_death_animation() -> void:
-	flash_amount = 1.0
+	flash_time = FLASH_DURATION
 	
 	if !(!sprite_2d || !sprite_2d.get_material()):
 		(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)

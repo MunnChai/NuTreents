@@ -77,7 +77,7 @@ func _connect_component_signals():
 	health_component.health_subtracted.connect(damage_sound_emitter_component.play_sound_effect.unbind(1))
 	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
 	health_component.health_subtracted.connect(tree_animation_component.play_damage_animation.unbind(1))
-	health_component.died.connect(_on_death)
+	health_component.died.connect(die)
 	
 	if grow_timer:
 		grow_timer.timeout.connect(upgrade_tree)
@@ -110,29 +110,19 @@ func upgrade_tree() -> void:
 	tree_animation_component.play_grow_large_animation()
 	tree_stat_component.set_upgraded_stats_from_resource()
 
-
-# Munn: I LITERALLY COULD NOT TELL YOU WHICH OF THE 3 FUNCTIONS BELOW ACTUALLY KILLS THE TREE
-
-func _on_death():
-	if TreeManager.get_tree_map().has(grid_position_component.get_pos()):
-		TreeManager.remove_tree(grid_position_component.get_pos())
-
 func die():
+	# Do extra death stuff here... maybe tree death counter...
+	remove()
+
+## Frees self, and calls TreeManager.remove_tree() to remove self from tree_map, structure_map, forests, etc.
+func remove() -> void:
 	death_sound_emitter_component.play_sound_effect()
-	
 	tree_animation_component.play_death_animation()
 	
 	await tree_animation_component.death_finished
 	
+	TreeManager.remove_tree(grid_position_component.get_pos())
 	actor.queue_free()
-
-func remove() -> void:
-	if marked_for_removal:
-		return
-	marked_for_removal = true
-	
-	for pos: Vector2i in grid_position_component.get_occupied_positions():
-		TreeManager.remove_tree(pos)
 
 #endregion
 
