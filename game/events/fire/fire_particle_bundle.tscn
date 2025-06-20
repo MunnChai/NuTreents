@@ -4,19 +4,20 @@
 [ext_resource type="Texture2D" uid="uid://8fghd3byaodf" path="res://events/fire/art/fire_particle.png" id="2_n60vp"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0r6la"]
+light_mode = 1
 
 [sub_resource type="Curve" id="Curve_17qxv"]
 _data = [Vector2(0.00741525, 0.229578), 0.0, 0.0, 0, 0, Vector2(0.456568, 0.141662), 0.0, 0.0, 0, 0, Vector2(1, 0.0421784), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_bl4gx"]
+[sub_resource type="CurveTexture" id="CurveTexture_rf6mg"]
 curve = SubResource("Curve_17qxv")
 
 [sub_resource type="Gradient" id="Gradient_0r6la"]
 offsets = PackedFloat32Array(0, 0.117978, 0.208989, 0.701124, 0.997753)
 colors = PackedColorArray(0, 0, 0, 0, 0.30086, 0.172425, 0.183697, 0.654902, 0.387883, 0.278975, 0.28253, 1, 0.47, 0.423, 0.4277, 0.792157, 1, 1, 1, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_17qxv"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_iuiym"]
 gradient = SubResource("Gradient_0r6la")
 width = 128
 
@@ -32,10 +33,11 @@ flatness = 0.134
 initial_velocity_max = 32.42
 gravity = Vector3(0, 0, 0)
 scale_min = 0.1
-color_ramp = SubResource("GradientTexture1D_17qxv")
-alpha_curve = SubResource("CurveTexture_bl4gx")
+color_ramp = SubResource("GradientTexture1D_iuiym")
+alpha_curve = SubResource("CurveTexture_rf6mg")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_17qxv"]
+light_mode = 1
 
 [sub_resource type="Curve" id="Curve_bl4gx"]
 _data = [Vector2(0.00635593, 0.0965475), 0.0, 0.0, 0, 0, Vector2(0.182203, 0.0849796), 0.0, 0.0, 0, 0, Vector2(0.431144, 0.280477), 0.0, 0.0, 0, 0, Vector2(0.833686, 0), 0.0, 0.0, 0, 0]
@@ -69,6 +71,7 @@ alpha_curve = SubResource("CurveTexture_vdvum")
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_toilv"]
 blend_mode = 1
+light_mode = 1
 
 [sub_resource type="Curve" id="Curve_0r6la"]
 _data = [Vector2(0.00635593, 0.0965475), 0.0, 0.0, 0, 0, Vector2(0.182203, 0.0849796), 0.0, 0.0, 0, 0, Vector2(0.431144, 0.280477), 0.0, 0.0, 0, 0, Vector2(0.833686, 0), 0.0, 0.0, 0, 0]

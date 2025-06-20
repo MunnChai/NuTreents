@@ -1,0 +1,285 @@
+[gd_scene load_steps=19 format=3 uid="uid://dhgtwthtou6ex"]
+
+[ext_resource type="Shader" uid="uid://c86lp05txhser" path="res://events/weather/lightning/lightning.gdshader" id="1_0s6vr"]
+[ext_resource type="Script" uid="uid://mhdsl11e814d" path="res://events/weather/lightning/lightning.gd" id="1_p7yrf"]
+[ext_resource type="Shader" uid="uid://bnw4t7xbunfjj" path="res://events/weather/lightning/lightning.tres" id="2_ewua8"]
+[ext_resource type="Texture2D" uid="uid://cddop480jutrb" path="res://events/weather/lightning/bolt_line.png" id="3_muwg8"]
+[ext_resource type="Texture2D" uid="uid://botmjego0b0rd" path="res://events/weather/lightning/art/bolt_terminus.png" id="5_1v4dk"]
+[ext_resource type="PackedScene" uid="uid://c2xj4kgbd4g06" path="res://particles/sparks.tscn" id="6_5gv3o"]
+[ext_resource type="Texture2D" uid="uid://breu2owm5ed1f" path="res://events/weather/lightning/art/bolt_area.png" id="6_k2p3t"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5gv3o"]
+noise_type = 5
+seed = 1040
+frequency = 0.018
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5gv3o"]
+seamless = true
+seamless_blend_skirt = 0.347
+noise = SubResource("FastNoiseLite_5gv3o")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ewua8"]
+shader = ExtResource("1_0s6vr")
+shader_parameter/effect_color = Color(1, 0.669148, 0.255212, 1)
+shader_parameter/speed = 1.0
+shader_parameter/phase_multiplier = 1.0
+shader_parameter/pixel_resolution = 1024
+shader_parameter/pixel_width = 36
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_5gv3o")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_k2p3t"]
+noise_type = 5
+seed = 1040
+frequency = 0.023
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bkfqx"]
+seamless = true
+seamless_blend_skirt = 0.347
+noise = SubResource("FastNoiseLite_k2p3t")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a1j2j"]
+shader = ExtResource("1_0s6vr")
+shader_parameter/effect_color = Color(1, 1, 1, 1)
+shader_parameter/speed = 1.0
+shader_parameter/phase_multiplier = 5.56
+shader_parameter/pixel_resolution = 1024
+shader_parameter/pixel_width = 52
+shader_parameter/noise_tex = SubResource("NoiseTexture2D_bkfqx")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5gv3o"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_muwg8"]
+shader = ExtResource("2_ewua8")
+shader_parameter/Speed = Vector2(2, 0)
+shader_parameter/basic_texture = ExtResource("3_muwg8")
+shader_parameter/color_param = Color(0.960059, 0.851529, 0.567563, 1)
+
+[sub_resource type="Animation" id="Animation_5gv3o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sparks:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TerminusSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LightningRect:material:shader_parameter/pixel_width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [36]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AreaSprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.2, 1.2)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WhiteLightning:material:shader_parameter/pixel_width")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [52]
+}
+
+[sub_resource type="Animation" id="Animation_p7yrf"]
+resource_name = "strike"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sparks:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TerminusSprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0211344, 0.0232179, 0.350357, 0.383723),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.5, 1.5), Vector2(1, 1), Vector2(0.8, 0.8), Vector2(1e-05, 1e-05)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("LightningRect:material:shader_parameter/pixel_width")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.00100423, 0.0223818, 0.264414, 0.310676),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [48, 36, 30, 0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CanvasLayer/ColorRect:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.00390625, 0.2303),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.772549), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("AreaSprite:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.0127579, 0.0228306, 0.0560774, 0.138359),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1.2, 1.2), Vector2(0.541508, 0.541508), Vector2(0.181, 0.181), Vector2(1e-05, 1e-05)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("WhiteLightning:material:shader_parameter/pixel_width")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.0094862, 0.0537551, 0.0638738),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [52, 9, 3, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1v4dk"]
+_data = {
+&"RESET": SubResource("Animation_5gv3o"),
+&"strike": SubResource("Animation_p7yrf")
+}
+
+[node name="Lightning" type="Node2D"]
+script = ExtResource("1_p7yrf")
+
+[node name="LightningRect" type="ColorRect" parent="."]
+z_index = 1000
+material = SubResource("ShaderMaterial_ewua8")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -512.0
+offset_top = -1024.0
+offset_right = 512.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="WhiteLightning" type="ColorRect" parent="."]
+z_index = 1000
+material = SubResource("ShaderMaterial_a1j2j")
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -512.0
+offset_top = -1024.0
+offset_right = 512.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="TerminusSprite" type="Sprite2D" parent="."]
+modulate = Color(1, 0.670588, 0.254902, 1)
+material = SubResource("CanvasItemMaterial_5gv3o")
+texture = ExtResource("5_1v4dk")
+
+[node name="AreaSprite" type="Sprite2D" parent="."]
+modulate = Color(1, 0.670588, 0.254902, 1)
+material = SubResource("CanvasItemMaterial_5gv3o")
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("6_k2p3t")
+
+[node name="Sparks" parent="." instance=ExtResource("6_5gv3o")]
+modulate = Color(1, 0.670588, 0.254902, 1)
+amount = 5
+
+[node name="Line2D" type="Line2D" parent="."]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_muwg8")
+points = PackedVector2Array(0, 0, 0, -1024)
+width = 128.0
+texture_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_1v4dk")
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)

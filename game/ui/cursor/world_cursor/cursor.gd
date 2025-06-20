@@ -211,7 +211,9 @@ func do_water_bucket_from_god() -> void:
 			if entity != null:
 				if Components.has_component(entity, FlammableComponent, "", true):
 					var flammable := Components.get_component(entity, FlammableComponent, "", true) as FlammableComponent
-					flammable.extinguish()
+					## TEMP: Actually ignition!
+					#flammable.extinguish()
+					flammable.ignite()
 
 ## Moves the cursor to the given LOCAL WORLD COORDINATE
 func move_to(local_world_pos: Vector2) -> void:
