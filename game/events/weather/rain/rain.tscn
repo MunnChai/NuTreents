@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://dykyagfq57yc5"]
+
+[ext_resource type="Texture2D" uid="uid://dgkxb5qm7j1xv" path="res://events/weather/rain/art/rain_drop.png" id="1_m35ce"]
+[ext_resource type="Texture2D" uid="uid://byba0le0au1o2" path="res://events/weather/rain/art/small_rain.png" id="2_bxb2e"]
+[ext_resource type="Texture2D" uid="uid://mi77ua1ikqxd" path="res://events/weather/rain/art/rain_splash.png" id="3_u4yl7"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m35ce"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bxb2e"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1024, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 1.5, 0)
+spread = 0.0
+initial_velocity_min = 300.0
+initial_velocity_max = 600.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m35ce"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1024, 1, 1)
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+direction = Vector3(0, 1.5, 0)
+spread = 0.0
+initial_velocity_min = 400.0
+initial_velocity_max = 500.0
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_u4yl7"]
+particles_animation = true
+particles_anim_h_frames = 2
+particles_anim_v_frames = 2
+particles_anim_loop = false
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_bmx0b"]
+particle_flag_align_y = true
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1024, 1024, 1)
+direction = Vector3(0, 0, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+anim_speed_min = 5.0
+anim_speed_max = 5.0
+
+[node name="Rain" type="Node2D"]
+
+[node name="RainParticles2" type="GPUParticles2D" parent="."]
+modulate = Color(0.490196, 0.92549, 0.945098, 0.862745)
+material = SubResource("CanvasItemMaterial_m35ce")
+amount = 8000
+texture = ExtResource("2_bxb2e")
+lifetime = 5.0
+preprocess = 20.0
+visibility_rect = Rect2(-1000, -1000, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_bxb2e")
+
+[node name="RainParticles" type="GPUParticles2D" parent="."]
+modulate = Color(0.333333, 0.494118, 0.737255, 0.862745)
+material = SubResource("CanvasItemMaterial_m35ce")
+amount = 8000
+texture = ExtResource("1_m35ce")
+lifetime = 5.0
+preprocess = 20.0
+process_material = SubResource("ParticleProcessMaterial_m35ce")
+
+[node name="Splashes" type="GPUParticles2D" parent="."]
+modulate = Color(0.745098, 1, 0.909804, 1)
+material = SubResource("CanvasItemMaterial_u4yl7")
+position = Vector2(0, 295)
+amount = 8000
+texture = ExtResource("3_u4yl7")
+lifetime = 0.17
+preprocess = 20.0
+visibility_rect = Rect2(-1000, -1000, 2000, 2000)
+process_material = SubResource("ParticleProcessMaterial_bmx0b")
