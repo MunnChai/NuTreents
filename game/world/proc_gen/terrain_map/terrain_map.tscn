@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c8ibupddw5xou"]
+[gd_scene load_steps=6 format=3 uid="uid://c8ibupddw5xou"]
 
 [ext_resource type="Texture2D" uid="uid://nc08yyyg3qtf" path="res://world/proc_gen/world_tiles.png" id="1_i2w04"]
 [ext_resource type="Script" uid="uid://cf1vggfxejw4f" path="res://world/proc_gen/terrain_map/terrain_map.gd" id="2_81d22"]
+[ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="3_uh2vc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_uh2vc"]
 texture = ExtResource("1_i2w04")
@@ -361,6 +362,14 @@ texture_region_size = Vector2i(32, 16)
 1:22/0 = 0
 2:22/size_in_atlas = Vector2i(1, 2)
 2:22/0 = 0
+0:24/size_in_atlas = Vector2i(1, 2)
+0:24/0 = 0
+1:24/size_in_atlas = Vector2i(1, 2)
+1:24/0 = 0
+2:24/size_in_atlas = Vector2i(1, 2)
+2:24/0 = 0
+3:24/size_in_atlas = Vector2i(1, 2)
+3:24/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_ag0jr"]
 tile_shape = 1
@@ -382,8 +391,12 @@ tile_set = SubResource("TileSet_ag0jr")
 script = ExtResource("2_81d22")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
 metadata/_edit_use_anchors_ = true
+
+[node name="Camera" parent="." instance=ExtResource("3_uh2vc")]
+visible = false
