@@ -24,10 +24,10 @@ func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	if (Input.is_action_just_pressed("debug_button")):
-		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
-		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
+	#if (Input.is_action_just_pressed("debug_button")):
+		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
+		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
+		#spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -49,7 +49,7 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		#kill_all_enemies()
+		kill_all_enemies()
  
 # increases the severity of bug spawns based on the day
 func increase_difficulty() -> void:
@@ -61,15 +61,12 @@ const CLOSEST_SPAWN_FROM_FOG_EDGE: float = 1.0
 const FURTHEST_SPAWN_FROM_FOG_EDGE: float = 50.0
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemy_wave() -> int:
-	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
-	
 	var target_tree = find_target_tree()
 	var grid_position_component: GridPositionComponent = Components.get_component(target_tree, GridPositionComponent)
 	var target_pos = grid_position_component.get_occupied_positions().pick_random()
 	
-	# Munn: Changed a bit here, to make the lag spike less obvious
+	# Get cells in the fog
 	var possible_cells = Global.fog_map.get_used_cells()
-	#print("Possible: ", possible_cells.size())
 	var near_cells = []
 	var distance := INF
 	for cell in possible_cells:
@@ -77,14 +74,19 @@ func spawn_enemy_wave() -> int:
 			if Global.fog_map.is_tile_foggy(cell):
 				distance = cell.distance_squared_to(target_pos)
 				near_cells.append(cell)
-	#print("Near: ", near_cells.size())
+	
+	# Get cells near the target
 	var allowed_cells = []
 	for cell in near_cells:
 		if cell.distance_squared_to(target_pos) > distance + 1.0 and cell.distance_squared_to(target_pos) < distance + 50.0:
 			allowed_cells.append(cell)
 	
+	# Get the spawned enemies
+	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
+	var enemies_to_spawn
+	
 	for i in range(0, num_enemies):
-		await get_tree().create_timer(0.1).timeout # Munn: Don't spawn every enemy on one frame, causes big lag spike
+		await get_tree().create_timer(0.5).timeout # Munn: Don't spawn every enemy on one frame, causes big lag spike
 		
 		var rand_enemy = Global.EnemyType.values().pick_random()
 		
@@ -191,15 +193,21 @@ func load_enemies_from(enemy_map: Dictionary):
 
 #region DifficultyFunctions
 
+const ENEMY_FIRST_SPAWN_DAY: Dictionary[Global.EnemyType, int] = {
+	Global.EnemyType.SPEEDLE: 1,
+	Global.EnemyType.SILK_SPITTER: 5,
+}
+
 const BASE_NUM_WAVES: int = 1
 const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # casted to an int, so effectively increase by 1 every 2 days
 
 const BASE_MIN_ENEMIES: int = 1
-const BASE_MAX_ENEMIES: int = 2
+const BASE_MAX_ENEMIES: int = 1
 const MIN_ENEMIES_INCREASE_PER_DAY: int = 1
-const MAX_ENEMIES_INCREASE_PER_DAY: int = 1
+const MAX_ENEMIES_INCREASE_PER_DAY: int = 2
 
 # Functions for calculating difficulty based on the given day
+# Note: day_tracker starts at 1
 func get_num_waves(day: int = day_tracker):
 	return BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY)
 

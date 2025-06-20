@@ -39,7 +39,7 @@ func _ready() -> void:
 
 ## Start the game with a blank slate
 func start_game():
-	nutreents = 10000
+	nutreents = 25
 	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
