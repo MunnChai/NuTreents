@@ -12,6 +12,16 @@ func _on_weather_changed(new_weather: WeatherManagerGlobal.WeatherType) -> void:
 			summon_lightning()
 			$Timer.start(0.5)
 			await $Timer.timeout
+	#elif new_weather == WeatherManagerGlobal.WeatherType.CLEAR:
+		#if EnemyManager.instance:
+			#for enemy in EnemyManager.instance.get_enemies():
+				#if not enemy:
+					#continue
+				#var grid_pos: GridPositionComponent = Components.get_component(enemy, GridPositionComponent, "", false)
+				#if grid_pos:
+					#summon_lightning_at(grid_pos.get_pos())
+					#$Timer.start(0.15)
+					#await $Timer.timeout
 
 const LIGHTNING = preload("res://events/weather/lightning/lightning.tscn")
 func summon_lightning() -> void:
@@ -20,6 +30,12 @@ func summon_lightning() -> void:
 	
 	var offset := Vector2i(randi_range(-3, 3), randi_range(-3, 3))
 	var pos := Global.ORIGIN + offset
+	
+	summon_lightning_at(pos)
+
+func summon_lightning_at(pos: Vector2i) -> void:
+	if not Global.structure_map:
+		return
 	
 	var new_lightning = LIGHTNING.instantiate()
 	new_lightning.global_position = Global.structure_map.map_to_local(pos)
