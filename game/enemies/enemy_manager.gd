@@ -24,7 +24,8 @@ func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	#if (Input.is_action_just_pressed("debug_button")):
+	if (Input.is_action_just_pressed("debug_button")):
+		spawn_enemy_wave()
 		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
 		#spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
@@ -49,7 +50,7 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		kill_all_enemies()
+		#kill_all_enemies()
  
 # increases the severity of bug spawns based on the day
 func increase_difficulty() -> void:
@@ -82,13 +83,11 @@ func spawn_enemy_wave() -> int:
 			allowed_cells.append(cell)
 	
 	# Get the spawned enemies
-	var num_enemies = randi_range(get_min_enemies_per_wave(), get_max_enemies_per_wave())
-	var enemies_to_spawn
+	var points: int = get_points_per_wave()
+	var enemies_to_spawn: Array[Global.EnemyType] = choose_enemies_to_spawn(points)
 	
-	for i in range(0, num_enemies):
+	for type in enemies_to_spawn:
 		await get_tree().create_timer(0.5).timeout # Munn: Don't spawn every enemy on one frame, causes big lag spike
-		
-		var rand_enemy = Global.EnemyType.values().pick_random()
 		
 		var rand_pos = allowed_cells.pick_random()
 		if !rand_pos: # No allowed cells
@@ -96,9 +95,48 @@ func spawn_enemy_wave() -> int:
 		var world_pos = Global.fog_map.map_to_local(rand_pos)
 		var terrain_pos = Global.terrain_map.local_to_map(world_pos)
 		
-		var enemy = spawn_enemy(rand_enemy, terrain_pos)
+		var enemy = spawn_enemy(type, terrain_pos)
 	
-	return num_enemies
+	return enemies_to_spawn.size()
+
+func choose_enemies_to_spawn(points: int) -> Array[Global.EnemyType]:
+	
+	var types: Array[Global.EnemyType] = EnemyRegistry.get_spawnable_enemies_by_day(day_tracker)
+	
+	# The minimum spawn cost of the array of enemies
+	var min_points: int = 999999
+	for type: Global.EnemyType in types:
+		var stat: EnemyStatResource = EnemyRegistry.get_enemy_stat(type)
+		if stat.spawn_point_cost < min_points:
+			min_points = stat.spawn_point_cost
+	
+	var enemies_to_spawn: Array[Global.EnemyType] = []
+	
+	# While we still have points to spend, choose a random enemy weighted
+	while points >= min_points:
+		var type: Global.EnemyType = choose_enemy_weighted(types)
+		var enemy_cost: int = EnemyRegistry.get_enemy_stat(type).spawn_point_cost
+		
+		enemies_to_spawn.append(type)
+		points -= enemy_cost
+	
+	return enemies_to_spawn
+
+func choose_enemy_weighted(enemy_types: Array[Global.EnemyType]) -> Global.EnemyType:
+	var weight_sum: int = 0
+	for enemy_type: Global.EnemyType in enemy_types:
+		weight_sum += EnemyRegistry.get_enemy_stat(enemy_type).spawn_weight
+	
+	var rand: int = randi_range(0, weight_sum)
+	
+	for enemy_type in enemy_types:
+		var weight = EnemyRegistry.get_enemy_stat(enemy_type).spawn_weight
+		if rand < weight:
+			return enemy_type
+		rand -= weight
+	
+	# SHOULD NEVER GET HERE
+	return Global.EnemyType.SPEEDLE
 
 # Searches forest for high priority trees
 # Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
@@ -193,29 +231,20 @@ func load_enemies_from(enemy_map: Dictionary):
 
 #region DifficultyFunctions
 
-const ENEMY_FIRST_SPAWN_DAY: Dictionary[Global.EnemyType, int] = {
-	Global.EnemyType.SPEEDLE: 1,
-	Global.EnemyType.SILK_SPITTER: 5,
-}
-
 const BASE_NUM_WAVES: int = 1
 const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # casted to an int, so effectively increase by 1 every 2 days
+const MAX_WAVES: int = 5
 
-const BASE_MIN_ENEMIES: int = 1
-const BASE_MAX_ENEMIES: int = 1
-const MIN_ENEMIES_INCREASE_PER_DAY: int = 1
-const MAX_ENEMIES_INCREASE_PER_DAY: int = 2
+const BASE_POINTS: int = 5
+const POINTS_INCREASE_PER_DAY: int = 10
 
 # Functions for calculating difficulty based on the given day
 # Note: day_tracker starts at 1
+func get_points_per_wave() -> int:
+	return (BASE_POINTS + (day_tracker - 1) * POINTS_INCREASE_PER_DAY) / get_num_waves()
+
 func get_num_waves(day: int = day_tracker):
-	return BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY)
-
-func get_max_enemies_per_wave(day: int = day_tracker) -> int:
-	return BASE_MAX_ENEMIES + (day - 1) * MAX_ENEMIES_INCREASE_PER_DAY
-
-func get_min_enemies_per_wave(day: int = day_tracker) -> int:
-	return BASE_MIN_ENEMIES + (day - 1) * MIN_ENEMIES_INCREASE_PER_DAY
+	return min(BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY), MAX_WAVES)
 
 func get_enemy_spawn_interval(day: int = day_tracker):
 	return Global.clock.HALF_DAY_SECONDS / get_num_waves(day)
