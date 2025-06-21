@@ -22,14 +22,20 @@ func summon_lightning() -> void:
 	var pos := Global.ORIGIN + offset
 	
 	var new_lightning = LIGHTNING.instantiate()
+	new_lightning.global_position = Global.structure_map.map_to_local(pos)
 	Global.structure_map.add_child(new_lightning)
-	new_lightning.position = Global.structure_map.map_to_local(pos)
 	
 	var entity = MapUtility.get_entity_at(pos)
 	if entity:
+		PopupManager.create_popup("HIT!", new_lightning.global_position, Color("ffab41"), Color.BLACK)
+		
 		var flammable: FlammableComponent = Components.get_component(entity, FlammableComponent, "", true)
 		if flammable:
 			flammable.ignite()
+		
+		var health: HealthComponent = Components.get_component(entity, HealthComponent, "", true)
+		if health:
+			health.subtract_health(5)
 
 func _process(delta: float) -> void:
 	pass
