@@ -422,7 +422,7 @@ func get_reachable_tree_placement_positions(include_trees: bool = false) -> Arra
 	
 	for pos in tree_map.keys():
 		var tree: Node2D = tree_map.get(pos)
-		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent)
+		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
 		
 		for offset in grid_range_component.get_tiles_in_range():
 			var new_pos = pos + offset
