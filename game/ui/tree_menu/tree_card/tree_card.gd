@@ -95,7 +95,7 @@ func _update_availability(delta: float) -> void:
 #region EVENT HANDLERS
 
 ## A tree has been placed/added by TweeManager!
-func _on_tree_placed(new_twee: Twee) -> void:
+func _on_tree_placed(new_twee: Node2D) -> void:
 	if is_selected:
 		pop() ## Selected card was just placed!
 

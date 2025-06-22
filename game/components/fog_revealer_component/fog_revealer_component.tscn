@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dc41m5quwf1is"]
+
+[ext_resource type="Script" uid="uid://cuns3gyhi5bfq" path="res://components/fog_revealer_component/fog_revealer_component.gd" id="1_d130y"]
+
+[node name="FogRevealerComponent" type="Node2D"]
+script = ExtResource("1_d130y")

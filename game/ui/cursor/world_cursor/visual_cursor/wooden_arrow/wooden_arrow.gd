@@ -1,6 +1,13 @@
 class_name CursorWoodenArrow
 extends AnimatedSprite2D
 
+enum ArrowHeight {
+	LOW = 0,
+	MEDIUM = 1,
+	HIGH = 2,
+	CUSTOM = 3,
+}
+
 const RATE_OF_DECAY = 22.0
 
 @onready var cursor_position := global_position
@@ -23,14 +30,16 @@ func _process(delta: float) -> void:
 func set_cursor_position(new_position: Vector2) -> void:
 	cursor_position = new_position
 
-func set_height(value: String) -> void:
+func set_height(value: ArrowHeight, custom_height: float = 0.0) -> void:
 	match value: # Remember: bigger value is down!
-		"low": 
+		ArrowHeight.LOW: 
 			pos_offset = Vector2(0, 10)
-		"medium":
+		ArrowHeight.MEDIUM:
 			pos_offset = Vector2(0, 0)
-		"high":
+		ArrowHeight.HIGH:
 			pos_offset = Vector2(0, -16)
+		ArrowHeight.CUSTOM:
+			pos_offset = Vector2(0, custom_height)
 
 func enable() -> void:
 	if is_enabled:

@@ -32,16 +32,7 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 const SOURCE_ID: int = 0
 const BIOME_FALLOFF = 2
 
-# City information
-const CITY_BUILDING = preload("res://structures/city/city_building.tscn")
-const FACTORY = preload("res://structures/city/factory/factory.tscn")
-
 const NUM_FACTORIES: int = 3 
-
-# Decor scenes
-const CITY_DECOR = preload("res://world/proc_gen/decor/city_decor.tscn")
-const GRASS_DECOR = preload("res://world/proc_gen/decor/grass_decor.tscn")
-const DIRT_DECOR = preload("res://world/proc_gen/decor/dirt_decor.tscn")
 
 # The current world size settings being used to generate the world
 var world_size_settings: WorldSizeSettings
@@ -141,7 +132,7 @@ func initialize_map() -> void:
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var TileType: int = TileType.GRASS
+			var TileType: int = TileType.DIRT
 			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[TileType]
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
@@ -250,7 +241,7 @@ func generate_highways(city_coords: Array[Vector2i]) -> void:
 func build_highway(city_i: Vector2i, city_j: Vector2i) -> void:
 	
 	for i in range(0, world_size_settings.num_highway_drunkards):
-		walk_drunkard_targeted(city_i, city_j, TileType.DIRT, world_size_settings.highway_drunkard_lifetime)
+		walk_drunkard_targeted(city_i, city_j, TileType.GRASS, world_size_settings.highway_drunkard_lifetime)
 
 
 func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
@@ -292,7 +283,7 @@ func generate_spawn() -> void:
 	var origin: Vector2i = Global.ORIGIN
 	
 	for i in range(0, world_size_settings.num_spawn_drunkards):
-		walk_drunkard(origin, TileType.GRASS, world_size_settings.spawn_drunkard_lifetime, [TileType.DIRT])
+		walk_drunkard(origin, TileType.GRASS, world_size_settings.spawn_drunkard_lifetime, [])
 
 
 func generate_factories(city_coords: Array[Vector2i]) -> void:
@@ -300,7 +291,7 @@ func generate_factories(city_coords: Array[Vector2i]) -> void:
 		var coord = city_coords.pick_random()
 		city_coords.erase(coord)
 		
-		var factory: Structure = FACTORY.instantiate()
+		var factory: Node2D = StructureRegistry.get_new_structure(Global.StructureType.FACTORY)
 		
 		var structure_map = Global.structure_map
 		structure_map.add_structure(coord, factory)
@@ -319,7 +310,7 @@ func generate_buildings(city_tiles: Array[Vector2i]) -> void:
 				
 				var rand = randf()
 				if (rand <= world_size_settings.building_frequency):
-					var building: Structure = CITY_BUILDING.instantiate()
+					var building: Node2D = StructureRegistry.get_new_structure(Global.StructureType.CITY_BUILDING)
 					
 					structure_map.add_structure(tile, building)
 
@@ -336,14 +327,15 @@ func add_decor() -> void:
 			if (tile_data):
 				var type = tile_data.get_custom_data("biome")
 				var rand = randf()
-				var decor: Decor = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
+				var decor: Node2D = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
 				
 				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or 
 					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
 					if success:
-						decor.set_decor_type(type)
+						var decor_behaviour_component: DecorBehaviourComponent = Components.get_component(decor, DecorBehaviourComponent)
+						decor_behaviour_component.set_decor_type(type)
 				
 
 

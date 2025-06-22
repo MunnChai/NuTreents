@@ -1,0 +1,94 @@
+[gd_scene load_steps=16 format=3 uid="uid://pwq6l348irkt"]
+
+[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_2ef26"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="1_l7t1q"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="2_3ntak"]
+[ext_resource type="Texture2D" uid="uid://cafkj4qot2ato" path="res://world/proc_gen/structure_map/factory_sheet.png" id="2_257jg"]
+[ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="3_3ntak"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="6_257jg"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="7_36ag0"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="9_nrg4w"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="10_snwho"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="11_ttqd5"]
+[ext_resource type="Script" uid="uid://cieb0en7ggha4" path="res://components/behaviour_components/structure_behaviour_components/factory_behaviour_component/factory_behaviour_component.gd" id="12_ygjgk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_36ag0"]
+shader = ExtResource("1_2ef26")
+shader_parameter/outline_width = 1
+shader_parameter/outline_alpha = 0.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_8g0gh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_mdjg4"]
+resource_name = "idle"
+length = 0.500008
+loop_mode = 1
+step = 0.0833333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0948205, 0.166667, 0.25, 0.333333, 0.416667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n56dr"]
+_data = {
+&"RESET": SubResource("Animation_8g0gh"),
+&"idle": SubResource("Animation_mdjg4")
+}
+
+[node name="FactoryComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_36ag0")
+texture = ExtResource("2_257jg")
+offset = Vector2(0, -16)
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_n56dr")
+}
+autoplay = "idle"
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("1_l7t1q")]
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("2_3ntak")]
+
+[node name="DestructableComponent" parent="." instance=ExtResource("3_3ntak")]
+cost_to_destroy = 500.0
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("6_257jg")]
+id = "factory"
+
+[node name="FogRevealerComponent" parent="." instance=ExtResource("7_36ag0")]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("9_nrg4w")]
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("10_snwho")]
+arrow_height = 1
+
+[node name="FactoryBehaviourComponent" parent="." instance=ExtResource("11_ttqd5")]
+script = ExtResource("12_ygjgk")
+type = 1

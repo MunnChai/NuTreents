@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://ftuwvgqjc6ym"]
+
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="1_8geoa"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="1_ym1hf"]
+[ext_resource type="PackedScene" uid="uid://bxqge2gs2yndp" path="res://components/atlas_randomizer_component/atlas_randomizer_component.tscn" id="3_6kfxq"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="5_0wjab"]
+[ext_resource type="Script" uid="uid://dfnufbcg5lkob" path="res://components/behaviour_components/structure_behaviour_components/decor_behaviour_component/decor_behaviour_component.gd" id="6_dm6cd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s8ydt"]
+atlas = ExtResource("1_8geoa")
+
+[node name="DecorComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = SubResource("AtlasTexture_s8ydt")
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("1_ym1hf")]
+
+[node name="AtlasRandomizerComponent" parent="." instance=ExtResource("3_6kfxq")]
+h_frames = 6
+v_frames = 3
+
+[node name="DecorBehaviourComponent" parent="." instance=ExtResource("5_0wjab")]
+script = ExtResource("6_dm6cd")
+type = 3

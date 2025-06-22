@@ -36,8 +36,9 @@ func update_highlights() -> void:
 	
 	# Update highlights according to forest
 	for pos: Vector2i in highlights:
-		var tree: Twee = TreeManager.tree_map[pos]
-		var forest: Forest = TreeManager.forests[tree.forest]
+		var tree: Node2D = TreeManager.tree_map[pos]
+		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		var forest: Forest = TreeManager.forests[tree_behaviour_component.forest]
 		
 		var highlight: WaterHighlight = highlights[pos]
 		
@@ -51,6 +52,7 @@ func update_highlights() -> void:
 		highlight.self_modulate = color
 		highlight.self_modulate.a = 0.75
 		
-		var net_water = tree.get_water_gain() - tree.get_water_maint()
+		var water_production_component: WaterProductionComponent = Components.get_component(tree, WaterProductionComponent)
+		var net_water = water_production_component.get_water_production()
 		
 		highlight.set_label_number(net_water)

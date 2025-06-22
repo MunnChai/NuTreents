@@ -62,7 +62,7 @@ func save_session_data(save_num: int = 1):
 	# Save trees
 	var tree_map: Dictionary
 	for pos in TreeManager.tree_map:
-		var tree: Twee = TreeManager.tree_map[pos]
+		var tree: Node2D = TreeManager.tree_map[pos]
 		
 		tree_map[pos] = _create_twee_save_resource(tree)
 	config.set_value(SECTION_SESSION, "tree_map", tree_map)
@@ -70,7 +70,7 @@ func save_session_data(save_num: int = 1):
 	# Save structures (including decor)
 	var structure_map: Dictionary
 	for pos in Global.structure_map.tile_scene_map:
-		var structure: Structure = Global.structure_map.tile_scene_map[pos]
+		var structure: Node2D = Global.structure_map.tile_scene_map[pos]
 		var save_resource = _create_structure_save_resource(structure)
 		if !save_resource:
 			continue
@@ -79,11 +79,12 @@ func save_session_data(save_num: int = 1):
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
-	for enemy: Enemy in EnemyManager.instance.current_enemies:
+	for enemy: Node2D in EnemyManager.instance.get_enemies():
 		var save_resource: EnemyDataResource = _create_enemy_save_resource(enemy)
 		if !save_resource:
 			continue
-		enemy_map[enemy.map_position] = save_resource
+		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
+		enemy_map[grid_position_component.get_pos()] = save_resource
 	config.set_value(SECTION_SESSION, "enemy_map", enemy_map)
 	config.set_value(SECTION_SESSION, "enemy_spawn_timer", EnemyManager.instance.enemy_spawn_timer)
 	
@@ -206,53 +207,62 @@ func create_save_directory() -> void:
 
 #region SaveResources
 
-func _create_twee_save_resource(twee: Twee) -> TweeDataResource:
+func _create_twee_save_resource(twee: Node2D) -> TweeDataResource:
 	var save_resource: TweeDataResource = TweeDataResource.new()
 	
-	save_resource.type = twee.type
+	var stat_component: TweeStatComponent = Components.get_component(twee, TweeStatComponent)
+	save_resource.type = stat_component.type
 	
-	save_resource.hp = twee.hp
-	save_resource.life_time_seconds = twee.life_time_seconds
-	save_resource.is_large = twee.is_large
+	var health_component: HealthComponent = Components.get_component(twee, HealthComponent)
+	var behaviour_component: TweeBehaviourComponent = Components.get_component(twee, TweeBehaviourComponent)
+	save_resource.hp = health_component.current_health
+	var grow_timer: Timer = Components.get_component(twee, Timer, "GrowTimer")
+	if grow_timer:
+		save_resource.life_time_seconds = grow_timer.time_left
+	save_resource.is_large = behaviour_component.is_large
 	
-	save_resource.sheet_id = twee.sheets.find(twee.sprite.texture)
+	var animation_component: TweeAnimationComponent = Components.get_component(twee, TweeAnimationComponent)
+	save_resource.sheet_id = animation_component.sheets.find(animation_component.sprite_2d.texture)
 	
-	save_resource.forest_water = TreeManager.forests[twee.forest].water
+	save_resource.forest_water = TreeManager.forests[behaviour_component.forest].water
 	
-	if twee is TechTree:
-		save_resource.tech_slot = twee.tech_slot
+	if stat_component.type == Global.TreeType.TECH_TREE:
+		save_resource.tech_slot = behaviour_component.tech_slot
 	
 	return save_resource
 
-func _create_structure_save_resource(structure: Structure) -> StructureDataResource:
+func _create_structure_save_resource(structure: Node2D) -> StructureDataResource:
 	# Don't save trees
-	if structure is Twee:
+	if Components.has_component(structure, TweeStatComponent):
 		return null
 	
 	var save_resource: StructureDataResource = StructureDataResource.new()
 	
-	save_resource.flip_h = structure.sprite_2d.flip_h
+	var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+	save_resource.flip_h = structure_behaviour_component.sprite_2d.flip_h
+	save_resource.type = structure_behaviour_component.type
 	
-	if structure is Factory:
-		save_resource.tech_slot = structure.tech_slot
-		save_resource.type = structure.structure_type
-	elif structure is CityStructure:
-		var atlas_texture: AtlasTexture = structure.sprite_2d.texture
-		save_resource.texture_region_position = atlas_texture.region.position
-		save_resource.type = structure.structure_type
-	elif structure is Decor:
-		var atlas_texture: AtlasTexture = structure.sprite_2d.texture
-		save_resource.texture_region_position = atlas_texture.region.position
-		save_resource.tile_type = structure.tile_type
-		save_resource.type = structure.structure_type
+	match structure_behaviour_component.type:
+		Global.StructureType.FACTORY, Global.StructureType.FACTORY_REMAINS:
+			save_resource.tech_slot = structure_behaviour_component.tech_slot
+		Global.StructureType.CITY_BUILDING:
+			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
+			save_resource.texture_region_position = atlas_texture.region.position
+		Global.StructureType.DECOR:
+			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
+			save_resource.texture_region_position = atlas_texture.region.position
+			save_resource.tile_type = structure_behaviour_component.tile_type
+		
 	
 	return save_resource
 
-func _create_enemy_save_resource(enemy: Enemy) -> EnemyDataResource:
+func _create_enemy_save_resource(enemy: Node2D) -> EnemyDataResource:
 	var save_resource: EnemyDataResource = EnemyDataResource.new()
 	
-	save_resource.type = enemy.type
-	save_resource.hp = enemy.current_health
+	var stat_component: EnemyStatComponent = Components.get_component(enemy, EnemyStatComponent)
+	save_resource.type = stat_component.type
+	var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+	save_resource.hp = health_component.current_health
 	
 	return save_resource
 

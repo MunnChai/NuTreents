@@ -1,0 +1,12 @@
+[gd_scene load_steps=4 format=3 uid="uid://dp2qux8jc8s0s"]
+
+[ext_resource type="Script" uid="uid://bb01m6d40cunj" path="res://enemies/registry/enemy_registry.gd" id="1_b224i"]
+[ext_resource type="PackedScene" uid="uid://dx31qo8ntqbho" path="res://enemies/speedle/speedle_composed.tscn" id="2_wmfea"]
+[ext_resource type="PackedScene" uid="uid://dguswqwhw6id" path="res://enemies/silk_spitter/silk_spitter_composed.tscn" id="3_relub"]
+
+[node name="EnemyRegistry" type="Node2D"]
+script = ExtResource("1_b224i")
+enemy_scene_registry = Dictionary[int, PackedScene]({
+0: ExtResource("2_wmfea"),
+1: ExtResource("3_relub")
+})

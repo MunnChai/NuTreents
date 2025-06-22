@@ -1,7 +1,7 @@
 extends Node
 class_name TweeManager
 
-signal tree_placed(new_tree: Twee)
+signal tree_placed(new_tree: Node2D)
 signal tree_removed(pos: Vector2i)
 
 var fog_map: FogMap
@@ -13,7 +13,7 @@ var forests: Dictionary[int, Forest] # {id, Forest}
 ## Mapping between position and forest
 var forest_map: Dictionary[Vector2i, int] # {pos, id}
 ## Mapping between position and twees
-var tree_map: Dictionary[Vector2i, Twee]
+var tree_map: Dictionary[Vector2i, Node2D]
 var forest_count: int
 
 ## Amount of nutreents the player has
@@ -26,6 +26,16 @@ func consume_n(cost: int) -> void:
 	nutreents -= cost
 
 #region CORE FUNCTIONALITY
+
+const RESOURCE_TICK_RATE: float = 0.5 # Time in seconds for each tick of resources
+var resource_timer: Timer
+
+func _ready() -> void:
+	resource_timer = Timer.new()
+	add_child(resource_timer)
+	resource_timer.one_shot = false
+	resource_timer.wait_time = RESOURCE_TICK_RATE
+	resource_timer.timeout.connect(get_resources)
 
 ## Start the game with a blank slate
 func start_game():
@@ -46,16 +56,24 @@ func start_game():
 	await get_tree().process_frame
 	
 	## SPAWN THE MOTHER TREE
-	var mother_tree: MotherTree = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
-	mother_tree.init_occupied_positions([ 
+	var mother_tree: Node2D = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
+	
+	var mother_tree_positions: Array[Vector2i] = [ 
 		Global.ORIGIN + Vector2i.LEFT,
 		Global.ORIGIN + Vector2i.LEFT + Vector2i.UP,
 		Global.ORIGIN + Vector2i.UP,
-		Global.ORIGIN])
-	call_deferred("add_tree", mother_tree)
+		Global.ORIGIN]
+	
+	for position: Vector2i in mother_tree_positions:
+		add_tree(mother_tree, position)
+	
+	var grid_position_component = Components.get_component(mother_tree, GridPositionComponent)
+	grid_position_component.init_occupied_positions(mother_tree_positions)
+	
+	resource_timer.start()
 
 ## Returns the twee at the given position, null if there is none
-func get_twee(pos: Vector2i) -> Twee:
+func get_twee(pos: Vector2i) -> Node2D:
 	if not is_twee(pos):
 		return null
 	return tree_map[pos]
@@ -67,39 +85,37 @@ func get_forest_at(pos: Vector2i) -> Forest:
 	return get_forest(forest_map[pos])
 
 ## Returns a dictionary of positions to twees
-func get_tree_map() -> Dictionary[Vector2i, Twee]:
+func get_tree_map() -> Dictionary[Vector2i, Node2D]:
 	return tree_map
 
 ## Place the given twee at the given position
 ## NOTE: ONLY USE THIS FOR SINGLE TILE TWEES
-func place_tree(twee: Twee, pos: Vector2i) -> void:
-	twee.init_pos(pos)
-	add_tree(twee)
+func place_tree(twee: Node2D, pos: Vector2i) -> void:
+	add_tree(twee, pos)
 
 ## Add the given twee to the map
-func add_tree(twee: Twee) -> void:
-	var occupied_positions = twee.get_occupied_positions()
+func add_tree(twee: Node2D, pos: Vector2i) -> void:
+	if is_twee(pos):
+		return
 	
-	for p: Vector2i in occupied_positions:
-		if is_twee(p):
-			return
+	#var occupied_positions = twee.get_occupied_positions()
+	#
+	#for p: Vector2i in occupied_positions:
+		#if is_twee(p):
+			#return
 	
-	for p: Vector2i in occupied_positions:
-		# Forest... 
-		var f_id: int = find_forest(p)
-		forest_map[p] = f_id
-		var forest: Forest = forests[f_id]
-		forest.add_tree(p, twee)
-		
-		# Map...
-		tree_map[p] = twee
-		
-		# Structure map...
-		structure_map.add_structure(p, twee)
-		
-		# Fog...
-		fog_map.remove_fog_around(p)
-	 
+	# Forest stuff...
+	var f_id: int = find_forest(pos)
+	forest_map[pos] = f_id
+	var forest: Forest = forests[f_id]
+	forest.add_tree(pos, twee)
+	
+	# Map...
+	tree_map[pos] = twee
+	
+	# Structure map...
+	structure_map.add_structure(pos, twee)
+	
 	# Signal!
 	tree_placed.emit(twee)
  
@@ -109,19 +125,19 @@ func remove_tree(p: Vector2i) -> void:
 	if not forest_map.has(p): # No tree here. No sir.
 		return
 	
+	# Structure map...
+	structure_map.remove_structure(p)
+	
 	# Forest...
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
-	var tree: Twee = f.trees[p]
+	var tree: Node2D = f.trees[p]
 	forest_map.erase(p)
 	f.remove_tree(p) # Assume remove_tree will free object correctly
 	forest_check(p, f_id)
 	
 	# Map...
 	tree_map.erase(p)
-	
-	# Structure map...
-	structure_map.remove_structure(p)
 	
 	# Fog...
 	# TODO: Put fog back?
@@ -134,19 +150,22 @@ func remove_tree(p: Vector2i) -> void:
 #region PROCESSING
 
 func _process(delta: float) -> void:
-	nutreents_gain = get_nutrient_gain(delta)
-	nutreents += nutreents_gain * delta # Nutreents/second * time 
-	update_water_maintenance(delta)
-	
-	if Input.is_action_just_pressed("debug_button_2"):
-		print("Orphan Nodes:")
-		print_orphan_nodes()
+	#nutreents_gain = get_nutrient_gain(delta)
+	#nutreents += nutreents_gain * delta # Nutreents/second * time 
+	#update_water_maintenance(delta)
+	pass
+
+# Occurs once per second
+func get_resources(tick_rate: float = RESOURCE_TICK_RATE) -> void:
+	nutreents_gain = get_nutrient_gain(tick_rate)
+	nutreents += nutreents_gain * tick_rate
+	update_water_maintenance(tick_rate)
 
 func get_nutrient_gain(delta: float) -> float:
 	var nutrient_sum: float = 0
 	for forest_id: int in forests:
 		var forest: Forest = forests[forest_id]
-		nutrient_sum += forest.get_nutrient_gain(delta)
+		nutrient_sum += forest.get_nutrient_gain()
 	return nutrient_sum
 
 func update_water_maintenance(delta: float) -> float:
@@ -203,8 +222,9 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 		var tree_id: int = forest_map[pos]
 		
 		if forests_to_merge.has(tree_id):
-			var tree: Twee = tree_map[pos]
-			tree.forest = forest_id
+			var tree: Node2D = tree_map[pos]
+			var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+			tree_behaviour_component.forest = forest_id
 			
 			# Add to forest
 			new_forest.trees[pos] = tree
@@ -271,7 +291,7 @@ func get_forest(id: int) -> Forest:
 ## given a pos, check if there's a need to split the forest, split if neccessary
 ## id is the forest_id of the original tree
 func forest_check(p: Vector2i, id: int):
-	print("forest_check called")
+	#print("forest_check called")
 	# check for split
 	var forest_groups: Array = check_for_split(p)
 	# split if needed
@@ -337,7 +357,8 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 		## update some info
 		#if (pos == Global.ORIGIN):
 			#continue
-		tree.forest = id
+		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		tree_behaviour_component.forest = id
 		forest_map[pos] = id
 		
 		# add this to new forest
@@ -375,7 +396,10 @@ func find_neighbours(p: Vector2i) -> Array[Vector2i]:
 #region POSITIONAL CHECKS
 
 func is_mother_dead() -> bool:
-	return (!tree_map.has(Global.ORIGIN) or tree_map[Global.ORIGIN].died)
+	if not tree_map.has(Global.ORIGIN):
+		return true
+	
+	return Components.get_component(tree_map[Global.ORIGIN], HealthComponent).is_dead
 
 ## Returns true if there is a tree at the given location
 func is_twee(pos: Vector2i):
@@ -397,8 +421,10 @@ func get_reachable_tree_placement_positions(include_trees: bool = false) -> Arra
 	var tree_map = get_tree_map()
 	
 	for pos in tree_map.keys():
-		var tree: Twee = tree_map.get(pos)
-		for offset in tree.get_reachable_offsets():
+		var tree: Node2D = tree_map.get(pos)
+		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent)
+		
+		for offset in grid_range_component.get_tiles_in_range():
 			var new_pos = pos + offset
 			if not tree_map.has(new_pos):
 				allowed_positions.append(pos + offset)

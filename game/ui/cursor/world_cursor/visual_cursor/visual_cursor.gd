@@ -18,11 +18,12 @@ func _process(delta: float) -> void:
 	
 	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
 	
-	var building: Structure = Global.structure_map.get_building_node(cursor.iso_position)
+	var building: Node2D = Global.structure_map.get_building_node(cursor.iso_position)
 	
 	## BUILDING:
-	if building != null:
-		var positions := building.get_occupied_positions()
+	if building != null and Components.has_component(building, GridPositionComponent):
+		var position_component: GridPositionComponent = Components.get_component(building, GridPositionComponent)
+		var positions := position_component.get_occupied_positions()
 		var average_pos := Vector2.ZERO
 		var sum := 0
 		for pos: Vector2i in positions:
@@ -88,17 +89,23 @@ func _update_visuals(delta: float) -> void:
 	
 	# SET THE ARROW HEIGHT BASED ON WHAT IS ON THIS TILE...
 	if building_node == null:
-		_set_arrow_height("low")
+		_set_arrow_height(CursorWoodenArrow.ArrowHeight.LOW)
 	else:
-		_set_arrow_height((building_node as Structure).get_arrow_cursor_height())
+		var visual_arrow_component: VisualArrowComponent = Components.get_component(building_node, VisualArrowComponent)
+		if visual_arrow_component:
+			_set_arrow_height(visual_arrow_component.get_arrow_cursor_height(), visual_arrow_component.get_custom_height())
 		_show_structure_outline(iso_position)
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
 	if building_node == null || not structure_map.does_obstructive_structure_exist(iso_position):
 		_set_arrow_bobbing(true)
 	else:
-		if (building_node as Structure).get_id() in BOBBING_BUILDING_IDS:
-			_set_arrow_bobbing(true)
+		if Components.has_component(building_node, TooltipIdentifierComponent):
+			var id = Components.get_component(building_node, TooltipIdentifierComponent)
+			if id in BOBBING_BUILDING_IDS:
+				_set_arrow_bobbing(true)
+			else:
+				_set_arrow_bobbing(false)
 		else:
 			_set_arrow_bobbing(false)
 	
@@ -178,8 +185,8 @@ func _set_arrow_visible(value: bool) -> void:
 	else:
 		wooden_arrow.disable()
 
-func _set_arrow_height(value: String) -> void:
-	wooden_arrow.set_height(value)
+func _set_arrow_height(value: CursorWoodenArrow.ArrowHeight, custom_height: float = 0.0) -> void:
+	wooden_arrow.set_height(value, custom_height)
 
 func _set_arrow_bobbing(value: bool) -> void:
 	if value and not wooden_arrow.is_playing():
@@ -193,25 +200,15 @@ func update_adjacent_tile_transparencies() -> void:
 	building_map.update_transparencies_around(cursor.iso_position)
 
 func _show_structure_outline(iso_position: Vector2i):
-	var tree_map = TreeManager.get_tree_map()
-	if tree_map.has(iso_position):
-		var twee: Twee = tree_map[iso_position]
-		twee.is_outline_active = true
-		return
-	
-	var building_node = Global.structure_map.get_building_node(iso_position)
-	if building_node != null and building_node is CityStructure:
-		building_node.is_outline_active = true
+	var entity: Node2D = MapUtility.get_entity_at(iso_position)
+	if entity and Components.has_component(entity, OutlineComponent):
+		var outline_component = Components.get_component(entity, OutlineComponent)
+		outline_component.show_outline()
 		return
 
 func _hide_structure_outline(iso_position: Vector2i):
-	var tree_map = TreeManager.get_tree_map()
-	if tree_map.has(iso_position):
-		var twee: Twee = tree_map[iso_position]
-		twee.is_outline_active = false
-		return
-	
-	var building_node = Global.structure_map.get_building_node(iso_position)
-	if building_node != null and building_node is CityStructure:
-		building_node.is_outline_active = false
+	var entity: Node2D = MapUtility.get_entity_at(iso_position)
+	if entity and Components.has_component(entity, OutlineComponent):
+		var outline_component = Components.get_component(entity, OutlineComponent)
+		outline_component.hide_outline()
 		return

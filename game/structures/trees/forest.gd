@@ -2,7 +2,7 @@ extends Node
 class_name Forest
 
 var trees: Dictionary[Vector2i, Node2D]
-var tree_set: Array[Twee]
+var tree_set: Array[Node2D]
 var water: float
 var id: int
 var empty: bool
@@ -30,6 +30,7 @@ func sort_close_to_far(a, b):
 		return true
 	return false
 
+## DEPRECATED
 ## to be called each round, update everything in this Forest
 ## returns the res to be added to the game
 func update(delta: float) -> Vector3:
@@ -84,12 +85,13 @@ func update(delta: float) -> Vector3:
 	return res
 
 # Returns the sum of nutrient gains of all the trees in this forest
-func get_nutrient_gain(delta: float) -> float:
+func get_nutrient_gain() -> float:
 	var nutrient_sum: float = 0
 
-	for tree: Twee in tree_set:
-		if tree: # temp null check. i have no idea why this is a thing
-			nutrient_sum += tree.get_nutrient_gain(delta)
+	for tree: Node2D in tree_set:
+		if tree: # NO clue why this is needed BUT IT IS NEEDED
+			var nutreent_production_component = Components.get_component(tree, NutreentProductionComponent)
+			nutrient_sum += nutreent_production_component.get_nutreent_production()
 	
 	return nutrient_sum
 
@@ -107,32 +109,28 @@ func update_water_maintenance(delta: float) -> float:
 		if (!trees[key]):
 			trees.erase(key)
 			continue
-		var tree: Twee = trees[key]
-		net_water += tree.gain.y
+		var tree: Node2D = trees[key]
+		var water_production_component = Components.get_component(tree, WaterProductionComponent)
+		var tree_water = water_production_component.get_water_production()
+		if tree_water > 0:
+			net_water += tree_water
 	
 	for key in sorted_trees:
 		if (!trees.has(key)):
 			continue
-		var tree: Twee = trees[key]
-		net_water -= tree.get_water_maint()
+		var tree: Node2D = trees[key]
 		
-		if (net_water < 0): # If the gain for this forest does not outweigh the maintenance
-			if (water <= 0): # Check THIS forest's water supply
-				if (tree.is_adjacent_to_water): # If the tree is next to water, don't be dehydrated
-					tree.is_dehydrated = false
-				else:
-					tree.is_dehydrated = true
-					
-					while (tree.water_damage_time > tree.WATER_DAMAGE_DELAY):
-						tree.take_damage(tree.DEHYDRATION_DAMAGE)
-						tree.water_damage_time -= RandomNumberGenerator.new().randf_range(tree.WATER_DAMAGE_DELAY, tree.WATER_DAMAGE_DELAY * 2)
-					tree.water_damage_time += delta
-			else:
-				tree.is_dehydrated = false
+		var water_production_component = Components.get_component(tree, WaterProductionComponent)
+		var tree_water = water_production_component.get_water_production()
+		if tree_water < 0:
+			net_water += tree_water
+		
+		var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		
+		if net_water >= 0 or water > 0 or water_production_component.is_water_adjacent():
+			twee_behaviour_component.is_dehydrated = false
 		else:
-			tree.is_dehydrated = false
-		
-		tree._update_shader(delta)
+			twee_behaviour_component.is_dehydrated = true
 	
 	water += net_water * delta
 	water = clamp(water, 0, INF)
@@ -143,17 +141,18 @@ func update_water_maintenance(delta: float) -> float:
 
 
 ## add the given tree to this forest
-func add_tree(p: Vector2i, t: Twee):
-	t.initialize(p, id)
+func add_tree(p: Vector2i, t: Node2D):
+	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(t, TweeBehaviourComponent)
+	tree_behaviour_component.set_forest(id)
 	trees[p] = t
 	
 	add_tree_to_set(t)
 
-func add_tree_to_set(t: Twee):
+func add_tree_to_set(t: Node2D):
 	if not tree_set.has(t):
 		tree_set.append(t)
 
-func remove_tree_from_set(t: Twee):
+func remove_tree_from_set(t: Node2D):
 	tree_set.erase(t)
 
 ## remove the tree at given p
@@ -162,15 +161,11 @@ func remove_tree(p: Vector2i):
 	if (!trees.has(p)):
 		return
 	
-	var t: Twee = trees[p]
-	t.die()
-	
-	water -= t.storage
+	var t: Node2D = trees[p]
 	trees.erase(p)
 	tree_set.erase(t)
-	
-	t.remove()
 
+## DEPRECATED
 ## upgrade the tree at given p
 ## returns false if tree at p is already secondary 
 func upgrade(p: Vector2i) -> int:
@@ -182,6 +177,7 @@ func upgrade(p: Vector2i) -> int:
 	tree.free()
 	return true
 
+## DEPRECATED
 ## called by Tree when they don't have sufficient water to survive
 ## returns false if total_water < maint; otherwise deduct maint from storage
 func get_water(maint: int) -> bool:

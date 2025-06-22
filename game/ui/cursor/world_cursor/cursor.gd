@@ -42,12 +42,15 @@ func do_primary_action() -> void:
 	if terrain_map.is_void(p):
 		return
 	
-	if TreeManager.is_twee(p):
-		SfxManager.play_sound_effect("ui_fail")
-		PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
-		return
+	var entity = MapUtility.get_entity_at(p)
+	if Components.has_component(entity, ObstructionComponent):
+		var obstruction_component: ObstructionComponent = Components.get_component(entity, ObstructionComponent)
+		if obstruction_component.is_obstructing:
+			SfxManager.play_sound_effect("ui_fail")
+			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
+			return
 	
-	if not TreeManager.is_reachable(p):
+	if not TreeManager.is_reachable(p, true):
 		SfxManager.play_sound_effect("ui_fail")
 		PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
 		return
@@ -68,8 +71,8 @@ func do_primary_action() -> void:
 		if !structure_map.tile_scene_map.has(p):
 			can_place = false
 		else:
-			var structure: Structure = structure_map.tile_scene_map[p]
-			if (not structure is FactoryRemains):
+			var structure: Node2D = structure_map.tile_scene_map[p]
+			if not Components.has_component(structure, FactoryRemainsBehaviourComponent):
 				can_place = false
 		
 		if !can_place:
@@ -80,26 +83,26 @@ func do_primary_action() -> void:
 	var tech_slot: int
 	# SPECIAL CASE FOR PLANTING TECH TREES ON FACTORY REMAINS:
 	if structure_map.tile_scene_map.has(p):
-		var structure: Structure = structure_map.tile_scene_map[p]
-		if structure is FactoryRemains:
+		var structure: Node2D = structure_map.tile_scene_map[p]
+		if Components.has_component(structure, FactoryRemainsBehaviourComponent):
 			if type == Global.TreeType.TECH_TREE:
-				tech_slot = structure.tech_slot
+				tech_slot = Components.get_component(structure, FactoryRemainsBehaviourComponent).tech_slot
 				structure_map.remove_structure(p)
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Only Tech Trees grow on factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
 				return
 	
-	var tree: Twee = TreeRegistry.get_new_twee(type)
+	var tree: Node2D = TreeRegistry.get_new_twee(type)
+	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
 	
-	if tree is TechTree:
-		tree.tech_slot = tech_slot
+	if type == Global.TreeType.TECH_TREE:
+		tree_behaviour_component.tech_slot = tech_slot
 	
-	TreeManager.consume_n(tree.tree_stat.cost_to_purchase)
+	var tree_stat_component: TweeStatComponent = Components.get_component(tree, TweeStatComponent)
+	TreeManager.consume_n(tree_stat_component.stat_resource.cost_to_purchase)
 	SfxManager.play_sound_effect("tree_plant")
 	TreeManager.place_tree(tree, p)
-
-const FACTORY_REMAINS = preload("res://structures/city/factory/factory_remains.tscn")
 
 ## Perform RIGHT MOUSE BUTTON action
 func do_secondary_action() -> void:
@@ -115,53 +118,42 @@ func do_secondary_action() -> void:
 	
 	# Get any building on the tile
 	if (structure_map.does_obstructive_structure_exist(map_pos)):
-		var structure: Structure = structure_map.tile_scene_map[map_pos]
+		var structure: Node2D = structure_map.tile_scene_map[map_pos]
 		
 		# If building is tree, remove tree and return (unless it's the mother tree)
-		if (structure is Twee):
-			if (structure is MotherTree):
+		if Components.has_component(structure, TweeStatComponent):
+			if Components.get_component(structure, TweeStatComponent).type == Global.TreeType.MOTHER_TREE:
 				PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(map_pos))
 				SfxManager.play_sound_effect("ui_fail")
 				return
 			
-			TreeManager.remove_tree(map_pos)
+			var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(structure, TweeBehaviourComponent)
+			tree_behaviour_component.remove()
 			PopupManager.create_popup("Tree removed!", structure_map.map_to_local(map_pos))
 		
-		# If building is city_building, remove city_building (if you have enough nutrients)
-		if (structure is CityBuilding):
-			if TreeManager.enough_n(structure.cost_to_remove):
+		# If building is not tree, but is destructable
+		var entity = MapUtility.get_entity_at(map_pos)
+		if Components.has_component(entity, DestructableComponent):
+			var destructable_component: DestructableComponent = Components.get_component(entity, DestructableComponent)
+			
+			var cost: float = destructable_component.get_cost()
+			
+			if TreeManager.enough_n(cost):
 				SfxManager.play_sound_effect("concrete_break")
-				TreeManager.consume_n(structure.cost_to_remove)
+				TreeManager.consume_n(cost)
 				structure_map.remove_structure(map_pos)
-				PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
+				destructable_component.destroyed.emit()
+				
+				var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(entity, StructureBehaviourComponent)
+				
+				match structure_behaviour_component.type:
+					Global.StructureType.FACTORY:
+						PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
+					_:
+						PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
-		
-		# If building is factory, remove factory, instantiate factory remains
-		if (structure is Factory):
-			if TreeManager.enough_n(structure.cost_to_remove):
-				TreeManager.consume_n(structure.cost_to_remove)
-				
-				var tech_slot = structure.tech_slot
-				structure_map.remove_structure(map_pos)
-				
-				terrain_map.set_cell_type(map_pos, terrain_map.TileType.DIRT)
-				
-				SfxManager.play_sound_effect("concrete_break")
-				PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
-				
-				# TODO: INSTANTIATE FACTORY REMAINS
-				var factory_remains = FACTORY_REMAINS.instantiate()
-				factory_remains.tech_slot = tech_slot
-				structure_map.add_structure(map_pos, factory_remains)
-			else:
-				SfxManager.play_sound_effect("ui_fail")
-				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
-		
-		if (structure is FactoryRemains):
-			SfxManager.play_sound_effect("ui_fail")
-			PopupManager.create_popup("Cannot destroy factory remains!", structure_map.map_to_local(map_pos))
 		
 		# Return after removing building
 		return

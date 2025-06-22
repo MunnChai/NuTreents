@@ -89,8 +89,7 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 	var world_pos = Global.terrain_map.map_to_local(pos)
 	var fog_pos = Global.fog_map.local_to_map(world_pos)
 
-	var tile_data = Global.fog_map.get_cell_tile_data(fog_pos)
-	if (tile_data != null):
+	if (Global.fog_map.is_tile_foggy(fog_pos)):
 		rich_text.text = ""
 		return
 	
@@ -102,8 +101,8 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		
 		rich_text.text += "\n"
 		
-		var enemy: Enemy = EnemyManager.instance.get_enemy_at(pos)
-		var structure: Structure = null
+		var enemy = EnemyManager.instance.get_enemy_at(pos)
+		var structure: Node2D = null
 		if (Global.structure_map.tile_scene_map.has(pos)):
 			structure = Global.structure_map.tile_scene_map[pos]
 		
@@ -125,9 +124,13 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			rich_text.text += "Nutrients needed to destroy: " + str(structure.cost_to_remove)
 		elif (enemy != null):
 			rich_text.text +="\n"
-			rich_text.text += "HP: " + str(enemy.current_health)
-			rich_text.text += "\nDAMAGE: " + str(enemy.attack_damage)
-			rich_text.text += "\nRANGE: " + str(enemy.attack_range)
+			
+			var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+			rich_text.text += "HP: " + str(health_component.current_health)
+			
+			var stat_component: EnemyStatComponent = Components.get_component(enemy, EnemyStatComponent)
+			rich_text.text += "\nDAMAGE: " + str(stat_component.stat_resource.attack_damage)
+			rich_text.text += "\nRANGE: " + str(stat_component.stat_resource.attack_range)
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";

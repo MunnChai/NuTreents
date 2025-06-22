@@ -18,10 +18,13 @@ func create_new_world() -> void:
 	# Set seed before world generation, for deterministic map gen
 	Global.set_seed(Global.get_seed())
 	
-	TreeManager.start_game()
 	EnemyManager.instance.start_game()
 	Global.terrain_map.generate_map(Global.current_world_size)
 	Global.fog_map.init()
+	
+	TreeManager.start_game()
+	
+	ScreenUI.shop_menu.reset_shop_cards()
 	
 	# Save metadata and session data together, so we don't end up with one without the other in a save file
 	SessionData.call_deferred("create_new_session_data", Global.get_metadata())
@@ -32,7 +35,6 @@ func load_world(session_data: Dictionary) -> void:
 	Global.set_seed(session_data["seed"])
 	Global.current_world_size = session_data["world_size"]
 	
-	TreeManager.start_game()
 	EnemyManager.instance.start_game()
 	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	Global.fog_map.init()
@@ -47,6 +49,11 @@ func load_world(session_data: Dictionary) -> void:
 	Global.clock.set_curr_day(session_data["current_day"])
 	Global.clock.set_curr_day_sec(session_data["current_time"])
 	
+	# Set terrain and structures
+	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
+	Global.terrain_map.randomize_tiles()
+	Global.structure_map.set_structures_from_data(session_data["structure_map"])
+	
 	# Place trees
 	var tree_map: Dictionary = session_data["tree_map"]
 	for pos in tree_map.keys():
@@ -55,15 +62,11 @@ func load_world(session_data: Dictionary) -> void:
 		if (tree_resource.type == Global.TreeType.MOTHER_TREE):
 			continue
 		
-		var tree: Twee = TreeRegistry.get_new_twee(tree_resource.type)
+		var tree: Node2D = TreeRegistry.get_new_twee(tree_resource.type)
 		TreeManager.place_tree(tree, pos)
 		
-		tree.apply_data_resource(tree_resource)
-	
-	# Set terrain and structures
-	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
-	Global.terrain_map.randomize_tiles()
-	Global.structure_map.set_structures_from_data(session_data["structure_map"])
+		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
+		tree_behaviour_component.apply_data_resource(tree_resource)
 	
 	# Load enemies
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])

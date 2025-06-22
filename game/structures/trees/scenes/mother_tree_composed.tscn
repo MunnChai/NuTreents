@@ -1,0 +1,101 @@
+[gd_scene load_steps=21 format=3 uid="uid://btc8w4mfmtrb1"]
+
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_r0oyg"]
+[ext_resource type="Resource" uid="uid://ll6klr2ec2b8" path="res://structures/trees/stats/mother_tree_stat.tres" id="2_7namq"]
+[ext_resource type="Texture2D" uid="uid://bq1xkos3efixb" path="res://structures/trees/sheets/mother/mother_tree_with_sapling.png" id="2_emprh"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="4_7namq"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_ojpxj"]
+[ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="5_v1tj4"]
+[ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="6_nw636"]
+[ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="7_ojpxj"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="9_nsnki"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="10_0qva2"]
+[ext_resource type="PackedScene" uid="uid://diqna20ydddnp" path="res://components/forest_modifiers/nutreent_production_component/nutreent_production_component.tscn" id="11_q21yj"]
+[ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="12_abiyy"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="13_xcbi2"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="16_7namq"]
+[ext_resource type="PackedScene" uid="uid://bggmdqy2h0ty7" path="res://components/behaviour_components/twee_behaviour_components/mother_twee_behaviour_component/mother_twee_behaviour_component.tscn" id="16_v1tj4"]
+[ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="17_nw636"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="17_v1tj4"]
+[ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="18_nw636"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_higsx"]
+shader = ExtResource("1_r0oyg")
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/wind_amount = 1.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 10.0
+shader_parameter/tint_amount = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/uv_y_offset = 4.69
+shader_parameter/flash_color = Color(1, 1, 1, 1)
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+shader_parameter/outline_alpha = 0.0
+shader_parameter/outline_width = 1
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_ojpxj"]
+points = PackedVector2Array(4.00008, 23, 15, -5.42999e-05, 3.99991, -25, -8, 2.89599e-05)
+
+[node name="MotherTreeComposed" type="Node2D"]
+
+[node name="WaterProductionComponent" parent="." instance=ExtResource("12_abiyy")]
+
+[node name="MotherTweeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("16_v1tj4")]
+damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
+death_sound_emitter_component = NodePath("../DeathSoundEmitterComponent")
+
+[node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("17_nw636")]
+sound_effect_name = "tree_damage"
+
+[node name="DeathSoundEmitterComponent" parent="." instance=ExtResource("17_nw636")]
+sound_effect_name = "tree_remove"
+
+[node name="TreeStatComponent" parent="." instance=ExtResource("18_nw636")]
+stat_resource = ExtResource("2_7namq")
+
+[node name="TreeAnimationComponent" parent="." instance=ExtResource("5_ojpxj")]
+sheets = Array[Texture2D]([ExtResource("2_emprh")])
+h_frames = 1
+v_frames = 1
+small_animation_name = ""
+large_animation_name = ""
+large_uv_offset = 0.0
+small_uv_offset = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_higsx")
+position = Vector2(0, -16)
+texture = ExtResource("2_emprh")
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("4_7namq")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("5_v1tj4")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("6_nw636")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+position = Vector2(0, -13)
+rotation = 1.5708
+shape = SubResource("ConvexPolygonShape2D_ojpxj")
+
+[node name="PopupEmitterComponent" parent="." instance=ExtResource("7_ojpxj")]
+popup_color = Color(0.996078, 0.596078, 0.533333, 1)
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("9_nsnki")]
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("10_0qva2")]
+
+[node name="NutreentProductionComponent" parent="." instance=ExtResource("11_q21yj")]
+
+[node name="GridRangeComponent" parent="." instance=ExtResource("13_xcbi2")]
+range = 1
+
+[node name="FogRevealerComponent" parent="." instance=ExtResource("16_7namq")]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("17_v1tj4")]
+
+[editable path="HurtboxComponent"]

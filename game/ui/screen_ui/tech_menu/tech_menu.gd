@@ -17,8 +17,8 @@ enum TechSlot {
 const OBTAINED_ICON_MODULATE := Color.WHITE
 const UNOBTAINED_ICON_MODULATE := Color("5a5a5a")
 
-var unassigned_tech: Array
-var current_tech: Array[TechSlot]
+var unassigned_tech: Array = TechSlot.values()
+var current_tech: Array[TechSlot] = []
 
 var starting_position = position
 
@@ -38,8 +38,6 @@ func close() -> void:
 
 
 func _ready():
-	unassigned_tech = TechSlot.values()
-	current_tech = []
 	
 	close()
 

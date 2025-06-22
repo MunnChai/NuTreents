@@ -8,6 +8,19 @@
 
 config_version=5
 
+[addons]
+
+resources_spreadsheet_view/array_color_tint=100.0
+resources_spreadsheet_view/color_rows=true
+resources_spreadsheet_view/array_min_width=128.0
+resources_spreadsheet_view/resource_preview_size=32.0
+resources_spreadsheet_view/clip_headers=false
+resources_spreadsheet_view/dupe_arrays=true
+resources_spreadsheet_view/context_menu_on_leftclick=false
+resources_spreadsheet_view/fold_docks=true
+resources_spreadsheet_view/resource_cell_label_mode=1
+resources_spreadsheet_view/freeze_first_column=true
+
 [application]
 
 config/name="NuTREEnts"
@@ -25,16 +38,18 @@ buses/default_bus_layout="res://sound/default_bus_layout.tres"
 
 Global="*res://global.gd"
 Settings="*res://settings/settings.gd"
-TreeRegistry="*res://structures/trees/registry/twee_registry.tscn"
 TreeManager="*res://structures/trees/twee_manager.gd"
+TreeRegistry="*res://structures/trees/registry/twee_registry.tscn"
 SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
 PopupManager="*res://ui/popup_manager/popup_manager.gd"
 ScreenUI="*res://ui/screen_ui/screen_ui.tscn"
 SceneLoader="*res://scene_loader/scene_loader.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 SessionData="*res://session_data/session_data.gd"
-StructureRegistry="*res://structures/city/registry/structure_registry.tscn"
+StructureRegistry="*res://structures/registry/structure_registry.tscn"
 WorldSettings="*res://world/world_settings/world_settings.tscn"
+MapUtility="*res://world/map_utility.gd"
+EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
 
 [display]
 
@@ -47,7 +62,7 @@ movie_writer/fps=24
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg")
+enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
 
 [global_group]
 
@@ -61,6 +76,7 @@ tile_manager=""
 music=""
 overlay_manager=""
 camera=""
+enemies=""
 
 [input]
 
@@ -236,6 +252,12 @@ debug_button_2={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":78,"key_label":0,"unicode":110,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_1="Ally"
+2d_physics/layer_2="Enemy"
+2d_physics/layer_3="Neutral"
 
 [rendering]
 

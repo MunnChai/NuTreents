@@ -1,0 +1,124 @@
+[gd_scene load_steps=26 format=3 uid="uid://doicha7u36klq"]
+
+[ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_hra2j"]
+[ext_resource type="Script" uid="uid://bdsr33i0o1a4j" path="res://components/stat_component/twee_stat_component/gun_twee_stat_component/gun_twee_stat_component.gd" id="3_c5uq1"]
+[ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="3_p5e44"]
+[ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_3uf8o"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_dofad"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="6_dqhnn"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_t1w6l"]
+[ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="8_dofad"]
+[ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="9_c5uq1"]
+[ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="10_tkyw5"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="11_hskg5"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="12_54454"]
+[ext_resource type="PackedScene" uid="uid://diqna20ydddnp" path="res://components/forest_modifiers/nutreent_production_component/nutreent_production_component.tscn" id="13_spt2m"]
+[ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="14_8fvse"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="15_46ovy"]
+[ext_resource type="PackedScene" uid="uid://cm4ndh5xmoip5" path="res://components/targeting_component/targeting_component.tscn" id="16_p5e44"]
+[ext_resource type="PackedScene" uid="uid://bea0oq8ld4gr" path="res://structures/trees/projectiles/tree_bullet_composed.tscn" id="18_3uf8o"]
+[ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="18_5fmn3"]
+[ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="19_5fmn3"]
+[ext_resource type="PackedScene" uid="uid://c1q4l0by3f41f" path="res://components/behaviour_components/twee_behaviour_components/gun_twee_behaviour_component/gun_twee_behaviour_component.tscn" id="20_dofad"]
+[ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="21_c5uq1"]
+[ext_resource type="PackedScene" uid="uid://bb1r8y0ky64va" path="res://components/spawner_component/projectile_spawner_component/projectile_spawner_component.tscn" id="21_tkyw5"]
+[ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="22_tkyw5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
+resource_local_to_scene = true
+shader = ExtResource("4_3uf8o")
+shader_parameter/pos = Vector2(0, 0)
+shader_parameter/wind_amount = 1.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/shake_amount = 30.0
+shader_parameter/tint_amount = 0.0
+shader_parameter/alpha = 1.0
+shader_parameter/uv_y_offset = 0.62
+shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
+shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
+shader_parameter/fps = 0.0
+shader_parameter/frame_count = 0
+shader_parameter/outline_alpha = 1.0
+shader_parameter/outline_width = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1jlhe"]
+resource_local_to_scene = true
+
+[node name="GunTreeComposed" type="Node2D"]
+
+[node name="WaterProductionComponent" parent="." instance=ExtResource("14_8fvse")]
+
+[node name="GunTweeBehaviourComponent" parent="." instance=ExtResource("20_dofad")]
+
+[node name="GunTreeStatComponent" parent="." instance=ExtResource("21_c5uq1")]
+script = ExtResource("3_c5uq1")
+type = 2
+stat_resource = ExtResource("2_hra2j")
+
+[node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("22_tkyw5")]
+sound_effect_name = "tree_damage"
+
+[node name="DeathSoundEmitterComponent" parent="." instance=ExtResource("22_tkyw5")]
+sound_effect_name = "tree_remove"
+
+[node name="TreeAnimationComponent" parent="." instance=ExtResource("5_dofad")]
+sheets = Array[Texture2D]([ExtResource("3_p5e44")])
+v_frames = 3
+large_uv_offset = 0.45
+small_uv_offset = 0.75
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_j4fxg")
+position = Vector2(0, -16)
+texture = ExtResource("3_p5e44")
+hframes = 9
+vframes = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": ExtResource("6_dqhnn")
+}
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("7_t1w6l")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("8_dofad")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("9_c5uq1")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_1jlhe")
+
+[node name="PopupEmitterComponent" parent="." instance=ExtResource("10_tkyw5")]
+popup_color = Color(0.996078, 0.596078, 0.533333, 1)
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("11_hskg5")]
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("12_54454")]
+
+[node name="NutreentProductionComponent" parent="." instance=ExtResource("13_spt2m")]
+
+[node name="GridRangeComponent" parent="." instance=ExtResource("15_46ovy")]
+range = 1
+
+[node name="AttackRangeComponent" parent="." instance=ExtResource("15_46ovy")]
+shape = "Square"
+range = 4
+
+[node name="TargetingComponent" parent="." instance=ExtResource("16_p5e44")]
+
+[node name="ProjectileSpawnerComponent" parent="." instance=ExtResource("21_tkyw5")]
+position = Vector2(0, -34)
+spawn = ExtResource("18_3uf8o")
+
+[node name="FogRevealerComponent" parent="." instance=ExtResource("18_5fmn3")]
+
+[node name="OutlineComponent" parent="." instance=ExtResource("19_5fmn3")]
+
+[node name="ActionTimer" type="Timer" parent="."]
+
+[node name="GrowTimer" type="Timer" parent="."]
+
+[editable path="HurtboxComponent"]

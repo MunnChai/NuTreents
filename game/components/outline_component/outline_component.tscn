@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ccdkwlkb7qoth"]
+
+[ext_resource type="Script" uid="uid://0u8w1bllc1u" path="res://components/outline_component/outline_component.gd" id="1_decyn"]
+
+[node name="OutlineComponent" type="Node2D"]
+script = ExtResource("1_decyn")
