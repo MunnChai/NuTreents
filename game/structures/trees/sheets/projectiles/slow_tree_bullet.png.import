@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdyh6sryto77l"
-path="res://.godot/imported/City_Buildings_1.png-b725611c861d8cea1d9981a4fc6c5ad4.ctex"
+uid="uid://c2na40f6gej1i"
+path="res://.godot/imported/slow_tree_bullet.png-5bdd46d7d4bb278542e45f477b944222.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/city/City_Buildings_1.png"
-dest_files=["res://.godot/imported/City_Buildings_1.png-b725611c861d8cea1d9981a4fc6c5ad4.ctex"]
+source_file="res://structures/trees/sheets/projectiles/slow_tree_bullet.png"
+dest_files=["res://.godot/imported/slow_tree_bullet.png-5bdd46d7d4bb278542e45f477b944222.ctex"]
 
 [params]
 

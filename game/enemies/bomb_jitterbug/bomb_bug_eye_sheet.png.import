@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdyh6sryto77l"
-path="res://.godot/imported/City_Buildings_1.png-b725611c861d8cea1d9981a4fc6c5ad4.ctex"
+uid="uid://rtij8rh8oqas"
+path="res://.godot/imported/bomb_bug_eye_sheet.png-b61c542efc0bb4b541f9fb9f1091aba4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/city/City_Buildings_1.png"
-dest_files=["res://.godot/imported/City_Buildings_1.png-b725611c861d8cea1d9981a4fc6c5ad4.ctex"]
+source_file="res://enemies/bomb_jitterbug/bomb_bug_eye_sheet.png"
+dest_files=["res://.godot/imported/bomb_bug_eye_sheet.png-b61c542efc0bb4b541f9fb9f1091aba4.ctex"]
 
 [params]
 

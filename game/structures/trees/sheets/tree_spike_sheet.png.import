@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cdyh6sryto77l"
-path="res://.godot/imported/City_Buildings_1.png-b725611c861d8cea1d9981a4fc6c5ad4.ctex"
+uid="uid://di7s7b6hq1gff"
+path="res://.godot/imported/tree_spike_sheet.png-1d9c1c34942b2b50fafa76fc57dfcc8e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/city/City_Buildings_1.png"
-dest_files=["res://.godot/imported/City_Buildings_1.png-b725611c861d8cea1d9981a4fc6c5ad4.ctex"]
+source_file="res://structures/trees/sheets/tree_spike_sheet.png"
+dest_files=["res://.godot/imported/tree_spike_sheet.png-1d9c1c34942b2b50fafa76fc57dfcc8e.ctex"]
 
 [params]
 
