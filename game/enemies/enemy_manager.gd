@@ -10,22 +10,23 @@ static var instance
 ## Generally make logic more easy to understand
 
 var enemy_spawn_timer: float = 0
-var current_wave = 0
-var day_tracker = 1
+var current_wave = 0 
+ 
+const DAY_ONE_BUG_LIFE_DURATION: float = 20
+var day_one_unique_scenario: bool = false
 
 func _ready() -> void:
 	instance = self
 
-func start_game():
-	day_tracker = 1
+func start_game(): 
 	enemy_spawn_timer = 0
 
 func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	if (Input.is_action_just_pressed("debug_button")):
-		spawn_enemy_wave()
+	#if (Input.is_action_just_pressed("debug_button")):
+		#spawn_enemy_wave()
 		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
 		#spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
@@ -35,14 +36,14 @@ func _process(delta: float) -> void:
 		return
 	
 	if (TreeManager.is_mother_dead()):
-		# if mother died
 		return
 	
 	var curr_time = Global.clock.get_curr_day_sec()
-	if (curr_time > Global.clock.HALF_DAY_SECONDS): # NIGHT TIME
-		
-		#increases difficulty based on day in game
-		increase_difficulty()
+	if (curr_time > Global.clock.HALF_DAY_SECONDS): # NIGHT TIME 
+		# Spawn enemies DAY_ONE_BUG_LIFE_DURATION seconds before night ends on day 1
+		if not day_one_unique_scenario and get_curr_day() == 1:
+			enemy_spawn_timer = Global.clock.HALF_DAY_SECONDS - DAY_ONE_BUG_LIFE_DURATION
+			day_one_unique_scenario = true
 		
 		enemy_spawn_timer -= delta
 		if (enemy_spawn_timer <= 0):
@@ -50,13 +51,10 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		#kill_all_enemies()
+		kill_all_enemies()
  
-# increases the severity of bug spawns based on the day
-func increase_difficulty() -> void:
-	var curr_day = Global.clock.get_curr_day()
-	if (curr_day > day_tracker):
-		day_tracker = curr_day
+func get_curr_day() -> int:
+	return Global.clock.get_curr_day()
 
 const CLOSEST_SPAWN_FROM_FOG_EDGE: float = 1.0
 const FURTHEST_SPAWN_FROM_FOG_EDGE: float = 50.0
@@ -101,7 +99,7 @@ func spawn_enemy_wave() -> int:
 
 func choose_enemies_to_spawn(points: int) -> Array[Global.EnemyType]:
 	
-	var types: Array[Global.EnemyType] = EnemyRegistry.get_spawnable_enemies_by_day(day_tracker)
+	var types: Array[Global.EnemyType] = EnemyRegistry.get_spawnable_enemies_by_day(get_curr_day())
 	
 	# The minimum spawn cost of the array of enemies
 	var min_points: int = 999999
@@ -232,20 +230,19 @@ func load_enemies_from(enemy_map: Dictionary):
 #region DifficultyFunctions
 
 const BASE_NUM_WAVES: int = 1
-const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # casted to an int, so effectively increase by 1 every 2 days
-const MAX_WAVES: int = 5
+const NUM_WAVES_INCREASE_PER_DAY: float = 1 # casted to an int, so effectively increase by 1 every 2 days
+const MAX_WAVES: int = 10
 
 const BASE_POINTS: int = 5
-const POINTS_INCREASE_PER_DAY: int = 10
+const POINTS_INCREASE_PER_DAY: int = 15
 
-# Functions for calculating difficulty based on the given day
-# Note: day_tracker starts at 1
-func get_points_per_wave() -> int:
-	return (BASE_POINTS + (day_tracker - 1) * POINTS_INCREASE_PER_DAY) / get_num_waves()
+# Functions for calculating difficulty based on the given day 
+func get_points_per_wave(day: int = get_curr_day()) -> int:
+	return (BASE_POINTS + (day - 1) * POINTS_INCREASE_PER_DAY) / get_num_waves()
 
-func get_num_waves(day: int = day_tracker):
+func get_num_waves(day: int = get_curr_day()):
 	return min(BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY), MAX_WAVES)
 
-func get_enemy_spawn_interval(day: int = day_tracker):
+func get_enemy_spawn_interval(day: int = get_curr_day()):
 	return Global.clock.HALF_DAY_SECONDS / get_num_waves(day)
 #endregion

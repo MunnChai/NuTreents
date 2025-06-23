@@ -11,7 +11,7 @@ extends StatComponent
 @export var grow_timer: Timer
 
 @export_group("Attack Components")
-## This node requires a set_damage() function
+## The attack_damage_node requires a set_damage() function
 @export var attack_damage_node: Node
 @export var attack_range_node: GridRangeComponent
 @export var attack_cooldown_timer: Timer

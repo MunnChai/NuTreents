@@ -47,12 +47,16 @@ resource_local_to_scene = true
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("14_8fvse")]
 
-[node name="GunTweeBehaviourComponent" parent="." instance=ExtResource("20_dofad")]
+[node name="GunTweeBehaviourComponent" parent="." node_paths=PackedStringArray("attack_range_component", "targeting_component", "action_timer", "spawner_component") instance=ExtResource("20_dofad")]
+attack_range_component = NodePath("../AttackRangeComponent")
+targeting_component = NodePath("../TargetingComponent")
+action_timer = NodePath("../ActionTimer")
+spawner_component = NodePath("../ProjectileSpawnerComponent")
 
 [node name="TreeStatComponent" parent="." node_paths=PackedStringArray("attack_damage_node", "attack_range_node", "attack_cooldown_timer") instance=ExtResource("21_c5uq1")]
 type = 2
 attack_damage_node = NodePath("../ProjectileSpawnerComponent")
-attack_range_node = NodePath("../GridRangeComponent")
+attack_range_node = NodePath("../AttackRangeComponent")
 attack_cooldown_timer = NodePath("../ActionTimer")
 stat_resource = ExtResource("2_hra2j")
 
