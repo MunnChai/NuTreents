@@ -1,6 +1,5 @@
-[gd_scene load_steps=21 format=3 uid="uid://d4l1saxnn6efv"]
+[gd_scene load_steps=24 format=3 uid="uid://d4l1saxnn6efv"]
 
-[ext_resource type="Script" uid="uid://dxfedvt20mvie" path="res://structures/trees/scenes/twee_composed.gd" id="1_istyr"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_tjy4u"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="2_istyr"]
@@ -16,8 +15,12 @@
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="10_5t5ov"]
 [ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="11_yo8g6"]
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="13_jlx1d"]
+[ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="16_jlx1d"]
 [ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="17_jlx1d"]
+[ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="17_wohpo"]
+[ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="18_vyjhx"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="18_wohpo"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="19_vyjhx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -40,10 +43,23 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="DefaultTreeComposed" type="Node2D"]
-script = ExtResource("1_istyr")
+
+[node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("17_wohpo")]
+damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
+death_sound_emitter_component = NodePath("../DeathSoundEmitterComponent")
+
+[node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("18_vyjhx")]
+sound_effect_name = "tree_damage"
+
+[node name="DeathSoundEmitterComponent" parent="." instance=ExtResource("18_vyjhx")]
+sound_effect_name = "tree_remove"
+
+[node name="TreeStatComponent" parent="." instance=ExtResource("16_jlx1d")]
 type = 1
-tree_stat = ExtResource("2_xufj2")
-sheets = Array[Texture2D]([ExtResource("3_t2lqx"), ExtResource("4_njuuy"), ExtResource("2_istyr")])
+stat_resource = ExtResource("2_xufj2")
+
+[node name="TreeAnimationComponent" parent="." instance=ExtResource("19_vyjhx")]
+sheets = Array[Texture2D]([ExtResource("4_njuuy"), ExtResource("2_istyr"), ExtResource("3_t2lqx")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
@@ -86,5 +102,7 @@ range = 1
 [node name="FogRevealerComponent" parent="." instance=ExtResource("17_jlx1d")]
 
 [node name="OutlineComponent" parent="." instance=ExtResource("18_wohpo")]
+
+[node name="GrowTimer" type="Timer" parent="."]
 
 [editable path="HurtboxComponent"]

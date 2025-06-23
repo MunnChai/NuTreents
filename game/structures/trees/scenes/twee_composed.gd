@@ -203,12 +203,6 @@ func get_water_gain() -> float:
 	
 	return water_production_component.get_water_production()
 
-## "medium" if small, "high" if large...
-func get_arrow_cursor_height() -> String:
-	if is_large:
-		return "high"
-	return "medium"
-
 ## Gets the four directly adjacent tiles next to this twee
 ## Override this if reachable tiles are different
 func get_reachable_offsets() -> Array[Vector2i]:

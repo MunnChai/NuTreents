@@ -7,12 +7,6 @@ func _ready():
 	if (Global.tech_menu.unassigned_tech.size() > 0):
 		tech_slot = Global.tech_menu.unassigned_tech.pick_random()
 		Global.tech_menu.unassigned_tech.erase(tech_slot)
-		print("Assigned factory tech slot: ", tech_slot) 
-
-## Returns the "height" that the arrow cursor should be above this structure...
-## One of "low", "medium", and "high".
-func get_arrow_cursor_height() -> String:
-	return "medium"
 
 func apply_data_resource(save_resource: Resource):
 	type = save_resource.type

@@ -47,7 +47,7 @@ func remove_structure(map_coords: Vector2i) -> bool:
 	
 	# Munn: kinda temp fix? twees handle freeing themselves, so we only need to free stuff like 
 	#       buildings, decor, etc.
-	if (not object is TweeComposed):
+	if not Components.has_component(object, TweeStatComponent):
 		remove_child(object)
 	
 	tile_scene_map.erase(map_coords)
@@ -110,14 +110,6 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 			tween.tween_property(node, "modulate", Color(node.modulate, TRANSPARENCY_ALPHA), TWEEN_TIME)
 
 
-func set_tree_transparency(alpha: float):
-	var structures = tile_scene_map.values()
-	
-	for structure: Node2D in structures:
-		if (structure is Twee):
-			structure.modulate.a = alpha # WE ADJUST THE TREE'S MODULATE IN update_transparencies_around............ maybe just set visible = false?
-
-
 # Removes all structures including trees, except for the mother tree
 func remove_all_structures() -> void:
 	for pos in tile_scene_map.keys():
@@ -125,14 +117,7 @@ func remove_all_structures() -> void:
 			continue
 		
 		var structure = tile_scene_map[pos]
-		if (structure is Twee): # Don't remove trees
-			continue
-		#elif (structure is Twee):
-			#TreeManager.remove_tree(pos)
-		else:
-			remove_structure(pos)
-
-
+		remove_structure(pos)
 
 
 func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:
@@ -145,4 +130,5 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
 		add_structure(pos, structure)
-		structure.apply_data_resource(save_resource)
+		var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+		structure_behaviour_component.apply_data_resource(save_resource)

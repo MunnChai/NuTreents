@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://covr634vfl4jg"]
+
+[ext_resource type="Script" uid="uid://bs7o1a6ykwc86" path="res://components/behaviour_components/structure_behaviour_components/factory_remains_behaviour_component/factory_remains_behaviour_component.gd" id="1_p314f"]
+
+[node name="FactoryRemainsBehaviourComponent" type="Node2D"]
+script = ExtResource("1_p314f")

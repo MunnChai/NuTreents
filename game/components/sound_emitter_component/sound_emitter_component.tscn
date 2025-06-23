@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dn30pix1eqsv1"]
+
+[ext_resource type="Script" uid="uid://dfchawc4b5ui6" path="res://components/sound_emitter_component/sound_emitter_component.gd" id="1_bt67j"]
+
+[node name="SoundEmitterComponent" type="Node2D"]
+script = ExtResource("1_bt67j")

@@ -334,7 +334,8 @@ func add_decor() -> void:
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
 					if success:
-						decor.set_decor_type(type)
+						var decor_behaviour_component: DecorBehaviourComponent = Components.get_component(decor, DecorBehaviourComponent)
+						decor_behaviour_component.set_decor_type(type)
 				
 
 

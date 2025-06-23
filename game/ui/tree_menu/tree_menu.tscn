@@ -62,24 +62,10 @@ alignment = 1
 layout_mode = 2
 tree_type = 1
 
-[node name="ExplorerTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
-layout_mode = 2
-tree_type = 5
-
-[node name="TallTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
-layout_mode = 2
-tree_type = 6
-
 [node name="WaterTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
 layout_mode = 2
 tree_type = 3
 
 [node name="GunTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
-visible = false
 layout_mode = 2
 tree_type = 2
-
-[node name="TechTreeCard" parent="MarginContainer/TreeCardContainer" instance=ExtResource("3_hfd1j")]
-visible = false
-layout_mode = 2
-tree_type = 4

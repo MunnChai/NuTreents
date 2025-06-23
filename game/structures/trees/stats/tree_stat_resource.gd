@@ -1,5 +1,5 @@
 class_name TreeStatResource
-extends Resource
+extends StatResource
 
 @export var name: String
 @export var id: String
@@ -18,7 +18,8 @@ extends Resource
 @export var time_to_grow: float
 @export var cost_to_purchase: int
 @export_subgroup("Attacks")
-@export var damage: float
+@export var attack_damage: float
+@export var attack_range: int
 @export var attack_cooldown: float
 
 
@@ -31,5 +32,6 @@ extends Resource
 @export var time_to_grow_2: float
 @export var cost_to_purchase_2: int
 @export_subgroup("Attacks")
-@export var damage_2: float
+@export var attack_damage_2: float
+@export var attack_range_2: int
 @export var attack_cooldown_2: float

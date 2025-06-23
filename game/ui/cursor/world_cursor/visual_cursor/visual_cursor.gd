@@ -89,9 +89,11 @@ func _update_visuals(delta: float) -> void:
 	
 	# SET THE ARROW HEIGHT BASED ON WHAT IS ON THIS TILE...
 	if building_node == null:
-		_set_arrow_height("low")
+		_set_arrow_height(CursorWoodenArrow.ArrowHeight.LOW)
 	else:
-		_set_arrow_height(building_node.get_arrow_cursor_height())
+		var visual_arrow_component: VisualArrowComponent = Components.get_component(building_node, VisualArrowComponent)
+		if visual_arrow_component:
+			_set_arrow_height(visual_arrow_component.get_arrow_cursor_height(), visual_arrow_component.get_custom_height())
 		_show_structure_outline(iso_position)
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...
@@ -183,8 +185,8 @@ func _set_arrow_visible(value: bool) -> void:
 	else:
 		wooden_arrow.disable()
 
-func _set_arrow_height(value: String) -> void:
-	wooden_arrow.set_height(value)
+func _set_arrow_height(value: CursorWoodenArrow.ArrowHeight, custom_height: float = 0.0) -> void:
+	wooden_arrow.set_height(value, custom_height)
 
 func _set_arrow_bobbing(value: bool) -> void:
 	if value and not wooden_arrow.is_playing():

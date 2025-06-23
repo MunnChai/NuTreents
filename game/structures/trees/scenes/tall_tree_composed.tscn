@@ -1,9 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://dlob0axb1wkq0"]
+[gd_scene load_steps=23 format=3 uid="uid://dlob0axb1wkq0"]
 
-[ext_resource type="Script" uid="uid://dxfedvt20mvie" path="res://structures/trees/scenes/twee_composed.gd" id="1_eywws"]
 [ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://structures/trees/stats/tall_tree_stat.tres" id="2_eywws"]
 [ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="3_dthtl"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_ekwly"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_76io5"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="5_bwurl"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="6_76io5"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_csjnu"]
@@ -17,6 +17,9 @@
 [ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="15_neanf"]
 [ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="16_dthtl"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="17_oq1xr"]
+[ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="18_76io5"]
+[ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="19_csjnu"]
+[ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="20_0wdcp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -39,9 +42,22 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="TallTreeComposed" type="Node2D"]
-script = ExtResource("1_eywws")
+
+[node name="WaterProductionComponent" parent="." instance=ExtResource("14_cu8ms")]
+
+[node name="TreeBehaviourComponent" parent="." instance=ExtResource("18_76io5")]
+
+[node name="TreeStatComponent" parent="." instance=ExtResource("19_csjnu")]
 type = 6
-tree_stat = ExtResource("2_eywws")
+stat_resource = ExtResource("2_eywws")
+
+[node name="DamageSoundEmitterComponent" parent="." instance=ExtResource("20_0wdcp")]
+sound_effect_name = "tree_damage"
+
+[node name="DeathSoundEmitterComponent" parent="." instance=ExtResource("20_0wdcp")]
+sound_effect_name = "tree_remove"
+
+[node name="TreeAnimationComponent" parent="." instance=ExtResource("5_76io5")]
 sheets = Array[Texture2D]([ExtResource("3_dthtl")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -77,13 +93,13 @@ popup_color = Color(0.996078, 0.596078, 0.533333, 1)
 
 [node name="NutreentProductionComponent" parent="." instance=ExtResource("13_hwjlj")]
 
-[node name="WaterProductionComponent" parent="." instance=ExtResource("14_cu8ms")]
-
 [node name="GridRangeComponent" parent="." instance=ExtResource("15_neanf")]
 range = 1
 
 [node name="FogRevealerComponent" parent="." instance=ExtResource("16_dthtl")]
 
 [node name="OutlineComponent" parent="." instance=ExtResource("17_oq1xr")]
+
+[node name="GrowTimer" type="Timer" parent="."]
 
 [editable path="HurtboxComponent"]

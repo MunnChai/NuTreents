@@ -9,6 +9,8 @@ const MAX_TILE_TRAVERSAL: int = 200
 
 var current_path: Array = []
 
+signal max_tiles_traversed(num_tiles_traversed: int)
+
 func get_next_position(pop_next: bool = false):
 	if current_path.is_empty():
 		return null
@@ -70,6 +72,7 @@ func find_path(start_position: Vector2i, target_position: Vector2i) -> Array:
 		
 		if (visited.size() >= MAX_TILE_TRAVERSAL):
 			print("Total tiles visited during pathfinding: ", visited.size(), ", stopping pathfinding!")
+			max_tiles_traversed.emit(visited.size())
 			break
 	
 	print("Could not find path during pathfinding!")

@@ -10,7 +10,7 @@ func _ready() -> void:
 	x_velocity = rng.randf_range(-20, 20)
 
 func set_color(text_color: Color, outline_color: Color):
-	label_settings.duplicate(true)
+	#label_settings.duplicate(true)
 	#$Label.label_settings.duplicate(true)
 	#$Label2.label_settings.duplicate(true)
 	#$Label3.label_settings.duplicate(true)
