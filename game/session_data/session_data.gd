@@ -47,6 +47,12 @@ func save_session_data(save_num: int = 1):
 	config.set_value(SECTION_SESSION, "current_time", current_time)
 	config.set_value(SECTION_METADATA, "total_time", total_time)
 	
+	# Save current weather and time remaining
+	var current_weather: WeatherManager.WeatherType = WeatherManager.instance.current_weather
+	var weather_time_remaining: float = WeatherManager.instance.timer.time_left
+	config.set_value(SECTION_SESSION, "current_weather", current_weather)
+	config.set_value(SECTION_SESSION, "weather_time_remaining", weather_time_remaining)
+	
 	# Save tiles
 	var terrain_map: Dictionary
 	for pos in Global.terrain_map.get_used_cells():
@@ -146,6 +152,12 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	session_data["current_day"] = current_day
 	session_data["current_time"] = current_time
 	session_data["total_time"] = total_time
+	
+	# Get weather data
+	var current_weather = config.get_value(SECTION_SESSION, "current_weather", WeatherManager.WeatherType.CLEAR)
+	var weather_time_remaining = config.get_value(SECTION_SESSION, "weather_time_remaining", 60.0)
+	session_data["current_weather"] = current_weather
+	session_data["weather_time_remaining"] = weather_time_remaining
 	
 	# Get EnemyManager info
 	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map", {})

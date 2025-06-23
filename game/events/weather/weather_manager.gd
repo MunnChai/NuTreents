@@ -44,7 +44,7 @@ func _process(delta: float) -> void:
 			update_storm_weather()
 
 ## Changing up the weather
-func switch_to(weather: WeatherType) -> void:
+func switch_to(weather: WeatherType, duration: float = -1.0) -> void:
 	match weather:
 		WeatherType.CLEAR:
 			pass
@@ -53,7 +53,10 @@ func switch_to(weather: WeatherType) -> void:
 		WeatherType.STORM:
 			pass
 	
-	timer.start(durations.get(weather, 1.0))
+	if duration < 0.0:
+		timer.start(durations.get(weather, 1.0))
+	else:
+		timer.start(duration)
 	current_weather = weather
 	
 	weather_changed.emit(weather)
@@ -79,7 +82,7 @@ func _on_timer_timeout() -> void:
 		WeatherType.CLEAR:
 			## Temporarily doesn't have RAIN because there's
 			## no way to distinguish between it and STORM at the moment...
-			var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.STORM]
+			var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.STORM, WeatherType.STORM]
 			switch_to(next_weathers.pick_random())
 		WeatherType.RAIN:
 			switch_to(WeatherType.CLEAR)

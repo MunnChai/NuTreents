@@ -139,10 +139,10 @@ func apply_data_resource(tree_resource: Resource):
 	
 	tree_animation_component.apply_data_resource(tree_resource)
 	
+	## LOAD FIRE DATA
 	if tree_resource.is_on_fire:
 		var flammable: FlammableComponent = Components.get_component(actor, FlammableComponent, "", true)
 		if flammable:
-			print(tree_stat_component.stat_resource.id)
 			flammable.ignite()
 			flammable.get_fire().start_lifetime(tree_resource.remaining_fire_lifetime)
 

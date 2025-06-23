@@ -16,7 +16,7 @@ func summon_lightning() -> void:
 	if not Global.structure_map:
 		return
 	
-	var occupied_tiles := Global.structure_map.tile_scene_map.keys()
+	var occupied_tiles := Global.structure_map.non_decor_map.keys()
 	
 	var base_pos: Vector2i = occupied_tiles.pick_random()
 	var offset := Vector2i(randi_range(-2, 2), randi_range(-2, 2))

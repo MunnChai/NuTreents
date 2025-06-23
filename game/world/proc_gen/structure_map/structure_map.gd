@@ -4,6 +4,7 @@ extends TileMapLayer
 const SOURCE_ID: int = 1
 
 var tile_scene_map: Dictionary[Vector2i, Node2D]
+var non_decor_map: Dictionary[Vector2i, Node2D]
 
 const COST_TO_REMOVE_CITY_TILE: int = 100
 const COST_TO_REMOVE_ROAD_TILE: int = 250
@@ -29,6 +30,9 @@ func add_structure(map_coords: Vector2i, structure: Node2D) -> bool:
 		Global.fog_map.remove_fog_around(map_coords)
 	
 	structure.position = map_to_local(map_coords)
+	
+	if Components.has_component(structure, ObstructionComponent):
+		non_decor_map.set(map_coords, structure)
 	
 	tile_scene_map[map_coords] = structure
 	if structure.get_parent() == null:
