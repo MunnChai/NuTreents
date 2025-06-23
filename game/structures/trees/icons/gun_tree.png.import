@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dogdbwrs7cpmw"
-path="res://.godot/imported/tech_tree.png-e140b9383eabf20a51d468aa113d6ee4.ctex"
+uid="uid://b8pc5lfc136u1"
+path="res://.godot/imported/gun_tree.png-589523c445255b7808cc534ed8606f82.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/tree_menu/icons/tech_tree.png"
-dest_files=["res://.godot/imported/tech_tree.png-e140b9383eabf20a51d468aa113d6ee4.ctex"]
+source_file="res://structures/trees/icons/gun_tree.png"
+dest_files=["res://.godot/imported/gun_tree.png-589523c445255b7808cc534ed8606f82.ctex"]
 
 [params]
 

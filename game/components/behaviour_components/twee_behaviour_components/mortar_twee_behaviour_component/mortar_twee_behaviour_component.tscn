@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://62mxpk710oiv"]
+
+[ext_resource type="Script" uid="uid://bal2o0mrjva8v" path="res://components/behaviour_components/twee_behaviour_components/mortar_twee_behaviour_component/mortar_twee_behaviour_component.gd" id="1_rnjqn"]
+
+[node name="MortarTweeBehaviourComponent" type="Node2D"]
+script = ExtResource("1_rnjqn")

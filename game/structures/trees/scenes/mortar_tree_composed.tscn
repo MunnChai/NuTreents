@@ -1,15 +1,17 @@
-[gd_scene load_steps=25 format=3 uid="uid://ddyejpllbcl4s"]
+[gd_scene load_steps=27 format=3 uid="uid://conxl1y71g60g"]
 
 [ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="1_qh5wb"]
 [ext_resource type="PackedScene" uid="uid://c1q4l0by3f41f" path="res://components/behaviour_components/twee_behaviour_components/gun_twee_behaviour_component/gun_twee_behaviour_component.tscn" id="2_r7uyf"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_opvuu"]
+[ext_resource type="Script" uid="uid://bal2o0mrjva8v" path="res://components/behaviour_components/twee_behaviour_components/mortar_twee_behaviour_component/mortar_twee_behaviour_component.gd" id="3_v2gbf"]
 [ext_resource type="Resource" uid="uid://bar5j3t3g00rn" path="res://structures/trees/stats/mortar_tree_stat.tres" id="4_qh5wb"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="5_eddnu"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="6_8qkpe"]
-[ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="7_7y1o7"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="6_8qkpe"]
+[ext_resource type="Script" uid="uid://ccjm54bjkfb7k" path="res://components/animation_components/twee_animation_components/mortar_twee_animation_component/mortar_twee_animation_component.gd" id="7_opvuu"]
+[ext_resource type="Texture2D" uid="uid://cpi68rcotncqc" path="res://structures/trees/sheets/tree_mortar_sheet.png" id="7_r7uyf"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="8_b03oh"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="9_cd85g"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="10_5b77f"]
+[ext_resource type="AnimationLibrary" uid="uid://ckwn4h463madi" path="res://structures/trees/animations/mortar_tree_animations.res" id="10_r7uyf"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="11_u0uhh"]
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="12_q5m6y"]
 [ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="13_ohxm0"]
@@ -47,7 +49,14 @@ resource_local_to_scene = true
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("1_qh5wb")]
 
-[node name="GunTweeBehaviourComponent" parent="." instance=ExtResource("2_r7uyf")]
+[node name="MortarTweeBehaviourComponent" parent="." node_paths=PackedStringArray("attack_range_component", "targeting_component", "action_timer", "spawner_component") instance=ExtResource("2_r7uyf")]
+script = ExtResource("3_v2gbf")
+reload_animation_duration = 1.0
+shoot_animation_delay = 0.5
+attack_range_component = NodePath("../AttackRangeComponent")
+targeting_component = NodePath("../TargetingComponent")
+action_timer = NodePath("../ActionTimer")
+spawner_component = NodePath("../ProjectileSpawnerComponent")
 
 [node name="TreeStatComponent" parent="." node_paths=PackedStringArray("attack_damage_node", "attack_range_node", "attack_cooldown_timer") instance=ExtResource("3_opvuu")]
 type = 8
@@ -62,9 +71,11 @@ sound_effect_name = "tree_damage"
 [node name="DeathSoundEmitterComponent" parent="." instance=ExtResource("5_eddnu")]
 sound_effect_name = "tree_remove"
 
-[node name="TreeAnimationComponent" parent="." instance=ExtResource("6_8qkpe")]
-sheets = Array[Texture2D]([ExtResource("7_7y1o7")])
-v_frames = 3
+[node name="MortarTreeAnimationComponent" parent="." instance=ExtResource("6_8qkpe")]
+script = ExtResource("7_opvuu")
+sheets = Array[Texture2D]([ExtResource("7_r7uyf")])
+h_frames = 10
+v_frames = 5
 large_uv_offset = 0.45
 small_uv_offset = 0.75
 
@@ -72,14 +83,14 @@ small_uv_offset = 0.75
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_dcqkq")
 position = Vector2(0, -16)
-texture = ExtResource("7_7y1o7")
-hframes = 9
-vframes = 3
+texture = ExtResource("7_r7uyf")
+hframes = 10
+vframes = 5
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-&"": ExtResource("9_cd85g")
+&"": ExtResource("10_r7uyf")
 }
 
 [node name="TooltipIdentifierComponent" parent="." instance=ExtResource("10_5b77f")]

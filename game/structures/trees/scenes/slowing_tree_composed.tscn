@@ -1,14 +1,15 @@
-[gd_scene load_steps=25 format=3 uid="uid://byncwf2ly7xpf"]
+[gd_scene load_steps=26 format=3 uid="uid://b1ux4dgnpbxu8"]
 
 [ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="1_203u7"]
 [ext_resource type="PackedScene" uid="uid://c1q4l0by3f41f" path="res://components/behaviour_components/twee_behaviour_components/gun_twee_behaviour_component/gun_twee_behaviour_component.tscn" id="2_2elig"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_abvan"]
 [ext_resource type="Resource" uid="uid://b1uf1mwjycuxb" path="res://structures/trees/stats/slowing_tree_stat.tres" id="4_203u7"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="5_xsv11"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="6_f2j37"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="6_f2j37"]
+[ext_resource type="Texture2D" uid="uid://c5r2rr7pbrocy" path="res://structures/trees/sheets/tree_slowing_sheet.png" id="7_2elig"]
 [ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="7_umajr"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="8_22ha4"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="9_hbtq2"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="9_hbtq2"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="10_hp6f8"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="11_j7527"]
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="12_wc8yu"]
@@ -64,7 +65,7 @@ sound_effect_name = "tree_damage"
 sound_effect_name = "tree_remove"
 
 [node name="TreeAnimationComponent" parent="." instance=ExtResource("6_f2j37")]
-sheets = Array[Texture2D]([ExtResource("7_umajr")])
+sheets = Array[Texture2D]([ExtResource("7_2elig")])
 v_frames = 3
 large_uv_offset = 0.45
 small_uv_offset = 0.75

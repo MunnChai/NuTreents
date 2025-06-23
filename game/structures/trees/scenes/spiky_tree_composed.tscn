@@ -1,15 +1,14 @@
-[gd_scene load_steps=26 format=3 uid="uid://dvke5r4ne1h7x"]
+[gd_scene load_steps=25 format=3 uid="uid://db827hwo1u53j"]
 
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="1_v3cq2"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="2_a1lvg"]
 [ext_resource type="Resource" uid="uid://dxvn1hldmfxi1" path="res://structures/trees/stats/spiky_tree_stat.tres" id="3_a1lvg"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_ndemp"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_lh3pk"]
-[ext_resource type="Texture2D" uid="uid://eckdbj5rer4l" path="res://structures/trees/sheets/tree_circle_sheet.png" id="6_03ebx"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="5_lh3pk"]
+[ext_resource type="Texture2D" uid="uid://di7s7b6hq1gff" path="res://structures/trees/sheets/tree_spike_sheet.png" id="5_v3cq2"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="7_t1t24"]
-[ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="8_3rd2a"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="9_hj1bn"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="10_ke0mo"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="10_ke0mo"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="11_0nfdt"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="12_s6gh5"]
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="13_1lfwp"]
@@ -57,7 +56,7 @@ attack_damage_node = NodePath("../HitboxComponent")
 stat_resource = ExtResource("3_a1lvg")
 
 [node name="TreeAnimationComponent" parent="." instance=ExtResource("5_lh3pk")]
-sheets = Array[Texture2D]([ExtResource("6_03ebx"), ExtResource("7_t1t24"), ExtResource("8_3rd2a")])
+sheets = Array[Texture2D]([ExtResource("5_v3cq2")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

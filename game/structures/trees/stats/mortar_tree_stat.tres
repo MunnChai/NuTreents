@@ -1,14 +1,14 @@
 [gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://bar5j3t3g00rn"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_t4rms"]
-[ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://ui/tree_menu/icons/gun_tree.png" id="2_tgwnr"]
+[ext_resource type="Texture2D" uid="uid://dvxjkntvapnlm" path="res://structures/trees/icons/mortar_tree.png" id="2_t4rms"]
 
 [resource]
 script = ExtResource("1_t4rms")
 name = "Mortar Tree"
 id = "mortar_tree"
 description = "Fires at baddies"
-tree_icon = ExtResource("2_tgwnr")
+tree_icon = ExtResource("2_t4rms")
 hp = 10
 max_water = 0
 gain = Vector3(0, 0, 0)

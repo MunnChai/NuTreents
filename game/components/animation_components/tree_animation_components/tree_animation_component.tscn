@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bhwt0mukr7pdf"]
-
-[ext_resource type="Script" uid="uid://3wsler4e885u" path="res://components/animation_components/tree_animation_components/tree_animation_component.gd" id="1_5d66m"]
-
-[node name="TreeAnimationComponent" type="Node2D"]
-script = ExtResource("1_5d66m")

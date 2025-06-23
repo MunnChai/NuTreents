@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bsfy4ir4jyguw"]
 
 [ext_resource type="Script" uid="uid://b6lbnfuj5tgoc" path="res://ui/tree_menu/tree_card/tree_card.gd" id="1_oi4kf"]
-[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/tree_menu/icons/default_tree.png" id="1_qqaul"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="1_qqaul"]
 [ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/tree_menu/card_sprites/tree_card.png" id="2_oi4kf"]
 
 [node name="TreeCard" type="Control"]

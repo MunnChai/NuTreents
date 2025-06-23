@@ -8,9 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dookr1yus2k36" path="res://structures/trees/scenes/tech_tree_composed.tscn" id="6_ytpl4"]
 [ext_resource type="PackedScene" uid="uid://dlffry2n2gk46" path="res://structures/trees/scenes/explorer_tree_composed.tscn" id="7_ytpl4"]
 [ext_resource type="PackedScene" uid="uid://dlob0axb1wkq0" path="res://structures/trees/scenes/tall_tree_composed.tscn" id="8_ytpl4"]
-[ext_resource type="PackedScene" uid="uid://dvke5r4ne1h7x" path="res://structures/trees/scenes/spiky_tree_composed.tscn" id="9_4fate"]
-[ext_resource type="PackedScene" uid="uid://byncwf2ly7xpf" path="res://structures/trees/scenes/slowing_tree_composed.tscn" id="9_c7bbx"]
-[ext_resource type="PackedScene" uid="uid://ddyejpllbcl4s" path="res://structures/trees/scenes/mortar_tree_composed.tscn" id="10_paipd"]
+[ext_resource type="PackedScene" uid="uid://db827hwo1u53j" path="res://structures/trees/scenes/spiky_tree_composed.tscn" id="9_4fate"]
+[ext_resource type="PackedScene" uid="uid://b1ux4dgnpbxu8" path="res://structures/trees/scenes/slowing_tree_composed.tscn" id="9_c7bbx"]
+[ext_resource type="PackedScene" uid="uid://conxl1y71g60g" path="res://structures/trees/scenes/mortar_tree_composed.tscn" id="10_paipd"]
 
 [node name="TweeRegistry" type="Node"]
 script = ExtResource("1_m8guu")

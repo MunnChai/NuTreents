@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://ynj8wn1o461e"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_3msaf"]
-[ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://ui/tree_menu/icons/gun_tree.png" id="2_pvl82"]
+[ext_resource type="Texture2D" uid="uid://b8pc5lfc136u1" path="res://structures/trees/icons/gun_tree.png" id="2_pvl82"]
 
 [resource]
 script = ExtResource("1_3msaf")
