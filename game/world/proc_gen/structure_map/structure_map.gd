@@ -13,6 +13,9 @@ func _ready() -> void:
 	y_sort_enabled = true
 
 func add_structure(map_coords: Vector2i, structure: Node2D) -> bool:
+	if structure == null:
+		return false
+	
 	if tile_scene_map.has(map_coords):
 		# Check if it is a decor structure
 		var curr_structure: Node2D = tile_scene_map[map_coords]
@@ -129,6 +132,6 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		
 		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
-		add_structure(pos, structure)
-		var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
-		structure_behaviour_component.apply_data_resource(save_resource)
+		if add_structure(pos, structure):
+			var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+			structure_behaviour_component.apply_data_resource(save_resource)

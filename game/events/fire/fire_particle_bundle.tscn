@@ -113,6 +113,7 @@ lifetime = 1.61
 speed_scale = 1.1
 explosiveness = 0.19
 fixed_fps = 10
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_bl4gx")
 
 [node name="FlameParticles2" type="GPUParticles2D" parent="."]
@@ -123,6 +124,7 @@ lifetime = 0.68
 speed_scale = 1.5
 explosiveness = 0.19
 fixed_fps = 10
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_lu5vc")
 
 [node name="FlameParticles" type="GPUParticles2D" parent="."]
@@ -133,4 +135,5 @@ lifetime = 0.68
 speed_scale = 1.5
 explosiveness = 0.19
 fixed_fps = 10
+local_coords = true
 process_material = SubResource("ParticleProcessMaterial_sohsh")

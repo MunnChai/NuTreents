@@ -15,6 +15,9 @@ signal extinguished ## Was put out by an external force
 var lifetime_countdown := 0.0 ## Time until the cold
 var is_extinguished := false ## The end of days is here
 
+func _ready() -> void:
+	pass
+
 ## Manual extinguishing, prevent destruction!
 func extinguish() -> void:
 	if is_extinguished:

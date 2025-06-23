@@ -1,4 +1,4 @@
-class_name WeatherManagerGlobal
+class_name WeatherManager
 extends Node2D
 
 ## THE WEATHER
@@ -16,14 +16,17 @@ var current_weather: WeatherType = WeatherType.CLEAR
 
 ## How long's the weather?
 var durations: Dictionary[WeatherType, float] = {
-	WeatherType.CLEAR: 10.0,
+	WeatherType.CLEAR: 60.0,
 	WeatherType.RAIN: 5.0,
-	WeatherType.STORM: 7.0,
+	WeatherType.STORM: 60.0,
 }
 
 @onready var timer: Timer = $Timer
 
+static var instance: WeatherManager
+
 func _ready() -> void:
+	instance = self
 	weather_changed.connect($LightningGenerator._on_weather_changed)
 	switch_to(WeatherType.CLEAR)
 
@@ -74,7 +77,9 @@ func update_storm_weather() -> void:
 func _on_timer_timeout() -> void:
 	match current_weather:
 		WeatherType.CLEAR:
-			var next_weathers: Array[WeatherType] = [WeatherType.RAIN, WeatherType.STORM]
+			## Temporarily doesn't have RAIN because there's
+			## no way to distinguish between it and STORM at the moment...
+			var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.STORM]
 			switch_to(next_weathers.pick_random())
 		WeatherType.RAIN:
 			switch_to(WeatherType.CLEAR)

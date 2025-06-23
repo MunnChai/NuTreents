@@ -221,6 +221,15 @@ func _create_twee_save_resource(twee: Node2D) -> TweeDataResource:
 		save_resource.life_time_seconds = grow_timer.time_left
 	save_resource.is_large = behaviour_component.is_large
 	
+	## SAVE ON FIRE AND TIME REMAINING
+	var flammable_component: FlammableComponent = Components.get_component(twee, FlammableComponent, "", true)
+	if flammable_component:
+		save_resource.is_on_fire = flammable_component.is_on_fire()
+		if save_resource.is_on_fire:
+			save_resource.remaining_fire_lifetime = flammable_component.get_fire().lifetime_countdown
+		else:
+			save_resource.remaining_fire_lifetime = 0.0
+	
 	var animation_component: TweeAnimationComponent = Components.get_component(twee, TweeAnimationComponent)
 	save_resource.sheet_id = animation_component.sheets.find(animation_component.sprite_2d.texture)
 	
@@ -252,8 +261,6 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
 			save_resource.texture_region_position = atlas_texture.region.position
 			save_resource.tile_type = structure_behaviour_component.tile_type
-		Global.StructureType.OMINOUS_TORCH:
-			pass
 	
 	return save_resource
 

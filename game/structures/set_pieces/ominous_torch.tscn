@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://duos5rnjoto4"]
+[gd_scene load_steps=14 format=3 uid="uid://du8xhok2kmu12"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_nthcp"]
 [ext_resource type="Texture2D" uid="uid://ctv6dmrhuuyri" path="res://structures/set_pieces/ominous_torch_of_hellfire_and_oblivion.png" id="2_aybrw"]

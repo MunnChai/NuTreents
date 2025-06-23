@@ -108,7 +108,6 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 		call_deferred("generate_factories", city_coords)
 		call_deferred("generate_buildings", city_tiles)
 		call_deferred("add_decor")
-		call_deferred("add_set_pieces")
 	
 	# Generate rivers at the end of map generation, so autotiling works
 	generate_rivers(river_tiles)
@@ -338,24 +337,6 @@ func add_decor() -> void:
 						var decor_behaviour_component: DecorBehaviourComponent = Components.get_component(decor, DecorBehaviourComponent)
 						decor_behaviour_component.set_decor_type(type)
 				
-
-func add_set_pieces() -> void:
-	var origin: Vector2i = Global.ORIGIN
-	var structure_map = Global.structure_map
-	
-	var successful_placement := false
-	var attempts := 0
-	
-	while not successful_placement and attempts < 10:
-		var x_dist = randi_range(4, 6)
-		var x_sign = 1 if randf_range(0.0, 1.0) > 0.5 else -1
-		var y_dist = randi_range(4, 6)
-		var y_sign = 1 if randf_range(0.0, 1.0) > 0.5 else -1
-	
-		var offset: Vector2i = Vector2i(x_dist * x_sign, y_dist * y_sign)
-		
-		var coord: Vector2i = origin + offset
-		successful_placement = structure_map.add_structure(coord, StructureRegistry.get_new_structure(Global.StructureType.OMINOUS_TORCH))
 
 func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irreplaceable_tiles: Array[TileType] = []) -> Array[Vector2i]:
 	var drunkard_life: int = lifetime

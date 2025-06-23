@@ -50,7 +50,6 @@ StructureRegistry="*res://structures/registry/structure_registry.tscn"
 WorldSettings="*res://world/world_settings/world_settings.tscn"
 MapUtility="*res://world/map_utility.gd"
 EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
-WeatherManager="*res://events/weather/weather_manager.tscn"
 DebugConsole="*res://addons/debug_console/debug_console_global.gd"
 
 [display]

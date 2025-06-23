@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://d21aaigi3uwrw"]
+[gd_scene load_steps=7 format=3 uid="uid://w8qc6edj0onk"]
 
-[ext_resource type="Script" uid="uid://dogi3on6nhcuq" path="res://structures/trees/_archive/mother_tree.gd" id="1_thw2w"]
+[ext_resource type="Script" path="res://structures/trees/_archive/mother_tree.gd" id="1_thw2w"]
 [ext_resource type="Resource" uid="uid://ll6klr2ec2b8" path="res://structures/trees/stats/mother_tree_stat.tres" id="2_wvohp"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="3_36npe"]
 [ext_resource type="Texture2D" uid="uid://bq1xkos3efixb" path="res://structures/trees/sheets/mother/mother_tree_with_sapling.png" id="3_pn7c0"]
