@@ -44,7 +44,6 @@ position = Vector2(0, -12)
 texture = ExtResource("4_qy2rf")
 hframes = 16
 vframes = 8
-frame = 36
 script = ExtResource("5_kdwdx")
 copy_from = NodePath("../Sprite2D")
 
