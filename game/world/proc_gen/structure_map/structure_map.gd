@@ -12,15 +12,18 @@ func _ready() -> void:
 	#add_to_group("structure_map")
 	y_sort_enabled = true
 
-func add_structure(map_coords: Vector2i, structure: Node2D) -> bool:
-	if tile_scene_map.has(map_coords):
-		# Check if it is a decor structure
-		var curr_structure: Node2D = tile_scene_map[map_coords]
-		if Components.has_component(curr_structure, ObstructionComponent): # Don't build on obstructive tiles
-			structure.queue_free()
-			return false
-		# Otherwise, destroy the decor and continue
+func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bool = false) -> bool:
+	if replace_existing:
 		remove_structure(map_coords)
+	else:
+		if tile_scene_map.has(map_coords):
+			# Check if it is a decor structure
+			var curr_structure: Node2D = tile_scene_map[map_coords]
+			if Components.has_component(curr_structure, ObstructionComponent): # Don't build on obstructive tiles
+				structure.queue_free()
+				return false
+			# Otherwise, destroy the decor and continue
+			remove_structure(map_coords)
 	
 	if Components.has_component(structure, FogRevealerComponent):
 		Global.fog_map.remove_fog_around(map_coords)

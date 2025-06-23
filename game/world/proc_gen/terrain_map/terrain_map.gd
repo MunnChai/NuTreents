@@ -45,11 +45,16 @@ func _ready() -> void:
 #func _process(_delta: float) -> void:
 	#pass
 #
-#func _input(event: InputEvent) -> void:
-	#if (TreeManager.is_mother_dead()):
-		## if mother died
-		#return
-	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
+func _input(event: InputEvent) -> void:
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
+		
+	if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/spiky_tree_spawn/spiky_tree_set_piece.tscn")
+		var set_piece = example_set_piece_scene.instantiate()
+		
+		create_set_piece(set_piece, local_to_map(get_mouse_coords()))
 		#generate_map()
 		#Global.structure_map.remove_all_structures()
 	#
@@ -333,10 +338,32 @@ func add_decor() -> void:
 					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
-					if success:
-						var decor_behaviour_component: DecorBehaviourComponent = Components.get_component(decor, DecorBehaviourComponent)
-						decor_behaviour_component.set_decor_type(type)
-				
+
+## Creates the given set piece at the given location on the terrain map.
+## Currently does not support autotiling.
+func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
+	# Temp add child so set_piece can do on_ready()
+	add_child(set_piece)
+	
+	var tiles: Dictionary[Vector2i, TerrainMap.TileType] = set_piece.get_tiles()
+	for offset: Vector2i in tiles.keys():
+		var true_pos: Vector2i = grid_position + offset
+		var type: TerrainMap.TileType = tiles[offset]
+		
+		set_cell_type(true_pos, tiles[offset])
+	
+	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
+	for offset: Vector2i in structures.keys():
+		var true_pos: Vector2i = grid_position + offset
+		var structure: Node2D = structures[offset]
+		
+		# Turn the child into an orphan
+		structure.get_parent().remove_child(structure)
+		
+		# Reparent the child (and force remove any structure that was there)
+		Global.structure_map.add_structure(true_pos, structure, true)
+	
+	set_piece.queue_free()
 
 
 func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irreplaceable_tiles: Array[TileType] = []) -> Array[Vector2i]:
