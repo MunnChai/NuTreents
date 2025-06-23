@@ -13,6 +13,10 @@ var name_dictionary = {
 	"tech_tree": "TECH TREE",
 	"water_tree": "WATER TREE",
 	"tall_tree": "TALL TREE",
+	"slowing_tree": "SLOWING TREE",
+	"mortar_tree": "MORTAR TREE",
+	"spiky_tree": "SPIKY TREE",
+	
 	
 	"city_building": "CITY STRUCTURE",
 	"factory": "FACTORY",
