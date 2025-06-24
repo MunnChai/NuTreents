@@ -11,7 +11,6 @@ func _ready():
 	if (Global.tech_menu.unassigned_tech.size() > 0):
 		tech_slot = Global.tech_menu.unassigned_tech.pick_random()
 		Global.tech_menu.unassigned_tech.erase(tech_slot)
-		print(tech_slot)
 
 func _get_components() -> void:
 	super._get_components()

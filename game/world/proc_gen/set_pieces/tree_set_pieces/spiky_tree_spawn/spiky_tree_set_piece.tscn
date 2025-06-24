@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=4 uid="uid://sucwt6sj65sy"]
 
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_xvf20"]
-[ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/petrified_trees/petrified_tree.tscn" id="2_e256j"]
+[ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_e256j"]
 [ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="3_e256j"]
 
 [node name="SetPieceBase" instance=ExtResource("1_xvf20")]

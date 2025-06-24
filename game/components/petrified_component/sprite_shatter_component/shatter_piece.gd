@@ -26,4 +26,3 @@ func _update_alpha(delta: float) -> void:
 	
 	if polygon_2d.modulate.a <= 0:
 		queue_free()
-		print("Freeing!")

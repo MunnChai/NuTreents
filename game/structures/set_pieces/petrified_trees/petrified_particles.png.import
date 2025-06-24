@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://kpgxwoahjesf"
-path="res://.godot/imported/petrified_particles.png-2ee24115e1f93a167f04845295ff1fb3.ctex"
+path="res://.godot/imported/petrified_particles.png-a3101edd8cb206224aa4921e5137077a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/petrified_trees/petrified_particles.png"
-dest_files=["res://.godot/imported/petrified_particles.png-2ee24115e1f93a167f04845295ff1fb3.ctex"]
+source_file="res://structures/set_pieces/petrified_trees/petrified_particles.png"
+dest_files=["res://.godot/imported/petrified_particles.png-a3101edd8cb206224aa4921e5137077a.ctex"]
 
 [params]
 

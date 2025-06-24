@@ -39,7 +39,7 @@ func _ready() -> void:
 
 ## Start the game with a blank slate
 func start_game():
-	nutreents = 55555555
+	nutreents = 25
 	
 	DebugConsole.register("free", func(args: PackedStringArray):
 		nutreents += 1000000000

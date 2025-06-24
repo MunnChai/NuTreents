@@ -8,10 +8,10 @@ extends Node2D
 @export var actor: Sprite2D
 
 ## Number of break points.
-@export_range(0, 200) var nbr_of_pieces: int = 5
+@export_range(0, 200) var num_break_points: int = 5
 
 ## Prevents slim triangles being created at the sprite edges.
-@export var edge_threshold: float = 10.0 
+@export var edge_threshold: float = 2.0 
 
 ## Minimum impulse of the shards upon breaking.
 @export var rand_x_force: float = 20.0 
@@ -30,18 +30,6 @@ const SHATTER_PIECE = preload("./shatter_piece.tscn")
 var triangles = []
 var shatter_pieces = []
 
-func _ready() -> void:
-	if not actor:
-		printerr("Sprite Shatter Component missing an actor! Owner: ", owner.name)
-	
-	await get_tree().process_frame
-	
-	create_shatter_pieces()
-
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("debug_button"):
-		shatter()
-
 func create_shatter_pieces() -> void:
 	var _rect = actor.get_rect()
 	
@@ -53,7 +41,7 @@ func create_shatter_pieces() -> void:
 	points.append(_rect.end)
 	
 	#add random break points
-	for i in nbr_of_pieces:
+	for i in num_break_points:
 		var p = _rect.position + Vector2(randi_range(0, _rect.size.x), randi_range(0, _rect.size.y))
 		#move outer points onto rectangle edges
 		if p.x < _rect.position.x + edge_threshold:
@@ -77,7 +65,7 @@ func create_shatter_pieces() -> void:
 		var center = Vector2((t[0].x + t[1].x + t[2].x)/3.0,(t[0].y + t[1].y + t[2].y)/3.0)
 		
 		var shatter_piece = SHATTER_PIECE.instantiate()
-		actor.add_child(shatter_piece)
+		add_child(shatter_piece)
 		
 		shatter_piece.position = center
 		shatter_piece.hide()
@@ -91,7 +79,8 @@ func create_shatter_pieces() -> void:
 		
 		if actor.material:
 			shatter_piece.polygon_2d.material = actor.material
-
+	
+	queue_redraw()
 
 func shatter() -> void:
 	actor.self_modulate.a = 0.0
@@ -102,6 +91,11 @@ func shatter() -> void:
 		
 		shatter_piece.velocity = Vector2(rand_x, rand_y)
 		shatter_piece.lifetime = lifetime
+	
+	
+
+func set_sprite_to_copy(sprite: Sprite2D) -> void:
+	actor = sprite
 
 func _draw() -> void:
 	if display_triangles:
