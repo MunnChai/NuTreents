@@ -29,5 +29,5 @@ func set_decor_type(type: TerrainMap.TileType):
 			atlas_randomizer_component.set_y_frame(1)
 		TerrainMap.TileType.CITY:
 			atlas_randomizer_component.set_y_frame(2)
-		TerrainMap.TileType.DESERT:
+		TerrainMap.TileType.SAND:
 			atlas_randomizer_component.set_y_frame(0)
