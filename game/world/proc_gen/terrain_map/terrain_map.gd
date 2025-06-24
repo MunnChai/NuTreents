@@ -74,7 +74,7 @@ func _input(event: InputEvent) -> void:
 		return
 		
 	if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/spiky_tree_spawn/spiky_tree_set_piece.tscn")
+		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/slowing_tree_set_piece.tscn")
 		var set_piece = example_set_piece_scene.instantiate()
 		
 		create_set_piece(set_piece, local_to_map(get_mouse_coords()))
@@ -395,13 +395,13 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	
 	grid_position += Vector2i(1, 0) # Slight offset for some reason
 	
-	var tiles: Dictionary[Vector2i, Vector2i] = set_piece.get_tile_atlases()
+	var tiles: Dictionary[Vector2i, Dictionary] = set_piece.get_tile_info()
 	#var tiles: Dictionary[Vector2i, Global.TileType] = set_piece.get_tiles()
 	for offset: Vector2i in tiles.keys():
 		var true_pos: Vector2i = grid_position + offset
 		
-		var atlas_coords: Vector2i = tiles[offset]
-		set_cell(true_pos, SOURCE_ID, atlas_coords)
+		var info: Dictionary = tiles[offset]
+		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
 		
 		#var type: Global.TileType = tiles[offset]
 		#set_cell_type(true_pos, tiles[offset])
