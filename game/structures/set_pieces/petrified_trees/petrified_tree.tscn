@@ -126,9 +126,6 @@ one_shot = true
 explosiveness = 0.5
 process_material = SubResource("ParticleProcessMaterial_f3b27")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(4, 4)
-
 [node name="GridPositionComponent" parent="." instance=ExtResource("7_7axg8")]
 
 [node name="ObstructionComponent" parent="." instance=ExtResource("8_wfxg5")]

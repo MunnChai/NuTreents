@@ -18,7 +18,9 @@ shader_parameter/outline_alpha = 0.0
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mv734"]
+resource_local_to_scene = true
 atlas = ExtResource("1_186vr")
+region = Rect2(0, 0, 32, 64)
 
 [node name="CityBuildingComposed" type="Node2D"]
 
@@ -33,6 +35,8 @@ texture = SubResource("AtlasTexture_mv734")
 [node name="GridPositionComponent" parent="." instance=ExtResource("2_186vr")]
 
 [node name="AtlasRandomizerComponent" parent="." instance=ExtResource("4_flrvg")]
+atlas_h_size = 4
+atlas_v_size = 2
 h_frames = 4
 v_frames = 2
 

@@ -1,6 +1,8 @@
 class_name DecorBehaviourComponent
 extends StructureBehaviourComponent
 
+@export var set_type_on_ready: bool = true
+
 @export_group("Components")
 @export var atlas_randomizer_component: AtlasRandomizerComponent
 
@@ -11,8 +13,9 @@ func _ready() -> void:
 	
 	await get_tree().process_frame
 	
-	var grid_position_component: GridPositionComponent = Components.get_component(actor, GridPositionComponent)
-	set_decor_type(Global.terrain_map.get_tile_biome(grid_position_component.get_pos()))
+	if set_type_on_ready:
+		var grid_position_component: GridPositionComponent = Components.get_component(actor, GridPositionComponent)
+		set_decor_type(Global.terrain_map.get_tile_biome(grid_position_component.get_pos()))
 
 func _get_components() -> void:
 	super._get_components()
@@ -31,3 +34,8 @@ func set_decor_type(type: TerrainMap.TileType):
 			atlas_randomizer_component.set_y_frame(2)
 		TerrainMap.TileType.SAND:
 			atlas_randomizer_component.set_y_frame(0)
+
+func apply_data_resource(save_resource: Resource):
+	super.apply_data_resource(save_resource)
+	
+	set_type_on_ready = save_resource.set_type_on_ready

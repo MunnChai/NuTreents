@@ -13,3 +13,6 @@ var tech_slot: int
 
 # For petrified Trees
 var tree_type: Global.TreeType
+
+# For Decor
+var set_type_on_ready: bool
