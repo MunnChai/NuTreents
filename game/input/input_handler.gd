@@ -66,6 +66,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		TreeMenu.instance.previous_tree()
 	if Input.is_action_just_pressed("menu_right"):
 		TreeMenu.instance.next_tree()
+	
+	if Input.is_action_just_pressed("water_bucket"):
+		Cursor.instance.do_water_bucket_from_god()
 
 #endregion
 

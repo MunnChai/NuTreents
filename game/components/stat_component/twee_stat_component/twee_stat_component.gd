@@ -3,12 +3,18 @@ extends StatComponent
 
 @export var type: Global.TreeType
 
-@export_group("Components")
+@export_group("General Components")
 @export var tooltip_identifier_component: TooltipIdentifierComponent
 @export var health_component: HealthComponent
 @export var water_production_component: WaterProductionComponent
 @export var nutreent_production_component: NutreentProductionComponent
 @export var grow_timer: Timer
+
+@export_group("Attack Components")
+## The attack_damage_node requires a set_damage() function
+@export var attack_damage_node: Node
+@export var attack_range_node: GridRangeComponent
+@export var attack_cooldown_timer: Timer
 
 var actor: Node2D
 
@@ -38,12 +44,12 @@ func set_stats_from_resource(resource: StatResource = stat_resource) -> void:
 	if grow_timer:
 		grow_timer.wait_time = resource.time_to_grow
 	
-	if Components.has_component(actor, ProjectileSpawnerComponent):
-		Components.get_component(actor, ProjectileSpawnerComponent).set_damage(resource.attack_damage)
-	if Components.has_component(actor, Timer, "ActionTimer"):
-		Components.get_component(actor, Timer, "ActionTimer").wait_time = resource.attack_cooldown
-	if Components.has_component(actor, GridRangeComponent, "AttackRangeComponent"):
-		Components.get_component(actor, GridRangeComponent, "AttackRangeComponent").range = resource.attack_range
+	if attack_damage_node:
+		attack_damage_node.set_damage(resource.attack_damage)
+	if attack_range_node:
+		attack_range_node.range = resource.attack_range
+	if attack_cooldown_timer:
+		attack_cooldown_timer.wait_time = resource.attack_cooldown
 
 func set_upgraded_stats_from_resource(resource: StatResource = stat_resource) -> void:
 	tooltip_identifier_component.set_id(resource.id)
@@ -51,9 +57,9 @@ func set_upgraded_stats_from_resource(resource: StatResource = stat_resource) ->
 	water_production_component.set_water_production(resource.gain_2.y - resource.maint_2)
 	nutreent_production_component.set_nutreent_production(resource.gain_2.x)
 	
-	if Components.has_component(actor, ProjectileSpawnerComponent):
-		Components.get_component(actor, ProjectileSpawnerComponent).set_damage(resource.attack_damage_2)
-	if Components.has_component(actor, Timer, "ActionTimer"):
-		Components.get_component(actor, Timer, "ActionTimer").wait_time = resource.attack_cooldown_2
-	if Components.has_component(actor, GridRangeComponent, "AttackRangeComponent"):
-		Components.get_component(actor, GridRangeComponent, "AttackRangeComponent").range = resource.attack_range_2
+	if attack_damage_node:
+		attack_damage_node.set_damage(resource.attack_damage_2)
+	if attack_range_node:
+		attack_range_node.range = resource.attack_range_2
+	if attack_cooldown_timer:
+		attack_cooldown_timer.wait_time = resource.attack_cooldown_2

@@ -25,14 +25,14 @@ func _ready() -> void:
 	var texture: AtlasTexture = target.texture.duplicate()
 	
 	if randomize_x:
-		texture.region.size.x = texture.get_size().x / h_frames
+		texture.region.size.x = texture.atlas.get_size().x / h_frames
 		var rand_x = randi_range(0, h_frames - 1)
-		texture.region.position.x = rand_x * texture.region.size.x
+		set_x_frame(rand_x)
 	
 	if randomize_y:
-		texture.region.size.y = texture.get_size().y / v_frames
+		texture.region.size.y = texture.atlas.get_size().y / v_frames
 		var rand_y = randi_range(0, v_frames - 1)
-		texture.region.position.y = rand_y * texture.region.size.y
+		set_y_frame(rand_y)
 	
 	if randomize_h_flip:
 		target.flip_h = randf() > 0.5

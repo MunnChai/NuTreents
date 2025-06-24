@@ -65,6 +65,11 @@ func do_primary_action() -> void:
 		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
 		return
 	
+	if structure_map.does_obstructive_structure_exist(p):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Obstruction!", structure_map.map_to_local(p))
+		return
+	
 	if type == Global.TreeType.TECH_TREE:
 		var can_place = true
 		
@@ -196,6 +201,19 @@ func do_secondary_action() -> void:
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+
+## Put out fires in a 3x3 square
+func do_water_bucket_from_god() -> void:
+	for x: int in range(iso_position.x - 1, iso_position.x + 1):
+		for y: int in range(iso_position.y - 1, iso_position.y + 1):
+			var coord := Vector2i(x, y)
+			var entity = MapUtility.get_entity_at(coord)
+			if entity != null:
+				if Components.has_component(entity, FlammableComponent, "", true):
+					var flammable := Components.get_component(entity, FlammableComponent, "", true) as FlammableComponent
+					## TEMP: Actually ignition!
+					#flammable.extinguish()
+					flammable.ignite()
 
 ## Moves the cursor to the given LOCAL WORLD COORDINATE
 func move_to(local_world_pos: Vector2) -> void:

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://be4ntefnq6er2"]
+
+[ext_resource type="Script" uid="uid://bynpuscsfx8bg" path="res://components/fire_components/flammable_component/flammable_component.gd" id="1_d2ka3"]
+
+[node name="FlammableComponent" type="Node2D"]
+script = ExtResource("1_d2ka3")

@@ -47,6 +47,12 @@ func save_session_data(save_num: int = 1):
 	config.set_value(SECTION_SESSION, "current_time", current_time)
 	config.set_value(SECTION_METADATA, "total_time", total_time)
 	
+	# Save current weather and time remaining
+	var current_weather: WeatherManager.WeatherType = WeatherManager.instance.current_weather
+	var weather_time_remaining: float = WeatherManager.instance.timer.time_left
+	config.set_value(SECTION_SESSION, "current_weather", current_weather)
+	config.set_value(SECTION_SESSION, "weather_time_remaining", weather_time_remaining)
+	
 	# Save tiles
 	var terrain_map: Dictionary
 	for pos in Global.terrain_map.get_used_cells():
@@ -147,6 +153,12 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	session_data["current_time"] = current_time
 	session_data["total_time"] = total_time
 	
+	# Get weather data
+	var current_weather = config.get_value(SECTION_SESSION, "current_weather", WeatherManager.WeatherType.CLEAR)
+	var weather_time_remaining = config.get_value(SECTION_SESSION, "weather_time_remaining", 60.0)
+	session_data["current_weather"] = current_weather
+	session_data["weather_time_remaining"] = weather_time_remaining
+	
 	# Get EnemyManager info
 	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map", {})
 	var enemy_spawn_timer = config.get_value(SECTION_SESSION, "enemy_spawn_timer", 0)
@@ -221,6 +233,15 @@ func _create_twee_save_resource(twee: Node2D) -> TweeDataResource:
 		save_resource.life_time_seconds = grow_timer.time_left
 	save_resource.is_large = behaviour_component.is_large
 	
+	## SAVE ON FIRE AND TIME REMAINING
+	var flammable_component: FlammableComponent = Components.get_component(twee, FlammableComponent, "", true)
+	if flammable_component:
+		save_resource.is_on_fire = flammable_component.is_on_fire()
+		if save_resource.is_on_fire:
+			save_resource.remaining_fire_lifetime = flammable_component.get_fire().lifetime_countdown
+		else:
+			save_resource.remaining_fire_lifetime = 0.0
+	
 	var animation_component: TweeAnimationComponent = Components.get_component(twee, TweeAnimationComponent)
 	save_resource.sheet_id = animation_component.sheets.find(animation_component.sprite_2d.texture)
 	
@@ -252,7 +273,6 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
 			save_resource.texture_region_position = atlas_texture.region.position
 			save_resource.tile_type = structure_behaviour_component.tile_type
-		
 	
 	return save_resource
 

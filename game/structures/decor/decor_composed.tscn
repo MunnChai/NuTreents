@@ -8,11 +8,13 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s8ydt"]
 atlas = ExtResource("1_8geoa")
+region = Rect2(0, 0, 32, 64)
 
 [node name="DecorComposed" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true
+position = Vector2(0, -16)
 texture = SubResource("AtlasTexture_s8ydt")
 
 [node name="GridPositionComponent" parent="." instance=ExtResource("1_ym1hf")]

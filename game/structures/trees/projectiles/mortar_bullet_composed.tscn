@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhmqswij1pk3v"]
+
+[ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://structures/trees/sheets/projectiles/tree_bullet.png" id="1_0xtnf"]
+[ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="2_d0qxi"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="3_r2h0v"]
+[ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="4_2k4fb"]
+[ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_cjw3u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
+resource_local_to_scene = true
+
+[node name="MortarBulletComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_0xtnf")
+
+[node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("2_d0qxi")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="Sprite2D/HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_05k2p")
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("3_r2h0v")]
+
+[node name="GridMovementComponent" parent="." instance=ExtResource("4_2k4fb")]
+movement_duration = 0.5
+ease = 1
+trans = 1
+bounce_amount = 64.0
+
+[node name="RemovalComponent" parent="." instance=ExtResource("5_cjw3u")]
+
+[node name="RemovalTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="Sprite2D/HitboxComponent" to="RemovalComponent" method="free_actor" unbinds=1]
+[connection signal="timeout" from="RemovalTimer" to="RemovalComponent" method="free_actor"]
+
+[editable path="Sprite2D/HitboxComponent"]

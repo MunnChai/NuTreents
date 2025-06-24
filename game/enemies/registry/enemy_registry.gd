@@ -24,3 +24,13 @@ func get_new_enemy(type: Global.EnemyType) -> Node2D:
 ## Returns the stat resource for a given enemy type
 func get_enemy_stat(type: Global.EnemyType) -> EnemyStatResource:
 	return enemy_stat_registry[type]
+
+## Returns an array of enemy types that can be spawned by a given day
+func get_spawnable_enemies_by_day(day: int) -> Array[Global.EnemyType]:
+	var types: Array[Global.EnemyType] = []
+	for type: Global.EnemyType in enemy_stat_registry.keys():
+		var stat: EnemyStatResource = enemy_stat_registry[type]
+		if stat.earliest_spawn_day <= day:
+			types.append(type)
+	
+	return types

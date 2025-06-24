@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://bar5j3t3g00rn"]
+
+[ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_t4rms"]
+[ext_resource type="Texture2D" uid="uid://dvxjkntvapnlm" path="res://structures/trees/icons/mortar_tree.png" id="2_t4rms"]
+
+[resource]
+script = ExtResource("1_t4rms")
+name = "Mortar Tree"
+id = "mortar_tree"
+description = "Shoots baddies from afar"
+tree_icon = ExtResource("2_t4rms")
+hp = 10
+max_water = 0
+gain = Vector3(0, 0, 0)
+maint = 9
+time_to_grow = 30.0
+cost_to_purchase = 500
+attack_damage = 0.0
+attack_range = 0
+attack_cooldown = 0.75
+hp_2 = 25
+max_water_2 = 2
+gain_2 = Vector3(0, 0, 0)
+maint_2 = 6
+time_to_grow_2 = 0.0
+cost_to_purchase_2 = 0
+attack_damage_2 = 25.0
+attack_range_2 = 12
+attack_cooldown_2 = 6.0
+metadata/_custom_type_script = "uid://cmqpyvo3bas1d"

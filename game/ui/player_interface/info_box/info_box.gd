@@ -13,13 +13,19 @@ var name_dictionary = {
 	"tech_tree": "TECH TREE",
 	"water_tree": "WATER TREE",
 	"tall_tree": "TALL TREE",
+	"slowing_tree": "SLOWING TREE",
+	"mortar_tree": "MORTAR TREE",
+	"spiky_tree": "SPIKY TREE",
+	
 	
 	"city_building": "CITY STRUCTURE",
 	"factory": "FACTORY",
 	"factory_remains": "FACTORY REMAINS",
 	
 	"speedle": "SPEEDLE",
-	"silk_spitter": "SILK SPITTER"
+	"silk_spitter": "SILK SPITTER",
+	
+	"ominous_torch": "OMINOUS TORCH",
 }
 
 var tile_name_dictionary = {
@@ -38,6 +44,9 @@ var desc_dictionary = {
 	"tech_tree": "For all your technology needs.",
 	"water_tree": "Dredges up them aquifers,\nfor your forest's convenience.",
 	"tall_tree": "Sharp and sturdy.\nIt'll take more than a few bugs to chop this one.",
+	"slowing_tree": "A close relative to the gun tree. \nSomehow survived growing up in the Arctic.",
+	"mortar_tree": "It was enlisted for the Great War, \nbut was too scared to go near the frontline.",
+	"spiky_tree": "A prickly tree with sharp branches. \nHurts anything that touches it.",
 	
 	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
 	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
@@ -45,6 +54,8 @@ var desc_dictionary = {
 	
 	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
 	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
+	
+	"ominous_torch": "What the hell is that thing?",
 	
 	TerrainMap.TileType.DIRT: "Good old dirt. Nothing special.",
 	TerrainMap.TileType.GRASS: "Fertile grasslands, ripe for trees.",
@@ -64,11 +75,7 @@ func hide_content():
 	rich_text.text = ""
 
 func show_content_for_tree(tree_stat: TreeStatResource):
-	if (!name_dictionary.has(tree_stat.id)):
-		rich_text.text = ""
-		return
-	
-	var content = "[i]" + name_dictionary[tree_stat.id] + "[/i]";
+	var content = "[i]" + tree_stat.name.to_upper() + "[/i]";
 	content += "\n\n"
 	content += desc_dictionary[tree_stat.id]
 	rich_text.text = content

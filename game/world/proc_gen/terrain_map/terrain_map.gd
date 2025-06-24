@@ -8,7 +8,15 @@ enum TileType {
 	CITY = DIRT + 1,
 	WATER = CITY + 1,
 	ROAD = WATER + 1,
-	DESERT = ROAD + 1,
+	SAND = ROAD + 1,
+	SNOW = SAND + 1,
+}
+
+enum Biome {
+	PLAINS = 1,
+	DESERT = PLAINS + 1,
+	SNOWY = DESERT + 1,
+	CITY = SNOWY + 1,
 }
 
 const TILE_ATLAS_COORDS: Dictionary[TileType, Vector2i] = {
@@ -17,7 +25,8 @@ const TILE_ATLAS_COORDS: Dictionary[TileType, Vector2i] = {
 	TileType.CITY: Vector2i(0, 4),
 	TileType.WATER: Vector2i(0, 14),
 	TileType.ROAD: Vector2i(0, 6),
-	TileType.DESERT: Vector2i(0, 22),
+	TileType.SAND: Vector2i(0, 22),
+	TileType.SNOW: Vector2i(0, 24),
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
@@ -26,7 +35,21 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 	TileType.CITY: 4,
 	TileType.WATER: 1,
 	TileType.ROAD: 6,
-	TileType.DESERT: 3,
+	TileType.SAND: 3,
+	TileType.SNOW: 4
+}
+
+# A 2D Array, where the x values (BIOME_TABLE[x]) represent humidity and the y values (BIOME_TABLE[x][y]) represent temperature
+const BIOME_TABLE: Array[Array] = [
+	[Biome.CITY, Biome.DESERT],
+	[Biome.SNOWY, Biome.PLAINS],
+]
+
+const BIOME_TILES: Dictionary[Biome, TileType] = {
+	Biome.PLAINS: TileType.DIRT,
+	Biome.DESERT: TileType.SAND,
+	Biome.SNOWY: TileType.SNOW,
+	Biome.CITY: TileType.CITY,
 }
 
 const SOURCE_ID: int = 0
@@ -45,11 +68,16 @@ func _ready() -> void:
 #func _process(_delta: float) -> void:
 	#pass
 #
-#func _input(event: InputEvent) -> void:
-	#if (TreeManager.is_mother_dead()):
-		## if mother died
-		#return
-	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
+func _input(event: InputEvent) -> void:
+	if (TreeManager.is_mother_dead()):
+		# if mother died
+		return
+		
+	if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/spiky_tree_spawn/spiky_tree_set_piece.tscn")
+		var set_piece = example_set_piece_scene.instantiate()
+		
+		create_set_piece(set_piece, local_to_map(get_mouse_coords()))
 		#generate_map()
 		#Global.structure_map.remove_all_structures()
 	#
@@ -64,14 +92,14 @@ func get_mouse_coords() -> Vector2:
 
 
 func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_structures: bool = true) -> void:
-	print("Generating map...") 
+	print("Generating map...")
 	
 	if not world_size in Global.WorldSize.values():
 		world_size = Global.WorldSize.SMALL
 	
 	world_size_settings = WorldSettings.world_size_settings[world_size]
 	
-	# Fill map with grass
+	# Fill map with tiles
 	initialize_map()
 	
 	# Create rivers, and get river tiles for later
@@ -93,7 +121,7 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 		#print("City: ", map_coords)
 	
 	# Generate roads between cities first
-	generate_highways(city_coords)
+	#generate_highways(city_coords)
 	
 	# Generate cities on top of roads
 	var city_tiles = generate_cities(city_coords)
@@ -112,35 +140,60 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 	# Generate rivers at the end of map generation, so autotiling works
 	generate_rivers(river_tiles)
 
+@onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
 # Initializes the terrain tilemap to be fully grass tiles
 func initialize_map() -> void:
 	
-	# Munn: leave commented in case of future noise use (is nice example)
-	#var noise := FastNoiseLite.new()
-	#noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
-	#noise.seed = randi()
-	#noise.frequency = 0.005
-	#noise.fractal_octaves = 4
-	#noise.fractal_lacunarity = 2
-	#noise.fractal_gain = 0.5
+	 #Munn: leave commented in case of future noise use (is nice example)
+	var temp_noise := FastNoiseLite.new()
+	temp_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	temp_noise.seed = Global.get_seed()
+	temp_noise.frequency = 0.005
+	temp_noise.fractal_octaves = 4
+	temp_noise.fractal_lacunarity = 2
+	temp_noise.fractal_gain = 0.5
 	
-	#test_image.texture = NoiseTexture2D.new()
-	#test_image.texture.noise = noise
+	var humid_noise := FastNoiseLite.new()
+	humid_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	humid_noise.seed = Global.get_seed() * 2
+	humid_noise.frequency = 0.005
+	humid_noise.fractal_octaves = 4
+	humid_noise.fractal_lacunarity = 2
+	humid_noise.fractal_gain = 0.5
+	
+	test_image.texture = NoiseTexture2D.new()
+	test_image.texture.noise = temp_noise
+	test_image.scale /= 2
 	 
 	for x in get_map_x_range():
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			
-			var TileType: int = TileType.DIRT
+			var raw_temp_value: float = temp_noise.get_noise_2dv(map_coords) # Float between -1 and 1
+			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size() # Float between 0 and TEMPS.size()
 			
-			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[TileType]
+			var raw_humid_value: float = humid_noise.get_noise_2dv(map_coords) # Float between -1 and 1
+			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size() # Float between 0 and TEMPS.size()
+			
+			var biome: Biome = get_biome_from_stats(scaled_temp_value, scaled_humid_value)
+			
+			var tile_type: int = BIOME_TILES[biome]
+			
+			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
 			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
 			
 			var tile_data: TileData = get_cell_tile_data(map_coords)
-			tile_data.set_custom_data("biome", TileType) 
+			tile_data.set_custom_data("biome", tile_type) 
+
+func get_biome_from_stats(temperature: float, humidity: float) -> Biome:
+	var temp: int = floor(temperature)
+	var humid: int = floor(humidity)
 	
-	#set_cells_terrain_connect(grass_tiles, 0, 0)
+	#print("Temp: ", temp)
+	#print("Humid: ", humid)
+	#
+	return BIOME_TABLE[temp][humid]
 
 func get_rivers() -> Array[Vector2i]:
 	
@@ -259,7 +312,7 @@ func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
 	# Generate roads
 	var road_tiles: Array[Vector2i] = []
 	var num_roads = randi_range(world_size_settings.min_roads_per_city, world_size_settings.max_roads_per_city)
-	var irreplaceable_tiles: Array[TileType] = [TileType.GRASS, TileType.DIRT, TileType.WATER, TileType.DESERT]
+	var irreplaceable_tiles: Array[TileType] = [TileType.GRASS, TileType.DIRT, TileType.WATER, TileType.SAND, TileType.SNOW]
 	for i in range(0, num_roads):
 		var tiles = walk_drunkard_stride(map_coords, \
 			TileType.ROAD, \
@@ -333,11 +386,32 @@ func add_decor() -> void:
 					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
-					if success:
-						var decor_behaviour_component: DecorBehaviourComponent = Components.get_component(decor, DecorBehaviourComponent)
-						decor_behaviour_component.set_decor_type(type)
-				
 
+## Creates the given set piece at the given location on the terrain map.
+## Currently does not support autotiling.
+func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
+	# Temp add child so set_piece can do on_ready()
+	add_child(set_piece)
+	
+	var tiles: Dictionary[Vector2i, TerrainMap.TileType] = set_piece.get_tiles()
+	for offset: Vector2i in tiles.keys():
+		var true_pos: Vector2i = grid_position + offset
+		var type: TerrainMap.TileType = tiles[offset]
+		
+		set_cell_type(true_pos, tiles[offset])
+	
+	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
+	for offset: Vector2i in structures.keys():
+		var true_pos: Vector2i = grid_position + offset
+		var structure: Node2D = structures[offset]
+		
+		# Turn the child into an orphan
+		structure.get_parent().remove_child(structure)
+		
+		# Reparent the child (and force remove any structure that was there)
+		Global.structure_map.add_structure(true_pos, structure, true)
+	
+	set_piece.queue_free()
 
 func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irreplaceable_tiles: Array[TileType] = []) -> Array[Vector2i]:
 	var drunkard_life: int = lifetime
@@ -552,12 +626,15 @@ func is_concrete(pos: Vector2) -> bool:
 	return biome == TileType.CITY || biome == TileType.ROAD
 
 ## Can I plant a tree on this tile?
+const FERTILE_TILE_TYPES: Array[TileType] = [
+	TileType.GRASS, TileType.DIRT, TileType.SNOW, TileType.SAND
+]
 func is_fertile(pos: Vector2) -> bool:
 	if not is_solid(pos):
 		return false
 	var tile_data: TileData = get_cell_tile_data(pos)
 	var biome = tile_data.get_custom_data("biome")
-	return biome == TileType.GRASS or biome == TileType.DIRT
+	return FERTILE_TILE_TYPES.has(biome)
 
 func set_cell_type(pos: Vector2i, tile_type: TileType):
 	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], 0)

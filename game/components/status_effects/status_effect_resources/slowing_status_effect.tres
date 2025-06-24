@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SlowingStatusEffect" load_steps=2 format=3 uid="uid://bfwx873k8yrj1"]
+
+[ext_resource type="Script" uid="uid://ci03jyubih40g" path="res://components/status_effects/status_effect_scripts/slowing_status_effect.gd" id="1_42h1e"]
+
+[resource]
+script = ExtResource("1_42h1e")
+slow_multiplier = 0.5
+duration = 4.0
+color_modulate = Color(0, 0.666667, 1, 1)
+metadata/_custom_type_script = "uid://ci03jyubih40g"
