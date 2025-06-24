@@ -1,0 +1,111 @@
+## Credit to u/twinpixelriot and u/ironmaiden947 for this effect 
+## https://www.reddit.com/r/godot/comments/nimkqg/how_to_break_a_2d_sprite_in_a_cool_and_easy_way/
+
+class_name SpriteShatterComponent
+extends Node2D
+
+## The node to shatter
+@export var actor: Sprite2D
+
+## Number of break points.
+@export_range(0, 200) var nbr_of_pieces: int = 5
+
+## Prevents slim triangles being created at the sprite edges.
+@export var edge_threshold: float = 10.0 
+
+## Minimum impulse of the shards upon breaking.
+@export var rand_x_force: float = 20.0 
+
+## Maximum impulse of the shards upon breaking.
+@export var rand_y_force: float = 40.0
+
+## How long the shards live.
+@export var lifetime: float = 1.0
+
+## Whether to display the triangles, for debug purposes.
+@export var display_triangles: bool = false
+
+const SHATTER_PIECE = preload("./shatter_piece.tscn")
+
+var triangles = []
+var shatter_pieces = []
+
+func _ready() -> void:
+	if not actor:
+		printerr("Sprite Shatter Component missing an actor! Owner: ", owner.name)
+	
+	await get_tree().process_frame
+	
+	create_shatter_pieces()
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug_button"):
+		shatter()
+
+func create_shatter_pieces() -> void:
+	var _rect = actor.get_rect()
+	
+	var points = []
+	#add outer frame points
+	points.append(_rect.position)
+	points.append(_rect.position + Vector2(_rect.size.x, 0))
+	points.append(_rect.position + Vector2(0, _rect.size.y))
+	points.append(_rect.end)
+	
+	#add random break points
+	for i in nbr_of_pieces:
+		var p = _rect.position + Vector2(randi_range(0, _rect.size.x), randi_range(0, _rect.size.y))
+		#move outer points onto rectangle edges
+		if p.x < _rect.position.x + edge_threshold:
+			p.x = _rect.position.x
+		elif p.x > _rect.end.x - edge_threshold:
+			p.x = _rect.end.x
+		if p.y < _rect.position.y + edge_threshold:
+			p.y = _rect.position.y
+		elif p.y > _rect.end.y - edge_threshold:
+			p.y = _rect.end.y
+		points.append(p)
+	
+	#calculate triangles
+	var delaunay = Geometry2D.triangulate_delaunay(points)
+	for i in range(0, delaunay.size(), 3):
+		triangles.append([points[delaunay[i + 2]], points[delaunay[i + 1]], points[delaunay[i]]])
+	
+	#create RigidBody2D shards
+	var texture = actor.texture
+	for t in triangles:
+		var center = Vector2((t[0].x + t[1].x + t[2].x)/3.0,(t[0].y + t[1].y + t[2].y)/3.0)
+		
+		var shatter_piece = SHATTER_PIECE.instantiate()
+		actor.add_child(shatter_piece)
+		
+		shatter_piece.position = center
+		shatter_piece.hide()
+		shatter_pieces.append(shatter_piece)
+		
+		#setup polygons
+		shatter_piece.polygon_2d.texture = texture
+		shatter_piece.polygon_2d.polygon = t
+		shatter_piece.polygon_2d.position = -center
+		shatter_piece.polygon_2d.texture_offset = texture.get_size() / 2 
+		
+		if actor.material:
+			shatter_piece.polygon_2d.material = actor.material
+
+
+func shatter() -> void:
+	actor.self_modulate.a = 0.0
+	for shatter_piece in shatter_pieces:
+		shatter_piece.show()
+		var rand_x: float = randf_range(-rand_x_force, rand_x_force)
+		var rand_y: float = randf_range(-rand_y_force, 0) # Give it a "bounce" upwards
+		
+		shatter_piece.velocity = Vector2(rand_x, rand_y)
+		shatter_piece.lifetime = lifetime
+
+func _draw() -> void:
+	if display_triangles:
+		for i in triangles:
+			draw_line(i[0], i[1], Color.WHITE, 1)
+			draw_line(i[1], i[2], Color.WHITE, 1)
+			draw_line(i[2], i[0], Color.WHITE, 1)
