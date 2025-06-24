@@ -9,22 +9,22 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_ttkdn"]
 resource_local_to_scene = true
 atlas = ExtResource("5_ttkdn")
-region = Rect2(224, 0, 32, 64)
+region = Rect2(224, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
 atlas = ExtResource("5_ttkdn")
-region = Rect2(224, 0, 32, 64)
+region = Rect2(224, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
 resource_local_to_scene = true
 atlas = ExtResource("5_ttkdn")
-region = Rect2(192, 0, 32, 64)
+region = Rect2(192, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k03om"]
 resource_local_to_scene = true
 atlas = ExtResource("5_ttkdn")
-region = Rect2(192, 0, 32, 64)
+region = Rect2(192, 64, 32, 64)
 
 [node name="SetPieceBase" instance=ExtResource("1_xvf20")]
 
