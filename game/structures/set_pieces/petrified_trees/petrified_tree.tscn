@@ -95,6 +95,7 @@ petrified_sprite_2d = NodePath("../PetrifyVisuals/PetrifiedSprite")
 position = Vector2(0, -16)
 
 [node name="Sprite2D" type="Sprite2D" parent="PetrifyVisuals"]
+visible = false
 position = Vector2(0, -16)
 texture = ExtResource("2_wy4bx")
 

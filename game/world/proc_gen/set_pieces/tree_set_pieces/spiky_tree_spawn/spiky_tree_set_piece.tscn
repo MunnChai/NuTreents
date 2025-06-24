@@ -2,16 +2,19 @@
 
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_xvf20"]
 [ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_e256j"]
-[ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="3_e256j"]
+[ext_resource type="Texture2D" uid="uid://cemj3fv64h5p" path="res://structures/trees/icons/spiky_tree.png" id="3_e256j"]
 
 [node name="SetPieceBase" instance=ExtResource("1_xvf20")]
 
 [node name="TileMapLayer" parent="." index="0"]
-tile_map_data = PackedByteArray("AAD//wAAAAAAAAIAAAD/////AAAAAAIAAAD+////AAAAAAIAAAD+/wAAAAAAAAIAAAD+/wEAAAAAAAIAAAD//wEAAAAAAAIAAAAAAAEAAAAAAAIAAAAAAAAAAAAAAAIAAAAAAP//AAAAAAIAAAAAAP7/AAAAAAIAAAD9////AAAAAAIAAAD9/wAAAAAAAAIAAAD9/wEAAAAAAAIAAAD+/wIAAAAAAAIAAAAAAAIAAAAAAAIAAAABAAIAAAAAAAIAAAABAAAAAAAAAAIAAAABAP//AAAAAAIAAAD///7/AAAAAAIAAAA=")
+tile_map_data = PackedByteArray("AAD//wAAAAAAAAIAAAD/////AAAAAAIAAAD+////AAADAAoAAAD+/wAAAAAAAAYAAAD+/wEAAAABAAoAAAD//wEAAAACAAIAAAAAAAEAAAABAAIAAAAAAAAAAAAAAAIAAAAAAP//AAACAAIAAAAAAP7/AAAAAAIAAAD9////AAACAAoAAAD9/wAAAAAAAAYAAAD9/wEAAAAAAAoAAAD+/wIAAAAAAAIAAAAAAAIAAAAAAAIAAAABAAIAAAAAAAIAAAABAAAAAAADAAIAAAABAP//AAAAAAIAAAD///7/AAABAAIAAAA=")
 
-[node name="PetrifiedTree" parent="." index="2" instance=ExtResource("2_e256j")]
+[node name="PetrifiedTree" parent="Structures" index="0" instance=ExtResource("2_e256j")]
 
-[node name="Sprite2D" parent="PetrifiedTree" index="0"]
+[node name="PetrifiedComponent" parent="Structures/PetrifiedTree" index="0"]
+tree_type = 9
+
+[node name="PetrifiedSprite" parent="Structures/PetrifiedTree/PetrifyVisuals" index="2"]
 texture = ExtResource("3_e256j")
 
-[editable path="PetrifiedTree"]
+[editable path="Structures/PetrifiedTree"]

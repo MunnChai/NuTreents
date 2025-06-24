@@ -19,10 +19,6 @@ func _ready() -> void:
 	
 	_set_sprite_textures()
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("debug_button_2"):
-		depetrify()
-
 func _get_components() -> void:
 	if not sprite_shatter_component:
 		sprite_shatter_component = Components.get_component(actor, SpriteShatterComponent, "", true)
