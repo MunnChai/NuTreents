@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dlffry2n2gk46"]
+[gd_scene load_steps=26 format=3 uid="uid://dlffry2n2gk46"]
 
 [ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://structures/trees/stats/explorer_tree_stat.tres" id="2_5qot7"]
 [ext_resource type="Texture2D" uid="uid://tscwrw87atsj" path="res://structures/trees/sheets/tree_explorer_sheet.png" id="3_e2s4h"]
@@ -20,6 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="18_aylqg"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="19_2nsi7"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="20_ejq07"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="21_js0g6"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="22_1c5eg"]
+[ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="23_e6p23"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -104,5 +107,22 @@ range = 2
 [node name="OutlineComponent" parent="." instance=ExtResource("17_x0s86")]
 
 [node name="GrowTimer" type="Timer" parent="."]
+
+[node name="FireComponents" type="Node2D" parent="."]
+
+[node name="FireRangeComponent" parent="FireComponents" instance=ExtResource("16_oc4jx")]
+shape = "Square"
+range = 2
+
+[node name="FlammableComponent" parent="FireComponents" instance=ExtResource("21_js0g6")]
+
+[node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("22_1c5eg")]
+flammable_component = NodePath("../FlammableComponent")
+grid_position_component = NodePath("../../GridPositionComponent")
+grid_range_component = NodePath("../FireRangeComponent")
+
+[node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("23_e6p23")]
+flammable_component = NodePath("../FlammableComponent")
+health_component = NodePath("../../HealthComponent")
 
 [editable path="HurtboxComponent"]

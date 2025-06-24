@@ -4,6 +4,7 @@ extends TileMapLayer
 const SOURCE_ID: int = 1
 
 var tile_scene_map: Dictionary[Vector2i, Node2D]
+var non_decor_map: Dictionary[Vector2i, Node2D]
 
 const COST_TO_REMOVE_CITY_TILE: int = 100
 const COST_TO_REMOVE_ROAD_TILE: int = 250
@@ -13,6 +14,9 @@ func _ready() -> void:
 	y_sort_enabled = true
 
 func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bool = false) -> bool:
+	if not structure:
+		return false
+
 	if replace_existing:
 		remove_structure(map_coords)
 	else:
@@ -29,6 +33,9 @@ func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bo
 		Global.fog_map.remove_fog_around(map_coords)
 	
 	structure.position = map_to_local(map_coords)
+	
+	if Components.has_component(structure, ObstructionComponent):
+		non_decor_map.set(map_coords, structure)
 	
 	tile_scene_map[map_coords] = structure
 	if structure.get_parent() == null:
@@ -132,6 +139,6 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		
 		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
-		add_structure(pos, structure)
-		var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
-		structure_behaviour_component.apply_data_resource(save_resource)
+		if add_structure(pos, structure):
+			var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+			structure_behaviour_component.apply_data_resource(save_resource)

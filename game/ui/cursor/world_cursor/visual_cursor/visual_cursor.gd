@@ -136,18 +136,6 @@ func _update_visuals(delta: float) -> void:
 	
 	# OK. Now we are in range...
 	
-	# Fertile ground!
-	if terrain_map.is_fertile(iso_position):
-		enable()
-		if _can_plant():
-			_set_highlight_modulate(BLUE)
-			_set_arrow_bobbing(true)
-		else:
-			_set_highlight_modulate(YELLOW)
-			_set_arrow_bobbing(false)
-		_set_arrow_visible(true)
-		return
-	
 	# We are highlighting concrete...
 	if terrain_map.is_concrete(iso_position):
 		enable()
@@ -168,6 +156,25 @@ func _update_visuals(delta: float) -> void:
 			if terrain_map.get_tile_biome(iso_position) == TerrainMap.TileType.ROAD:
 				if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
 					_set_arrow_bobbing(false)
+		return
+	
+	# Obstruction
+	if structure_map.does_obstructive_structure_exist(iso_position):
+		enable()
+		_set_highlight_modulate(RED)
+		_set_arrow_visible(false)
+		return
+	
+	# Fertile ground!
+	if terrain_map.is_fertile(iso_position):
+		enable()
+		if _can_plant():
+			_set_highlight_modulate(BLUE)
+			_set_arrow_bobbing(true)
+		else:
+			_set_highlight_modulate(YELLOW)
+			_set_arrow_bobbing(false)
+		_set_arrow_visible(true)
 		return
 
 func _can_plant() -> bool:

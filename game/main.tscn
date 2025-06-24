@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://42g6dxmn1liw"]
+[gd_scene load_steps=13 format=3 uid="uid://42g6dxmn1liw"]
 
 [ext_resource type="PackedScene" uid="uid://bxd4072sdpptn" path="res://world/proc_gen/tile_maps.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://clltcgyhrsp74" path="res://main.gd" id="1_lquwl"]
@@ -7,9 +7,11 @@
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c5ab514k8x8dc" path="res://overlays/overlays.tscn" id="3_kek77"]
 [ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://input/input_handler.gd" id="5_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b2bri5edcykxw" path="res://events/weather/weather_manager.tscn" id="5_dg77c"]
 [ext_resource type="PackedScene" uid="uid://5xnl4wkxo80k" path="res://ui/cursor/virtual_cursor/virtual_cursor.tscn" id="6_4c57u"]
 [ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="7_4c57u"]
 [ext_resource type="AudioStream" uid="uid://c82lm8mfowgcs" path="res://sound/sfx/wind_loop.wav" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://dykyagfq57yc5" path="res://events/weather/rain/rain.tscn" id="8_efxa6"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_lquwl")
@@ -29,12 +31,17 @@ mouse_filter = 1
 
 [node name="TileMaps" parent="World" instance=ExtResource("1_0xm2m")]
 
+[node name="WeatherManager" parent="World" instance=ExtResource("5_dg77c")]
+
 [node name="AmbientLighting" parent="World" instance=ExtResource("2_h2yge")]
 night_color = Color(0.220747, 0.405964, 0.660919, 1)
 
 [node name="VirtualCursor" parent="World" instance=ExtResource("6_4c57u")]
 
 [node name="Camera" parent="World" groups=["camera"] instance=ExtResource("7_4c57u")]
+
+[node name="Rain" parent="World/Camera" instance=ExtResource("8_efxa6")]
+position = Vector2(0, -484)
 
 [node name="Music" parent="World" instance=ExtResource("3_1bvp3")]
 

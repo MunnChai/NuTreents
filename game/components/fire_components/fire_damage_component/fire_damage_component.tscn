@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsv2kph1ooca4"]
+
+[ext_resource type="Script" uid="uid://1h8a1mf63v7f" path="res://components/fire_components/fire_damage_component/fire_damage_component.gd" id="1_lka51"]
+
+[node name="FireDamageComponent" type="Node2D"]
+script = ExtResource("1_lka51")

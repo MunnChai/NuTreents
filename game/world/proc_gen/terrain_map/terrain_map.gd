@@ -413,7 +413,6 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	
 	set_piece.queue_free()
 
-
 func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irreplaceable_tiles: Array[TileType] = []) -> Array[Vector2i]:
 	var drunkard_life: int = lifetime
 	var current_coord: Vector2i = map_coords

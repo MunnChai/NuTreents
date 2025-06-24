@@ -41,6 +41,10 @@ func _ready() -> void:
 func start_game():
 	nutreents = 55555555
 	
+	DebugConsole.register("free", func(args: PackedStringArray):
+		nutreents += 1000000000
+		, "Gives you a lot of nutreents")
+	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
 	forest_map.clear()

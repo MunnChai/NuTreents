@@ -8,4 +8,6 @@ func get_structure_packed_scene(type: Global.StructureType) -> PackedScene:
 
 ## Returns a new instantiated scene node of the given StructureType
 func get_new_structure(type: Global.StructureType) -> Node2D:
+	if get_structure_packed_scene(type) == null:
+		return null
 	return get_structure_packed_scene(type).instantiate()

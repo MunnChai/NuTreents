@@ -49,6 +49,9 @@ func load_world(session_data: Dictionary) -> void:
 	Global.clock.set_curr_day(session_data["current_day"])
 	Global.clock.set_curr_day_sec(session_data["current_time"])
 	
+	# Set weather
+	WeatherManager.instance.switch_to(session_data["current_weather"], session_data["weather_time_remaining"])
+	
 	# Set terrain and structures
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
 	Global.terrain_map.randomize_tiles()

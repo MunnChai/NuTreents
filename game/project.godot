@@ -50,6 +50,7 @@ StructureRegistry="*res://structures/registry/structure_registry.tscn"
 WorldSettings="*res://world/world_settings/world_settings.tscn"
 MapUtility="*res://world/map_utility.gd"
 EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
+DebugConsole="*res://addons/debug_console/debug_console_global.gd"
 
 [display]
 
@@ -62,7 +63,7 @@ movie_writer/fps=24
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/discord-rpc-gd/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
+enabled=PackedStringArray("res://addons/debug_console/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg")
 
 [global_group]
 
@@ -267,8 +268,6 @@ water_bucket={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.14902, 0.117647, 0.227451, 1)
 2d/snap/snap_2d_transforms_to_pixel=true
