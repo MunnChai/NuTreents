@@ -375,8 +375,10 @@ func generate_buildings(city_tiles: Array[Vector2i]) -> void:
 					structure_map.add_structure(tile, building)
 
 const CITY_DECOR_FREQUENCY = 0.3
-const DIRT_DECOR_FREQUENCY = 0.4
+const DIRT_DECOR_FREQUENCY = 0.1
 const GRASS_DECOR_FREQUENCY = 0.025
+const SAND_DECOR_FREQUENCY = 0.15
+const SNOW_DECOR_FREQUENCY = 0.15
 func add_decor() -> void:
 	for x in get_map_x_range():
 		for y in get_map_y_range():
@@ -391,7 +393,9 @@ func add_decor() -> void:
 				
 				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or 
 					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
-					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
+					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY) or
+					(type == TileType.SAND and rand < SAND_DECOR_FREQUENCY) or
+					(type == TileType.SNOW and rand < SNOW_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
 
 ## Creates the given set piece at the given location on the terrain map.
