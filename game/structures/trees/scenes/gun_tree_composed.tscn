@@ -1,5 +1,6 @@
 [gd_scene load_steps=29 format=3 uid="uid://doicha7u36klq"]
 
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_54454"]
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_hra2j"]
 [ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="3_p5e44"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_3uf8o"]
@@ -47,6 +48,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="GunTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_54454")]
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("14_8fvse")]
 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://b1ux4dgnpbxu8"]
+[gd_scene load_steps=27 format=3 uid="uid://b1ux4dgnpbxu8"]
 
 [ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="1_203u7"]
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_abvan"]
 [ext_resource type="PackedScene" uid="uid://c1q4l0by3f41f" path="res://components/behaviour_components/twee_behaviour_components/gun_twee_behaviour_component/gun_twee_behaviour_component.tscn" id="2_2elig"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_abvan"]
 [ext_resource type="Resource" uid="uid://b1uf1mwjycuxb" path="res://structures/trees/stats/slowing_tree_stat.tres" id="4_203u7"]
@@ -45,6 +46,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="SlowingTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_abvan")]
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("1_203u7")]
 
