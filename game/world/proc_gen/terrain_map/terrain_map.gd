@@ -10,6 +10,7 @@ enum TileType {
 	ROAD = WATER + 1,
 	SAND = ROAD + 1,
 	SNOW = SAND + 1,
+	ICE = SNOW + 1,
 }
 
 enum Biome {
@@ -27,6 +28,7 @@ const TILE_ATLAS_COORDS: Dictionary[TileType, Vector2i] = {
 	TileType.ROAD: Vector2i(0, 6),
 	TileType.SAND: Vector2i(0, 22),
 	TileType.SNOW: Vector2i(0, 24),
+	TileType.ICE: Vector2i(0, 26)
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
@@ -35,8 +37,9 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 	TileType.CITY: 4,
 	TileType.WATER: 1,
 	TileType.ROAD: 6,
-	TileType.SAND: 3,
-	TileType.SNOW: 4
+	TileType.SAND: 4,
+	TileType.SNOW: 6,
+	TileType.ICE: 4,
 }
 
 # A 2D Array, where the x values (BIOME_TABLE[x]) represent humidity and the y values (BIOME_TABLE[x][y]) represent temperature
@@ -59,6 +62,8 @@ const NUM_FACTORIES: int = 3
 
 # The current world size settings being used to generate the world
 var world_size_settings: WorldSizeSettings
+
+var biome_map: Dictionary[Vector2i, Biome] = {}
 
 #@onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
@@ -177,6 +182,7 @@ func initialize_map() -> void:
 			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size() # Float between 0 and TEMPS.size()
 			
 			var biome: Biome = get_biome_from_stats(scaled_temp_value, scaled_humid_value)
+			biome_map.set(map_coords, biome)
 			
 			var tile_type: int = BIOME_TILES[biome]
 			
@@ -225,7 +231,9 @@ func get_rivers() -> Array[Vector2i]:
 			
 			if (scaled_value > 0.5 && scaled_value < 0.8):
 				var TileType: int = TileType.WATER
-			
+				if biome_map.get(map_coords, Biome.PLAINS) == Biome.SNOWY:
+					TileType = self.TileType.ICE
+				
 				var atlas_coords: Vector2i = TILE_ATLAS_COORDS[TileType]
 				
 				set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
@@ -245,7 +253,6 @@ func get_rivers() -> Array[Vector2i]:
 func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 	var to_remove: Array[Vector2i] = []
 	for map_coords in river_tiles:
-		
 		# remove from array if: tile data is null, or tile already has an assigned biome that isn't river
 		var tile_data: TileData = get_cell_tile_data(map_coords)
 		if (tile_data == null):
@@ -253,6 +260,7 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 			continue
 		
 		var tile_type: int = tile_data.get_custom_data("biome")
+		
 		if (tile_type == null || tile_type != TileType.WATER):
 			to_remove.append(map_coords)
 	
@@ -264,7 +272,6 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 	for map_coords in river_tiles:
 		var tile_data: TileData = get_cell_tile_data(map_coords)
 		tile_data.set_custom_data("biome", TileType.WATER)
-
 
 func generate_cities(city_coords: Array[Vector2i]) -> Array[Vector2i]:
 	var city_tiles: Array[Vector2i] = []
