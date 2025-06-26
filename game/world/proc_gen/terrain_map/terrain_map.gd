@@ -1,7 +1,7 @@
 class_name TerrainMap
 extends TileMapLayer
 
-# Enum for the different types of tiles that can exist on the map.
+# --- Enums and Base Constants ---
 enum TileType {
 	VOID = -1,
 	GRASS = 0,
@@ -13,7 +13,6 @@ enum TileType {
 	SNOW = SAND + 1,
 }
 
-# Enum for the different climate biomes.
 enum Biome {
 	PLAINS = 1,
 	DESERT = PLAINS + 1,
@@ -21,7 +20,6 @@ enum Biome {
 	CITY = SNOWY + 1,
 }
 
-# Atlas coordinates for the base tile of each type.
 const TILE_ATLAS_COORDS: Dictionary[TileType, Vector2i] = {
 	TileType.GRASS: Vector2i(0, 0),
 	TileType.DIRT: Vector2i(0, 2),
@@ -32,7 +30,6 @@ const TILE_ATLAS_COORDS: Dictionary[TileType, Vector2i] = {
 	TileType.SNOW: Vector2i(0, 24),
 }
 
-# Number of visual variations for each tile type in the atlas.
 const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 	TileType.GRASS: 4,
 	TileType.DIRT: 4,
@@ -43,13 +40,11 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 	TileType.SNOW: 4
 }
 
-# A 2D Array, where x is humidity and y is temperature.
 const BIOME_TABLE: Array[Array] = [
 	[Biome.CITY, Biome.DESERT],
 	[Biome.SNOWY, Biome.PLAINS],
 ]
 
-# The primary ground tile associated with each biome.
 const BIOME_TILES: Dictionary[Biome, TileType] = {
 	Biome.PLAINS: TileType.DIRT,
 	Biome.DESERT: TileType.SAND,
@@ -57,98 +52,84 @@ const BIOME_TILES: Dictionary[Biome, TileType] = {
 	Biome.CITY: TileType.CITY,
 }
 
-# --- NEW: Tile Effects System ---
-# Defines the gameplay modifiers for each tile type.
-# These are multipliers. E.g., a value of 0.8 means 80% of the base value (a 20% reduction).
+
+# --- Gameplay Effects & Properties ---
 const TILE_EFFECTS: Dictionary[TileType, Dictionary] = {
-	TileType.GRASS: {
-		"water_consumption_modifier": 0.8, # Decreases water consumption by 20%
-		"water_production_modifier": 1.1,  # Increases water production by 10%
-	},
-	TileType.DIRT: {
-		# No special effects
-	},
-	TileType.SAND: {
-		"water_consumption_modifier": 1.5, # Increases water consumption by 50%
-		"water_production_modifier": 0.7,  # Decreases water production by 30%
-		"fire_spread_modifier": 1.5,       # Increases fire spread chance/speed
-	},
-	TileType.SNOW: {
-		"water_consumption_modifier": 1.2, # Slightly increases water needs due to cold
-		"fire_resistance_modifier": 0.5,   # Resists fire, taking 50% less fire damage/spread
-		"growth_rate_modifier": 0.9,       # Slightly slows growth by 10%
-	}
+	TileType.GRASS: {"water_consumption_modifier": 0.8, "water_production_modifier": 1.1},
+	TileType.DIRT: {},
+	TileType.SAND: {"water_consumption_modifier": 1.5, "water_production_modifier": 0.7, "fire_spread_modifier": 1.5},
+	TileType.SNOW: {"water_consumption_modifier": 1.2, "fire_resistance_modifier": 0.5, "growth_rate_modifier": 0.9}
 }
-# --- End of New System ---
 
+# --- Temperature System ---
+const BIOME_TEMPERATURE_BASE: Dictionary[Biome, float] = {
+	Biome.PLAINS: 15.0,
+	Biome.DESERT: 30.0,
+	Biome.SNOWY: -5.0,
+	Biome.CITY: 18.0,
+}
+const TILE_TEMPERATURE_PROPERTIES: Dictionary[TileType, Dictionary] = {
+	TileType.GRASS: {"heat_in": 1.0, "heat_out": 1.0},
+	TileType.DIRT:  {"heat_in": 1.2, "heat_out": 0.9},
+	TileType.CITY:  {"heat_in": 1.5, "heat_out": 0.7},
+	TileType.WATER: {"heat_in": 2.0, "heat_out": 2.0},
+	TileType.ROAD:  {"heat_in": 1.6, "heat_out": 0.6},
+	TileType.SAND:  {"heat_in": 1.4, "heat_out": 0.8},
+	TileType.SNOW:  {"heat_in": 0.5, "heat_out": 1.5}
+}
+const BASE_HEAT_TRANSFER_RATE: float = 0.1
+var tile_temperature_data: Dictionary = {}
 
+# --- General Constants ---
 const SOURCE_ID: int = 0
 const BIOME_FALLOFF = 2
-
 const NUM_FACTORIES: int = 3
 
-# The current world size settings being used to generate the world
 var world_size_settings: WorldSizeSettings
-
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
 func _ready() -> void:
 	y_sort_enabled = true
+	set_process(true)
 
 func _input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
-		# if mother died
 		return
 		
 	if (event is InputEventKey && event.is_action_pressed("generate_map")):
 		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/spiky_tree_spawn/spiky_tree_set_piece.tscn")
 		var set_piece = example_set_piece_scene.instantiate()
-		
 		create_set_piece(set_piece, local_to_map(get_mouse_coords()))
 
-
 func get_mouse_coords() -> Vector2:
-	var mouse_screen_pos: Vector2 = get_local_mouse_position()
-	return mouse_screen_pos
+	return get_local_mouse_position()
 
+func _process(delta: float) -> void:
+	for map_coords in tile_temperature_data.keys():
+		update_tile_temperature(map_coords, delta)
+
+# --- MAP GENERATION ---
 
 func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_structures: bool = true) -> void:
 	print("Generating map...")
-	
 	if not world_size in Global.WorldSize.values():
 		world_size = Global.WorldSize.SMALL
 	
 	world_size_settings = WorldSettings.world_size_settings[world_size]
 	
-	# Fill map with tiles
 	initialize_map()
-	
-	# Create rivers, and get river tiles for later
 	var river_tiles: Array[Vector2i] = get_rivers()
-	
-	# Generate random cities
 	var city_coords: Array[Vector2i]
 	var num_cities: int = randi_range(world_size_settings.min_cities, world_size_settings.max_cities)
 	
 	var angle: float = randf() * 2 * PI
 	for i in range(0, num_cities):
-		
-		var map_coords: Vector2i = Global.ORIGIN
-		map_coords += Vector2i(Vector2.RIGHT.rotated(angle) * world_size_settings.city_distance_from_origin)
+		var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * world_size_settings.city_distance_from_origin)
 		city_coords.append(map_coords)
-		
 		angle += 2 * PI / num_cities
 		
-	# Generate roads between cities first
-	#generate_highways(city_coords)
-	
-	# Generate cities on top of roads
 	var city_tiles = generate_cities(city_coords)
-	
-	# Create spawn area of grass
 	generate_spawn()
-	
-	# Randomize tiles based on biome
 	randomize_tiles()
 	
 	if with_structures:
@@ -156,12 +137,10 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 		call_deferred("generate_buildings", city_tiles)
 		call_deferred("add_decor")
 	
-	# Generate rivers at the end of map generation, so autotiling works
 	generate_rivers(river_tiles)
+	call_deferred("initialize_temperature_data")
 
-# Initializes the terrain tilemap based on noise.
 func initialize_map() -> void:
-	
 	var temp_noise := FastNoiseLite.new()
 	temp_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	temp_noise.seed = Global.get_seed()
@@ -185,23 +164,145 @@ func initialize_map() -> void:
 	for x in get_map_x_range():
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
-			
-			var raw_temp_value: float = temp_noise.get_noise_2dv(map_coords) # Float between -1 and 1
-			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size() # Float between 0 and TEMPS.size()
-			
-			var raw_humid_value: float = humid_noise.get_noise_2dv(map_coords) # Float between -1 and 1
-			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size() # Float between 0 and TEMPS.size()
+			var raw_temp_value: float = temp_noise.get_noise_2dv(map_coords)
+			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size()
+			var raw_humid_value: float = humid_noise.get_noise_2dv(map_coords)
+			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size()
 			
 			var biome: Biome = get_biome_from_stats(scaled_temp_value, scaled_humid_value)
-			
 			var tile_type: int = BIOME_TILES[biome]
-			
-			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
-			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
-			
-			var tile_data: TileData = get_cell_tile_data(map_coords)
-			if tile_data:
-				tile_data.set_custom_data("biome", tile_type)
+			set_cell_type(map_coords, tile_type)
+
+# --- TEMPERATURE SYSTEM ---
+
+func initialize_temperature_data() -> void:
+	print("Initializing temperature system...")
+	tile_temperature_data.clear()
+	for x in get_map_x_range():
+		for y in get_map_y_range():
+			var map_coords := Vector2i(x, y)
+			if get_cell_tile_data(map_coords) == null: continue
+			var ambient_temp := _calculate_ambient_temperature(map_coords)
+			tile_temperature_data[map_coords] = {"real_temp": ambient_temp, "entity_modifier": 0.0}
+
+func update_tile_temperature(map_coords: Vector2i, delta: float) -> void:
+	if not tile_temperature_data.has(map_coords): return
+	var temp_data: Dictionary = tile_temperature_data[map_coords]
+	var ambient_temp: float = _calculate_ambient_temperature(map_coords)
+	var target_temp: float = ambient_temp + temp_data.entity_modifier
+	var temp_difference: float = target_temp - temp_data.real_temp
+	if abs(temp_difference) < 0.01: return
+	var tile_type: TileType = get_tile_biome(map_coords)
+	var heat_props: Dictionary = TILE_TEMPERATURE_PROPERTIES.get(tile_type, {"heat_in": 1.0, "heat_out": 1.0})
+	var heat_modifier: float = heat_props.heat_in if temp_difference > 0 else heat_props.heat_out
+	var temp_change: float = temp_difference * heat_modifier * BASE_HEAT_TRANSFER_RATE * delta
+	temp_data.real_temp += temp_change
+
+func _calculate_ambient_temperature(map_coords: Vector2i) -> float:
+	var tile_data := get_cell_tile_data(map_coords)
+	if not tile_data: return 15.0
+	
+	var biome_tile_type: TileType = tile_data.get_custom_data("biome")
+	var biome: Biome
+
+	# This match statement is more robust than a reverse dictionary lookup (find_key)
+	# and directly handles all tile types, preventing null values.
+	match biome_tile_type:
+		TileType.DIRT:
+			biome = Biome.PLAINS
+		TileType.SAND:
+			biome = Biome.DESERT
+		TileType.SNOW:
+			biome = Biome.SNOWY
+		TileType.CITY, TileType.ROAD:
+			biome = Biome.CITY
+		TileType.GRASS:
+			biome = Biome.PLAINS
+		TileType.WATER:
+			biome = Biome.PLAINS # Water assumes a neutral biome temperature
+		_:
+			biome = Biome.PLAINS # Failsafe for any other unknown tile type
+
+	var base_temp: float = BIOME_TEMPERATURE_BASE.get(biome, 15.0)
+	
+	if not is_instance_valid(TimeManager.instance): return base_temp
+	var time_of_day: float = TimeManager.instance.get_current_time()
+	var time_offset: float = sin((time_of_day - 8.0) * (2.0 * PI) / 24.0) * 10.0
+	
+	var weather_modifier: float = 0.0
+	if is_instance_valid(WeatherManager.instance):
+		match WeatherManager.instance.current_weather:
+			WeatherManager.WeatherType.CLEAR:
+				weather_modifier = 2.0
+			WeatherManager.WeatherType.RAIN:
+				weather_modifier = -5.0
+			WeatherManager.WeatherType.STORM:
+				weather_modifier = -6.0
+
+	return base_temp + time_offset + weather_modifier
+
+# --- PUBLIC API & SAVE/LOAD ---
+
+func get_real_temperature(map_coords: Vector2i) -> float:
+	if tile_temperature_data.has(map_coords):
+		return tile_temperature_data[map_coords].real_temp
+	return 15.0
+
+func add_temperature_modifier(center_coords: Vector2i, value: float, radius: int) -> void:
+	for x in range(center_coords.x - radius, center_coords.x + radius + 1):
+		for y in range(center_coords.y - radius, center_coords.y + radius + 1):
+			var pos := Vector2i(x, y)
+			if tile_temperature_data.has(pos) and pos.distance_to(center_coords) <= radius:
+				tile_temperature_data[pos].entity_modifier += value
+
+func get_tile_effects(pos: Vector2i) -> Dictionary:
+	var tile_type: TileType = get_tile_biome(pos)
+	if TILE_EFFECTS.has(tile_type):
+		return TILE_EFFECTS[tile_type]
+	return {}
+
+func get_tile_biome(pos: Vector2i) -> TileType:
+	var tile_data: TileData = get_cell_tile_data(pos)
+	if tile_data == null: return TileType.VOID
+	return tile_data.get_custom_data("biome")
+
+func set_cell_type(pos: Vector2i, tile_type: TileType) -> void:
+	if not TILE_ATLAS_COORDS.has(tile_type): return
+	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], 0)
+	var tile_data = get_cell_tile_data(pos)
+	if tile_data:
+		tile_data.set_custom_data("biome", tile_type)
+
+## This function is restored to fix the "nonexistent function" error.
+func set_terrain_from_data(data: Dictionary) -> void:
+	for pos: Vector2i in data.keys():
+		var save_resource: TileDataResource = data[pos]
+		set_cell_type(pos, save_resource.type)
+	# Post-load logic like autotiling would go here.
+	# The temperature system will be initialized after this by generate_map.
+
+# --- Positional Check Functions ---
+
+func is_void(pos: Vector2i) -> bool:
+	return get_cell_tile_data(pos) == null
+
+func is_solid(pos: Vector2i) -> bool:
+	if is_void(pos): return false
+	return get_tile_biome(pos) != TileType.WATER
+
+const FERTILE_TILE_TYPES: Array[TileType] = [
+	TileType.GRASS, TileType.DIRT, TileType.SNOW, TileType.SAND
+]
+func is_fertile(pos: Vector2i) -> bool:
+	if not is_solid(pos): return false
+	return FERTILE_TILE_TYPES.has(get_tile_biome(pos))
+
+func is_concrete(pos: Vector2i) -> bool:
+	if is_fertile(pos): return false
+	var biome: TileType = get_tile_biome(pos)
+	return biome == TileType.CITY or biome == TileType.ROAD
+
+# --- Rest of Generation Code ---
 
 func get_biome_from_stats(temperature: float, humidity: float) -> Biome:
 	var temp: int = floor(temperature)
@@ -209,8 +310,6 @@ func get_biome_from_stats(temperature: float, humidity: float) -> Biome:
 	return BIOME_TABLE[temp][humid]
 
 func get_rivers() -> Array[Vector2i]:
-	
-	# Create noise
 	var river_noise := FastNoiseLite.new()
 	river_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
 	river_noise.seed = randi()
@@ -221,41 +320,23 @@ func get_rivers() -> Array[Vector2i]:
 	
 	var river_tiles: Array[Vector2i]
 	
-	# For each tile
 	for x in get_map_x_range():
 		for y in get_map_y_range():
-			var map_coords: Vector2i = Vector2i(x ,y)
-			
+			var map_coords: Vector2i = Vector2i(x, y)
 			var origin: Vector2i = Global.ORIGIN
-			
 			var distance_from_origin: float = (map_coords - origin).length()
-			var distance_scaled = distance_from_origin / (Global.MAP_SIZE.length() * BIOME_FALLOFF)
-			
-			# Some value between 0.0 and 1.0
+			var distance_scaled = distance_from_origin / (world_size_settings.map_size.length() * BIOME_FALLOFF)
 			var noise = river_noise.get_noise_2dv(map_coords)
-			var noise_clamped: float = clamp((noise + distance_scaled) , 0, 0.99)
+			var noise_clamped: float = clamp((noise + distance_scaled), 0, 0.99)
 			var scaled_value: float = noise_clamped * TILE_ATLAS_COORDS.size()
 			
-			if (scaled_value > 0.5 && scaled_value < 0.8):
-				var tile_type: int = TileType.WATER
-			
-				var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
-				
-				set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
-				
-				var tile_data: TileData = get_cell_tile_data(map_coords)
-				if tile_data:
-					tile_data.set_custom_data("biome", tile_type)
-				
+			if (scaled_value > 0.5 and scaled_value < 0.8):
 				river_tiles.append(map_coords)
-	
 	return river_tiles
 
-# Called at the end of map generation to handle autotiling for rivers.
 func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 	var to_remove: Array[Vector2i] = []
 	for map_coords in river_tiles:
-		
 		var tile_data: TileData = get_cell_tile_data(map_coords)
 		if (tile_data == null):
 			to_remove.append(map_coords)
@@ -267,14 +348,11 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 	
 	for map_coords in to_remove:
 		river_tiles.erase(map_coords)
-	
-	set_cells_terrain_connect(river_tiles, 0, 1)
-	
+		
 	for map_coords in river_tiles:
-		var tile_data: TileData = get_cell_tile_data(map_coords)
-		if tile_data:
-			tile_data.set_custom_data("biome", TileType.WATER)
+		set_cell_type(map_coords, TileType.WATER)
 
+	set_cells_terrain_connect(river_tiles, 0, 1)
 
 func generate_cities(city_coords: Array[Vector2i]) -> Array[Vector2i]:
 	var city_tiles: Array[Vector2i] = []
@@ -289,24 +367,6 @@ func generate_cities(city_coords: Array[Vector2i]) -> Array[Vector2i]:
 	
 	return city_tiles
 
-
-func generate_highways(city_coords: Array[Vector2i]) -> void:
-	
-	for i in range(0, city_coords.size()):
-		if (i == city_coords.size() - 1):
-			return
-		
-		var curr_city: Vector2 = city_coords[i]
-		var next_city: Vector2 = city_coords[i + 1]
-		
-		build_highway(curr_city, next_city)
-
-func build_highway(city_i: Vector2i, city_j: Vector2i) -> void:
-	
-	for i in range(0, world_size_settings.num_highway_drunkards):
-		walk_drunkard_targeted(city_i, city_j, TileType.GRASS, world_size_settings.highway_drunkard_lifetime)
-
-
 func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
 	var city_tiles: Array[Vector2i] = []
 	for i in range(0, world_size_settings.num_city_drunkards):
@@ -319,18 +379,11 @@ func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
 	city_tiles = remove_duplicates.keys()
 	
 	map_coords += Vector2i(1, 1)
-	# Generate roads
 	var road_tiles: Array[Vector2i] = []
 	var num_roads = randi_range(world_size_settings.min_roads_per_city, world_size_settings.max_roads_per_city)
 	var irreplaceable_tiles: Array[TileType] = [TileType.GRASS, TileType.DIRT, TileType.WATER, TileType.SAND, TileType.SNOW]
 	for i in range(0, num_roads):
-		var tiles = walk_drunkard_stride(map_coords, \
-			TileType.ROAD, \
-			world_size_settings.road_drunkard_lifetime, \
-			world_size_settings.min_road_length, \
-			world_size_settings.max_road_length, \
-			irreplaceable_tiles)
-		
+		var tiles = walk_drunkard_stride(map_coords, TileType.ROAD, world_size_settings.road_drunkard_lifetime, world_size_settings.min_road_length, world_size_settings.max_road_length, irreplaceable_tiles)
 		road_tiles.append_array(tiles)
 	
 	var remove_road_duplicates: Dictionary[Vector2i, int] = {}
@@ -344,37 +397,28 @@ func generate_city(map_coords: Vector2i) -> Array[Vector2i]:
 
 func generate_spawn() -> void:
 	var origin: Vector2i = Global.ORIGIN
-	
 	for i in range(0, world_size_settings.num_spawn_drunkards):
 		walk_drunkard(origin, TileType.GRASS, world_size_settings.spawn_drunkard_lifetime, [])
 
-
 func generate_factories(city_coords: Array[Vector2i]) -> void:
 	for i in range(0, NUM_FACTORIES):
+		if city_coords.is_empty(): break
 		var coord = city_coords.pick_random()
 		city_coords.erase(coord)
-		
 		var factory: Node2D = StructureRegistry.get_new_structure(Global.StructureType.FACTORY)
-		
 		var structure_map = Global.structure_map
 		structure_map.add_structure(coord, factory)
- 
+
 func generate_buildings(city_tiles: Array[Vector2i]) -> void:
-	
-	# Generate buildings randomly
 	for tile: Vector2i in city_tiles:
 		var tile_data = get_cell_tile_data(tile)
-		
 		if (tile_data):
 			var tile_type: int = tile_data.get_custom_data("biome")
-			
 			if (tile_type == TileType.CITY):
 				var structure_map: BuildingMap = Global.structure_map
-				
 				var rand = randf()
 				if (rand <= world_size_settings.building_frequency):
 					var building: Node2D = StructureRegistry.get_new_structure(Global.StructureType.CITY_BUILDING)
-					
 					structure_map.add_structure(tile, building)
 
 const CITY_DECOR_FREQUENCY = 0.3
@@ -385,39 +429,29 @@ func add_decor() -> void:
 		for y in get_map_y_range():
 			var pos = Vector2i(x, y)
 			var structure_map = Global.structure_map
-			
 			var tile_data = get_cell_tile_data(pos)
 			if (tile_data):
 				var type = tile_data.get_custom_data("biome")
 				var rand = randf()
 				var decor: Node2D = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
 				
-				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or 
-					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
+				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or
+					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
 
-## Creates the given set piece at the given location on the terrain map.
 func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
-	# Temp add child so set_piece can do on_ready()
 	add_child(set_piece)
-	
 	var tiles: Dictionary[Vector2i, TerrainMap.TileType] = set_piece.get_tiles()
 	for offset: Vector2i in tiles.keys():
 		var true_pos: Vector2i = grid_position + offset
-		var type: TerrainMap.TileType = tiles[offset]
-		
 		set_cell_type(true_pos, tiles[offset])
 	
 	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
 	for offset: Vector2i in structures.keys():
 		var true_pos: Vector2i = grid_position + offset
 		var structure: Node2D = structures[offset]
-		
-		# Turn the child into an orphan
 		structure.get_parent().remove_child(structure)
-		
-		# Reparent the child (and force remove any structure that was there)
 		Global.structure_map.add_structure(true_pos, structure, true)
 	
 	set_piece.queue_free()
@@ -427,9 +461,7 @@ func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irr
 	var current_coord: Vector2i = map_coords
 	var visited: Array[Vector2i] = []
 	while (drunkard_life > 0):
-		# Walk in a random direction
 		var rand: int = randi_range(0, 3)
-		
 		var direction: Vector2i
 		match (rand):
 			0: direction = Vector2i.UP
@@ -439,83 +471,53 @@ func walk_drunkard(map_coords: Vector2i, tile_type: TileType, lifetime: int, irr
 		
 		current_coord += direction
 		
-		if (current_coord.x >= get_map_x_range().back() || current_coord.y >= get_map_y_range().back()):
-			drunkard_life -= 1
-			continue
-		if (current_coord.x < get_map_x_range().front() || current_coord.y < get_map_y_range().front()):
+		if (current_coord.x >= get_map_x_range().back() or current_coord.y >= get_map_y_range().back() or
+			current_coord.x < get_map_x_range().front() or current_coord.y < get_map_y_range().front()):
 			drunkard_life -= 1
 			continue
 		
 		var tile_data: TileData = get_cell_tile_data(current_coord)
+		if (tile_data != null and irreplaceable_tiles.has(tile_data.get_custom_data("biome"))):
+			drunkard_life -= 1
+			continue
 		
-		if (tile_data != null):
-			var current_tile: TileType = tile_data.get_custom_data("biome")
-			
-			if (irreplaceable_tiles.find(current_tile) > -1):
-				drunkard_life -= 1
-				continue
-		
-		
-		# Set to City Tile
-		var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
-		set_cell(current_coord, SOURCE_ID, atlas_coords, 0)
-		tile_data = get_cell_tile_data(current_coord)
-		if tile_data:
-			tile_data.set_custom_data("biome", tile_type)
+		set_cell_type(current_coord, tile_type)
 		visited.append(current_coord)
-		
 		drunkard_life -= 1
 	
 	var remove_duplicates: Dictionary[Vector2i, int]
 	for tile: Vector2i in visited:
 		remove_duplicates[tile] = 0
-	visited = remove_duplicates.keys()
-	
-	return visited
+	return remove_duplicates.keys()
 
 func walk_drunkard_stride(start_coords: Vector2i, tile_type: TileType, lifetime: int, min_stride: int, max_stride: int, irreplaceable_tiles: Array[TileType]) -> Array[Vector2i]:
 	var drunkard_life: int = lifetime
 	var current_coord: Vector2i = start_coords
 	var visited: Array[Vector2i] = []
-	
 	var stride: int = randi_range(min_stride, max_stride)
 	
 	while (drunkard_life > 0):
-		# Walk in a random direction
 		var rand: int = randi_range(0, 3)
-		
 		var direction: Vector2i
 		match (rand):
 			0: direction = Vector2i.UP
 			1: direction = Vector2i.DOWN
 			2: direction = Vector2i.LEFT
 			3: direction = Vector2i.RIGHT
-
 		var curr_step = 0
 		while (curr_step < stride):
 			current_coord += direction
-			
-			if (current_coord.x >= get_map_x_range().back() || current_coord.y >= get_map_y_range().back()):
-				curr_step += 1
-				continue
-			if (current_coord.x < get_map_x_range().front() || current_coord.y < get_map_y_range().front()):
+			if (current_coord.x >= get_map_x_range().back() or current_coord.y >= get_map_y_range().back() or
+				current_coord.x < get_map_x_range().front() or current_coord.y < get_map_y_range().front()):
 				curr_step += 1
 				continue
 			var tile_data = get_cell_tile_data(current_coord)
-			if (tile_data):
-				var type = tile_data.get_custom_data("biome")
-				if (irreplaceable_tiles.has(type)):
-					curr_step += 1
-					continue
+			if (tile_data and irreplaceable_tiles.has(tile_data.get_custom_data("biome"))):
+				curr_step += 1
+				continue
 			
-			# Set to City Tile
-			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
-			set_cell(current_coord, SOURCE_ID, atlas_coords, 0)
-			tile_data = get_cell_tile_data(current_coord)
-			if tile_data:
-				tile_data.set_custom_data("biome", tile_type)
+			set_cell_type(current_coord, tile_type)
 			visited.append(current_coord)
-			
 			curr_step += 1
 			
 		drunkard_life -= 1
@@ -523,9 +525,7 @@ func walk_drunkard_stride(start_coords: Vector2i, tile_type: TileType, lifetime:
 	var remove_duplicates: Dictionary[Vector2i, int]
 	for tile: Vector2i in visited:
 		remove_duplicates[tile] = 0
-	visited = remove_duplicates.keys()
-	
-	return visited
+	return remove_duplicates.keys()
 
 
 func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, tile_type: TileType, lifetime: int) -> bool:
@@ -552,114 +552,35 @@ func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, til
 		
 		current_coord += direction
 		
-		if (current_coord.x >= get_map_x_range().back() || current_coord.y >= get_map_y_range().back()):
-			drunkard_life -= 1
-			continue
-		if (current_coord.x < get_map_x_range().front() || current_coord.y < get_map_y_range().front()):
+		if (current_coord.x >= get_map_x_range().back() or current_coord.y >= get_map_y_range().back() or
+			current_coord.x < get_map_x_range().front() or current_coord.y < get_map_y_range().front()):
 			drunkard_life -= 1
 			continue
 		
-		var atlas_coords: Vector2i = TILE_ATLAS_COORDS[tile_type]
-		set_cell(current_coord, SOURCE_ID, atlas_coords, 0)
-		var tile_data: TileData = get_cell_tile_data(current_coord)
-		if tile_data:
-			tile_data.set_custom_data("biome", tile_type)
-		
+		set_cell_type(current_coord, tile_type)
 		drunkard_life -= 1
 	
 	return false
-
-
 
 func randomize_tiles() -> void:
 	for x in get_map_x_range():
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
-			
 			var tile_data: TileData = get_cell_tile_data(map_coords)
 			if not tile_data: continue
-
 			var biome: int = tile_data.get_custom_data("biome")
 			if not TILE_TYPE_VARIATIONS.has(biome): continue
 			
 			var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
 			var modifier: int = floor(scaled_value)
-			
 			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
-			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
 			
-			tile_data = get_cell_tile_data(map_coords)
-			if tile_data:
-				tile_data.set_custom_data("biome", biome)
-
+			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+			var new_tile_data = get_cell_tile_data(map_coords)
+			if new_tile_data: new_tile_data.set_custom_data("biome", biome)
 
 func get_map_x_range() -> Array:
 	return range(-world_size_settings.map_size.x / 2, world_size_settings.map_size.x / 2 + 1)
 
 func get_map_y_range() -> Array:
 	return range(-world_size_settings.map_size.y / 2, world_size_settings.map_size.y / 2 + 1)
-
-
-func get_tile_biome(pos: Vector2i) -> TileType:
-	var tile_data: TileData = get_cell_tile_data(pos)
-	if tile_data == null:
-		return TileType.VOID
-	return tile_data.get_custom_data("biome")
-
-# --- NEW/UPDATED PUBLIC API FUNCTIONS ---
-
-## Returns a dictionary of gameplay effect modifiers for a given tile coordinate.
-## Example usage in a Tree script:
-##   var effects = Global.terrain_map.get_tile_effects(my_map_position)
-##   var water_mod = effects.get("water_consumption_modifier", 1.0)
-##   var final_water_need = base_water_need * water_mod
-func get_tile_effects(pos: Vector2i) -> Dictionary:
-	var tile_type: TileType = get_tile_biome(pos)
-	if TILE_EFFECTS.has(tile_type):
-		return TILE_EFFECTS[tile_type]
-	return {} # Return empty dictionary if no effects are defined
-
-func is_void(pos: Vector2i) -> bool:
-	var tile_data: TileData = get_cell_tile_data(pos)
-	return tile_data == null
-
-func is_solid(pos: Vector2i) -> bool:
-	if is_void(pos):
-		return false
-	var biome = get_tile_biome(pos)
-	return biome != TileType.WATER
-
-func is_concrete(pos: Vector2i) -> bool:
-	if is_fertile(pos):
-		return false
-	var biome = get_tile_biome(pos)
-	return biome == TileType.CITY || biome == TileType.ROAD
-
-## Can I plant a tree on this tile?
-const FERTILE_TILE_TYPES: Array[TileType] = [
-	TileType.GRASS, TileType.DIRT, TileType.SNOW, TileType.SAND
-]
-func is_fertile(pos: Vector2i) -> bool:
-	if not is_solid(pos):
-		return false
-	var biome = get_tile_biome(pos)
-	return FERTILE_TILE_TYPES.has(biome)
-
-func set_cell_type(pos: Vector2i, tile_type: TileType):
-	if not TILE_ATLAS_COORDS.has(tile_type): return
-	
-	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], 0)
-	var tile_data = get_cell_tile_data(pos)
-	if tile_data:
-		tile_data.set_custom_data("biome", tile_type)
-
-
-func set_terrain_from_data(data: Dictionary):
-	
-	for pos: Vector2i in data.keys():
-		var save_resource: TileDataResource = data[pos]
-		set_cell_type(pos, save_resource.type)
-	
-	# Autotiling and other post-load processes would go here.
-	# The TILE_EFFECTS system will work automatically since it's based on the
-	# tile type that has just been loaded.
