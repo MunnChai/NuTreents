@@ -7,6 +7,8 @@ extends Node2D
 @export var petrified_sprite_2d: Sprite2D
 
 var actor: Node2D
+var depetrified: bool = false
+
 
 func _ready() -> void:
 	actor = get_owner()
@@ -30,4 +32,8 @@ func _set_sprite_textures() -> void:
 	sprite_shatter_component.create_shatter_pieces()
 
 func depetrify() -> void:
+	if depetrified:
+		return
+	
+	depetrified = true
 	sprite_shatter_component.shatter()

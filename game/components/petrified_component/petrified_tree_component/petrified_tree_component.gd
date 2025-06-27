@@ -36,6 +36,9 @@ func _set_sprite_textures() -> void:
 	sprite_shatter_component.create_shatter_pieces()
 
 func depetrify() -> void:
+	if depetrified:
+		return
+	
 	# Play sprite shattering effect
 	super.depetrify()
 	
@@ -57,7 +60,8 @@ func depetrify() -> void:
 	# Complete reparenting
 	new_twee.add_child(sprite_shatter_component)
 	new_twee.add_child(depetrify_particles)
-	new_twee.add_child(tree_acquire_animation)
+	Global.fog_map.add_child(tree_acquire_animation)
+	tree_acquire_animation.global_position = new_twee.global_position
 	depetrify_particles.emitting = true
 	
 	# Force grow tree and override animation

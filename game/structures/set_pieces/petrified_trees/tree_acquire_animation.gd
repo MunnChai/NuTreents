@@ -34,8 +34,7 @@ func play_acquire_animation() -> void:
 	# Init card
 	card.visible = true
 	card.scale = Vector2(0, 0)
-	var init_pos = get_parent().global_position
-	card.global_position = init_pos
+	var init_pos = global_position
 	
 	# Emerge
 	tween.set_parallel(true)
@@ -55,6 +54,7 @@ func play_acquire_animation() -> void:
 	tween.tween_property(card, "scale", Vector2(0, 0), EMERGE_DURATION)
 	tween.tween_property(card, "global_position", init_pos, EMERGE_DURATION) # Ideally this tweens towards the tree menu
 	tween.finished.connect(add_tree_card_to_menu.bind(petrified_component.tree_type))
+	tween.finished.connect(queue_free)
 
 func add_tree_card_to_menu(type: Global.TreeType) -> void:
 	TreeMenu.instance.add_tree_card(type)

@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://b5t81tx31klk0" path="res://structures/set_pieces/petrified_trees/tree_acquire_animation.gd" id="13_teheq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wy4bx"]
+resource_local_to_scene = true
 shader = ExtResource("1_8pq07")
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
@@ -144,16 +145,15 @@ sprite_2d = NodePath("../PetrifyVisuals/PetrifiedSprite")
 
 [node name="Camera" parent="." instance=ExtResource("12_yxnlr")]
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="TreeAcquireAnimationComponent" type="Node2D" parent="."]
 script = ExtResource("13_teheq")
 
-[node name="Card" type="Sprite2D" parent="Node2D"]
+[node name="Card" type="Sprite2D" parent="TreeAcquireAnimationComponent"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(0, -62)
 texture = ExtResource("13_j5p62")
 
-[node name="TreeIcon" type="Sprite2D" parent="Node2D/Card"]
+[node name="TreeIcon" type="Sprite2D" parent="TreeAcquireAnimationComponent/Card"]
 unique_name_in_owner = true
 position = Vector2(0, -2)
 scale = Vector2(0.9, 0.9)
