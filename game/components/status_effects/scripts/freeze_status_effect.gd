@@ -8,7 +8,7 @@ func apply_status_effect(entity: Node2D) -> void:
 	
 	var animation_player: AnimationPlayer = Components.get_component(entity, AnimationPlayer)
 	if animation_player:
-		animation_player.speed_scale = 0
+		animation_player.stop()
 
 func remove_status_effect(entity: Node2D) -> void:
 	var action_timer: Timer = Components.get_component(entity, Timer, "ActionTimer")
@@ -17,4 +17,4 @@ func remove_status_effect(entity: Node2D) -> void:
 	
 	var animation_player: AnimationPlayer = Components.get_component(entity, AnimationPlayer)
 	if animation_player:
-		animation_player.speed_scale = 1
+		animation_player.play()

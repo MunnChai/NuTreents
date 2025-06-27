@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="4_fcsjw"]
 [ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_21ns3"]
 [ext_resource type="PackedScene" uid="uid://c7bm4e2244omm" path="res://components/status_effects/status_inflictor_component/status_inflictor_component.tscn" id="6_fk4nl"]
-[ext_resource type="Resource" uid="uid://c0jut7lkwflll" path="res://components/status_effects/status_effect_resources/freeze_status_effect.tres" id="7_gyl6c"]
+[ext_resource type="Resource" uid="uid://bfwx873k8yrj1" path="res://components/status_effects/resources/slowing_status_effect.tres" id="7_gyl6c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
 resource_local_to_scene = true

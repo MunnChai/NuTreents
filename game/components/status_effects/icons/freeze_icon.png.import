@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b4mwf1gkb110e"
-path="res://.godot/imported/freeze_icon.png-efce25acc6ef9fb19eb5ac52a625ee5d.ctex"
+path="res://.godot/imported/freeze_icon.png-f4cee4f7066b75902d3543b9fa139841.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://components/status_effects/status_effect_icons/freeze_icon.png"
-dest_files=["res://.godot/imported/freeze_icon.png-efce25acc6ef9fb19eb5ac52a625ee5d.ctex"]
+source_file="res://components/status_effects/icons/freeze_icon.png"
+dest_files=["res://.godot/imported/freeze_icon.png-f4cee4f7066b75902d3543b9fa139841.ctex"]
 
 [params]
 

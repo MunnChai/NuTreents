@@ -6,6 +6,7 @@ extends Resource
 @export_category("Visuals")
 @export var color_modulate: Color = Color(1, 1, 1, 1)
 @export var effect_icon: Texture2D
+@export var particles: PackedScene
 
 ## This function should get the Components that it wants to alter, and alter them by a set amount
 func apply_status_effect(entity: Node2D) -> void:
