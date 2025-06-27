@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="FreezeStatusEffect" load_steps=2 format=3 uid="uid://c0jut7lkwflll"]
+
+[ext_resource type="Script" uid="uid://cg07waolp4xjo" path="res://components/status_effects/status_effect_scripts/freeze_status_effect.gd" id="1_toh8t"]
+
+[resource]
+script = ExtResource("1_toh8t")
+duration = 4.0
+color_modulate = Color(0, 0.60627, 0.606681, 1)
+metadata/_custom_type_script = "uid://cg07waolp4xjo"
