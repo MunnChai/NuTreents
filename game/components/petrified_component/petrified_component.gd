@@ -4,7 +4,6 @@ extends Node2D
 
 
 @export var sprite_shatter_component: SpriteShatterComponent
-@export var sprite_2d: Sprite2D
 @export var petrified_sprite_2d: Sprite2D
 
 var actor: Node2D
@@ -27,9 +26,6 @@ func _connect_signals() -> void:
 	pass
 
 func _set_sprite_textures() -> void:
-	if sprite_2d:
-		petrified_sprite_2d.texture = sprite_2d.texture.duplicate()
-	
 	sprite_shatter_component.set_sprite_to_copy(petrified_sprite_2d)
 	sprite_shatter_component.create_shatter_pieces()
 

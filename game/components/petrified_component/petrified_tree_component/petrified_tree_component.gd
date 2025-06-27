@@ -27,18 +27,19 @@ func set_tree_type(type: Global.TreeType) -> void:
 func _set_sprite_textures() -> void:
 	var tree_texture: TreeStatResource = TreeRegistry.get_twee_stat(tree_type)
 	
-	if sprite_2d:
-		sprite_2d.texture = tree_texture.tree_icon
 	petrified_sprite_2d.texture = tree_texture.tree_icon
 	
 	sprite_shatter_component.set_sprite_to_copy(petrified_sprite_2d)
 	sprite_shatter_component.create_shatter_pieces()
 
 func depetrify() -> void:
-	# Get new twee of type
-	var new_twee: Node2D = TreeRegistry.get_new_twee(tree_type)
+	# Play sprite shattering effect
+	super.depetrify()
 	
-	# Reparent sprite_shatter_component to new tree
+	# Wait for animation to finish
+	await sprite_shatter_component.shatter_finished
+	
+	# Begin reparenting sprite_shatter_component to new tree
 	sprite_shatter_component.get_parent().remove_child(sprite_shatter_component)
 	get_parent().remove_child(depetrify_particles)
 	
@@ -46,6 +47,7 @@ func depetrify() -> void:
 	Global.structure_map.remove_structure(grid_position_component.get_pos())
 	
 	# Add new tree to map
+	var new_twee: Node2D = TreeRegistry.get_new_twee(tree_type)
 	TreeManager.place_tree(new_twee, grid_position_component.get_pos())
 	
 	# Complete reparenting
@@ -61,5 +63,4 @@ func depetrify() -> void:
 	var twee_animation_component: TweeAnimationComponent = Components.get_component(new_twee, TweeAnimationComponent)
 	twee_animation_component.play_large_tree_animation()
 	
-	# Play sprite shattering effect
-	super.depetrify()
+	
