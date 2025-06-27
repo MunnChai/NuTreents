@@ -21,6 +21,7 @@ var name_dictionary = {
 	"city_building": "CITY STRUCTURE",
 	"factory": "FACTORY",
 	"factory_remains": "FACTORY REMAINS",
+	"petrified_tree": "PETRIFIED TREE",
 	
 	"speedle": "SPEEDLE",
 	"silk_spitter": "SILK SPITTER",
@@ -53,6 +54,7 @@ var desc_dictionary = {
 	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
 	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
 	"factory_remains": "What if you planted a Tech Tree here?",
+	"petrified_tree": "A tree made of stone.\nCould you save it somehow?",
 	
 	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
 	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
@@ -64,7 +66,7 @@ var desc_dictionary = {
 	TerrainMap.TileType.CITY: "Cold, hard asphalt.\nYou'll have to remove it to plant.",
 	TerrainMap.TileType.WATER: "Hydrates your nearby trees.\nDon't fall in, though.",
 	TerrainMap.TileType.ROAD: "Well-worn tar.\nYou'll have to remove it to plant.",
-	TerrainMap.TileType.SAND: "Sand. Coarse and rough\nand irritating and it gets everywhere.",
+	TerrainMap.TileType.SAND: "Coarse and rough and irritating\nand it gets everywhere.",
 	TerrainMap.TileType.SNOW: "A soft blanket of snow.",
 }
 
@@ -117,22 +119,23 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		if (Global.structure_map.tile_scene_map.has(pos)):
 			structure = Global.structure_map.tile_scene_map[pos]
 		
-		if (structure is Twee):
+		var tree_stat_component: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
+		if tree_stat_component:
 			rich_text.text +="\n"
-			rich_text.text += "HP: " + str(structure.hp)
-			rich_text.text += "\nNET WATER: " + str(structure.gain.y - structure.maint) + "/s"
-			rich_text.text += "\nNET NUTRIENTS: " + str(structure.gain.x) + "/s"
-			#rich_text.text += "\nNET SUN: " + str(structure.gain.z) + "/s"
+			rich_text.text += "HP: " + str(Components.get_component(structure, HealthComponent).get_current_health())
+			rich_text.text += "\nNET WATER: " + str(Components.get_component(structure, WaterProductionComponent).get_water_production()) + "/s"
+			rich_text.text += "\nNET NUTRIENTS: " + str(Components.get_component(structure, NutreentProductionComponent).get_nutreent_production()) + "/s"
 			
 			rich_text.text += "\n"
 			
-			if (TreeManager.get_twee(pos).is_dehydrated):
-				rich_text.text += "\n[color=ab5012]DEHYDRATED[/color]"
-			if (previously_factory):
-				rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
-		elif (structure is CityBuilding || structure is Factory):
+			#if (TreeManager.get_twee(pos).is_dehydrated):
+				#rich_text.text += "\n[color=ab5012]DEHYDRATED[/color]"
+			#if (previously_factory):
+				#rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
+		var destructable_component: DestructableComponent = Components.get_component(structure, DestructableComponent)
+		if destructable_component and not tree_stat_component:
 			rich_text.text +="\n"
-			rich_text.text += "Nutrients needed to destroy: " + str(structure.cost_to_remove)
+			rich_text.text += "Nutrients needed to destroy: " + str(destructable_component.get_cost())
 		elif (enemy != null):
 			rich_text.text +="\n"
 			

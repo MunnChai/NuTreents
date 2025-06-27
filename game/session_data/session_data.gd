@@ -273,6 +273,9 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 			var atlas_texture: AtlasTexture = structure_behaviour_component.sprite_2d.texture
 			save_resource.texture_region_position = atlas_texture.region.position
 			save_resource.tile_type = structure_behaviour_component.tile_type
+			save_resource.set_type_on_ready = structure_behaviour_component.set_type_on_ready
+		Global.StructureType.PETRIFIED_TREE:
+			save_resource.tree_type = Components.get_component(structure, PetrifiedTreeComponent).tree_type
 	
 	return save_resource
 

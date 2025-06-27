@@ -96,10 +96,10 @@ func _input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		return
 		
-	if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/spiky_tree_spawn/spiky_tree_set_piece.tscn")
-		var set_piece = example_set_piece_scene.instantiate()
-		create_set_piece(set_piece, local_to_map(get_mouse_coords()))
+	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		#var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/slowing_tree_set_piece.tscn")
+		#var set_piece = example_set_piece_scene.instantiate()
+		#create_set_piece(set_piece, local_to_map(get_mouse_coords()))
 
 func get_mouse_coords() -> Vector2:
 	return get_local_mouse_position()
@@ -442,10 +442,19 @@ func add_decor() -> void:
 
 func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	add_child(set_piece)
-	var tiles: Dictionary[Vector2i, TerrainMap.TileType] = set_piece.get_tiles()
+	
+	grid_position += Vector2i(1, 0) # Slight offset for some reason
+	
+	var tiles: Dictionary[Vector2i, Dictionary] = set_piece.get_tile_info()
+	#var tiles: Dictionary[Vector2i, Global.TileType] = set_piece.get_tiles()
 	for offset: Vector2i in tiles.keys():
 		var true_pos: Vector2i = grid_position + offset
-		set_cell_type(true_pos, tiles[offset])
+		
+		var info: Dictionary = tiles[offset]
+		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
+		
+		#var type: Global.TileType = tiles[offset]
+		#set_cell_type(true_pos, tiles[offset])
 	
 	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
 	for offset: Vector2i in structures.keys():
@@ -565,19 +574,16 @@ func walk_drunkard_targeted(start_coords: Vector2i, target_coords: Vector2i, til
 func randomize_tiles() -> void:
 	for x in get_map_x_range():
 		for y in get_map_y_range():
-			var map_coords: Vector2i = Vector2i(x ,y)
-			var tile_data: TileData = get_cell_tile_data(map_coords)
-			if not tile_data: continue
-			var biome: int = tile_data.get_custom_data("biome")
-			if not TILE_TYPE_VARIATIONS.has(biome): continue
-			
-			var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
-			var modifier: int = floor(scaled_value)
-			var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
-			
-			set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
-			var new_tile_data = get_cell_tile_data(map_coords)
-			if new_tile_data: new_tile_data.set_custom_data("biome", biome)
+			randomize_tile(Vector2i(x ,y))
+
+func randomize_tile(map_coords: Vector2i) -> void:
+	var tile_data: TileData = get_cell_tile_data(map_coords)
+	var biome: int = tile_data.get_custom_data("biome")
+	var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
+	var modifier: int = floor(scaled_value)
+	
+	var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
+	set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
 
 func get_map_x_range() -> Array:
 	return range(-world_size_settings.map_size.x / 2, world_size_settings.map_size.x / 2 + 1)

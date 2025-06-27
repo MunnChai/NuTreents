@@ -144,18 +144,23 @@ func do_secondary_action() -> void:
 			var cost: float = destructable_component.get_cost()
 			
 			if TreeManager.enough_n(cost):
-				SfxManager.play_sound_effect("concrete_break")
 				TreeManager.consume_n(cost)
-				structure_map.remove_structure(map_pos)
-				destructable_component.destroyed.emit()
+				destructable_component.destroy()
 				
 				var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(entity, StructureBehaviourComponent)
 				
 				match structure_behaviour_component.type:
 					Global.StructureType.FACTORY:
 						PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
+					Global.StructureType.PETRIFIED_TREE:
+						#PopupManager.create_popup("De-Petrified!", structure_map.map_to_local(map_pos))
+						var sprite_shatter_component: SpriteShatterComponent = Components.get_component(entity, SpriteShatterComponent, "", true)
+						if sprite_shatter_component:
+							await sprite_shatter_component.shatter_finished
 					_:
 						PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
+				
+				SfxManager.play_sound_effect("concrete_break")
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
