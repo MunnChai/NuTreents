@@ -39,6 +39,9 @@ func depetrify() -> void:
 	if depetrified:
 		return
 	
+	# Remove destructable component
+	actor.remove_child(destructable_component)
+	
 	# Play sprite shattering effect
 	super.depetrify()
 	
