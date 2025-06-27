@@ -4,6 +4,7 @@ extends PetrifiedComponent
 @export var tree_type: Global.TreeType
 @export var grid_position_component: GridPositionComponent
 @export var destructable_component: DestructableComponent
+@export var tree_acquire_animation: TreeAcquireAnimationComponent
 
 @onready var depetrify_particles: GPUParticles2D = $"../DepetrifyParticles"
 
@@ -14,6 +15,8 @@ func _get_components() -> void:
 		grid_position_component = Components.get_component(actor, GridPositionComponent)
 	if not destructable_component: 
 		destructable_component = Components.get_component(actor, DestructableComponent)
+	if not tree_acquire_animation:
+		tree_acquire_animation = Components.get_component(actor, TreeAcquireAnimationComponent)
 
 func _connect_signals() -> void:
 	destructable_component.cost_to_destroy = TreeRegistry.get_twee_stat(tree_type).cost_to_purchase
@@ -41,7 +44,8 @@ func depetrify() -> void:
 	
 	# Begin reparenting sprite_shatter_component to new tree
 	sprite_shatter_component.get_parent().remove_child(sprite_shatter_component)
-	get_parent().remove_child(depetrify_particles)
+	depetrify_particles.get_parent().remove_child(depetrify_particles)
+	tree_acquire_animation.get_parent().remove_child(tree_acquire_animation)
 	
 	# Remove self from map
 	Global.structure_map.remove_structure(grid_position_component.get_pos())
@@ -53,14 +57,14 @@ func depetrify() -> void:
 	# Complete reparenting
 	new_twee.add_child(sprite_shatter_component)
 	new_twee.add_child(depetrify_particles)
+	new_twee.add_child(tree_acquire_animation)
 	depetrify_particles.emitting = true
 	
-	# Force grow tree
+	# Force grow tree and override animation
 	var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(new_twee, TweeBehaviourComponent)
 	twee_behaviour_component.upgrade_tree()
-	
-	# Override growing animation
 	var twee_animation_component: TweeAnimationComponent = Components.get_component(new_twee, TweeAnimationComponent)
 	twee_animation_component.play_large_tree_animation()
 	
-	
+	# Play tree acquisition animation
+	tree_acquire_animation.play_acquire_animation()

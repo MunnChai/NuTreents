@@ -32,10 +32,10 @@ var shatter_pieces = []
 
 signal shatter_finished
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("debug_button_2"):
-		create_shatter_pieces()
-		shatter()
+#func _process(delta: float) -> void:
+	#if Input.is_action_just_pressed("debug_button_2"):
+		#create_shatter_pieces()
+		#shatter()
 
 func create_shatter_pieces() -> void:
 	var _rect = actor.get_rect()
@@ -129,7 +129,7 @@ func shatter() -> void:
 	for shatter_piece in shatter_pieces:
 		shatter_piece.show()
 		var rand_x: float = randf_range(-rand_x_force, rand_x_force)
-		var rand_y: float = randf_range(-rand_y_force, 0) # Give it a "bounce" upwards
+		var rand_y: float = randf_range(-rand_y_force, -rand_y_force / 2) # Give it a "bounce" upwards
 		
 		shatter_piece.velocity = Vector2(rand_x, rand_y)
 		shatter_piece.lifetime = lifetime

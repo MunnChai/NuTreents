@@ -96,10 +96,10 @@ func _input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		return
 		
-	if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/slowing_tree_set_piece.tscn")
-		var set_piece = example_set_piece_scene.instantiate()
-		create_set_piece(set_piece, local_to_map(get_mouse_coords()))
+	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		#var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/slowing_tree_set_piece.tscn")
+		#var set_piece = example_set_piece_scene.instantiate()
+		#create_set_piece(set_piece, local_to_map(get_mouse_coords()))
 
 func get_mouse_coords() -> Vector2:
 	return get_local_mouse_position()
