@@ -38,6 +38,23 @@ func get_tiles() -> Dictionary[Vector2i, TerrainMap.TileType]:
 	
 	return dict
 
+func get_tile_info() -> Dictionary[Vector2i, Dictionary]:
+	var dict: Dictionary[Vector2i, Dictionary] = {}
+	
+	for pos: Vector2i in tile_map_layer.get_used_cells():
+		var tile_data: TileData = tile_map_layer.get_cell_tile_data(pos)
+		var tile_atlas_coords: Vector2i = tile_map_layer.get_cell_atlas_coords(pos)
+		var alternative_id: int = tile_map_layer.get_cell_alternative_tile(pos)
+		
+		var info := {
+			"atlas_coords": tile_atlas_coords,
+			"alternative_id": alternative_id,
+		}
+		
+		dict[pos] = info
+	
+	return dict
+
 ## Gathers all structure nodes from the child "Structures" node.
 ## Returns a dictionary mapping the local grid position of each structure to its node.
 func get_structures() -> Dictionary[Vector2i, Node2D]:

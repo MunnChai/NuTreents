@@ -1,0 +1,160 @@
+[gd_scene load_steps=28 format=3 uid="uid://c63p5poae6fy"]
+
+[ext_resource type="PackedScene" uid="uid://dmci56ftp4fgl" path="res://components/petrified_component/petrified_component.tscn" id="1_2eard"]
+[ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="1_8pq07"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="1_l7w3x"]
+[ext_resource type="Script" uid="uid://4nbno2pdoga1" path="res://components/petrified_component/petrified_tree_component/petrified_tree_component.gd" id="2_vtvom"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="2_wy4bx"]
+[ext_resource type="Texture2D" uid="uid://kpgxwoahjesf" path="res://structures/set_pieces/petrified_trees/petrified_particles.png" id="3_kkul4"]
+[ext_resource type="PackedScene" uid="uid://dgnnwqann63cb" path="res://components/petrified_component/sprite_shatter_component/sprite_shatter_component.tscn" id="3_wy4bx"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="7_7axg8"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="8_wfxg5"]
+[ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="9_b4uc8"]
+[ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="10_f3b27"]
+[ext_resource type="Script" uid="uid://bqii1haopscvc" path="res://components/behaviour_components/structure_behaviour_components/petrified_tree_behaviour_component.gd" id="11_nnewv"]
+[ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="12_yxnlr"]
+[ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/tree_menu/card_sprites/tree_card.png" id="13_j5p62"]
+[ext_resource type="Script" uid="uid://b5t81tx31klk0" path="res://structures/set_pieces/petrified_trees/tree_acquire_animation.gd" id="13_teheq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wy4bx"]
+resource_local_to_scene = true
+shader = ExtResource("1_8pq07")
+shader_parameter/alpha = 1.0
+shader_parameter/is_flashing = false
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wy4bx"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_2eard"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vtvom"]
+curve = SubResource("Curve_2eard")
+
+[sub_resource type="Curve" id="Curve_ydc1q"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_unuhy"]
+texture_mode = 1
+curve = SubResource("Curve_ydc1q")
+
+[sub_resource type="Curve" id="Curve_7axg8"]
+_limits = [0.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wfxg5"]
+curve = SubResource("Curve_7axg8")
+
+[sub_resource type="Curve" id="Curve_ql4vy"]
+_data = [Vector2(0, 0.767857), 0.0, 0.0, 0, 0, Vector2(0.498069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.704545), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kqu8f"]
+curve = SubResource("Curve_ql4vy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fkif1"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(12, 12, 1)
+gravity = Vector3(0, 4.9, 0)
+scale_curve = SubResource("CurveTexture_kqu8f")
+alpha_curve = SubResource("CurveTexture_vtvom")
+anim_speed_curve = SubResource("CurveTexture_wfxg5")
+anim_offset_max = 1.0
+anim_offset_curve = SubResource("CurveTexture_unuhy")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f3b27"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(14, 12, 1)
+direction = Vector3(0, -1, 0)
+spread = 10.0
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 20, 0)
+scale_curve = SubResource("CurveTexture_kqu8f")
+alpha_curve = SubResource("CurveTexture_vtvom")
+anim_speed_curve = SubResource("CurveTexture_wfxg5")
+anim_offset_max = 1.0
+anim_offset_curve = SubResource("CurveTexture_unuhy")
+
+[node name="PetrifiedTree" type="Node2D"]
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("1_l7w3x")]
+id = "petrified_tree"
+
+[node name="PetrifiedComponent" parent="." node_paths=PackedStringArray("sprite_shatter_component", "petrified_sprite_2d") instance=ExtResource("1_2eard")]
+script = ExtResource("2_vtvom")
+tree_type = 6
+sprite_shatter_component = NodePath("../PetrifyVisuals/SpriteShatterComponent")
+petrified_sprite_2d = NodePath("../PetrifyVisuals/PetrifiedSprite")
+
+[node name="PetrifyVisuals" type="Node2D" parent="."]
+
+[node name="SpriteShatterComponent" parent="PetrifyVisuals" node_paths=PackedStringArray("actor") instance=ExtResource("3_wy4bx")]
+position = Vector2(0, -16)
+actor = NodePath("../PetrifiedSprite")
+lifetime = 3.0
+
+[node name="PetrifiedSprite" type="Sprite2D" parent="PetrifyVisuals"]
+material = SubResource("ShaderMaterial_wy4bx")
+position = Vector2(0, -16)
+texture = ExtResource("2_wy4bx")
+
+[node name="DustParticles" type="GPUParticles2D" parent="."]
+modulate = Color(0.920995, 0.920995, 0.920995, 1)
+material = SubResource("CanvasItemMaterial_wy4bx")
+position = Vector2(0, -16)
+amount = 3
+texture = ExtResource("3_kkul4")
+lifetime = 2.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_fkif1")
+
+[node name="DepetrifyParticles" type="GPUParticles2D" parent="."]
+modulate = Color(7.21961e-06, 0.980895, 0.574661, 1)
+material = SubResource("CanvasItemMaterial_wy4bx")
+position = Vector2(0, -4)
+emitting = false
+amount = 24
+texture = ExtResource("3_kkul4")
+lifetime = 1.5
+one_shot = true
+explosiveness = 0.5
+process_material = SubResource("ParticleProcessMaterial_f3b27")
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("7_7axg8")]
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("8_wfxg5")]
+
+[node name="DestructableComponent" parent="." instance=ExtResource("9_b4uc8")]
+remove_self_on_destroyed = false
+
+[node name="StructureBehaviourComponent" parent="." node_paths=PackedStringArray("sprite_2d") instance=ExtResource("10_f3b27")]
+script = ExtResource("11_nnewv")
+type = 5
+sprite_2d = NodePath("../PetrifyVisuals/PetrifiedSprite")
+
+[node name="Camera" parent="." instance=ExtResource("12_yxnlr")]
+
+[node name="TreeAcquireAnimationComponent" type="Node2D" parent="."]
+script = ExtResource("13_teheq")
+
+[node name="Card" type="Sprite2D" parent="TreeAcquireAnimationComponent"]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("13_j5p62")
+
+[node name="TreeIcon" type="Sprite2D" parent="TreeAcquireAnimationComponent/Card"]
+unique_name_in_owner = true
+position = Vector2(0, -2)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2_wy4bx")
