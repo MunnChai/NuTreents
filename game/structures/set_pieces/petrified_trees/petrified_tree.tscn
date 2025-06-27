@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://c63p5poae6fy"]
+[gd_scene load_steps=28 format=3 uid="uid://c63p5poae6fy"]
 
 [ext_resource type="PackedScene" uid="uid://dmci56ftp4fgl" path="res://components/petrified_component/petrified_component.tscn" id="1_2eard"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="1_8pq07"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="1_l7w3x"]
 [ext_resource type="Script" uid="uid://4nbno2pdoga1" path="res://components/petrified_component/petrified_tree_component/petrified_tree_component.gd" id="2_vtvom"]
 [ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="2_wy4bx"]
 [ext_resource type="Texture2D" uid="uid://kpgxwoahjesf" path="res://structures/set_pieces/petrified_trees/petrified_particles.png" id="3_kkul4"]
@@ -85,6 +86,9 @@ anim_offset_max = 1.0
 anim_offset_curve = SubResource("CurveTexture_unuhy")
 
 [node name="PetrifiedTree" type="Node2D"]
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("1_l7w3x")]
+id = "petrified_tree"
 
 [node name="PetrifiedComponent" parent="." node_paths=PackedStringArray("sprite_shatter_component", "petrified_sprite_2d") instance=ExtResource("1_2eard")]
 script = ExtResource("2_vtvom")
