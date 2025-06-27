@@ -433,7 +433,7 @@ func generate_buildings(city_tiles: Array[Vector2i]) -> void:
 					structure_map.add_structure(tile, building)
 
 const CITY_DECOR_FREQUENCY = 0.3
-const DIRT_DECOR_FREQUENCY = 0.1
+const DIRT_DECOR_FREQUENCY = 0.01
 const GRASS_DECOR_FREQUENCY = 0.025
 const SAND_DECOR_FREQUENCY = 0.15
 const SNOW_DECOR_FREQUENCY = 0.15
