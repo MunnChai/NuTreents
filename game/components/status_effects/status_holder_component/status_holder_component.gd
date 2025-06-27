@@ -3,7 +3,7 @@ extends Node2D
 
 const STATUS_EFFECT_ICON = preload("res://components/status_effects/status_holder_component/status_effect_icon.tscn")
 
-@export var icon_y_offset: float = 16.0
+@export var icon_y_offset: float = 8.0
 @export var particle_y_offset: float = 0.0
 
 var remaining_durations: Dictionary[StatusEffect, SceneTreeTimer]
@@ -73,10 +73,15 @@ func _add_status_effect_icon(status_effect: StatusEffect) -> void:
 	var icon = STATUS_EFFECT_ICON.instantiate()
 	icon.texture = status_effect.effect_icon
 	
-	add_child(icon)
-	icon.global_position += Vector2(0, -icon_y_offset)
+	var sprite: Sprite2D = Components.get_component(actor, Sprite2D)
+	if sprite:
+		sprite.add_child(icon)
+	else:
+		add_child(icon)
 	
 	status_effect_icons[status_effect] = icon
+	
+	_fix_status_effect_offsets()
 
 func _remove_status_effect_icon(status_effect: StatusEffect) -> void:
 	if not status_effect_icons.has(status_effect):
@@ -84,7 +89,32 @@ func _remove_status_effect_icon(status_effect: StatusEffect) -> void:
 	
 	var icon: Node2D = status_effect_icons[status_effect]
 	
-	remove_child(icon)
+	var sprite: Sprite2D = Components.get_component(actor, Sprite2D)
+	if sprite:
+		sprite.remove_child(icon)
+	else:
+		remove_child(icon)
+	
+	status_effect_icons.erase(status_effect)
+	
+	_fix_status_effect_offsets()
+
+
+const ICON_WIDTH: float = 14
+func _fix_status_effect_offsets() -> void:
+	var num_icons: int = status_effect_icons.size()
+	if num_icons <= 0:
+		return
+	
+	var total_x_offset: float = (num_icons - 1) * ICON_WIDTH
+	var i: float = 0
+	for icon: Node2D in status_effect_icons.values():
+		var x_offset = (i * ICON_WIDTH) - (total_x_offset / 2)
+		
+		icon.position = Vector2(x_offset, -icon_y_offset)
+		
+		i += 1
+
 
 #endregion
 
@@ -111,6 +141,8 @@ func _remove_particles(status_effect: StatusEffect) -> void:
 	var particles: Node2D = status_effect_particles[status_effect]
 	
 	remove_child(particles)
+	
+	status_effect_particles.erase(status_effect)
 
 #endregion
 

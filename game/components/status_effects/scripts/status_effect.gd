@@ -12,13 +12,13 @@ extends Resource
 func apply_status_effect(entity: Node2D) -> void:
 	var sprite_2d: Sprite2D = Components.get_component(entity, Sprite2D)
 	if sprite_2d != null:
-		sprite_2d.modulate = blend(sprite_2d.modulate, color_modulate)
+		sprite_2d.self_modulate = blend(sprite_2d.self_modulate, color_modulate)
 
 ## This function should get the Components that it was altering, and revert the alterations that it made
 func remove_status_effect(entity: Node2D) -> void:
 	var sprite_2d: Sprite2D = Components.get_component(entity, Sprite2D)
 	if sprite_2d != null:
-		sprite_2d.modulate = undo_blend(sprite_2d.modulate, color_modulate)
+		sprite_2d.self_modulate = undo_blend(sprite_2d.self_modulate, color_modulate)
 
 
 

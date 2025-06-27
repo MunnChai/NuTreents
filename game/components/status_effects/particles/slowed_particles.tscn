@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://dws6eqsrnd0gr"]
+[gd_scene load_steps=8 format=3 uid="uid://c35byladg6nkn"]
 
-[ext_resource type="Texture2D" uid="uid://kpgxwoahjesf" path="res://structures/set_pieces/petrified_trees/petrified_particles.png" id="1_kfqna"]
+[ext_resource type="Texture2D" uid="uid://kpgxwoahjesf" path="res://structures/set_pieces/petrified_trees/petrified_particles.png" id="1_sdv67"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q528i"]
 particles_animation = true
@@ -22,20 +22,20 @@ point_count = 1
 [sub_resource type="CurveTexture" id="CurveTexture_y1euk"]
 curve = SubResource("Curve_e4k0l")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fp3wj"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sdv67"]
 particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(16, 8, 1)
 direction = Vector3(0, -1, 0)
-initial_velocity_max = 2.0
+initial_velocity_max = 4.0
 alpha_curve = SubResource("CurveTexture_5lrk7")
 anim_offset_max = 1.0
 anim_offset_curve = SubResource("CurveTexture_y1euk")
 
 [node name="FreezeParticles" type="GPUParticles2D"]
-modulate = Color(0, 1, 1, 1)
+modulate = Color(0, 0.541176, 1, 1)
 material = SubResource("CanvasItemMaterial_q528i")
 amount = 4
-texture = ExtResource("1_kfqna")
+texture = ExtResource("1_sdv67")
 lifetime = 1.5
-process_material = SubResource("ParticleProcessMaterial_fp3wj")
+process_material = SubResource("ParticleProcessMaterial_sdv67")
