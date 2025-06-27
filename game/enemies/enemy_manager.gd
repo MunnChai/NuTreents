@@ -26,7 +26,7 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	if (Input.is_action_just_pressed("debug_button")):
-		spawn_enemy_wave()
+		#spawn_enemy_wave()
 		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
 		spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
