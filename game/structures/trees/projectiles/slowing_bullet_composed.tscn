@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://ba1323u33dy8v"]
 
-[ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://structures/trees/sheets/projectiles/tree_bullet.png" id="1_rw02i"]
+[ext_resource type="Texture2D" uid="uid://c2na40f6gej1i" path="res://structures/trees/sheets/projectiles/slow_tree_bullet.png" id="1_gyl6c"]
 [ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="2_fk4nl"]
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="3_gyl6c"]
 [ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="4_fcsjw"]
@@ -14,7 +14,7 @@ resource_local_to_scene = true
 [node name="TreeBulletComposed" type="Node2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_rw02i")
+texture = ExtResource("1_gyl6c")
 
 [node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("2_fk4nl")]
 collision_mask = 6
@@ -28,7 +28,7 @@ shape = SubResource("CircleShape2D_05k2p")
 movement_duration = 0.5
 ease = 1
 trans = 1
-bounce_amount = 24.0
+bounce_amount = 32.0
 
 [node name="RemovalComponent" parent="." instance=ExtResource("5_21ns3")]
 

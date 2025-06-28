@@ -3,7 +3,7 @@ extends Node2D
 
 const STATUS_EFFECT_ICON = preload("res://components/status_effects/status_holder_component/status_effect_icon.tscn")
 
-@export var icon_y_offset: float = 8.0
+@export var icon_y_offset: float = 6.0
 @export var particle_y_offset: float = 0.0
 
 var remaining_durations: Dictionary[StatusEffect, SceneTreeTimer]
@@ -16,6 +16,9 @@ var actor: Node2D
 
 func _ready() -> void:
 	actor = get_parent()
+
+func _process(delta: float) -> void:
+	_fix_status_effect_icon_offsets(delta)
 
 
 #region Public Functions
@@ -80,8 +83,6 @@ func _add_status_effect_icon(status_effect: StatusEffect) -> void:
 		add_child(icon)
 	
 	status_effect_icons[status_effect] = icon
-	
-	_fix_status_effect_offsets()
 
 func _remove_status_effect_icon(status_effect: StatusEffect) -> void:
 	if not status_effect_icons.has(status_effect):
@@ -96,12 +97,13 @@ func _remove_status_effect_icon(status_effect: StatusEffect) -> void:
 		remove_child(icon)
 	
 	status_effect_icons.erase(status_effect)
-	
-	_fix_status_effect_offsets()
 
 
 const ICON_WIDTH: float = 14
-func _fix_status_effect_offsets() -> void:
+const SIN_OFFSET_MAGNITUDE: float = 2
+const SIN_SPEED: float = 3
+var y_sin_counter: float = 0
+func _fix_status_effect_icon_offsets(delta: float) -> void:
 	var num_icons: int = status_effect_icons.size()
 	if num_icons <= 0:
 		return
@@ -111,7 +113,9 @@ func _fix_status_effect_offsets() -> void:
 	for icon: Node2D in status_effect_icons.values():
 		var x_offset = (i * ICON_WIDTH) - (total_x_offset / 2)
 		
-		icon.position = Vector2(x_offset, -icon_y_offset)
+		y_sin_counter += delta * SIN_SPEED
+		var sin_offset = sin(y_sin_counter) * SIN_OFFSET_MAGNITUDE
+		icon.position = Vector2(x_offset, -icon_y_offset + sin_offset)
 		
 		i += 1
 
