@@ -1,5 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=27 format=3 uid="uid://b5hdmb6e3u31i"]
 
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
 [ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="3_roexn"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_qablk"]
@@ -32,7 +33,7 @@ shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 30.0
 shader_parameter/tint_amount = 0.0
-shader_parameter/alpha = 1.0
+shader_parameter/modulate = Vector4(1, 1, 1, 1)
 shader_parameter/uv_y_offset = 0.62
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
@@ -45,6 +46,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="WaterTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_ylnla")]
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("14_no8lf")]
 
@@ -125,7 +128,6 @@ fire_tick_duration = 1.5
 flammable_component = NodePath("../FlammableComponent")
 grid_position_component = NodePath("../../GridPositionComponent")
 grid_range_component = NodePath("../FireRangeComponent")
-fire_spread_increment = 2.0
 
 [node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("23_e5otl")]
 flammable_component = NodePath("../FlammableComponent")

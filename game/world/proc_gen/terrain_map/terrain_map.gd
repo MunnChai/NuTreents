@@ -11,6 +11,7 @@ enum TileType {
 	ROAD = WATER + 1,
 	SAND = ROAD + 1,
 	SNOW = SAND + 1,
+	ICE = SNOW + 1,
 }
 
 enum Biome {
@@ -28,6 +29,7 @@ const TILE_ATLAS_COORDS: Dictionary[TileType, Vector2i] = {
 	TileType.ROAD: Vector2i(0, 6),
 	TileType.SAND: Vector2i(0, 22),
 	TileType.SNOW: Vector2i(0, 24),
+	TileType.ICE: Vector2i(0, 26)
 }
 
 const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
@@ -36,8 +38,9 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 	TileType.CITY: 4,
 	TileType.WATER: 1,
 	TileType.ROAD: 6,
-	TileType.SAND: 3,
-	TileType.SNOW: 4
+	TileType.SAND: 4,
+	TileType.SNOW: 6,
+	TileType.ICE: 4,
 }
 
 const BIOME_TABLE: Array[Array] = [
@@ -86,6 +89,8 @@ const BIOME_FALLOFF = 2
 const NUM_FACTORIES: int = 3
 
 var world_size_settings: WorldSizeSettings
+
+var biome_map: Dictionary[Vector2i, Biome] = {}
 @onready var test_image: TextureRect = $CanvasLayer/TextureRect
 
 func _ready() -> void:
@@ -170,6 +175,8 @@ func initialize_map() -> void:
 			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size()
 			
 			var biome: Biome = get_biome_from_stats(scaled_temp_value, scaled_humid_value)
+			biome_map.set(map_coords, biome)
+			
 			var tile_type: int = BIOME_TILES[biome]
 			set_cell_type(map_coords, tile_type)
 
@@ -343,6 +350,7 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 			continue
 		
 		var tile_type: int = tile_data.get_custom_data("biome")
+		
 		if (tile_type == null || tile_type != TileType.WATER):
 			to_remove.append(map_coords)
 	
@@ -350,7 +358,10 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 		river_tiles.erase(map_coords)
 		
 	for map_coords in river_tiles:
-		set_cell_type(map_coords, TileType.WATER)
+		if biome_map.get(map_coords) == Biome.SNOWY:
+			set_cell_type(map_coords, TileType.ICE)
+		else:
+			set_cell_type(map_coords, TileType.WATER)
 
 	set_cells_terrain_connect(river_tiles, 0, 1)
 
@@ -422,8 +433,10 @@ func generate_buildings(city_tiles: Array[Vector2i]) -> void:
 					structure_map.add_structure(tile, building)
 
 const CITY_DECOR_FREQUENCY = 0.3
-const DIRT_DECOR_FREQUENCY = 0.4
+const DIRT_DECOR_FREQUENCY = 0.01
 const GRASS_DECOR_FREQUENCY = 0.025
+const SAND_DECOR_FREQUENCY = 0.15
+const SNOW_DECOR_FREQUENCY = 0.15
 func add_decor() -> void:
 	for x in get_map_x_range():
 		for y in get_map_y_range():
@@ -435,9 +448,11 @@ func add_decor() -> void:
 				var rand = randf()
 				var decor: Node2D = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
 				
-				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or
-					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or
-					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY)):
+				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or 
+					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
+					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY) or
+					(type == TileType.SAND and rand < SAND_DECOR_FREQUENCY) or
+					(type == TileType.SNOW and rand < SNOW_DECOR_FREQUENCY)):
 					var success: bool = structure_map.add_structure(pos, decor)
 
 func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:

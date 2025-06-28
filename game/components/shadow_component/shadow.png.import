@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw37ytuqi38ns"
-path="res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"
+uid="uid://ukof8apdjhcv"
+path="res://.godot/imported/shadow.png-20dc9f240a3da9ef5fef90ada22a321a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/fog_tile_1.png"
-dest_files=["res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"]
+source_file="res://components/shadow_component/shadow.png"
+dest_files=["res://.godot/imported/shadow.png-20dc9f240a3da9ef5fef90ada22a321a.ctex"]
 
 [params]
 

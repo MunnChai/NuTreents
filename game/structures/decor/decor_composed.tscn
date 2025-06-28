@@ -22,12 +22,12 @@ texture = SubResource("AtlasTexture_s8ydt")
 
 [node name="AtlasRandomizerComponent" parent="." instance=ExtResource("3_6kfxq")]
 randomize_y = false
-atlas_h_size = 8
-atlas_v_size = 4
+atlas_h_size = 6
+atlas_v_size = 5
 h_frames = 6
-v_frames = 3
+v_frames = 5
 
 [node name="DecorBehaviourComponent" parent="." instance=ExtResource("5_0wjab")]
 script = ExtResource("6_dm6cd")
-set_type_on_ready = true
 type = 3
+set_type_on_ready = true
