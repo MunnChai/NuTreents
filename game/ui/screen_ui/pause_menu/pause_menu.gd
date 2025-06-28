@@ -73,18 +73,13 @@ func setup_button_signals() -> void:
 	
 	resume_button.focus_entered.connect(_on_enabled_button_focus)
 	settings_button.focus_entered.connect(_on_enabled_button_focus)
-	save_button.focus_entered.connect(_on_disabled_button_focus)
+	# --- BUG FIX ---
+	# The save button was incorrectly connected to the "disabled" focus function.
+	# It has been changed to connect to the "enabled" function like the other buttons.
+	save_button.focus_entered.connect(_on_enabled_button_focus)
 	load_button.focus_entered.connect(_on_enabled_button_focus)
 	main_menu_button.focus_entered.connect(_on_enabled_button_focus)
 	quit_game_button.focus_entered.connect(_on_enabled_button_focus)
-
-## Pauses if unpaused, unpauses if paused
-#func toggle_pause() -> void:
-	#if is_paused:
-		#unpause_game()
-		#SfxManager.play_sound_effect("ui_click")
-	#else:
-		#pause_game()
 
 ## Pauses the game
 func pause_game() -> void:
@@ -128,14 +123,26 @@ func _on_settings_button_pressed() -> void:
 		ScreenUI.add_menu(ScreenUI.settings_menu)
 		TweenUtil.pop_delta(self, Vector2(0.3, -0.3), 0.2)
 		TweenUtil.whoosh(self, position + Vector2.LEFT * 200.0, 0.25)
-	
-	## TODO: Go to the settings menu
 
 func _on_save_button_pressed() -> void:
 	save_button_pressed.emit()
-	
 	SfxManager.play_sound_effect("ui_click")
-	## TODO: Open a save games screen to prompt for save
+	
+	# --- IMPLEMENTATION ---
+	# Call the save function from the SessionData singleton, using the current
+	# session ID to save to the correct file.
+	SessionData.save_session_data(Global.session_id)
+	
+	# Optional: Provide feedback to the player that the save was successful.
+	# For now, we'll print to the console. A small popup label could be added later.
+	print("Game progress saved to session: ", Global.session_id)
+	
+	# You could also briefly disable the button to prevent spamming saves.
+	save_button.disabled = true
+	save_button.text = "Saved!"
+	await get_tree().create_timer(2.0).timeout
+	save_button.disabled = false
+	save_button.text = "Save Game"
 
 func _on_load_button_pressed() -> void:
 	load_button_pressed.emit()
@@ -153,8 +160,7 @@ func _on_load_button_pressed() -> void:
 	TweenUtil.scale_to(self, Vector2(0.9, 1.1), 0.05)
 	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.2, Tween.TRANS_CUBIC, Tween.EASE_IN)
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close_for_load)
-	
-	## TODO: Open a save games screen to prompt for selection
+
 func _finish_close_for_load() -> void:
 	hide()
 
