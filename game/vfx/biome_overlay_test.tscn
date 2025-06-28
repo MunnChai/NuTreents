@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccvjsxpcbvqmi"]
+
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="1_rla7y"]
+[ext_resource type="PackedScene" uid="uid://drv7hamgqyjrf" path="res://vfx/biome_overlays/biome_overlay.tscn" id="2_rla7y"]
+
+[node name="BiomeOverlayTest" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rla7y")
+
+[node name="BiomeOverlay" parent="." instance=ExtResource("2_rla7y")]

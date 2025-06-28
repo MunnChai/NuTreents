@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnwmoqcy1law8"]
+[gd_scene load_steps=14 format=3 uid="uid://dnwmoqcy1law8"]
 
 [ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="1_0eofc"]
 [ext_resource type="Texture2D" uid="uid://cdyh6sryto77l" path="res://structures/city/City_Buildings_1.png" id="1_186vr"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_8khhr"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="9_uc0t6"]
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="10_6h5io"]
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="11_vgmj2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8khhr"]
 shader = ExtResource("1_0eofc")
@@ -23,6 +24,8 @@ atlas = ExtResource("1_186vr")
 region = Rect2(0, 0, 32, 64)
 
 [node name="CityBuildingComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("11_vgmj2")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

@@ -1,5 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://db827hwo1u53j"]
+[gd_scene load_steps=26 format=3 uid="uid://db827hwo1u53j"]
 
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_a1lvg"]
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="1_v3cq2"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="2_a1lvg"]
 [ext_resource type="Resource" uid="uid://dxvn1hldmfxi1" path="res://structures/trees/stats/spiky_tree_stat.tres" id="3_a1lvg"]
@@ -47,6 +48,8 @@ resource_local_to_scene = true
 radius = 2.0
 
 [node name="SpikyTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_a1lvg")]
 
 [node name="TreeBehaviourComponent" parent="." instance=ExtResource("1_v3cq2")]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw37ytuqi38ns"
-path="res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"
+uid="uid://c7u1nwjfc1m6h"
+path="res://.godot/imported/tree_icy_sheet.png-db9a997448a4ccf04bd27a37b4e76dba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/fog_tile_1.png"
-dest_files=["res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"]
+source_file="res://structures/trees/sheets/tree_icy_sheet.png"
+dest_files=["res://.godot/imported/tree_icy_sheet.png-db9a997448a4ccf04bd27a37b4e76dba.ctex"]
 
 [params]
 

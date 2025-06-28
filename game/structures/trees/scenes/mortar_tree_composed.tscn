@@ -1,6 +1,7 @@
-[gd_scene load_steps=27 format=3 uid="uid://conxl1y71g60g"]
+[gd_scene load_steps=28 format=3 uid="uid://conxl1y71g60g"]
 
 [ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="1_qh5wb"]
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_v2gbf"]
 [ext_resource type="PackedScene" uid="uid://c1q4l0by3f41f" path="res://components/behaviour_components/twee_behaviour_components/gun_twee_behaviour_component/gun_twee_behaviour_component.tscn" id="2_r7uyf"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_opvuu"]
 [ext_resource type="Script" uid="uid://bal2o0mrjva8v" path="res://components/behaviour_components/twee_behaviour_components/mortar_twee_behaviour_component/mortar_twee_behaviour_component.gd" id="3_v2gbf"]
@@ -46,6 +47,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="MortarTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_v2gbf")]
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("1_qh5wb")]
 
