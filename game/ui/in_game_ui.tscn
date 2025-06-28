@@ -19,6 +19,7 @@ shader = ExtResource("4_6i6ec")
 shader_parameter/alpha = 0.75
 shader_parameter/inner_radius = 0.16
 shader_parameter/outer_radius = 1.34
+shader_parameter/color = Color(0, 0, 0, 1)
 
 [node name="InGameUI" type="CanvasLayer"]
 layer = 5

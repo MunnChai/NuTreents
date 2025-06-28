@@ -12,8 +12,13 @@ const SHOP_CARD = preload("res://ui/screen_ui/shop_menu/shop_card/shop_card.tscn
 
 @export var initial_tree_cards: Array[Global.TreeType]
 
-# For open/close tweens
 var starting_position := position
+
+# --- Controller Support Variables ---
+enum FocusArea { CARDS, BUTTONS }
+var _current_focus_area: FocusArea = FocusArea.CARDS
+var _focused_card_index: int = 0
+var _active_card_container: HBoxContainer
 
 var currently_selected_card: ShopCard = null
 var purchased_cards: Array[Global.TreeType] = []
@@ -22,10 +27,79 @@ signal on_tree_purchased(twee: Twee)
 
 func _ready():
 	show_card_details(null)
-	
 	_connect_button_signals()
-	
 	reset_shop_cards()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not is_visible_in_tree(): return
+
+	# Use shoulder buttons to switch focus between the card grid and the action buttons
+	if event.is_action_pressed("menu_right") or event.is_action_pressed("menu_left"):
+		_switch_focus_area()
+		get_viewport().set_input_as_handled()
+	# Use the pause button as a universal "back" action in menus
+	elif event.is_action_pressed("pause"):
+		_on_back_button_pressed()
+		get_viewport().set_input_as_handled()
+	# If neither of the above, delegate the input to the currently focused area
+	else:
+		if _current_focus_area == FocusArea.CARDS:
+			_handle_card_navigation(event)
+
+func _handle_card_navigation(event: InputEvent):
+	if not is_instance_valid(_active_card_container) or _active_card_container.get_child_count() == 0:
+		_switch_focus_area() # Nothing to select, so move focus to buttons
+		return
+		
+	var new_index = _focused_card_index
+	if event.is_action_pressed("right"): new_index += 1
+	elif event.is_action_pressed("left"): new_index -= 1
+	elif event.is_action_pressed("down"): _switch_card_container(power_cards)
+	elif event.is_action_pressed("up"): _switch_card_container(tree_cards)
+	
+	new_index = clamp(new_index, 0, _active_card_container.get_child_count() - 1)
+	if new_index != _focused_card_index:
+		_focused_card_index = new_index
+		_update_card_focus()
+		get_viewport().set_input_as_handled()
+
+	# 'lmb' is your "accept" button (A on Xbox, Cross on PlayStation)
+	if event.is_action_pressed("lmb"):
+		var card = _active_card_container.get_child(_focused_card_index)
+		_on_shop_card_pressed(card)
+		get_viewport().set_input_as_handled()
+
+func _switch_focus_area():
+	if _current_focus_area == FocusArea.CARDS:
+		_current_focus_area = FocusArea.BUTTONS
+		_clear_card_focus() # Visually deselect cards
+		# Grab focus on an appropriate button
+		if purchase_button.disabled == false:
+			purchase_button.grab_focus()
+		else:
+			back_button.grab_focus()
+	else:
+		_current_focus_area = FocusArea.CARDS
+		_update_card_focus() # Visually re-select the focused card
+		
+func _switch_card_container(target_container: HBoxContainer):
+	if _active_card_container != target_container and is_instance_valid(target_container):
+		if currently_selected_card: currently_selected_card.deselect()
+		_active_card_container = target_container
+		_focused_card_index = 0
+		_update_card_focus()
+
+func _update_card_focus():
+	_clear_card_focus()
+	if _active_card_container.get_child_count() > _focused_card_index:
+		var card_to_focus = _active_card_container.get_child(_focused_card_index)
+		card_to_focus.select() # Use the card's built-in select visual state
+
+func _clear_card_focus():
+	for container in [tree_cards, power_cards]:
+		if is_instance_valid(container):
+			for card in container.get_children():
+				card.deselect()
 
 func _connect_button_signals():
 	back_button.pressed.connect(_on_back_button_pressed)
@@ -35,80 +109,71 @@ func _on_back_button_pressed():
 	ScreenUI.exit_menu()
 
 func _on_purchase_button_pressed():
+	if not currently_selected_card: return
 	if not TreeManager.enough_n(currently_selected_card.tree_stat.cost_to_purchase):
 		SfxManager.play_sound_effect("ui_fail")
 		return
 	
 	TreeManager.consume_n(currently_selected_card.tree_stat.cost_to_purchase)
-	
 	SfxManager.play_sound_effect("ui_click")
 	TreeMenu.instance.add_tree_card(currently_selected_card.tree_type)
-	
+	purchased_cards.append(currently_selected_card.tree_type)
 	remove_card(currently_selected_card)
 	show_card_details(null)
-	
-	purchased_cards.append(currently_selected_card.tree_type)
 
 func _on_shop_card_pressed(shop_card: ShopCard):
-	if currently_selected_card != null:
-		currently_selected_card.deselect()
-	
 	if currently_selected_card == shop_card:
+		shop_card.deselect()
 		currently_selected_card = null
 		show_card_details(null)
-		return
+	else:
+		if currently_selected_card != null:
+			currently_selected_card.deselect()
+		currently_selected_card = shop_card
+		currently_selected_card.select()
+		_focused_card_index = shop_card.get_index()
+		_active_card_container = shop_card.get_parent()
+		show_card_details(shop_card)
 	
-	currently_selected_card = shop_card
-	shop_card.select()
-	
-	show_card_details(shop_card)
-
-
+	_switch_focus_area()
 
 func show_card_details(shop_card: ShopCard):
-	if shop_card == null:
-		purchase_button.disabled = true
-		cost_label.text = ""
-	else:
-		purchase_button.disabled = false
-		cost_label.text = "Cost: " + str(shop_card.tree_stat.cost_to_purchase)
-	
+	purchase_button.disabled = shop_card == null
+	cost_label.text = "Cost: " + str(shop_card.tree_stat.cost_to_purchase) if shop_card else ""
 	detail_panel.set_details(shop_card)
 
 func reset_shop_cards():
 	currently_selected_card = null
 	purchased_cards = []
-	
-	for shop_card in tree_cards.get_children():
-		shop_card.queue_free()
+	for container in [tree_cards, power_cards]:
+		for card in container.get_children():
+			card.queue_free()
 	
 	for tree_type in initial_tree_cards:
 		var shop_card = SHOP_CARD.instantiate()
 		shop_card.tree_type = tree_type
 		shop_card.pressed.connect(_on_shop_card_pressed.bind(shop_card))
-		
 		tree_cards.add_child(shop_card)
+	
+	_active_card_container = tree_cards
+	_focused_card_index = 0
 
 func remove_card(shop_card: ShopCard):
 	shop_card.remove()
 
 func disable_card_of_type(tree_type: Global.TreeType):
-	for shop_card: ShopCard in tree_cards.get_children():
-		if shop_card.tree_type == tree_type:
-			remove_card(shop_card)
-	
-	for shop_card: ShopCard in power_cards.get_children():
-		if shop_card.tree_type == tree_type:
-			remove_card(shop_card)
-
-
-
+	for container in [tree_cards, power_cards]:
+		for card: ShopCard in container.get_children():
+			if card.tree_type == tree_type:
+				remove_card(card)
 
 func open(previous_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
 	pause_game()
+	_current_focus_area = FocusArea.CARDS
+	_update_card_focus()
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
-	position = position + Vector2.DOWN * 100.0
+	position = starting_position + Vector2.DOWN * 100.0
 	TweenUtil.whoosh(self, starting_position, 0.4)
 	TweenUtil.fade(self, 1.0, 0.1)
 
@@ -119,32 +184,22 @@ func close(next_menu: ScreenMenu):
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)
 
 func _finish_close():
-	unpause_game() 
-
+	unpause_game()
 
 #region Pausing
-
-## Pauses the game
-func pause_game() -> void:
+func pause_game():
 	Global.pause_game()
-	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
 	AudioServer.add_bus_effect(AudioServer.get_bus_index("Music"), filter, 0)
-	
 	NutreentsDiscordRPC.update_details("Shopping for saplings")
-	
 	show()
-	back_button.grab_focus() ## TEMP: So controller can navigate the menu...
+	back_button.grab_focus()
 
-func unpause_game() -> void:
+func unpause_game():
 	Global.unpause_game()
-	
 	NutreentsDiscordRPC.update_details("Growing a forest")
-	
 	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
-	
 	hide()
-
 #endregion
