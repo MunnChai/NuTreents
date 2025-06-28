@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("3_euawe")
 duration = 4.0
-color_modulate = Color(0, 0.60627, 0.606681, 1)
+color_modulate = Color(0, 1, 1, 1)
 effect_icon = ExtResource("1_lus1x")
 particles = ExtResource("2_k8jg3")
 metadata/_custom_type_script = "uid://cg07waolp4xjo"

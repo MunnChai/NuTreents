@@ -16,6 +16,9 @@ var name_dictionary = {
 	"slowing_tree": "SLOWING TREE",
 	"mortar_tree": "MORTAR TREE",
 	"spiky_tree": "SPIKY TREE",
+	"icy_tree": "ICY TREE",
+	"fire_tree": "FIRE TREE",
+	"sprinkler_tree": "SPRINKLER TREE",
 	
 	
 	"city_building": "CITY STRUCTURE",
@@ -51,6 +54,9 @@ var desc_dictionary = {
 	"slowing_tree": "A close relative to the gun tree. \nSomehow survived growing up in the Arctic.",
 	"mortar_tree": "It was enlisted for the Great War, \nbut was too scared to go near the frontline.",
 	"spiky_tree": "A prickly tree with sharp branches. \nHurts anything that touches it.",
+	"icy_tree": "Cold and sharp. Its branches\nfreeze anything that touches it.",
+	"fire_tree": "It shoots fiery hot seeds at enemies.",
+	"sprinkler_tree": "Protects nearby trees from blazing fires.",
 	
 	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
 	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
