@@ -37,6 +37,7 @@ var tile_name_dictionary = {
 	TerrainMap.TileType.ROAD: "ROAD",
 	TerrainMap.TileType.SAND: "SAND",
 	TerrainMap.TileType.SNOW: "SNOW",
+	TerrainMap.TileType.ICE: "ICE"
 }
 
 var desc_dictionary = {
@@ -68,6 +69,7 @@ var desc_dictionary = {
 	TerrainMap.TileType.ROAD: "Well-worn tar.\nYou'll have to remove it to plant.",
 	TerrainMap.TileType.SAND: "Coarse and rough and irritating\nand it gets everywhere.",
 	TerrainMap.TileType.SNOW: "A soft blanket of snow.",
+	TerrainMap.TileType.ICE: "Frozen. No place for roots."
 }
 
 func _ready():

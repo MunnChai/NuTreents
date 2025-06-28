@@ -1,0 +1,112 @@
+[gd_scene load_steps=8 format=3 uid="uid://drv7hamgqyjrf"]
+
+[ext_resource type="Script" uid="uid://c7d781p1embvi" path="res://vfx/biome_overlays/biome_overlay.gd" id="1_h7ily"]
+[ext_resource type="Shader" uid="uid://8d3entohu0hj" path="res://vfx/biome_overlays/heat_distortion.gdshader" id="1_v2dfe"]
+[ext_resource type="Shader" uid="uid://d07riooyidmp1" path="res://world/lighting/vignette.gdshader" id="2_rh8rj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h7ily"]
+shader = ExtResource("2_rh8rj")
+shader_parameter/alpha = 0.19
+shader_parameter/inner_radius = 0.65
+shader_parameter/outer_radius = 1.02
+shader_parameter/color = Color(0.660693, 0.368835, 0.0510027, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rh8rj"]
+shader = ExtResource("1_v2dfe")
+shader_parameter/strength = 0.001
+shader_parameter/speed = 1.0
+shader_parameter/freq = 30.0
+
+[sub_resource type="Shader" id="Shader_rh8rj"]
+code = "shader_type canvas_item;
+
+uniform float alpha = 1.0;
+uniform float inner_radius = 0.0;
+uniform float outer_radius = 1.0;
+uniform vec4 color: source_color = vec4(0.0, 0.0, 0.0, 1.0);
+
+void fragment() {
+	float x = abs(UV.r-.5)*2.0;
+	float y = abs(UV.g-.5)*2.0;
+	float q = 1.0-(1.0-sqrt(x*x+y*y)/outer_radius)/(1.0-inner_radius);
+	COLOR = vec4(color.r, color.g, color.b, q*alpha);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p24nw"]
+shader = SubResource("Shader_rh8rj")
+shader_parameter/alpha = 0.21
+shader_parameter/inner_radius = 0.74
+shader_parameter/outer_radius = 1.14
+shader_parameter/color = Color(0.181416, 0.51246, 0.488732, 1)
+
+[node name="BiomeOverlay" type="CanvasLayer"]
+script = ExtResource("1_h7ily")
+
+[node name="Desert" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DesertVignette" type="ColorRect" parent="Desert"]
+material = SubResource("ShaderMaterial_h7ily")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="DesertHeat" type="ColorRect" parent="Desert"]
+material = SubResource("ShaderMaterial_rh8rj")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Snowy" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SnowyVignette" type="ColorRect" parent="Snowy"]
+material = SubResource("ShaderMaterial_p24nw")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="City" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Plains" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

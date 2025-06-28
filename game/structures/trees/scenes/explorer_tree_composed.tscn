@@ -1,5 +1,6 @@
-[gd_scene load_steps=26 format=3 uid="uid://dlffry2n2gk46"]
+[gd_scene load_steps=27 format=3 uid="uid://dlffry2n2gk46"]
 
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_1c5eg"]
 [ext_resource type="Resource" uid="uid://bluynlpf58mkf" path="res://structures/trees/stats/explorer_tree_stat.tres" id="2_5qot7"]
 [ext_resource type="Texture2D" uid="uid://tscwrw87atsj" path="res://structures/trees/sheets/tree_explorer_sheet.png" id="3_e2s4h"]
 [ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="5_2nsi7"]
@@ -32,7 +33,7 @@ shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 30.0
 shader_parameter/tint_amount = 0.0
-shader_parameter/alpha = 1.0
+shader_parameter/modulate = Vector4(1, 1, 1, 1)
 shader_parameter/uv_y_offset = 0.62
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
@@ -45,6 +46,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="ExplorerTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_1c5eg")]
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("15_cdhv4")]
 

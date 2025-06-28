@@ -1,7 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://d4l1saxnn6efv"]
+[gd_scene load_steps=28 format=3 uid="uid://d4l1saxnn6efv"]
 
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_tjy4u"]
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_x4v7o"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="2_istyr"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://structures/trees/stats/default_tree_stat.tres" id="2_xufj2"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="3_42ur6"]
@@ -20,7 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="17_wohpo"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="18_vyjhx"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="18_wohpo"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="19_vyjhx"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="19_vyjhx"]
 [ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="22_eq1ht"]
 [ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="23_frebl"]
 [ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="24_61457"]
@@ -46,6 +47,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="DefaultTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_x4v7o")]
 
 [node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("17_wohpo")]
 damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")

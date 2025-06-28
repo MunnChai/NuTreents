@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://f43ngdes0ihc"]
+[gd_scene load_steps=7 format=3 uid="uid://wmae8p0j0wfw"]
 
-[ext_resource type="Script" uid="uid://d7o2gl2j3wuj" path="res://enemies/_archive/enemy.gd" id="1_blffj"]
+[ext_resource type="Script" path="res://enemies/_archive/enemy.gd" id="1_blffj"]
 [ext_resource type="Texture2D" uid="uid://c1h3tk203clg7" path="res://enemies/silk_spitter/silk_spitter_anims.png" id="2_qcyb8"]
-[ext_resource type="AnimationLibrary" uid="uid://dxw6d6vomro1c" path="res://enemies/enemy_animations.res" id="3_2t1gi"]
+[ext_resource type="AnimationLibrary" path="res://enemies/enemy_animations.res" id="3_2t1gi"]
 [ext_resource type="Script" uid="uid://btt3wf72o4sst" path="res://enemies/common/copy_frame_sprite.gd" id="4_2t1gi"]
 [ext_resource type="Texture2D" uid="uid://dkia4dc3mre8s" path="res://enemies/silk_spitter/silk_spitter_anims_eyes.png" id="4_qcyb8"]
 
