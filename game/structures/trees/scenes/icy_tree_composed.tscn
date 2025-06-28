@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_f23sx"]
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="2_m4g31"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_85pv0"]
-[ext_resource type="Resource" uid="uid://dxvn1hldmfxi1" path="res://structures/trees/stats/spiky_tree_stat.tres" id="4_m1ipw"]
+[ext_resource type="Resource" uid="uid://c1n8eo2waa4d4" path="res://structures/trees/stats/icy_tree_stat.tres" id="4_85pv0"]
 [ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="5_v51pg"]
-[ext_resource type="Texture2D" uid="uid://di7s7b6hq1gff" path="res://structures/trees/sheets/tree_spike_sheet.png" id="6_qsixo"]
+[ext_resource type="Texture2D" uid="uid://c7u1nwjfc1m6h" path="res://structures/trees/sheets/tree_icy_sheet.png" id="6_85pv0"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="7_vxw8c"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="8_k160g"]
 [ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="9_svcsy"]
@@ -52,19 +52,19 @@ resource_local_to_scene = true
 resource_local_to_scene = true
 radius = 2.0
 
-[node name="SpikyTreeComposed" type="Node2D"]
+[node name="IcyTreeComposed" type="Node2D"]
 
 [node name="ShadowComponent" parent="." instance=ExtResource("1_f23sx")]
 
 [node name="TreeBehaviourComponent" parent="." instance=ExtResource("2_m4g31")]
 
 [node name="TreeStatComponent" parent="." node_paths=PackedStringArray("attack_damage_node") instance=ExtResource("3_85pv0")]
-type = 9
+type = 10
 attack_damage_node = NodePath("../HitboxComponent")
-stat_resource = ExtResource("4_m1ipw")
+stat_resource = ExtResource("4_85pv0")
 
 [node name="TreeAnimationComponent" parent="." instance=ExtResource("5_v51pg")]
-sheets = Array[Texture2D]([ExtResource("6_qsixo")])
+sheets = Array[Texture2D]([ExtResource("6_85pv0")])
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 unique_name_in_owner = true

@@ -26,6 +26,9 @@ var tree_order = [Global.TreeType.DEFAULT_TREE,
 	Global.TreeType.SLOWING_TREE,
 	Global.TreeType.MORTAR_TREE,
 	Global.TreeType.SPIKY_TREE,
+	Global.TreeType.ICY_TREE,
+	Global.TreeType.FIRE_TREE,
+	Global.TreeType.SPRINKLER_TREE,
 	]
 ## Index of the currently selected tree
 var currently_selected_tree = 0
