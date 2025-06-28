@@ -28,8 +28,11 @@ func transition_to_main_menu():
 	
 	await scene_changed
 	
-	# Reset session id when returning to main menu
-	Global.session_id = 0
+	# --- BUG FIX ---
+	# The line 'Global.session_id = 0' has been removed from this function.
+	# The session ID should only be changed when the player actively selects a
+	# different save file from the main menu, not when transitioning to it.
+	# This prevents the game from losing the context of the current save file.
 
 func transition_to_game(session_data: Dictionary = {}):
 	transition_to_packed(MAIN)
