@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bmcchyrn7kb4r"]
+[gd_scene load_steps=15 format=3 uid="uid://bmcchyrn7kb4r"]
 
 [ext_resource type="Script" uid="uid://dnayrutw5452u" path="res://structures/trees/registry/twee_registry.gd" id="1_m8guu"]
 [ext_resource type="PackedScene" uid="uid://btc8w4mfmtrb1" path="res://structures/trees/scenes/mother_tree_composed.tscn" id="2_ytpl4"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://conxl1y71g60g" path="res://structures/trees/scenes/mortar_tree_composed.tscn" id="10_paipd"]
 [ext_resource type="PackedScene" uid="uid://6anyotc045yo" path="res://structures/trees/scenes/icy_tree_composed.tscn" id="12_uf73y"]
 [ext_resource type="PackedScene" uid="uid://oiasrq8h2ugd" path="res://structures/trees/scenes/fire_tree_composed.tscn" id="13_h6bwm"]
+[ext_resource type="PackedScene" uid="uid://12couxgfrhcb" path="res://structures/trees/scenes/sprinkler_tree_composed.tscn" id="14_eg0dn"]
 
 [node name="TweeRegistry" type="Node"]
 script = ExtResource("1_m8guu")
@@ -28,5 +29,6 @@ twee_scene_registry = Dictionary[int, PackedScene]({
 8: ExtResource("10_paipd"),
 9: ExtResource("9_4fate"),
 10: ExtResource("12_uf73y"),
+11: ExtResource("14_eg0dn"),
 12: ExtResource("13_h6bwm")
 })
