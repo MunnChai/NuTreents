@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxm7m784x6nwe"
-path="res://.godot/imported/tank_speedle_eye_sheet.png-1c2f0f5d0b9e5def1e00fd6da2268d07.ctex"
+uid="uid://c1h3tk203clg7"
+path="res://.godot/imported/silk_spitter_sheet.png-98c679976cdbee85c3f0a1018983eef6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/tank_speedle/tank_speedle_eye_sheet.png"
-dest_files=["res://.godot/imported/tank_speedle_eye_sheet.png-1c2f0f5d0b9e5def1e00fd6da2268d07.ctex"]
+source_file="res://enemies/sheets/silk_spitter_sheet.png"
+dest_files=["res://.godot/imported/silk_spitter_sheet.png-98c679976cdbee85c3f0a1018983eef6.ctex"]
 
 [params]
 
