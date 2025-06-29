@@ -9,7 +9,7 @@ id = "tank_speedle"
 description = "A speedy spider beetle...
 but tankier"
 hp = 40.0
-action_cooldown = 1.0
+action_cooldown = 1.85
 attack_damage = 4.0
 attack_range = 1
 earliest_spawn_day = 3

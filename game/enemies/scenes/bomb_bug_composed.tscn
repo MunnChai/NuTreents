@@ -1,0 +1,132 @@
+[gd_scene load_steps=29 format=3 uid="uid://ciqk7v2h1gbc6"]
+
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="2_npua1"]
+[ext_resource type="Texture2D" uid="uid://bededh3jpvb6x" path="res://enemies/sheets/bomb_bug_sheet.png" id="3_tkh5l"]
+[ext_resource type="Texture2D" uid="uid://cie3etb5upjck" path="res://enemies/sheets/bomb_bug_eye_sheet.png" id="4_8oob8"]
+[ext_resource type="Script" uid="uid://btt3wf72o4sst" path="res://enemies/common/copy_frame_sprite.gd" id="5_l441e"]
+[ext_resource type="AnimationLibrary" uid="uid://do368mkngtki" path="res://enemies/animations/bomb_bug_animations.res" id="6_48k2j"]
+[ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_xev8h"]
+[ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="8_8odlb"]
+[ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="9_gijqc"]
+[ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="10_djt1b"]
+[ext_resource type="PackedScene" uid="uid://ci1innvjpbdpd" path="res://components/movement/pathfinding_component/pathfinding_component.tscn" id="11_nhwbi"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="12_ncp2j"]
+[ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="13_gcgag"]
+[ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="14_qnh0i"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="15_qx4lu"]
+[ext_resource type="PackedScene" uid="uid://cm4ndh5xmoip5" path="res://components/targeting_component/targeting_component.tscn" id="16_v6tng"]
+[ext_resource type="PackedScene" uid="uid://b83aqlj7be5nf" path="res://components/stat_component/enemy_stat_component/enemy_stat_component.tscn" id="17_caola"]
+[ext_resource type="Resource" uid="uid://fn4kyirepowr" path="res://enemies/stats/bomb_bug_stat.tres" id="18_5bfl0"]
+[ext_resource type="PackedScene" uid="uid://cmtqk8uud6t26" path="res://components/behaviour_components/enemy_behaviour_components/enemy_behaviour_component.tscn" id="19_2h0nq"]
+[ext_resource type="Script" uid="uid://cvk0t4203ctlh" path="res://components/behaviour_components/enemy_behaviour_components/bomb_bug_behaviour_component/bomb_bug_behaviour_component.gd" id="20_rgww4"]
+[ext_resource type="PackedScene" uid="uid://st4gpjvotjj2" path="res://components/animation_components/enemy_animation_components/enemy_animation_component.tscn" id="21_3wgo8"]
+[ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="22_8w6ub"]
+[ext_resource type="PackedScene" uid="uid://p8gninponnf1" path="res://components/collision/aoe_component/aoe_component.tscn" id="23_gbnaw"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="24_vi0bm"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="25_fgmni"]
+[ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="26_6fl4v"]
+[ext_resource type="PackedScene" uid="uid://62uytvgw3ln8" path="res://components/status_effects/status_holder_component/status_holder_component.tscn" id="27_5rk0n"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0vre5"]
+light_mode = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p0yog"]
+resource_local_to_scene = true
+
+[node name="BombBugComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("2_npua1")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+texture = ExtResource("3_tkh5l")
+hframes = 16
+vframes = 8
+
+[node name="Eyes" type="Sprite2D" parent="." node_paths=PackedStringArray("copy_from")]
+material = SubResource("CanvasItemMaterial_0vre5")
+position = Vector2(0, -12)
+texture = ExtResource("4_8oob8")
+hframes = 16
+vframes = 8
+script = ExtResource("5_l441e")
+copy_from = NodePath("../Sprite2D")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": ExtResource("6_48k2j")
+}
+autoplay = "idle"
+
+[node name="TooltipIdentifierComponent" parent="." instance=ExtResource("7_xev8h")]
+id = "bomb_bug"
+
+[node name="HealthComponent" parent="." instance=ExtResource("8_8odlb")]
+max_health = 20.0
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("9_gijqc")]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" parent="HurtboxComponent" index="0"]
+shape = SubResource("CircleShape2D_p0yog")
+
+[node name="PopupEmitterComponent" parent="." instance=ExtResource("10_djt1b")]
+
+[node name="PathfindingComponent" parent="." instance=ExtResource("11_nhwbi")]
+obstructive_tiles = Array[int]([3])
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("12_ncp2j")]
+
+[node name="GridMovementComponent" parent="." instance=ExtResource("13_gcgag")]
+movement_duration = 0.5
+bounce_amount = 8.0
+
+[node name="ObstructionComponent" parent="." instance=ExtResource("14_qnh0i")]
+
+[node name="GridRangeComponent" parent="." instance=ExtResource("15_qx4lu")]
+range = 1
+
+[node name="TargetingComponent" parent="." instance=ExtResource("16_v6tng")]
+
+[node name="ActionTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="EnemyStatResource" parent="." instance=ExtResource("17_caola")]
+type = 4
+stat_resource = ExtResource("18_5bfl0")
+
+[node name="EnemyBehaviourComponent" parent="." instance=ExtResource("19_2h0nq")]
+script = ExtResource("20_rgww4")
+
+[node name="EnemyAnimationComponent" parent="." instance=ExtResource("21_3wgo8")]
+
+[node name="SoundEmitterComponent" parent="." instance=ExtResource("22_8w6ub")]
+sound_effect_name = "speedle_die"
+
+[node name="AoeComponent" parent="." node_paths=PackedStringArray("explosion_range_component") instance=ExtResource("23_gbnaw")]
+explode_range = 2.0
+explosion_range_component = NodePath("../ExplosionRangeComponent")
+damage = 2.0
+
+[node name="ExplosionRangeComponent" parent="." instance=ExtResource("15_qx4lu")]
+range = 2
+
+[node name="FireComponents" type="Node2D" parent="."]
+
+[node name="FireRangeComponent" parent="FireComponents" instance=ExtResource("15_qx4lu")]
+shape = "Square"
+range = 1
+
+[node name="FlammableComponent" parent="FireComponents" instance=ExtResource("24_vi0bm")]
+
+[node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_range_component") instance=ExtResource("25_fgmni")]
+flammable_component = NodePath("../FlammableComponent")
+grid_range_component = NodePath("../FireRangeComponent")
+
+[node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("26_6fl4v")]
+flammable_component = NodePath("../FlammableComponent")
+
+[node name="StatusHolderComponent" parent="." instance=ExtResource("27_5rk0n")]
+
+[editable path="HurtboxComponent"]

@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bbhcyk1k6fkk" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_text.png" id="3_mquka"]
 [ext_resource type="Texture2D" uid="uid://bqookpbbsmui5" path="res://world/proc_gen/terrain_map/Tiles_1.png" id="5_nhexk"]
 [ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="7_qnpkc"]
-[ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/speedle/speedle_sheet.png" id="7_yqlfy"]
+[ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/sheets/speedle_sheet.png" id="7_yqlfy"]
 [ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="8_33wmp"]
 [ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="9_s5xbb"]
 

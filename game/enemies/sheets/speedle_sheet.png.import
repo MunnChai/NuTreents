@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://kymn2pn31r2"
-path="res://.godot/imported/speedle_sheet.png-f00d3330038d40ed64fd2f4e068d465c.ctex"
+path="res://.godot/imported/speedle_sheet.png-87035dbdbc3a557c5275e39568ccd04c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/speedle/speedle_sheet.png"
-dest_files=["res://.godot/imported/speedle_sheet.png-f00d3330038d40ed64fd2f4e068d465c.ctex"]
+source_file="res://enemies/sheets/speedle_sheet.png"
+dest_files=["res://.godot/imported/speedle_sheet.png-87035dbdbc3a557c5275e39568ccd04c.ctex"]
 
 [params]
 

@@ -28,6 +28,9 @@ var name_dictionary = {
 	
 	"speedle": "SPEEDLE",
 	"silk_spitter": "SILK SPITTER",
+	"speed_speedle": "SPEEDY SPEEDLE",
+	"tank_speedle": "TANKY SPEEDLE",
+	"bomb_bug": "BOMB BUG",
 	
 	"ominous_torch": "OMINOUS TORCH",
 }
@@ -65,6 +68,9 @@ var desc_dictionary = {
 	
 	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
 	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
+	"speed_speedle": "The name is redundant.",
+	"tank_speedle": "Life in the wilderness has gifted this speedle with the power of armour.",
+	"bomb_bug": "An unholy abomination of an ant, a beetle, and a propane tanker.",
 	
 	"ominous_torch": "What the hell is that thing?",
 	

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bededh3jpvb6x"
-path="res://.godot/imported/bomb_bug_sheet.png-d21372ea6666f24ef57c889c6dd89fd1.ctex"
+uid="uid://ltf37it8f1o0"
+path="res://.godot/imported/bomb_bug_sheet.png-73e946376d528de4b025705d98931b01.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/bomb_bug/bomb_bug_sheet.png"
-dest_files=["res://.godot/imported/bomb_bug_sheet.png-d21372ea6666f24ef57c889c6dd89fd1.ctex"]
+source_file="res://enemies/_archive/bomb_jitterbug/bomb_bug_sheet.png"
+dest_files=["res://.godot/imported/bomb_bug_sheet.png-73e946376d528de4b025705d98931b01.ctex"]
 
 [params]
 
