@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://c35byladg6nkn"]
+
+[ext_resource type="Texture2D" uid="uid://kpgxwoahjesf" path="res://structures/set_pieces/petrified_trees/petrified_particles.png" id="1_sdv67"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_q528i"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_fhle3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_5lrk7"]
+curve = SubResource("Curve_fhle3")
+
+[sub_resource type="Curve" id="Curve_e4k0l"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_y1euk"]
+curve = SubResource("Curve_e4k0l")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sdv67"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(16, 8, 1)
+direction = Vector3(0, -1, 0)
+initial_velocity_max = 4.0
+alpha_curve = SubResource("CurveTexture_5lrk7")
+anim_offset_max = 1.0
+anim_offset_curve = SubResource("CurveTexture_y1euk")
+
+[node name="FreezeParticles" type="GPUParticles2D"]
+modulate = Color(0, 0.541176, 1, 1)
+material = SubResource("CanvasItemMaterial_q528i")
+amount = 4
+texture = ExtResource("1_sdv67")
+lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_sdv67")

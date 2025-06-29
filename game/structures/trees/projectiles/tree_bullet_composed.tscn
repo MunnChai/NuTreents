@@ -26,7 +26,7 @@ shape = SubResource("CircleShape2D_05k2p")
 movement_duration = 0.5
 ease = 1
 trans = 1
-bounce_amount = 24.0
+bounce_amount = 32.0
 
 [node name="RemovalComponent" parent="." instance=ExtResource("5_05k2p")]
 

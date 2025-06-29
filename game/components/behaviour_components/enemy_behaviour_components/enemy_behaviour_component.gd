@@ -19,6 +19,7 @@ extends Node2D
 @export var enemy_stat_component: EnemyStatComponent
 @export var enemy_animation_component: EnemyAnimationComponent
 @export var death_sound_emitter_component: SoundEmitterComponent
+@export var status_holder_component: StatusHolderComponent
 
 ## The node that this component is acting on, usually the parent
 var actor: Node2D
@@ -65,6 +66,9 @@ func _get_components() -> void:
 		enemy_animation_component = Components.get_component(actor, EnemyAnimationComponent)
 	if not death_sound_emitter_component:
 		death_sound_emitter_component = Components.get_component(actor, SoundEmitterComponent)
+	
+	if not status_holder_component:
+		status_holder_component = Components.get_component(actor, StatusHolderComponent)
 
 
 func _connect_component_signals() -> void:
@@ -155,6 +159,9 @@ func die():
 	hurtbox_component.monitoring = false
 	hitbox_component.set_deferred("monitorable", false)
 	hitbox_component.monitoring = false
+	
+	status_holder_component.remove_all_status_effects()
+	status_holder_component.disable()
 
 
 const ENEMY_REBOOT_TIME: float = 30

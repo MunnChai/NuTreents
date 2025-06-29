@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FreezeStatusEffect" load_steps=4 format=3 uid="uid://c0jut7lkwflll"]
+
+[ext_resource type="Texture2D" uid="uid://b4mwf1gkb110e" path="res://components/status_effects/icons/freeze_icon.png" id="1_lus1x"]
+[ext_resource type="PackedScene" uid="uid://dws6eqsrnd0gr" path="res://components/status_effects/particles/freeze_particles.tscn" id="2_k8jg3"]
+[ext_resource type="Script" uid="uid://cg07waolp4xjo" path="res://components/status_effects/scripts/freeze_status_effect.gd" id="3_euawe"]
+
+[resource]
+script = ExtResource("3_euawe")
+duration = 4.0
+color_modulate = Color(0, 1, 1, 1)
+effect_icon = ExtResource("1_lus1x")
+particles = ExtResource("2_k8jg3")
+metadata/_custom_type_script = "uid://cg07waolp4xjo"

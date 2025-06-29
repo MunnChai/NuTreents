@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://c1n8eo2waa4d4"]
+
+[ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_si707"]
+[ext_resource type="Texture2D" uid="uid://dexcrdfmurf6c" path="res://structures/trees/icons/icy_tree.png" id="2_si707"]
+
+[resource]
+script = ExtResource("1_si707")
+name = "Icy Tree"
+id = "icy_tree"
+description = "Icy branches freeze enemies upon contact."
+tree_icon = ExtResource("2_si707")
+hp = 15
+max_water = 3
+gain = Vector3(0, 0, 0)
+maint = 2
+time_to_grow = 30.0
+cost_to_purchase = 200
+attack_damage = 0.0
+attack_range = 0
+attack_cooldown = 0.0
+hp_2 = 50
+max_water_2 = 5
+gain_2 = Vector3(0, 0, 1)
+maint_2 = 2
+time_to_grow_2 = 0.0
+cost_to_purchase_2 = 0
+attack_damage_2 = 0.0
+attack_range_2 = 0
+attack_cooldown_2 = 0.0
+metadata/_custom_type_script = "uid://cmqpyvo3bas1d"

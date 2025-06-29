@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc2mtq4xoduoa"]
+
+[ext_resource type="Script" uid="uid://dim4dk77nooua" path="res://components/fire_components/sprinkler_component/sprinkler_component.gd" id="1_7w5uj"]
+
+[node name="SprinklerComponent" type="Node2D"]
+script = ExtResource("1_7w5uj")
