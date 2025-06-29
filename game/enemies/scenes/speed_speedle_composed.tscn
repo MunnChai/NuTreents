@@ -62,7 +62,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="TooltipIdentifierComponent" parent="." instance=ExtResource("7_rbagk")]
-id = "speedle"
+id = "speed_speedle"
 
 [node name="HealthComponent" parent="." instance=ExtResource("8_1hem6")]
 max_health = 20.0
