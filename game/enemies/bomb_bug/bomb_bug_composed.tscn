@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://ciqk7v2h1gbc6"]
+[gd_scene load_steps=25 format=3 uid="uid://ciqk7v2h1gbc6"]
 
 [ext_resource type="Script" uid="uid://bdotlfxvb7j6r" path="res://enemies/enemy_composed.gd" id="1_0782n"]
 [ext_resource type="Texture2D" uid="uid://bededh3jpvb6x" path="res://enemies/bomb_bug/bomb_bug_sheet.png" id="3_qy2rf"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://cm4ndh5xmoip5" path="res://components/targeting_component/targeting_component.tscn" id="17_d77xk"]
 [ext_resource type="PackedScene" uid="uid://b83aqlj7be5nf" path="res://components/stat_component/enemy_stat_component/enemy_stat_component.tscn" id="17_rq67w"]
 [ext_resource type="Resource" uid="uid://fn4kyirepowr" path="res://enemies/stats/bomb_bug_stat.tres" id="18_2hstf"]
+[ext_resource type="Script" uid="uid://cvk0t4203ctlh" path="res://components/behaviour_components/enemy_behaviour_components/bomb_bug_behaviour_component/bomb_bug_behaviour_component.gd" id="19_2hstf"]
 [ext_resource type="PackedScene" uid="uid://cmtqk8uud6t26" path="res://components/behaviour_components/enemy_behaviour_components/enemy_behaviour_component.tscn" id="19_w8aws"]
 [ext_resource type="PackedScene" uid="uid://st4gpjvotjj2" path="res://components/animation_components/enemy_animation_components/enemy_animation_component.tscn" id="20_hk6yl"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="21_c2rsr"]
@@ -91,6 +92,7 @@ type = 4
 stat_resource = ExtResource("18_2hstf")
 
 [node name="EnemyBehaviourComponent" parent="." instance=ExtResource("19_w8aws")]
+script = ExtResource("19_2hstf")
 
 [node name="EnemyAnimationComponent" parent="." instance=ExtResource("20_hk6yl")]
 
