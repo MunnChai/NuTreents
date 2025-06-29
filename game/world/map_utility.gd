@@ -8,7 +8,7 @@ func tile_has_structure(map_pos: Vector2i) -> bool:
 	
 	return false
 
-func tile_has_entity(map_pos: Vector2i) -> bool:
+func tile_has_enemy(map_pos: Vector2i) -> bool:
 	for enemy in get_tree().get_nodes_in_group("enemies"):
 		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
 		if grid_position_component.get_pos() == map_pos:

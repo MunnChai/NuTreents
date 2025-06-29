@@ -41,6 +41,8 @@ func _get_components() -> void:
 		hurtbox_component = Components.get_component(actor, HurtboxComponent)
 	if not hitbox_component:
 		hitbox_component = Components.get_component(actor, HitboxComponent)
+		if not hitbox_component:
+			hitbox_component = Components.get_component(actor, AoeComponent)	
 	
 	if not action_timer:
 		action_timer = Components.get_component(actor, Timer)
@@ -138,7 +140,7 @@ func move(target_pos: Vector2i) -> void:
 			return
 	
 	# If it is obstructed by a bug, find a new path
-	if MapUtility.tile_has_entity(next_pos):
+	if MapUtility.tile_has_enemy(next_pos):
 		pathfinding_component.find_path(current_pos, target_pos)
 		next_pos = pathfinding_component.get_next_position()
 	

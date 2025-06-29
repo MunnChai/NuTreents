@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://dfh1kms265c8l" path="res://enemies/stats/speedle_stat.tres" id="2_ehors"]
 [ext_resource type="Texture2D" uid="uid://ciqackaiahdkm" path="res://enemies/speedle/speedle_eyes_sheet.png" id="2_iifq8"]
 [ext_resource type="Script" uid="uid://btt3wf72o4sst" path="res://enemies/common/copy_frame_sprite.gd" id="3_b2xnc"]
-[ext_resource type="AnimationLibrary" path="res://enemies/enemy_animations.res" id="4_7ra7c"]
+[ext_resource type="AnimationLibrary" uid="uid://dxw6d6vomro1c" path="res://enemies/enemy_animations.res" id="4_7ra7c"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="6_2qnq7"]
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="6_iifq8"]
 [ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="7_7ra7c"]

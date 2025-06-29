@@ -6,6 +6,8 @@ extends Node2D
 
 var actor: Node2D
 
+signal exploded()
+
 func _ready() -> void:
 	actor = get_parent()
 	
@@ -26,6 +28,14 @@ func play_death() -> void:
 	animation_player.play("death")
 	animation_player.animation_finished.connect(
 		func(animation_name):
+			actor.queue_free()
+	)
+	
+func play_explode() -> void:
+	animation_player.play("explode")
+	animation_player.animation_finished.connect(
+		func(animation_name):
+			exploded.emit()
 			actor.queue_free()
 	)
 
