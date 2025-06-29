@@ -71,7 +71,7 @@ func _connect_component_signals() -> void:
 	hurtbox_component.hit_taken.connect(health_component.subtract_health)
 	hurtbox_component.hit_taken.connect(enemy_animation_component.play_hurt_animation.unbind(1))
 	
-	enemy_animation_component.exploded.connect(die)
+	enemy_animation_component.exploded.connect(exploded)
 	
 	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
 	health_component.died.connect(die)
@@ -121,10 +121,15 @@ func attack_tree(target_pos: Vector2i) -> void:
 		grid_movement_component.move_to_and_back(target_pos)
 
 func explode() -> void:
-	# does aoe damage instead
-	var aoe_component: AoeComponent = hitbox_component
+	# plays explode animation
 	enemy_animation_component.play_explode()
-	aoe_component.explode()
+	
+	
+func exploded() -> void:
+	# waits for explode animation to finish, then deals actual damage
+	var aoe_component: AoeComponent = hitbox_component
+	await aoe_component.explode(grid_position_component.get_pos())
+	die()
 
 func move(target_pos: Vector2i) -> void:
 	var current_pos: Vector2i = grid_position_component.get_pos()
@@ -151,7 +156,7 @@ func move(target_pos: Vector2i) -> void:
 			return
 	
 	# If it is obstructed by a bug, find a new path
-	if MapUtility.tile_has_entity(next_pos):
+	if MapUtility.tile_has_enemy(next_pos):
 		pathfinding_component.find_path(current_pos, target_pos)
 		next_pos = pathfinding_component.get_next_position()
 	

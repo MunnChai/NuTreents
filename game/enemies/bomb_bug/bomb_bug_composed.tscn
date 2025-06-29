@@ -43,7 +43,6 @@ position = Vector2(0, -12)
 texture = ExtResource("4_qy2rf")
 hframes = 16
 vframes = 8
-frame = 23
 script = ExtResource("5_kdwdx")
 copy_from = NodePath("../Sprite2D")
 
@@ -99,7 +98,7 @@ stat_resource = ExtResource("18_2hstf")
 sound_effect_name = "speedle_die"
 
 [node name="AoeComponent" parent="." instance=ExtResource("21_rq67w")]
-range = 50.0
+explode_range = 2.0
 damage = 2.0
 
 [editable path="HurtboxComponent"]
