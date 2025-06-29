@@ -29,7 +29,7 @@ light_mode = 1
 [sub_resource type="CircleShape2D" id="CircleShape2D_p0yog"]
 resource_local_to_scene = true
 
-[node name="SpeedleComposed" type="Node2D"]
+[node name="SpeedleComposed2" type="Node2D"]
 script = ExtResource("1_0782n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -99,8 +99,9 @@ script = ExtResource("19_2hstf")
 [node name="SoundEmitterComponent" parent="." instance=ExtResource("21_c2rsr")]
 sound_effect_name = "speedle_die"
 
-[node name="AoeComponent" parent="." instance=ExtResource("21_rq67w")]
+[node name="AoeComponent" parent="." node_paths=PackedStringArray("explosion_range_component") instance=ExtResource("21_rq67w")]
 explode_range = 2.0
+explosion_range_component = NodePath("../ExplosionRangeComponent")
 damage = 2.0
 
 [node name="ExplosionRangeComponent" parent="." instance=ExtResource("16_ht4jl")]
