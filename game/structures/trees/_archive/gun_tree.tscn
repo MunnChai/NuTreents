@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://w6imeajyursp" path="res://structures/trees/_archive/gun_tree.gd" id="1_b4h83"]
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_p5an4"]
 [ext_resource type="Texture2D" uid="uid://dvj2784pyld1f" path="res://structures/trees/sheets/tree_gun_sheet.png" id="3_18yy7"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="4_mbreq"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="4_mbreq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_18yy7"]
 shader = ExtResource("1_18yy7")

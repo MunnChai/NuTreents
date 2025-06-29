@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://b1uf1mwjycuxb"]
+
+[ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_oogaa"]
+[ext_resource type="Texture2D" uid="uid://cmfge0lgov2bj" path="res://structures/trees/icons/slowing_tree.png" id="2_oogaa"]
+
+[resource]
+script = ExtResource("1_oogaa")
+name = "Slowing Tree"
+id = "slowing_tree"
+description = "Slows the baddies"
+tree_icon = ExtResource("2_oogaa")
+hp = 10
+max_water = 0
+gain = Vector3(0, 0, 0)
+maint = 6
+time_to_grow = 30.0
+cost_to_purchase = 250
+attack_damage = 0.0
+attack_range = 0
+attack_cooldown = 0.75
+hp_2 = 15
+max_water_2 = 2
+gain_2 = Vector3(0, 0, 0)
+maint_2 = 3
+time_to_grow_2 = 0.0
+cost_to_purchase_2 = 0
+attack_damage_2 = 2.0
+attack_range_2 = 3
+attack_cooldown_2 = 1.0
+metadata/_custom_type_script = "uid://cmqpyvo3bas1d"

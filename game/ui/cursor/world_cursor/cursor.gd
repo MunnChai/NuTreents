@@ -65,6 +65,11 @@ func do_primary_action() -> void:
 		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
 		return
 	
+	if structure_map.does_obstructive_structure_exist(p):
+		SfxManager.play_sound_effect("ui_fail")
+		PopupManager.create_popup("Obstruction!", structure_map.map_to_local(p))
+		return
+	
 	if type == Global.TreeType.TECH_TREE:
 		var can_place = true
 		
@@ -139,18 +144,23 @@ func do_secondary_action() -> void:
 			var cost: float = destructable_component.get_cost()
 			
 			if TreeManager.enough_n(cost):
-				SfxManager.play_sound_effect("concrete_break")
 				TreeManager.consume_n(cost)
-				structure_map.remove_structure(map_pos)
-				destructable_component.destroyed.emit()
+				destructable_component.destroy()
 				
 				var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(entity, StructureBehaviourComponent)
 				
 				match structure_behaviour_component.type:
 					Global.StructureType.FACTORY:
 						PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
+					Global.StructureType.PETRIFIED_TREE:
+						#PopupManager.create_popup("De-Petrified!", structure_map.map_to_local(map_pos))
+						var sprite_shatter_component: SpriteShatterComponent = Components.get_component(entity, SpriteShatterComponent, "", true)
+						if sprite_shatter_component:
+							await sprite_shatter_component.shatter_finished
 					_:
 						PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(map_pos))
+				
+				SfxManager.play_sound_effect("concrete_break")
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
@@ -196,6 +206,19 @@ func do_secondary_action() -> void:
 			else:
 				SfxManager.play_sound_effect("ui_fail")
 				PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(map_pos))
+
+## Put out fires in a 3x3 square
+func do_water_bucket_from_god() -> void:
+	for x: int in range(iso_position.x - 1, iso_position.x + 1):
+		for y: int in range(iso_position.y - 1, iso_position.y + 1):
+			var coord := Vector2i(x, y)
+			var entity = MapUtility.get_entity_at(coord)
+			if entity != null:
+				if Components.has_component(entity, FlammableComponent, "", true):
+					var flammable := Components.get_component(entity, FlammableComponent, "", true) as FlammableComponent
+					## TEMP: Actually ignition!
+					#flammable.extinguish()
+					flammable.ignite()
 
 ## Moves the cursor to the given LOCAL WORLD COORDINATE
 func move_to(local_world_pos: Vector2) -> void:

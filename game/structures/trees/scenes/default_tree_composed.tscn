@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://d4l1saxnn6efv"]
+[gd_scene load_steps=28 format=3 uid="uid://d4l1saxnn6efv"]
 
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="1_t5oha"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_tjy4u"]
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_x4v7o"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="2_istyr"]
 [ext_resource type="Resource" uid="uid://2t6mabvksoaa" path="res://structures/trees/stats/default_tree_stat.tres" id="2_xufj2"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="3_42ur6"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="3_42ur6"]
 [ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="3_t2lqx"]
 [ext_resource type="Texture2D" uid="uid://eckdbj5rer4l" path="res://structures/trees/sheets/tree_circle_sheet.png" id="4_njuuy"]
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="7_42ur6"]
@@ -20,7 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="17_wohpo"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="18_vyjhx"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="18_wohpo"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="19_vyjhx"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="19_vyjhx"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="22_eq1ht"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="23_frebl"]
+[ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="24_61457"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -30,7 +34,7 @@ shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 30.0
 shader_parameter/tint_amount = 0.0
-shader_parameter/alpha = 1.0
+shader_parameter/modulate = Vector4(1, 1, 1, 1)
 shader_parameter/uv_y_offset = 0.62
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
@@ -43,6 +47,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="DefaultTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_x4v7o")]
 
 [node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("17_wohpo")]
 damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
@@ -101,8 +107,27 @@ range = 1
 
 [node name="FogRevealerComponent" parent="." instance=ExtResource("17_jlx1d")]
 
-[node name="OutlineComponent" parent="." instance=ExtResource("18_wohpo")]
+[node name="OutlineComponent" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("18_wohpo")]
+position = Vector2(0, -1)
+actor = NodePath("../Sprite2D")
 
 [node name="GrowTimer" type="Timer" parent="."]
+
+[node name="FireComponents" type="Node2D" parent="."]
+
+[node name="FireRangeComponent" parent="FireComponents" instance=ExtResource("10_4oe0m")]
+shape = "Square"
+range = 1
+
+[node name="FlammableComponent" parent="FireComponents" instance=ExtResource("22_eq1ht")]
+
+[node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("23_frebl")]
+flammable_component = NodePath("../FlammableComponent")
+grid_position_component = NodePath("../../GridPositionComponent")
+grid_range_component = NodePath("../FireRangeComponent")
+
+[node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("24_61457")]
+flammable_component = NodePath("../FlammableComponent")
+health_component = NodePath("../../HealthComponent")
 
 [editable path="HurtboxComponent"]

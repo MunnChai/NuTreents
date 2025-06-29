@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://ll6klr2ec2b8" path="res://structures/trees/stats/mother_tree_stat.tres" id="2_7namq"]
 [ext_resource type="Texture2D" uid="uid://bq1xkos3efixb" path="res://structures/trees/sheets/mother/mother_tree_with_sapling.png" id="2_emprh"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="4_7namq"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="5_ojpxj"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="5_ojpxj"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="5_v1tj4"]
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="6_nw636"]
 [ext_resource type="PackedScene" uid="uid://c8w0i4ah3vv4s" path="res://components/popup_emitter_component/popup_emitter_component.tscn" id="7_ojpxj"]
@@ -26,7 +26,7 @@ shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 10.0
 shader_parameter/tint_amount = 0.0
-shader_parameter/alpha = 1.0
+shader_parameter/modulate = Vector4(1, 1, 1, 1)
 shader_parameter/uv_y_offset = 4.69
 shader_parameter/flash_color = Color(1, 1, 1, 1)
 shader_parameter/tint_color = Color(1, 1, 1, 1)

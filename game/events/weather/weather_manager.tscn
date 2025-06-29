@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b2bri5edcykxw"]
+
+[ext_resource type="Script" uid="uid://b6n6qsageln6f" path="res://events/weather/weather_manager.gd" id="1_aycar"]
+[ext_resource type="PackedScene" uid="uid://bnx0cw7x4oc0" path="res://events/weather/lightning/lightning_generator/lightning_generator.tscn" id="2_4tv7o"]
+
+[node name="WeatherManager" type="Node2D"]
+script = ExtResource("1_aycar")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="LightningGenerator" parent="." instance=ExtResource("2_4tv7o")]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

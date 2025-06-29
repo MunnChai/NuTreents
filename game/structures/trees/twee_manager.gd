@@ -41,6 +41,10 @@ func _ready() -> void:
 func start_game():
 	nutreents = 25
 	
+	DebugConsole.register("free", func(args: PackedStringArray):
+		nutreents += 1000000000
+		, "Gives you a lot of nutreents")
+	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
 	forest_map.clear()
@@ -422,7 +426,7 @@ func get_reachable_tree_placement_positions(include_trees: bool = false) -> Arra
 	
 	for pos in tree_map.keys():
 		var tree: Node2D = tree_map.get(pos)
-		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent)
+		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
 		
 		for offset in grid_range_component.get_tiles_in_range():
 			var new_pos = pos + offset

@@ -19,7 +19,7 @@ uniform float wind_amount = 1.0; // Ideally [0, 1]
 uniform float flash_amount = 1.0; // [0, 1], lerp from regular to flash colour
 uniform float shake_amount = 10.0;
 uniform float tint_amount = 0.0; // [0, 1], lerp between application of tint to greens
-uniform float alpha = 1.0; // For modulation
+uniform vec4 modulate = vec4(1.0, 1.0, 1.0, 1.0); // For modulation
 
 // UV OFFSET
 // (So the bottom trunk of the tree does not move)
@@ -150,7 +150,7 @@ void fragment() {
 	vec4 after_flash = apply_flash_to_color(COLOR);
 	vec4 after_tint = apply_tint_to_color(after_flash);
 
- 	COLOR = vec4(after_tint.rgb, COLOR.a * alpha);
+ 	COLOR = vec4(after_tint.rgb * modulate.rgb, COLOR.a * modulate.a);
 
 	if (is_on_edge(after_shake, TEXTURE, TEXTURE_PIXEL_SIZE)) {
 		COLOR = vec4(1.0, 1.0, 1.0, outline_alpha);

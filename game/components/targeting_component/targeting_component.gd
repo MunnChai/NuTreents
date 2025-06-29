@@ -6,6 +6,10 @@ func get_nearest_enemy(map_position: Vector2i) -> Node2D:
 	var nearest_enemy_pos = Vector2i.ZERO
 	var nearest_dist: float = INF
 	for enemy in get_tree().get_nodes_in_group("enemies"):
+		var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+		if enemy_health_component.is_dead:
+			continue
+		
 		var enemy_pos_component = Components.get_component(enemy, GridPositionComponent)
 		
 		for pos in enemy_pos_component.get_occupied_positions():
@@ -22,6 +26,10 @@ func get_nearest_enemy_pos(map_position: Vector2i) -> Vector2i:
 	var nearest_enemy_pos = Vector2i.ZERO
 	var nearest_dist: float = INF
 	for enemy in get_tree().get_nodes_in_group("enemies"):
+		var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+		if enemy_health_component.is_dead:
+			continue
+		
 		var enemy_pos_component = Components.get_component(enemy, GridPositionComponent)
 		
 		for pos in enemy_pos_component.get_occupied_positions():

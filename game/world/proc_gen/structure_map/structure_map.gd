@@ -4,6 +4,7 @@ extends TileMapLayer
 const SOURCE_ID: int = 1
 
 var tile_scene_map: Dictionary[Vector2i, Node2D]
+var non_decor_map: Dictionary[Vector2i, Node2D]
 
 const COST_TO_REMOVE_CITY_TILE: int = 100
 const COST_TO_REMOVE_ROAD_TILE: int = 250
@@ -12,20 +13,33 @@ func _ready() -> void:
 	#add_to_group("structure_map")
 	y_sort_enabled = true
 
-func add_structure(map_coords: Vector2i, structure: Node2D) -> bool:
-	if tile_scene_map.has(map_coords):
-		# Check if it is a decor structure
-		var curr_structure: Node2D = tile_scene_map[map_coords]
-		if Components.has_component(curr_structure, ObstructionComponent): # Don't build on obstructive tiles
-			structure.queue_free()
-			return false
-		# Otherwise, destroy the decor and continue
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug_button"):
+		add_structure(local_to_map(get_mouse_coords()), StructureRegistry.get_new_structure(Global.StructureType.PETRIFIED_TREE))
+
+func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bool = false) -> bool:
+	if not structure:
+		return false
+
+	if replace_existing:
 		remove_structure(map_coords)
+	else:
+		if tile_scene_map.has(map_coords):
+			# Check if it is a decor structure
+			var curr_structure: Node2D = tile_scene_map[map_coords]
+			if Components.has_component(curr_structure, ObstructionComponent): # Don't build on obstructive tiles
+				structure.queue_free()
+				return false
+			# Otherwise, destroy the decor and continue
+			remove_structure(map_coords)
 	
 	if Components.has_component(structure, FogRevealerComponent):
 		Global.fog_map.remove_fog_around(map_coords)
 	
 	structure.position = map_to_local(map_coords)
+	
+	if Components.has_component(structure, ObstructionComponent):
+		non_decor_map.set(map_coords, structure)
 	
 	tile_scene_map[map_coords] = structure
 	if structure.get_parent() == null:
@@ -129,6 +143,6 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		
 		var structure: Node2D = StructureRegistry.get_new_structure(save_resource.type)
 		
-		add_structure(pos, structure)
-		var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
-		structure_behaviour_component.apply_data_resource(save_resource)
+		if add_structure(pos, structure):
+			var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
+			structure_behaviour_component.apply_data_resource(save_resource)

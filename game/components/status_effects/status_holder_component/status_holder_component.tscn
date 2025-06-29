@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://62uytvgw3ln8"]
+
+[ext_resource type="Script" uid="uid://bjxdebtcmeb5g" path="res://components/status_effects/status_holder_component/status_holder_component.gd" id="1_ovehs"]
+
+[node name="StatusHolderComponent" type="Node2D"]
+script = ExtResource("1_ovehs")

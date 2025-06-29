@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq1kqquv8d5h5"]
+
+[ext_resource type="Script" uid="uid://4nbno2pdoga1" path="res://components/petrified_component/petrified_tree_component/petrified_tree_component.gd" id="1_rtegh"]
+
+[node name="PetrifiedTreeComponent" type="Node2D"]
+script = ExtResource("1_rtegh")

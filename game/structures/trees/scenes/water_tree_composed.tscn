@@ -1,11 +1,12 @@
-[gd_scene load_steps=23 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=27 format=3 uid="uid://b5hdmb6e3u31i"]
 
+[ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
 [ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="3_roexn"]
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="4_qablk"]
 [ext_resource type="Texture2D" uid="uid://c246f21ad4hjn" path="res://structures/trees/sheets/tree_square_sheet.png" id="5_de6j2"]
-[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/tree_animations.res" id="6_ag2fa"]
-[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/tree_animation_components/tree_animation_component.tscn" id="7_g5evl"]
+[ext_resource type="AnimationLibrary" uid="uid://b75x83ikhqgye" path="res://structures/trees/animations/tree_animations.res" id="6_ag2fa"]
+[ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="7_g5evl"]
 [ext_resource type="PackedScene" uid="uid://co2pv5y1xe6ad" path="res://components/tooltip_identifier_component/tooltip_identifier_component.tscn" id="7_nwb60"]
 [ext_resource type="PackedScene" uid="uid://3kbd5phsf4bg" path="res://components/health_component/health_component.tscn" id="8_g5evl"]
 [ext_resource type="PackedScene" uid="uid://wvdajc3q2v8g" path="res://components/collision/hurtbox_component/hurtbox_component.tscn" id="9_u17au"]
@@ -20,6 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="18_ag2fa"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="19_nwb60"]
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="20_g5evl"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="21_u17au"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="22_ylnla"]
+[ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="23_e5otl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -29,7 +33,7 @@ shader_parameter/wind_amount = 1.0
 shader_parameter/flash_amount = 0.0
 shader_parameter/shake_amount = 30.0
 shader_parameter/tint_amount = 0.0
-shader_parameter/alpha = 1.0
+shader_parameter/modulate = Vector4(1, 1, 1, 1)
 shader_parameter/uv_y_offset = 0.62
 shader_parameter/flash_color = Color(0.756863, 0.811765, 0.415686, 1)
 shader_parameter/tint_color = Color(0.99447, 0.596609, 0.535069, 1)
@@ -42,6 +46,8 @@ shader_parameter/outline_width = 1
 resource_local_to_scene = true
 
 [node name="WaterTreeComposed" type="Node2D"]
+
+[node name="ShadowComponent" parent="." instance=ExtResource("1_ylnla")]
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("14_no8lf")]
 
@@ -107,5 +113,25 @@ range = 1
 [node name="OutlineComponent" parent="." instance=ExtResource("17_23jrq")]
 
 [node name="GrowTimer" type="Timer" parent="."]
+
+[node name="FireComponents" type="Node2D" parent="."]
+
+[node name="FireRangeComponent" parent="FireComponents" instance=ExtResource("15_ya7fu")]
+shape = "Square"
+range = 1
+
+[node name="FlammableComponent" parent="FireComponents" instance=ExtResource("21_u17au")]
+burn_time = 5.0
+fire_tick_duration = 1.5
+
+[node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("22_ylnla")]
+flammable_component = NodePath("../FlammableComponent")
+grid_position_component = NodePath("../../GridPositionComponent")
+grid_range_component = NodePath("../FireRangeComponent")
+
+[node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("23_e5otl")]
+flammable_component = NodePath("../FlammableComponent")
+health_component = NodePath("../../HealthComponent")
+damage_amount = 1.0
 
 [editable path="HurtboxComponent"]

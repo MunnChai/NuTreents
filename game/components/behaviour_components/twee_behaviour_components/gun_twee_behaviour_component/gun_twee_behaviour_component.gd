@@ -1,6 +1,8 @@
 class_name GunTweeBehaviourComponent
 extends TweeBehaviourComponent
 
+@export var shoot_animation_delay: float = 0.25
+
 @export var attack_range_component: GridRangeComponent
 @export var targeting_component: TargetingComponent
 @export var action_timer: Timer
@@ -43,7 +45,7 @@ func perform_action() -> void:
 	
 	if attack_range_component.is_in_range(current_position, target_enemy_pos):
 		tree_animation_component.play_custom_animation("shoot")
-		await get_tree().create_timer(0.25).timeout # Munn: KINDA SCUFFED...
+		await get_tree().create_timer(shoot_animation_delay).timeout # Munn: KINDA SCUFFED...
 		spawn_projectile(target_enemy_pos)
 
 func spawn_projectile(target_pos: Vector2i) -> void:

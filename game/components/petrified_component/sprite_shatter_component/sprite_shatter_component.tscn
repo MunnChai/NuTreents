@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgnnwqann63cb"]
+
+[ext_resource type="Script" uid="uid://x6w8kvmwpqqk" path="res://components/petrified_component/sprite_shatter_component/sprite_shatter_component.gd" id="1_tctrf"]
+
+[node name="SpriteShatterComponent" type="Node2D"]
+script = ExtResource("1_tctrf")
+
+[node name="Timer" type="Timer" parent="."]

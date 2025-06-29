@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://2t6mabvksoaa"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_oaifg"]
-[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/tree_menu/icons/default_tree.png" id="2_xrtgq"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="2_xrtgq"]
 
 [resource]
 script = ExtResource("1_oaifg")
@@ -21,7 +21,7 @@ attack_cooldown = 0.0
 hp_2 = 25
 max_water_2 = 5
 gain_2 = Vector3(1, 0, 0)
-maint_2 = 0
+maint_2 = 2
 time_to_grow_2 = 0.0
 cost_to_purchase_2 = 0
 attack_damage_2 = 0.0

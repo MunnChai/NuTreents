@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://i677y27v8cbs"]
+[gd_scene load_steps=8 format=3 uid="uid://i677y27v8cbs"]
 
 [ext_resource type="Script" uid="uid://cvi6o5tn5mc0v" path="res://structures/registry/structure_registry.gd" id="1_kgvgx"]
 [ext_resource type="PackedScene" uid="uid://dnwmoqcy1law8" path="res://structures/city/city_building_composed.tscn" id="2_tih5d"]
 [ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_tih5d"]
 [ext_resource type="PackedScene" uid="uid://b58nh1d7lvhem" path="res://structures/city/factory/factory_remains_composed.tscn" id="4_2lfd5"]
 [ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_tih5d"]
+[ext_resource type="PackedScene" uid="uid://du8xhok2kmu12" path="res://structures/set_pieces/ominous_torch.tscn" id="6_2lfd5"]
+[ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="7_tymnd"]
 
 [node name="CityStructureRegistry" type="Node"]
 script = ExtResource("1_kgvgx")
@@ -12,5 +14,7 @@ structure_scene_registry = Dictionary[int, PackedScene]({
 0: ExtResource("2_tih5d"),
 1: ExtResource("3_tih5d"),
 2: ExtResource("4_2lfd5"),
-3: ExtResource("5_tih5d")
+3: ExtResource("5_tih5d"),
+4: ExtResource("6_2lfd5"),
+5: ExtResource("7_tymnd")
 })

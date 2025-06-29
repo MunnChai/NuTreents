@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bektkr1phsdg2"]
+
+[ext_resource type="Script" uid="uid://divqan1feny6l" path="res://components/fire_components/spontaneous_combustion_component/spontanous_combustion_component.gd" id="1_lna8g"]
+
+[node name="SpontanousCombustionComponent" type="Node2D"]
+script = ExtResource("1_lna8g")
+
+[node name="Timer" type="Timer" parent="."]
