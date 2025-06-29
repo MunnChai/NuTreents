@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cr13pcl8g8yqg"
-path="res://.godot/imported/speed_speedle_sheet.png-0bd8c04fd1294ac7be5270dfe2436164.ctex"
+uid="uid://0upgo2ekp24d"
+path="res://.godot/imported/speed_speedle_eye_sheet.png-03055eefc5f296027e5e3c4a9e7b4e81.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/speed_speedle/speed_speedle_sheet.png"
-dest_files=["res://.godot/imported/speed_speedle_sheet.png-0bd8c04fd1294ac7be5270dfe2436164.ctex"]
+source_file="res://enemies/sheets/speed_speedle_eye_sheet.png"
+dest_files=["res://.godot/imported/speed_speedle_eye_sheet.png-03055eefc5f296027e5e3c4a9e7b4e81.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmyvtn7f1wt52"
-path="res://.godot/imported/silk_spitter_idle.png-779e26fee57f8a47991f081709340283.ctex"
+uid="uid://dkia4dc3mre8s"
+path="res://.godot/imported/silk_spitter_eye_sheet.png-0cc89ffb189100a9bdd0b166ea8965a5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/silk_spitter/silk_spitter_idle.png"
-dest_files=["res://.godot/imported/silk_spitter_idle.png-779e26fee57f8a47991f081709340283.ctex"]
+source_file="res://enemies/sheets/silk_spitter_eye_sheet.png"
+dest_files=["res://.godot/imported/silk_spitter_eye_sheet.png-0cc89ffb189100a9bdd0b166ea8965a5.ctex"]
 
 [params]
 

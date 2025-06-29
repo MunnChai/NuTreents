@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dyax385joht5m"
-path="res://.godot/imported/tank_speedle_sheet.png-f6cc38b0d46f06210c29d363e539e4bf.ctex"
+uid="uid://bxm7m784x6nwe"
+path="res://.godot/imported/tank_speedle_eye_sheet.png-06df071d26afb37df4e8fa1301eb4d51.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/tank_speedle/tank_speedle_sheet.png"
-dest_files=["res://.godot/imported/tank_speedle_sheet.png-f6cc38b0d46f06210c29d363e539e4bf.ctex"]
+source_file="res://enemies/sheets/tank_speedle_eye_sheet.png"
+dest_files=["res://.godot/imported/tank_speedle_eye_sheet.png-06df071d26afb37df4e8fa1301eb4d51.ctex"]
 
 [params]
 

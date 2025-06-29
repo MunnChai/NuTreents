@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cie3etb5upjck"
-path="res://.godot/imported/bomb_bug_eye_sheet.png-ab6675615e06da374bd51aefc9eb94a6.ctex"
+uid="uid://doos0jm3w1ofn"
+path="res://.godot/imported/silk_spitter_dying.png-26367f42170fd6bd2720452a65b7a73d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://enemies/bomb_bug/bomb_bug_eye_sheet.png"
-dest_files=["res://.godot/imported/bomb_bug_eye_sheet.png-ab6675615e06da374bd51aefc9eb94a6.ctex"]
+source_file="res://enemies/_archive/silk_spitter/silk_spitter_dying.png"
+dest_files=["res://.godot/imported/silk_spitter_dying.png-26367f42170fd6bd2720452a65b7a73d.ctex"]
 
 [params]
 
