@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="EnemyStatResource" load_steps=2 format=3 uid="uid://dq4jb4rqdrqya"]
+
+[ext_resource type="Script" uid="uid://cq0shh8yxktgu" path="res://enemies/stats/enemy_stat_resource.gd" id="1_cbd8c"]
+
+[resource]
+script = ExtResource("1_cbd8c")
+name = "Tank Speedle"
+id = "tank_speedle"
+description = "A speedy spider beetle...
+but tankier"
+hp = 40.0
+action_cooldown = 1.0
+attack_damage = 4.0
+attack_range = 1
+earliest_spawn_day = 3
+spawn_weight = 200
+spawn_point_cost = 15
+metadata/_custom_type_script = "uid://cq0shh8yxktgu"

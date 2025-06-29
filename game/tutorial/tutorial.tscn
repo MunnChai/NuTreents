@@ -37,6 +37,7 @@ shader = ExtResource("7_jf5h8")
 shader_parameter/alpha = 0.75
 shader_parameter/inner_radius = 0.16
 shader_parameter/outer_radius = 1.34
+shader_parameter/color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_l38k8"]
 colors = PackedColorArray(0, 0, 0, 0.784314, 0, 0, 0, 0.784314)

@@ -99,7 +99,7 @@ func is_valid_tile(map_pos: Vector2i) -> bool:
 		return false
 	
 	# Do not go on other enemies
-	if not ignore_entities and MapUtility.tile_has_entity(map_pos):
+	if not ignore_entities and MapUtility.tile_has_enemy(map_pos):
 		return false
 	
 	return true

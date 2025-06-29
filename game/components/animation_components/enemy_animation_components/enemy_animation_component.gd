@@ -6,6 +6,8 @@ extends Node2D
 
 var actor: Node2D
 
+signal exploded()
+
 func _ready() -> void:
 	actor = get_parent()
 	
@@ -32,6 +34,13 @@ func _on_animation_finished(anim_name: String) -> void:
 	
 	if anim_name == "death":
 		actor.queue_free()
+	
+	if anim_name == "explode":
+		exploded.emit()
+		actor.queue_free()
+
+func play_explode() -> void:
+	animation_player.play("explode")
 
 func face_direction(direction: Vector2i):
 	if direction.length() > 1:
