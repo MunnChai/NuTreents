@@ -1,6 +1,5 @@
-[gd_scene load_steps=30 format=3 uid="uid://cuxllgx5nt2bc"]
+[gd_scene load_steps=29 format=3 uid="uid://cuxllgx5nt2bc"]
 
-[ext_resource type="Script" uid="uid://bdotlfxvb7j6r" path="res://enemies/enemy_composed.gd" id="1_m8kpx"]
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="2_abtb5"]
 [ext_resource type="Texture2D" uid="uid://dyax385joht5m" path="res://enemies/sheets/tank_speedle_sheet.png" id="3_j7sqq"]
 [ext_resource type="Texture2D" uid="uid://bxm7m784x6nwe" path="res://enemies/sheets/tank_speedle_eye_sheet.png" id="4_raewt"]
@@ -38,7 +37,6 @@ resource_local_to_scene = true
 radius = 1.0
 
 [node name="SpeedleComposed" type="Node2D"]
-script = ExtResource("1_m8kpx")
 
 [node name="ShadowComponent" parent="." instance=ExtResource("2_abtb5")]
 
