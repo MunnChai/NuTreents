@@ -12,4 +12,7 @@ hp = 20.0
 action_cooldown = 0.5
 attack_damage = 4.0
 attack_range = 1
+earliest_spawn_day = 6
+spawn_weight = 300
+spawn_point_cost = 20
 metadata/_custom_type_script = "uid://cq0shh8yxktgu"

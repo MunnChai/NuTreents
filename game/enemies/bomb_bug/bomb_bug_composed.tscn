@@ -103,4 +103,7 @@ sound_effect_name = "speedle_die"
 explode_range = 2.0
 damage = 2.0
 
+[node name="ExplosionRangeComponent" parent="." instance=ExtResource("16_ht4jl")]
+range = 2
+
 [editable path="HurtboxComponent"]
