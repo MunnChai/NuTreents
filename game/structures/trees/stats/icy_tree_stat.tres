@@ -7,7 +7,7 @@
 script = ExtResource("1_si707")
 name = "Icy Tree"
 id = "icy_tree"
-description = "Icy branches freeze enemies upon contact."
+description = "Icy branches freeze enemies upon contact"
 tree_icon = ExtResource("2_si707")
 hp = 15
 max_water = 3

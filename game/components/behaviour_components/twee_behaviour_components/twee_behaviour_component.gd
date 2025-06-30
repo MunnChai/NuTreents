@@ -133,7 +133,7 @@ func apply_data_resource(tree_resource: Resource):
 	is_large = tree_resource.is_large
 	
 	if is_large:
-		tree_stat_component.set_upgraded_stats_from_resource()
+		upgrade_tree()
 	
 	health_component.current_health = tree_resource.hp
 	
