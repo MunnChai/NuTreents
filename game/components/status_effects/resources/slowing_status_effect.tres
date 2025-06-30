@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SlowingStatusEffect" load_steps=4 format=3 uid="uid://bfwx873k8yrj1"]
+
+[ext_resource type="Texture2D" uid="uid://bty0wrfy4gl0t" path="res://components/status_effects/icons/slowed_icon.png" id="1_k6b4n"]
+[ext_resource type="PackedScene" uid="uid://c35byladg6nkn" path="res://components/status_effects/particles/slowed_particles.tscn" id="2_i8phx"]
+[ext_resource type="Script" uid="uid://ci03jyubih40g" path="res://components/status_effects/scripts/slowing_status_effect.gd" id="2_u1n04"]
+
+[resource]
+script = ExtResource("2_u1n04")
+slow_multiplier = 0.5
+duration = 4.0
+color_modulate = Color(0, 0.666667, 1, 1)
+effect_icon = ExtResource("1_k6b4n")
+particles = ExtResource("2_i8phx")
+metadata/_custom_type_script = "uid://ci03jyubih40g"

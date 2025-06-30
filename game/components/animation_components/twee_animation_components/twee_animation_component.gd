@@ -15,6 +15,8 @@ const GREEN_TREE_DIE = preload("res://structures/trees/scenes/death/green_tree_d
 @export var large_uv_offset: float = 0.1
 @export var small_uv_offset: float = 0.62
 
+@export var spawn_leaves_on_death: bool = true
+
 @export_group("Components")
 @export var animation_player: AnimationPlayer
 @export var sprite_2d: Sprite2D
@@ -82,9 +84,12 @@ func play_death_animation() -> void:
 	
 	await get_tree().create_timer(FLASH_DURATION).timeout
 	
-	if animation_player.current_animation == large_animation_name: # Temp fix: Prevent small trees from spawning big tree die vfx
+	# Temp fix: Prevent small trees from spawning big tree die vfx
+	if spawn_leaves_on_death and \
+		animation_player.current_animation != small_animation_name and \
+		animation_player.current_animation != "grow_small": 
 		var death_vfx = GREEN_TREE_DIE.instantiate()
-		get_parent().get_parent().add_child(death_vfx) # Munn; So scuffed lol
+		Global.structure_map.add_child(death_vfx) # Munn: So scuffed lol
 		death_vfx.global_position = global_position
 	
 	death_finished.emit()
