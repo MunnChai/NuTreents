@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bnfqehf31racc"]
+
+[ext_resource type="Script" uid="uid://dw077n56o8g48" path="res://ui/cursor/isometric_cursor/isometric_cursor.gd" id="1_wl2m8"]
+[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/info_box/info_box_detection.gd" id="2_131un"]
+
+[node name="IsometricCursor" type="Marker2D"]
+script = ExtResource("1_wl2m8")
+
+[node name="InfoBoxDetector" type="Node" parent="."]
+script = ExtResource("2_131un")

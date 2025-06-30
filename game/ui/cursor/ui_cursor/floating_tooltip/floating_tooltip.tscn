@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3xlpptughfmd"]
+
+[ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="1_v7cq5"]
+[ext_resource type="Script" uid="uid://tfj0vrh4jwxq" path="res://ui/cursor/ui_cursor/floating_tooltip/floating_tooltip.gd" id="1_w81qv"]
+[ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="2_w81qv"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_rjktu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1dai2"]
+
+[node name="FloatingTooltip" type="PanelContainer"]
+offset_right = 100.0
+offset_bottom = 35.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1dai2")
+script = ExtResource("1_w81qv")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+modulate = Color(0, 0, 0, 0.592157)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("1_v7cq5")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="ArrowRect" type="TextureRect" parent="NinePatchRect"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("2_w81qv")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="NinePatchRect"]
+visible = false
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 2.01
+offset_bottom = 2.01
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.639216)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 11
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 11
+
+[node name="TooltipText" type="RichTextLabel" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_rjktu")
+bbcode_enabled = true
+text = "TOOLTIP TEXT!"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

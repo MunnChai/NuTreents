@@ -26,14 +26,14 @@ func _update_cursor(delta: float) -> void:
 	#print(Input.get_current_cursor_shape())
 	
 	if current_device_type == DeviceType.KEYBOARD_MOUSE:
-		Cursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
+		IsometricCursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
 		VirtualCursor.instance.hide()
 	
 	if current_device_type == DeviceType.CONTROLLER:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 		var cursor_move_direction = Vector2(Input.get_axis("cursor_left", "cursor_right"), Input.get_axis("cursor_up", "cursor_down")).normalized()
 		VirtualCursor.instance.offset_position += cursor_move_direction * Settings.get_setting_or_default("virtual_cursor_speed", 50.0) * TimeUtil.unscaled_delta(delta)
-		Cursor.instance.move_to(VirtualCursor.instance.global_position)
+		IsometricCursor.instance.move_to(IsometricCursor.instance.global_position)
 		VirtualCursor.instance.show()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -46,16 +46,16 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	
 	if (Input.is_action_pressed("lmb")): # We want press and hold to work...
-		if not Cursor.instance.can_interact():
+		if not IsometricCursor.instance.can_interact():
 			return
-		Cursor.instance.do_primary_action()
+		IsometricCursor.instance.do_primary_action()
 	else:
-		Cursor.instance.attempted_already = false
+		IsometricCursor.instance.attempted_already = false
 	
 	if (Input.is_action_just_pressed("rmb")): # Only deal with on click
-		if not Cursor.instance.can_interact():
+		if not IsometricCursor.instance.can_interact():
 			return
-		Cursor.instance.do_secondary_action()
+		IsometricCursor.instance.do_secondary_action()
 	
 	## Controller reset to centre of screen...
 	if Input.is_action_just_pressed("reset_cursor"):
@@ -68,7 +68,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		TreeMenu.instance.next_tree()
 	
 	if Input.is_action_just_pressed("water_bucket"):
-		Cursor.instance.do_water_bucket_from_god()
+		IsometricCursor.instance.do_water_bucket_from_god()
 
 #endregion
 

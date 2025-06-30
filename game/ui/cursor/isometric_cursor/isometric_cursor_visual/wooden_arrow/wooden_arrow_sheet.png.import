@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw37ytuqi38ns"
-path="res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"
+uid="uid://bm0baq3q3jrlx"
+path="res://.godot/imported/wooden_arrow_sheet.png-f3457677852f141b9b8dc9a9efb74897.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/fog_tile_1.png"
-dest_files=["res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"]
+source_file="res://ui/cursor/isometric_cursor/isometric_cursor_visual/wooden_arrow/wooden_arrow_sheet.png"
+dest_files=["res://.godot/imported/wooden_arrow_sheet.png-f3457677852f141b9b8dc9a9efb74897.ctex"]
 
 [params]
 
