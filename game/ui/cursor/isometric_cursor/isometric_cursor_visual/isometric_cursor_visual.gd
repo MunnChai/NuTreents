@@ -103,6 +103,8 @@ func _update_visuals(delta: float) -> void:
 		var visual_arrow_component: VisualArrowComponent = Components.get_component(building_node, VisualArrowComponent)
 		if visual_arrow_component:
 			_set_arrow_height(visual_arrow_component.get_arrow_cursor_height(), visual_arrow_component.get_custom_height())
+		else:
+			_set_arrow_height(CursorWoodenArrow.ArrowHeight.LOW)
 		_show_structure_outline(iso_position)
 	
 	# SET THE ARROW BOBBING BASED ON WHAT IS ON THIS TILE...

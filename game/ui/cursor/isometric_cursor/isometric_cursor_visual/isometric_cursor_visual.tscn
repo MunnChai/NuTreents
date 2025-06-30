@@ -70,6 +70,7 @@ unique_name_in_owner = true
 
 [node name="WoodenArrow" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.588235)
 z_index = 25
 sprite_frames = SubResource("SpriteFrames_f33o1")
 frame_progress = 0.531519
