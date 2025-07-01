@@ -3,8 +3,10 @@ shader_type canvas_item;
 uniform float alpha = 1.0;
 uniform bool is_flashing = false;
 
+varying vec4 vertex_color; 
+
 void vertex() {
-	// Called for every vertex the material is visible on.
+	vertex_color = COLOR;
 }
 
 void fragment() {
@@ -14,7 +16,7 @@ void fragment() {
 	if (is_flashing) {
 		COLOR = vec4(1.0, 1.0, 1.0, tex_color.a * alpha);
 	} else {
-		COLOR = vec4(gray, gray, gray, tex_color.a * alpha);
+		COLOR = vec4(vertex_color.r * gray, vertex_color.g * gray, vertex_color.b * gray, tex_color.a * alpha);
 	}
 }
 
