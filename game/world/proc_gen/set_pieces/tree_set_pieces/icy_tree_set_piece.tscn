@@ -1,60 +1,60 @@
-[gd_scene load_steps=13 format=4 uid="uid://sucwt6sj65sy"]
+[gd_scene load_steps=13 format=4 uid="uid://cemofwr6pvnby"]
 
-[ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_xvf20"]
-[ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_e256j"]
-[ext_resource type="Texture2D" uid="uid://cemj3fv64h5p" path="res://structures/trees/icons/spiky_tree.png" id="3_e256j"]
-[ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="4_0whg8"]
-[ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="5_5wi47"]
-[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="5_ttkdn"]
+[ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_6ifap"]
+[ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_raqcf"]
+[ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="3_c3ned"]
+[ext_resource type="Texture2D" uid="uid://dexcrdfmurf6c" path="res://structures/trees/icons/icy_tree.png" id="4_6ifap"]
+[ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_3liqj"]
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="6_j0ujk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5wi47"]
 resource_local_to_scene = true
-shader = ExtResource("5_5wi47")
+shader = ExtResource("3_c3ned")
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iu88x"]
-shader = ExtResource("5_5wi47")
+shader = ExtResource("3_c3ned")
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ttkdn"]
 resource_local_to_scene = true
-atlas = ExtResource("5_ttkdn")
+atlas = ExtResource("6_j0ujk")
 region = Rect2(224, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
-atlas = ExtResource("5_ttkdn")
+atlas = ExtResource("6_j0ujk")
 region = Rect2(224, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
 resource_local_to_scene = true
-atlas = ExtResource("5_ttkdn")
+atlas = ExtResource("6_j0ujk")
 region = Rect2(192, 64, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k03om"]
 resource_local_to_scene = true
-atlas = ExtResource("5_ttkdn")
+atlas = ExtResource("6_j0ujk")
 region = Rect2(192, 64, 32, 64)
 
-[node name="SpikyTreeSetPiece" instance=ExtResource("1_xvf20")]
-biome = 2
-tree_type = 9
+[node name="IcyTreeSetPiece" instance=ExtResource("1_6ifap")]
+biome = 3
+tree_type = 10
 
 [node name="TileMapLayer" parent="." index="0"]
-tile_map_data = PackedByteArray("AAD//wAAAAADABYAAAD/////AAACABYAAAD+////AAAAABYAAAD+/wAAAAAAABYAAAD+/wEAAAABABYAAAD//wEAAAAAABYAAAAAAAEAAAAAABYAAAAAAAAAAAABABYAAAAAAP//AAADABYAAAAAAP7/AAADABYAAAD9////AAADABYAAAD9/wAAAAADABYAAAD9/wEAAAAAABYAAAD+/wIAAAADABYAAAAAAAIAAAADABYAAAABAAIAAAADABYAAAABAAAAAAABABYAAAABAP//AAABABYAAAD///7/AAACABYAAAD9/wIAAAABABYAAAD//wIAAAAAABYAAAABAAEAAAACABYAAAABAP7/AAACABYAAAD+//7/AAABABYAAAD9//7/AAACABYAAAA=")
+tile_map_data = PackedByteArray("AAD//wAAAAACABgAAQD/////AAABABgAAQD+////AAACABgAAQD+/wAAAAACABgAAQD+/wEAAAABABgAAQD//wEAAAABABgAAQAAAAEAAAADABgAAQAAAAAAAAAAABgAAQAAAP//AAADABgAAQAAAP7/AAABABgAAQD9////AAAAABgAAQD9/wAAAAACABgAAQD9/wEAAAACABgAAQD+/wIAAAADABgAAQAAAAIAAAAAABgAAQABAAIAAAAAABgAAQABAAAAAAADABgAAQABAP//AAABABgAAQD///7/AAADABgAAQD9/wIAAAACABgAAQD//wIAAAADABgAAQABAAEAAAAAABgAAQABAP7/AAABABgAAQD+//7/AAAAABgAAQD9//7/AAAAABgAAQA=")
 
-[node name="PetrifiedTree" parent="Structures" index="0" instance=ExtResource("2_e256j")]
+[node name="PetrifiedTree" parent="Structures" index="0" instance=ExtResource("2_raqcf")]
 
 [node name="PetrifiedComponent" parent="Structures/PetrifiedTree" index="1"]
-tree_type = 9
+tree_type = 10
 
 [node name="PetrifiedSprite" parent="Structures/PetrifiedTree/PetrifyVisuals" index="2"]
 material = SubResource("ShaderMaterial_5wi47")
-texture = ExtResource("3_e256j")
+texture = ExtResource("4_6ifap")
 
-[node name="DecorComposed" parent="Structures" index="1" instance=ExtResource("4_0whg8")]
+[node name="DecorComposed" parent="Structures" index="1" instance=ExtResource("5_3liqj")]
 position = Vector2(-32, 0)
 
 [node name="Sprite2D" parent="Structures/DecorComposed" index="0"]
@@ -67,7 +67,7 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed" index="3"]
 set_type_on_ready = false
 
-[node name="DecorComposed2" parent="Structures" index="2" instance=ExtResource("4_0whg8")]
+[node name="DecorComposed2" parent="Structures" index="2" instance=ExtResource("5_3liqj")]
 position = Vector2(32, 0)
 
 [node name="Sprite2D" parent="Structures/DecorComposed2" index="0"]
@@ -80,7 +80,7 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed2" index="3"]
 set_type_on_ready = false
 
-[node name="DecorComposed3" parent="Structures" index="3" instance=ExtResource("4_0whg8")]
+[node name="DecorComposed3" parent="Structures" index="3" instance=ExtResource("5_3liqj")]
 position = Vector2(-16, -24)
 
 [node name="Sprite2D" parent="Structures/DecorComposed3" index="0"]
@@ -94,7 +94,7 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
 set_type_on_ready = false
 
-[node name="DecorComposed4" parent="Structures" index="4" instance=ExtResource("4_0whg8")]
+[node name="DecorComposed4" parent="Structures" index="4" instance=ExtResource("5_3liqj")]
 position = Vector2(16, 24)
 
 [node name="Sprite2D" parent="Structures/DecorComposed4" index="0"]
