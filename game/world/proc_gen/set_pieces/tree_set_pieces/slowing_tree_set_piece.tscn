@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://ba6uu8vf61rtv"]
+[gd_scene load_steps=12 format=4 uid="uid://ba6uu8vf61rtv"]
 
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_woc8k"]
 [ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_nylbs"]
@@ -7,9 +7,16 @@
 [ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="5_m1mnt"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="5_nylbs"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nylbs"]
+resource_local_to_scene = true
+shader = ExtResource("5_nylbs")
+shader_parameter/alpha = 1.0
+shader_parameter/is_flashing = false
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xd6jd"]
 shader = ExtResource("5_nylbs")
 shader_parameter/alpha = 1.0
+shader_parameter/is_flashing = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
@@ -26,17 +33,20 @@ resource_local_to_scene = true
 atlas = ExtResource("5_m1mnt")
 region = Rect2(192, 192, 32, 64)
 
-[node name="SetPieceBase" instance=ExtResource("1_woc8k")]
+[node name="SlowingTreeSetPiece" instance=ExtResource("1_woc8k")]
+biome = 3
+tree_type = 7
 
 [node name="TileMapLayer" parent="." index="0"]
 tile_map_data = PackedByteArray("AAD//wAAAAABABgAAQD/////AAAAABgAAQD+////AAAAABgAAQD//wEAAAACABgAAQAAAAAAAAACABgAAQAAAP//AAABABgAAQABAAAAAAADABgAAQD///7/AAADABgAAQD//wIAAAABABgAAQABAAEAAAABABgAAQACAAAAAAABABgAAQD9/wAAAAACABgAAQD+/wAAAAABABgAAQD+/wEAAAAAABgAAQAAAAEAAAABABgAAQA=")
 
 [node name="PetrifiedTree" parent="Structures" index="0" instance=ExtResource("2_nylbs")]
 
-[node name="PetrifiedComponent" parent="Structures/PetrifiedTree" index="0"]
+[node name="PetrifiedComponent" parent="Structures/PetrifiedTree" index="1"]
 tree_type = 7
 
 [node name="PetrifiedSprite" parent="Structures/PetrifiedTree/PetrifyVisuals" index="2"]
+material = SubResource("ShaderMaterial_nylbs")
 texture = ExtResource("3_woc8k")
 
 [node name="DecorComposed2" parent="Structures" index="1" instance=ExtResource("4_mvo10")]

@@ -51,6 +51,7 @@ WorldSettings="*res://world/world_settings/world_settings.tscn"
 MapUtility="*res://world/map_utility.gd"
 EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
 DebugConsole="*res://addons/debug_console/debug_console_global.gd"
+SetPieceRegistry="*res://world/proc_gen/set_pieces/set_piece_registry.gd"
 
 [display]
 
