@@ -3,6 +3,8 @@ extends CursorAction
 
 ## The DESTROY ACTION taken by the Cursor
 
+## BUG: Possible double execute issue?
+
 ## Perform RIGHT MOUSE BUTTON action
 ## - Removing trees
 ## - Destroying buildings
