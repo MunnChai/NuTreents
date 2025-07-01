@@ -3,6 +3,12 @@ extends Node
 
 ## Handles device detection and propogation of certain inputs into the game
 
+# The @export variables are no longer needed, as we will now use the OverlayManager.
+# @export var health_view_panel: Control
+# @export var water_view_panel: Control
+
+const FAST_FORWARD_SCALE = 2.5
+
 func _input(event: InputEvent) -> void:
 	_update_device_type(event)
 
@@ -11,36 +17,45 @@ func _input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	_update_cursor(delta)
 
-#func _notification(blah):
-	#match blah:
-		#NOTIFICATION_WM_MOUSE_EXIT:
-			#Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-			#print('Mouse left window')
-		#NOTIFICATION_WM_MOUSE_ENTER:
-			##Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
-			#print('Mouse entered window')
-			#
+	# --- Fast Forward Logic ---
+	if Input.is_action_pressed("fast_forward"):
+		Engine.time_scale = FAST_FORWARD_SCALE
+	elif Input.is_action_just_released("fast_forward"):
+		Engine.time_scale = 1.0
 
 ## Updates the cursor/virtual cursor POSITION based on input type...
 func _update_cursor(delta: float) -> void:
-	#print(Input.get_current_cursor_shape())
-	
 	if current_device_type == DeviceType.KEYBOARD_MOUSE:
-		Cursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
-		VirtualCursor.instance.hide()
+		if is_instance_valid(Cursor.instance) and is_instance_valid(Global.terrain_map):
+			Cursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
+		if is_instance_valid(VirtualCursor.instance):
+			VirtualCursor.instance.hide()
 	
 	if current_device_type == DeviceType.CONTROLLER:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-		var cursor_move_direction = Vector2(Input.get_axis("cursor_left", "cursor_right"), Input.get_axis("cursor_up", "cursor_down")).normalized()
-		VirtualCursor.instance.offset_position += cursor_move_direction * Settings.get_setting_or_default("virtual_cursor_speed", 50.0) * TimeUtil.unscaled_delta(delta)
-		Cursor.instance.move_to(VirtualCursor.instance.global_position)
-		VirtualCursor.instance.show()
+		var cursor_move_direction = Input.get_vector("cursor_left", "cursor_right", "cursor_up", "cursor_down")
+		if is_instance_valid(VirtualCursor.instance):
+			VirtualCursor.instance.offset_position += cursor_move_direction * Settings.get_setting_or_default("virtual_cursor_speed", 50.0) * TimeUtil.unscaled_delta(delta)
+			VirtualCursor.instance.show()
+		if is_instance_valid(Cursor.instance) and is_instance_valid(VirtualCursor.instance):
+			Cursor.instance.move_to(VirtualCursor.instance.global_position)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Game is not in playing mode...
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
-	
+		
+	# --- View Toggle Logic (Using OverlayManager) ---
+	if event.is_action_pressed("toggle_health_view"):
+		_toggle_overlay(OverlayManager.OverlayType.HEALTH_OVERLAY)
+		get_viewport().set_input_as_handled()
+
+	if event.is_action_pressed("toggle_water_view"):
+		_toggle_overlay(OverlayManager.OverlayType.WATER_OVERLAY)
+		get_viewport().set_input_as_handled()
+
+
 	# Mother tree is dead...
 	if (TreeManager.is_mother_dead()):
 		return
@@ -59,16 +74,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	## Controller reset to centre of screen...
 	if Input.is_action_just_pressed("reset_cursor"):
-		VirtualCursor.instance.offset_position = Vector2.ZERO
-	
-	## Controller shift left/right in menu...
-	if Input.is_action_just_pressed("menu_left"):
-		TreeMenu.instance.previous_tree()
-	if Input.is_action_just_pressed("menu_right"):
-		TreeMenu.instance.next_tree()
+		if is_instance_valid(VirtualCursor.instance):
+			VirtualCursor.instance.offset_position = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("water_bucket"):
-		Cursor.instance.do_water_bucket_from_god()
+		if is_instance_valid(Cursor.instance):
+			Cursor.instance.do_water_bucket_from_god()
+
+# This new helper function contains the logic for toggling overlays.
+func _toggle_overlay(overlay_type: OverlayManager.OverlayType) -> void:
+	if not is_instance_valid(OverlayManager.instance):
+		return
+		
+	var om = OverlayManager.instance
+	
+	# If the overlay we want to toggle is already the current one, hide it.
+	if om.current_overlay == om.overlays[overlay_type]:
+		om.hide_overlay()
+	# Otherwise, show the new overlay (which will automatically hide any other one).
+	else:
+		om.show_overlay(overlay_type)
 
 #endregion
 
@@ -114,4 +139,4 @@ func get_device_type(event: InputEvent) -> DeviceType:
 		return DeviceType.CONTROLLER
 	return DeviceType.UNKNOWN
 
-#endregion
+#endreg

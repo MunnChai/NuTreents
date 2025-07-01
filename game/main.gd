@@ -49,6 +49,11 @@ func load_world(session_data: Dictionary) -> void:
 	Global.clock.set_curr_day(session_data["current_day"])
 	Global.clock.set_curr_day_sec(session_data["current_time"])
 	
+	# --- BUG FIX ---
+	# After setting the time data, we must call a function to force the
+	# clock's visual state (the day/night animation) to update immediately.
+	Global.clock.force_update_visuals()
+	
 	# Set weather
 	WeatherManager.instance.switch_to(session_data["current_weather"], session_data["weather_time_remaining"])
 	
