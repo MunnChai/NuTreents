@@ -9,12 +9,13 @@ extends Control
 ## TODO
 ## - Implement clamp to camera bounds
 ## - Gamepad support
+## - Priority dictionary, for juggling multiple overrides
 
 @export_category("Cursor Texture")
 const DEFAULT_CURSOR_SHAPE := CursorShape.CURSOR_ARROW
 ## Shape to texture map... for animations, use an AnimatedTexture
 @export var cursor_shape_textures: Dictionary[CursorShape, Texture2D]
-var cursor_shape_override: CursorShape = -1 ## Force override the CursorShape... if isn't -1
+var cursor_shape_override: Input.CursorShape = -1 ## Force override the CursorShape... if isn't -1
 var force_wait := false ## Force the WAITING... shape
 
 @onready var cursor_icon: TextureRect = %CursorIcon
@@ -59,6 +60,9 @@ func _update_cursor_shape() -> void:
 		current_shape = cursor_shape_override
 	
 	set_texture_from_cursor_shape(current_shape)
+
+func reset_cursor_shape_override() -> void:
+	cursor_shape_override = -1
 
 ## Retrieves the corresponding texture from the shape-texture map
 ## and sets the texture of the cursor

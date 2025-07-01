@@ -52,6 +52,6 @@ id = "city_building"
 [node name="OutlineComponent" parent="." instance=ExtResource("9_uc0t6")]
 
 [node name="VisualArrowComponent" parent="." instance=ExtResource("10_6h5io")]
-arrow_height = 1
+arrow_height = 2
 
 [node name="StructureBehaviourComponent" parent="." instance=ExtResource("2_vgmj2")]

@@ -23,9 +23,9 @@ func _process(delta: float) -> void:
 	global_position = current_global_position
 
 	if is_playing() and is_enabled:
-		Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+		UICursor.instance.cursor_shape_override = Input.CursorShape.CURSOR_POINTING_HAND
 	else:
-		Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+		UICursor.instance.cursor_shape_override = -1
 
 func set_cursor_position(new_position: Vector2) -> void:
 	cursor_position = new_position

@@ -13,9 +13,9 @@ func _ready() -> void:
 	#add_to_group("structure_map")
 	y_sort_enabled = true
 
-#func _process(delta: float) -> void:
-	#if Input.is_action_just_pressed("debug_button"):
-		#add_structure(local_to_map(get_mouse_coords()), StructureRegistry.get_new_structure(Global.StructureType.PETRIFIED_TREE))
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug_button"):
+		add_structure(local_to_map(get_mouse_coords()), StructureRegistry.get_new_structure(Global.StructureType.PETRIFIED_TREE))
 
 func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bool = false) -> bool:
 	if not structure:

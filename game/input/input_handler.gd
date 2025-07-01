@@ -48,14 +48,14 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (Input.is_action_pressed("lmb")): # We want press and hold to work...
 		if not IsometricCursor.instance.can_interact():
 			return
-		IsometricCursor.instance.do_primary_action()
+		IsometricCursor.instance.try_do_primary_action()
 	else:
 		IsometricCursor.instance.attempted_already = false
 	
 	if (Input.is_action_just_pressed("rmb")): # Only deal with on click
 		if not IsometricCursor.instance.can_interact():
 			return
-		IsometricCursor.instance.do_secondary_action()
+		IsometricCursor.instance.try_do_secondary_action()
 	
 	## Controller reset to centre of screen...
 	if Input.is_action_just_pressed("reset_cursor"):
