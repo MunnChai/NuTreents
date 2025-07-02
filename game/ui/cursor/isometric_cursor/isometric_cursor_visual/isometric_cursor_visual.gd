@@ -139,7 +139,7 @@ func _update_visuals(delta: float) -> void:
 				_set_arrow_visible(true)
 				_set_arrow_bobbing(false)
 			else:
-				# We are highlighting something that can be bobbed
+				## We are highlighting something that can be bobbed
 				var building_node = structure_map.get_building_node(iso_position)
 				if Components.has_component(building_node, TooltipIdentifierComponent):
 					enable()
@@ -164,7 +164,14 @@ func _update_visuals(delta: float) -> void:
 						_set_arrow_visible(true)
 						_set_arrow_bobbing(false)
 				else:
-					disable()
+					var enemy = EnemyManager.instance.get_enemy_at(iso_position)
+					## We are highlighting an enemy
+					if enemy:
+						_set_highlight_modulate(RED)
+						_set_arrow_visible(true)
+						_set_arrow_bobbing(false)
+					else:
+						disable()
 		IsometricCursor.HoverFlag.NOT_FERTILE:
 			if terrain_map.is_concrete(iso_position):
 				enable()
@@ -187,9 +194,13 @@ func _update_visuals(delta: float) -> void:
 			# Fertile ground!
 			if terrain_map.is_fertile(iso_position):
 				enable()
-				if _can_plant():
-					_set_highlight_modulate(BLUE)
-					_set_arrow_bobbing(true)
+				if _can_plant_on_tile():
+					if _has_enough_n_to_plant():
+						_set_highlight_modulate(BLUE)
+						_set_arrow_bobbing(true)
+					else:
+						_set_highlight_modulate(YELLOW)
+						_set_arrow_bobbing(false)
 				else:
 					_set_highlight_modulate(YELLOW)
 					_set_arrow_bobbing(false)
@@ -197,12 +208,9 @@ func _update_visuals(delta: float) -> void:
 		_:
 			pass ## How did we get here?
 
-func _can_plant() -> bool:
+## Tile validation?
+func _can_plant_on_tile() -> bool:
 	var type := TreeMenu.instance.get_currently_selected_tree_type()
-	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(type)
-	
-	if tree_stat == null:
-		return false
 	
 	## TILE VALIDATION
 	var structure_map := Global.structure_map
@@ -217,6 +225,14 @@ func _can_plant() -> bool:
 			if structure_map.tile_scene_map.has(p) and Components.has_component(structure_map.tile_scene_map[p], FactoryRemainsBehaviourComponent):
 				return false
 	
+	return true
+
+## Enough nutreents?
+func _has_enough_n_to_plant() -> bool:
+	var type := TreeMenu.instance.get_currently_selected_tree_type()
+	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(type)
+	if tree_stat == null:
+		return false
 	## COST VALIDATION
 	return TreeManager.enough_n(tree_stat.cost_to_purchase)
 
