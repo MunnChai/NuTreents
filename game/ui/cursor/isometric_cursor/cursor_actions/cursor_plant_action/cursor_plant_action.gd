@@ -20,6 +20,8 @@ func execute(cursor: IsometricCursor) -> void:
 	match flag:
 		IsometricCursor.HoverFlag.VOID:
 			return
+		IsometricCursor.HoverFlag.OBSCURED:
+			return
 		IsometricCursor.HoverFlag.TOO_FAR_AWAY:
 			SfxManager.play_sound_effect("ui_fail")
 			PopupManager.create_popup(tr(&"WARN_TOO_FAR_AWAY"), structure_map.map_to_local(p))

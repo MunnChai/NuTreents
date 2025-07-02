@@ -58,6 +58,7 @@ func set_iso_position(new_iso_pos: Vector2i) -> void:
 enum HoverFlag {
 	VOID,
 	TOO_FAR_AWAY,
+	OBSCURED,
 	OCCUPIED,
 	NOT_FERTILE,
 	OK_FOR_PLANTING,
@@ -69,10 +70,15 @@ func get_hover_flag() -> HoverFlag:
 	var p := iso_position
 	var terrain_map := Global.terrain_map
 	var structure_map := Global.structure_map
+	var fog_map := Global.fog_map
 	
 	## Early termination for void tiles
 	if terrain_map.is_void(p):
 		return HoverFlag.VOID
+	
+	## Early termination for foggy tiles
+	if fog_map.is_tile_foggy(p):
+		return HoverFlag.OBSCURED
 	
 	## Early termination for far away tiles
 	if not TreeManager.is_reachable(p, true):

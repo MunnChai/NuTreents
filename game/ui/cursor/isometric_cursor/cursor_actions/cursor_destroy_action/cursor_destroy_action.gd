@@ -18,6 +18,8 @@ func execute(cursor: IsometricCursor) -> void:
 	match hover_flag:
 		IsometricCursor.HoverFlag.VOID:
 			return
+		IsometricCursor.HoverFlag.OBSCURED:
+			return
 		IsometricCursor.HoverFlag.TOO_FAR_AWAY:
 			return
 		_:
