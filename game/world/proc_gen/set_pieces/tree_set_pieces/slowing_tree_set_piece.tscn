@@ -21,17 +21,17 @@ shader_parameter/is_flashing = false
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
 atlas = ExtResource("5_m1mnt")
-region = Rect2(224, 192, 32, 64)
+region = Rect2(160, 256, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
 resource_local_to_scene = true
 atlas = ExtResource("5_m1mnt")
-region = Rect2(160, 192, 32, 64)
+region = Rect2(32, 256, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k03om"]
 resource_local_to_scene = true
 atlas = ExtResource("5_m1mnt")
-region = Rect2(192, 192, 32, 64)
+region = Rect2(96, 256, 32, 64)
 
 [node name="SlowingTreeSetPiece" instance=ExtResource("1_woc8k")]
 biome = 3

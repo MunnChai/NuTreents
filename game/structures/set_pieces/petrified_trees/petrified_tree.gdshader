@@ -3,7 +3,7 @@ shader_type canvas_item;
 uniform float alpha = 1.0;
 uniform bool is_flashing = false;
 
-varying vec4 vertex_color; 
+varying vec4 vertex_color;
 
 void vertex() {
 	vertex_color = COLOR;
@@ -12,7 +12,7 @@ void vertex() {
 void fragment() {
 	vec4 tex_color = texture(TEXTURE, UV);
 	float gray = 0.299 * tex_color.r + 0.587 * tex_color.g + 0.114 * tex_color.b;
-	
+
 	if (is_flashing) {
 		COLOR = vec4(1.0, 1.0, 1.0, tex_color.a * alpha);
 	} else {
