@@ -12,6 +12,7 @@ const ALMANAC_ENEMY_CARD = preload("res://ui/screen_ui/almanac_menu/almanac_card
 
 var starting_position := position
 
+var currently_selected_card: AlmanacCardBase = null
 var previous_time_scale: float
 var is_paused: bool
 
@@ -41,7 +42,7 @@ func populate_tree_menu():
 	for t in trees:
 		var card: AlmanacTreeCard = ALMANAC_TREE_CARD.instantiate()
 		card.type = t
-		card.pressed.connect(_on_tree_card_pressed.bind(card))
+		card.pressed.connect(_on_card_pressed.bind(card))
 		tree_menu.add_child(card)
 	
 func populate_enemy_menu():
@@ -49,13 +50,24 @@ func populate_enemy_menu():
 	for e in enemies:
 		var card: AlmanacEnemyCard = ALMANAC_ENEMY_CARD.instantiate()
 		card.type = e
-		card.pressed.connect(_on_enemy_card_pressed.bind(card))
+		card.pressed.connect(_on_card_pressed.bind(card))
 		enemy_menu.add_child(card)
 
-func _on_tree_card_pressed(card: AlmanacTreeCard):
-	return
+func _on_card_pressed(card: AlmanacCardBase):
+	if currently_selected_card != null:
+		currently_selected_card.deselect()
+	
+	if currently_selected_card == card:
+		currently_selected_card = null
+		show_card_details(null)
+		return
+	
+	currently_selected_card = card
+	card.select()
+	
+	show_card_details(card)
 
-func _on_enemy_card_pressed(card: AlmanacEnemyCard):
+func show_card_details(card: AlmanacCardBase):
 	return
 
 func open(previous_menu: ScreenMenu):
