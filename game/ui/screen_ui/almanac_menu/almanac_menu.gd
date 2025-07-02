@@ -1,12 +1,62 @@
 class_name AlmanacMenu
 extends ScreenMenu
 
+const ALMANAC_TREE_CARD = preload("res://ui/screen_ui/almanac_menu/almanac_card/almanac_tree_card.tscn")
+const ALMANAC_ENEMY_CARD = preload("res://ui/screen_ui/almanac_menu/almanac_card/almanac_enemy_card.tscn")
+
 @onready var back_button = %BackButton
+@onready var tree_menu = %TreeGrid
+@onready var enemy_menu = %EnemyGrid
+@onready var tabs = %Tabs
+@onready var details = %Details
 
 var starting_position := position
 
 var previous_time_scale: float
 var is_paused: bool
+
+func _ready() -> void:
+	connect_signals()
+
+func connect_signals():
+	back_button.pressed.connect(on_back_button_pressed)
+	tabs.tab_changed.connect(update_menu)
+	
+
+func clear_menus():
+	for card in tree_menu.get_children():
+		card.queue_free()
+	for card in enemy_menu.get_children():
+		card.queue_free()
+
+func update_menu(tab: int):
+	clear_menus()
+	if tab == 0:
+		populate_tree_menu()
+	else:
+		populate_enemy_menu()
+
+func populate_tree_menu():
+	var trees: Array[Global.TreeType] = AlmanacInfo.get_trees()
+	for t in trees:
+		var card: AlmanacTreeCard = ALMANAC_TREE_CARD.instantiate()
+		card.type = t
+		card.pressed.connect(_on_tree_card_pressed.bind(card))
+		tree_menu.add_child(card)
+	
+func populate_enemy_menu():
+	var enemies: Array[Global.EnemyType] = AlmanacInfo.get_enemies()
+	for e in enemies:
+		var card: AlmanacEnemyCard = ALMANAC_ENEMY_CARD.instantiate()
+		card.type = e
+		card.pressed.connect(_on_enemy_card_pressed.bind(card))
+		enemy_menu.add_child(card)
+
+func _on_tree_card_pressed(card: AlmanacTreeCard):
+	return
+
+func _on_enemy_card_pressed(card: AlmanacEnemyCard):
+	return
 
 func open(previous_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
@@ -15,6 +65,7 @@ func open(previous_menu: ScreenMenu):
 	position = position + Vector2.DOWN * 100.0
 	TweenUtil.whoosh(self, starting_position, 0.4)
 	TweenUtil.fade(self, 1.0, 0.1)
+	update_menu(0)
 
 func close(next_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
@@ -25,6 +76,8 @@ func close(next_menu: ScreenMenu):
 func _finish_close():
 	unpause_game() 
 
+func on_back_button_pressed():
+	ScreenUI.exit_menu()
 
 #region Pausing
 

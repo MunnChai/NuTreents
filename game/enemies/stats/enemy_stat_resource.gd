@@ -5,6 +5,10 @@ extends StatResource
 @export var id: String
 @export_multiline var description: String
 
+@export_group("EnemyCard")
+@export var enemy_icon: Texture2D
+@export var special_card_background_override: Texture2D
+
 @export_category("In Game Stats")
 @export var hp: float
 @export var action_cooldown: float

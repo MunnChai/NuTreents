@@ -95,7 +95,7 @@ func hide_content():
 	rich_text.text = ""
 
 func show_content_for_tree(tree_stat: TreeStatResource):
-	var content = "[i]" + tree_stat.name.to_upper() + "[/i]";
+	var content = "[i]" + tree_stat.name.to_upper() + "[/i]"
 	content += "\n\n"
 	content += desc_dictionary[tree_stat.id]
 	rich_text.text = content
