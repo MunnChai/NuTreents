@@ -54,20 +54,20 @@ func try_destroy_structure(structure: Node2D, p: Vector2i) -> void:
 	
 	## Huh... it's indestructable?
 	SfxManager.play_sound_effect("ui_fail")
-	PopupManager.create_popup("Indestructable!", structure_map.map_to_local(p))
+	PopupManager.create_popup(tr(&"WARN_INDESTRUCTIBLE"), structure_map.map_to_local(p))
 
 func try_destroy_tree(tree: Node2D, p: Vector2i) -> void:
 	var structure_map := Global.structure_map
 	
 	## MOTHER TREE CHECK PREVENTION
 	if Components.get_component(tree, TweeStatComponent).type == Global.TreeType.MOTHER_TREE:
-		PopupManager.create_popup("Cannot remove mother tree!", structure_map.map_to_local(p))
+		PopupManager.create_popup(tr(&"WARN_MOTHER_TREE_REMOVAL"), structure_map.map_to_local(p))
 		SfxManager.play_sound_effect("ui_fail")
 		return
 	
 	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
 	tree_behaviour_component.remove()
-	PopupManager.create_popup("Tree removed!", structure_map.map_to_local(p))
+	PopupManager.create_popup(tr(&"SUCCESS_TREE_REMOVAL"), structure_map.map_to_local(p))
 
 func try_destroy_destructable(structure: Node2D, p: Vector2i) -> void:
 	var structure_map := Global.structure_map
@@ -77,7 +77,7 @@ func try_destroy_destructable(structure: Node2D, p: Vector2i) -> void:
 	var cost: float = destructable_component.get_cost()
 	if not TreeManager.enough_n(cost):
 		SfxManager.play_sound_effect("ui_fail")
-		PopupManager.create_popup("Not enough nutrients!", structure_map.map_to_local(p))
+		PopupManager.create_popup(tr(&"WARN_NOT_ENOUGH_NUTREENTS"), structure_map.map_to_local(p))
 		return
 	TreeManager.consume_n(cost)
 	
@@ -87,14 +87,14 @@ func try_destroy_destructable(structure: Node2D, p: Vector2i) -> void:
 	var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
 	match structure_behaviour_component.type:
 		Global.StructureType.FACTORY:
-			PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(p))
+			PopupManager.create_popup(tr(&"SUCCESS_FACTORY_REMOVAL"), structure_map.map_to_local(p))
 		Global.StructureType.PETRIFIED_TREE: ## NOTE: TREE DE-PETRIFICATION / UN-PETRIFICATION IS REQUESTED HERE...
 			#PopupManager.create_popup("De-Petrified!", structure_map.map_to_local(map_pos))
 			var sprite_shatter_component: SpriteShatterComponent = Components.get_component(structure, SpriteShatterComponent, "", true)
 			if sprite_shatter_component:
 				await sprite_shatter_component.shatter_finished
 		_:
-			PopupManager.create_popup("Building destroyed!", structure_map.map_to_local(p))
+			PopupManager.create_popup(tr(&"SUCCESS_BUILDING_REMOVAL"), structure_map.map_to_local(p))
 	
 	## JUICE
 	SfxManager.play_sound_effect("concrete_break")
@@ -128,7 +128,7 @@ func try_destroy_tile(p: Vector2i) -> void:
 	## COST CHECK
 	if not TreeManager.enough_n(cost):
 		SfxManager.play_sound_effect("ui_fail")
-		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
+		PopupManager.create_popup(tr(&"WARN_NOT_ENOUGH_NUTREENTS"), structure_map.map_to_local(p))
 		return
 	TreeManager.consume_n(cost)
 	
@@ -143,9 +143,9 @@ func try_destroy_tile(p: Vector2i) -> void:
 	match tile_type:
 		TerrainMap.TileType.CITY:
 			SfxManager.play_sound_effect("concrete_break")
-			PopupManager.create_popup("Concrete removed!", structure_map.map_to_local(p))
+			PopupManager.create_popup(tr(&"SUCCESS_CONCRETE_REMOVAL"), structure_map.map_to_local(p))
 		TerrainMap.TileType.ROAD:
 			SfxManager.play_sound_effect("concrete_break")
-			PopupManager.create_popup("Road destroyed!", structure_map.map_to_local(p))
+			PopupManager.create_popup(tr(&"SUCCESS_ROAD_REMOVAL"), structure_map.map_to_local(p))
 
 #endregion

@@ -14,7 +14,7 @@ theme_override_styles/panel = SubResource("StyleBoxEmpty_1dai2")
 script = ExtResource("1_w81qv")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
-modulate = Color(0, 0, 0, 0.592157)
+modulate = Color(0, 0, 0, 0.854902)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3

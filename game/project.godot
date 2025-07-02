@@ -259,6 +259,10 @@ water_bucket={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://language/lang.en.translation", "res://language/lang.fr.translation")
+
 [layer_names]
 
 2d_physics/layer_1="Ally"

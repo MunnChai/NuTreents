@@ -22,15 +22,15 @@ func execute(cursor: IsometricCursor) -> void:
 			return
 		IsometricCursor.HoverFlag.TOO_FAR_AWAY:
 			SfxManager.play_sound_effect("ui_fail")
-			PopupManager.create_popup("Too far away!", structure_map.map_to_local(p))
+			PopupManager.create_popup(tr(&"WARN_TOO_FAR_AWAY"), structure_map.map_to_local(p))
 			return
 		IsometricCursor.HoverFlag.OCCUPIED:
 			SfxManager.play_sound_effect("ui_fail")
-			PopupManager.create_popup("Occupied!", structure_map.map_to_local(p), Color("ffb561"))
+			PopupManager.create_popup(tr(&"WARN_OCCUPIED"), structure_map.map_to_local(p), Color("ffb561"))
 			return
 		IsometricCursor.HoverFlag.NOT_FERTILE:
 			SfxManager.play_sound_effect("ui_fail")
-			PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
+			PopupManager.create_popup(tr(&"WARN_NOT_FERTILE"), structure_map.map_to_local(p))
 			return
 		IsometricCursor.HoverFlag.OK_FOR_PLANTING:
 			pass
@@ -42,7 +42,7 @@ func execute(cursor: IsometricCursor) -> void:
 	## COST CHECK
 	if !TreeManager.enough_n(tree_stat.cost_to_purchase):
 		SfxManager.play_sound_effect("ui_fail")
-		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
+		PopupManager.create_popup(tr(&"WARN_NOT_ENOUGH_NUTREENTS"), structure_map.map_to_local(p))
 		return
 	
 	## FINAL CHECKS DEPENDING ON TYPE OF TREE
@@ -68,12 +68,14 @@ func try_plant_tree(type: Global.TreeType, p: Vector2i) -> Node2D:
 			
 			if not can_plant:
 				SfxManager.play_sound_effect("ui_fail")
-				PopupManager.create_popup("Requires factory remains!", structure_map.map_to_local(p), Color("6be1e3"))
+				PopupManager.create_popup(tr(&"WARN_NEED_FACTORY_REMAINS"), structure_map.map_to_local(p), Color("6be1e3"))
 				return null
+			else:
+				PopupManager.create_popup(tr(&"SUCCESS_TECH_TREE_PLANTED"), structure_map.map_to_local(p), Color("6be1e3"))
 		_: ## All other trees cannot be planted on Factory Remains
 			if structure_map.tile_scene_map.has(p) and Components.has_component(structure_map.tile_scene_map[p], FactoryRemainsBehaviourComponent):
 				SfxManager.play_sound_effect("ui_fail")
-				PopupManager.create_popup("Too industrial!", structure_map.map_to_local(p), Color("6be1e3"))
+				PopupManager.create_popup(tr(&"WARN_NEED_NOT_FACTORY_REMAINS"), structure_map.map_to_local(p), Color("6be1e3"))
 				return null
 	
 	## OK, so we know that the tree can be planted on this tile
