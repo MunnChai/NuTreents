@@ -8,7 +8,7 @@ const ALMANAC_ENEMY_CARD = preload("res://ui/screen_ui/almanac_menu/almanac_card
 @onready var tree_menu = %TreeGrid
 @onready var enemy_menu = %EnemyGrid
 @onready var tabs = %Tabs
-@onready var details = %Details
+@onready var details: AlmanacDetailPanel = %Details
 
 var starting_position := position
 
@@ -18,6 +18,7 @@ var is_paused: bool
 
 func _ready() -> void:
 	connect_signals()
+	show_card_details(null)
 
 func connect_signals():
 	back_button.pressed.connect(on_back_button_pressed)
@@ -68,7 +69,11 @@ func _on_card_pressed(card: AlmanacCardBase):
 	show_card_details(card)
 
 func show_card_details(card: AlmanacCardBase):
-	return
+	if card == null:
+		details.set_card(null)
+		return
+		
+	details.set_card(card)
 
 func open(previous_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
@@ -86,6 +91,7 @@ func close(next_menu: ScreenMenu):
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)
 
 func _finish_close():
+	clear_menus()
 	unpause_game() 
 
 func on_back_button_pressed():

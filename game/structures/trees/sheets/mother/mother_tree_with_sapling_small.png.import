@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://esesdl5i1sft"
-path="res://.godot/imported/silk_spitter.png-e4f1adf5b31f212ac40de06b05b5f2ba.ctex"
+uid="uid://b1e5kvam771du"
+path="res://.godot/imported/mother_tree_with_sapling_small.png-eab8a81d941feb5d6ede6927e2d41533.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/trees/stats/silk_spitter.png"
-dest_files=["res://.godot/imported/silk_spitter.png-e4f1adf5b31f212ac40de06b05b5f2ba.ctex"]
+source_file="res://structures/trees/sheets/mother/mother_tree_with_sapling_small.png"
+dest_files=["res://.godot/imported/mother_tree_with_sapling_small.png-eab8a81d941feb5d6ede6927e2d41533.ctex"]
 
 [params]
 

@@ -162,6 +162,20 @@ func get_trees() -> Array[Global.TreeType]:
 func get_enemies() -> Array[Global.EnemyType]:
 	return enemies
 
+func get_tree_details(type: Global.TreeType) -> String:
+	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(type)
+	var id: String = tree_stat.id
+	var content: String = desc_dictionary[id]
+	content += "\n\n"
+	return content
+
+func get_enemy_details(type: Global.EnemyType) -> String:
+	var enemy_stat: EnemyStatResource = EnemyRegistry.get_enemy_stat(type)
+	var id: String = enemy_stat.id
+	var content: String = desc_dictionary[id]
+	content += "\n\n"
+	return content
+
 func get_tree_type(id: String) -> Global.TreeType:
 	return tree_type_dict[id]
 

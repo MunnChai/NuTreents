@@ -15,3 +15,6 @@ func set_details(shop_card: ShopCard):
 	title.text = shop_card.tree_stat.name
 	texture.texture.atlas = shop_card.tree_stat.tree_icon
 	description.text = shop_card.tree_stat.description
+
+func set_title(text: String):
+	title.text = text

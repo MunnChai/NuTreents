@@ -63,3 +63,12 @@ func _on_mouse_exited():
 		return
 	
 	TweenUtil.scale_to(self, Vector2(1, 1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
+
+func get_title() -> String:
+	return ""
+
+func get_icon() -> Texture2D:
+	return null
+
+func get_details() -> String:
+	return ""

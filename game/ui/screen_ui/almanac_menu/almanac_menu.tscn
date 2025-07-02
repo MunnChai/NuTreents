@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cclbsu58ct2ku"]
+[gd_scene load_steps=6 format=3 uid="uid://cclbsu58ct2ku"]
 
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_i1o82"]
 [ext_resource type="Script" uid="uid://2j8qudds1mmw" path="res://ui/screen_ui/almanac_menu/almanac_menu.gd" id="1_uepv2"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_e0t40"]
+[ext_resource type="PackedScene" uid="uid://cinmp1kkqcj4o" path="res://ui/screen_ui/almanac_menu/almanac_detail_panel/almanac_detail_panel.tscn" id="4_uepv2"]
+[ext_resource type="Script" uid="uid://dspuw2gaiio1s" path="res://ui/screen_ui/almanac_menu/almanac_detail_panel/almanac_detail_panel.gd" id="5_m3e0m"]
 
 [node name="AlmanacMenu" type="Control"]
 layout_mode = 3
@@ -111,9 +113,7 @@ columns = 6
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper"]
-layout_mode = 2
-
-[node name="Details" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper/VBoxContainer"]
+[node name="Details" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper" instance=ExtResource("4_uepv2")]
 unique_name_in_owner = true
 layout_mode = 2
+script = ExtResource("5_m3e0m")
