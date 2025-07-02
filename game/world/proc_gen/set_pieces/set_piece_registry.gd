@@ -32,7 +32,7 @@ func _generate_tree_set_piece_dict() -> void:
 				var set_piece: SetPiece = set_piece_packed.instantiate()
 				
 				var biome_set_pieces: Array = tree_unlock_set_pieces[set_piece.biome]
-				biome_set_pieces.append(set_piece)
+				biome_set_pieces.append(set_piece_packed)
 			
 			# Get next
 			file_name = dir.get_next()
@@ -57,7 +57,7 @@ func _generate_tech_set_piece_dict() -> void:
 				var set_piece: SetPiece = set_piece_packed.instantiate()
 				
 				var biome_set_pieces: Array = tech_point_set_pieces[set_piece.biome]
-				biome_set_pieces.append(set_piece)
+				biome_set_pieces.append(set_piece_packed)
 			
 			# Get next
 			file_name = dir.get_next()
@@ -70,16 +70,32 @@ func get_tree_unlock_set_pieces(biome: TerrainMap.Biome = -999) -> Array:
 	if biome == -999:
 		var all_set_pieces = []
 		for array: Array in tree_unlock_set_pieces.values():
-			all_set_pieces.append_array(array)
+			var instantiated_array = []
+			for packed_scene in array:
+				instantiated_array.append(packed_scene.instantiate())
+			all_set_pieces.append_array(instantiated_array)
 		return all_set_pieces
 	
-	return tree_unlock_set_pieces[biome].duplicate()
+	var array = tree_unlock_set_pieces[biome]
+	var instantiated_array = []
+	for packed_scene in array:
+		instantiated_array.append(packed_scene.instantiate())
+	
+	return instantiated_array
 
 func get_tech_point_set_pieces(biome: TerrainMap.Biome = -999) -> Array:
 	if biome == -999:
 		var all_set_pieces = []
 		for array: Array in tech_point_set_pieces.values():
-			all_set_pieces.append_array(array)
+			var instantiated_array = []
+			for packed_scene in array:
+				instantiated_array.append(packed_scene.instantiate())
+			all_set_pieces.append_array(instantiated_array)
 		return all_set_pieces
 	
-	return tech_point_set_pieces[biome].duplicate()
+	var array = tech_point_set_pieces[biome]
+	var instantiated_array = []
+	for packed_scene in array:
+		instantiated_array.append(packed_scene.instantiate())
+	
+	return instantiated_array

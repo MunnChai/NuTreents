@@ -11,6 +11,13 @@ extends Resource
 @export var num_spawn_drunkards: int = 25
 @export var spawn_drunkard_lifetime: int = 10
 
+@export_group("Set Pieces") 
+@export var num_tree_unlock_set_pieces: int = 5
+@export var num_tech_point_set_pieces: int = 5
+@export var set_piece_radiuses: Array[float] = [9, 16]
+@export var num_set_pieces_per_circle: Array[int] = [4, 6]
+
+
 @export_group("City Settings")
 @export_range(3, 50, 1) var min_cities: int = 3
 @export_range(3, 50, 1) var max_cities: int = 5

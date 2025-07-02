@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://gl2mr0urfc52" path="res://world/proc_gen/set_pieces/set_piece.gd" id="1_m5iia"]
 [ext_resource type="TileSet" uid="uid://c56n5at2ah3wj" path="res://world/proc_gen/terrain_map/terrain_tileset.tres" id="2_i4o0q"]
-[ext_resource type="PackedScene" uid="uid://ney755v7lyxy" path="res://structures/_archive/factory.tscn" id="3_sri7j"]
+[ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_sri7j"]
 
 [node name="TechSetPiece0" type="Node2D"]
 script = ExtResource("1_m5iia")
@@ -14,4 +14,4 @@ tile_set = ExtResource("2_i4o0q")
 
 [node name="Structures" type="Node2D" parent="."]
 
-[node name="Factory" parent="Structures" instance=ExtResource("3_sri7j")]
+[node name="FactoryComposed" parent="Structures" instance=ExtResource("3_sri7j")]

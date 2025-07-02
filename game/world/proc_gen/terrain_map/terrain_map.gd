@@ -44,8 +44,8 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 }
 
 const BIOME_TABLE: Array[Array] = [
-	[Biome.CITY, Biome.DESERT],
-	[Biome.SNOWY, Biome.PLAINS],
+	[Biome.PLAINS, Biome.PLAINS],
+	[Biome.SNOWY, Biome.DESERT],
 ]
 
 const BIOME_TILES: Dictionary[Biome, TileType] = {
@@ -101,10 +101,9 @@ func _input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		return
 		
-	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		#var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/slowing_tree_set_piece.tscn")
-		#var set_piece = example_set_piece_scene.instantiate()
-		#create_set_piece(set_piece, local_to_map(get_mouse_coords()))
+	if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		Global.new_seed()
+		regenerate_map()
 
 func get_mouse_coords() -> Vector2:
 	return get_local_mouse_position()
@@ -133,17 +132,23 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 		city_coords.append(map_coords)
 		angle += 2 * PI / num_cities
 		
-	var city_tiles = generate_cities(city_coords)
+	#var city_tiles = generate_cities(city_coords)
 	generate_spawn()
 	randomize_tiles()
 	
 	if with_structures:
-		call_deferred("generate_factories", city_coords)
-		call_deferred("generate_buildings", city_tiles)
-		call_deferred("add_decor")
+		#call_deferred("generate_factories", city_coords)
+		#call_deferred("generate_buildings", city_tiles)
+		add_decor()
+	
+	generate_set_pieces()
 	
 	generate_rivers(river_tiles)
 	call_deferred("initialize_temperature_data")
+
+func regenerate_map() -> void:
+	Global.structure_map.remove_all_structures()
+	generate_map()
 
 func initialize_map() -> void:
 	var temp_noise := FastNoiseLite.new()
@@ -170,7 +175,7 @@ func initialize_map() -> void:
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			var raw_temp_value: float = temp_noise.get_noise_2dv(map_coords)
-			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size()
+			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size() + 0.2
 			var raw_humid_value: float = humid_noise.get_noise_2dv(map_coords)
 			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size()
 			
@@ -365,6 +370,102 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 
 	set_cells_terrain_connect(river_tiles, 0, 1)
 
+func generate_set_pieces() -> void:
+	var total_num_set_pieces: int = world_size_settings.num_tree_unlock_set_pieces + world_size_settings.num_tech_point_set_pieces
+	var set_piece_positions: Array[Vector2i] = get_multiple_radial_positions(total_num_set_pieces, world_size_settings.set_piece_radiuses, world_size_settings.num_set_pieces_per_circle)
+	set_piece_positions.shuffle()
+	
+	var remaining_tree_unlocks: int = world_size_settings.num_tree_unlock_set_pieces
+	var remaining_tech_points: int = world_size_settings.num_tech_point_set_pieces
+	var tech_set_pieces: Array = SetPieceRegistry.get_tech_point_set_pieces()
+	var tree_set_pieces: Array = SetPieceRegistry.get_tree_unlock_set_pieces()
+	for pos: Vector2i in set_piece_positions:
+		if remaining_tree_unlocks > 0:
+			remaining_tree_unlocks -= 1
+			
+			var tile_type: TileType = get_tile_biome(pos)
+			var biome: Biome = -999
+			for biome_key: Biome in BIOME_TILES.keys():
+				if BIOME_TILES[biome_key] == tile_type:
+					biome = biome_key
+					break
+			
+			if biome == -999:
+				printerr("ERROR: Tile type does not match any Biome! terrain_map.gd::generate_set_pieces(): ", tile_type)
+				return
+			
+			var new_set_piece: SetPiece = null
+			for set_piece: SetPiece in tree_set_pieces:
+				if set_piece.biome == biome:
+					new_set_piece = set_piece
+					break
+			
+			if new_set_piece == null:
+				print("Null")
+				continue
+			
+			create_set_piece(new_set_piece, pos)
+			tree_set_pieces.erase(new_set_piece)
+			
+		elif remaining_tech_points > 0:
+			remaining_tech_points -= 1
+			
+			# Get a random tech set piece, remove it from the list
+			var set_piece: SetPiece = tech_set_pieces.pick_random()
+			if not tech_set_pieces.has(set_piece) or set_piece == null:
+				continue
+			
+			create_set_piece(set_piece, pos)
+			tech_set_pieces.erase(set_piece)
+			
+
+
+func get_random_positions(amount: int) -> Array[Vector2i]:
+	var positions: Array[Vector2i] = []
+	
+	for i in range(0, amount):
+		var x_range: Array = get_map_x_range()
+		var x_rand: int = randi_range(x_range.front(), x_range.back())
+		
+		var y_range: Array = get_map_y_range()
+		var y_rand: int = randi_range(y_range.front(), y_range.back())
+		
+		var pos_rand: Vector2i = Vector2i(x_rand, y_rand)
+		positions.push_back(pos_rand)
+	
+	return positions
+
+func get_radial_positions(amount: int, radius: float) -> Array[Vector2i]:
+	var positions: Array[Vector2i] = []
+	
+	var angle: float = randf() * 2 * PI
+	for i in range(0, amount):
+		var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * radius)
+		positions.append(map_coords)
+		angle += 2 * PI / amount
+	
+	return positions
+
+func get_multiple_radial_positions(amount: int, radiuses: Array[float], pos_per_circle: Array[int] = []) -> Array[Vector2i]:
+	var positions: Array[Vector2i] = []
+	
+	var num_circles = radiuses.size()
+	var num_pos_per_circle: int = int(amount / num_circles)
+	
+	for i in range(0, num_circles):
+		var angle: float = randf() * 2 * PI
+		var radius: float = radiuses[i]
+		
+		var num_pos_this_circle: int = num_pos_per_circle
+		if not pos_per_circle.is_empty():
+			num_pos_this_circle = pos_per_circle[i]
+		for j in range(0, num_pos_this_circle):
+			var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * radius)
+			positions.append(map_coords)
+			angle += 2 * PI / num_pos_this_circle
+	
+	return positions
+
 func generate_cities(city_coords: Array[Vector2i]) -> Array[Vector2i]:
 	var city_tiles: Array[Vector2i] = []
 	for map_coords in city_coords:
@@ -468,8 +569,7 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 		var info: Dictionary = tiles[offset]
 		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
 		
-		#var type: Global.TileType = tiles[offset]
-		#set_cell_type(true_pos, tiles[offset])
+		Global.structure_map.remove_structure(true_pos)
 	
 	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
 	for offset: Vector2i in structures.keys():
