@@ -142,9 +142,6 @@ func _ready():
 	add_tree(Global.TreeType.WATER_TREE)
 	add_tree(Global.TreeType.GUN_TREE)
 	
-	# TODO: remove later:
-	add_enemy(Global.EnemyType.SPEEDLE)
-	add_enemy(Global.EnemyType.SILK_SPITTER)
 
 # add explored tree
 func add_tree(tree_type: Global.TreeType):

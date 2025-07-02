@@ -174,6 +174,7 @@ func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
 func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> Node2D:
+	AlmanacInfo.add_enemy(enemy_type)
 	
 	var enemy_node: Node2D = EnemyRegistry.get_new_enemy(enemy_type)
 	

@@ -33,6 +33,7 @@ func clear_menus():
 
 func update_menu(tab: int):
 	clear_menus()
+	show_card_details(null)
 	if tab == 0:
 		populate_tree_menu()
 	else:
@@ -48,6 +49,8 @@ func populate_tree_menu():
 	
 func populate_enemy_menu():
 	var enemies: Array[Global.EnemyType] = AlmanacInfo.get_enemies()
+	if enemies.is_empty():
+		details.set_title("You haven't seen any enemies yet")
 	for e in enemies:
 		var card: AlmanacEnemyCard = ALMANAC_ENEMY_CARD.instantiate()
 		card.type = e
