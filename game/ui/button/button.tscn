@@ -1,0 +1,286 @@
+[gd_scene load_steps=22 format=3 uid="uid://du36b2fkr0xkd"]
+
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="1_o8ei0"]
+[ext_resource type="Texture2D" uid="uid://cm61g7makhv5c" path="res://ui/button/button_nine_patch_rect.png" id="2_1imm2"]
+[ext_resource type="Script" uid="uid://dfui7o6hl52wi" path="res://ui/button/juicy_button.gd" id="2_glnhe"]
+[ext_resource type="Texture2D" uid="uid://gdq38tx5gsru" path="res://ui/button/button_down_nine_patch_rect.png" id="4_8vxab"]
+[ext_resource type="Texture2D" uid="uid://cb13mdtpk1bs" path="res://ui/button/button_hover_nine_patch_rect.png" id="5_huj2i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8vxab"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_huj2i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2jwr8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kvkpk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ex14a"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ie48o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7r70n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ahtvt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6dvd4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cq4j4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4c7q6"]
+
+[sub_resource type="Animation" id="Animation_8vxab"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonScalePivot/PanelContainer/NinePatchRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_1imm2")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_top")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="Animation" id="Animation_huj2i"]
+resource_name = "button_down"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonScalePivot/PanelContainer/NinePatchRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_8vxab")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+
+[sub_resource type="Animation" id="Animation_glnhe"]
+resource_name = "button_up"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonScalePivot/PanelContainer/NinePatchRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_1imm2")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_top")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="Animation" id="Animation_2jwr8"]
+resource_name = "button_hover"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ButtonScalePivot/PanelContainer/NinePatchRect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("5_huj2i")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_top")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ButtonScalePivot/PanelContainer/MarginContainer:theme_override_constants/margin_bottom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [12]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8vxab"]
+_data = {
+&"RESET": SubResource("Animation_8vxab"),
+&"button_down": SubResource("Animation_huj2i"),
+&"button_hover": SubResource("Animation_2jwr8"),
+&"button_up": SubResource("Animation_glnhe")
+}
+
+[node name="JuicyButton" type="Control" node_paths=PackedStringArray("button")]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+theme = ExtResource("1_o8ei0")
+script = ExtResource("2_glnhe")
+button = NodePath("ButtonScalePivot/PanelContainer/Button")
+
+[node name="ButtonScalePivot" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ButtonScalePivot"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -18.0
+offset_top = -16.5
+offset_right = 18.0
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Button" type="Button" parent="ButtonScalePivot/PanelContainer"]
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8vxab")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxEmpty_huj2i")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2jwr8")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxEmpty_kvkpk")
+theme_override_styles/hover_pressed = SubResource("StyleBoxEmpty_ex14a")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxEmpty_ie48o")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_7r70n")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxEmpty_ahtvt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6dvd4")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxEmpty_cq4j4")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4c7q6")
+text = "PRESS THIS BUTTON"
+flat = true
+
+[node name="NinePatchRect" type="NinePatchRect" parent="ButtonScalePivot/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("2_1imm2")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ButtonScalePivot/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="CenterContainer" type="CenterContainer" parent="ButtonScalePivot/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="ButtonText" type="RichTextLabel" parent="ButtonScalePivot/PanelContainer/MarginContainer/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme = ExtResource("1_o8ei0")
+bbcode_enabled = true
+text = "PRESS THIS BUTTON"
+fit_content = true
+autowrap_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_8vxab")
+}

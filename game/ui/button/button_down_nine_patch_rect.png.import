@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw37ytuqi38ns"
-path="res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"
+uid="uid://gdq38tx5gsru"
+path="res://.godot/imported/button_down_nine_patch_rect.png-b390885342c782cf32cfe3de65a4d9a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/fog_tile_1.png"
-dest_files=["res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"]
+source_file="res://ui/button/button_down_nine_patch_rect.png"
+dest_files=["res://.godot/imported/button_down_nine_patch_rect.png-b390885342c782cf32cfe3de65a4d9a9.ctex"]
 
 [params]
 
