@@ -1,7 +1,7 @@
 class_name OutlineComponent
 extends Node2D
 
-const OUTLINE_SHADER: Shader = preload("res://ui/cursor/world_cursor/visual_cursor/outline.gdshader")
+const OUTLINE_SHADER: Shader = preload("./outline.gdshader")
 
 @export var actor: Sprite2D
 

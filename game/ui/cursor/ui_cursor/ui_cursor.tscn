@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhyyy6a55e8pp"]
+
+[ext_resource type="Script" uid="uid://ba3os81gow2pp" path="res://ui/cursor/ui_cursor/ui_cursor.gd" id="1_0um8k"]
+[ext_resource type="Texture2D" uid="uid://osqxigfn8kag" path="res://ui/cursor/ui_cursor/ui_cursor_sprites/game_cursor_pointer.png" id="2_q4jvr"]
+[ext_resource type="Texture2D" uid="uid://bx2ug7nhyiq8k" path="res://ui/cursor/ui_cursor/ui_cursor_sprites/game_cursor_hand.png" id="3_j1744"]
+[ext_resource type="Texture2D" uid="uid://b306imvnhufig" path="res://ui/cursor/ui_cursor/ui_cursor_sprites/loading_cursor_animation.tres" id="4_nkea4"]
+[ext_resource type="PackedScene" uid="uid://b3xlpptughfmd" path="res://ui/cursor/ui_cursor/floating_tooltip/floating_tooltip.tscn" id="5_nhke1"]
+
+[node name="UICursor" type="Control"]
+process_mode = 3
+z_index = 1000
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_0um8k")
+cursor_shape_textures = Dictionary[int, Texture2D]({
+0: ExtResource("2_q4jvr"),
+2: ExtResource("3_j1744"),
+4: ExtResource("4_nkea4")
+})
+
+[node name="FloatingTooltip" parent="." instance=ExtResource("5_nhke1")]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 16.0
+offset_top = 29.0
+offset_right = 116.0
+offset_bottom = 64.0
+
+[node name="CursorIcon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 16.0
+offset_bottom = 16.0
+mouse_filter = 2
+texture = ExtResource("2_q4jvr")
+stretch_mode = 2

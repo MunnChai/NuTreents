@@ -1,4 +1,4 @@
-extends Cursor
+extends IsometricCursor
 
 var is_visible: bool = true
 

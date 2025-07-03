@@ -26,8 +26,8 @@ func _process(delta: float) -> void:
 ## Updates the cursor/virtual cursor POSITION based on input type...
 func _update_cursor(delta: float) -> void:
 	if current_device_type == DeviceType.KEYBOARD_MOUSE:
-		if is_instance_valid(Cursor.instance) and is_instance_valid(Global.terrain_map):
-			Cursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
+		if is_instance_valid(IsometricCursor.instance) and is_instance_valid(Global.terrain_map):
+			IsometricCursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
 		if is_instance_valid(VirtualCursor.instance):
 			VirtualCursor.instance.hide()
 	
@@ -37,9 +37,8 @@ func _update_cursor(delta: float) -> void:
 		if is_instance_valid(VirtualCursor.instance):
 			VirtualCursor.instance.offset_position += cursor_move_direction * Settings.get_setting_or_default("virtual_cursor_speed", 50.0) * TimeUtil.unscaled_delta(delta)
 			VirtualCursor.instance.show()
-		if is_instance_valid(Cursor.instance) and is_instance_valid(VirtualCursor.instance):
-			Cursor.instance.move_to(VirtualCursor.instance.global_position)
-
+		if is_instance_valid(IsometricCursor.instance) and is_instance_valid(VirtualCursor.instance):
+			IsometricCursor.instance.move_to(VirtualCursor.instance.global_position)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Game is not in playing mode...
@@ -60,17 +59,20 @@ func _unhandled_input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		return
 	
-	if (Input.is_action_pressed("lmb")): # We want press and hold to work...
-		if not Cursor.instance.can_interact():
-			return
-		Cursor.instance.do_primary_action()
-	else:
-		Cursor.instance.attempted_already = false
+	if not is_instance_valid(IsometricCursor.instance):
+		return
 	
-	if (Input.is_action_just_pressed("rmb")): # Only deal with on click
-		if not Cursor.instance.can_interact():
+	if Input.is_action_pressed("lmb"): # We want press and hold to work...
+		if not IsometricCursor.instance.can_interact():
 			return
-		Cursor.instance.do_secondary_action()
+		IsometricCursor.instance.try_do_primary_action()
+	else:
+		IsometricCursor.instance.attempted_already = false
+	
+	if event.is_action_pressed("rmb"): # Only deal with on click
+		if not IsometricCursor.instance.can_interact():
+			return
+		IsometricCursor.instance.try_do_secondary_action()
 	
 	## Controller reset to centre of screen...
 	if Input.is_action_just_pressed("reset_cursor"):
@@ -78,8 +80,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			VirtualCursor.instance.offset_position = Vector2.ZERO
 	
 	if Input.is_action_just_pressed("water_bucket"):
-		if is_instance_valid(Cursor.instance):
-			Cursor.instance.do_water_bucket_from_god()
+		if is_instance_valid(IsometricCursor.instance):
+			IsometricCursor.instance.do_water_bucket_from_god()
 
 # This new helper function contains the logic for toggling overlays.
 func _toggle_overlay(overlay_type: OverlayManager.OverlayType) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c63p5poae6fy"]
+[gd_scene load_steps=30 format=3 uid="uid://c63p5poae6fy"]
 
 [ext_resource type="PackedScene" uid="uid://dmci56ftp4fgl" path="res://components/petrified_component/petrified_component.tscn" id="1_2eard"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="1_8pq07"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="12_yxnlr"]
 [ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/tree_menu/card_sprites/tree_card.png" id="13_j5p62"]
 [ext_resource type="Script" uid="uid://b5t81tx31klk0" path="res://structures/set_pieces/petrified_trees/tree_acquire_animation.gd" id="13_teheq"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="17_mtnra"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wy4bx"]
 resource_local_to_scene = true
@@ -161,3 +162,6 @@ unique_name_in_owner = true
 position = Vector2(0, -2)
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("2_wy4bx")
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("17_mtnra")]
+arrow_height = 2

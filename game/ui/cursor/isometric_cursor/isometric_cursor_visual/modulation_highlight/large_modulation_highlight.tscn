@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1hdqqs20ewit"]
+
+[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://components/outline_component/outline.gdshader" id="1_ptrs0"]
+[ext_resource type="Script" uid="uid://bjb2k03euitel" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/modulation_highlight/large_modulation_highlight.gd" id="2_1gkvg"]
+[ext_resource type="Shader" uid="uid://do77gmj5hfxp5" path="res://components/outline_component/canvas_outline.gdshader" id="3_pmr2x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45pwa"]
+shader = ExtResource("1_ptrs0")
+shader_parameter/outline_width = 16
+shader_parameter/outline_alpha = 1.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rb0if"]
+shader = ExtResource("3_pmr2x")
+shader_parameter/match_camera_zoom = true
+shader_parameter/camera_zoom = Vector2(1, 1)
+shader_parameter/outline_width = 1
+shader_parameter/outline_alpha = 1.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+
+[node name="LargeModulationHighlight" type="Node2D"]
+y_sort_enabled = true
+material = SubResource("ShaderMaterial_45pwa")
+script = ExtResource("2_1gkvg")
+
+[node name="CanvasGroup" type="CanvasGroup" parent="."]
+material = SubResource("ShaderMaterial_rb0if")

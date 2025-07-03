@@ -1,0 +1,21 @@
+[gd_scene load_steps=6 format=3 uid="uid://bnfqehf31racc"]
+
+[ext_resource type="Script" path="res://ui/cursor/isometric_cursor/isometric_cursor.gd" id="1_wl2m8"]
+[ext_resource type="Script" uid="uid://bebq0yw3wjd6s" path="res://ui/info_box/info_box_detection.gd" id="2_131un"]
+[ext_resource type="PackedScene" uid="uid://c5pjlper34tpa" path="res://ui/cursor/isometric_cursor/cursor_actions/cursor_plant_action/cursor_plant_action.tscn" id="3_eca7b"]
+[ext_resource type="PackedScene" uid="uid://ceo205q1hqnw1" path="res://ui/cursor/isometric_cursor/cursor_actions/cursor_destroy_action/cursor_destroy_action.tscn" id="4_o8lhp"]
+[ext_resource type="PackedScene" uid="uid://7mxn783efc66" path="res://ui/cursor/isometric_cursor/cursor_actions/cursor_extinguish_action/cursor_extinguish_action.tscn" id="5_a2s46"]
+
+[node name="IsometricCursor" type="Marker2D" node_paths=PackedStringArray("primary_action", "secondary_action")]
+script = ExtResource("1_wl2m8")
+primary_action = NodePath("CursorPlantAction")
+secondary_action = NodePath("CursorDestroyAction")
+
+[node name="InfoBoxDetector" type="Node" parent="."]
+script = ExtResource("2_131un")
+
+[node name="CursorPlantAction" parent="." instance=ExtResource("3_eca7b")]
+
+[node name="CursorDestroyAction" parent="." instance=ExtResource("4_o8lhp")]
+
+[node name="CursorExtinguishAction" parent="." instance=ExtResource("5_a2s46")]
