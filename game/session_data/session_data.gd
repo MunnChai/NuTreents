@@ -166,9 +166,9 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	session_data["weather_time_remaining"] = weather_time_remaining
 	
 	# Get almanac info
-	var trees: Array[Global.TreeType] = config.get_value(SECTION_SESSION, "almanac_trees", [])
+	var trees: Array[Global.TreeType] = config.get_value(SECTION_SESSION, "almanac_trees", ([] as Array[Global.TreeType]))
 	AlmanacInfo.set_trees(trees)
-	var enemies: Array[Global.EnemyType] = config.get_value(SECTION_SESSION, "almanac_enemies", [])
+	var enemies: Array[Global.EnemyType] = config.get_value(SECTION_SESSION, "almanac_enemies", ([] as Array[Global.TreeType]))
 	AlmanacInfo.set_enemies(enemies)
 	
 	# Get EnemyManager info
