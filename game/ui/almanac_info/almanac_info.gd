@@ -159,6 +159,12 @@ func get_trees() -> Array[Global.TreeType]:
 func get_enemies() -> Array[Global.EnemyType]:
 	return enemies
 
+func set_trees(data: Array[Global.TreeType]):
+	trees = data
+
+func set_enemies(data: Array[Global.EnemyType]):
+	enemies = data
+
 func get_tree_details(type: Global.TreeType) -> String:
 	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(type)
 	var id: String = tree_stat.id

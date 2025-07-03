@@ -49,8 +49,6 @@ func populate_tree_menu():
 	
 func populate_enemy_menu():
 	var enemies: Array[Global.EnemyType] = AlmanacInfo.get_enemies()
-	if enemies.is_empty():
-		details.set_title("You haven't seen any enemies yet")
 	for e in enemies:
 		var card: AlmanacEnemyCard = ALMANAC_ENEMY_CARD.instantiate()
 		card.type = e
@@ -85,7 +83,7 @@ func open(previous_menu: ScreenMenu):
 	position = position + Vector2.DOWN * 100.0
 	TweenUtil.whoosh(self, starting_position, 0.4)
 	TweenUtil.fade(self, 1.0, 0.1)
-	update_menu(0)
+	update_menu(tabs.current_tab)
 
 func close(next_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
