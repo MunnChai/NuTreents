@@ -83,6 +83,12 @@ func save_session_data(save_num: int = 1):
 		structure_map[pos] = save_resource
 	config.set_value(SECTION_SESSION, "structure_map", structure_map)
 	
+	# Save almanac info
+	var trees: Array[Global.TreeType] = AlmanacInfo.get_trees()
+	config.set_value(SECTION_SESSION, "almanac_trees", trees)
+	var enemies: Array[Global.EnemyType] = AlmanacInfo.get_enemies()
+	config.set_value(SECTION_SESSION, "almanac_enemies", enemies)
+	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
 	for enemy: Node2D in EnemyManager.instance.get_enemies():
@@ -158,6 +164,12 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	var weather_time_remaining = config.get_value(SECTION_SESSION, "weather_time_remaining", 60.0)
 	session_data["current_weather"] = current_weather
 	session_data["weather_time_remaining"] = weather_time_remaining
+	
+	# Get almanac info
+	var trees: Array[Global.TreeType] = config.get_value(SECTION_SESSION, "almanac_trees", [])
+	AlmanacInfo.set_trees(trees)
+	var enemies: Array[Global.EnemyType] = config.get_value(SECTION_SESSION, "almanac_enemies", [])
+	AlmanacInfo.set_enemies(enemies)
 	
 	# Get EnemyManager info
 	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map", {})
