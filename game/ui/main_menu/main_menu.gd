@@ -12,8 +12,13 @@ func _ready():
 
 func show_load_screen():
 	ScreenUI.add_menu(ScreenUI.load_menu)
+	
+	# --- BUG FIX ---
+	# This line tells the button to give up focus immediately after being
+	# pressed. This prevents the user from accidentally triggering the
+	# action multiple times by spamming the Enter key.
+	start_button.release_focus()
 
 func start_game():
 	SceneLoader.transition_to_game()
 	SfxManager.play_sound_effect("ui_click")
- 
