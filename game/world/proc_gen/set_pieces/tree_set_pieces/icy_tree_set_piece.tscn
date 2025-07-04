@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://cemofwr6pvnby"]
+[gd_scene load_steps=13 format=4 uid="uid://cemofwr6pvnby"]
 
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_6ifap"]
 [ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_raqcf"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dexcrdfmurf6c" path="res://structures/trees/icons/icy_tree.png" id="4_6ifap"]
 [ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_3liqj"]
 [ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="6_j0ujk"]
+[ext_resource type="PackedScene" uid="uid://cct4xj35n0jg3" path="res://components/petrified_component/petrified_decor_component/petrified_decor_component.tscn" id="7_raqcf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5wi47"]
 resource_local_to_scene = true
@@ -64,6 +65,8 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed" index="3"]
 set_type_on_ready = false
 
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed" index="4" instance=ExtResource("7_raqcf")]
+
 [node name="DecorComposed2" parent="Structures" index="2" instance=ExtResource("5_3liqj")]
 position = Vector2(-48, 8)
 
@@ -76,6 +79,8 @@ randomize_on_ready = false
 
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed2" index="3"]
 set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed2" index="4" instance=ExtResource("7_raqcf")]
 
 [node name="DecorComposed3" parent="Structures" index="3" instance=ExtResource("5_3liqj")]
 position = Vector2(-16, -24)
@@ -90,6 +95,8 @@ randomize_on_ready = false
 
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
 set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed3" index="4" instance=ExtResource("7_raqcf")]
 
 [editable path="Structures/PetrifiedTree"]
 [editable path="Structures/DecorComposed"]

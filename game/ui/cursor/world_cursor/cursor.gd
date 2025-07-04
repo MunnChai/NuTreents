@@ -153,7 +153,7 @@ func do_secondary_action() -> void:
 					Global.StructureType.FACTORY:
 						PopupManager.create_popup("Factory destroyed!", structure_map.map_to_local(map_pos))
 					Global.StructureType.PETRIFIED_TREE:
-						#PopupManager.create_popup("De-Petrified!", structure_map.map_to_local(map_pos))
+						PopupManager.create_popup("De-Petrifying!", structure_map.map_to_local(map_pos))
 						var sprite_shatter_component: SpriteShatterComponent = Components.get_component(entity, SpriteShatterComponent, "", true)
 						if sprite_shatter_component:
 							await sprite_shatter_component.shatter_finished

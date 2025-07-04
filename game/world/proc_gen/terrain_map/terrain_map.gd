@@ -309,11 +309,10 @@ func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
 	## Handle animations
 	var structure: Node2D = MapUtility.get_structure_at(pos)
 	if structure:
-		var sprite: Sprite2D = Components.get_component(structure, Sprite2D)
-		var sprite_material = sprite.material
-		if sprite_material is ShaderMaterial:
-			if sprite_material.get_shader_parameter("shader_is_petrified"):
-				sprite.material = null
+		var petrified_component: PetrifiedComponent = Components.get_component(structure, PetrifiedComponent)
+		if petrified_component:
+			petrified_component.depetrify()
+			print("DEPETRIFYING")
 	else:
 		animate_tile(pos)
 	

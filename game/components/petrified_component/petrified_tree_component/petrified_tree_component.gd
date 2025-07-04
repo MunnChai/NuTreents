@@ -1,16 +1,26 @@
 class_name PetrifiedTreeComponent
 extends PetrifiedComponent
 
+@export var sprite_shatter_component: SpriteShatterComponent
+@export var petrified_sprite_2d: Sprite2D
 @export var tree_type: Global.TreeType
+
 @export var grid_position_component: GridPositionComponent
 @export var destructable_component: DestructableComponent
 @export var tree_acquire_animation: TreeAcquireAnimationComponent
 
 @onready var depetrify_particles: GPUParticles2D = $"../DepetrifyParticles"
 
-func _get_components() -> void:
-	super._get_components()
+func _ready() -> void:
+	super._ready()
 	
+	await get_tree().process_frame
+	
+	_set_sprite_textures()
+
+func _get_components() -> void:
+	if not sprite_shatter_component:
+		sprite_shatter_component = Components.get_component(actor, SpriteShatterComponent, "", true)
 	if not grid_position_component:
 		grid_position_component = Components.get_component(actor, GridPositionComponent)
 	if not destructable_component: 
@@ -36,14 +46,17 @@ func _set_sprite_textures() -> void:
 	sprite_shatter_component.create_shatter_pieces()
 
 func depetrify() -> void:
+	print("CHeck")
 	if depetrified:
 		return
-	
+	print("Yes")
 	# Remove destructable component
 	actor.remove_child(destructable_component)
 	
 	# Play sprite shattering effect
 	super.depetrify()
+	
+	sprite_shatter_component.shatter()
 	
 	# Wait for animation to finish
 	await sprite_shatter_component.shatter_finished

@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=4 uid="uid://djyxuqm3cswji"]
+[gd_scene load_steps=13 format=4 uid="uid://djyxuqm3cswji"]
 
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_y1wkk"]
 [ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_jbnkm"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="3_tc0rp"]
 [ext_resource type="Texture2D" uid="uid://kst7eisiiq22" path="res://structures/trees/icons/sprinkler_tree.png" id="4_y1wkk"]
 [ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_gy4ac"]
+[ext_resource type="PackedScene" uid="uid://cct4xj35n0jg3" path="res://components/petrified_component/petrified_decor_component/petrified_decor_component.tscn" id="5_jbnkm"]
 [ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="6_peetu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iu88x"]
@@ -55,6 +56,8 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed" index="3"]
 set_type_on_ready = false
 
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed" index="4" instance=ExtResource("5_jbnkm")]
+
 [node name="DecorComposed2" parent="Structures" index="1" instance=ExtResource("5_gy4ac")]
 position = Vector2(32, 0)
 
@@ -67,6 +70,8 @@ randomize_on_ready = false
 
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed2" index="3"]
 set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed2" index="4" instance=ExtResource("5_jbnkm")]
 
 [node name="DecorComposed3" parent="Structures" index="2" instance=ExtResource("5_gy4ac")]
 position = Vector2(-16, 8)
@@ -82,6 +87,8 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
 set_type_on_ready = false
 
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed3" index="4" instance=ExtResource("5_jbnkm")]
+
 [node name="DecorComposed4" parent="Structures" index="3" instance=ExtResource("5_gy4ac")]
 position = Vector2(-16, -8)
 
@@ -95,6 +102,8 @@ randomize_on_ready = false
 
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed4" index="3"]
 set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed4" index="4" instance=ExtResource("5_jbnkm")]
 
 [node name="DecorComposed5" parent="Structures" index="4" instance=ExtResource("5_gy4ac")]
 position = Vector2(0, 16)
@@ -110,6 +119,8 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed5" index="3"]
 set_type_on_ready = false
 
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed5" index="4" instance=ExtResource("5_jbnkm")]
+
 [node name="DecorComposed6" parent="Structures" index="5" instance=ExtResource("5_gy4ac")]
 position = Vector2(16, 8)
 
@@ -123,6 +134,8 @@ randomize_on_ready = false
 
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed6" index="3"]
 set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed6" index="4" instance=ExtResource("5_jbnkm")]
 
 [node name="DecorComposed7" parent="Structures" index="6" instance=ExtResource("5_gy4ac")]
 position = Vector2(16, -8)
@@ -138,6 +151,8 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed7" index="3"]
 set_type_on_ready = false
 
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed7" index="4" instance=ExtResource("5_jbnkm")]
+
 [node name="DecorComposed8" parent="Structures" index="7" instance=ExtResource("5_gy4ac")]
 position = Vector2(0, -16)
 
@@ -151,6 +166,8 @@ randomize_on_ready = false
 
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed8" index="3"]
 set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed8" index="4" instance=ExtResource("5_jbnkm")]
 
 [node name="PetrifiedTree" parent="Structures" index="8" instance=ExtResource("2_jbnkm")]
 

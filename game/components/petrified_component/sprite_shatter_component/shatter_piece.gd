@@ -1,7 +1,5 @@
 extends Node2D
 
-@onready var polygon_2d: Polygon2D = $Polygon2D
-
 const GRAVITY: float = 100
 
 var velocity: Vector2
@@ -19,10 +17,10 @@ func _update_movement(delta: float) -> void:
 
 func _update_alpha(delta: float) -> void:
 	if velocity.length() > 0:
-		polygon_2d.modulate.a -= delta / lifetime
+		modulate.a -= delta / lifetime
 	
-	if polygon_2d.material is ShaderMaterial:
-		polygon_2d.material.set_shader_parameter("alpha", polygon_2d.modulate.a)
+	if material is ShaderMaterial:
+		material.set_shader_parameter("alpha", modulate.a)
 	
-	if polygon_2d.modulate.a <= 0:
+	if modulate.a <= 0:
 		queue_free()
