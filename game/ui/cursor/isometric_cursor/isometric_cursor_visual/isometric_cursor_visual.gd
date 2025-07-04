@@ -113,9 +113,6 @@ func _update_visuals(delta: float) -> void:
 	var structure_map = Global.structure_map
 	var iso_position = cursor.iso_position
 	
-	## CLEAN UP UPON MOVEMENT
-	
-	
 	## OK, SO WE MOVED
 	large_modulation_highlight.highlight_tile_at(iso_position)
 	
