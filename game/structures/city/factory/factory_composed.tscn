@@ -86,6 +86,8 @@ cost_to_destroy = 500.0
 id = "factory"
 
 [node name="FogRevealerComponent" parent="." instance=ExtResource("7_36ag0")]
+transparency_level = 2
+update_surrounding = false
 
 [node name="GridRangeComponent" parent="FogRevealerComponent" index="0"]
 range = 1

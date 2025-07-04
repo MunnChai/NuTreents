@@ -140,8 +140,8 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 		#call_deferred("generate_factories", city_coords)
 		#call_deferred("generate_buildings", city_tiles)
 		add_decor()
+		generate_set_pieces()
 	
-	generate_set_pieces()
 	
 	generate_rivers(river_tiles)
 	call_deferred("initialize_temperature_data")
@@ -427,7 +427,7 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 func generate_set_pieces() -> void:
 	var total_num_set_pieces: int = world_size_settings.num_tree_unlock_set_pieces + world_size_settings.num_tech_point_set_pieces
 	var set_piece_positions: Array[Vector2i] = get_multiple_radial_positions(total_num_set_pieces, world_size_settings.set_piece_radiuses, world_size_settings.num_set_pieces_per_circle)
-	set_piece_positions.shuffle()
+	#set_piece_positions.shuffle()
 	
 	var remaining_tree_unlocks: int = world_size_settings.num_tree_unlock_set_pieces
 	var remaining_tech_points: int = world_size_settings.num_tech_point_set_pieces
