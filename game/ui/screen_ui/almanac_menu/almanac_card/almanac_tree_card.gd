@@ -25,6 +25,13 @@ func get_icon() -> Texture2D:
 
 func get_details() -> String:
 	var content: String = AlmanacInfo.get_tree_details(type)
+	if type == Global.TreeType.MOTHER_TREE:
+		content += "HP: " + var_to_str(tree_stat.hp) + "\n"
+		content += "Max water storage: " + var_to_str(tree_stat.max_water) + "\n"
+		content += "Gains: +" + var_to_str(tree_stat.gain.x) + " N/s" + "  "
+		content += "+" + var_to_str(tree_stat.gain.y) + " W/s" + "\n"
+		return content
+	
 	content += "Primary Stats\n"
 	content += "HP: " + var_to_str(tree_stat.hp) + "\n"
 	content += "Max water storage: " + var_to_str(tree_stat.max_water) + "\n"
