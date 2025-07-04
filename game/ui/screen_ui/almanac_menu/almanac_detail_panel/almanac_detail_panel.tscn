@@ -40,8 +40,17 @@ layout_mode = 2
 texture = SubResource("AtlasTexture_q37el")
 stretch_mode = 5
 
-[node name="Description" type="RichTextLabel" parent="MarginContainer/HBoxContainer" index="2"]
-unique_name_in_owner = true
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer" index="2"]
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Description" type="RichTextLabel" parent="MarginContainer/HBoxContainer/ScrollContainer" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme = ExtResource("3_o5p2d")
-fit_content = true
+autowrap_mode = 1
