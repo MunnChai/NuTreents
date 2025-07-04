@@ -23,7 +23,7 @@ shader_parameter/is_flashing = false
 [sub_resource type="AtlasTexture" id="AtlasTexture_ttkdn"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(0, 192, 32, 64)
+region = Rect2(64, 192, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
@@ -33,12 +33,12 @@ region = Rect2(64, 192, 32, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(128, 192, 32, 64)
+region = Rect2(160, 192, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k03om"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(32, 192, 32, 64)
+region = Rect2(96, 192, 32, 64)
 
 [node name="FireTreeSetPiece" instance=ExtResource("1_tbrfx")]
 biome = 2
@@ -57,7 +57,7 @@ material = SubResource("ShaderMaterial_5wi47")
 texture = ExtResource("4_tbrfx")
 
 [node name="DecorComposed" parent="Structures" index="1" instance=ExtResource("5_3vt30")]
-position = Vector2(-32, 0)
+position = Vector2(-48, 8)
 
 [node name="Sprite2D" parent="Structures/DecorComposed" index="0"]
 material = SubResource("ShaderMaterial_iu88x")
@@ -75,6 +75,7 @@ position = Vector2(48, -8)
 [node name="Sprite2D" parent="Structures/DecorComposed2" index="0"]
 material = SubResource("ShaderMaterial_iu88x")
 texture = SubResource("AtlasTexture_xfcu1")
+flip_h = true
 
 [node name="AtlasRandomizerComponent" parent="Structures/DecorComposed2" index="2"]
 randomize_on_ready = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://cemofwr6pvnby"]
+[gd_scene load_steps=12 format=4 uid="uid://cemofwr6pvnby"]
 
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_6ifap"]
 [ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_raqcf"]
@@ -23,29 +23,24 @@ shader_parameter/is_flashing = false
 [sub_resource type="AtlasTexture" id="AtlasTexture_ttkdn"]
 resource_local_to_scene = true
 atlas = ExtResource("6_j0ujk")
-region = Rect2(224, 64, 32, 64)
+region = Rect2(32, 256, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
 atlas = ExtResource("6_j0ujk")
-region = Rect2(224, 64, 32, 64)
+region = Rect2(96, 256, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
 resource_local_to_scene = true
 atlas = ExtResource("6_j0ujk")
-region = Rect2(192, 64, 32, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k03om"]
-resource_local_to_scene = true
-atlas = ExtResource("6_j0ujk")
-region = Rect2(192, 64, 32, 64)
+region = Rect2(0, 256, 32, 64)
 
 [node name="IcyTreeSetPiece" instance=ExtResource("1_6ifap")]
 biome = 3
 tree_type = 10
 
 [node name="TileMapLayer" parent="." index="0"]
-tile_map_data = PackedByteArray("AAD//wAAAAACABgAAQD/////AAABABgAAQD+////AAACABgAAQD+/wAAAAACABgAAQD+/wEAAAABABgAAQD//wEAAAABABgAAQAAAAEAAAADABgAAQAAAAAAAAAAABgAAQAAAP//AAADABgAAQAAAP7/AAABABgAAQD9////AAAAABgAAQD9/wAAAAACABgAAQD9/wEAAAACABgAAQD+/wIAAAADABgAAQAAAAIAAAAAABgAAQABAAIAAAAAABgAAQABAAAAAAADABgAAQABAP//AAABABgAAQD///7/AAADABgAAQD9/wIAAAACABgAAQD//wIAAAADABgAAQABAAEAAAAAABgAAQABAP7/AAABABgAAQD+//7/AAAAABgAAQD9//7/AAAAABgAAQA=")
+tile_map_data = PackedByteArray("AAD//wAAAAACABgAAQD/////AAABABgAAQD+////AAACABgAAQD+/wAAAAACABgAAQD+/wEAAAABABgAAQD//wEAAAABABgAAQAAAAEAAAADABgAAQAAAAAAAAAAABgAAQAAAP//AAADABgAAQD9////AAAAABgAAQD9/wEAAAACABgAAQD+/wIAAAADABgAAQAAAAIAAAAAABgAAQABAP//AAABABgAAQABAAEAAAAAABgAAQD+//7/AAAAABgAAQAAAP7/AAADABgAAQA=")
 
 [node name="PetrifiedTree" parent="Structures" index="0" instance=ExtResource("2_raqcf")]
 
@@ -57,7 +52,7 @@ material = SubResource("ShaderMaterial_5wi47")
 texture = ExtResource("4_6ifap")
 
 [node name="DecorComposed" parent="Structures" index="1" instance=ExtResource("5_3liqj")]
-position = Vector2(-32, 0)
+position = Vector2(16, 24)
 
 [node name="Sprite2D" parent="Structures/DecorComposed" index="0"]
 material = SubResource("ShaderMaterial_iu88x")
@@ -70,7 +65,7 @@ randomize_on_ready = false
 set_type_on_ready = false
 
 [node name="DecorComposed2" parent="Structures" index="2" instance=ExtResource("5_3liqj")]
-position = Vector2(32, 0)
+position = Vector2(-48, 8)
 
 [node name="Sprite2D" parent="Structures/DecorComposed2" index="0"]
 material = SubResource("ShaderMaterial_iu88x")
@@ -96,21 +91,7 @@ randomize_on_ready = false
 [node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
 set_type_on_ready = false
 
-[node name="DecorComposed4" parent="Structures" index="4" instance=ExtResource("5_3liqj")]
-position = Vector2(16, 24)
-
-[node name="Sprite2D" parent="Structures/DecorComposed4" index="0"]
-material = SubResource("ShaderMaterial_iu88x")
-texture = SubResource("AtlasTexture_k03om")
-
-[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed4" index="2"]
-randomize_on_ready = false
-
-[node name="DecorBehaviourComponent" parent="Structures/DecorComposed4" index="3"]
-set_type_on_ready = false
-
 [editable path="Structures/PetrifiedTree"]
 [editable path="Structures/DecorComposed"]
 [editable path="Structures/DecorComposed2"]
 [editable path="Structures/DecorComposed3"]
-[editable path="Structures/DecorComposed4"]
