@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://t3rh6n673tko" path="res://ui/menu_buttons.gd" id="9_oqbvt"]
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="10_hrmpd"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
-[ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
+[ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/info_box/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")

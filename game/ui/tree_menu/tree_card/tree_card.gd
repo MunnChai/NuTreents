@@ -109,7 +109,7 @@ func _on_mouse_entered() -> void:
 	SfxManager.play_sound_effect("ui_click")
 	pop()
 	
-	rotation_offset = clampf(GameCursor.instance.mouse_velocity.x * 2.0, -25, 25) 
+	rotation_offset = clampf(UICursor.instance.mouse_velocity.x * 2.0, -25, 25) 
 
 ## Mouse has exited MouseDetector
 func _on_mouse_exited() -> void:

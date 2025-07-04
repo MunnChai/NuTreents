@@ -6,7 +6,7 @@ const POPUP = preload("res://ui/popup_manager/popup.tscn")
 
 const SIZE_MULTIPLIER: float = 0.15
 const MIN_SIZE: float = 1.0
-const TWEEN_DURATION: float = 1.0
+const TWEEN_DURATION: float = 1.7
 const Y_OFFSET_RANGE: float = 20
 
 func create_popup(text: String, position: Vector2, text_color: Color = Color.WHITE, outline_color: Color = Color.BLACK):  

@@ -33,6 +33,11 @@ func _process(delta: float) -> void:
 	#$Label4.text = text
 	#$Label5.text = text
 	
-	position.x += x_velocity * delta
-	position.y += y_velocity * delta
+	if y_velocity < 0:
+		position.x += x_velocity * delta
+		position.y += y_velocity * delta
+	else:
+		position.x += x_velocity * delta / 5.0
+		position.y += y_velocity * delta / 7.0
+	
 	y_velocity += gravity * delta
