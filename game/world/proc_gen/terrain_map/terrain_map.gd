@@ -289,7 +289,10 @@ func set_cell_type(pos: Vector2i, tile_type: TileType, alt_id: int = 0) -> void:
 func set_terrain_from_data(data: Dictionary) -> void:
 	for pos: Vector2i in data.keys():
 		var save_resource: TileDataResource = data[pos]
-		set_cell(pos, SOURCE_ID, save_resource.atlas_coords, save_resource.alt_id)
+		if save_resource.atlas_coords == Vector2i():
+			set_cell_type(pos, save_resource.type, save_resource.alt_id)
+		else:
+			set_cell(pos, SOURCE_ID, save_resource.atlas_coords, save_resource.alt_id)
 		
 	# Post-load logic like autotiling would go here.
 	# The temperature system will be initialized after this by generate_map.
