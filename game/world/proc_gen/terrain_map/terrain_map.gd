@@ -307,8 +307,16 @@ func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
 	set_cell(pos, SOURCE_ID, get_cell_atlas_coords(pos), DEPETRIFIED_ID)
 	
 	## Handle animations
-	if not MapUtility.tile_has_structure(pos):
+	var structure: Node2D = MapUtility.get_structure_at(pos)
+	if structure:
+		var sprite: Sprite2D = Components.get_component(structure, Sprite2D)
+		var sprite_material = sprite.material
+		if sprite_material is ShaderMaterial:
+			if sprite_material.get_shader_parameter("shader_is_petrified"):
+				sprite.material = null
+	else:
 		animate_tile(pos)
+	
 	
 	await get_tree().create_timer(DEPETRIFICATION_EXPANSION_DELAY).timeout
 	

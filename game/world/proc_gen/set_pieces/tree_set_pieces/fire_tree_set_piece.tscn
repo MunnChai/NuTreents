@@ -10,33 +10,35 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5wi47"]
 resource_local_to_scene = true
 shader = ExtResource("3_sport")
+shader_parameter/shader_is_petrified = true
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iu88x"]
 shader = ExtResource("3_sport")
+shader_parameter/shader_is_petrified = true
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ttkdn"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(224, 64, 32, 64)
+region = Rect2(0, 192, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(224, 64, 32, 64)
+region = Rect2(64, 192, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(192, 64, 32, 64)
+region = Rect2(128, 192, 32, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k03om"]
 resource_local_to_scene = true
 atlas = ExtResource("6_bi1ko")
-region = Rect2(192, 64, 32, 64)
+region = Rect2(32, 192, 32, 64)
 
 [node name="FireTreeSetPiece" instance=ExtResource("1_tbrfx")]
 biome = 2
@@ -68,7 +70,7 @@ randomize_on_ready = false
 set_type_on_ready = false
 
 [node name="DecorComposed2" parent="Structures" index="2" instance=ExtResource("5_3vt30")]
-position = Vector2(32, 0)
+position = Vector2(48, -8)
 
 [node name="Sprite2D" parent="Structures/DecorComposed2" index="0"]
 material = SubResource("ShaderMaterial_iu88x")

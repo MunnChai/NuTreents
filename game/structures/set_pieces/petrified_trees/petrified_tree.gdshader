@@ -1,4 +1,6 @@
 shader_type canvas_item;
+// MUNN: THIS IS SO SCUFFED IT'S JUST HOW I'M CHECKING IF A SPRITE HAS THIS SPECIFIC SHADER
+uniform bool shader_is_petrified = true;
 
 uniform float alpha = 1.0;
 uniform bool is_flashing = false;
