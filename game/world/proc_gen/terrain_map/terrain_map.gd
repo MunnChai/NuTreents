@@ -297,7 +297,7 @@ var animated_tiles: Dictionary[Vector2i, float]
 
 const DEPETRIFIED_ID: int = 0
 const PETRIFIED_ID: int = 1
-const DEPETRIFY_ANIMATION_DURATION: float = 0.2
+const DEPETRIFICATION_EXPANSION_DELAY: float = 0.075
 func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
 	var tile_alt_id: int = get_cell_alternative_tile(pos)
 	# Check to ensure this tile is petrified
@@ -307,21 +307,24 @@ func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
 	set_cell(pos, SOURCE_ID, get_cell_atlas_coords(pos), DEPETRIFIED_ID)
 	
 	## Handle animations
-	animate_tile(pos)
+	if not MapUtility.tile_has_structure(pos):
+		animate_tile(pos)
 	
-	await get_tree().create_timer(DEPETRIFY_ANIMATION_DURATION / 2).timeout
+	await get_tree().create_timer(DEPETRIFICATION_EXPANSION_DELAY).timeout
 	
 	if depetrify_around:
 		for surrounding_pos: Vector2i in get_surrounding_cells(pos):
 			depetrify_tile(surrounding_pos, true)
-	
-	
 
+const DEPETRIFY_ANIMATION_DURATION: float = 0.4
+const DEPETRIFY_ANIM_OFFSET_ONE: float = 4
+const DEPETRIFY_ANIM_OFFSET_TWO: float = -4
 func animate_tile(pos: Vector2i) -> void:
 	var tween = get_tree().create_tween()
 	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_method(set_animated_tile_offset.bind(pos), 0.0, -4.0, 0.1)
-	tween.tween_method(set_animated_tile_offset.bind(pos), -4.0, 0.0, 0.1)
+	tween.tween_method(set_animated_tile_offset.bind(pos), 0.0, DEPETRIFY_ANIM_OFFSET_ONE, DEPETRIFY_ANIMATION_DURATION / 3)
+	tween.tween_method(set_animated_tile_offset.bind(pos), DEPETRIFY_ANIM_OFFSET_ONE, DEPETRIFY_ANIM_OFFSET_TWO, DEPETRIFY_ANIMATION_DURATION / 3)
+	tween.tween_method(set_animated_tile_offset.bind(pos), DEPETRIFY_ANIM_OFFSET_TWO, 0.0, DEPETRIFY_ANIMATION_DURATION / 3)
 	await tween.finished
 	
 	notify_runtime_tile_data_update()
@@ -335,7 +338,6 @@ func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
 	return animated_tiles.has(coords)
 
 func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
-	print(animated_tiles[coords])
 	tile_data.texture_origin = Vector2(0, animated_tiles[coords])
 	
 

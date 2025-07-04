@@ -1,10 +1,7 @@
 class_name FogMap
 extends TileMapLayer
 
-const DEFAULT_VISION_RANGE = 3
 const FOG_SIZE = Global.MAP_SIZE * 4
-
-var tree_vision_range: int = DEFAULT_VISION_RANGE
 
 @onready var solid_atlas_coords := get_solid_atlas_coords()
 @onready var semi_transparent_atlas_coords := get_semi_transparent_atlas_coords()
@@ -24,30 +21,25 @@ func init() -> void:
 			
 			set_cell(map_coords, 0, atlas_coords, 0)
 
-func remove_fog_around(map_coords: Vector2i):
-	for x in range(map_coords.x - tree_vision_range, map_coords.x + tree_vision_range):
-		for y in range(map_coords.y - tree_vision_range, map_coords.y + tree_vision_range):
-			## ATTEMPT AT CIRCULAR
-			#var dist = map_coords.distance_to(Vector2i(x, y))
-			#if dist >= tree_vision_range:
-				#continue
+func remove_fog_around(map_coords: Vector2i, fog_revealer_component: FogRevealerComponent):
+	var offsets = fog_revealer_component.reveal_range_component.get_tiles_in_range()
+	for offset in offsets:
+		var current_coord: Vector2i = map_coords + offset
 			
-			var current_coord: Vector2i = Vector2i(x, y)
-			
-			erase_cell(current_coord)
-			
-			var base_surrounding = get_surrounding_cells(current_coord)
-			
-			for cell in base_surrounding:
-				for another_cell in get_surrounding_cells(cell):
-					if get_cell_atlas_coords(another_cell) in transparent_atlas_coords:
-						continue
-					if get_cell_tile_data(another_cell) != null:
-						set_cell(another_cell, 0, get_random_most_transparent_atlas_coords(), 0)
-			
-			for cell in base_surrounding:
-				if get_cell_tile_data(cell) != null:
-					set_cell(cell, 0, get_random_transparent_atlas_coords(), 0)
+		erase_cell(current_coord)
+		
+		var base_surrounding = get_surrounding_cells(current_coord)
+		
+		for cell in base_surrounding:
+			for another_cell in get_surrounding_cells(cell):
+				if get_cell_atlas_coords(another_cell) in transparent_atlas_coords:
+					continue
+				if get_cell_tile_data(another_cell) != null:
+					set_cell(another_cell, 0, get_random_most_transparent_atlas_coords(), 0)
+		
+		for cell in base_surrounding:
+			if get_cell_tile_data(cell) != null:
+				set_cell(cell, 0, get_random_transparent_atlas_coords(), 0)
 
 func update_surrounding_tiles(map_coords: Vector2i):
 	var is_tree_here: bool = TreeManager.get_tree_map().has(map_coords)

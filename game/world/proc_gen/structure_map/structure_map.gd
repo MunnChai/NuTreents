@@ -33,8 +33,9 @@ func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bo
 			# Otherwise, destroy the decor and continue
 			remove_structure(map_coords)
 	
-	if Components.has_component(structure, FogRevealerComponent):
-		Global.fog_map.remove_fog_around(map_coords)
+	var fog_revealer_component: FogRevealerComponent = Components.get_component(structure, FogRevealerComponent)
+	if fog_revealer_component:
+		Global.fog_map.remove_fog_around(map_coords, fog_revealer_component)
 	
 	structure.position = map_to_local(map_coords)
 	

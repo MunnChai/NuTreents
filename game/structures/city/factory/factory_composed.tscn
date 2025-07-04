@@ -87,6 +87,9 @@ id = "factory"
 
 [node name="FogRevealerComponent" parent="." instance=ExtResource("7_36ag0")]
 
+[node name="GridRangeComponent" parent="FogRevealerComponent" index="0"]
+range = 1
+
 [node name="OutlineComponent" parent="." instance=ExtResource("9_nrg4w")]
 
 [node name="VisualArrowComponent" parent="." instance=ExtResource("10_snwho")]
@@ -95,3 +98,5 @@ arrow_height = 1
 [node name="FactoryBehaviourComponent" parent="." instance=ExtResource("11_ttqd5")]
 script = ExtResource("12_ygjgk")
 type = 1
+
+[editable path="FogRevealerComponent"]
