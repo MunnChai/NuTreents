@@ -54,11 +54,12 @@ func depetrify() -> void:
 	tree_acquire_animation.get_parent().remove_child(tree_acquire_animation)
 	
 	# Remove self from map
-	Global.structure_map.remove_structure(grid_position_component.get_pos())
+	var map_pos: Vector2i = grid_position_component.get_pos()
+	Global.structure_map.remove_structure(map_pos)
 	
 	# Add new tree to map
 	var new_twee: Node2D = TreeRegistry.get_new_twee(tree_type)
-	TreeManager.place_tree(new_twee, grid_position_component.get_pos())
+	TreeManager.place_tree(new_twee, map_pos)
 	
 	# Complete reparenting
 	new_twee.add_child(sprite_shatter_component)
@@ -75,3 +76,5 @@ func depetrify() -> void:
 	
 	# Play tree acquisition animation
 	tree_acquire_animation.play_acquire_animation()
+	
+	Global.terrain_map.depetrify_tile(map_pos, true)

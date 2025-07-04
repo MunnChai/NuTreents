@@ -101,9 +101,9 @@ func _input(event: InputEvent) -> void:
 	if (TreeManager.is_mother_dead()):
 		return
 		
-	if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		Global.new_seed()
-		regenerate_map()
+	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
+		#Global.new_seed()
+		#regenerate_map()
 
 func get_mouse_coords() -> Vector2:
 	return get_local_mouse_position()
@@ -292,6 +292,52 @@ func set_terrain_from_data(data: Dictionary) -> void:
 		set_cell_type(pos, save_resource.type)
 	# Post-load logic like autotiling would go here.
 	# The temperature system will be initialized after this by generate_map.
+
+var animated_tiles: Dictionary[Vector2i, float]
+
+const DEPETRIFIED_ID: int = 0
+const PETRIFIED_ID: int = 1
+const DEPETRIFY_ANIMATION_DURATION: float = 0.2
+func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
+	var tile_alt_id: int = get_cell_alternative_tile(pos)
+	# Check to ensure this tile is petrified
+	if tile_alt_id != PETRIFIED_ID:
+		return
+	# Depetrify the tile
+	set_cell(pos, SOURCE_ID, get_cell_atlas_coords(pos), DEPETRIFIED_ID)
+	
+	## Handle animations
+	animate_tile(pos)
+	
+	await get_tree().create_timer(DEPETRIFY_ANIMATION_DURATION / 2).timeout
+	
+	if depetrify_around:
+		for surrounding_pos: Vector2i in get_surrounding_cells(pos):
+			depetrify_tile(surrounding_pos, true)
+	
+	
+
+func animate_tile(pos: Vector2i) -> void:
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_method(set_animated_tile_offset.bind(pos), 0.0, -4.0, 0.1)
+	tween.tween_method(set_animated_tile_offset.bind(pos), -4.0, 0.0, 0.1)
+	await tween.finished
+	
+	notify_runtime_tile_data_update()
+	animated_tiles.erase(pos)
+
+func set_animated_tile_offset(offset: float, pos: Vector2i) -> void:
+	animated_tiles[pos] = offset
+	notify_runtime_tile_data_update()
+
+func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
+	return animated_tiles.has(coords)
+
+func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
+	print(animated_tiles[coords])
+	tile_data.texture_origin = Vector2(0, animated_tiles[coords])
+	
 
 # --- Positional Check Functions ---
 
