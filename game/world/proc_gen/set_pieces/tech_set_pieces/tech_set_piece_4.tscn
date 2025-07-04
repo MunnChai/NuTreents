@@ -1,17 +1,30 @@
-[gd_scene load_steps=4 format=4 uid="uid://co87li76utfkg"]
+[gd_scene load_steps=5 format=4 uid="uid://co87li76utfkg"]
 
 [ext_resource type="Script" uid="uid://gl2mr0urfc52" path="res://world/proc_gen/set_pieces/set_piece.gd" id="1_463oi"]
 [ext_resource type="TileSet" uid="uid://c56n5at2ah3wj" path="res://world/proc_gen/terrain_map/terrain_tileset.tres" id="2_12vlg"]
 [ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_c1ppv"]
+[ext_resource type="PackedScene" uid="uid://dnwmoqcy1law8" path="res://structures/city/city_building_composed.tscn" id="4_12vlg"]
 
 [node name="TechSetPiece0" type="Node2D"]
 script = ExtResource("1_463oi")
 biome = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD+////AAACAAoAAAD+/wAAAAAAAAYAAAD+/wEAAAAAAAoAAAD//wEAAAABAAYAAAAAAAEAAAABAAoAAAD//wAAAAABAAQAAAD/////AAABAAYAAAAAAAAAAAAAAAYAAAAAAP//AAADAAoAAAD9////AAABAAQAAAD9/wAAAAADAAQAAAD///7/AAADAAQAAAD+//7/AAAAAAQAAAD+/wIAAAAAAAQAAAD//wIAAAACAAQAAAAAAAIAAAAAAAQAAAABAAAAAAACAAQAAAABAAEAAAAAAAQAAAD9/wEAAAADAAQAAAAAAP7/AAACAAQAAAABAP//AAAAAAQAAAA=")
+tile_map_data = PackedByteArray("AAD+////AAABAAQAAAD+/wAAAAADAAQAAAAAAAEAAAAAAAQAAAD//wAAAAABAAQAAAD/////AAABAAQAAAAAAAAAAAABAAYAAAAAAP//AAAAAAQAAAAAAAIAAAAAAAQAAAABAAAAAAABAAYAAAAAAP7/AAADAAQAAAABAP//AAACAAQAAAD//wEAAAACAAQAAAD+/wEAAAAAAAQAAAACAAAAAAABAAYAAAACAP//AAAAAAQAAAABAP7/AAAAAAQAAAABAAEAAAAAAAQAAAD9/wAAAAABAAQAAAADAAAAAAAFAAYAAAAEAAAAAAAFAAYAAAADAP//AAAAAAQAAAAEAP//AAAAAAQAAAACAAEAAAACAAQAAAAEAAEAAAAAAAQAAAADAAEAAAADAAQAAAAGAAAAAAAFAAYAAAAFAAAAAAAFAAYAAAA=")
 tile_set = ExtResource("2_12vlg")
 
 [node name="Structures" type="Node2D" parent="."]
 
 [node name="FactoryComposed" parent="Structures" instance=ExtResource("3_c1ppv")]
+
+[node name="CityBuildingComposed" parent="Structures" instance=ExtResource("4_12vlg")]
+position = Vector2(64, 16)
+
+[node name="CityBuildingComposed2" parent="Structures" instance=ExtResource("4_12vlg")]
+position = Vector2(48, 40)
+
+[node name="CityBuildingComposed3" parent="Structures" instance=ExtResource("4_12vlg")]
+position = Vector2(16, 24)
+
+[node name="CityBuildingComposed4" parent="Structures" instance=ExtResource("4_12vlg")]
+position = Vector2(32, 0)

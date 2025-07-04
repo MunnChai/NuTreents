@@ -620,6 +620,10 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	for offset: Vector2i in tiles.keys():
 		var true_pos: Vector2i = grid_position + offset
 		
+		# Out of bounds
+		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
+			return 
+		
 		var info: Dictionary = tiles[offset]
 		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
 		
@@ -628,6 +632,11 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
 	for offset: Vector2i in structures.keys():
 		var true_pos: Vector2i = grid_position + offset
+		
+		# Out of bounds
+		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
+			return 
+		
 		var structure: Node2D = structures[offset]
 		structure.get_parent().remove_child(structure)
 		Global.structure_map.add_structure(true_pos, structure, true)

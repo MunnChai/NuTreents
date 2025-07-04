@@ -1,17 +1,123 @@
-[gd_scene load_steps=4 format=4 uid="uid://dja0stqd6dutw"]
+[gd_scene load_steps=12 format=4 uid="uid://dja0stqd6dutw"]
 
 [ext_resource type="Script" uid="uid://gl2mr0urfc52" path="res://world/proc_gen/set_pieces/set_piece.gd" id="1_35v5h"]
 [ext_resource type="TileSet" uid="uid://c56n5at2ah3wj" path="res://world/proc_gen/terrain_map/terrain_tileset.tres" id="2_hf7xi"]
 [ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_3kwpf"]
+[ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="4_3kwpf"]
+[ext_resource type="PackedScene" uid="uid://dnwmoqcy1law8" path="res://structures/city/city_building_composed.tscn" id="4_vog1n"]
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="5_vog1n"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7f1yl"]
+resource_local_to_scene = true
+atlas = ExtResource("5_vog1n")
+region = Rect2(0, 128, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vog1n"]
+resource_local_to_scene = true
+atlas = ExtResource("5_vog1n")
+region = Rect2(160, 128, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s33sr"]
+resource_local_to_scene = true
+atlas = ExtResource("5_vog1n")
+region = Rect2(64, 128, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctc1f"]
+resource_local_to_scene = true
+atlas = ExtResource("5_vog1n")
+region = Rect2(96, 128, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e550p"]
+resource_local_to_scene = true
+atlas = ExtResource("5_vog1n")
+region = Rect2(128, 128, 32, 64)
 
 [node name="TechSetPiece0" type="Node2D"]
 script = ExtResource("1_35v5h")
 biome = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_map_data = PackedByteArray("AAD+////AAACAAoAAAD+/wAAAAAAAAYAAAD+/wEAAAAAAAoAAAD//wEAAAABAAYAAAAAAAEAAAABAAoAAAD//wAAAAABAAQAAAD/////AAABAAYAAAAAAAAAAAAAAAYAAAAAAP//AAADAAoAAAD9////AAABAAQAAAD9/wAAAAADAAQAAAD///7/AAADAAQAAAD+//7/AAAAAAQAAAD+/wIAAAAAAAQAAAD//wIAAAACAAQAAAAAAAIAAAAAAAQAAAABAAAAAAACAAQAAAABAAEAAAAAAAQAAAD9/wEAAAADAAQAAAAAAP7/AAACAAQAAAABAP//AAAAAAQAAAA=")
+tile_map_data = PackedByteArray("AAD+/wAAAAADAAQAAAD+/wEAAAABAAYAAAD//wEAAAACAAgAAAAAAAEAAAACAAgAAAD//wAAAAABAAQAAAD9////AAACAAQAAAD9/wEAAAAFAAYAAAD9//7/AAACAAQAAAAAAAAAAAADAAQAAAABAAAAAAAAAAQAAAD+/wIAAAACAAQAAAD9/wMAAAABAAQAAAAAAP//AAACAAQAAAD+////AAACAAQAAAAAAAIAAAAGAAYAAAD//wIAAAAAAAgAAAD//wMAAAAAAAoAAAD+/wQAAAABAAQAAAD+/wMAAAABAAQAAAD9/wIAAAAAAAQAAAABAAEAAAACAAgAAAABAAIAAAAEAAgAAAAAAAMAAAAGAAgAAAAAAAQAAAAAAAQAAAACAAIAAAACAAQAAAACAAEAAAAFAAYAAAACAAMAAAAAAAQAAAD8/wEAAAABAAgAAAD8/wIAAAAAAAYAAAD8/wAAAAAAAAYAAAD8////AAAAAAYAAAD9/wAAAAADAAQAAAD7/wAAAAABAAQAAAABAAMAAAABAAoAAAABAAQAAAADAAQAAAA=")
 tile_set = ExtResource("2_hf7xi")
 
 [node name="Structures" type="Node2D" parent="."]
 
 [node name="FactoryComposed" parent="Structures" instance=ExtResource("3_3kwpf")]
+
+[node name="CityBuildingComposed" parent="Structures" instance=ExtResource("4_vog1n")]
+position = Vector2(-32, -16)
+
+[node name="CityBuildingComposed2" parent="Structures" instance=ExtResource("4_vog1n")]
+position = Vector2(-16, -24)
+
+[node name="CityBuildingComposed3" parent="Structures" instance=ExtResource("4_vog1n")]
+position = Vector2(32, 16)
+
+[node name="DecorComposed" parent="Structures" instance=ExtResource("4_3kwpf")]
+position = Vector2(-64, -16)
+
+[node name="Sprite2D" parent="Structures/DecorComposed" index="0"]
+texture = SubResource("AtlasTexture_7f1yl")
+flip_h = true
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed" index="3"]
+set_type_on_ready = false
+
+[node name="DecorComposed2" parent="Structures" instance=ExtResource("4_3kwpf")]
+position = Vector2(-32, 16)
+
+[node name="Sprite2D" parent="Structures/DecorComposed2" index="0"]
+texture = SubResource("AtlasTexture_vog1n")
+flip_h = true
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed2" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed2" index="3"]
+set_type_on_ready = false
+
+[node name="DecorComposed3" parent="Structures" instance=ExtResource("4_3kwpf")]
+position = Vector2(0, 16)
+
+[node name="Sprite2D" parent="Structures/DecorComposed3" index="0"]
+texture = SubResource("AtlasTexture_s33sr")
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed3" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
+set_type_on_ready = false
+
+[node name="DecorComposed4" parent="Structures" instance=ExtResource("4_3kwpf")]
+position = Vector2(-16, 40)
+
+[node name="Sprite2D" parent="Structures/DecorComposed4" index="0"]
+texture = SubResource("AtlasTexture_ctc1f")
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed4" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed4" index="3"]
+set_type_on_ready = false
+
+[node name="DecorComposed5" parent="Structures" instance=ExtResource("4_3kwpf")]
+position = Vector2(-48, 8)
+
+[node name="Sprite2D" parent="Structures/DecorComposed5" index="0"]
+texture = SubResource("AtlasTexture_e550p")
+flip_h = true
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed5" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed5" index="3"]
+set_type_on_ready = false
+
+[editable path="Structures/DecorComposed"]
+[editable path="Structures/DecorComposed2"]
+[editable path="Structures/DecorComposed3"]
+[editable path="Structures/DecorComposed4"]
+[editable path="Structures/DecorComposed5"]
