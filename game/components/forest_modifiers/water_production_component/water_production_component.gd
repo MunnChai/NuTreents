@@ -20,7 +20,7 @@ func get_water_production() -> float:
 	if is_water_adjacent():
 		return max(0, water_production * ADJACENT_WATER_MULTIPLIER)
 	
-	return water_production
+	return water_production * get_rain_multiplier()
 
 func add_water_production(amount: float) -> float:
 	water_production += amount
@@ -42,3 +42,9 @@ func is_water_adjacent() -> bool:
 			return true
 	
 	return false
+
+func get_rain_multiplier() -> float:
+	if WeatherManager.instance.is_raining():
+		return 1.5
+	else:
+		return 1.0

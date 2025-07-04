@@ -3,6 +3,8 @@ extends Node2D
 
 ## THE WEATHER
 
+const RAIN_WATER_PRODUCTION_MULTIPLIER = 1.5
+
 enum WeatherType {
 	CLEAR,
 	RAIN,
@@ -24,6 +26,9 @@ var durations: Dictionary[WeatherType, float] = {
 @onready var timer: Timer = $Timer
 
 static var instance: WeatherManager
+
+func is_raining() -> bool:
+	return current_weather == WeatherType.RAIN or current_weather == WeatherType.STORM
 
 func _ready() -> void:
 	instance = self
