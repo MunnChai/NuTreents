@@ -136,13 +136,6 @@ var desc_dictionary = {
 	TerrainMap.TileType.ICE: "Frozen. No place for roots."
 }
 
-func _ready():
-	add_tree(Global.TreeType.MOTHER_TREE)
-	add_tree(Global.TreeType.DEFAULT_TREE)
-	add_tree(Global.TreeType.WATER_TREE)
-	add_tree(Global.TreeType.GUN_TREE)
-	
-
 # add explored tree
 func add_tree(tree_type: Global.TreeType):
 	if not trees.has(tree_type):
@@ -160,9 +153,13 @@ func get_enemies() -> Array[Global.EnemyType]:
 	return enemies
 
 func set_trees(data: Array[Global.TreeType]):
+	if data.is_empty():
+		return
 	trees = data
 
 func set_enemies(data: Array[Global.EnemyType]):
+	if data.is_empty():
+		return
 	enemies = data
 
 func get_tree_details(type: Global.TreeType) -> String:

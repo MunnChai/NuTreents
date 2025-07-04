@@ -50,7 +50,6 @@ horizontal_scroll_mode = 0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
-size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("3_o5p2d")
 autowrap_mode = 1

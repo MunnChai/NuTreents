@@ -41,6 +41,7 @@ func update_menu(tab: int):
 
 func populate_tree_menu():
 	var trees: Array[Global.TreeType] = AlmanacInfo.get_trees()
+	print("open almanac", trees)
 	for t in trees:
 		var card: AlmanacTreeCard = ALMANAC_TREE_CARD.instantiate()
 		card.type = t
