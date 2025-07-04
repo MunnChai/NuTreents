@@ -135,6 +135,7 @@ func remove_all_structures() -> void:
 		remove_structure(pos)
 
 
+const PETRIFIED_DECOR_COMPONENT = preload("res://components/petrified_component/petrified_decor_component/petrified_decor_component.tscn")
 func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:
 	if remove_structures:
 		remove_all_structures()
@@ -147,3 +148,9 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		if add_structure(pos, structure):
 			var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
 			structure_behaviour_component.apply_data_resource(save_resource)
+			
+			if save_resource.is_petrified:
+				if structure_behaviour_component.type == Global.StructureType.DECOR:
+					var petrified_decor_component = PETRIFIED_DECOR_COMPONENT.instantiate()
+					structure.add_child(petrified_decor_component)
+					petrified_decor_component.petrify(true)

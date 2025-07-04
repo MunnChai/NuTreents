@@ -6,6 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hqm3l"]
 resource_local_to_scene = true
 shader = ExtResource("1_ls0ug")
+shader_parameter/shader_is_petrified = true
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
@@ -532,11 +533,19 @@ texture_region_size = Vector2i(32, 16)
 3:22/1/material = SubResource("ShaderMaterial_hqm3l")
 3:22/1/custom_data_0 = 5
 4:24/size_in_atlas = Vector2i(1, 2)
+4:24/next_alternative_id = 2
 4:24/0 = 0
 4:24/0/custom_data_0 = 6
+4:24/1 = 1
+4:24/1/material = SubResource("ShaderMaterial_hqm3l")
+4:24/1/custom_data_0 = 6
 5:24/size_in_atlas = Vector2i(1, 2)
+5:24/next_alternative_id = 2
 5:24/0 = 0
 5:24/0/custom_data_0 = 6
+5:24/1 = 1
+5:24/1/material = SubResource("ShaderMaterial_hqm3l")
+5:24/1/custom_data_0 = 6
 
 [resource]
 tile_shape = 1

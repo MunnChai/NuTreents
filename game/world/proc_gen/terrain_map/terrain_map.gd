@@ -278,9 +278,9 @@ func get_tile_biome(pos: Vector2i) -> TileType:
 	if tile_data == null: return TileType.VOID
 	return tile_data.get_custom_data("biome")
 
-func set_cell_type(pos: Vector2i, tile_type: TileType) -> void:
+func set_cell_type(pos: Vector2i, tile_type: TileType, alt_id: int = 0) -> void:
 	if not TILE_ATLAS_COORDS.has(tile_type): return
-	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], 0)
+	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], alt_id)
 	var tile_data = get_cell_tile_data(pos)
 	if tile_data:
 		tile_data.set_custom_data("biome", tile_type)
@@ -289,7 +289,7 @@ func set_cell_type(pos: Vector2i, tile_type: TileType) -> void:
 func set_terrain_from_data(data: Dictionary) -> void:
 	for pos: Vector2i in data.keys():
 		var save_resource: TileDataResource = data[pos]
-		set_cell_type(pos, save_resource.type)
+		set_cell_type(pos, save_resource.type, save_resource.alt_id)
 	# Post-load logic like autotiling would go here.
 	# The temperature system will be initialized after this by generate_map.
 
@@ -312,7 +312,6 @@ func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
 		var petrified_component: PetrifiedComponent = Components.get_component(structure, PetrifiedComponent)
 		if petrified_component:
 			petrified_component.depetrify()
-			print("DEPETRIFYING")
 	else:
 		animate_tile(pos)
 	
@@ -750,10 +749,11 @@ func randomize_tile(map_coords: Vector2i) -> void:
 	var tile_data: TileData = get_cell_tile_data(map_coords)
 	var biome: int = tile_data.get_custom_data("biome")
 	var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
+	var alt_id: int = get_cell_alternative_tile(map_coords)
 	var modifier: int = floor(scaled_value)
 	
 	var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
-	set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+	set_cell(map_coords, SOURCE_ID, atlas_coords, alt_id)
 
 func get_map_x_range() -> Array:
 	return range(-world_size_settings.map_size.x / 2, world_size_settings.map_size.x / 2 + 1)

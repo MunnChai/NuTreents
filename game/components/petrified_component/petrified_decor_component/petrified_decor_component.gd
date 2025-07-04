@@ -12,8 +12,8 @@ func _get_components() -> void:
 	if not sprite_2d:
 		sprite_2d = Components.get_component(get_parent(), Sprite2D)
 
-func petrify() -> void:
-	if not depetrified:
+func petrify(override_flag: bool = false) -> void:
+	if not depetrified and not override_flag:
 		return
 	
 	depetrified = false
@@ -22,13 +22,12 @@ func petrify() -> void:
 		sprite_2d.material = ShaderMaterial.new()
 		sprite_2d.material.shader = PETRIFIED_TREE
 
-func depetrify() -> void:
-	if depetrified:
+func depetrify(override_flag: bool = false) -> void:
+	if depetrified and not override_flag:
 		return
 	super.depetrify()
 	
 	if sprite_2d:
 		var sprite_material = sprite_2d.material
 		if sprite_material is ShaderMaterial:
-			if sprite_material.get_shader_parameter("shader_is_petrified"):
-				sprite_2d.material = null
+			sprite_2d.material = null
