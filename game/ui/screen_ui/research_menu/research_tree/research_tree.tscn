@@ -119,7 +119,7 @@ required_nodes = [NodePath("../../Row1/Damage1")]
 [node name="TallTree" parent="VBoxContainer/Row2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
 research_resource = ExtResource("9_45mi0")
-required_nodes = [NodePath("../../Row1/Damage1")]
+required_nodes = [NodePath("../../Row1/Health1")]
 
 [node name="Row3" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2

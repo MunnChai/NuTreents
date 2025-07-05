@@ -5,6 +5,7 @@ extends ScreenMenu
 @onready var scroll_container: ScrollContainer = %ScrollContainer
 @onready var research_tree: ResearchTree = %ResearchTree
 @onready var detail_panel: ResearchDetailPanel = %DetailPanel
+@onready var tech_points_label: RichTextLabel = %TechPointsLabel
 
 @onready var starting_position = position
 
@@ -43,6 +44,9 @@ func _on_research_node_pressed(research_node: ResearchNode) -> void:
 
 func _on_research_node_focused(research_node: ResearchNode) -> void:
 	target_v_scroll = research_node.get_parent().position.y - 165
+
+func _on_num_tech_points_changed(tech_points: int) -> void:
+	tech_points_label.text = str(tech_points) + " Points"
 
 #region Menu Opening/Closing
 
