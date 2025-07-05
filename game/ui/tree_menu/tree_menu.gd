@@ -59,6 +59,7 @@ func previous_tree() -> void:
 
 
 func add_tree_card(tree_type: Global.TreeType):
+	AlmanacInfo.add_tree(tree_type)
 	var new_card = TREE_CARD.instantiate()
 	new_card.tree_type = tree_type
 	

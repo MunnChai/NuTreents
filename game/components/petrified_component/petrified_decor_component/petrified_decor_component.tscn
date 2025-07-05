@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cct4xj35n0jg3"]
+
+[ext_resource type="Script" uid="uid://dtx463osdsp3e" path="res://components/petrified_component/petrified_decor_component/petrified_decor_component.gd" id="1_4gc84"]
+
+[node name="PetrifiedDecorComponent" type="Node2D"]
+script = ExtResource("1_4gc84")

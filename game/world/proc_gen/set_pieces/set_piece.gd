@@ -8,6 +8,10 @@ extends Node2D
 ##    - Each tile MUST have custom data "biome" set to a TerrainMap.TileType enum value.
 ## 2. A Node2D named "Structures" to act as a container for any structure scenes.
 
+## If this set piece is not a tree unlock, then default to Mother Tree
+@export var biome: TerrainMap.Biome
+@export var tree_type: Global.TreeType = Global.TreeType.MOTHER_TREE
+
 @onready var tile_map_layer: TileMapLayer = $TileMapLayer
 @onready var structures: Node2D = $Structures
 

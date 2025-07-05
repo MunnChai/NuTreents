@@ -61,6 +61,8 @@ func save_session_data(save_num: int = 1):
 		
 		var tile_save_data: TileDataResource = TileDataResource.new()
 		tile_save_data.type = tile_type
+		tile_save_data.alt_id = Global.terrain_map.get_cell_alternative_tile(pos)
+		tile_save_data.atlas_coords = Global.terrain_map.get_cell_atlas_coords(pos)
 		
 		terrain_map[pos] = tile_save_data
 	config.set_value(SECTION_SESSION, "terrain_map", terrain_map)
@@ -82,6 +84,12 @@ func save_session_data(save_num: int = 1):
 			continue
 		structure_map[pos] = save_resource
 	config.set_value(SECTION_SESSION, "structure_map", structure_map)
+	
+	# Save almanac info
+	var trees: Array[Global.TreeType] = AlmanacInfo.get_trees()
+	config.set_value(SECTION_SESSION, "almanac_trees", trees)
+	var enemies: Array[Global.EnemyType] = AlmanacInfo.get_enemies()
+	config.set_value(SECTION_SESSION, "almanac_enemies", enemies)
 	
 	# Save enemies + EnemyManager info
 	var enemy_map: Dictionary
@@ -158,6 +166,12 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	var weather_time_remaining = config.get_value(SECTION_SESSION, "weather_time_remaining", 60.0)
 	session_data["current_weather"] = current_weather
 	session_data["weather_time_remaining"] = weather_time_remaining
+	
+	# Get almanac info
+	var trees: Array[Global.TreeType] = config.get_value(SECTION_SESSION, "almanac_trees", ([] as Array[Global.TreeType]))
+	session_data["almanac_trees"] = trees
+	var enemies: Array[Global.EnemyType] = config.get_value(SECTION_SESSION, "almanac_enemies", ([] as Array[Global.TreeType]))
+	session_data["almanac_enemies"] = enemies
 	
 	# Get EnemyManager info
 	var enemy_map = config.get_value(SECTION_SESSION, "enemy_map", {})
@@ -274,6 +288,10 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 			save_resource.texture_region_position = atlas_texture.region.position
 			save_resource.tile_type = structure_behaviour_component.tile_type
 			save_resource.set_type_on_ready = structure_behaviour_component.set_type_on_ready
+			var petrified_component: PetrifiedDecorComponent = Components.get_component(structure, PetrifiedDecorComponent, "", true)
+			if petrified_component:
+				if not petrified_component.depetrified:
+					save_resource.is_petrified = true
 		Global.StructureType.PETRIFIED_TREE:
 			save_resource.tree_type = Components.get_component(structure, PetrifiedTreeComponent).tree_type
 	

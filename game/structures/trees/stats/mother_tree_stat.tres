@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=2 format=3 uid="uid://ll6klr2ec2b8"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://ll6klr2ec2b8"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_wnjji"]
+[ext_resource type="Texture2D" uid="uid://b1e5kvam771du" path="res://structures/trees/sheets/mother/mother_tree_with_sapling_small.png" id="2_sndmp"]
 
 [resource]
 script = ExtResource("1_wnjji")
 name = "Mother Tree"
 id = "mother_tree"
 description = ""
+tree_icon = ExtResource("2_sndmp")
 hp = 50
 max_water = 10
 gain = Vector3(2, 6, 0)
