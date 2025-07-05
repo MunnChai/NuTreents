@@ -121,3 +121,6 @@ func _on_mouse_exited():
 
 func _on_focus_entered():
 	focused.emit(self)
+
+func is_unlocked() -> bool:
+	return state == ResearchState.UNLOCKED

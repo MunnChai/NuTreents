@@ -6,12 +6,14 @@ static var instance: ResearchTree
 @onready var root_node: ResearchNode = %RootNode
 @onready var v_box_container: VBoxContainer = $VBoxContainer
 
-var num_tech_points: int = 5:
+var num_tech_points: int = 1:
 	set(new_tech_points):
 		num_tech_points = new_tech_points
 		num_tech_points_changed.emit(new_tech_points)
 
 signal num_tech_points_changed(new_tech_points: int)
+signal unlock_failed(research_node: ResearchNode)
+signal unlock_success(research_node: ResearchNode)
 
 func _ready() -> void:
 	instance = self
@@ -30,19 +32,21 @@ func try_unlock(research_node: ResearchNode) -> void:
 		research_node.unlock_research_node()
 		num_tech_points -= research_node.research_resource.tech_point_cost
 		update_unlockable_nodes()
+		unlock_success.emit(research_node)
 	else:
 		SfxManager.play_sound_effect("ui_fail")
+		unlock_failed.emit(research_node)
 
 func update_unlockable_nodes() -> void:
 	var research_nodes: Array[ResearchNode] = get_research_nodes()
 	
 	for research_node: ResearchNode in research_nodes:
-		if research_node.state != ResearchNode.ResearchState.UNLOCKED:
+		if not research_node.is_unlocked():
 			var required_nodes: Array = research_node.required_nodes
 			
 			var is_unlockable: bool = true
 			for required_node in required_nodes:
-				if required_node.state != ResearchNode.ResearchState.UNLOCKED:
+				if not required_node.is_unlocked():
 					is_unlockable = false
 					break
 			
@@ -67,7 +71,7 @@ func get_unlocked_nodes() -> Array[ResearchNode]:
 	var research_nodes: Array[ResearchNode] = get_research_nodes()
 	
 	for research_node: ResearchNode in research_nodes:
-		if research_node.state != ResearchNode.ResearchState.UNLOCKED:
+		if research_node.is_unlocked():
 			unlocked_nodes.append(research_node)
 	
 	return unlocked_nodes

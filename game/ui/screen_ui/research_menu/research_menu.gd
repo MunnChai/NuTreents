@@ -18,6 +18,7 @@ func _ready():
 	var root_node: ResearchNode = research_tree.get_root_node()
 	_on_research_node_focused(root_node)
 	scroll_container.scroll_vertical = target_v_scroll
+	_on_num_tech_points_changed(research_tree.num_tech_points)
 
 func _process(delta: float) -> void:
 	scroll_container.scroll_vertical = MathUtil.decay(scroll_container.scroll_vertical, target_v_scroll, 10, delta)
@@ -29,6 +30,10 @@ func _connect_button_signals():
 	for research_node: ResearchNode in research_nodes:
 		research_node.pressed.connect(_on_research_node_pressed)
 		research_node.focused.connect(_on_research_node_focused)
+	
+	research_tree.num_tech_points_changed.connect(_on_num_tech_points_changed)
+	research_tree.unlock_failed.connect(_on_unlock_failed)
+	research_tree.unlock_success.connect(_on_unlock_success)
 
 func _on_back_button_pressed():
 	ScreenUI.exit_menu()
@@ -46,7 +51,17 @@ func _on_research_node_focused(research_node: ResearchNode) -> void:
 	target_v_scroll = research_node.get_parent().position.y - 165
 
 func _on_num_tech_points_changed(tech_points: int) -> void:
-	tech_points_label.text = str(tech_points) + " Points"
+	var points_str = " Points" if tech_points != 1 else " Point"
+	tech_points_label.text = str(tech_points) + points_str
+
+func _on_unlock_failed(research_node: ResearchNode) -> void:
+	var points_str = " Points" if research_tree.num_tech_points != 1 else " Point"
+	tech_points_label.text = "[shake rate=20.0 level=20 connected=1][color=red]" + str(research_tree.num_tech_points) + points_str + "[/color][/shake]"
+	await get_tree().create_timer(0.5).timeout
+	tech_points_label.text = str(research_tree.num_tech_points) + points_str
+
+func _on_unlock_success(research_node: ResearchNode) -> void:
+	detail_panel.set_details(research_node)
 
 #region Menu Opening/Closing
 
