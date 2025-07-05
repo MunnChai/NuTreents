@@ -24,7 +24,7 @@ func enough_n(cost: int) -> bool:
 	return nutreents >= cost
 func consume_n(cost: int) -> void:
 	nutreents -= cost
-	var notification = Notification.new(&"cost", 'Spent ' + str(cost) + ' nutreents', { "priority": 1, "time_remaining": 3.0 });
+	var notification = Notification.new(&"cost", tr(&"NOTIF_SPENT").format({ "num": str(cost) }), { "priority": 1, "time_remaining": 3.0 });
 	NotificationLog.instance.add_notification(notification)
 
 #region CORE FUNCTIONALITY

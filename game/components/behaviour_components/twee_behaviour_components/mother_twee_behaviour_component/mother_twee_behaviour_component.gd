@@ -24,7 +24,7 @@ func take_damage(damage: int) -> void:
 	
 	## NOTIFY PLAYER
 	if not notification or notification.is_removed:
-		notification = Notification.new(&"mother_tree_attacked", '[color=ff5671][url="goto"]Mother Tree is being attacked![/url]', { "priority": 10, "time_remaining": 3.0, "position": grid_position_component.get_average_pos()});
+		notification = Notification.new(&"mother_tree_attacked", '[color=ff5671][url="goto"]' + tr(&"NOTIF_MOTHER_TREE_ATTACKED") + '[/url]', { "priority": 10, "time_remaining": 3.0, "position": grid_position_component.get_average_pos()});
 		NotificationLog.instance.add_notification(notification)
 	else:
 		notification.properties["time_remaining"] = 3.0

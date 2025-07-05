@@ -120,7 +120,7 @@ func update_water_maintenance(delta: float) -> float:
 	## HANDLE showing notification for dehydrated forests
 	if is_forest_dehydrated and could_be_visibly_dehydrated:
 		if not notification or notification.is_removed:
-			notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]A part of your forest is dehydrated.[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
+			notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
 			NotificationLog.instance.add_notification(notification)
 		else:
 			notification.properties["time_remaining"] = 1.0

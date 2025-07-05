@@ -16,7 +16,7 @@ func _ready() -> void:
 		flammable.extinguished.connect(_on_ended)
 
 func _on_ignited(fire: Fire) -> void:
-	notification = Notification.new(&"fire", '[color=ff6612][url="goto"]FIRE! A tree in your forest is on fire.[/url]', { "priority": 10, "position": grid_pos.get_pos() });
+	notification = Notification.new(&"fire", '[color=ff6612][url="goto"]' + tr(&"NOTIF_FIRE") + '[/url]', { "priority": 10, "position": grid_pos.get_pos() });
 	NotificationLog.instance.add_notification(notification)
 
 func _on_ended() -> void:
