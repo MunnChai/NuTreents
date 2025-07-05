@@ -20,6 +20,13 @@ var is_paused: bool = false
 func _ready() -> void:
 	animation_player.play("RESET")
 	# Engine.time_scale = 20
+	
+	DebugConsole.register("day", func (args: PackedStringArray):
+		if args.size() != 1:
+			Logger.log("Usage: day [int]")
+			return
+		set_curr_day(int(args[0]))
+		)
 
 func _process(delta: float) -> void:
 	if (!is_paused):
