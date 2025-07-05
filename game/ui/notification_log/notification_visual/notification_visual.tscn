@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmnr1casdu4nj"]
+
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="1_rgt4b"]
+[ext_resource type="Script" uid="uid://bq3d31o2si7nl" path="res://ui/notification_log/notification_visual/notification_visual.gd" id="2_hgl5g"]
+
+[node name="NotificationVisual" type="RichTextLabel"]
+theme = ExtResource("1_rgt4b")
+bbcode_enabled = true
+text = "WARNING! Tree on fire!"
+fit_content = true
+autowrap_mode = 0
+script = ExtResource("2_hgl5g")
+
+[connection signal="meta_clicked" from="." to="." method="_on_meta_clicked"]

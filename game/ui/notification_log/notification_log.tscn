@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj8rykw3ejjax"]
+
+[ext_resource type="Script" uid="uid://dql235owqja08" path="res://ui/notification_log/notification_log.gd" id="1_cxkfb"]
+
+[sub_resource type="Gradient" id="Gradient_ss6ck"]
+offsets = PackedFloat32Array(0.470588, 0.595588)
+colors = PackedColorArray(0, 0, 0, 0.741176, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cxkfb"]
+gradient = SubResource("Gradient_ss6ck")
+fill_from = Vector2(0.00378788, 0.492424)
+fill_to = Vector2(1, 0.503788)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1gycp"]
+texture = SubResource("GradientTexture2D_cxkfb")
+
+[node name="NotificationLog" type="Control" node_paths=PackedStringArray("notification_log_visual", "notification_container")]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_cxkfb")
+notification_log_visual = NodePath(".")
+notification_container = NodePath("PanelContainer/MarginContainer/VBoxContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 16.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_1gycp")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
