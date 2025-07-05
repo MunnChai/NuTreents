@@ -45,6 +45,14 @@ func get_currently_selected_tree_type() -> Global.TreeType:
 func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
 	currently_selected_tree = tree_order.find(tree_type)
 
+func get_unlocked_tree_types() -> Array[Global.TreeType]:
+	var tree_types: Array[Global.TreeType]
+	
+	for tree_card: TreeCard in tree_card_container.get_children():
+		tree_types.append(tree_card.tree_type)
+	
+	return tree_types
+
 func next_tree() -> void:
 	currently_selected_tree += 1
 	currently_selected_tree = currently_selected_tree % tree_order.size()
@@ -64,3 +72,7 @@ func add_tree_card(tree_type: Global.TreeType):
 	new_card.tree_type = tree_type
 	
 	tree_card_container.add_child(new_card)
+
+func remove_all_tree_cards() -> void:
+	for tree_card: TreeCard in tree_card_container.get_children():
+		tree_card.queue_free()
