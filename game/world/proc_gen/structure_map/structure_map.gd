@@ -13,9 +13,9 @@ func _ready() -> void:
 	#add_to_group("structure_map")
 	y_sort_enabled = true
 
-#func _process(delta: float) -> void:
-	#if Input.is_action_just_pressed("debug_button"):
-		#add_structure(local_to_map(get_mouse_coords()), StructureRegistry.get_new_structure(Global.StructureType.PETRIFIED_TREE))
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("debug_button"):
+		add_structure(local_to_map(get_mouse_coords()), StructureRegistry.get_new_structure(Global.StructureType.PETRIFIED_TREE))
 
 func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bool = false) -> bool:
 	if not structure:
@@ -33,8 +33,9 @@ func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bo
 			# Otherwise, destroy the decor and continue
 			remove_structure(map_coords)
 	
-	if Components.has_component(structure, FogRevealerComponent):
-		Global.fog_map.remove_fog_around(map_coords)
+	var fog_revealer_component: FogRevealerComponent = Components.get_component(structure, FogRevealerComponent)
+	if fog_revealer_component:
+		Global.fog_map.remove_fog_around(map_coords, fog_revealer_component)
 	
 	structure.position = map_to_local(map_coords)
 	
@@ -134,6 +135,7 @@ func remove_all_structures() -> void:
 		remove_structure(pos)
 
 
+const PETRIFIED_DECOR_COMPONENT = preload("res://components/petrified_component/petrified_decor_component/petrified_decor_component.tscn")
 func set_structures_from_data(data: Dictionary, remove_structures: bool = true) -> void:
 	if remove_structures:
 		remove_all_structures()
@@ -146,3 +148,9 @@ func set_structures_from_data(data: Dictionary, remove_structures: bool = true) 
 		if add_structure(pos, structure):
 			var structure_behaviour_component: StructureBehaviourComponent = Components.get_component(structure, StructureBehaviourComponent)
 			structure_behaviour_component.apply_data_resource(save_resource)
+			
+			if save_resource.is_petrified:
+				if structure_behaviour_component.type == Global.StructureType.DECOR:
+					var petrified_decor_component = PETRIFIED_DECOR_COMPONENT.instantiate()
+					structure.add_child(petrified_decor_component)
+					petrified_decor_component.petrify(true)

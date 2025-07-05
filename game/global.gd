@@ -92,6 +92,16 @@ func _ready() -> void:
 	
 	# For randomness upon first opening the game
 	set_seed(int(Time.get_unix_time_from_system()))
+	
+	## Register some useful commands...
+	await get_tree().process_frame # Wait for setup
+	
+	DebugConsole.register("lang", func (args: PackedStringArray):
+		if args.size() != 1:
+			Logger.log("Usage: lang [language-code]")
+		else:
+			TranslationServer.set_locale(args[0])
+		)
 
 func update_globals():
 	structure_map = get_tree().get_first_node_in_group("structure_map")

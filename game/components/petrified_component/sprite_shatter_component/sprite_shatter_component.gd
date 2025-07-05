@@ -83,13 +83,13 @@ func create_shatter_pieces() -> void:
 		shatter_pieces.append(shatter_piece)
 		
 		#setup polygons
-		shatter_piece.polygon_2d.texture = texture
-		shatter_piece.polygon_2d.polygon = t
-		shatter_piece.polygon_2d.position = -center
-		shatter_piece.polygon_2d.texture_offset = texture.get_size() / 2 
+		shatter_piece.texture = texture
+		shatter_piece.polygon = t
+		shatter_piece.position = -center
+		shatter_piece.texture_offset = texture.get_size() / 2 
 		
 		if actor.material:
-			shatter_piece.polygon_2d.material = actor.material
+			shatter_piece.material = actor.material
 	
 	queue_redraw()
 

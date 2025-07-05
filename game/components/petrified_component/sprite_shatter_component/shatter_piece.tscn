@@ -2,7 +2,5 @@
 
 [ext_resource type="Script" uid="uid://dotd77fihf3g1" path="res://components/petrified_component/sprite_shatter_component/shatter_piece.gd" id="1_qsk73"]
 
-[node name="ShatterPiece" type="Node2D"]
+[node name="ShatterPiece" type="Polygon2D"]
 script = ExtResource("1_qsk73")
-
-[node name="Polygon2D" type="Polygon2D" parent="."]

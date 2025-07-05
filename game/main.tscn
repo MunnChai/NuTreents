@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c5ab514k8x8dc" path="res://overlays/overlays.tscn" id="3_kek77"]
 [ext_resource type="Script" uid="uid://cbt8on7k0jkvt" path="res://input/input_handler.gd" id="5_7mycd"]
 [ext_resource type="PackedScene" uid="uid://b2bri5edcykxw" path="res://events/weather/weather_manager.tscn" id="5_dg77c"]
-[ext_resource type="PackedScene" uid="uid://5xnl4wkxo80k" path="res://ui/cursor/virtual_cursor/virtual_cursor.tscn" id="6_4c57u"]
+[ext_resource type="PackedScene" uid="uid://5xnl4wkxo80k" path="res://ui/_archive/virtual_cursor/virtual_cursor.tscn" id="6_4c57u"]
 [ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="7_4c57u"]
 [ext_resource type="AudioStream" uid="uid://c82lm8mfowgcs" path="res://sound/sfx/wind_loop.wav" id="7_272bh"]
 [ext_resource type="PackedScene" uid="uid://dykyagfq57yc5" path="res://events/weather/rain/rain.tscn" id="8_efxa6"]
@@ -53,5 +53,3 @@ stream = ExtResource("7_272bh")
 volume_db = -20.0
 autoplay = true
 bus = &"SFX"
-
-[editable path="UI/UI"]

@@ -1,0 +1,104 @@
+[gd_scene load_steps=13 format=4 uid="uid://de17vp4s556vu"]
+
+[ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_tnbko"]
+[ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_aqjvn"]
+[ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="3_rjpw0"]
+[ext_resource type="Texture2D" uid="uid://dvxjkntvapnlm" path="res://structures/trees/icons/mortar_tree.png" id="4_tnbko"]
+[ext_resource type="PackedScene" uid="uid://cct4xj35n0jg3" path="res://components/petrified_component/petrified_decor_component/petrified_decor_component.tscn" id="5_aqjvn"]
+[ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_wpg2h"]
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="6_75pj1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iu88x"]
+shader = ExtResource("3_rjpw0")
+shader_parameter/shader_is_petrified = true
+shader_parameter/alpha = 1.0
+shader_parameter/is_flashing = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ttkdn"]
+resource_local_to_scene = true
+atlas = ExtResource("6_75pj1")
+region = Rect2(32, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xfcu1"]
+resource_local_to_scene = true
+atlas = ExtResource("6_75pj1")
+region = Rect2(128, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ugmi"]
+resource_local_to_scene = true
+atlas = ExtResource("6_75pj1")
+region = Rect2(64, 64, 32, 64)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wi47"]
+resource_local_to_scene = true
+shader = ExtResource("3_rjpw0")
+shader_parameter/shader_is_petrified = true
+shader_parameter/alpha = 1.0
+shader_parameter/is_flashing = false
+
+[node name="MortarTreeSetPiece" instance=ExtResource("1_tnbko")]
+biome = 1
+tree_type = 8
+
+[node name="TileMapLayer" parent="." index="0"]
+tile_map_data = PackedByteArray("AAD//wAAAAABAAIAAQD+////AAADAAIAAQD+/wAAAAAAAAIAAQD+/wEAAAAAAAIAAQD//wEAAAAAAAIAAQAAAAEAAAACAAIAAQAAAAAAAAABAAIAAQAAAP//AAACAAIAAQD9////AAAAAAIAAQD//wIAAAACAAIAAQD/////AAACAAIAAQABAAAAAAABAAIAAQD///7/AAADAAIAAQD+//7/AAADAAIAAQA=")
+
+[node name="DecorComposed" parent="Structures" index="0" instance=ExtResource("5_wpg2h")]
+position = Vector2(32, -16)
+
+[node name="Sprite2D" parent="Structures/DecorComposed" index="0"]
+material = SubResource("ShaderMaterial_iu88x")
+texture = SubResource("AtlasTexture_ttkdn")
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed" index="3"]
+set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed" index="4" instance=ExtResource("5_aqjvn")]
+
+[node name="DecorComposed2" parent="Structures" index="1" instance=ExtResource("5_wpg2h")]
+position = Vector2(32, 16)
+
+[node name="Sprite2D" parent="Structures/DecorComposed2" index="0"]
+material = SubResource("ShaderMaterial_iu88x")
+texture = SubResource("AtlasTexture_xfcu1")
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed2" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed2" index="3"]
+set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed2" index="4" instance=ExtResource("5_aqjvn")]
+
+[node name="DecorComposed3" parent="Structures" index="2" instance=ExtResource("5_wpg2h")]
+position = Vector2(-16, -24)
+
+[node name="Sprite2D" parent="Structures/DecorComposed3" index="0"]
+material = SubResource("ShaderMaterial_iu88x")
+texture = SubResource("AtlasTexture_0ugmi")
+flip_h = true
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed3" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
+set_type_on_ready = false
+
+[node name="PetrifiedDecorComponent" parent="Structures/DecorComposed3" index="4" instance=ExtResource("5_aqjvn")]
+
+[node name="PetrifiedTree" parent="Structures" index="3" instance=ExtResource("2_aqjvn")]
+
+[node name="PetrifiedComponent" parent="Structures/PetrifiedTree" index="1"]
+tree_type = 8
+
+[node name="PetrifiedSprite" parent="Structures/PetrifiedTree/PetrifyVisuals" index="2"]
+material = SubResource("ShaderMaterial_5wi47")
+texture = ExtResource("4_tnbko")
+
+[editable path="Structures/DecorComposed"]
+[editable path="Structures/DecorComposed2"]
+[editable path="Structures/DecorComposed3"]
+[editable path="Structures/PetrifiedTree"]
