@@ -87,12 +87,17 @@ func load_world(session_data: Dictionary) -> void:
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
 	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]
 	
-	# Add purchased cards to tree menu
-	ScreenUI.shop_menu.reset_shop_cards() # Reset the state of the shop menu first
-	ScreenUI.shop_menu.purchased_cards = session_data["purchased_cards"]
-	for tree_type: Global.TreeType in ScreenUI.shop_menu.purchased_cards:
+	# Add unlocked cards to tree menu
+	TreeMenu.instance.remove_all_tree_cards()
+	for tree_type: Global.TreeType in session_data["purchased_cards"]:
 		TreeMenu.instance.add_tree_card(tree_type)
-		ScreenUI.shop_menu.disable_card_of_type(tree_type)
+		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
+	
+	#ScreenUI.shop_menu.reset_shop_cards() # Reset the state of the shop menu first
+	#ScreenUI.shop_menu.purchased_cards = session_data["purchased_cards"]
+	#for tree_type: Global.TreeType in ScreenUI.shop_menu.purchased_cards:
+		#TreeMenu.instance.add_tree_card(tree_type)
+		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
 	
 	# Add almanac info
 	AlmanacInfo.set_trees(session_data["almanac_trees"])
