@@ -4,6 +4,7 @@ extends Node2D
 ## THE WEATHER
 
 const RAIN_WATER_PRODUCTION_MULTIPLIER = 1.5
+const FIRST_DAY_OF_STORM = 5
 
 enum WeatherType {
 	CLEAR,
@@ -87,8 +88,11 @@ func _on_timer_timeout() -> void:
 		WeatherType.CLEAR:
 			## Temporarily doesn't have RAIN because there's
 			## no way to distinguish between it and STORM at the moment...
-			var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.STORM, WeatherType.STORM]
-			switch_to(next_weathers.pick_random())
+			if Global.clock.get_curr_day() > FIRST_DAY_OF_STORM: ## Rain starts only after designated first day
+				var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.STORM, WeatherType.STORM]
+				switch_to(next_weathers.pick_random())
+			else:
+				switch_to(WeatherType.CLEAR)
 		WeatherType.RAIN:
 			switch_to(WeatherType.CLEAR)
 		WeatherType.STORM:

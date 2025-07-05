@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://doicha7u36klq"]
+[gd_scene load_steps=32 format=3 uid="uid://doicha7u36klq"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_54454"]
 [ext_resource type="Resource" uid="uid://ynj8wn1o461e" path="res://structures/trees/stats/gun_tree_stat.tres" id="2_hra2j"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="26_8fvse"]
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="27_8fvse"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="28_46ovy"]
+[ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="29_46ovy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -159,5 +160,9 @@ arrow_height = 1
 [node name="TweeArrowHeightComponent" parent="." node_paths=PackedStringArray("visual_arrow", "twee") instance=ExtResource("28_46ovy")]
 visual_arrow = NodePath("../VisualArrowComponent")
 twee = NodePath("../GunTweeBehaviourComponent")
+
+[node name="FireNotifierComponent" parent="." node_paths=PackedStringArray("flammable", "grid_pos") instance=ExtResource("29_46ovy")]
+flammable = NodePath("../FireComponents/FlammableComponent")
+grid_pos = NodePath("../GridPositionComponent")
 
 [editable path="HurtboxComponent"]
