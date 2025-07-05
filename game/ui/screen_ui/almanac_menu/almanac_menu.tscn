@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://cclbsu58ct2ku"]
+[gd_scene load_steps=6 format=3 uid="uid://cclbsu58ct2ku"]
 
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_i1o82"]
 [ext_resource type="Script" uid="uid://2j8qudds1mmw" path="res://ui/screen_ui/almanac_menu/almanac_menu.gd" id="1_uepv2"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_e0t40"]
+[ext_resource type="PackedScene" uid="uid://cinmp1kkqcj4o" path="res://ui/screen_ui/almanac_menu/almanac_detail_panel/almanac_detail_panel.tscn" id="4_uepv2"]
+[ext_resource type="Script" uid="uid://dspuw2gaiio1s" path="res://ui/screen_ui/almanac_menu/almanac_detail_panel/almanac_detail_panel.gd" id="5_m3e0m"]
 
 [node name="AlmanacMenu" type="Control"]
 layout_mode = 3
@@ -56,12 +58,13 @@ theme_override_constants/margin_bottom = 0
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="TabContainer" type="TabContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="Tabs" type="TabContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("2_e0t40")
 current_tab = 0
 
-[node name="Trees" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/TabContainer"]
+[node name="Trees" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 custom_minimum_size = Vector2(550, 0)
 layout_mode = 2
 theme_override_constants/margin_left = 10
@@ -69,12 +72,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 metadata/_tab_index = 0
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/TabContainer/Trees"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Tabs/Trees"]
 layout_mode = 2
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/TabContainer/Trees/ScrollContainer"]
+[node name="TreeGrid" type="GridContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Tabs/Trees/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -82,7 +86,7 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 6
 
-[node name="Enemies" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/TabContainer"]
+[node name="Enemies" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Tabs"]
 visible = false
 custom_minimum_size = Vector2(550, 0)
 layout_mode = 2
@@ -91,12 +95,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 metadata/_tab_index = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/TabContainer/Enemies"]
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Tabs/Enemies"]
 layout_mode = 2
 follow_focus = true
 horizontal_scroll_mode = 0
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/TabContainer/Enemies/ScrollContainer"]
+[node name="EnemyGrid" type="GridContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/Tabs/Enemies/ScrollContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -108,8 +113,7 @@ columns = 6
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper"]
+[node name="Details" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper" instance=ExtResource("4_uepv2")]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="Name" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper/VBoxContainer"]
-layout_mode = 2
+script = ExtResource("5_m3e0m")

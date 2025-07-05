@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cj8rykw3ejjax"]
+[gd_scene load_steps=6 format=3 uid="uid://cj8rykw3ejjax"]
 
 [ext_resource type="Script" uid="uid://dql235owqja08" path="res://ui/notification_log/notification_log.gd" id="1_cxkfb"]
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="2_1gycp"]
+[ext_resource type="Script" uid="uid://xsthtf0wvcid" path="res://ui/notification_log/copy_rect.gd" id="3_1gvgj"]
 [ext_resource type="Texture2D" uid="uid://ddyl2qkovhx1u" path="res://ui/player_interface/info_box/connector_arrow.png" id="3_i3qga"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1gvgj"]
@@ -14,18 +15,14 @@ script = ExtResource("1_cxkfb")
 notification_log_visual = NodePath(".")
 notification_container = NodePath("PanelContainer/MarginContainer/VBoxContainer")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 1
-offset_right = 80.0
-offset_bottom = 16.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_1gvgj")
-
-[node name="NinePatchRect" type="NinePatchRect" parent="PanelContainer"]
+[node name="NinePatchRect" type="NinePatchRect" parent="." node_paths=PackedStringArray("copy_from")]
 modulate = Color(0, 0, 0, 0.670588)
 layout_mode = 2
+offset_right = 80.0
+offset_bottom = 16.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 0
 texture = ExtResource("2_1gycp")
 region_rect = Rect2(0, 0, 48, 48)
 patch_margin_left = 8
@@ -34,8 +31,10 @@ patch_margin_right = 8
 patch_margin_bottom = 8
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
+script = ExtResource("3_1gvgj")
+copy_from = NodePath("../PanelContainer")
 
-[node name="ArrowRect" type="TextureRect" parent="PanelContainer/NinePatchRect"]
+[node name="ArrowRect" type="TextureRect" parent="NinePatchRect"]
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -49,7 +48,7 @@ texture = ExtResource("3_i3qga")
 expand_mode = 1
 stretch_mode = 3
 
-[node name="ColorRect" type="ColorRect" parent="PanelContainer/NinePatchRect"]
+[node name="ColorRect" type="ColorRect" parent="NinePatchRect"]
 visible = false
 z_index = -1
 layout_mode = 1
@@ -61,6 +60,13 @@ offset_bottom = 2.01
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.639216)
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_right = 80.0
+offset_bottom = 16.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_1gvgj")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2

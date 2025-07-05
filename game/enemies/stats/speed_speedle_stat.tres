@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="EnemyStatResource" load_steps=2 format=3 uid="uid://dywgdb7muwpov"]
+[gd_resource type="Resource" script_class="EnemyStatResource" load_steps=3 format=3 uid="uid://dywgdb7muwpov"]
 
 [ext_resource type="Script" uid="uid://cq0shh8yxktgu" path="res://enemies/stats/enemy_stat_resource.gd" id="1_fi0bh"]
+[ext_resource type="Texture2D" uid="uid://bqf7pp4r0n42" path="res://enemies/icons/speed_speedle.png" id="1_vhgjp"]
 
 [resource]
 script = ExtResource("1_fi0bh")
@@ -8,6 +9,7 @@ name = "Speed  Speedle"
 id = "speed_speedle"
 description = "A speedy spider beetle...
 but faster"
+enemy_icon = ExtResource("1_vhgjp")
 hp = 20.0
 action_cooldown = 0.5
 attack_damage = 4.0

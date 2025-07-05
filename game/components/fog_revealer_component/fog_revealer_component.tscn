@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://dc41m5quwf1is"]
+[gd_scene load_steps=3 format=3 uid="uid://dc41m5quwf1is"]
 
 [ext_resource type="Script" uid="uid://cuns3gyhi5bfq" path="res://components/fog_revealer_component/fog_revealer_component.gd" id="1_d130y"]
+[ext_resource type="PackedScene" uid="uid://72exs0gvf0fp" path="res://components/grid_range_component/grid_range_component.tscn" id="2_o4w6y"]
 
-[node name="FogRevealerComponent" type="Node2D"]
+[node name="FogRevealerComponent" type="Node2D" node_paths=PackedStringArray("reveal_range_component")]
 script = ExtResource("1_d130y")
+reveal_range_component = NodePath("GridRangeComponent")
+
+[node name="GridRangeComponent" parent="." instance=ExtResource("2_o4w6y")]
+shape = "Square"
+range = 3

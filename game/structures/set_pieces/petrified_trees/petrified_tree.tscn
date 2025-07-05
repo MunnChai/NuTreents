@@ -20,6 +20,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wy4bx"]
 resource_local_to_scene = true
 shader = ExtResource("1_8pq07")
+shader_parameter/shader_is_petrified = true
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
@@ -94,9 +95,9 @@ id = "petrified_tree"
 
 [node name="PetrifiedComponent" parent="." node_paths=PackedStringArray("sprite_shatter_component", "petrified_sprite_2d") instance=ExtResource("1_2eard")]
 script = ExtResource("2_vtvom")
-tree_type = 6
 sprite_shatter_component = NodePath("../PetrifyVisuals/SpriteShatterComponent")
 petrified_sprite_2d = NodePath("../PetrifyVisuals/PetrifiedSprite")
+tree_type = 6
 
 [node name="PetrifyVisuals" type="Node2D" parent="."]
 

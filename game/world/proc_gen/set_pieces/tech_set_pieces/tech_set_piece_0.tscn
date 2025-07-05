@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=4 uid="uid://80o6ibgg02pr"]
+
+[ext_resource type="Script" uid="uid://gl2mr0urfc52" path="res://world/proc_gen/set_pieces/set_piece.gd" id="1_m5iia"]
+[ext_resource type="TileSet" uid="uid://c56n5at2ah3wj" path="res://world/proc_gen/terrain_map/terrain_tileset.tres" id="2_i4o0q"]
+[ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_sri7j"]
+[ext_resource type="PackedScene" uid="uid://dnwmoqcy1law8" path="res://structures/city/city_building_composed.tscn" id="4_38d4b"]
+[ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_hdn3i"]
+[ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="6_uoqf4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7r1k"]
+resource_local_to_scene = true
+atlas = ExtResource("6_uoqf4")
+region = Rect2(64, 128, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xw57v"]
+resource_local_to_scene = true
+atlas = ExtResource("6_uoqf4")
+region = Rect2(96, 128, 32, 64)
+
+[node name="TechSetPiece0" type="Node2D"]
+script = ExtResource("1_m5iia")
+biome = 1
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD+////AAACAAoAAAD+/wAAAAAEAAgAAAD+/wEAAAAAAAoAAAD//wEAAAABAAYAAAAAAAEAAAABAAoAAAD//wAAAAABAAQAAAD/////AAABAAYAAAAAAAAAAAAAAAgAAAAAAP//AAADAAoAAAD9////AAABAAQAAAD9/wAAAAABAAYAAAD///7/AAAAAAQAAAD+//7/AAACAAQAAAD+/wIAAAAAAAQAAAD//wIAAAACAAQAAAAAAAIAAAAAAAQAAAABAAAAAAABAAYAAAABAAEAAAAAAAQAAAD9/wEAAAAEAAQAAAAAAP7/AAAEAAQAAAABAP//AAABAAQAAAACAAEAAAABAAQAAAABAAIAAAACAAQAAAD//wMAAAAAAAQAAAD+/wMAAAACAAQAAAD8/wEAAAACAAQAAAABAP7/AAADAAQAAAACAP//AAADAAQAAAD///3/AAAEAAQAAAACAAAAAAABAAYAAAD8/wAAAAABAAYAAAA=")
+tile_set = ExtResource("2_i4o0q")
+
+[node name="Structures" type="Node2D" parent="."]
+
+[node name="FactoryComposed" parent="Structures" instance=ExtResource("3_sri7j")]
+
+[node name="CityBuildingComposed" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(-32, 16)
+
+[node name="CityBuildingComposed2" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(-16, 24)
+
+[node name="CityBuildingComposed3" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(16, 24)
+
+[node name="CityBuildingComposed5" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(48, 8)
+
+[node name="CityBuildingComposed6" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(48, -8)
+
+[node name="CityBuildingComposed7" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(32, -16)
+
+[node name="CityBuildingComposed8" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(16, -24)
+
+[node name="CityBuildingComposed9" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(-16, -24)
+
+[node name="CityBuildingComposed11" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(-48, -8)
+
+[node name="CityBuildingComposed12" parent="Structures" instance=ExtResource("4_38d4b")]
+position = Vector2(-48, 8)
+
+[node name="DecorComposed3" parent="Structures" instance=ExtResource("5_hdn3i")]
+position = Vector2(-48, 24)
+
+[node name="Sprite2D" parent="Structures/DecorComposed3" index="0"]
+texture = SubResource("AtlasTexture_i7r1k")
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed3" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed3" index="3"]
+set_type_on_ready = false
+
+[node name="DecorComposed4" parent="Structures" instance=ExtResource("5_hdn3i")]
+position = Vector2(64, 16)
+
+[node name="Sprite2D" parent="Structures/DecorComposed4" index="0"]
+texture = SubResource("AtlasTexture_xw57v")
+
+[node name="AtlasRandomizerComponent" parent="Structures/DecorComposed4" index="2"]
+randomize_on_ready = false
+
+[node name="DecorBehaviourComponent" parent="Structures/DecorComposed4" index="3"]
+set_type_on_ready = false
+
+[editable path="Structures/DecorComposed3"]
+[editable path="Structures/DecorComposed4"]

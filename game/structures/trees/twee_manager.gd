@@ -58,9 +58,6 @@ func start_game():
 	structure_map = Global.structure_map
 	terrain_map = Global.terrain_map
 	
-	# Need to wait a frame, something to do with fog or something
-	await get_tree().process_frame
-	
 	## SPAWN THE MOTHER TREE
 	var mother_tree: Node2D = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
 	

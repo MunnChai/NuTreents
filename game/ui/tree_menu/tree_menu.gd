@@ -45,6 +45,14 @@ func get_currently_selected_tree_type() -> Global.TreeType:
 func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
 	currently_selected_tree = tree_order.find(tree_type)
 
+func get_unlocked_tree_types() -> Array[Global.TreeType]:
+	var tree_types: Array[Global.TreeType]
+	
+	for tree_card: TreeCard in tree_card_container.get_children():
+		tree_types.append(tree_card.tree_type)
+	
+	return tree_types
+
 func next_tree() -> void:
 	currently_selected_tree += 1
 	currently_selected_tree = currently_selected_tree % tree_order.size()
@@ -59,10 +67,15 @@ func previous_tree() -> void:
 
 
 func add_tree_card(tree_type: Global.TreeType):
+	AlmanacInfo.add_tree(tree_type)
 	var new_card = TREE_CARD.instantiate()
 	new_card.tree_type = tree_type
 	
 	tree_card_container.add_child(new_card)
 	
-	var notification = Notification.new(&"unlock", 'Unlocked ' + TreeRegistry.get_twee_stat(tree_type).name.to_upper() + '!', { "priority": 3, "time_remaining": 3.0 });
+	var notification = Notification.new(&"unlock", '[color=e09420]Unlocked ' + TreeRegistry.get_twee_stat(tree_type).name.to_upper() + '!', { "priority": 3, "time_remaining": 3.0 });
 	NotificationLog.instance.add_notification(notification)
+
+func remove_all_tree_cards() -> void:
+	for tree_card: TreeCard in tree_card_container.get_children():
+		tree_card.queue_free()

@@ -37,3 +37,16 @@ func get_pos() -> Vector2i:
 ## Returns the list of occupied positions of this structure...
 func get_occupied_positions() -> Array:
 	return occupied_positions
+
+## Returns the average position of this structure
+func get_average_pos() -> Vector2:
+	var n := 0
+	var pos := Vector2.ZERO
+	
+	for p: Vector2i in get_occupied_positions():
+		n += 1
+		pos += Vector2(p)
+	
+	if n <= 0:
+		return Vector2.ZERO
+	return pos / n
