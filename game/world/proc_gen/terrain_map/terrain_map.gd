@@ -124,10 +124,11 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 	initialize_map()
 	var river_tiles: Array[Vector2i] = get_rivers()
 	
-	generate_spawn()
-	randomize_tiles()
+	
 	
 	call_deferred("generate_rivers", river_tiles)
+	call_deferred("generate_spawn")
+	call_deferred("randomize_tiles")
 	if with_structures:
 		call_deferred("add_decor")
 		call_deferred("generate_set_pieces")
