@@ -1,9 +1,9 @@
-[gd_scene load_steps=32 format=3 uid="uid://6anyotc045yo"]
+[gd_scene load_steps=34 format=3 uid="uid://6anyotc045yo"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_f23sx"]
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="2_m4g31"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="3_85pv0"]
-[ext_resource type="Script" uid="uid://ct3g0xpn124wg" path="res://components/behaviour_components/twee_behaviour_components/icy_twee_behaviour_component.gd" id="3_m1ipw"]
+[ext_resource type="Script" path="res://components/behaviour_components/twee_behaviour_components/icy_twee_behaviour_component.gd" id="3_m1ipw"]
 [ext_resource type="Resource" uid="uid://c1n8eo2waa4d4" path="res://structures/trees/stats/icy_tree_stat.tres" id="4_85pv0"]
 [ext_resource type="PackedScene" uid="uid://bhwt0mukr7pdf" path="res://components/animation_components/twee_animation_components/twee_animation_component.tscn" id="5_v51pg"]
 [ext_resource type="Texture2D" uid="uid://c7u1nwjfc1m6h" path="res://structures/trees/sheets/tree_icy_sheet.png" id="6_85pv0"]
@@ -28,6 +28,8 @@
 [ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="25_4xc2e"]
 [ext_resource type="PackedScene" uid="uid://c7bm4e2244omm" path="res://components/status_effects/status_inflictor_component/status_inflictor_component.tscn" id="26_85pv0"]
 [ext_resource type="Resource" uid="uid://c0jut7lkwflll" path="res://components/status_effects/resources/freeze_status_effect.tres" id="27_m1ipw"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="29_qsixo"]
+[ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="30_vxw8c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sxeaf"]
 resource_local_to_scene = true
@@ -141,6 +143,13 @@ flammable_component = NodePath("../FlammableComponent")
 
 [node name="StatusInflictorComponent" parent="." instance=ExtResource("26_85pv0")]
 status_effect = ExtResource("27_m1ipw")
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("29_qsixo")]
+arrow_height = 1
+
+[node name="TweeArrowHeightComponent" parent="." node_paths=PackedStringArray("visual_arrow", "twee") instance=ExtResource("30_vxw8c")]
+visual_arrow = NodePath("../VisualArrowComponent")
+twee = NodePath("../TreeBehaviourComponent")
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]

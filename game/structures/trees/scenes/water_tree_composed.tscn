@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=29 format=3 uid="uid://b5hdmb6e3u31i"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
@@ -24,6 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="21_u17au"]
 [ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="22_ylnla"]
 [ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="23_e5otl"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="25_whkhy"]
+[ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_it1uo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -133,5 +135,12 @@ grid_range_component = NodePath("../FireRangeComponent")
 flammable_component = NodePath("../FlammableComponent")
 health_component = NodePath("../../HealthComponent")
 damage_amount = 1.0
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("25_whkhy")]
+arrow_height = 1
+
+[node name="TweeArrowHeightComponent" parent="." node_paths=PackedStringArray("visual_arrow", "twee") instance=ExtResource("26_it1uo")]
+visual_arrow = NodePath("../VisualArrowComponent")
+twee = NodePath("../TreeBehaviourComponent")
 
 [editable path="HurtboxComponent"]

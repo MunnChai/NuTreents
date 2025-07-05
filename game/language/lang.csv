@@ -1,0 +1,15 @@
+key,en,fr
+WARN_TOO_FAR_AWAY,Too far away!,Trop loin!
+WARN_OCCUPIED,Occupied!,Occupé!
+WARN_NOT_FERTILE,Ground not fertile!,Sol peu fertile!
+WARN_NOT_ENOUGH_NUTREENTS,Not enough nutreents!,Pas assez de nutriments!
+WARN_NEED_FACTORY_REMAINS,Requires factory remains!,Nécessite des restes d'usine
+WARN_NEED_NOT_FACTORY_REMAINS,Too industrial!,Trop industriel! 
+WARN_INDESTRUCTIBLE,Indestructible!,Indestructible!
+WARN_MOTHER_TREE_REMOVAL,Cannot remove mother tree!,Impossible d'enlever l'arbre mère
+SUCCESS_TECH_TREE_PLANTED,Tech tree planted!,oui oui baguette
+SUCCESS_TREE_REMOVAL,Tree removed!,Arbre enlevé!
+SUCCESS_FACTORY_REMOVAL,Factory destroyed..?,Usine détruite..?
+SUCCESS_BUILDING_REMOVAL,Building destroyed!,Bâtiment détruit!
+SUCCESS_CONCRETE_REMOVAL,Concrete removed!,Béton enlevé!
+SUCCESS_ROAD_REMOVAL,Road destroyed!,Route détruite!

@@ -100,28 +100,19 @@ func on_back_button_pressed():
 	ScreenUI.exit_menu()
 
 #region Pausing
-
-## Pauses the game
-func pause_game() -> void:
+func pause_game():
 	Global.pause_game()
-	
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
 	AudioServer.add_bus_effect(AudioServer.get_bus_index("Music"), filter, 0)
-	
 	NutreentsDiscordRPC.update_details("Researching tree things...")
-	
 	show()
-	back_button.grab_focus() ## TEMP: So controller can navigate the menu...
+	back_button.grab_focus()
 
-func unpause_game() -> void:
+func unpause_game():
 	Global.unpause_game()
-	
 	NutreentsDiscordRPC.update_details("Growing a forest")
-	
 	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
-	
 	hide()
-
 #endregion

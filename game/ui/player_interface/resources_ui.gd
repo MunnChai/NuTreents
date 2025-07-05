@@ -30,8 +30,8 @@ func update_ui():
 	else:
 		nutrients_label.text = str(int(TreeManager.nutreents))
 
-	if Cursor.instance != null:
-		var highlighted_forest := TreeManager.get_forest_at(Cursor.instance.iso_position)
+	if IsometricCursor.instance != null:
+		var highlighted_forest := TreeManager.get_forest_at(IsometricCursor.instance.iso_position)
 		if highlighted_forest != null:
 			if highlighted_forest.water_gain == 0:
 				water_label.text = str(int(highlighted_forest.water))

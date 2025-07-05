@@ -28,11 +28,13 @@ func transition_to_main_menu():
 	
 	await scene_changed
 	
-	# --- BUG FIX ---
-	# The line 'Global.session_id = 0' has been removed from this function.
-	# The session ID should only be changed when the player actively selects a
-	# different save file from the main menu, not when transitioning to it.
-	# This prevents the game from losing the context of the current save file.
+	# --- Data Handling Fix ---
+	# The session data is now cleared here, AFTER returning to the main menu.
+	# This is the correct place to end a session.
+	Global.session_data.clear()
+	
+	# Reset session id when returning to main menu
+	Global.session_id = 0
 
 func transition_to_game(session_data: Dictionary = {}):
 	transition_to_packed(MAIN)
@@ -58,7 +60,7 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	is_transitioning = true
 	var tween_in = create_tween()
 	
-	GameCursor.instance.force_wait = true
+	UICursor.instance.force_wait = true
 	
 	if FloatingTooltip.instance:
 		FloatingTooltip.instance.force_hidden = true
@@ -67,7 +69,15 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 	
 	tween_in.finished.connect(
 		func():
-			get_tree().paused = false
+			# --- BUG FIX ---
+			# We now directly unpause the tree and remove the audio filter.
+			# This is more robust than calling a global function during a scene transition.
+			if get_tree().paused:
+				get_tree().paused = false
+			
+			if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
+				AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
+
 			ScreenUI.terminate_stack()
 			
 			var music: Node = get_tree().get_first_node_in_group("music")
@@ -81,7 +91,7 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			tween_out.tween_property(black_screen, "modulate:a", 0.0, tween_out_duration)
 			is_transitioning = false
 			
-			GameCursor.instance.force_wait = false
+			UICursor.instance.force_wait = false
 			
 			if FloatingTooltip.instance:
 				FloatingTooltip.instance.force_hidden = false
@@ -89,4 +99,6 @@ func transition_to_packed(scene: PackedScene, tween_in_duration = FADE_DURATION 
 			scene_changed.emit()
 	)
 	
-	Global.session_data.clear()
+	# --- Data Handling Fix ---
+	# Global.session_data.clear() has been REMOVED from this function.
+	# It was clearing the data too early, before the new scene could load it.

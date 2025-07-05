@@ -46,6 +46,26 @@ func get_curr_day() -> int:
 func set_curr_day(day: int) -> void:
 	_curr_day = day
 
+# --- NEW FUNCTION ---
+## Forces the clock's visual state (day/night animation) to match its internal time.
+## Should be called after loading a game from a save file.
+func force_update_visuals() -> void:
+	# Determine if it should be day or night based on the loaded time
+	var should_be_night = _current_day_seconds >= HALF_DAY_SECONDS
+	is_day = not should_be_night
+
+	# Immediately jump the animation to the correct state without playing the transition.
+	if should_be_night:
+		# Jump to the end of the day_to_night animation
+		animation_player.seek(animation_player.get_animation("day_to_night").length, true)
+		animation_player.play("night_twinkle") # Start the night effect immediately
+	else:
+		# Jump to the beginning of the day_to_night animation
+		animation_player.seek(0, true)
+		animation_player.play("RESET") # Ensure it's in the daytime state
+	
+	_update_label() # Also force the "Day X" label to update immediately.
+
 
 # Increments time variables
 func _process_time(delta: float) -> void:
