@@ -21,17 +21,20 @@ func _ready() -> void:
 	
 	notification_added.connect(_on_notification_added)
 
+var is_visible := true
+
 func _process(delta: float) -> void:
 	for notif: Notification in notifications:
 		notif.update(delta)
 	
-	if Input.is_action_just_pressed("debug_button"):
-		add_notification(Notification.new("fire", "WARNING! A tree is ON FIRE! [url=\"do_something\"]click[/url]", {Notification.TIME_REMAINING: 1.0}))
-	
 	if notifications.is_empty():
-		notification_log_visual.hide()
+		if is_visible:
+			TweenUtil.fade(notification_log_visual, 0.0, 0.5)
+			is_visible = false
 	else:
-		notification_log_visual.show()
+		if not is_visible:
+			TweenUtil.fade(notification_log_visual, 1.0, 0.5)
+			is_visible = true
 
 func _on_notification_added(notif: Notification) -> void:
 	create_new_notification(notif)
@@ -42,6 +45,8 @@ const NOTIFICATION_VISUAL = preload("./notification_visual/notification_visual.t
 func create_new_notification(notif: Notification) -> void:
 	var new_notification := NOTIFICATION_VISUAL.instantiate()
 	notification_container.add_child(new_notification)
+	if notif.properties.get("priority", 0) >= 10:
+		notification_container.move_child(new_notification, 0)
 	new_notification.assign_notification(notif)
 
 func _on_notif_expired(notif: Notification) -> void:

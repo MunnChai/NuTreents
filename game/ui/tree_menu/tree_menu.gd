@@ -63,3 +63,6 @@ func add_tree_card(tree_type: Global.TreeType):
 	new_card.tree_type = tree_type
 	
 	tree_card_container.add_child(new_card)
+	
+	var notification = Notification.new(&"unlock", 'Unlocked ' + TreeRegistry.get_twee_stat(tree_type).name.to_upper() + '!', { "priority": 3, "time_remaining": 3.0 });
+	NotificationLog.instance.add_notification(notification)
