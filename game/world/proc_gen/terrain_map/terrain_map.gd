@@ -124,10 +124,11 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 	initialize_map()
 	var river_tiles: Array[Vector2i] = get_rivers()
 	
-	generate_spawn()
-	randomize_tiles()
+	
 	
 	call_deferred("generate_rivers", river_tiles)
+	call_deferred("generate_spawn")
+	call_deferred("randomize_tiles")
 	if with_structures:
 		call_deferred("add_decor")
 		call_deferred("generate_set_pieces")
@@ -611,7 +612,7 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 		
 		# Out of bounds
 		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
-			return 
+			continue
 		
 		var info: Dictionary = tiles[offset]
 		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
@@ -624,7 +625,7 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 		
 		# Out of bounds
 		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
-			return 
+			continue
 		
 		var structure: Node2D = structures[offset]
 		structure.get_parent().remove_child(structure)
