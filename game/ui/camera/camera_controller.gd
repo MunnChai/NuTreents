@@ -1,3 +1,4 @@
+class_name Camera
 extends Camera2D
 
 # Camera move constants
@@ -20,7 +21,10 @@ var current_zoom_index: int = 2
 
 var core_position: Vector2
 
+static var instance: Camera
+
 func _ready() -> void:
+	instance = self
 	zoom = Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index]
 	## START THE CAMERA ON THE CENTRE WITH VERY SCUFFED MATH CALCULATION
 	## (This assumes the map is square)

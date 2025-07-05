@@ -118,6 +118,8 @@ func perform_action() -> void:
 
 func attack_tree(target_pos: Vector2i) -> void:
 	grid_movement_component.move_to_and_back(target_pos)
+	
+	
 
 func move(target_pos: Vector2i) -> void:
 	var current_pos: Vector2i = grid_position_component.get_pos()

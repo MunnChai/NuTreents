@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://c63p5poae6fy"]
+[gd_scene load_steps=29 format=3 uid="uid://c63p5poae6fy"]
 
 [ext_resource type="PackedScene" uid="uid://dmci56ftp4fgl" path="res://components/petrified_component/petrified_component.tscn" id="1_2eard"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="1_8pq07"]
@@ -13,7 +13,6 @@
 [ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="9_b4uc8"]
 [ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="10_f3b27"]
 [ext_resource type="Script" uid="uid://bqii1haopscvc" path="res://components/behaviour_components/structure_behaviour_components/petrified_tree_behaviour_component.gd" id="11_nnewv"]
-[ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="12_yxnlr"]
 [ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/tree_menu/card_sprites/tree_card.png" id="13_j5p62"]
 [ext_resource type="Script" uid="uid://b5t81tx31klk0" path="res://structures/set_pieces/petrified_trees/tree_acquire_animation.gd" id="13_teheq"]
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="17_mtnra"]
@@ -148,8 +147,6 @@ remove_self_on_destroyed = false
 script = ExtResource("11_nnewv")
 type = 5
 sprite_2d = NodePath("../PetrifyVisuals/PetrifiedSprite")
-
-[node name="Camera" parent="." instance=ExtResource("12_yxnlr")]
 
 [node name="TreeAcquireAnimationComponent" type="Node2D" parent="."]
 script = ExtResource("13_teheq")

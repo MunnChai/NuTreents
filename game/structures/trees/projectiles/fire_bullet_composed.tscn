@@ -28,9 +28,8 @@ shape = SubResource("CircleShape2D_05k2p")
 can_fire_go_out = false
 ignite_on_ready = true
 
-[node name="FireSpreadComponent" parent="Sprite2D/FireComponents" node_paths=PackedStringArray("flammable_component", "grid_range_component") instance=ExtResource("7_paf4j")]
+[node name="FireSpreadComponent" parent="Sprite2D/FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("7_paf4j")]
 flammable_component = NodePath("../FlammableComponent")
-grid_range_component = NodePath("")
 
 [node name="GridPositionComponent" parent="." instance=ExtResource("3_etqhs")]
 

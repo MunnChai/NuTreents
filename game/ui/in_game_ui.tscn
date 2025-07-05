@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=16 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="PackedScene" uid="uid://b1f0pb7wkyn1" path="res://ui/resource_indicator/resource_indicator.tscn" id="3_hrmpd"]
 [ext_resource type="PackedScene" uid="uid://cc8j5p14wpk8e" path="res://ui/clock/clock.tscn" id="3_wl5ax"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://71cpfqvfyp5d" path="res://ui/player_interface/info_box/info_box.tscn" id="10_hrmpd"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
 [ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/info_box/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
+[ext_resource type="PackedScene" uid="uid://cj8rykw3ejjax" path="res://ui/notification_log/notification_log.tscn" id="14_wplf5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -33,6 +34,14 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("5_anucx")
+
+[node name="NotificationLog" parent="." instance=ExtResource("14_wplf5")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -230.0
+offset_bottom = -230.0
+grow_vertical = 2
 
 [node name="ResourceIndicator" parent="." instance=ExtResource("3_hrmpd")]
 
@@ -121,6 +130,7 @@ theme = ExtResource("10_kxjjr")
 text = "SHOP"
 
 [node name="TechMenu" parent="." instance=ExtResource("9_bi8hs")]
+visible = false
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5

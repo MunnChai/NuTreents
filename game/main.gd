@@ -44,7 +44,7 @@ func load_world(session_data: Dictionary) -> void:
 	
 	EnemyManager.instance.start_game()
 	Global.fog_map.init()
-	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
+	#Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	
 	TreeManager.start_game()
 	
@@ -67,7 +67,7 @@ func load_world(session_data: Dictionary) -> void:
 	# Set terrain and structures
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
 	#Global.terrain_map.randomize_tiles()
-	Global.structure_map.set_structures_from_data(session_data["structure_map"])
+	Global.structure_map.set_structures_from_data(session_data["structure_map"], false)
 	
 	# Place trees
 	var tree_map: Dictionary = session_data["tree_map"]
@@ -75,6 +75,9 @@ func load_world(session_data: Dictionary) -> void:
 		var tree_resource: TweeDataResource = tree_map[pos]
 		
 		if (tree_resource.type == Global.TreeType.MOTHER_TREE):
+			var mother_twee = TreeManager.get_twee(pos)
+			var health_component: HealthComponent = Components.get_component(mother_twee, HealthComponent)
+			health_component.set_current_health(tree_resource.hp)
 			continue
 		
 		var tree: Node2D = TreeRegistry.get_new_twee(tree_resource.type)
