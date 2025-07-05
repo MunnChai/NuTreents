@@ -12,22 +12,48 @@ var iso_position: Vector2i
 
 var attempted_already := false
 
-## BUGS
-## - When in UI, kind scuffed.
-## - Correct height on billboard/short city buildings... 
-
 func _ready() -> void:
 	instance = self # Assuming only one cursor!
 	set_iso_position(Global.ORIGIN)
 	just_moved.connect(on_just_moved)
 
 func _process(delta: float) -> void:
-	$InfoBoxDetector.detect(iso_position)
+	# The InfoBoxDetector is no longer needed, as we now handle this logic directly.
+	# $InfoBoxDetector.detect(iso_position)
+	pass
+
+# --- NEW FUNCTION ---
+## Generates and displays the correct tooltip based on the entity under the cursor.
+func _update_hover_info(map_pos: Vector2i) -> void:
+	var entity = MapUtility.get_entity_at(map_pos)
+
+	# If there's no entity or it's not destructable, hide the tooltip.
+	if not is_instance_valid(entity) or not Components.has_component(entity, DestructableComponent):
+		if is_instance_valid(HoverInfoBox.instance):
+			HoverInfoBox.instance.hide_content()
+		return
+
+	var destructable_comp: DestructableComponent = Components.get_component(entity, DestructableComponent)
+	var cost: int = destructable_comp.get_cost()
+	var verb: String = "destroy" # This is the default action verb.
+
+	# Check for the ObstructionComponent and see if it has a verb_override.
+	if Components.has_component(entity, ObstructionComponent):
+		var obstruction_comp: ObstructionComponent = Components.get_component(entity, ObstructionComponent)
+		if not obstruction_comp.verb_override.is_empty():
+			# If it does, use it instead of the default "destroy".
+			verb = obstruction_comp.verb_override
+
+	# Construct and show the final tooltip string.
+	var text_to_show = "%d Nutreents to %s" % [cost, verb]
+	if is_instance_valid(HoverInfoBox.instance):
+		HoverInfoBox.instance.show_content(text_to_show)
+
 
 ## Perform LEFT MOUSE BUTTON action
 func do_primary_action() -> void:
 	if attempted_already:
-		return 
+		return
 	
 	attempted_already = true
 	
@@ -36,7 +62,7 @@ func do_primary_action() -> void:
 	var terrain_map := Global.terrain_map
 	var structure_map := Global.structure_map
 	
-	var type: Global.TreeType = TreeMenu.instance.get_currently_selected_tree_type() 
+	var type: Global.TreeType = TreeMenu.instance.get_currently_selected_tree_type()
 	var tree_stat = TreeRegistry.get_twee_stat(type)
 	
 	if terrain_map.is_void(p):
@@ -59,7 +85,7 @@ func do_primary_action() -> void:
 		SfxManager.play_sound_effect("ui_fail")
 		PopupManager.create_popup("Ground not fertile!", structure_map.map_to_local(p))
 		return
-	 
+	
 	if !TreeManager.enough_n(tree_stat.cost_to_purchase):
 		SfxManager.play_sound_effect("ui_fail")
 		PopupManager.create_popup("Not enough nutreents!", structure_map.map_to_local(p))
@@ -236,5 +262,6 @@ func can_interact() -> bool:
 	return is_enabled
 
 func on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
-	#$InfoBoxDetector.detect(iso_position)
+	# The InfoBoxDetector is no longer needed. We call the new function here instead.
+	_update_hover_info(new_pos)
 	attempted_already = false
