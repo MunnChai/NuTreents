@@ -22,10 +22,20 @@ var nutreents: float = 0
 var nutreents_gain: float = 0
 func enough_n(cost: int) -> bool:
 	return nutreents >= cost
+
+var notification: Notification
 func consume_n(cost: int) -> void:
 	nutreents -= cost
-	var notification = Notification.new(&"cost", tr(&"NOTIF_SPENT").format({ "num": str(cost) }), { "priority": 1, "time_remaining": 3.0 });
-	NotificationLog.instance.add_notification(notification)
+	
+	if notification and not notification.is_removed:
+		var previous_amount = notification.properties.get("amount", 0)
+		var new_amount = previous_amount + cost
+		notification.set_message(tr(&"NOTIF_SPENT").format({ "num": str(new_amount) }))
+		notification.properties.set("amount", new_amount)
+		notification.properties.set("time_remaining", 2.5)
+	else:
+		notification = Notification.new(&"cost", tr(&"NOTIF_SPENT").format({ "num": str(cost) }), { "priority": 1, "time_remaining": 3.0, "amount": cost });
+		NotificationLog.instance.add_notification(notification)
 
 #region CORE FUNCTIONALITY
 

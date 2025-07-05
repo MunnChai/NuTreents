@@ -15,7 +15,9 @@ SUCCESS_CONCRETE_REMOVAL,Concrete removed!,Béton enlevé!
 SUCCESS_ROAD_REMOVAL,Road destroyed!,Route détruite!
 NOTIF_FIRE,FIRE! A tree in your forest is on fire,TODO
 NOTIF_MOTHER_TREE_ATTACKED,Mother Tree is being attacked!,TODO
+NOTIF_ATTACKED,Your forest is being attacked!,TODO
 NOTIF_DEHYDRATED,A part of your forest is dehydrated,TODO
 NOTIF_UNLOCK,Unlocked {tree_name}!,TODO {tree_name}!
 NOTIF_SPENT,Spent {num} nutreents,TODO {num}
-NOTIF_TECH_TREE_PLANTED,Technology improved!,TODO
+NOTIF_TECH_TREE_PLANTED,Technology planted...,TODO
+NOTIF_TECH_TREE_GROW,Technology improved!,TODO

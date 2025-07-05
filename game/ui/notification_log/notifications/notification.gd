@@ -5,6 +5,7 @@ extends RefCounted
 
 signal expired(notif: Notification)
 signal removed(notif: Notification)
+signal message_changed(old_message: String, new_message: String)
 
 const TIME_REMAINING := "time_remaining"
 
@@ -27,6 +28,12 @@ func _init(_type: StringName, _message: String, _properties: Dictionary, _on_hov
 	
 	expired.connect(_on_expired)
 	removed.connect(_on_removed)
+
+## Update the message of this notification
+func set_message(msg: String) -> void:
+	var old_message := message
+	message = msg
+	message_changed.emit(old_message, message)
 
 func _on_expired(notif: Notification) -> void:
 	remove()

@@ -44,7 +44,9 @@ func is_water_adjacent() -> bool:
 	return false
 
 func get_rain_multiplier() -> float:
-	if WeatherManager.instance.is_raining():
-		return 1.5
-	else:
-		return 1.0
+	if is_instance_valid(WeatherManager.instance):
+		if WeatherManager.instance.is_raining():
+			return WeatherManager.RAIN_WATER_PRODUCTION_MULTIPLIER
+		else:
+			return 1.0
+	return 1.0
