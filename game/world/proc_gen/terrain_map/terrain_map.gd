@@ -123,27 +123,14 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 	
 	initialize_map()
 	var river_tiles: Array[Vector2i] = get_rivers()
-	var city_coords: Array[Vector2i]
-	var num_cities: int = randi_range(world_size_settings.min_cities, world_size_settings.max_cities)
 	
-	var angle: float = randf() * 2 * PI
-	for i in range(0, num_cities):
-		var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * world_size_settings.city_distance_from_origin)
-		city_coords.append(map_coords)
-		angle += 2 * PI / num_cities
-		
-	#var city_tiles = generate_cities(city_coords)
 	generate_spawn()
 	randomize_tiles()
 	
+	call_deferred("generate_rivers", river_tiles)
 	if with_structures:
-		#call_deferred("generate_factories", city_coords)
-		#call_deferred("generate_buildings", city_tiles)
-		add_decor()
-		generate_set_pieces()
-	
-	
-	generate_rivers(river_tiles)
+		call_deferred("add_decor")
+		call_deferred("generate_set_pieces")
 	call_deferred("initialize_temperature_data")
 
 func regenerate_map() -> void:
@@ -405,6 +392,7 @@ func get_rivers() -> Array[Vector2i]:
 	return river_tiles
 
 func generate_rivers(river_tiles: Array[Vector2i]) -> void:
+	
 	var to_remove: Array[Vector2i] = []
 	for map_coords in river_tiles:
 		var tile_data: TileData = get_cell_tile_data(map_coords)
@@ -412,14 +400,14 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 			to_remove.append(map_coords)
 			continue
 		
-		var tile_type: int = tile_data.get_custom_data("biome")
-		
-		if (tile_type == null || tile_type != TileType.WATER):
-			to_remove.append(map_coords)
+		#var tile_type: int = tile_data.get_custom_data("biome")
+		#
+		#if (tile_type == null || tile_type != TileType.WATER):
+			#to_remove.append(map_coords)
 	
 	for map_coords in to_remove:
 		river_tiles.erase(map_coords)
-		
+	
 	for map_coords in river_tiles:
 		if biome_map.get(map_coords) == Biome.SNOWY:
 			set_cell_type(map_coords, TileType.ICE)
