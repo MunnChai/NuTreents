@@ -593,8 +593,8 @@ func add_decor() -> void:
 				var rand = randf()
 				var decor: Node2D = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
 				
-				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or 
-					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or 
+				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or
+					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or
 					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY) or
 					(type == TileType.SAND and rand < SAND_DECOR_FREQUENCY) or
 					(type == TileType.SNOW and rand < SNOW_DECOR_FREQUENCY)):
@@ -627,6 +627,12 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
 			continue
 		
+		# --- BUG FIX ---
+		# Check if the target tile is solid before placing a structure.
+		# This prevents placing structures on water or in the void.
+		if not is_solid(true_pos):
+			continue
+			
 		var structure: Node2D = structures[offset]
 		structure.get_parent().remove_child(structure)
 		Global.structure_map.add_structure(true_pos, structure, true)
