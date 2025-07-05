@@ -35,6 +35,17 @@ func _ready() -> void:
 	instance = self
 	weather_changed.connect($LightningGenerator._on_weather_changed)
 	switch_to(WeatherType.CLEAR)
+	
+	DebugConsole.register("weather", func (args: PackedStringArray):
+		if args.size() != 1:
+			Logger.log("Usage: weather [CLEAR/STORM]")
+		else:
+			var arg = args[0]
+			if arg == "CLEAR":
+				switch_to(WeatherType.CLEAR, 60.0)
+			elif arg == "STORM":
+				switch_to(WeatherType.STORM, 60.0)
+		)
 
 ## Update the weather
 func _process(delta: float) -> void:
