@@ -11,7 +11,8 @@ var texture_region_position: Vector2
 # For Tech things
 var tech_slot: int
 
-# For petrified Trees
+# For petrified things
+var is_petrified: bool = false
 var tree_type: Global.TreeType
 
 # For Decor

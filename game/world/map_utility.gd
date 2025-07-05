@@ -48,6 +48,9 @@ func get_entity_at(map_pos: Vector2i) -> Node2D:
 	
 	return null
 
+func get_structure_at(map_pos: Vector2i) -> Node2D:
+	return Global.structure_map.get_building_node(map_pos)
+
 func get_adjacent_tiles(pos: Vector2i) -> Array[Vector2i]:
 	var right_tile = pos + Vector2i(1, 0)
 	var left_tile = pos + Vector2i(-1, 0)

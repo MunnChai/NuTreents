@@ -61,6 +61,8 @@ func save_session_data(save_num: int = 1):
 		
 		var tile_save_data: TileDataResource = TileDataResource.new()
 		tile_save_data.type = tile_type
+		tile_save_data.alt_id = Global.terrain_map.get_cell_alternative_tile(pos)
+		tile_save_data.atlas_coords = Global.terrain_map.get_cell_atlas_coords(pos)
 		
 		terrain_map[pos] = tile_save_data
 	config.set_value(SECTION_SESSION, "terrain_map", terrain_map)
@@ -286,6 +288,10 @@ func _create_structure_save_resource(structure: Node2D) -> StructureDataResource
 			save_resource.texture_region_position = atlas_texture.region.position
 			save_resource.tile_type = structure_behaviour_component.tile_type
 			save_resource.set_type_on_ready = structure_behaviour_component.set_type_on_ready
+			var petrified_component: PetrifiedDecorComponent = Components.get_component(structure, PetrifiedDecorComponent, "", true)
+			if petrified_component:
+				if not petrified_component.depetrified:
+					save_resource.is_petrified = true
 		Global.StructureType.PETRIFIED_TREE:
 			save_resource.tree_type = Components.get_component(structure, PetrifiedTreeComponent).tree_type
 	

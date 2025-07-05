@@ -44,8 +44,8 @@ const TILE_TYPE_VARIATIONS: Dictionary[TileType, int] = {
 }
 
 const BIOME_TABLE: Array[Array] = [
-	[Biome.CITY, Biome.DESERT],
-	[Biome.SNOWY, Biome.PLAINS],
+	[Biome.PLAINS, Biome.PLAINS],
+	[Biome.SNOWY, Biome.DESERT],
 ]
 
 const BIOME_TILES: Dictionary[Biome, TileType] = {
@@ -102,9 +102,8 @@ func _input(event: InputEvent) -> void:
 		return
 		
 	#if (event is InputEventKey && event.is_action_pressed("generate_map")):
-		#var example_set_piece_scene = load("res://world/proc_gen/set_pieces/tree_set_pieces/slowing_tree_set_piece.tscn")
-		#var set_piece = example_set_piece_scene.instantiate()
-		#create_set_piece(set_piece, local_to_map(get_mouse_coords()))
+		#Global.new_seed()
+		#regenerate_map()
 
 func get_mouse_coords() -> Vector2:
 	return get_local_mouse_position()
@@ -124,26 +123,19 @@ func generate_map(world_size: Global.WorldSize = Global.WorldSize.SMALL, with_st
 	
 	initialize_map()
 	var river_tiles: Array[Vector2i] = get_rivers()
-	var city_coords: Array[Vector2i]
-	var num_cities: int = randi_range(world_size_settings.min_cities, world_size_settings.max_cities)
 	
-	var angle: float = randf() * 2 * PI
-	for i in range(0, num_cities):
-		var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * world_size_settings.city_distance_from_origin)
-		city_coords.append(map_coords)
-		angle += 2 * PI / num_cities
-		
-	var city_tiles = generate_cities(city_coords)
 	generate_spawn()
 	randomize_tiles()
 	
+	call_deferred("generate_rivers", river_tiles)
 	if with_structures:
-		call_deferred("generate_factories", city_coords)
-		call_deferred("generate_buildings", city_tiles)
 		call_deferred("add_decor")
-	
-	generate_rivers(river_tiles)
+		call_deferred("generate_set_pieces")
 	call_deferred("initialize_temperature_data")
+
+func regenerate_map() -> void:
+	Global.structure_map.remove_all_structures()
+	generate_map()
 
 func initialize_map() -> void:
 	var temp_noise := FastNoiseLite.new()
@@ -170,7 +162,7 @@ func initialize_map() -> void:
 		for y in get_map_y_range():
 			var map_coords: Vector2i = Vector2i(x ,y)
 			var raw_temp_value: float = temp_noise.get_noise_2dv(map_coords)
-			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size()
+			var scaled_temp_value: float = ((raw_temp_value + 1) / 2) * BIOME_TABLE[0].size() + 0.2
 			var raw_humid_value: float = humid_noise.get_noise_2dv(map_coords)
 			var scaled_humid_value: float = ((raw_humid_value + 1) / 2) * BIOME_TABLE.size()
 			
@@ -273,9 +265,9 @@ func get_tile_biome(pos: Vector2i) -> TileType:
 	if tile_data == null: return TileType.VOID
 	return tile_data.get_custom_data("biome")
 
-func set_cell_type(pos: Vector2i, tile_type: TileType) -> void:
+func set_cell_type(pos: Vector2i, tile_type: TileType, alt_id: int = 0) -> void:
 	if not TILE_ATLAS_COORDS.has(tile_type): return
-	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], 0)
+	set_cell(pos, SOURCE_ID, TILE_ATLAS_COORDS[tile_type], alt_id)
 	var tile_data = get_cell_tile_data(pos)
 	if tile_data:
 		tile_data.set_custom_data("biome", tile_type)
@@ -284,9 +276,67 @@ func set_cell_type(pos: Vector2i, tile_type: TileType) -> void:
 func set_terrain_from_data(data: Dictionary) -> void:
 	for pos: Vector2i in data.keys():
 		var save_resource: TileDataResource = data[pos]
-		set_cell_type(pos, save_resource.type)
+		if save_resource.atlas_coords == Vector2i():
+			set_cell_type(pos, save_resource.type, save_resource.alt_id)
+		else:
+			set_cell(pos, SOURCE_ID, save_resource.atlas_coords, save_resource.alt_id)
+		
 	# Post-load logic like autotiling would go here.
 	# The temperature system will be initialized after this by generate_map.
+
+var animated_tiles: Dictionary[Vector2i, float]
+
+const DEPETRIFIED_ID: int = 0
+const PETRIFIED_ID: int = 1
+const DEPETRIFICATION_EXPANSION_DELAY: float = 0.075
+func depetrify_tile(pos: Vector2i, depetrify_around: bool = false) -> void:
+	var tile_alt_id: int = get_cell_alternative_tile(pos)
+	# Check to ensure this tile is petrified
+	if tile_alt_id != PETRIFIED_ID:
+		return
+	# Depetrify the tile
+	set_cell(pos, SOURCE_ID, get_cell_atlas_coords(pos), DEPETRIFIED_ID)
+	
+	## Handle animations
+	var structure: Node2D = MapUtility.get_structure_at(pos)
+	if structure:
+		var petrified_component: PetrifiedComponent = Components.get_component(structure, PetrifiedComponent)
+		if petrified_component:
+			petrified_component.depetrify()
+	else:
+		animate_tile(pos)
+	
+	
+	await get_tree().create_timer(DEPETRIFICATION_EXPANSION_DELAY).timeout
+	
+	if depetrify_around:
+		for surrounding_pos: Vector2i in get_surrounding_cells(pos):
+			depetrify_tile(surrounding_pos, true)
+
+const DEPETRIFY_ANIMATION_DURATION: float = 0.4
+const DEPETRIFY_ANIM_OFFSET_ONE: float = 4
+const DEPETRIFY_ANIM_OFFSET_TWO: float = -4
+func animate_tile(pos: Vector2i) -> void:
+	var tween = get_tree().create_tween()
+	tween.set_trans(Tween.TRANS_SINE)
+	tween.tween_method(set_animated_tile_offset.bind(pos), 0.0, DEPETRIFY_ANIM_OFFSET_ONE, DEPETRIFY_ANIMATION_DURATION / 3)
+	tween.tween_method(set_animated_tile_offset.bind(pos), DEPETRIFY_ANIM_OFFSET_ONE, DEPETRIFY_ANIM_OFFSET_TWO, DEPETRIFY_ANIMATION_DURATION / 3)
+	tween.tween_method(set_animated_tile_offset.bind(pos), DEPETRIFY_ANIM_OFFSET_TWO, 0.0, DEPETRIFY_ANIMATION_DURATION / 3)
+	await tween.finished
+	
+	notify_runtime_tile_data_update()
+	animated_tiles.erase(pos)
+
+func set_animated_tile_offset(offset: float, pos: Vector2i) -> void:
+	animated_tiles[pos] = offset
+	notify_runtime_tile_data_update()
+
+func _use_tile_data_runtime_update(coords: Vector2i) -> bool:
+	return animated_tiles.has(coords)
+
+func _tile_data_runtime_update(coords: Vector2i, tile_data: TileData) -> void:
+	tile_data.texture_origin = Vector2(0, animated_tiles[coords])
+	
 
 # --- Positional Check Functions ---
 
@@ -342,6 +392,7 @@ func get_rivers() -> Array[Vector2i]:
 	return river_tiles
 
 func generate_rivers(river_tiles: Array[Vector2i]) -> void:
+	
 	var to_remove: Array[Vector2i] = []
 	for map_coords in river_tiles:
 		var tile_data: TileData = get_cell_tile_data(map_coords)
@@ -349,21 +400,114 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 			to_remove.append(map_coords)
 			continue
 		
-		var tile_type: int = tile_data.get_custom_data("biome")
-		
-		if (tile_type == null || tile_type != TileType.WATER):
-			to_remove.append(map_coords)
+		#var tile_type: int = tile_data.get_custom_data("biome")
+		#
+		#if (tile_type == null || tile_type != TileType.WATER):
+			#to_remove.append(map_coords)
 	
 	for map_coords in to_remove:
 		river_tiles.erase(map_coords)
-		
-	for map_coords in river_tiles:
-		if biome_map.get(map_coords) == Biome.SNOWY:
-			set_cell_type(map_coords, TileType.ICE)
-		else:
-			set_cell_type(map_coords, TileType.WATER)
-
+	
 	set_cells_terrain_connect(river_tiles, 0, 1)
+	
+	#for map_coords in river_tiles:
+		#if biome_map.get(map_coords) == Biome.SNOWY:
+			#set_cell_type(map_coords, TileType.ICE)
+
+func generate_set_pieces() -> void:
+	var total_num_set_pieces: int = world_size_settings.num_tree_unlock_set_pieces + world_size_settings.num_tech_point_set_pieces
+	var set_piece_positions: Array[Vector2i] = get_multiple_radial_positions(total_num_set_pieces, world_size_settings.set_piece_radiuses, world_size_settings.num_set_pieces_per_circle)
+	#set_piece_positions.shuffle()
+	
+	var remaining_tree_unlocks: int = world_size_settings.num_tree_unlock_set_pieces
+	var remaining_tech_points: int = world_size_settings.num_tech_point_set_pieces
+	var tech_set_pieces: Array = SetPieceRegistry.get_tech_point_set_pieces()
+	var tree_set_pieces: Array = SetPieceRegistry.get_tree_unlock_set_pieces()
+	for pos: Vector2i in set_piece_positions:
+		if remaining_tree_unlocks > 0:
+			remaining_tree_unlocks -= 1
+			
+			var tile_type: TileType = get_tile_biome(pos)
+			var biome: Biome = -999
+			for biome_key: Biome in BIOME_TILES.keys():
+				if BIOME_TILES[biome_key] == tile_type:
+					biome = biome_key
+					break
+			
+			if biome == -999:
+				printerr("ERROR: Tile type does not match any Biome! terrain_map.gd::generate_set_pieces(): ", tile_type)
+				continue
+			
+			var new_set_piece: SetPiece = null
+			for set_piece: SetPiece in tree_set_pieces:
+				if set_piece.biome == biome:
+					new_set_piece = set_piece
+					break
+			
+			if new_set_piece == null:
+				continue
+			
+			create_set_piece(new_set_piece, pos)
+			tree_set_pieces.erase(new_set_piece)
+			
+		elif remaining_tech_points > 0:
+			remaining_tech_points -= 1
+			
+			# Get a random tech set piece, remove it from the list
+			var set_piece: SetPiece = tech_set_pieces.pick_random()
+			if not tech_set_pieces.has(set_piece) or set_piece == null:
+				continue
+			
+			create_set_piece(set_piece, pos)
+			tech_set_pieces.erase(set_piece)
+			
+
+
+func get_random_positions(amount: int) -> Array[Vector2i]:
+	var positions: Array[Vector2i] = []
+	
+	for i in range(0, amount):
+		var x_range: Array = get_map_x_range()
+		var x_rand: int = randi_range(x_range.front(), x_range.back())
+		
+		var y_range: Array = get_map_y_range()
+		var y_rand: int = randi_range(y_range.front(), y_range.back())
+		
+		var pos_rand: Vector2i = Vector2i(x_rand, y_rand)
+		positions.push_back(pos_rand)
+	
+	return positions
+
+func get_radial_positions(amount: int, radius: float) -> Array[Vector2i]:
+	var positions: Array[Vector2i] = []
+	
+	var angle: float = randf() * 2 * PI
+	for i in range(0, amount):
+		var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * radius)
+		positions.append(map_coords)
+		angle += 2 * PI / amount
+	
+	return positions
+
+func get_multiple_radial_positions(amount: int, radiuses: Array[float], pos_per_circle: Array[int] = []) -> Array[Vector2i]:
+	var positions: Array[Vector2i] = []
+	
+	var num_circles = radiuses.size()
+	var num_pos_per_circle: int = int(amount / num_circles)
+	
+	for i in range(0, num_circles):
+		var angle: float = randf() * 2 * PI
+		var radius: float = radiuses[i]
+		
+		var num_pos_this_circle: int = num_pos_per_circle
+		if not pos_per_circle.is_empty():
+			num_pos_this_circle = pos_per_circle[i]
+		for j in range(0, num_pos_this_circle):
+			var map_coords: Vector2i = Global.ORIGIN + Vector2i(Vector2.RIGHT.rotated(angle) * radius)
+			positions.append(map_coords)
+			angle += 2 * PI / num_pos_this_circle
+	
+	return positions
 
 func generate_cities(city_coords: Array[Vector2i]) -> Array[Vector2i]:
 	var city_tiles: Array[Vector2i] = []
@@ -465,15 +609,23 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	for offset: Vector2i in tiles.keys():
 		var true_pos: Vector2i = grid_position + offset
 		
+		# Out of bounds
+		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
+			return 
+		
 		var info: Dictionary = tiles[offset]
 		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
 		
-		#var type: Global.TileType = tiles[offset]
-		#set_cell_type(true_pos, tiles[offset])
+		Global.structure_map.remove_structure(true_pos)
 	
 	var structures: Dictionary[Vector2i, Node2D] = set_piece.get_structures()
 	for offset: Vector2i in structures.keys():
 		var true_pos: Vector2i = grid_position + offset
+		
+		# Out of bounds
+		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
+			return 
+		
 		var structure: Node2D = structures[offset]
 		structure.get_parent().remove_child(structure)
 		Global.structure_map.add_structure(true_pos, structure, true)
@@ -595,10 +747,11 @@ func randomize_tile(map_coords: Vector2i) -> void:
 	var tile_data: TileData = get_cell_tile_data(map_coords)
 	var biome: int = tile_data.get_custom_data("biome")
 	var scaled_value: float = randf() * (TILE_TYPE_VARIATIONS[biome] - 1)
+	var alt_id: int = get_cell_alternative_tile(map_coords)
 	var modifier: int = floor(scaled_value)
 	
 	var atlas_coords: Vector2i = TILE_ATLAS_COORDS[biome] + Vector2i(modifier, 0)
-	set_cell(map_coords, SOURCE_ID, atlas_coords, 0)
+	set_cell(map_coords, SOURCE_ID, atlas_coords, alt_id)
 
 func get_map_x_range() -> Array:
 	return range(-world_size_settings.map_size.x / 2, world_size_settings.map_size.x / 2 + 1)

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=4 uid="uid://djvh7kk0kurti"]
+
+[ext_resource type="Script" uid="uid://gl2mr0urfc52" path="res://world/proc_gen/set_pieces/set_piece.gd" id="1_2eonq"]
+[ext_resource type="TileSet" uid="uid://c56n5at2ah3wj" path="res://world/proc_gen/terrain_map/terrain_tileset.tres" id="2_u1x58"]
+[ext_resource type="PackedScene" uid="uid://pwq6l348irkt" path="res://structures/city/factory/factory_composed.tscn" id="3_b0sho"]
+[ext_resource type="PackedScene" uid="uid://dnwmoqcy1law8" path="res://structures/city/city_building_composed.tscn" id="4_u1x58"]
+
+[node name="TechSetPiece0" type="Node2D"]
+script = ExtResource("1_2eonq")
+biome = 1
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD+/wAAAAAAAAYAAAD//wEAAAAAAAQAAAAAAAEAAAAAAAYAAAD//wAAAAACAAQAAAAAAAAAAAAAAAYAAAD9/wAAAAADAAQAAAD//wIAAAADAAQAAAAAAAIAAAAAAAYAAAABAAAAAAACAAQAAAABAAEAAAABAAQAAAD9/wEAAAABAAQAAAD+/wEAAAAAAAYAAAABAAIAAAACAAQAAAD+////AAAEAAYAAAD/////AAADAAQAAAAAAP//AAAEAAYAAAAAAP3/AAAAAAYAAAAAAP7/AAAAAAYAAAAAAAMAAAAEAAYAAAD9////AAADAAQAAAD+//7/AAAEAAYAAAD+/wIAAAAEAAYAAAD+/wMAAAAEAAYAAAAAAAQAAAAAAAYAAAD9/wIAAAABAAQAAAABAP7/AAADAAQAAAABAP//AAABAAQAAAD///7/AAABAAQAAAD///3/AAABAAQAAAD///z/AAAAAAQAAAD//wMAAAABAAQAAAD//wQAAAACAAQAAAD//wUAAAABAAQAAAD///v/AAAAAAQAAAAAAPz/AAAEAAYAAAA=")
+tile_set = ExtResource("2_u1x58")
+
+[node name="Structures" type="Node2D" parent="."]
+
+[node name="FactoryComposed" parent="Structures" instance=ExtResource("3_b0sho")]
+
+[node name="CityBuildingComposed" parent="Structures" instance=ExtResource("4_u1x58")]
+position = Vector2(-64, 32)
+
+[node name="CityBuildingComposed2" parent="Structures" instance=ExtResource("4_u1x58")]
+position = Vector2(-48, 24)
+
+[node name="CityBuildingComposed3" parent="Structures" instance=ExtResource("4_u1x58")]
+position = Vector2(-32, 16)
+
+[node name="CityBuildingComposed4" parent="Structures" instance=ExtResource("4_u1x58")]
+position = Vector2(32, -16)
+
+[node name="CityBuildingComposed5" parent="Structures" instance=ExtResource("4_u1x58")]
+position = Vector2(48, -24)
