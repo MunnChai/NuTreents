@@ -137,6 +137,7 @@ process_material = SubResource("ParticleProcessMaterial_f3b27")
 [node name="GridPositionComponent" parent="." instance=ExtResource("7_7axg8")]
 
 [node name="ObstructionComponent" parent="." instance=ExtResource("8_wfxg5")]
+verb_override = "Un-petrify"
 
 [node name="DestructableComponent" parent="." instance=ExtResource("9_b4uc8")]
 remove_self_on_destroyed = false
