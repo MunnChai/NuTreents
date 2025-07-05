@@ -5,3 +5,5 @@ extends Resource
 @export var id: String
 @export var icon: Texture2D
 @export var tech_point_cost: int = 1
+
+@export_multiline var description: String

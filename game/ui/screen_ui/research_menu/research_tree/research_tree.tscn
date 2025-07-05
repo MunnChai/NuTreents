@@ -1,0 +1,127 @@
+[gd_scene load_steps=6 format=3 uid="uid://cr7mehptvupy8"]
+
+[ext_resource type="Script" uid="uid://d2toeiiddlobk" path="res://ui/screen_ui/research_menu/research_tree/research_tree.gd" id="1_av127"]
+[ext_resource type="PackedScene" uid="uid://bir2nauxjr10w" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node.tscn" id="2_2tbkv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_302ec"]
+bg_color = Color(0, 0, 0, 0.592157)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2tbkv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_av127"]
+
+[node name="ResearchTree" type="PanelContainer"]
+clip_contents = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_302ec")
+script = ExtResource("1_av127")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Row-4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row-4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="Row-3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row-3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="Row-2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="ExplorerTree" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row-1/FogRevealer")]
+
+[node name="FireResistance" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row-1/WaterProduction")]
+
+[node name="Row-1" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="FogRevealer" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="WaterProduction" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="Row0" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="RootNode" parent="VBoxContainer/Row0" instance=ExtResource("2_2tbkv")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 1)
+layout_mode = 2
+state = 2
+
+[node name="Row1" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="DangerousTrees" parent="VBoxContainer/Row1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="HealthyTrees" parent="VBoxContainer/Row1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="Row2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="AttackRange" parent="VBoxContainer/Row2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+required_nodes = [NodePath("../../Row1/DangerousTrees")]
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_av127")
+
+[node name="Row3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="Row4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")

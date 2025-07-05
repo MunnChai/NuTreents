@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4ed1exxflnd0"]
+[gd_scene load_steps=6 format=3 uid="uid://d4ed1exxflnd0"]
 
 [ext_resource type="Script" uid="uid://c15n6726ms7e4" path="res://ui/screen_ui/research_menu/research_menu.gd" id="1_jkbu0"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_mliin"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_p53e2"]
-[ext_resource type="PackedScene" uid="uid://bir2nauxjr10w" path="res://ui/screen_ui/research_menu/research_node/research_node.tscn" id="4_jkbu0"]
+[ext_resource type="PackedScene" uid="uid://cr7mehptvupy8" path="res://ui/screen_ui/research_menu/research_tree/research_tree.tscn" id="4_jkbu0"]
+[ext_resource type="Script" uid="uid://dob7gmsyldp3e" path="res://ui/screen_ui/research_menu/detail_panel/research_detail_panel.gd" id="5_302ec"]
 
 [node name="ResearchMenu" type="Control"]
 layout_mode = 3
@@ -18,10 +19,10 @@ script = ExtResource("1_jkbu0")
 
 [node name="PanelContainerWrapper" parent="." instance=ExtResource("2_mliin")]
 layout_mode = 1
-offset_left = -375.0
-offset_top = -208.5
-offset_right = 375.0
-offset_bottom = 208.5
+offset_left = -448.0
+offset_top = -260.0
+offset_right = 448.0
+offset_bottom = 260.0
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper"]
 layout_mode = 2
@@ -62,31 +63,112 @@ theme_override_constants/margin_bottom = 0
 layout_mode = 2
 alignment = 1
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer"]
+[node name="ResearchTreePanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_mliin")]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer" instance=ExtResource("2_mliin")]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 7
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="ResearchTree" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/MarginContainer/ScrollContainer" instance=ExtResource("4_jkbu0")]
+unique_name_in_owner = true
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper"]
+[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Control" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control"]
+layout_mode = 2
+anchors_preset = 0
+offset_right = 580.0
+offset_bottom = 896.0
+mouse_filter = 2
+
+[node name="TechPointPanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control/Control" instance=ExtResource("2_mliin")]
+layout_mode = 1
+offset_left = -58.0
+offset_top = -424.0
+offset_right = 70.0
+offset_bottom = -376.0
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control/Control/TechPointPanel"]
+layout_mode = 2
+theme = ExtResource("3_p53e2")
+theme_override_font_sizes/normal_font_size = 32
+text = "1 Points"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DetailPanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_mliin")]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+script = ExtResource("5_302ec")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer"]
-layout_mode = 2
-columns = 6
-
-[node name="ResearchNode" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer" instance=ExtResource("4_jkbu0")]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_mliin")]
-custom_minimum_size = Vector2(200, 0)
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Padding" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="DisplayName" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_p53e2")
+theme_override_font_sizes/normal_font_size = 32
+text = "Title"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Description" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_p53e2")
+theme_override_font_sizes/normal_font_size = 32
+text = "Description"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+alignment = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainerWrapper"]
+[node name="PurchaseButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer2"]
 layout_mode = 2
+theme = ExtResource("3_p53e2")
+theme_override_font_sizes/font_size = 32
+text = "Purchase"
+
+[editable path="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel"]
+[editable path="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel"]

@@ -2,21 +2,42 @@ class_name ResearchMenu
 extends ScreenMenu
 
 @onready var back_button: Button = %BackButton
-@onready var research_scroll_container: ScrollContainer = %ResearchScrollContainer
-@onready var starting_node: Button = %StartingNode
+@onready var scroll_container: ScrollContainer = %ScrollContainer
+@onready var research_tree: ResearchTree = %ResearchTree
 
 @onready var starting_position = position
 
+var target_v_scroll: float
+var currently_selected_node: ResearchNode
+
 func _ready():
 	_connect_button_signals()
-	await get_tree().process_frame
-	starting_node.grab_focus()
+
+func _process(delta: float) -> void:
+	scroll_container.scroll_vertical = MathUtil.decay(scroll_container.scroll_vertical, target_v_scroll, 10, delta)
 
 func _connect_button_signals():
 	back_button.pressed.connect(_on_back_button_pressed)
+	
+	var research_nodes: Array[ResearchNode] = research_tree.get_research_nodes()
+	for research_node: ResearchNode in research_nodes:
+		research_node.pressed.connect(_on_research_node_pressed)
+		research_node.focused.connect(_on_research_node_focused)
 
 func _on_back_button_pressed():
 	ScreenUI.exit_menu()
+
+func _on_research_node_pressed(research_node: ResearchNode) -> void:
+	if currently_selected_node:
+		currently_selected_node.deselect()
+	
+	research_node.select()
+	currently_selected_node = research_node
+
+func _on_research_node_focused(research_node: ResearchNode) -> void:
+	target_v_scroll = research_node.get_parent().position.y - 165
+
+#region Menu Opening/Closing
 
 func open(previous_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
@@ -35,9 +56,11 @@ func close(next_menu: ScreenMenu):
 func _finish_close():
 	unpause_game()
 
+#endregion
 
 
 #region Pausing
+
 func pause_game():
 	Global.pause_game()
 	var filter := AudioEffectLowPassFilter.new()
@@ -53,4 +76,5 @@ func unpause_game():
 	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
 	hide()
+
 #endregion
