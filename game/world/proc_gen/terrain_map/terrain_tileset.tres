@@ -6,6 +6,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hqm3l"]
 resource_local_to_scene = true
 shader = ExtResource("1_ls0ug")
+shader_parameter/shader_is_petrified = true
 shader_parameter/alpha = 1.0
 shader_parameter/is_flashing = false
 
