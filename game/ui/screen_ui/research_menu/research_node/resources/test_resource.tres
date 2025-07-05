@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://bq5wqy6dllvrw"]
+
+[ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_node/resources/research_node_resource.gd" id="1_daqgn"]
+[ext_resource type="Texture2D" uid="uid://i38yc501bg6g" path="res://ui/screen_ui/research_menu/icons/icon_test.png" id="1_n53kc"]
+
+[resource]
+script = ExtResource("1_daqgn")
+display_name = "Test Resource"
+id = "test_resource"
+icon = ExtResource("1_n53kc")
+tech_point_cost = 1
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

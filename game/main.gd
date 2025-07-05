@@ -24,8 +24,6 @@ func create_new_world() -> void:
 	
 	TreeManager.start_game()
 	
-	ScreenUI.shop_menu.reset_shop_cards()
-	
 	# Save metadata and session data together, so we don't end up with one without the other in a save file
 	SessionData.call_deferred("create_new_session_data", Global.get_metadata())
 	SessionData.call_deferred("save_session_data", Global.session_id)
@@ -91,13 +89,6 @@ func load_world(session_data: Dictionary) -> void:
 	TreeMenu.instance.remove_all_tree_cards()
 	for tree_type: Global.TreeType in session_data["purchased_cards"]:
 		TreeMenu.instance.add_tree_card(tree_type)
-		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
-	
-	#ScreenUI.shop_menu.reset_shop_cards() # Reset the state of the shop menu first
-	#ScreenUI.shop_menu.purchased_cards = session_data["purchased_cards"]
-	#for tree_type: Global.TreeType in ScreenUI.shop_menu.purchased_cards:
-		#TreeMenu.instance.add_tree_card(tree_type)
-		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
 	
 	# Add almanac info
 	AlmanacInfo.set_trees(session_data["almanac_trees"])

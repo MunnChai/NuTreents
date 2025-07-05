@@ -1,14 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://d4ed1exxflnd0"]
+[gd_scene load_steps=5 format=3 uid="uid://d4ed1exxflnd0"]
 
 [ext_resource type="Script" uid="uid://c15n6726ms7e4" path="res://ui/screen_ui/research_menu/research_menu.gd" id="1_jkbu0"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_mliin"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_p53e2"]
-[ext_resource type="Texture2D" uid="uid://chvnh26sacn53" path="res://ui/screen_ui/research_menu/research_node/research_node_unlockable.png" id="4_302ec"]
-[ext_resource type="Texture2D" uid="uid://i38yc501bg6g" path="res://ui/screen_ui/research_menu/icons/icon_test.png" id="5_kpvta"]
-[ext_resource type="Texture2D" uid="uid://db5xvjk5l5xb3" path="res://ui/screen_ui/research_menu/research_node/research_node_locked.png" id="6_mh1te"]
-[ext_resource type="Texture2D" uid="uid://dlwhsba3ufbjf" path="res://ui/screen_ui/research_menu/research_node/research_node_unlocked.png" id="7_cigje"]
+[ext_resource type="PackedScene" uid="uid://bir2nauxjr10w" path="res://ui/screen_ui/research_menu/research_node/research_node.tscn" id="4_jkbu0"]
 
-[node name="ShopMenu" type="Control"]
+[node name="ResearchMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -83,63 +80,8 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 columns = 6
 
-[node name="TextureButton2" type="TextureButton" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer"]
-modulate = Color(0.481789, 0.481789, 0.481789, 1)
+[node name="ResearchNode" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer" instance=ExtResource("4_jkbu0")]
 layout_mode = 2
-texture_normal = ExtResource("6_mh1te")
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer/TextureButton2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_kpvta")
-
-[node name="TextureButton" type="TextureButton" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer"]
-layout_mode = 2
-texture_normal = ExtResource("4_302ec")
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer/TextureButton"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_kpvta")
-
-[node name="TextureButton3" type="TextureButton" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer"]
-layout_mode = 2
-texture_normal = ExtResource("7_cigje")
-
-[node name="TextureRect" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/PanelContainer/PanelContainerWrapper/MarginContainer/GridContainer/TextureButton3"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.0
-offset_top = -24.0
-offset_right = 24.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("5_kpvta")
 
 [node name="PanelContainerWrapper" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_mliin")]
 custom_minimum_size = Vector2(200, 0)
