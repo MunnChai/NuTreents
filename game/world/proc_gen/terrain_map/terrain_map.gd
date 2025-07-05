@@ -611,7 +611,7 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 		
 		# Out of bounds
 		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
-			return 
+			continue
 		
 		var info: Dictionary = tiles[offset]
 		set_cell(true_pos, SOURCE_ID, info["atlas_coords"], info["alternative_id"])
@@ -624,7 +624,7 @@ func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 		
 		# Out of bounds
 		if not true_pos.x in get_map_x_range() or not true_pos.y in get_map_y_range():
-			return 
+			continue
 		
 		var structure: Node2D = structures[offset]
 		structure.get_parent().remove_child(structure)
