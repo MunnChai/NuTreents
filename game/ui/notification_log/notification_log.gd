@@ -14,9 +14,11 @@ signal notification_removed(notif: Notification)
 
 var notifications: Array[Notification] = []
 
-static var log: NotificationLog
+static var instance: NotificationLog
 
 func _ready() -> void:
+	instance = self
+	
 	notification_added.connect(_on_notification_added)
 
 func _process(delta: float) -> void:

@@ -152,6 +152,7 @@ range = 1
 [node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_range_component") instance=ExtResource("27_b03oh")]
 flammable_component = NodePath("../FlammableComponent")
 grid_range_component = NodePath("../FireRangeComponent")
+spread_tick_duration = 1.8
 
 [node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("28_cd85g")]
 flammable_component = NodePath("../FlammableComponent")

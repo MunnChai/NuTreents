@@ -142,13 +142,17 @@ shape = "Square"
 range = 1
 
 [node name="FlammableComponent" parent="FireComponents" instance=ExtResource("25_f2j37")]
+burn_time = 8.0
+fire_tick_duration = 2.0
 
 [node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_range_component") instance=ExtResource("26_umajr")]
 flammable_component = NodePath("../FlammableComponent")
 grid_range_component = NodePath("../FireRangeComponent")
+spread_tick_duration = 3.0
 
 [node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("27_22ha4")]
 flammable_component = NodePath("../FlammableComponent")
+damage_amount = 4.0
 
 [node name="VisualArrowComponent" parent="." instance=ExtResource("28_22ha4")]
 arrow_height = 1

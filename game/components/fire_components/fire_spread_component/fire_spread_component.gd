@@ -9,6 +9,7 @@ extends Node2D
 @export var grid_range_component: GridRangeComponent ## This is expressly for how far the fire can spread!
 
 @export var spread_tick_duration: float = 1.0 ## In seconds
+@export var chance: float = 0.5 ## Probability of spread
 
 func _ready() -> void:
 	flammable_component.ignited.connect(_on_ignition)
@@ -55,6 +56,7 @@ func try_ignite_entity(entity: Node2D) -> bool:
 	if Components.has_component(entity, FlammableComponent, "", true):
 		var flammable: FlammableComponent = Components.get_component(entity, FlammableComponent, "", true)
 		if flammable != self:
-			flammable.ignite()
+			if randf() < chance:
+				flammable.ignite()
 			return true
 	return false
