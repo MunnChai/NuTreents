@@ -12,6 +12,7 @@ func _on_weather_changed(new_weather: WeatherManager.WeatherType) -> void:
 
 ## Strike near any structure on the map
 const LIGHTNING = preload("res://events/weather/lightning/lightning.tscn")
+const LIGHTNING_TELEGRAPH = preload("res://events/weather/lightning/lightning_telegraph.tscn")
 func summon_lightning() -> void:
 	if not Global.structure_map:
 		return
@@ -23,7 +24,17 @@ func summon_lightning() -> void:
 	
 	var pos = base_pos + offset
 	
-	summon_lightning_at(pos)
+	summon_lightning_telegraph_at(pos)
+
+func summon_lightning_telegraph_at(pos: Vector2i) -> void:
+	if not Global.structure_map:
+		return
+	
+	var new_telegraph = LIGHTNING_TELEGRAPH.instantiate()
+	new_telegraph.global_position = Global.structure_map.map_to_local(pos)
+	Global.structure_map.add_child(new_telegraph)
+	
+	new_telegraph.telegraph_ended.connect(summon_lightning_at.bind(pos)) # Summon the actual lightning at position
 
 ## Summon lightning at position!
 func summon_lightning_at(pos: Vector2i) -> void:

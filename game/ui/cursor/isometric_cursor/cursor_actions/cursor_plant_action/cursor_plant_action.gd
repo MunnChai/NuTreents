@@ -74,6 +74,9 @@ func try_plant_tree(type: Global.TreeType, p: Vector2i) -> Node2D:
 				return null
 			else:
 				PopupManager.create_popup(tr(&"SUCCESS_TECH_TREE_PLANTED"), structure_map.map_to_local(p), Color("6be1e3"))
+				
+				var notification = Notification.new(&"cost", '[color=6be1e3]' + tr(&"NOTIF_TECH_TREE_PLANTED"), { "priority": 1, "time_remaining": 3.0 });
+				NotificationLog.instance.add_notification(notification)
 		_: ## All other trees cannot be planted on Factory Remains
 			if structure_map.tile_scene_map.has(p) and Components.has_component(structure_map.tile_scene_map[p], FactoryRemainsBehaviourComponent):
 				SfxManager.play_sound_effect("ui_fail")
