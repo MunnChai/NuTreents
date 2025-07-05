@@ -51,6 +51,8 @@ WorldSettings="*res://world/world_settings/world_settings.tscn"
 MapUtility="*res://world/map_utility.gd"
 EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
 DebugConsole="*res://addons/debug_console/debug_console_global.gd"
+AlmanacInfo="*res://ui/almanac_info/almanac_info.gd"
+SetPieceRegistry="*res://world/proc_gen/set_pieces/set_piece_registry.gd"
 
 [display]
 
@@ -270,6 +272,10 @@ toggle_water_view={
 ]
 }
 
+[internationalization]
+
+locale/translations=PackedStringArray("res://language/lang.en.translation", "res://language/lang.fr.translation")
+
 [layer_names]
 
 2d_physics/layer_1="Ally"
@@ -279,6 +285,8 @@ toggle_water_view={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/vram_compression/import_etc2_astc=true
 environment/defaults/default_clear_color=Color(0.14902, 0.117647, 0.227451, 1)
 2d/snap/snap_2d_transforms_to_pixel=true

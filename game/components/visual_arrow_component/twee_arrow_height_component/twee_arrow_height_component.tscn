@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddg8ke7v2mqsi"]
+
+[ext_resource type="Script" uid="uid://clnf4qlriib0m" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.gd" id="1_3al4y"]
+
+[node name="TweeArrowHeightComponent" type="Node"]
+script = ExtResource("1_3al4y")

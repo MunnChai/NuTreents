@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3 uid="uid://dikuvrgbtkbvt"]
+
+[ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_h13lq"]
+[ext_resource type="Script" uid="uid://dgxvel4din2rf" path="res://ui/screen_ui/almanac_menu/almanac_card/almanac_tree_card.gd" id="2_qv6ok"]
+[ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_16ow6"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="4_2bgpf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1dll"]
+atlas = ExtResource("4_2bgpf")
+region = Rect2(0, 16, 32, 40)
+
+[node name="AlmanacTreeCard" instance=ExtResource("1_h13lq")]
+clip_contents = true
+custom_minimum_size = Vector2(80, 120)
+offset_left = -40.0
+offset_top = -60.0
+offset_right = 40.0
+offset_bottom = 60.0
+pivot_offset = Vector2(40, 60)
+size_flags_vertical = 0
+script = ExtResource("2_qv6ok")
+
+[node name="MarginContainer" type="MarginContainer" parent="." index="1"]
+clip_contents = true
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
+clip_contents = true
+layout_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="MarginContainer/VBoxContainer" index="0"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("3_16ow6")
+text = "Default Tree"
+fit_content = true
+autowrap_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon" type="TextureRect" parent="MarginContainer/VBoxContainer" index="1"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+texture = SubResource("AtlasTexture_k1dll")
+stretch_mode = 5
+
+[node name="HiddenButton" type="TextureButton" parent="." index="2"]
+layout_mode = 2
+theme = ExtResource("3_16ow6")
+stretch_mode = 3
+
+[connection signal="button_down" from="HiddenButton" to="." method="_on_mouse_pressed"]
+[connection signal="button_up" from="HiddenButton" to="." method="_on_mouse_released"]
+[connection signal="focus_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="focus_exited" from="HiddenButton" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HiddenButton" to="." method="_on_mouse_exited"]

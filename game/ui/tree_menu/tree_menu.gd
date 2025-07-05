@@ -26,9 +26,13 @@ var tree_order = [Global.TreeType.DEFAULT_TREE,
 	Global.TreeType.SLOWING_TREE,
 	Global.TreeType.MORTAR_TREE,
 	Global.TreeType.SPIKY_TREE,
+	Global.TreeType.ICY_TREE,
+	Global.TreeType.FIRE_TREE,
+	Global.TreeType.SPRINKLER_TREE,
 	]
 ## Index of the currently selected tree
 var currently_selected_tree = 0
+var is_selecting_tree := true ## Am I selecting a tree, or are we not selecting anything?
 
 static var instance: TreeMenu # Psuedo-singleton reference
 
@@ -40,6 +44,14 @@ func get_currently_selected_tree_type() -> Global.TreeType:
 
 func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
 	currently_selected_tree = tree_order.find(tree_type)
+
+func get_unlocked_tree_types() -> Array[Global.TreeType]:
+	var tree_types: Array[Global.TreeType]
+	
+	for tree_card: TreeCard in tree_card_container.get_children():
+		tree_types.append(tree_card.tree_type)
+	
+	return tree_types
 
 func next_tree() -> void:
 	currently_selected_tree += 1
@@ -55,7 +67,12 @@ func previous_tree() -> void:
 
 
 func add_tree_card(tree_type: Global.TreeType):
+	AlmanacInfo.add_tree(tree_type)
 	var new_card = TREE_CARD.instantiate()
 	new_card.tree_type = tree_type
 	
 	tree_card_container.add_child(new_card)
+
+func remove_all_tree_cards() -> void:
+	for tree_card: TreeCard in tree_card_container.get_children():
+		tree_card.queue_free()

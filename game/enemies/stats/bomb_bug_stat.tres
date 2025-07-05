@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EnemyStatResource" load_steps=3 format=3 uid="uid://fn4kyirepowr"]
+
+[ext_resource type="Script" uid="uid://cq0shh8yxktgu" path="res://enemies/stats/enemy_stat_resource.gd" id="1_1tsjc"]
+[ext_resource type="Texture2D" uid="uid://q07ujcutpsgv" path="res://enemies/icons/bomb_bug.png" id="1_jmi5n"]
+
+[resource]
+script = ExtResource("1_1tsjc")
+name = "Bomb Bug"
+id = "bomb_bug"
+description = "An unholy abomination of an ant, a beetle, and a propane tank"
+enemy_icon = ExtResource("1_jmi5n")
+hp = 40.0
+action_cooldown = 1.0
+attack_damage = 4.0
+attack_range = 1
+earliest_spawn_day = 12
+spawn_weight = 200
+spawn_point_cost = 40
+metadata/_custom_type_script = "uid://cq0shh8yxktgu"

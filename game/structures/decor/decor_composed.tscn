@@ -29,5 +29,5 @@ v_frames = 5
 
 [node name="DecorBehaviourComponent" parent="." instance=ExtResource("5_0wjab")]
 script = ExtResource("6_dm6cd")
-type = 3
 set_type_on_ready = true
+type = 3

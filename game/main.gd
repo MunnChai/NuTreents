@@ -19,8 +19,8 @@ func create_new_world() -> void:
 	Global.set_seed(Global.get_seed())
 	
 	EnemyManager.instance.start_game()
-	Global.terrain_map.generate_map(Global.current_world_size)
 	Global.fog_map.init()
+	Global.terrain_map.generate_map(Global.current_world_size)
 	
 	TreeManager.start_game()
 	
@@ -29,6 +29,13 @@ func create_new_world() -> void:
 	# Save metadata and session data together, so we don't end up with one without the other in a save file
 	SessionData.call_deferred("create_new_session_data", Global.get_metadata())
 	SessionData.call_deferred("save_session_data", Global.session_id)
+	
+	# set almanac info
+	AlmanacInfo.add_tree(Global.TreeType.MOTHER_TREE)
+	AlmanacInfo.add_tree(Global.TreeType.DEFAULT_TREE)
+	AlmanacInfo.add_tree(Global.TreeType.WATER_TREE)
+	AlmanacInfo.add_tree(Global.TreeType.GUN_TREE)
+	print("new world trees", AlmanacInfo.get_trees())
 
 func load_world(session_data: Dictionary) -> void:
 	# Set seed before world generation, for (hopefully) deterministic map gen
@@ -36,8 +43,8 @@ func load_world(session_data: Dictionary) -> void:
 	Global.current_world_size = session_data["world_size"]
 	
 	EnemyManager.instance.start_game()
-	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	Global.fog_map.init()
+	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	
 	TreeManager.start_game()
 	
@@ -59,7 +66,7 @@ func load_world(session_data: Dictionary) -> void:
 	
 	# Set terrain and structures
 	Global.terrain_map.set_terrain_from_data(session_data["terrain_map"])
-	Global.terrain_map.randomize_tiles()
+	#Global.terrain_map.randomize_tiles()
 	Global.structure_map.set_structures_from_data(session_data["structure_map"])
 	
 	# Place trees
@@ -80,9 +87,18 @@ func load_world(session_data: Dictionary) -> void:
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
 	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]
 	
-	# Add purchased cards to tree menu
-	ScreenUI.shop_menu.reset_shop_cards() # Reset the state of the shop menu first
-	ScreenUI.shop_menu.purchased_cards = session_data["purchased_cards"]
-	for tree_type: Global.TreeType in ScreenUI.shop_menu.purchased_cards:
+	# Add unlocked cards to tree menu
+	TreeMenu.instance.remove_all_tree_cards()
+	for tree_type: Global.TreeType in session_data["purchased_cards"]:
 		TreeMenu.instance.add_tree_card(tree_type)
-		ScreenUI.shop_menu.disable_card_of_type(tree_type)
+		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
+	
+	#ScreenUI.shop_menu.reset_shop_cards() # Reset the state of the shop menu first
+	#ScreenUI.shop_menu.purchased_cards = session_data["purchased_cards"]
+	#for tree_type: Global.TreeType in ScreenUI.shop_menu.purchased_cards:
+		#TreeMenu.instance.add_tree_card(tree_type)
+		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
+	
+	# Add almanac info
+	AlmanacInfo.set_trees(session_data["almanac_trees"])
+	AlmanacInfo.set_trees(session_data["almanac_enemies"])

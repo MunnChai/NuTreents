@@ -6,28 +6,41 @@ extends Node2D
 
 var actor: Node2D
 
+signal exploded()
+
 func _ready() -> void:
 	actor = get_parent()
 	
 	if not animation_player:
 		animation_player = Components.get_component(actor, AnimationPlayer)
+		animation_player.animation_finished.connect(_on_animation_finished)
 	if not sprite_2d:
 		sprite_2d = Components.get_component(actor, Sprite2D)
 
 func play_hurt_animation():
 	if animation_player.current_animation == "idle":
 		animation_player.play("hurt")
-		animation_player.queue("idle")
 	elif animation_player.current_animation == "idle_backwards":
 		animation_player.play("hurt_backwards")
-		animation_player.queue("idle_backwards")
 
 func play_death() -> void:
 	animation_player.play("death")
-	animation_player.animation_finished.connect(
-		func(animation_name):
-			actor.queue_free()
-	)
+
+func _on_animation_finished(anim_name: String) -> void:
+	if anim_name == "hurt":
+		animation_player.play("idle")
+	if anim_name == "hurt_backwards":
+		animation_player.play("idle_backwards")
+	
+	if anim_name == "death":
+		actor.queue_free()
+	
+	if anim_name == "explode":
+		exploded.emit()
+		actor.queue_free()
+
+func play_explode() -> void:
+	animation_player.play("explode")
 
 func face_direction(direction: Vector2i):
 	if direction.length() > 1:

@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dwpl26cf6kleg"]
 
-[ext_resource type="Script" uid="uid://iavbe6xpcga4" path="res://structures/city/factory/city_building.gd" id="1_342x3"]
-[ext_resource type="Texture2D" uid="uid://biqrko5gffb5j" path="res://structures/city/City_Buildings_1.png" id="2_342x3"]
-[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://ui/cursor/world_cursor/visual_cursor/outline.gdshader" id="2_i0ck8"]
+[ext_resource type="Script" path="res://structures/city/factory/city_building.gd" id="1_342x3"]
+[ext_resource type="Texture2D" uid="uid://cdyh6sryto77l" path="res://structures/city/City_Buildings_1.png" id="2_342x3"]
+[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://components/outline_component/outline.gdshader" id="2_i0ck8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cnien"]
 shader = ExtResource("2_i0ck8")

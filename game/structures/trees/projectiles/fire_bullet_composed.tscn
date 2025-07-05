@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://ctu3gksgwvuku"]
+
+[ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://structures/trees/sheets/projectiles/tree_bullet.png" id="1_tc7fj"]
+[ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="2_jqs4b"]
+[ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="3_etqhs"]
+[ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="4_paf4j"]
+[ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_7wpnm"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="6_etqhs"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="7_paf4j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
+resource_local_to_scene = true
+
+[node name="FireBulletComposed" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_tc7fj")
+
+[node name="HitboxComponent" parent="Sprite2D" instance=ExtResource("2_jqs4b")]
+collision_mask = 6
+
+[node name="CollisionShape2D" parent="Sprite2D/HitboxComponent" index="0"]
+shape = SubResource("CircleShape2D_05k2p")
+
+[node name="FireComponents" type="Node2D" parent="Sprite2D"]
+
+[node name="FlammableComponent" parent="Sprite2D/FireComponents" instance=ExtResource("6_etqhs")]
+can_fire_go_out = false
+ignite_on_ready = true
+
+[node name="FireSpreadComponent" parent="Sprite2D/FireComponents" node_paths=PackedStringArray("flammable_component", "grid_range_component") instance=ExtResource("7_paf4j")]
+flammable_component = NodePath("../FlammableComponent")
+grid_range_component = NodePath("")
+
+[node name="GridPositionComponent" parent="." instance=ExtResource("3_etqhs")]
+
+[node name="GridMovementComponent" parent="." instance=ExtResource("4_paf4j")]
+movement_duration = 0.5
+ease = 1
+trans = 1
+bounce_amount = 32.0
+
+[node name="RemovalComponent" parent="." instance=ExtResource("5_7wpnm")]
+
+[node name="RemovalTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="Sprite2D/HitboxComponent" to="RemovalComponent" method="free_actor" unbinds=1]
+[connection signal="hit_entity" from="Sprite2D/HitboxComponent" to="Sprite2D/FireComponents/FireSpreadComponent" method="try_ignite_entity"]
+[connection signal="timeout" from="RemovalTimer" to="RemovalComponent" method="free_actor"]
+
+[editable path="Sprite2D/HitboxComponent"]

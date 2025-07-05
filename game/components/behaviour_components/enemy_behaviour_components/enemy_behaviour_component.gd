@@ -19,6 +19,7 @@ extends Node2D
 @export var enemy_stat_component: EnemyStatComponent
 @export var enemy_animation_component: EnemyAnimationComponent
 @export var death_sound_emitter_component: SoundEmitterComponent
+@export var status_holder_component: StatusHolderComponent
 
 ## The node that this component is acting on, usually the parent
 var actor: Node2D
@@ -41,6 +42,8 @@ func _get_components() -> void:
 		hurtbox_component = Components.get_component(actor, HurtboxComponent)
 	if not hitbox_component:
 		hitbox_component = Components.get_component(actor, HitboxComponent)
+		if not hitbox_component:
+			hitbox_component = Components.get_component(actor, AoeComponent)	
 	
 	if not action_timer:
 		action_timer = Components.get_component(actor, Timer)
@@ -63,6 +66,9 @@ func _get_components() -> void:
 		enemy_animation_component = Components.get_component(actor, EnemyAnimationComponent)
 	if not death_sound_emitter_component:
 		death_sound_emitter_component = Components.get_component(actor, SoundEmitterComponent)
+	
+	if not status_holder_component:
+		status_holder_component = Components.get_component(actor, StatusHolderComponent)
 
 
 func _connect_component_signals() -> void:
@@ -138,7 +144,7 @@ func move(target_pos: Vector2i) -> void:
 			return
 	
 	# If it is obstructed by a bug, find a new path
-	if MapUtility.tile_has_entity(next_pos):
+	if MapUtility.tile_has_enemy(next_pos):
 		pathfinding_component.find_path(current_pos, target_pos)
 		next_pos = pathfinding_component.get_next_position()
 	
@@ -153,6 +159,9 @@ func die():
 	hurtbox_component.monitoring = false
 	hitbox_component.set_deferred("monitorable", false)
 	hitbox_component.monitoring = false
+	
+	status_holder_component.remove_all_status_effects()
+	status_holder_component.disable()
 
 
 const ENEMY_REBOOT_TIME: float = 30

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://db827hwo1u53j"]
+[gd_scene load_steps=31 format=3 uid="uid://db827hwo1u53j"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_a1lvg"]
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="1_v3cq2"]
@@ -22,6 +22,11 @@
 [ext_resource type="PackedScene" uid="uid://dc41m5quwf1is" path="res://components/fog_revealer_component/fog_revealer_component.tscn" id="20_sdht0"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="21_nminj"]
 [ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="22_a1lvg"]
+[ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="23_lh3pk"]
+[ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="24_03ebx"]
+[ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="25_t1t24"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="26_t1t24"]
+[ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="27_3rd2a"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sxeaf"]
 resource_local_to_scene = true
@@ -116,6 +121,28 @@ collision_mask = 6
 
 [node name="CollisionShape2D" parent="HitboxComponent" index="0"]
 shape = SubResource("CircleShape2D_a1lvg")
+
+[node name="FireComponents" type="Node2D" parent="."]
+
+[node name="FireRangeComponent" parent="FireComponents" instance=ExtResource("19_spbuv")]
+shape = "Square"
+range = 1
+
+[node name="FlammableComponent" parent="FireComponents" instance=ExtResource("23_lh3pk")]
+
+[node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_range_component") instance=ExtResource("24_03ebx")]
+flammable_component = NodePath("../FlammableComponent")
+grid_range_component = NodePath("../FireRangeComponent")
+
+[node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("25_t1t24")]
+flammable_component = NodePath("../FlammableComponent")
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("26_t1t24")]
+arrow_height = 1
+
+[node name="TweeArrowHeightComponent" parent="." node_paths=PackedStringArray("visual_arrow", "twee") instance=ExtResource("27_3rd2a")]
+visual_arrow = NodePath("../VisualArrowComponent")
+twee = NodePath("../TreeBehaviourComponent")
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]

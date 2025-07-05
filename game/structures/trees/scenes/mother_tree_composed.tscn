@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://btc8w4mfmtrb1"]
+[gd_scene load_steps=23 format=3 uid="uid://btc8w4mfmtrb1"]
 
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_r0oyg"]
 [ext_resource type="Resource" uid="uid://ll6klr2ec2b8" path="res://structures/trees/stats/mother_tree_stat.tres" id="2_7namq"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://dn30pix1eqsv1" path="res://components/sound_emitter_component/sound_emitter_component.tscn" id="17_nw636"]
 [ext_resource type="PackedScene" uid="uid://ccdkwlkb7qoth" path="res://components/outline_component/outline_component.tscn" id="17_v1tj4"]
 [ext_resource type="PackedScene" uid="uid://ba4yphj18hn0l" path="res://components/stat_component/twee_stat_component/twee_stat_component.tscn" id="18_nw636"]
+[ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="19_s42kc"]
+[ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="20_nsnki"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_higsx"]
 shader = ExtResource("1_r0oyg")
@@ -97,5 +99,12 @@ range = 1
 [node name="FogRevealerComponent" parent="." instance=ExtResource("16_7namq")]
 
 [node name="OutlineComponent" parent="." instance=ExtResource("17_v1tj4")]
+
+[node name="VisualArrowComponent" parent="." instance=ExtResource("19_s42kc")]
+arrow_height = 1
+
+[node name="TweeArrowHeightComponent" parent="." node_paths=PackedStringArray("visual_arrow", "twee") instance=ExtResource("20_nsnki")]
+visual_arrow = NodePath("../VisualArrowComponent")
+twee = NodePath("../MotherTweeBehaviourComponent")
 
 [editable path="HurtboxComponent"]

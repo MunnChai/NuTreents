@@ -1,12 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://dp2qux8jc8s0s"]
+[gd_scene load_steps=7 format=3 uid="uid://dp2qux8jc8s0s"]
 
 [ext_resource type="Script" uid="uid://bb01m6d40cunj" path="res://enemies/registry/enemy_registry.gd" id="1_b224i"]
-[ext_resource type="PackedScene" uid="uid://dx31qo8ntqbho" path="res://enemies/speedle/speedle_composed.tscn" id="2_wmfea"]
-[ext_resource type="PackedScene" uid="uid://dguswqwhw6id" path="res://enemies/silk_spitter/silk_spitter_composed.tscn" id="3_relub"]
+[ext_resource type="PackedScene" uid="uid://dx31qo8ntqbho" path="res://enemies/scenes/speedle_composed.tscn" id="2_wmfea"]
+[ext_resource type="PackedScene" uid="uid://dguswqwhw6id" path="res://enemies/scenes/silk_spitter_composed.tscn" id="3_relub"]
+[ext_resource type="PackedScene" uid="uid://cuxllgx5nt2bc" path="res://enemies/scenes/tank_speedle_composed.tscn" id="4_bu3u2"]
+[ext_resource type="PackedScene" uid="uid://bhs6547uulu7g" path="res://enemies/scenes/speed_speedle_composed.tscn" id="5_mqfdr"]
+[ext_resource type="PackedScene" uid="uid://ciqk7v2h1gbc6" path="res://enemies/scenes/bomb_bug_composed.tscn" id="6_a5c7b"]
 
 [node name="EnemyRegistry" type="Node2D"]
 script = ExtResource("1_b224i")
 enemy_scene_registry = Dictionary[int, PackedScene]({
 0: ExtResource("2_wmfea"),
-1: ExtResource("3_relub")
+1: ExtResource("3_relub"),
+2: ExtResource("4_bu3u2"),
+3: ExtResource("5_mqfdr"),
+4: ExtResource("6_a5c7b")
 })

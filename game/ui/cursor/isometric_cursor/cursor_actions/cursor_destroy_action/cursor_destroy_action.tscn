@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceo205q1hqnw1"]
+
+[ext_resource type="Script" uid="uid://dm2j4olk178lk" path="res://ui/cursor/isometric_cursor/cursor_actions/cursor_destroy_action/cursor_destroy_action.gd" id="1_a2wsh"]
+
+[node name="CursorDestroyAction" type="Node"]
+script = ExtResource("1_a2wsh")

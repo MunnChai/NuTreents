@@ -26,7 +26,6 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	#if (Input.is_action_just_pressed("debug_button")):
-		#spawn_enemy_wave()
 		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
 		#spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
@@ -174,6 +173,7 @@ func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 
 # Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
 func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> Node2D:
+	AlmanacInfo.add_enemy(enemy_type)
 	
 	var enemy_node: Node2D = EnemyRegistry.get_new_enemy(enemy_type)
 	

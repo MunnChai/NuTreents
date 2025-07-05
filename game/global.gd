@@ -42,6 +42,9 @@ enum TreeType {
 	SLOWING_TREE = TALL_TREE + 1,
 	MORTAR_TREE = SLOWING_TREE + 1,
 	SPIKY_TREE = MORTAR_TREE + 1,
+	ICY_TREE = SPIKY_TREE + 1,
+	SPRINKLER_TREE = ICY_TREE + 1,
+	FIRE_TREE = SPRINKLER_TREE + 1,
 }
 
 ## ENEMY IDS 
@@ -49,6 +52,9 @@ enum TreeType {
 enum EnemyType {
 	SPEEDLE = 0,
 	SILK_SPITTER = SPEEDLE + 1,
+	TANK_SPEEDLE = SILK_SPITTER + 1,
+	SPEED_SPEEDLE = TANK_SPEEDLE + 1,
+	BOMB_BUG = SPEED_SPEEDLE + 1
 }
 
 ## GAME STATE
@@ -86,6 +92,16 @@ func _ready() -> void:
 	
 	# For randomness upon first opening the game
 	set_seed(int(Time.get_unix_time_from_system()))
+	
+	## Register some useful commands...
+	await get_tree().process_frame # Wait for setup
+	
+	DebugConsole.register("lang", func (args: PackedStringArray):
+		if args.size() != 1:
+			Logger.log("Usage: lang [language-code]")
+		else:
+			TranslationServer.set_locale(args[0])
+		)
 
 func update_globals():
 	structure_map = get_tree().get_first_node_in_group("structure_map")
