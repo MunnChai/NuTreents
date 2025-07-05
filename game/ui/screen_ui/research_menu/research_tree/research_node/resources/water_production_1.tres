@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://ddju3aygjbv7c"]
+
+[ext_resource type="Texture2D" uid="uid://i38yc501bg6g" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/icon_test.png" id="1_468d0"]
+[ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/research_node_resource.gd" id="2_81o7r"]
+
+[resource]
+script = ExtResource("2_81o7r")
+display_name = "Hydrophilic Roots"
+id = "water_production_1"
+icon = ExtResource("1_468d0")
+tech_point_cost = 1
+description = "Your water trees produce an additional 2 water."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

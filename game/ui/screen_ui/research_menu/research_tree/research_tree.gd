@@ -47,3 +47,6 @@ func get_research_nodes() -> Array[ResearchNode]:
 				research_nodes.append(node)
 	
 	return research_nodes
+
+func get_root_node() -> ResearchNode:
+	return root_node

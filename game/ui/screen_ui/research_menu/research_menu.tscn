@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_mliin"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_p53e2"]
 [ext_resource type="PackedScene" uid="uid://cr7mehptvupy8" path="res://ui/screen_ui/research_menu/research_tree/research_tree.tscn" id="4_jkbu0"]
-[ext_resource type="Script" uid="uid://dob7gmsyldp3e" path="res://ui/screen_ui/research_menu/detail_panel/research_detail_panel.gd" id="5_302ec"]
+[ext_resource type="PackedScene" uid="uid://cq0jfouvwl1p7" path="res://ui/screen_ui/research_menu/detail_panel/research_detail_panel.tscn" id="5_302ec"]
 
 [node name="ResearchMenu" type="Control"]
 layout_mode = 3
@@ -116,59 +116,8 @@ fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DetailPanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("2_mliin")]
-custom_minimum_size = Vector2(250, 0)
+[node name="DetailPanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("5_302ec")]
+unique_name_in_owner = true
 layout_mode = 2
-script = ExtResource("5_302ec")
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Padding" type="Control" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
-layout_mode = 2
-
-[node name="DisplayName" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3_p53e2")
-theme_override_font_sizes/normal_font_size = 32
-text = "Title"
-fit_content = true
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Icon" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Description" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3_p53e2")
-theme_override_font_sizes/normal_font_size = 32
-text = "Description"
-fit_content = true
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-alignment = 2
-
-[node name="PurchaseButton" type="Button" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel/MarginContainer/VBoxContainer/VBoxContainer2"]
-layout_mode = 2
-theme = ExtResource("3_p53e2")
-theme_override_font_sizes/font_size = 32
-text = "Purchase"
 
 [editable path="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel"]
-[editable path="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/DetailPanel"]

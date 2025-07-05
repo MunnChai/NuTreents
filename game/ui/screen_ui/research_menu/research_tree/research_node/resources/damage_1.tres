@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://bikpqinwijxv5"]
+
+[ext_resource type="Texture2D" uid="uid://i38yc501bg6g" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/icon_test.png" id="1_u0cdo"]
+[ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/research_node_resource.gd" id="2_og5xq"]
+
+[resource]
+script = ExtResource("2_og5xq")
+display_name = "Dangerous Trees"
+id = "damage_1"
+icon = ExtResource("1_u0cdo")
+tech_point_cost = 1
+description = "All trees deal 1 more damage."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

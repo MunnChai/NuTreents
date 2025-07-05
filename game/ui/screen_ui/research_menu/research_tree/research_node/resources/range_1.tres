@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://b15rei1mf1c8h"]
+
+[ext_resource type="Texture2D" uid="uid://i38yc501bg6g" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/icon_test.png" id="1_smxjj"]
+[ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/research_node_resource.gd" id="2_4fe0y"]
+
+[resource]
+script = ExtResource("2_4fe0y")
+display_name = "Long Range Seeds"
+id = "range_1"
+icon = ExtResource("1_smxjj")
+tech_point_cost = 1
+description = "All trees have 1 more range."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

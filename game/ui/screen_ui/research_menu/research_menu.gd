@@ -4,6 +4,7 @@ extends ScreenMenu
 @onready var back_button: Button = %BackButton
 @onready var scroll_container: ScrollContainer = %ScrollContainer
 @onready var research_tree: ResearchTree = %ResearchTree
+@onready var detail_panel: ResearchDetailPanel = %DetailPanel
 
 @onready var starting_position = position
 
@@ -12,6 +13,10 @@ var currently_selected_node: ResearchNode
 
 func _ready():
 	_connect_button_signals()
+	await get_tree().process_frame
+	var root_node: ResearchNode = research_tree.get_root_node()
+	_on_research_node_focused(root_node)
+	scroll_container.scroll_vertical = target_v_scroll
 
 func _process(delta: float) -> void:
 	scroll_container.scroll_vertical = MathUtil.decay(scroll_container.scroll_vertical, target_v_scroll, 10, delta)
@@ -33,6 +38,8 @@ func _on_research_node_pressed(research_node: ResearchNode) -> void:
 	
 	research_node.select()
 	currently_selected_node = research_node
+	
+	detail_panel.set_details(research_node)
 
 func _on_research_node_focused(research_node: ResearchNode) -> void:
 	target_v_scroll = research_node.get_parent().position.y - 165
