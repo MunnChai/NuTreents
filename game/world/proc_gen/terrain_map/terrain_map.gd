@@ -408,13 +408,11 @@ func generate_rivers(river_tiles: Array[Vector2i]) -> void:
 	for map_coords in to_remove:
 		river_tiles.erase(map_coords)
 	
-	for map_coords in river_tiles:
-		if biome_map.get(map_coords) == Biome.SNOWY:
-			set_cell_type(map_coords, TileType.ICE)
-		else:
-			set_cell_type(map_coords, TileType.WATER)
-
 	set_cells_terrain_connect(river_tiles, 0, 1)
+	
+	#for map_coords in river_tiles:
+		#if biome_map.get(map_coords) == Biome.SNOWY:
+			#set_cell_type(map_coords, TileType.ICE)
 
 func generate_set_pieces() -> void:
 	var total_num_set_pieces: int = world_size_settings.num_tree_unlock_set_pieces + world_size_settings.num_tech_point_set_pieces
@@ -438,7 +436,7 @@ func generate_set_pieces() -> void:
 			
 			if biome == -999:
 				printerr("ERROR: Tile type does not match any Biome! terrain_map.gd::generate_set_pieces(): ", tile_type)
-				return
+				continue
 			
 			var new_set_piece: SetPiece = null
 			for set_piece: SetPiece in tree_set_pieces:
@@ -447,7 +445,6 @@ func generate_set_pieces() -> void:
 					break
 			
 			if new_set_piece == null:
-				print("Null")
 				continue
 			
 			create_set_piece(new_set_piece, pos)
