@@ -15,9 +15,6 @@ var currently_selected_node: ResearchNode
 func _ready():
 	_connect_button_signals()
 	await get_tree().process_frame
-	var root_node: ResearchNode = research_tree.get_root_node()
-	_on_research_node_focused(root_node)
-	scroll_container.scroll_vertical = target_v_scroll
 	_on_num_tech_points_changed(research_tree.num_tech_points)
 
 func _process(delta: float) -> void:
@@ -48,7 +45,7 @@ func _on_research_node_pressed(research_node: ResearchNode) -> void:
 	detail_panel.set_details(research_node)
 
 func _on_research_node_focused(research_node: ResearchNode) -> void:
-	target_v_scroll = research_node.get_parent().position.y - 165
+	target_v_scroll = research_node.get_parent().position.y - 165 ## Manual scroll offset.. kinda scuffed
 
 func _on_num_tech_points_changed(tech_points: int) -> void:
 	var points_str = " Points" if tech_points != 1 else " Point"
@@ -72,6 +69,12 @@ func open(previous_menu: ScreenMenu):
 	position = starting_position + Vector2.DOWN * 100.0
 	TweenUtil.whoosh(self, starting_position, 0.4)
 	TweenUtil.fade(self, 1.0, 0.1)
+	
+	# Set scroll to center
+	await get_tree().process_frame
+	var root_node: ResearchNode = research_tree.get_root_node()
+	_on_research_node_focused(root_node)
+	scroll_container.scroll_vertical = target_v_scroll
 
 func close(next_menu: ScreenMenu):
 	SfxManager.play_sound_effect("ui_pages")
