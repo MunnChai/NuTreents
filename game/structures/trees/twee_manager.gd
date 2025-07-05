@@ -27,15 +27,16 @@ var notification: Notification
 func consume_n(cost: int) -> void:
 	nutreents -= cost
 	
-	if notification and not notification.is_removed:
-		var previous_amount = notification.properties.get("amount", 0)
-		var new_amount = previous_amount + cost
-		notification.set_message(tr(&"NOTIF_SPENT").format({ "num": str(new_amount) }))
-		notification.properties.set("amount", new_amount)
-		notification.properties.set("time_remaining", 2.5)
-	else:
-		notification = Notification.new(&"cost", tr(&"NOTIF_SPENT").format({ "num": str(cost) }), { "priority": 1, "time_remaining": 3.0, "amount": cost });
-		NotificationLog.instance.add_notification(notification)
+	if is_instance_valid(NotificationLog.instance):
+		if notification and not notification.is_removed:
+			var previous_amount = notification.properties.get("amount", 0)
+			var new_amount = previous_amount + cost
+			notification.set_message(tr(&"NOTIF_SPENT").format({ "num": str(new_amount) }))
+			notification.properties.set("amount", new_amount)
+			notification.properties.set("time_remaining", 2.5)
+		else:
+			notification = Notification.new(&"cost", tr(&"NOTIF_SPENT").format({ "num": str(cost) }), { "priority": 1, "time_remaining": 3.0, "amount": cost });
+			NotificationLog.instance.add_notification(notification)
 
 #region CORE FUNCTIONALITY
 
@@ -52,6 +53,9 @@ func _ready() -> void:
 ## Start the game with a blank slate
 func start_game():
 	nutreents = 25
+	
+	if notification:
+		notification.remove()
 	
 	DebugConsole.register("free", func(args: PackedStringArray):
 		nutreents += 1000000000
