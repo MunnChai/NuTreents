@@ -44,7 +44,7 @@ func load_world(session_data: Dictionary) -> void:
 	
 	EnemyManager.instance.start_game()
 	Global.fog_map.init()
-	Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
+	#Global.terrain_map.generate_map(session_data["world_size"], false) # Generate map without buildings
 	
 	TreeManager.start_game()
 	
