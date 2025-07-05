@@ -3,7 +3,7 @@ extends Node
 
 ## THE DATA COMPONENT OF THE NOTIFICATION LOG IN THE UI
 
-## TODO: Notification coallation/stacking for close enough in time
+## TODO: Notifications for NOTIF_ATTACKED
 
 signal notification_added(notif: Notification)
 signal notification_expired(notif: Notification)

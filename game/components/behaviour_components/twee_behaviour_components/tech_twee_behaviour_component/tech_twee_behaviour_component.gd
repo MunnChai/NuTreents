@@ -23,6 +23,9 @@ func upgrade_tree() -> void:
 	
 	# Do stuff related to TechMenu
 	Global.tech_menu.current_tech.append(tech_slot)
+	
+	var notification = Notification.new(&"tech_tree_grow", '[color=6be1e3]' + tr(&"NOTIF_TECH_TREE_GROW"), { "priority": 3, "time_remaining": 3.0 });
+	NotificationLog.instance.add_notification(notification)
 
 func apply_data_resource(tree_resource: Resource):
 	super.apply_data_resource(tree_resource)
