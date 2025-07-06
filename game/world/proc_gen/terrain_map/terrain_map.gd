@@ -583,22 +583,20 @@ const GRASS_DECOR_FREQUENCY = 0.025
 const SAND_DECOR_FREQUENCY = 0.15
 const SNOW_DECOR_FREQUENCY = 0.15
 func add_decor() -> void:
-	for x in get_map_x_range():
-		for y in get_map_y_range():
-			var pos = Vector2i(x, y)
-			var structure_map = Global.structure_map
-			var tile_data = get_cell_tile_data(pos)
-			if (tile_data):
-				var type = tile_data.get_custom_data("biome")
-				var rand = randf()
-				var decor: Node2D = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
-				
-				if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or
-					(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or
-					(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY) or
-					(type == TileType.SAND and rand < SAND_DECOR_FREQUENCY) or
-					(type == TileType.SNOW and rand < SNOW_DECOR_FREQUENCY)):
-					var success: bool = structure_map.add_structure(pos, decor)
+	for pos: Vector2i in get_used_cells():
+		var structure_map = Global.structure_map
+		var tile_data = get_cell_tile_data(pos)
+		if (tile_data):
+			var type = tile_data.get_custom_data("biome")
+			var rand = randf()
+			var decor: Node2D = StructureRegistry.get_new_structure(Global.StructureType.DECOR)
+			
+			if ((type == TileType.CITY and rand < CITY_DECOR_FREQUENCY) or
+				(type == TileType.DIRT and rand < DIRT_DECOR_FREQUENCY) or
+				(type == TileType.GRASS and rand < GRASS_DECOR_FREQUENCY) or
+				(type == TileType.SAND and rand < SAND_DECOR_FREQUENCY) or
+				(type == TileType.SNOW and rand < SNOW_DECOR_FREQUENCY)):
+				var success: bool = structure_map.add_structure(pos, decor)
 
 func create_set_piece(set_piece: SetPiece, grid_position: Vector2i) -> void:
 	add_child(set_piece)
