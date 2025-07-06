@@ -50,6 +50,7 @@ func play_oneshot(id: StringName, global_pos: Vector2) -> void:
 	audio_player.global_position = global_pos
 	audio_player.stream = stream
 	audio_player.pitch_scale = 1.0 + randf_range(-sound.pitch_variation_range, sound.pitch_variation_range)
+	audio_player.volume_linear = sound.linear_volume
 	audio_player.play()
 	
 	await audio_player.finished

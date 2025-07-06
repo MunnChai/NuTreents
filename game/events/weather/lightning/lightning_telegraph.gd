@@ -8,6 +8,8 @@ signal telegraph_ended
 func _ready() -> void:
 	$Timer.start(LIGHTNING_TELEGRAPH_TIME)
 	spark_gap = 1.2
+	
+	SoundManager.play_oneshot(&"lightning_spark", global_position)
 
 var spark_gap := 0.0
 

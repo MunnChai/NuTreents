@@ -4,6 +4,7 @@ extends Resource
 ## A resource representing a sound with an id
 
 @export var id: StringName
+@export var linear_volume: float = 1.0
 @export var pitch_variation_range: float = 0.3
 @export var audio_streams: Array[AudioStream]
 
