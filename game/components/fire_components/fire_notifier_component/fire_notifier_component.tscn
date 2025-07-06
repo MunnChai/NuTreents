@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bugvhh3abyvjb"]
+
+[ext_resource type="Script" uid="uid://ciwrtr816jqvq" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.gd" id="1_mpg8r"]
+
+[node name="FireNotifierComponent" type="Node"]
+script = ExtResource("1_mpg8r")

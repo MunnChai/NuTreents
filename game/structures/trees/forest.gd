@@ -46,6 +46,8 @@ func get_nutrient_gain() -> float:
 				nutrient_sum += nutreent_production_component.get_nutreent_production()
 	return nutrient_sum
 
+var notification: Notification
+
 func update_water_maintenance(delta: float) -> float:
 	var net_water_change: float = 0.0
 
@@ -96,6 +98,8 @@ func update_water_maintenance(delta: float) -> float:
 
 	var is_forest_dehydrated: bool = (water + net_water_change * delta) < 0
 	
+	var could_be_visibly_dehydrated: bool = false
+	
 	for pos in trees.keys():
 		var tree_node = trees.get(pos)
 		if not is_instance_valid(tree_node):
@@ -104,16 +108,30 @@ func update_water_maintenance(delta: float) -> float:
 		var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(tree_node, TweeBehaviourComponent)
 		var water_comp: WaterProductionComponent = Components.get_component(tree_node, WaterProductionComponent)
 		
+		if not water_comp.is_water_adjacent():
+			could_be_visibly_dehydrated = true
+
+		
 		if not is_forest_dehydrated or water_comp.is_water_adjacent():
 			if twee_behaviour_component: twee_behaviour_component.is_dehydrated = false
 		else:
 			if twee_behaviour_component: twee_behaviour_component.is_dehydrated = true
 
+	## HANDLE showing notification for dehydrated forests
+	if is_forest_dehydrated and could_be_visibly_dehydrated:
+		if not notification or notification.is_removed:
+			notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
+			NotificationLog.instance.add_notification(notification)
+		else:
+			notification.properties["time_remaining"] = 1.0
+	else:
+		if notification:
+			notification.remove()
+
 	water += net_water_change * delta
 	water = max(water, 0)
 	water_gain = net_water_change
 	return net_water_change
-
 
 ## add the given tree to this forest
 func add_tree(p: Vector2i, t: Node2D):

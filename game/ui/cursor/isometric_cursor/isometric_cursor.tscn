@@ -19,3 +19,4 @@ script = ExtResource("2_131un")
 [node name="CursorDestroyAction" parent="." instance=ExtResource("4_o8lhp")]
 
 [node name="CursorExtinguishAction" parent="." instance=ExtResource("5_a2s46")]
+ignite_instead = true

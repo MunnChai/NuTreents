@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=30 format=3 uid="uid://b5hdmb6e3u31i"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bsv2kph1ooca4" path="res://components/fire_components/fire_damage_component/fire_damage_component.tscn" id="23_e5otl"]
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="25_whkhy"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_it1uo"]
+[ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="27_it1uo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -119,17 +120,17 @@ range = 1
 [node name="FireComponents" type="Node2D" parent="."]
 
 [node name="FireRangeComponent" parent="FireComponents" instance=ExtResource("15_ya7fu")]
-shape = "Square"
 range = 1
 
 [node name="FlammableComponent" parent="FireComponents" instance=ExtResource("21_u17au")]
 burn_time = 5.0
-fire_tick_duration = 1.5
+fire_tick_duration = 1.8
 
 [node name="FireSpreadComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "grid_position_component", "grid_range_component") instance=ExtResource("22_ylnla")]
 flammable_component = NodePath("../FlammableComponent")
 grid_position_component = NodePath("../../GridPositionComponent")
 grid_range_component = NodePath("../FireRangeComponent")
+chance = 0.2
 
 [node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component", "health_component") instance=ExtResource("23_e5otl")]
 flammable_component = NodePath("../FlammableComponent")
@@ -142,5 +143,9 @@ arrow_height = 1
 [node name="TweeArrowHeightComponent" parent="." node_paths=PackedStringArray("visual_arrow", "twee") instance=ExtResource("26_it1uo")]
 visual_arrow = NodePath("../VisualArrowComponent")
 twee = NodePath("../TreeBehaviourComponent")
+
+[node name="FireNotifierComponent" parent="." node_paths=PackedStringArray("flammable", "grid_pos") instance=ExtResource("27_it1uo")]
+flammable = NodePath("../FireComponents/FlammableComponent")
+grid_pos = NodePath("../GridPositionComponent")
 
 [editable path="HurtboxComponent"]
