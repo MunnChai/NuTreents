@@ -78,14 +78,14 @@ func load_world(session_data: Dictionary) -> void:
 		if (tree_resource.type == Global.TreeType.MOTHER_TREE):
 			var mother_twee = TreeManager.get_twee(pos)
 			var health_component: HealthComponent = Components.get_component(mother_twee, HealthComponent)
-			health_component.set_current_health(tree_resource.hp)
+			health_component.call_deferred("set_current_health", tree_resource.hp)
 			continue
 		
 		var tree: Node2D = TreeRegistry.get_new_twee(tree_resource.type)
 		TreeManager.place_tree(tree, pos)
 		
 		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
-		tree_behaviour_component.apply_data_resource(tree_resource)
+		tree_behaviour_component.call_deferred("apply_data_resource", tree_resource)
 	
 	# Load enemies
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])

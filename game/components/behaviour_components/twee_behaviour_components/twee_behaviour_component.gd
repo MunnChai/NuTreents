@@ -37,12 +37,13 @@ const DEHYDRATION_DAMAGE = 2
 func _ready():
 	actor = get_parent()
 	
-	
 	_get_components()
-	_connect_component_signals()
 	
 	# Randomize water damage time
 	water_damage_time += RandomNumberGenerator.new().randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
+	
+	call_deferred("_set_stats")
+	call_deferred("_connect_component_signals")
 
 #region Components and Signals
 
@@ -88,6 +89,12 @@ func _connect_component_signals():
 		await get_tree().process_frame # Await, stat_component can set grow_timer time
 		 
 		grow_timer.start()
+
+func _set_stats() -> void:
+	if is_large:
+		tree_stat_component.set_upgraded_stats_from_resource()
+	else:
+		tree_stat_component.set_stats_from_resource()
 
 #endregion
 
@@ -137,6 +144,7 @@ func apply_data_resource(tree_resource: Resource):
 		grow_timer.wait_time = tree_resource.life_time_seconds
 	is_large = tree_resource.is_large
 	
+	_set_stats()
 	if is_large:
 		upgrade_tree()
 	
