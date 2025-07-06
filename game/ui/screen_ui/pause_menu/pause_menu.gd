@@ -89,7 +89,7 @@ func pause_game() -> void:
 	filter.cutoff_hz = 800.0
 	AudioServer.add_bus_effect(AudioServer.get_bus_index("Music"), filter, 0)
 	
-	NutreentsDiscordRPC.update_details("Navigating menus")
+	NutreentsDiscordRPC.instance.update_details("Navigating menus")
 	
 	show()
 	resume_button.grab_focus() ## TEMP: So controller can navigate the menu...
@@ -97,7 +97,7 @@ func pause_game() -> void:
 func unpause_game() -> void:
 	Global.unpause_game()
 	
-	NutreentsDiscordRPC.update_details("Growing a forest")
+	NutreentsDiscordRPC.instance.update_details("Growing a forest")
 	
 	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
