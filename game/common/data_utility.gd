@@ -13,12 +13,13 @@ const HALT_ALL_LOGS := false
 static func load_all_resources_in_folder(path: String, resource_type: String, log_loading: bool = true, level: int = 1) -> Array[Resource]:
 	var result: Array[Resource] = []
 	
-	if log_loading and not HALT_ALL_LOGS:
-		print(LEVEL_CHAR.repeat(level) + " Loading resources of type {type} from {path}...".format({ "type": resource_type, "path": path }))
+	if log_loading:
+		log_message(LEVEL_CHAR.repeat(level) + " Loading resources of type {type} from {path}...".format({ "type": resource_type, "path": path }))
 	
 	## CHECKS
 	if not DirAccess.dir_exists_absolute(path):
-		print(LEVEL_CHAR.repeat(level) + " WARNING! Attempting to load from {path}, but it does not exist".format({ "path": path }))
+		if log_loading:
+			log_message(LEVEL_CHAR.repeat(level) + " WARNING! Attempting to load from {path}, but it does not exist".format({ "path": path }))
 		return []
 	
 	## FIX
@@ -33,7 +34,7 @@ static func load_all_resources_in_folder(path: String, resource_type: String, lo
 			result.append_array(load_all_resources_in_folder(file_path, resource_type, log_loading, level + 1))
 		else:
 			if log_loading:
-				print(LEVEL_CHAR.repeat(level + 1) + " Loading {file_name} ({path})...".format({ "file_name": file_name, "path": file_path }))
+				log_message(LEVEL_CHAR.repeat(level + 1) + " Loading {file_name} ({path})...".format({ "file_name": file_name, "path": file_path }))
 			
 			var resource: Resource = ResourceLoader.load(file_path, resource_type)
 			if resource:
@@ -47,7 +48,13 @@ static func load_all_scenes_in_folder(path: String, log_loading: bool = true, le
 	var result: Array[PackedScene] = []
 	
 	if log_loading:
-		print(LEVEL_CHAR.repeat(level) + " Loading scenes from {path}...".format({ "path": path }))
+		log_message(LEVEL_CHAR.repeat(level) + " Loading scenes from {path}...".format({ "path": path }))
+	
+	## CHECKS
+	if not DirAccess.dir_exists_absolute(path):
+		if log_loading:
+			log_message(LEVEL_CHAR.repeat(level) + " WARNING! Attempting to load from {path}, but it does not exist".format({ "path": path }))
+		return []
 	
 	## FIX
 	## - Allows the engine to use editor paths at build runtime
@@ -61,10 +68,14 @@ static func load_all_scenes_in_folder(path: String, log_loading: bool = true, le
 			result.append_array(load_all_scenes_in_folder(file_path, log_loading, level + 1))
 		else:
 			if log_loading:
-				print(LEVEL_CHAR.repeat(level + 1) + " Loading {file_name} ({path})...".format({ "file_name": file_name, "path": file_path }))
+				log_message(LEVEL_CHAR.repeat(level + 1) + " Loading {file_name} ({path})...".format({ "file_name": file_name, "path": file_path }))
 			
 			var scene: PackedScene = load(file_path)
 			if scene:
 				result.append(scene)
 	
 	return result
+
+static func log_message(msg: String) -> void:
+	if not HALT_ALL_LOGS:
+		print(msg)
