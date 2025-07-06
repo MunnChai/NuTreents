@@ -92,7 +92,6 @@ func load_world(session_data: Dictionary) -> void:
 	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]
 	
 	# Add unlocked cards to tree menu
-	TreeMenu.instance.remove_all_tree_cards()
 	for tree_type: Global.TreeType in session_data["purchased_cards"]:
 		TreeMenu.instance.add_tree_card(tree_type)
 	
