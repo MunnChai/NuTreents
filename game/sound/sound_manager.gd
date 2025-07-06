@@ -39,6 +39,13 @@ func get_sound(id: StringName) -> SoundResource:
 	return dict.get(id)
 
 func play_oneshot(id: StringName, global_pos: Vector2) -> void:
+	var audio_player := start_player(id, global_pos)
+	
+	await audio_player.finished
+	
+	audio_player.queue_free()
+
+func start_player(id: StringName, global_pos: Vector2) -> AudioStreamPlayer2D:
 	var sound := get_sound(id)
 	if not sound:
 		return
@@ -53,6 +60,4 @@ func play_oneshot(id: StringName, global_pos: Vector2) -> void:
 	audio_player.volume_linear = sound.linear_volume
 	audio_player.play()
 	
-	await audio_player.finished
-	
-	audio_player.queue_free()
+	return audio_player
