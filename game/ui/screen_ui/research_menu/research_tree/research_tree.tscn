@@ -8,8 +8,8 @@
 [ext_resource type="Resource" uid="uid://bikpqinwijxv5" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/damage/damage_1.tres" id="4_2tbkv"]
 [ext_resource type="Resource" uid="uid://ddju3aygjbv7c" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/water_production_1.tres" id="4_ccsu5"]
 [ext_resource type="Resource" uid="uid://d2lqg5ieym5qe" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/fire_resist_1.tres" id="4_qfnyx"]
-[ext_resource type="Resource" uid="uid://cyu6q8bml23lg" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/health_1.tres" id="5_tswv8"]
-[ext_resource type="Resource" uid="uid://b15rei1mf1c8h" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/range_1.tres" id="6_qncw5"]
+[ext_resource type="Resource" uid="uid://cyu6q8bml23lg" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/health/health_1.tres" id="5_tswv8"]
+[ext_resource type="Resource" uid="uid://b15rei1mf1c8h" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/attack_range/attack_range_1.tres" id="6_qncw5"]
 [ext_resource type="Resource" uid="uid://cgwkp3mwlvufu" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/tall_tree_unlock.tres" id="9_45mi0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_302ec"]

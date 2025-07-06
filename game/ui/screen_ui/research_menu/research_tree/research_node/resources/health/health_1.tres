@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="HealthResearchResource" load_steps=2 format=3 uid="uid://cyu6q8bml23lg"]
+
+[ext_resource type="Script" uid="uid://dtxvs1rvbdlde" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/health/health_research_resource.gd" id="1_ul2xe"]
+
+[resource]
+script = ExtResource("1_ul2xe")
+health_increase = 10
+display_name = "Thick Trunks"
+id = "health_1"
+tech_point_cost = 1
+tree_type = 0
+description = "All trees gain 10 max health."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

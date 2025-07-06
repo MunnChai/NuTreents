@@ -148,7 +148,7 @@ func apply_data_resource(tree_resource: Resource):
 	if is_large:
 		upgrade_tree()
 	
-	health_component.current_health = tree_resource.hp
+	health_component.set_current_health(tree_resource.hp)
 	
 	tree_animation_component.apply_data_resource(tree_resource)
 	
