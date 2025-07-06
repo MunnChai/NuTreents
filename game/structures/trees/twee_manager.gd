@@ -115,10 +115,6 @@ func add_tree(twee: Node2D, pos: Vector2i) -> void:
 	if is_twee(pos):
 		return
 	
-	# Only apply research to twees ONCE (don't do it multiple times for multi-tile trees)
-	if not twee in tree_map.values():
-		ResearchTree.instance.apply_all_research(twee)
-	
 	# Forest stuff...
 	var f_id: int = find_forest(pos)
 	forest_map[pos] = f_id
@@ -133,8 +129,6 @@ func add_tree(twee: Node2D, pos: Vector2i) -> void:
 	
 	# Signal!
 	tree_placed.emit(twee)
-	
-	
  
 ## Remove the given twee at the position
 ## If there is no tree there, does nothing 

@@ -19,6 +19,12 @@ func _ready() -> void:
 	instance = self
 	_connect_signals()
 	update_unlockable_nodes()
+	
+	await get_tree().process_frame
+	
+	DebugConsole.register("tech_points", func(args: PackedStringArray):
+		num_tech_points += 1000000000
+		, "Gives you a lot of tech points")
 
 func _connect_signals() -> void:
 	var research_nodes: Array[ResearchNode] = get_research_nodes()

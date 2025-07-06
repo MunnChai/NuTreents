@@ -73,9 +73,6 @@ alignment = 1
 layout_mode = 2
 research_resource = ExtResource("3_7ku5u")
 required_nodes = [NodePath("../../Row0/RootNode")]
-locked_icon = null
-unlockable_icon = null
-unlocked_icon = null
 
 [node name="WaterProduction1" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
