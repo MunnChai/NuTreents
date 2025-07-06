@@ -6,7 +6,7 @@ static var instance: ResearchTree
 @onready var root_node: ResearchNode = %RootNode
 @onready var v_box_container: VBoxContainer = $VBoxContainer
 
-var num_tech_points: int = 1:
+var num_tech_points: int = 0:
 	set(new_tech_points):
 		num_tech_points = new_tech_points
 		num_tech_points_changed.emit(new_tech_points)
@@ -76,9 +76,29 @@ func get_unlocked_nodes() -> Array[ResearchNode]:
 	
 	return unlocked_nodes
 
-func get_unlocked_node_ids() -> Array[String]:
+func set_unlocked_nodes(unlocked_node_ids: Array) -> void:
+	var research_nodes: Array[ResearchNode] = get_research_nodes()
+	
+	for research_node: ResearchNode in research_nodes:
+		if research_node.research_resource.id in unlocked_node_ids:
+			research_node.unlock_research_node()
+	
+	update_unlockable_nodes()
+
+func reset_unlocked_nodes() -> void:
+	var research_nodes: Array[ResearchNode] = get_research_nodes()
+	
+	for research_node: ResearchNode in research_nodes:
+		if research_node == root_node:
+			research_node.unlock_research_node()
+		else:
+			research_node.lock_research_node()
+	
+	update_unlockable_nodes()
+
+func get_unlocked_node_ids() -> Array:
 	var unlocked_nodes: Array[ResearchNode] = get_unlocked_nodes()
-	var unlocked_ids: Array[String] = unlocked_nodes.map(
+	var unlocked_ids: Array = unlocked_nodes.map(
 		func(node: ResearchNode):
 			return node.research_resource.id
 	)
@@ -89,3 +109,9 @@ func get_root_node() -> ResearchNode:
 
 func add_tech_points(amount: int) -> void:
 	num_tech_points += amount
+
+func set_tech_points(amount: int) -> void:
+	num_tech_points = amount
+
+func get_num_tech_points() -> int:
+	return num_tech_points

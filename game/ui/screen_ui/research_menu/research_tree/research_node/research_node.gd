@@ -80,6 +80,9 @@ func try_unlock_research_node() -> void:
 func unlock_research_node() -> void:
 	state = ResearchState.UNLOCKED
 
+func lock_research_node() -> void:
+	state = ResearchState.LOCKED
+
 func select():
 	is_selected = true
 	#TweenUtil.scale_to(self, Vector2(0.9, 0.9), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
