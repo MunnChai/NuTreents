@@ -9,5 +9,5 @@ extends Resource
 @export_multiline var description: String
 
 func apply_research(node: Node2D) -> void:
-	print("Applying research \"", display_name, "\" to: ", node)
+	#print("Applying research \"", display_name, "\" to: ", node)
 	pass
