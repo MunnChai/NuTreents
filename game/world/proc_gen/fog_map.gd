@@ -14,6 +14,11 @@ const FOG_SIZE = Global.MAP_SIZE * 4
 @onready var semi_transparent_atlas_coords := get_semi_transparent_atlas_coords()
 @onready var transparent_atlas_coords := get_transparent_atlas_coords()
 
+func _ready() -> void:
+	DebugConsole.register("fog", func(args: PackedStringArray):
+		visible = !visible
+		, "Toggles the visibility of the fog")
+
 func init() -> void:
 	for x in range(Global.ORIGIN.x - FOG_SIZE.x / 2, Global.ORIGIN.x + FOG_SIZE.x / 2): # Munn: Ignore how ugly this is lol
 		for y in range(Global.ORIGIN.y - FOG_SIZE.y / 2, Global.ORIGIN.y + FOG_SIZE.y / 2):
