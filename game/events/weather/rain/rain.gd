@@ -8,6 +8,7 @@ static var instance: Rain
 @onready var splashes: GPUParticles2D = $Splashes
 
 const FADE_DURATION = 1.5
+var _fade_tween: Tween # A reference to the currently active fade tween
 
 func _ready() -> void:
 	instance = self
@@ -18,30 +19,35 @@ func _ready() -> void:
 	self.modulate.a = 0.0
 
 func start_particles() -> void:
-	# --- BUG FIX ---
-	# The 'emitting' property must be set to true here to ensure the particles
-	# are actually generated. This was missing from the previous version.
+	# Kill any existing fade tween before starting a new one.
+	# This prevents animations from fighting with each other.
+	if _fade_tween and _fade_tween.is_running():
+		_fade_tween.kill()
+
+	# Set emitting to true immediately
 	rain_particles.emitting = true
 	rain_particles_2.emitting = true
 	splashes.emitting = true
 	
-	# Calling restart() clears all existing particles before starting emission.
-	# This prevents the "splattering" effect when the camera moves.
 	rain_particles.restart()
 	rain_particles_2.restart()
 	splashes.restart()
 	
-	# Instead of instantly appearing, the rain now smoothly fades in.
-	var tween = create_tween().set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(self, "modulate:a", 1.0, FADE_DURATION)
+	# Create a new tween to fade in.
+	_fade_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
+	_fade_tween.tween_property(self, "modulate:a", 1.0, FADE_DURATION)
 
 func stop_particles() -> void:
-	# The rain now smoothly fades out instead of abruptly stopping.
-	var tween = create_tween().set_trans(Tween.TRANS_CUBIC)
-	tween.tween_property(self, "modulate:a", 0.0, FADE_DURATION)
+	# Kill any existing fade tween.
+	if _fade_tween and _fade_tween.is_running():
+		_fade_tween.kill()
+
+	# Create a new tween to fade out.
+	_fade_tween = create_tween().set_trans(Tween.TRANS_CUBIC)
+	_fade_tween.tween_property(self, "modulate:a", 0.0, FADE_DURATION)
 	
 	# We wait for the fade to complete before turning off the emitters.
-	await tween.finished
+	await _fade_tween.finished
 	
 	# This check ensures that if the rain was started again while it was
 	# fading out, we don't accidentally turn it off.
