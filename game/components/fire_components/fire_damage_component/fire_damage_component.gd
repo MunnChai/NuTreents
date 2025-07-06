@@ -16,3 +16,10 @@ func _ready() -> void:
 func _on_tick() -> void:
 	if health_component:
 		health_component.subtract_health(damage_amount)
+
+func increase_damage(amount: float) -> void:
+	damage_amount += amount
+	
+	# NO HEALING
+	if damage_amount < 0:
+		damage_amount = 0

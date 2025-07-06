@@ -8,4 +8,4 @@ func apply_research(node: Node2D) -> void:
 	
 	var attack_range_component: GridRangeComponent = Components.get_component(node, GridRangeComponent, "AttackRangeComponent")
 	if attack_range_component:
-		attack_range_component.range += range_increase
+		attack_range_component.increase_range(range_increase)

@@ -9,5 +9,6 @@ display_name = "Explorer Tree"
 id = "explorer_tree"
 icon = ExtResource("1_sjmqb")
 tech_point_cost = 1
+tree_type = 5
 description = "Unlock the Explorer Tree."
 metadata/_custom_type_script = "uid://vcwsq4ujmer2"

@@ -9,5 +9,6 @@ display_name = "Tall Tree"
 id = "tall_tree"
 icon = ExtResource("1_jt5ow")
 tech_point_cost = 1
+tree_type = 6
 description = "Unlock the Tall Tree."
 metadata/_custom_type_script = "uid://vcwsq4ujmer2"
