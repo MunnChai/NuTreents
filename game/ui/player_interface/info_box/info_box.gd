@@ -46,6 +46,7 @@ var tile_name_dictionary = {
 	TerrainMap.TileType.ICE: "ICE"
 }
 
+# --- FIX: Added newlines to long descriptions for better formatting ---
 var desc_dictionary = {
 	"default_tree": "We have all seen a default tree\nsometime in our lives.",
 	"mother_tree": "The source of all trees.\nProtect it with your life.",
@@ -53,24 +54,24 @@ var desc_dictionary = {
 	"explorer_tree": "A bubbly maple.\nReaches far to adjacent lands.",
 	"tech_tree": "For all your technology needs.",
 	"water_tree": "Dredges up them aquifers,\nfor your forest's convenience.",
-	"tall_tree": "Sharp and sturdy.\nIt'll take more than a few bugs to chop this one.",
-	"slowing_tree": "A close relative to the gun tree. \nSomehow survived growing up in the Arctic.",
-	"mortar_tree": "It was enlisted for the Great War, \nbut was too scared to go near the frontline.",
+	"tall_tree": "Sharp and sturdy.\nIt'll take more than a few bugs\nto chop this one.",
+	"slowing_tree": "A close relative to the gun tree. \nSomehow survived growing up\nin the Arctic.",
+	"mortar_tree": "It was enlisted for the Great War, \nbut was too scared to go near\nthe frontline.",
 	"spiky_tree": "A prickly tree with sharp branches. \nHurts anything that touches it.",
 	"icy_tree": "Cold and sharp. Its branches\nfreeze anything that touches it.",
-	"fire_tree": "It shoots fiery hot seeds at enemies.",
-	"sprinkler_tree": "Protects nearby trees from blazing fires.",
+	"fire_tree": "It shoots fiery hot seeds\nat enemies.",
+	"sprinkler_tree": "Protects nearby trees from\nblazing fires.",
 	
-	"city_building": "The last signs of human civilization in the vicinity. You'll have to remove it to plant.",
-	"factory": "Despite its abandoned state, the machinery in this factory is still functional. It might be worth looting.",
-	"factory_remains": "What if you planted a Tech Tree here?",
+	"city_building": "The last signs of human civilization.\nYou'll have to remove it to plant.",
+	"factory": "Despite its abandoned state, the\nmachinery in this factory is still\nfunctional. It might be worth looting.",
+	"factory_remains": "What if you planted a\nTech Tree here?",
 	"petrified_tree": "A tree made of stone.\nCould you save it somehow?",
 	
-	"speedle": "A mutant arthropod dead-set on destroying any and all trees in its path.",
-	"silk_spitter": "A mutant caterpillar that spits silken bullets at any trees in its line of sight.",
+	"speedle": "A mutant arthropod dead-set on\ndestroying any and all trees\nin its path.",
+	"silk_spitter": "A mutant caterpillar that spits\nsilken bullets at any trees\nin its line of sight.",
 	"speed_speedle": "The name is redundant.",
-	"tank_speedle": "Life in the wilderness has gifted this speedle with the power of armour.",
-	"bomb_bug": "An unholy abomination of an ant, a beetle, and a propane tanker.",
+	"tank_speedle": "Life in the wilderness has gifted\nthis speedle with the power of armour.",
+	"bomb_bug": "An unholy abomination of an ant,\na beetle, and a propane tanker.",
 	
 	"ominous_torch": "What the hell is that thing?",
 	
