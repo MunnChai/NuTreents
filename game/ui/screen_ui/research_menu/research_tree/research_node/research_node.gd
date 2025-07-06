@@ -79,9 +79,18 @@ func try_unlock_research_node() -> void:
 
 func unlock_research_node() -> void:
 	state = ResearchState.UNLOCKED
+	
+	# Unlock new card
+	if research_resource.tree_type != Global.TreeType.MOTHER_TREE:
+		TreeMenu.instance.add_tree_card(research_resource.tree_type)
+	
+	ResearchTree.instance.apply_research_to_trees(self)
 
 func lock_research_node() -> void:
 	state = ResearchState.LOCKED
+
+func apply_research(node: Node2D) -> void:
+	research_resource.apply_research(node)
 
 func select():
 	is_selected = true

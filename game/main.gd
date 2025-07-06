@@ -104,3 +104,6 @@ func load_world(session_data: Dictionary) -> void:
 	ResearchTree.instance.reset_unlocked_nodes()
 	ResearchTree.instance.set_unlocked_nodes(session_data["unlocked_research"])
 	ResearchTree.instance.set_tech_points(session_data["num_tech_points"])
+	
+	# Apply all unlocked research to all trees
+	ResearchTree.instance.apply_all_research_to_trees()
