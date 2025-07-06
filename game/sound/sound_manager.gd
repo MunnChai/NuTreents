@@ -6,6 +6,7 @@ extends Node
 ## TODO:
 ## - Limit amount of times per second same track can be played
 ## - Pool audio players?
+## - Vary strength of on-screen sound players by zoom scale
 
 var dict: Dictionary[StringName, SoundResource] = {}
 
@@ -58,6 +59,7 @@ func start_player(id: StringName, global_pos: Vector2) -> AudioStreamPlayer2D:
 	audio_player.stream = stream
 	audio_player.pitch_scale = 1.0 + randf_range(-sound.pitch_variation_range, sound.pitch_variation_range)
 	audio_player.volume_linear = sound.linear_volume
+	audio_player.bus = "SFX"
 	audio_player.play()
 	
 	return audio_player

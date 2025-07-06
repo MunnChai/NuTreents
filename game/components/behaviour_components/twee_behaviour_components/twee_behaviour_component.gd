@@ -17,6 +17,7 @@ signal grew_up
 @export var grow_timer: Timer
 @export var damage_sound_emitter_component: SoundEmitterComponent
 @export var death_sound_emitter_component: SoundEmitterComponent
+@export var sound_loop_component: SoundLoopComponent
 
 var actor: Node2D
 
@@ -113,6 +114,9 @@ func upgrade_tree() -> void:
 	
 	tree_animation_component.play_grow_large_animation()
 	tree_stat_component.set_upgraded_stats_from_resource()
+	
+	if sound_loop_component:
+		sound_loop_component.start()
 
 func die():
 	# Do extra death stuff here... maybe tree death counter...

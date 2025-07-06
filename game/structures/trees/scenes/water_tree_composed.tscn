@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=31 format=3 uid="uid://b5hdmb6e3u31i"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="25_whkhy"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_it1uo"]
 [ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="27_it1uo"]
+[ext_resource type="PackedScene" uid="uid://cys3ffyh8822h" path="res://components/sound_loop_component/sound_loop_component.tscn" id="28_no8lf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -54,9 +55,10 @@ resource_local_to_scene = true
 
 [node name="WaterProductionComponent" parent="." instance=ExtResource("14_no8lf")]
 
-[node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component") instance=ExtResource("18_ag2fa")]
+[node name="TreeBehaviourComponent" parent="." node_paths=PackedStringArray("damage_sound_emitter_component", "death_sound_emitter_component", "sound_loop_component") instance=ExtResource("18_ag2fa")]
 damage_sound_emitter_component = NodePath("../DamageSoundEmitterComponent")
 death_sound_emitter_component = NodePath("../DeathSoundEmitterComponent")
+sound_loop_component = NodePath("../SoundLoopComponent")
 
 [node name="TreeStatComponent" parent="." instance=ExtResource("19_nwb60")]
 type = 3
@@ -147,5 +149,9 @@ twee = NodePath("../TreeBehaviourComponent")
 [node name="FireNotifierComponent" parent="." node_paths=PackedStringArray("flammable", "grid_pos") instance=ExtResource("27_it1uo")]
 flammable = NodePath("../FireComponents/FlammableComponent")
 grid_pos = NodePath("../GridPositionComponent")
+
+[node name="SoundLoopComponent" parent="." node_paths=PackedStringArray("grid_position") instance=ExtResource("28_no8lf")]
+grid_position = NodePath("../GridPositionComponent")
+sound_id = &"tree_pump"
 
 [editable path="HurtboxComponent"]
