@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://e4tojr7l4pr6"
-path="res://.godot/imported/Chasm_Tile_1.png-4ce8e94bb2d26acf322bb1b25725c39e.ctex"
+uid="uid://p5141fumd1kg"
+path="res://.godot/imported/test_stuff.png-3dd3e54d0f3fad185f8c9f15bb625cc9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/terrain_map/Chasm_Tile_1.png"
-dest_files=["res://.godot/imported/Chasm_Tile_1.png-4ce8e94bb2d26acf322bb1b25725c39e.ctex"]
+source_file="res://world/proc_gen/_archive/test_stuff.png"
+dest_files=["res://.godot/imported/test_stuff.png-3dd3e54d0f3fad185f8c9f15bb625cc9.ctex"]
 
 [params]
 
