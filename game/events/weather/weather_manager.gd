@@ -4,6 +4,7 @@ extends Node2D
 ## THE WEATHER
 
 const RAIN_WATER_PRODUCTION_MULTIPLIER = 1.5
+# This constant is no longer used in the timer logic, but can be kept for other features.
 const FIRST_DAY_OF_STORM = 5
 
 enum WeatherType {
@@ -20,7 +21,7 @@ var current_weather: WeatherType = WeatherType.CLEAR
 ## How long's the weather?
 var durations: Dictionary[WeatherType, float] = {
 	WeatherType.CLEAR: 60.0,
-	WeatherType.RAIN: 5.0,
+	WeatherType.RAIN: 15.0, # Increased duration slightly
 	WeatherType.STORM: 60.0,
 }
 
@@ -33,7 +34,8 @@ func is_raining() -> bool:
 
 func _ready() -> void:
 	instance = self
-	weather_changed.connect($LightningGenerator._on_weather_changed)
+	if get_node_or_null("LightningGenerator"):
+		weather_changed.connect($LightningGenerator._on_weather_changed)
 	switch_to(WeatherType.CLEAR)
 	
 	DebugConsole.register("weather", func (args: PackedStringArray):
@@ -52,10 +54,6 @@ func _process(delta: float) -> void:
 	if Global.game_state != Global.GameState.PLAYING:
 		return
 	
-	# --- BUG FIX ---
-	# This logic has been restored. It is necessary to run every frame to
-	# maintain the correct visual state for the current weather, ensuring
-	# that rain and storm effects are always active when they should be.
 	match current_weather:
 		WeatherType.CLEAR:
 			update_clear_weather()
@@ -66,6 +64,9 @@ func _process(delta: float) -> void:
 
 ## Changing up the weather
 func switch_to(weather: WeatherType, duration: float = -1.0) -> void:
+	# Added a debug print to make it easy to see when the weather changes.
+	print("Weather changing to: ", WeatherType.keys()[weather])
+	
 	if duration < 0.0:
 		timer.start(durations.get(weather, 1.0))
 	else:
@@ -86,30 +87,28 @@ func switch_to(weather: WeatherType, duration: float = -1.0) -> void:
 
 ## Sunny day
 func update_clear_weather() -> void:
-	if Rain.instance:
+	if is_instance_valid(Rain.instance):
 		Rain.instance.stop_particles()
 
 ## Light rain
 func update_rain_weather() -> void:
-	if Rain.instance:
+	if is_instance_valid(Rain.instance):
 		Rain.instance.start_particles()
 
 ## Storm clouds
 func update_storm_weather() -> void:
-	if Rain.instance:
+	if is_instance_valid(Rain.instance):
 		Rain.instance.start_particles()
 
 ## Weather's over!
 func _on_timer_timeout() -> void:
 	match current_weather:
 		WeatherType.CLEAR:
-			## Temporarily doesn't have RAIN because there's
-			## no way to distinguish between it and STORM at the moment...
-			if Global.clock.get_curr_day() > FIRST_DAY_OF_STORM: ## Rain starts only after designated first day
-				var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.STORM, WeatherType.STORM]
-				switch_to(next_weathers.pick_random())
-			else:
-				switch_to(WeatherType.CLEAR)
+			# --- BUG FIX ---
+			# The check for FIRST_DAY_OF_STORM has been removed.
+			# Storms can now happen from Day 1, but are less likely than clear weather.
+			var next_weathers: Array[WeatherType] = [WeatherType.CLEAR, WeatherType.CLEAR, WeatherType.CLEAR, WeatherType.STORM]
+			switch_to(next_weathers.pick_random())
 		WeatherType.RAIN:
 			switch_to(WeatherType.CLEAR)
 		WeatherType.STORM:
