@@ -30,25 +30,25 @@ func _ready():
 	_connect_button_signals()
 	reset_shop_cards()
 
-func _unhandled_input(event: InputEvent) -> void:
+# --- BUG FIX ---
+# The check for the "pause" action has been removed from this script.
+# The global UI manager (ScreenUI.gd) is already responsible for handling the
+# "back" action. This menu was interfering by also trying to handle it,
+# which caused the double-action bug.
+func _input(event: InputEvent) -> void:
 	if not is_visible_in_tree(): return
 
-	# Use shoulder buttons to switch focus between the card grid and the action buttons
 	if event.is_action_pressed("menu_right") or event.is_action_pressed("menu_left"):
 		_switch_focus_area()
 		get_viewport().set_input_as_handled()
-	# Use the pause button as a universal "back" action in menus
-	elif event.is_action_pressed("pause"):
-		_on_back_button_pressed()
-		get_viewport().set_input_as_handled()
-	# If neither of the above, delegate the input to the currently focused area
+	# The "pause" event is no longer handled here.
 	else:
 		if _current_focus_area == FocusArea.CARDS:
 			_handle_card_navigation(event)
 
 func _handle_card_navigation(event: InputEvent):
 	if not is_instance_valid(_active_card_container) or _active_card_container.get_child_count() == 0:
-		_switch_focus_area() # Nothing to select, so move focus to buttons
+		_switch_focus_area()
 		return
 		
 	var new_index = _focused_card_index
@@ -63,7 +63,6 @@ func _handle_card_navigation(event: InputEvent):
 		_update_card_focus()
 		get_viewport().set_input_as_handled()
 
-	# 'lmb' is your "accept" button (A on Xbox, Cross on PlayStation)
 	if event.is_action_pressed("lmb"):
 		var card = _active_card_container.get_child(_focused_card_index)
 		_on_shop_card_pressed(card)
@@ -72,18 +71,17 @@ func _handle_card_navigation(event: InputEvent):
 func _switch_focus_area():
 	if _current_focus_area == FocusArea.CARDS:
 		_current_focus_area = FocusArea.BUTTONS
-		_clear_card_focus() # Visually deselect cards
-		# Grab focus on an appropriate button
-		if purchase_button.disabled == false:
-			purchase_button.grab_focus()
-		else:
+		_clear_card_focus()
+		if purchase_button.disabled:
 			back_button.grab_focus()
+		else:
+			purchase_button.grab_focus()
 	else:
 		_current_focus_area = FocusArea.CARDS
-		_update_card_focus() # Visually re-select the focused card
+		_update_card_focus()
 		
 func _switch_card_container(target_container: HBoxContainer):
-	if _active_card_container != target_container and is_instance_valid(target_container):
+	if _active_card_container != target_container:
 		if currently_selected_card: currently_selected_card.deselect()
 		_active_card_container = target_container
 		_focused_card_index = 0
@@ -93,13 +91,12 @@ func _update_card_focus():
 	_clear_card_focus()
 	if _active_card_container.get_child_count() > _focused_card_index:
 		var card_to_focus = _active_card_container.get_child(_focused_card_index)
-		card_to_focus.select() # Use the card's built-in select visual state
+		card_to_focus.select()
 
 func _clear_card_focus():
 	for container in [tree_cards, power_cards]:
-		if is_instance_valid(container):
-			for card in container.get_children():
-				card.deselect()
+		for card in container.get_children():
+			card.deselect()
 
 func _connect_button_signals():
 	back_button.pressed.connect(_on_back_button_pressed)
@@ -145,6 +142,7 @@ func show_card_details(shop_card: ShopCard):
 func reset_shop_cards():
 	currently_selected_card = null
 	purchased_cards = []
+	
 	for container in [tree_cards, power_cards]:
 		for card in container.get_children():
 			card.queue_free()
@@ -203,3 +201,4 @@ func unpause_game():
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
 	hide()
 #endregion
+ 
