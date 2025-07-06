@@ -54,13 +54,13 @@ func _process(delta: float) -> void:
 	if Global.game_state != Global.GameState.PLAYING:
 		return
 	
-	match current_weather:
-		WeatherType.CLEAR:
-			update_clear_weather()
-		WeatherType.RAIN:
-			update_rain_weather()
-		WeatherType.STORM:
-			update_storm_weather()
+	#match current_weather:
+		#WeatherType.CLEAR:
+			#update_clear_weather()
+		#WeatherType.RAIN:
+			#update_rain_weather()
+		#WeatherType.STORM:
+			#update_storm_weather()
 
 ## Changing up the weather
 func switch_to(weather: WeatherType, duration: float = -1.0) -> void:
