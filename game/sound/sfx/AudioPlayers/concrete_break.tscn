@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dmrav74lw4x8h"]
 
-[ext_resource type="AudioStream" uid="uid://c0l0fov3ak722" path="res://sound/sfx/city_tile_break.wav" id="1_cdsf7"]
+[ext_resource type="AudioStream" uid="uid://c0l0fov3ak722" path="res://sound/sfx/tiles/city_tile_break.wav" id="1_cdsf7"]
 
 [node name="ConcreteBreak" type="AudioStreamPlayer"]
 stream = ExtResource("1_cdsf7")

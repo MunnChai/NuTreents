@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b0ooi07dqe67g"]
 
-[ext_resource type="AudioStream" uid="uid://dshrhkfcttaqc" path="res://sound/sfx/tree_remove.wav" id="1_34hx8"]
+[ext_resource type="AudioStream" uid="uid://dshrhkfcttaqc" path="res://sound/sfx/trees/tree_remove.wav" id="1_34hx8"]
 
 [node name="TreeRemove" type="AudioStreamPlayer"]
 stream = ExtResource("1_34hx8")

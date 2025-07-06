@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://ck25xn78bqaro"]
+
+[ext_resource type="AudioStream" uid="uid://oonwibky6kpg" path="res://sound/sfx/trees/snow_plant_01.ogg" id="1_mnfdx"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_q0ow2"]
+
+[resource]
+script = ExtResource("2_q0ow2")
+id = &"tree_plant_snow"
+pitch_variation_range = 0.3
+audio_streams = Array[AudioStream]([ExtResource("1_mnfdx")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

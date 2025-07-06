@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ddxv6h5wipkn4"]
 
-[ext_resource type="AudioStream" uid="uid://bxuk8te388kws" path="res://sound/sfx/silkspitter_attack.wav" id="1_xdbmy"]
+[ext_resource type="AudioStream" uid="uid://bxuk8te388kws" path="res://sound/sfx/enemies/silkspitter_attack.wav" id="1_xdbmy"]
 
 [node name="SilkSpitterAttack" type="AudioStreamPlayer"]
 stream = ExtResource("1_xdbmy")

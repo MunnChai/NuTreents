@@ -53,7 +53,15 @@ func execute(cursor: IsometricCursor) -> void:
 	var tree := try_plant_tree(type, p)
 	
 	if tree: ## SUCCESS!
-		SfxManager.play_sound_effect("tree_plant")
+		var biome := terrain_map.get_tile_biome(p)
+		print(biome)
+		match biome:
+			TerrainMap.TileType.SAND:
+				SoundManager.play_oneshot(&"tree_plant_desert", structure_map.map_to_local(p))
+			TerrainMap.TileType.SNOW:
+				SoundManager.play_oneshot(&"tree_plant_snow", structure_map.map_to_local(p))
+			_:
+				SoundManager.play_oneshot(&"tree_plant", structure_map.map_to_local(p))
 
 ## Returns the tree on success
 ## null otherwise

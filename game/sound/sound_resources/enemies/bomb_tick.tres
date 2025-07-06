@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=6 format=3 uid="uid://brbcarr5id8r7"]
+
+[ext_resource type="AudioStream" uid="uid://gcm1w4fajshe" path="res://sound/sfx/enemies/bomb_tick_01.ogg" id="1_igdx2"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_7p4fm"]
+[ext_resource type="AudioStream" uid="uid://bnjhjlb66l1v4" path="res://sound/sfx/enemies/bomb_tick_02.ogg" id="2_weoaf"]
+[ext_resource type="AudioStream" uid="uid://coad5sbbi577m" path="res://sound/sfx/enemies/bomb_tick_03.ogg" id="3_okmq4"]
+[ext_resource type="AudioStream" uid="uid://bm0gxhfqjf1bd" path="res://sound/sfx/enemies/bomb_tick_04.ogg" id="4_sqnft"]
+
+[resource]
+script = ExtResource("2_7p4fm")
+id = &"bomb_tick"
+pitch_variation_range = 0.5
+audio_streams = Array[AudioStream]([ExtResource("1_igdx2"), ExtResource("2_weoaf"), ExtResource("3_okmq4"), ExtResource("4_sqnft")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

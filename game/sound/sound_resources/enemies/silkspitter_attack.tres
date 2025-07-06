@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://ct4bk7xmprbyb"]
+
+[ext_resource type="AudioStream" uid="uid://bxuk8te388kws" path="res://sound/sfx/enemies/silkspitter_attack.wav" id="1_wfshc"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_tvcfp"]
+
+[resource]
+script = ExtResource("2_tvcfp")
+id = &"silkspitter_attack"
+pitch_variation_range = 0.3
+audio_streams = Array[AudioStream]([ExtResource("1_wfshc")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"
