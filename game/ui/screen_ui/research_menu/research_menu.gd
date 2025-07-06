@@ -48,14 +48,12 @@ func _on_research_node_focused(research_node: ResearchNode) -> void:
 	target_v_scroll = research_node.get_parent().position.y - 165 ## Manual scroll offset.. kinda scuffed
 
 func _on_num_tech_points_changed(tech_points: int) -> void:
-	var points_str = " Points" if tech_points != 1 else " Point"
-	tech_points_label.text = str(tech_points) + points_str
+	tech_points_label.text = str(tech_points)
 
 func _on_unlock_failed(research_node: ResearchNode) -> void:
-	var points_str = " Points" if research_tree.num_tech_points != 1 else " Point"
-	tech_points_label.text = "[shake rate=20.0 level=20 connected=1][color=red]" + str(research_tree.num_tech_points) + points_str + "[/color][/shake]"
+	tech_points_label.text = "[shake rate=20.0 level=20 connected=1][color=red]" + str(research_tree.num_tech_points) + "[/color][/shake]"
 	await get_tree().create_timer(0.5).timeout
-	tech_points_label.text = str(research_tree.num_tech_points) + points_str
+	tech_points_label.text = str(research_tree.num_tech_points)
 
 func _on_unlock_success(research_node: ResearchNode) -> void:
 	detail_panel.set_details(research_node)

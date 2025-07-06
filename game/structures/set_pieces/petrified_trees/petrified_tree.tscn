@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bxmruf00te3al" path="res://components/movement/obstruction_component/obstruction_component.tscn" id="8_wfxg5"]
 [ext_resource type="PackedScene" uid="uid://b8rscal8j368j" path="res://components/destructable_component/destructable_component.tscn" id="9_b4uc8"]
 [ext_resource type="PackedScene" uid="uid://bjehlmgi7l7ue" path="res://components/behaviour_components/structure_behaviour_components/structure_behaviour_component.tscn" id="10_f3b27"]
-[ext_resource type="Script" uid="uid://bqii1haopscvc" path="res://components/behaviour_components/structure_behaviour_components/petrified_tree_behaviour_component.gd" id="11_nnewv"]
+[ext_resource type="Script" path="res://components/behaviour_components/structure_behaviour_components/petrified_tree_behaviour_component.gd" id="11_nnewv"]
 [ext_resource type="PackedScene" uid="uid://dhvwmm2t468c3" path="res://ui/camera/camera.tscn" id="12_yxnlr"]
 [ext_resource type="Texture2D" uid="uid://ce0c318ybkujv" path="res://ui/tree_menu/card_sprites/tree_card.png" id="13_j5p62"]
 [ext_resource type="Script" uid="uid://b5t81tx31klk0" path="res://structures/set_pieces/petrified_trees/tree_acquire_animation.gd" id="13_teheq"]

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4ed1exxflnd0"]
+[gd_scene load_steps=8 format=3 uid="uid://d4ed1exxflnd0"]
 
 [ext_resource type="Script" uid="uid://c15n6726ms7e4" path="res://ui/screen_ui/research_menu/research_menu.gd" id="1_jkbu0"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_mliin"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_p53e2"]
 [ext_resource type="PackedScene" uid="uid://cr7mehptvupy8" path="res://ui/screen_ui/research_menu/research_tree/research_tree.tscn" id="4_jkbu0"]
 [ext_resource type="PackedScene" uid="uid://cq0jfouvwl1p7" path="res://ui/screen_ui/research_menu/detail_panel/research_detail_panel.tscn" id="5_302ec"]
+[ext_resource type="Texture2D" uid="uid://ocd5jp3aduqf" path="res://ui/screen_ui/research_menu/tech_point/tech_point_back_64x64.png" id="5_mh1te"]
+[ext_resource type="Texture2D" uid="uid://coyom4ja6kvtw" path="res://ui/screen_ui/research_menu/tech_point/tech_point_icon.png" id="6_cigje"]
 
 [node name="ResearchMenu" type="Control"]
 layout_mode = 3
@@ -99,21 +101,36 @@ offset_right = 580.0
 offset_bottom = 896.0
 mouse_filter = 2
 
+[node name="TechPointBack" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control/Control"]
+layout_mode = 0
+offset_left = 264.0
+offset_top = 16.0
+offset_right = 328.0
+offset_bottom = 80.0
+texture = ExtResource("5_mh1te")
+
+[node name="Icon" type="TextureRect" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control/Control/TechPointBack"]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+scale = Vector2(2, 2)
+texture = ExtResource("6_cigje")
+
 [node name="TechPointPanel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control/Control" instance=ExtResource("2_mliin")]
 layout_mode = 1
-offset_left = -58.0
-offset_top = -424.0
-offset_right = 70.0
-offset_bottom = -376.0
+offset_left = -10.0
+offset_top = -376.0
+offset_right = 22.0
+offset_bottom = -352.0
 mouse_filter = 2
 
 [node name="TechPointsLabel" type="RichTextLabel" parent="PanelContainerWrapper/MarginContainer/VBoxContainer/MarginContainer/HBoxContainer/ResearchTreePanel/Control/Control/TechPointPanel"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("3_p53e2")
-theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
-text = "0 Points"
+text = "0"
 fit_content = true
 horizontal_alignment = 1
 vertical_alignment = 1

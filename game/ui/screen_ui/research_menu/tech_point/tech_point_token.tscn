@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdm7y20k3ga02"]
+
+[ext_resource type="Texture2D" uid="uid://c2tmjx51owocr" path="res://ui/screen_ui/research_menu/tech_point/tech_point_back_32x32.png" id="1_67o28"]
+[ext_resource type="Script" uid="uid://cchqjij183wao" path="res://ui/screen_ui/research_menu/tech_point/tech_point_token.gd" id="1_b3sn8"]
+[ext_resource type="Texture2D" uid="uid://coyom4ja6kvtw" path="res://ui/screen_ui/research_menu/tech_point/tech_point_icon.png" id="2_b3sn8"]
+
+[node name="TechPointToken" type="Node2D"]
+script = ExtResource("1_b3sn8")
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_67o28")
+
+[node name="Icon" type="Sprite2D" parent="Background"]
+texture = ExtResource("2_b3sn8")

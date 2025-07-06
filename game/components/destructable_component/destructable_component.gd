@@ -13,6 +13,6 @@ func destroy():
 	if remove_self_on_destroyed:
 		var grid_position_component = Components.get_component(get_owner(), GridPositionComponent)
 		Global.structure_map.remove_structure(grid_position_component.get_pos())
-		print("REMOVED!")
+		#print("REMOVED!")
 	
 	destroyed.emit()

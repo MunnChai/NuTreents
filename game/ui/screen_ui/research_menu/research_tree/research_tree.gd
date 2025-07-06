@@ -86,3 +86,6 @@ func get_unlocked_node_ids() -> Array[String]:
 
 func get_root_node() -> ResearchNode:
 	return root_node
+
+func add_tech_points(amount: int) -> void:
+	num_tech_points += amount

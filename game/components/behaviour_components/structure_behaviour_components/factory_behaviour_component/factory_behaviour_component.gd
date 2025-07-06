@@ -1,6 +1,8 @@
 class_name FactoryBehaviourComponent
 extends StructureBehaviourComponent
 
+const TECH_POINT_TOKEN = preload("res://ui/screen_ui/research_menu/tech_point/tech_point_token.tscn")
+
 var tech_slot: int
 
 @onready var destructable_component: DestructableComponent = $"../DestructableComponent"
@@ -21,8 +23,17 @@ func _get_components() -> void:
 func _connect_signals() -> void:
 	super._connect_signals()
 	
-	destructable_component.destroyed.connect(create_factory_remains)
+	#destructable_component.destroyed.connect(create_factory_remains)
+	destructable_component.destroyed.connect(_on_destroyed)
 
+func _on_destroyed() -> void:
+	ResearchTree.instance.add_tech_points(1)
+	var tech_point_token = TECH_POINT_TOKEN.instantiate()
+	Global.fog_map.add_child(tech_point_token)
+	tech_point_token.global_position = global_position
+	tech_point_token.play_acquire_animation()
+
+## DEPRECATED
 func create_factory_remains() -> void:
 	# Get Factory remains node
 	var factory_remains: Node2D = StructureRegistry.get_new_structure(Global.StructureType.FACTORY_REMAINS)
