@@ -133,7 +133,8 @@ func remove() -> void:
 # Applies a save resource to this tree
 func apply_data_resource(tree_resource: Resource):
 	
-	grow_timer.wait_time = tree_resource.life_time_seconds
+	if tree_resource.life_time_seconds > 0:
+		grow_timer.wait_time = tree_resource.life_time_seconds
 	is_large = tree_resource.is_large
 	
 	if is_large:

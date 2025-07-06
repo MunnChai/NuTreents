@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://dndds7q1jjdax" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/fog_reveal_1.tres" id="3_7ku5u"]
 [ext_resource type="Resource" uid="uid://bq5wqy6dllvrw" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/starting_node.tres" id="3_av127"]
 [ext_resource type="Resource" uid="uid://t4maddpa35f" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/explorer_tree_unlock.tres" id="3_x6503"]
-[ext_resource type="Resource" uid="uid://bikpqinwijxv5" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/damage_1.tres" id="4_2tbkv"]
+[ext_resource type="Resource" uid="uid://bikpqinwijxv5" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/damage/damage_1.tres" id="4_2tbkv"]
 [ext_resource type="Resource" uid="uid://ddju3aygjbv7c" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/water_production_1.tres" id="4_ccsu5"]
 [ext_resource type="Resource" uid="uid://d2lqg5ieym5qe" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/fire_resist_1.tres" id="4_qfnyx"]
 [ext_resource type="Resource" uid="uid://cyu6q8bml23lg" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/health_1.tres" id="5_tswv8"]
