@@ -52,6 +52,10 @@ func _process(delta: float) -> void:
 	if Global.game_state != Global.GameState.PLAYING:
 		return
 	
+	# --- BUG FIX ---
+	# This logic has been restored. It is necessary to run every frame to
+	# maintain the correct visual state for the current weather, ensuring
+	# that rain and storm effects are always active when they should be.
 	match current_weather:
 		WeatherType.CLEAR:
 			update_clear_weather()
@@ -62,20 +66,22 @@ func _process(delta: float) -> void:
 
 ## Changing up the weather
 func switch_to(weather: WeatherType, duration: float = -1.0) -> void:
-	match weather:
-		WeatherType.CLEAR:
-			pass
-		WeatherType.RAIN:
-			pass
-		WeatherType.STORM:
-			pass
-	
 	if duration < 0.0:
 		timer.start(durations.get(weather, 1.0))
 	else:
 		timer.start(duration)
+		
 	current_weather = weather
 	
+	# This initial call ensures the visual state changes immediately.
+	match current_weather:
+		WeatherType.CLEAR:
+			update_clear_weather()
+		WeatherType.RAIN:
+			update_rain_weather()
+		WeatherType.STORM:
+			update_storm_weather()
+
 	weather_changed.emit(weather)
 
 ## Sunny day

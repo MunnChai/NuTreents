@@ -19,20 +19,23 @@ func _ready() -> void:
 
 func start_particles() -> void:
 	# --- BUG FIX ---
+	# The 'emitting' property must be set to true here to ensure the particles
+	# are actually generated. This was missing from the previous version.
+	rain_particles.emitting = true
+	rain_particles_2.emitting = true
+	splashes.emitting = true
+	
 	# Calling restart() clears all existing particles before starting emission.
-	# This prevents the "splattering" effect when the camera moves while the
-	# particles were previously disabled but still technically "alive".
+	# This prevents the "splattering" effect when the camera moves.
 	rain_particles.restart()
 	rain_particles_2.restart()
 	splashes.restart()
 	
-	# --- VIBE ENHANCEMENT ---
 	# Instead of instantly appearing, the rain now smoothly fades in.
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "modulate:a", 1.0, FADE_DURATION)
 
 func stop_particles() -> void:
-	# --- VIBE ENHANCEMENT ---
 	# The rain now smoothly fades out instead of abruptly stopping.
 	var tween = create_tween().set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(self, "modulate:a", 0.0, FADE_DURATION)

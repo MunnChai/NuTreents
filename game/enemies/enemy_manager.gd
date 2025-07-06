@@ -57,6 +57,10 @@ const FURTHEST_SPAWN_FROM_FOG_EDGE: float = 50.0
 # Spawns enemies. returns number of enemies spawned
 func spawn_enemy_wave() -> int:
 	var target_tree = find_target_tree()
+	if not is_instance_valid(target_tree):
+		printerr("EnemyManager Error: Could not find a valid target tree. Skipping wave.")
+		return 0
+		
 	var grid_position_component: GridPositionComponent = Components.get_component(target_tree, GridPositionComponent)
 	var target_pos = grid_position_component.get_occupied_positions().pick_random()
 	
@@ -97,10 +101,6 @@ func choose_enemies_to_spawn(points: int) -> Array[Global.EnemyType]:
 	
 	var types: Array[Global.EnemyType] = EnemyRegistry.get_spawnable_enemies_by_day(get_curr_day())
 	
-	# --- BUG FIX ---
-	# If the EnemyRegistry returns no valid enemies for the current day,
-	# the original code would fail silently. This check now provides a clear
-	# warning and prevents the rest of the function from running.
 	if types.is_empty():
 		printerr("EnemyManager Warning: No spawnable enemies found for day ", get_curr_day(), ". No wave will be spawned.")
 		return []
@@ -137,8 +137,8 @@ func choose_enemy_weighted(enemy_types: Array[Global.EnemyType]) -> Global.Enemy
 			return enemy_type
 		rand -= weight
 	
-	# SHOULD NEVER GET HERE
-	return Global.EnemyType.SPEEDLE
+	# Should only be reached if all weights are 0
+	return enemy_types.pick_random()
 
 # Searches forest for high priority trees
 # Priority: Tech Tree > Water Tree > Mother Tree > Any other tree
@@ -150,9 +150,8 @@ func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 	var water_trees: Array = []
 	var mother_tree: Node2D = null
 	for twee: Node2D in tree_map.values():
-		# Don't count ignored trees
-		if trees_to_avoid.has(twee):
-			continue
+		if not is_instance_valid(twee): continue
+		if trees_to_avoid.has(twee): continue
 		
 		var tree_stat_component: TweeStatComponent = Components.get_component(twee, TweeStatComponent)
 		
@@ -163,67 +162,55 @@ func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 		if tree_stat_component.type == Global.TreeType.MOTHER_TREE:
 			mother_tree = twee
 	
-	# If any prioritized trees were found, target them!
 	if not tech_trees.is_empty():
 		return tech_trees.pick_random()
 	elif not water_trees.is_empty():
 		return water_trees.pick_random()
-	elif mother_tree != null: # Munn: This should always happen??
+	elif mother_tree != null:
 		return mother_tree
 	
-	return tree_map.pick_random()
+	# Failsafe: return any valid tree if no priority targets are found
+	if not tree_map.values().is_empty():
+		return tree_map.values().pick_random()
+		
+	return null # No trees exist at all
 
-# Spawn an enemy of a certain type, at the given map coordinates. It will automatically begin pathfinding towards the nearest tree
+# Spawn an enemy of a certain type, at the given map coordinates.
 func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> Node2D:
 	AlmanacInfo.add_enemy(enemy_type)
-	
 	var enemy_node: Node2D = EnemyRegistry.get_new_enemy(enemy_type)
-	
 	var terrain_map: TerrainMap = Global.terrain_map
-	
 	var world_pos: Vector2 = terrain_map.map_to_local(map_coords)
-	
 	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
 	enemy_map.add_child(enemy_node)
-	
 	enemy_node.global_position = world_pos
 	var position_component: GridPositionComponent = Components.get_component(enemy_node, GridPositionComponent)
 	position_component.init_pos(map_coords)
-	
 	return enemy_node
 
 func kill_all_enemies():
 	for enemy: Node2D in get_enemies():
-		if (!enemy):
-			continue
-		
-		var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
-		enemy_health_component.set_current_health(0)
+		if is_instance_valid(enemy):
+			var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+			enemy_health_component.set_current_health(0)
 
 func get_enemies() -> Array:
 	return get_tree().get_nodes_in_group("enemies")
 
 func get_enemy_at(pos: Vector2i):
 	for enemy in get_enemies():
-		if not enemy:
-			continue
-		
+		if not is_instance_valid(enemy): continue
 		var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
-		if health_component.is_dead:
-			continue
-		
+		if health_component.is_dead: continue
 		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
 		if grid_position_component.get_pos() == pos:
 			return enemy
-	
 	return null
-
 
 #region SaveAndLoad
 func load_enemies_from(enemy_map: Dictionary):
 	for pos in enemy_map.keys():
 		var save_resource: EnemyDataResource = enemy_map[pos]
-		
 		var enemy: Node2D = spawn_enemy(save_resource.type, pos)
 		var health_component = Components.get_component(enemy, HealthComponent)
 		health_component.current_health = save_resource.hp
@@ -232,27 +219,30 @@ func load_enemies_from(enemy_map: Dictionary):
 #region DifficultyFunctions
 
 const BASE_NUM_WAVES: int = 1
-const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # Slowed down wave increase
+const NUM_WAVES_INCREASE_PER_DAY: float = 0.5
 const MAX_WAVES: int = 15
 
 const BASE_POINTS: int = 5
-# --- DIFFICULTY SCALING FIX ---
-# The linear scaling factor has been replaced with a logarithmic one.
-# This provides a smoother difficulty curve that won't break at high day counts.
-const POINTS_LOG_FACTOR: float = 30.0
+const POINTS_INCREASE_PER_DAY: int = 15
+# NEW: A cap on the total points ensures the late-game is stable.
+const MAX_POINTS_PER_NIGHT: int = 1000 # This can be adjusted for game balance.
 
 # Functions for calculating difficulty based on the given day
 func get_points_per_wave(day: int = get_curr_day()) -> int:
 	# --- DIFFICULTY SCALING FIX ---
-	# The old linear formula (day * 15) has been replaced with a more stable
-	# logarithmic formula. This provides good scaling in the early game without
-	# becoming unmanageable or causing overflow issues in the late game.
-	var total_points_for_night = BASE_POINTS + int(log(day) * POINTS_LOG_FACTOR)
-	return total_points_for_night / get_num_waves(day)
+	# This capped linear formula provides steady growth that doesn't flatten
+	# out too early (like the logarithmic one) or grow infinitely.
+	var total_points_for_night = BASE_POINTS + (day - 1) * POINTS_INCREASE_PER_DAY
+	var capped_points = min(total_points_for_night, MAX_POINTS_PER_NIGHT)
+	var num_waves = get_num_waves(day)
+	# Prevent division by zero if there are no waves
+	return capped_points / num_waves if num_waves > 0 else capped_points
 
 func get_num_waves(day: int = get_curr_day()):
 	return min(BASE_NUM_WAVES + int((day - 1) * NUM_WAVES_INCREASE_PER_DAY), MAX_WAVES)
 
 func get_enemy_spawn_interval(day: int = get_curr_day()):
-	return Global.clock.HALF_DAY_SECONDS / get_num_waves(day)
+	var num_waves = get_num_waves(day)
+	# Prevent division by zero if there are no waves
+	return Global.clock.HALF_DAY_SECONDS / num_waves if num_waves > 0 else Global.clock.HALF_DAY_SECONDS
 #endregion
