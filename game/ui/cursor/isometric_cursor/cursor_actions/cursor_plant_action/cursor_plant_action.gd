@@ -54,7 +54,6 @@ func execute(cursor: IsometricCursor) -> void:
 	
 	if tree: ## SUCCESS!
 		var biome := terrain_map.get_tile_biome(p)
-		print(biome)
 		match biome:
 			TerrainMap.TileType.SAND:
 				SoundManager.play_oneshot(&"tree_plant_desert", structure_map.map_to_local(p))

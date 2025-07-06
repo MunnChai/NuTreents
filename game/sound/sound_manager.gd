@@ -3,6 +3,8 @@ extends Node
 
 ## NEW AND IMPROVED VERSION OF SFX MANAGER
 
+const LOG_LOADING := true
+
 ## TODO:
 ## - Limit amount of times per second same track can be played
 ## - Pool audio players?
@@ -11,30 +13,8 @@ extends Node
 var dict: Dictionary[StringName, SoundResource] = {}
 
 func _ready() -> void:
-	for sound: SoundResource in load_all_resource_in_folder("res://sound/sound_resources/", "SoundResource"):
+	for sound: SoundResource in DataUtil.load_all_resources_in_folder("res://sound/sound_resources/", "SoundResource"):
 		dict.set(sound.id, sound)
-
-## Recursively loads all of resource_type in path and returns the list
-func load_all_resource_in_folder(path: String, resource_type: String) -> Array[Resource]:
-	var result: Array[Resource] = []
-	
-	var dir = DirAccess.open(path)
-	dir.list_dir_begin()
-	
-	var file_name = dir.get_next()
-	while file_name != "":
-		var file_path = path + "/" + file_name
-		
-		if dir.current_is_dir():
-			result.append_array(load_all_resource_in_folder(file_path, resource_type))
-		else:
-			var resource: Resource = ResourceLoader.load(file_path, resource_type)
-			if resource:
-				result.append(resource)
-		
-		file_name = dir.get_next()
-	
-	return result
 
 func get_sound(id: StringName) -> SoundResource:
 	return dict.get(id)

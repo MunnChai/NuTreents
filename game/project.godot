@@ -63,6 +63,7 @@ window/stretch/mode="viewport"
 
 movie_writer/movie_file="/Users/felixrl/Felix/Projects/310-Game Development/GodotWildJam/GodotWildJam79/Recordings/movie.avi"
 movie_writer/fps=24
+export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 

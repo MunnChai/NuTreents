@@ -46,10 +46,8 @@ func _set_sprite_textures() -> void:
 	sprite_shatter_component.create_shatter_pieces()
 
 func depetrify() -> void:
-	print("CHeck")
 	if depetrified:
 		return
-	print("Yes")
 	# Remove destructable component
 	actor.remove_child(destructable_component)
 	
