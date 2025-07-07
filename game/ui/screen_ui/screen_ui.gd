@@ -60,6 +60,8 @@ func terminate_stack() -> void:
 	close()
 ## Returns the menu that is currently at the top of the stack
 func get_active_menu() -> ScreenMenu:
+	if menu_stack.is_empty():
+		return null
 	return menu_stack.back()
 ## Returns the menu that is second highest in the stack,
 ## or null if there is none
