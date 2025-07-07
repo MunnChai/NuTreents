@@ -17,6 +17,14 @@ var day_one_unique_scenario: bool = false
 
 func _ready() -> void:
 	instance = self
+	
+	DebugConsole.register("spawn_enemies", func(args: PackedStringArray):
+		spawn_enemy_wave()
+		, "Spawns a wave of enemies")
+	
+	DebugConsole.register("clear_enemies", func(args: PackedStringArray):
+		kill_all_enemies()
+		, "Kills all enemies")
 
 func start_game():
 	enemy_spawn_timer = 0
@@ -49,6 +57,7 @@ func _process(delta: float) -> void:
 			spawn_enemy_wave()
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
+		enemy_spawn_timer = 10 ## Next time night comes, spawn enemies 10 seconds after night time
 		current_wave = 0
 		kill_all_enemies()
 
@@ -273,13 +282,13 @@ func load_enemies_from(enemy_map: Dictionary):
 #region DifficultyFunctions
 
 const BASE_NUM_WAVES: int = 1
-const NUM_WAVES_INCREASE_PER_DAY: float = 0.5
+const NUM_WAVES_INCREASE_PER_DAY: float = 0.4 # New wave every 3 days
 const MAX_WAVES: int = 15
 
 const BASE_POINTS: int = 5
-const POINTS_INCREASE_PER_DAY: int = 15
+const POINTS_INCREASE_PER_DAY: int = 12.5
 # NEW: A cap on the total points ensures the late-game is stable.
-const MAX_POINTS_PER_NIGHT: int = 1000 # This can be adjusted for game balance.
+const MAX_POINTS_PER_NIGHT: int = 5000 # This can be adjusted for game balance.
 
 # Functions for calculating difficulty based on the given day
 func get_points_per_wave(day: int = get_curr_day()) -> int:
@@ -289,6 +298,8 @@ func get_points_per_wave(day: int = get_curr_day()) -> int:
 	var total_points_for_night = BASE_POINTS + (day - 1) * POINTS_INCREASE_PER_DAY
 	var capped_points = min(total_points_for_night, MAX_POINTS_PER_NIGHT)
 	var num_waves = get_num_waves(day)
+	
+	return capped_points
 	# Prevent division by zero if there are no waves
 	return capped_points / num_waves if num_waves > 0 else capped_points
 

@@ -27,6 +27,21 @@ func _ready() -> void:
 			return
 		set_curr_day(int(args[0]))
 		)
+	
+	DebugConsole.register("time", func (args: PackedStringArray):
+		if args.size() != 1:
+			Logger.log("Usage: time [NIGHT/DAY]")
+			return
+		var arg: String = args[0].to_lower()
+		if arg != "night" and arg != "day":
+			Logger.log("Usage: time [NIGHT/DAY]")
+			return
+		
+		if arg == "night":
+			set_curr_day_sec(HALF_DAY_SECONDS)
+		elif arg == "day":
+			set_curr_day_sec(0)
+		)
 
 func _process(delta: float) -> void:
 	if (!is_paused):
