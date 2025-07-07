@@ -37,6 +37,9 @@ func _connect_signals() -> void:
 ## Try to unlock the given research node. Will succeed if the current num_tech_points > the node's cost
 func try_unlock(research_node: ResearchNode) -> void:
 	if num_tech_points >= research_node.research_resource.tech_point_cost:
+		var notification = Notification.new(&"unlock", '[color=6be1e3]' + tr(&"NOTIF_TECH_UNLOCK").format({ "tech_name": research_node.research_resource.display_name.to_upper() }), { "priority": 3, "time_remaining": 3.0 });
+		NotificationLog.instance.add_notification(notification)
+		
 		research_node.unlock_research_node()
 		num_tech_points -= research_node.research_resource.tech_point_cost
 		update_unlockable_nodes()
