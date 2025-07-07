@@ -108,11 +108,11 @@ func _on_back_button_pressed():
 func _on_purchase_button_pressed():
 	if not currently_selected_card: return
 	if not TreeManager.enough_n(currently_selected_card.tree_stat.cost_to_purchase):
-		SfxManager.play_sound_effect("ui_fail")
+		SoundManager.play_global_oneshot(&"ui_fail")
 		return
 	
 	TreeManager.consume_n(currently_selected_card.tree_stat.cost_to_purchase)
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	TreeMenu.instance.add_tree_card(currently_selected_card.tree_type)
 	purchased_cards.append(currently_selected_card.tree_type)
 	remove_card(currently_selected_card)
@@ -166,7 +166,7 @@ func disable_card_of_type(tree_type: Global.TreeType):
 				remove_card(card)
 
 func open(previous_menu: ScreenMenu):
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	pause_game()
 	_current_focus_area = FocusArea.CARDS
 	_update_card_focus()
@@ -176,7 +176,7 @@ func open(previous_menu: ScreenMenu):
 	TweenUtil.fade(self, 1.0, 0.1)
 
 func close(next_menu: ScreenMenu):
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
 	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.4)
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)

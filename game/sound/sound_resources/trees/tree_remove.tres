@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://5h3fg72lqymk"]
+
+[ext_resource type="AudioStream" uid="uid://dshrhkfcttaqc" path="res://sound/sfx/trees/tree_remove.wav" id="1_6ywri"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_kty51"]
+
+[resource]
+script = ExtResource("2_kty51")
+id = &"tree_remove"
+pitch_variation_range = 0.3
+audio_streams = Array[AudioStream]([ExtResource("1_6ywri")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

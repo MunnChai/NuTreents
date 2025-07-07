@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dx4fp1gitv4gc"]
 
-[ext_resource type="AudioStream" uid="uid://20y63yqdq3ot" path="res://sound/sfx/tree_plant.wav" id="1_wghv4"]
+[ext_resource type="AudioStream" uid="uid://20y63yqdq3ot" path="res://sound/sfx/trees/tree_plant.wav" id="1_wghv4"]
 
 [sub_resource type="GDScript" id="GDScript_wghv4"]
 script/source = "extends AudioStreamPlayer

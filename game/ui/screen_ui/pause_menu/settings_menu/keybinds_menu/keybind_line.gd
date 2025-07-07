@@ -65,7 +65,7 @@ func await_rebind() -> void:
 	$CurrentKey.text = "<AWAITING INPUT>"
 	currently_rebinding = true
 	KeybindsMenu.instance.is_rebinding = true
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 
 func _input(event) -> void:
 	if currently_rebinding:
@@ -91,7 +91,7 @@ func _input(event) -> void:
 				currently_rebinding = false
 				KeybindsMenu.instance.is_rebinding = false
 				
-				SfxManager.play_sound_effect("ui_click")
+				SoundManager.play_global_oneshot(&"ui_click")
 				
 				save_to_settings()
 

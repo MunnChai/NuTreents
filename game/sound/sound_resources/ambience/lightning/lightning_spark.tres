@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=7 format=3 uid="uid://dnstcxnvblwym"]
+
+[ext_resource type="AudioStream" uid="uid://dc5d2yjd6eec" path="res://sound/sfx/ambience/lightning_spark_02-000.ogg" id="1_daj1n"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_hksgy"]
+[ext_resource type="AudioStream" uid="uid://bovoajvscuxpr" path="res://sound/sfx/ambience/lightning_spark_02-001.ogg" id="2_pt3j4"]
+[ext_resource type="AudioStream" uid="uid://caclulsqielgh" path="res://sound/sfx/ambience/lightning_spark_02-002.ogg" id="3_fu5ls"]
+[ext_resource type="AudioStream" uid="uid://dodq5nvrgolhh" path="res://sound/sfx/ambience/lightning_spark_02-003.ogg" id="4_im78m"]
+[ext_resource type="AudioStream" uid="uid://dhdit5suv5dip" path="res://sound/sfx/ambience/lightning_spark_02-004.ogg" id="5_qiyc2"]
+
+[resource]
+script = ExtResource("2_hksgy")
+id = &"lightning_spark"
+linear_volume = 0.85
+pitch_variation_range = 0.5
+attenuation_override = 5.0
+audio_streams = Array[AudioStream]([ExtResource("1_daj1n"), ExtResource("2_pt3j4"), ExtResource("3_fu5ls"), ExtResource("4_im78m"), ExtResource("5_qiyc2")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

@@ -90,23 +90,25 @@ func update_day_track() -> void:
 	pass
 
 func update_night_track() -> void:
-	if !audio_stream_player.playing || !audio_stream_player.stream_paused:
+	if not audio_stream_player.playing or audio_stream_player.stream_paused:
 		return
 	
 	if audio_stream_player.get_stream_playback() == null:
 		return
 	
-	if len(get_tree().get_nodes_in_group("enemies")) > 15:
+	if get_tree().get_nodes_in_group("enemies").size() >= 5:
 		if current_vibe != Vibe.INTENSE_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("intense")
 			current_vibe = Vibe.INTENSE_NIGHT
 		# audio_stream_player["parameters/switch_to_clip"] = "intense"
-	elif len(get_tree().get_nodes_in_group("enemies")) > 3:
+	elif get_tree().get_nodes_in_group("enemies").size() >= 1:
+		print("MILD")
 		if current_vibe != Vibe.MILD_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("mild")
 			current_vibe = Vibe.MILD_NIGHT
 			# audio_stream_player["parameters/switch_to_clip"] = "mild"
 	else:
+		print("CALM")
 		if current_vibe != Vibe.CALM_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("calm")
 			current_vibe = Vibe.CALM_NIGHT

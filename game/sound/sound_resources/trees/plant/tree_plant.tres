@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://b0hilpmtk4o48"]
+
+[ext_resource type="AudioStream" uid="uid://20y63yqdq3ot" path="res://sound/sfx/trees/tree_plant.wav" id="1_ej0t7"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="1_m77se"]
+
+[resource]
+script = ExtResource("1_m77se")
+id = &"tree_plant"
+pitch_variation_range = 0.3
+audio_streams = Array[AudioStream]([ExtResource("1_ej0t7")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

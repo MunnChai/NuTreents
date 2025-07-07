@@ -57,4 +57,4 @@ func spawn_projectile(target_pos: Vector2i) -> void:
 	var movement_component: GridMovementComponent = Components.get_component(bullet, GridMovementComponent)
 	movement_component.move_to_position(target_pos)
 	
-	SfxManager.play_sound_effect("gun_tree_projectile")
+	SoundManager.play_oneshot(&"gun_tree_fire", global_position)

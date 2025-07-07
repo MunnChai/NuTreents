@@ -21,4 +21,4 @@ func show_load_screen():
 
 func start_game():
 	SceneLoader.transition_to_game()
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")

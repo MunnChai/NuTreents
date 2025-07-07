@@ -11,6 +11,9 @@ script = ExtResource("1_wl2m8")
 primary_action = NodePath("CursorPlantAction")
 secondary_action = NodePath("CursorDestroyAction")
 
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
+
 [node name="InfoBoxDetector" type="Node" parent="."]
 script = ExtResource("2_131un")
 

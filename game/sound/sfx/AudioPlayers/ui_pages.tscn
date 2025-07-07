@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ej65te20hkb2"]
 
-[ext_resource type="AudioStream" uid="uid://b85wfbodbeqof" path="res://sound/sfx/ui_pages.wav" id="1_yj1f5"]
+[ext_resource type="AudioStream" uid="uid://b85wfbodbeqof" path="res://sound/sfx/ui/ui_pages.wav" id="1_yj1f5"]
 
 [node name="UiPages" type="AudioStreamPlayer"]
 stream = ExtResource("1_yj1f5")

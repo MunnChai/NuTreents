@@ -12,3 +12,5 @@ script = ExtResource("1_7vwbl")
 script = ExtResource("2_pfoii")
 decay = 0.65
 max_roll = 0.1
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]

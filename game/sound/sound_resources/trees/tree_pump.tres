@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://d24d5lkjdj4s7"]
+
+[ext_resource type="AudioStream" uid="uid://re3ar225qhkm" path="res://sound/sfx/trees/pump_01.ogg" id="1_4bjeh"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_24lfc"]
+
+[resource]
+script = ExtResource("2_24lfc")
+id = &"tree_pump"
+linear_volume = 0.1
+pitch_variation_range = 0.5
+attenuation_override = -1.0
+audio_streams = Array[AudioStream]([ExtResource("1_4bjeh")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

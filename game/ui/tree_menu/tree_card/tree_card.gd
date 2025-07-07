@@ -46,7 +46,7 @@ func _detect_and_handle_selection() -> void:
 	## Not selected, highlighted, and clicked -> Select this tree type
 	if is_highlighted and not is_selected and Input.is_action_just_pressed("lmb"):
 		TreeMenu.instance.set_currently_selected_tree_type(tree_type)
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")
 
 ## Update the offset of the card image rect based on various details
 const OFFSET_DECAY_CONSTANT := 32.0 # How fast does offset "lerp"?
@@ -86,7 +86,7 @@ func _update_availability(delta: float) -> void:
 		if not is_available:
 			is_available = true
 			pop()
-			SfxManager.play_sound_effect("ui_click")
+			SoundManager.play_global_oneshot(&"ui_click")
 	else:
 		is_available = false
 	
@@ -106,7 +106,7 @@ func _on_mouse_entered() -> void:
 	FloatingTooltip.instance.force_hidden = true
 	
 	#if not is_selected:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	pop()
 	
 	rotation_offset = clampf(UICursor.instance.mouse_velocity.x * 2.0, -25, 25) 
