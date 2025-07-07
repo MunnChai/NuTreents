@@ -61,6 +61,8 @@ func execute(cursor: IsometricCursor) -> void:
 				SoundManager.play_oneshot(&"tree_plant_snow", structure_map.map_to_local(p))
 			_:
 				SoundManager.play_oneshot(&"tree_plant", structure_map.map_to_local(p))
+		
+		UICursor.instance.pop()
 
 ## Returns the tree on success
 ## null otherwise
