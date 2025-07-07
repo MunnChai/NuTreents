@@ -18,6 +18,8 @@ func _get_tree_icon() -> void:
 	if petrified_component:
 		tree_icon.texture = TreeRegistry.get_twee_stat(petrified_component.tree_type).tree_icon
 
+func set_tree_icon(tree_type: Global.TreeType) -> void:
+	tree_icon.texture = TreeRegistry.get_twee_stat(petrified_component.tree_type).tree_icon
 
 ## Animation constants
 const EMERGE_DURATION: float = 0.75
