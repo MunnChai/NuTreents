@@ -19,7 +19,7 @@ clip_2/stream = ExtResource("4_cb2kx")
 clip_2/auto_advance = 0
 _transitions = {
 Vector2i(-1, -1): {
-"fade_beats": 1.0,
+"fade_beats": 8.0,
 "fade_mode": 3,
 "from_time": 2,
 "hold_previous": true,

@@ -171,8 +171,23 @@ func get_root_node() -> ResearchNode:
 
 #region Tech Points
 
+static var point_notification: Notification
+
 func add_tech_points(amount: int) -> void:
 	num_tech_points += amount
+	
+	if not point_notification or point_notification.is_removed:
+		point_notification = Notification.new(&"tech_point_earn", '[color=6be1e3]' + get_correct_plural_for_notif(amount), { "priority": 3, "time_remaining": 3.0, "amount": amount });
+		NotificationLog.instance.add_notification(point_notification)
+	else:
+		var new_amount = amount + point_notification.properties.get("amount", 0)
+		point_notification.set_message('[color=6be1e3]' + get_correct_plural_for_notif(new_amount))
+
+func get_correct_plural_for_notif(total: int) -> String:
+	if total == 1:
+		return tr(&"NOTIF_TECH_POINT").format({ "num": total })
+	else:
+		return tr(&"NOTIF_TECH_POINTS").format({ "num": total })
 
 func set_tech_points(amount: int) -> void:
 	num_tech_points = amount
