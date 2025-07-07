@@ -35,7 +35,6 @@ func create_new_world() -> void:
 	AlmanacInfo.add_tree(Global.TreeType.DEFAULT_TREE)
 	AlmanacInfo.add_tree(Global.TreeType.WATER_TREE)
 	AlmanacInfo.add_tree(Global.TreeType.GUN_TREE)
-	print("new world trees", AlmanacInfo.get_trees())
 
 func load_world(session_data: Dictionary) -> void:
 	# Set seed before world generation, for (hopefully) deterministic map gen
@@ -104,4 +103,4 @@ func load_world(session_data: Dictionary) -> void:
 	
 	# Add almanac info
 	AlmanacInfo.set_trees(session_data["almanac_trees"])
-	AlmanacInfo.set_trees(session_data["almanac_enemies"])
+	AlmanacInfo.set_enemies(session_data["almanac_enemies"])
