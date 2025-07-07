@@ -97,7 +97,7 @@ func load_world(session_data: Dictionary) -> void:
 	
 	# Add almanac info
 	AlmanacInfo.set_trees(session_data["almanac_trees"])
-	AlmanacInfo.set_trees(session_data["almanac_enemies"])
+	AlmanacInfo.set_enemies(session_data["almanac_enemies"])
 	
 	# Set unlocked research nodes
 	ResearchTree.instance.reset_unlocked_nodes()
