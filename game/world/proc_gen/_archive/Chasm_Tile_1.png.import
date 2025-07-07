@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://e4tojr7l4pr6"
-path="res://.godot/imported/chasm_tile_1.png-ac567ab62f5ff338136db6aff1e11858.ctex"
+path="res://.godot/imported/Chasm_Tile_1.png-57992be184e3b321f24ba66ce887e792.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/terrain_map/chasm_tile_1.png"
-dest_files=["res://.godot/imported/chasm_tile_1.png-ac567ab62f5ff338136db6aff1e11858.ctex"]
+source_file="res://world/proc_gen/_archive/Chasm_Tile_1.png"
+dest_files=["res://.godot/imported/Chasm_Tile_1.png-57992be184e3b321f24ba66ce887e792.ctex"]
 
 [params]
 

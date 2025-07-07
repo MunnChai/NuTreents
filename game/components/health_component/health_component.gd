@@ -5,13 +5,14 @@ extends Node2D
 var current_health: float
 var is_dead: bool = false
 
-
+var actor: Node2D
 
 signal died()
 signal health_added(amount: float)
 signal health_subtracted(amount: float)
 
 func _ready() -> void:
+	actor = get_owner()
 	current_health = max_health
 
 

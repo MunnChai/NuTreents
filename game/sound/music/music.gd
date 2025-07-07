@@ -102,13 +102,13 @@ func update_night_track() -> void:
 			current_vibe = Vibe.INTENSE_NIGHT
 		# audio_stream_player["parameters/switch_to_clip"] = "intense"
 	elif get_tree().get_nodes_in_group("enemies").size() >= 1:
-		print("MILD")
+		#print("MILD")
 		if current_vibe != Vibe.MILD_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("mild")
 			current_vibe = Vibe.MILD_NIGHT
 			# audio_stream_player["parameters/switch_to_clip"] = "mild"
 	else:
-		print("CALM")
+		#print("CALM")
 		if current_vibe != Vibe.CALM_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("calm")
 			current_vibe = Vibe.CALM_NIGHT

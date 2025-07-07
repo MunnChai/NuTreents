@@ -25,4 +25,6 @@ func exploded() -> void:
 	# waits for explode animation to finish, then deals actual damage
 	var aoe_component: AoeComponent = hitbox_component
 	await aoe_component.explode(grid_position_component.get_pos())
-	die()
+	
+	var health_component: HealthComponent = Components.get_component(actor, HealthComponent)
+	health_component.set_current_health(0)

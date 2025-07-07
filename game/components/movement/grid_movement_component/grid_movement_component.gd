@@ -14,6 +14,7 @@ var grid_position_component: GridPositionComponent
 var sprite_2d: Sprite2D
 
 signal move_in_direction(direction: Vector2i)
+signal moved(from: Vector2i, to: Vector2i)
 
 func _ready() -> void:
 	if not actor:
@@ -45,6 +46,8 @@ func move_to_position(target_position: Vector2i) -> void:
 	bounce_tween.tween_property(sprite_2d, "position:y", bounce_amount, movement_duration / 2).as_relative()
 	
 	grid_position_component.move(direction)
+	
+	moved.emit(actor, current_position, target_position)
 
 func move_to_and_back(target_position: Vector2i) -> void:
 	var current_position = grid_position_component.get_pos()
