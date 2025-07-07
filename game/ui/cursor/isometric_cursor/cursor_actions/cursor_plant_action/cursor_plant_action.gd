@@ -105,4 +105,6 @@ func try_plant_tree(type: Global.TreeType, p: Vector2i) -> Node2D:
 	var tree_stat_component: TweeStatComponent = Components.get_component(tree, TweeStatComponent)
 	TreeManager.consume_n(tree_stat_component.stat_resource.cost_to_purchase)
 	
+	PopupManager.create_popup("-" + str(int(tree_stat_component.stat_resource.cost_to_purchase)), structure_map.map_to_local(p), Color("c1cf6abc"), Color("261e3abc"), Vector2(0, 100))
+	
 	return tree

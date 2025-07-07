@@ -9,7 +9,7 @@ const MIN_SIZE: float = 1.0
 const TWEEN_DURATION: float = 1.7
 const Y_OFFSET_RANGE: float = 20
 
-func create_popup(text: String, position: Vector2, text_color: Color = Color.WHITE, outline_color: Color = Color.BLACK):  
+func create_popup(text: String, position: Vector2, text_color: Color = Color.WHITE, outline_color: Color = Color.BLACK, vel_override: Vector2 = Vector2.ZERO):  
 	var popup = POPUP.instantiate()
 	popup.set_color(text_color, outline_color)
 	popup.text = text
@@ -17,7 +17,10 @@ func create_popup(text: String, position: Vector2, text_color: Color = Color.WHI
 	popup.position += position
 	
 	call_deferred("add_child", popup)
- 
+	
+	if vel_override.y != 0.0:
+		popup.set_deferred("y_velocity", vel_override.y)
+	
 	popup.pivot_offset = Vector2(popup.size / 2)
 	
 	var alpha_tween = get_tree().create_tween()
