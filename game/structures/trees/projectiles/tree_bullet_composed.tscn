@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://bea0oq8ld4gr"]
+[gd_scene load_steps=8 format=3 uid="uid://bea0oq8ld4gr"]
 
 [ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://structures/trees/sheets/projectiles/tree_bullet.png" id="1_ot4qe"]
 [ext_resource type="PackedScene" uid="uid://bt5ejyes4aheb" path="res://components/movement/grid_position_component/grid_position_component.tscn" id="2_gq3dt"]
 [ext_resource type="PackedScene" uid="uid://c5s1m8423l0mf" path="res://components/movement/grid_movement_component/grid_movement_component.tscn" id="3_05k2p"]
 [ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="4_gq3dt"]
 [ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_05k2p"]
+[ext_resource type="PackedScene" uid="uid://6if1mlvat0c1" path="res://components/behaviour_components/projectile_behaviour_components/projectile_behaviour_component.tscn" id="6_k0xk5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
 resource_local_to_scene = true
@@ -34,6 +35,8 @@ bounce_amount = 32.0
 wait_time = 0.5
 one_shot = true
 autostart = true
+
+[node name="ProjectileBehaviourComponent" parent="." instance=ExtResource("6_k0xk5")]
 
 [connection signal="area_entered" from="Sprite2D/HitboxComponent" to="RemovalComponent" method="free_actor" unbinds=1]
 [connection signal="timeout" from="RemovalTimer" to="RemovalComponent" method="free_actor"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://6if1mlvat0c1"]
+
+[ext_resource type="Script" uid="uid://pwix106j3ral" path="res://components/behaviour_components/projectile_behaviour_components/projectile_behaviour_component.gd" id="1_0ov7c"]
+
+[node name="ProjectileBehaviourComponent" type="Node2D"]
+script = ExtResource("1_0ov7c")
