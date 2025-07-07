@@ -27,6 +27,8 @@ func _generate_tree_set_piece_dict() -> void:
 		while file_name != "":
 			# Do stuff with file...
 			if not dir.current_is_dir():
+				if file_name.ends_with(".remap"): # Strip ".remap" off of file name
+					file_name = file_name.left(-6)
 				var full_path: String = tree_unlock_path + file_name
 				var set_piece_packed = load(full_path)
 				var set_piece: SetPiece = set_piece_packed.instantiate()
@@ -52,6 +54,8 @@ func _generate_tech_set_piece_dict() -> void:
 		while file_name != "":
 			# Do stuff with file...
 			if not dir.current_is_dir():
+				if file_name.ends_with(".remap"): # Strip ".remap" off of file name
+					file_name = file_name.left(-6)
 				var full_path: String = tech_unlock_path + file_name
 				var set_piece_packed = load(full_path)
 				var set_piece: SetPiece = set_piece_packed.instantiate()

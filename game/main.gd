@@ -7,7 +7,7 @@ func _ready():
 	
 	Global.update_globals()
 	Global.game_state = Global.GameState.PLAYING
-	NutreentsDiscordRPC.update_details("Growing a forest")
+	NutreentsDiscordRPC.instance.update_details("Growing a forest")
 	
 	if session_data.is_empty():
 		call_deferred("create_new_world")

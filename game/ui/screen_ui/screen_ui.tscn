@@ -187,3 +187,6 @@ layer = 128
 [node name="GameCursor" parent="CursorLayer" instance=ExtResource("2_2e8l5")]
 z_index = 4096
 z_as_relative = false
+
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true

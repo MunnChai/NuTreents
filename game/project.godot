@@ -33,9 +33,11 @@ config/icon="uid://b58wlyiwuebmb"
 [audio]
 
 buses/default_bus_layout="res://sound/default_bus_layout.tres"
+general/default_playback_type.web=0
 
 [autoload]
 
+DiscordObjectAutoload="*res://discord_wrapper/discord_object_autoload.gd"
 Global="*res://global.gd"
 Settings="*res://settings/settings.gd"
 TreeManager="*res://structures/trees/twee_manager.gd"
@@ -44,7 +46,6 @@ SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
 PopupManager="*res://ui/popup_manager/popup_manager.gd"
 ScreenUI="*res://ui/screen_ui/screen_ui.tscn"
 SceneLoader="*res://scene_loader/scene_loader.gd"
-DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 SessionData="*res://session_data/session_data.gd"
 StructureRegistry="*res://structures/registry/structure_registry.tscn"
 WorldSettings="*res://world/world_settings/world_settings.tscn"
