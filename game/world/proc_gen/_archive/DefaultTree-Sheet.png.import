@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ib563qaldw58"
-path="res://.godot/imported/WaterTiles_Animated_1.png-86e0db3c053d5a013259fac092ad42d0.ctex"
+uid="uid://baeko446ej3ri"
+path="res://.godot/imported/DefaultTree-Sheet.png-b24589a1f008557b583f8295375410ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/terrain_map/WaterTiles_Animated_1.png"
-dest_files=["res://.godot/imported/WaterTiles_Animated_1.png-86e0db3c053d5a013259fac092ad42d0.ctex"]
+source_file="res://world/proc_gen/_archive/DefaultTree-Sheet.png"
+dest_files=["res://.godot/imported/DefaultTree-Sheet.png-b24589a1f008557b583f8295375410ca.ctex"]
 
 [params]
 

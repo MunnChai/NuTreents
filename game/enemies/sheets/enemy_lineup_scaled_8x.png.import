@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://baeko446ej3ri"
-path="res://.godot/imported/DefaultTree-Sheet.png-98c5e944c2084e187230a81885ce671d.ctex"
+uid="uid://cxgfcku32b838"
+path="res://.godot/imported/enemy_lineup_scaled_8x.png-3ab15b4ed168ef93df19797477df8e4f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/terrain_map/DefaultTree-Sheet.png"
-dest_files=["res://.godot/imported/DefaultTree-Sheet.png-98c5e944c2084e187230a81885ce671d.ctex"]
+source_file="res://enemies/sheets/enemy_lineup_scaled_8x.png"
+dest_files=["res://.godot/imported/enemy_lineup_scaled_8x.png-3ab15b4ed168ef93df19797477df8e4f.ctex"]
 
 [params]
 

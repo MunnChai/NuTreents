@@ -4,46 +4,46 @@
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="2_0amx6"]
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="2_5li0k"]
 [ext_resource type="Texture2D" uid="uid://bbhcyk1k6fkk" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_text.png" id="3_mquka"]
-[ext_resource type="Texture2D" uid="uid://bqookpbbsmui5" path="res://world/proc_gen/terrain_map/Tiles_1.png" id="5_nhexk"]
+[ext_resource type="Texture2D" uid="uid://nc08yyyg3qtf" path="res://world/proc_gen/world_tiles.png" id="5_qnpkc"]
 [ext_resource type="Texture2D" uid="uid://55g0x02evm07" path="res://structures/trees/sheets/tree_triangle_sheet.png" id="7_qnpkc"]
 [ext_resource type="Texture2D" uid="uid://kymn2pn31r2" path="res://enemies/sheets/speedle_sheet.png" id="7_yqlfy"]
 [ext_resource type="Texture2D" uid="uid://dtt6qi76ow2uv" path="res://structures/trees/sheets/tree_tall_sheet.png" id="8_33wmp"]
 [ext_resource type="Texture2D" uid="uid://5daqlv8jvuh4" path="res://structures/trees/sheets/tree_pump_sheet.png" id="9_s5xbb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_yqlfy"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mht4c"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_s5xbb"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j8lxg"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mpl8o"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(96, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3mor3"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(0, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hv1dw"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_uk5hu"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wr7vw"]
-atlas = ExtResource("5_nhexk")
+atlas = ExtResource("5_qnpkc")
 region = Rect2(32, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33wmp"]

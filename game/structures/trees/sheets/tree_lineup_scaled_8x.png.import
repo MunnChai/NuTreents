@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqookpbbsmui5"
-path="res://.godot/imported/Tiles_1.png-5a1329ff9439d84b7f430eda2f79167a.ctex"
+uid="uid://mrjqcl2gsdty"
+path="res://.godot/imported/tree_lineup_scaled_8x.png-7f2032b1a63b7bdbcef18c1457a41f5c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/terrain_map/Tiles_1.png"
-dest_files=["res://.godot/imported/Tiles_1.png-5a1329ff9439d84b7f430eda2f79167a.ctex"]
+source_file="res://structures/trees/sheets/tree_lineup_scaled_8x.png"
+dest_files=["res://.godot/imported/tree_lineup_scaled_8x.png-7f2032b1a63b7bdbcef18c1457a41f5c.ctex"]
 
 [params]
 

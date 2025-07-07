@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ctu3gksgwvuku"]
+[gd_scene load_steps=10 format=3 uid="uid://ctu3gksgwvuku"]
 
 [ext_resource type="Texture2D" uid="uid://bvudbupansns" path="res://structures/trees/sheets/projectiles/tree_bullet.png" id="1_tc7fj"]
 [ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="2_jqs4b"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_7wpnm"]
 [ext_resource type="PackedScene" uid="uid://be4ntefnq6er2" path="res://components/fire_components/flammable_component/flammable_component.tscn" id="6_etqhs"]
 [ext_resource type="PackedScene" uid="uid://dkj5432pbunea" path="res://components/fire_components/fire_spread_component/fire_spread_component.tscn" id="7_paf4j"]
+[ext_resource type="PackedScene" uid="uid://6if1mlvat0c1" path="res://components/behaviour_components/projectile_behaviour_components/projectile_behaviour_component.tscn" id="8_paf4j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
 resource_local_to_scene = true
@@ -45,6 +46,8 @@ bounce_amount = 32.0
 wait_time = 0.5
 one_shot = true
 autostart = true
+
+[node name="ProjectileBehaviourComponent" parent="." instance=ExtResource("8_paf4j")]
 
 [connection signal="area_entered" from="Sprite2D/HitboxComponent" to="RemovalComponent" method="free_actor" unbinds=1]
 [connection signal="hit_entity" from="Sprite2D/HitboxComponent" to="Sprite2D/FireComponents/FireSpreadComponent" method="try_ignite_entity"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ba1323u33dy8v"]
+[gd_scene load_steps=10 format=3 uid="uid://ba1323u33dy8v"]
 
 [ext_resource type="Texture2D" uid="uid://c2na40f6gej1i" path="res://structures/trees/sheets/projectiles/slow_tree_bullet.png" id="1_gyl6c"]
 [ext_resource type="PackedScene" uid="uid://bd1lvgtnjvu3d" path="res://components/collision/hitbox_component/hitbox_component.tscn" id="2_fk4nl"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cxn04aoyu52rj" path="res://components/removal_component/removal_component.tscn" id="5_21ns3"]
 [ext_resource type="PackedScene" uid="uid://c7bm4e2244omm" path="res://components/status_effects/status_inflictor_component/status_inflictor_component.tscn" id="6_fk4nl"]
 [ext_resource type="Resource" uid="uid://bfwx873k8yrj1" path="res://components/status_effects/resources/slowing_status_effect.tres" id="7_gyl6c"]
+[ext_resource type="PackedScene" uid="uid://6if1mlvat0c1" path="res://components/behaviour_components/projectile_behaviour_components/projectile_behaviour_component.tscn" id="8_fcsjw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_05k2p"]
 resource_local_to_scene = true
@@ -39,6 +40,8 @@ autostart = true
 
 [node name="StatusInflictorComponent" parent="." instance=ExtResource("6_fk4nl")]
 status_effect = ExtResource("7_gyl6c")
+
+[node name="ProjectileBehaviourComponent" parent="." instance=ExtResource("8_fcsjw")]
 
 [connection signal="area_entered" from="Sprite2D/HitboxComponent" to="RemovalComponent" method="free_actor" unbinds=1]
 [connection signal="hit_entity" from="Sprite2D/HitboxComponent" to="StatusInflictorComponent" method="apply_status_effect"]
