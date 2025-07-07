@@ -22,6 +22,8 @@ func spawn_node(grid_offset: Vector2i = Vector2i.ZERO, new_spawn: Node2D = null,
 	
 	return new_spawn
 
+func increase_damage(amount: float) -> void:
+	damage += amount
 
 func set_damage(new_damage: float) -> void:
 	damage = new_damage

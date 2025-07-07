@@ -22,7 +22,6 @@ func _ready() -> void:
 	actor = get_parent()
 	
 	_get_components()
-	set_stats_from_resource()
 
 func _get_components() -> void:
 	if not tooltip_identifier_component:
@@ -50,6 +49,8 @@ func set_stats_from_resource(resource: StatResource = stat_resource) -> void:
 		attack_range_node.range = resource.attack_range
 	if attack_cooldown_timer:
 		attack_cooldown_timer.wait_time = resource.attack_cooldown
+	
+	ResearchTree.instance.apply_all_research(actor)
 
 func set_upgraded_stats_from_resource(resource: StatResource = stat_resource) -> void:
 	tooltip_identifier_component.set_id(resource.id)
@@ -63,3 +64,5 @@ func set_upgraded_stats_from_resource(resource: StatResource = stat_resource) ->
 		attack_range_node.range = resource.attack_range_2
 	if attack_cooldown_timer:
 		attack_cooldown_timer.wait_time = resource.attack_cooldown_2
+	
+	ResearchTree.instance.apply_all_research(actor)

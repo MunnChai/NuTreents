@@ -294,14 +294,6 @@ alignment = 1
 layout_mode = 2
 tree_type = 1
 
-[node name="ExplorerTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
-layout_mode = 2
-tree_type = 5
-
-[node name="TallTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
-layout_mode = 2
-tree_type = 6
-
 [node name="WaterTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
 layout_mode = 2
 tree_type = 3
@@ -327,15 +319,19 @@ grow_vertical = 2
 z_index = 1000
 
 [node name="TextBox" parent="UI/UI/TutorialUI" index="0"]
-offset_bottom = 193.0
-
-[node name="RichText" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/TextContainer" index="0"]
-text = "Welcome to NuTreents!"
+offset_left = 416.0
+offset_top = 53.0
+offset_right = 748.0
+offset_bottom = 262.0
 
 [node name="ContinueButton" parent="UI/UI/TutorialUI/TextBox/VBoxContainer/ButtonContainer" index="0"]
-text = "Hi!
-"
 autowrap_mode = 3
+
+[node name="PanelContainer" parent="UI/UI/TutorialUI" index="2"]
+offset_left = 24.0
+offset_top = 560.0
+offset_right = 221.0
+offset_bottom = 622.0
 
 [node name="FadeScreen" type="Control" parent="UI/UI/TutorialUI"]
 z_index = -10
@@ -356,10 +352,10 @@ metadata/_edit_lock_ = true
 
 [node name="CircleClip" type="TextureRect" parent="UI/UI/TutorialUI/FadeScreen/CanvasGroup"]
 material = SubResource("CanvasItemMaterial_l38k8")
-offset_left = 882.0
-offset_top = 1.0
-offset_right = 1282.0
-offset_bottom = 401.0
+offset_left = -128.0
+offset_top = -152.0
+offset_right = 272.0
+offset_bottom = 248.0
 mouse_filter = 2
 texture = SubResource("GradientTexture2D_30bqp")
 
@@ -384,7 +380,7 @@ script = ExtResource("4_3e0vf")
 
 [node name="GroundLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("16_e8ato")]
 z_index = -5
-tile_map_data = PackedByteArray("AAD+/wEAAAABAAAAAAD//wEAAAADAAAAAAAAAAEAAAABAAAAAAABAAEAAAABAAAAAAABAAAAAAACAAAAAAAAAAAAAAAAAAAAAAD//wAAAAADAAAAAAD+/wAAAAABAAAAAAD+////AAAAAAAAAAD/////AAADAAAAAAAAAP//AAACAAAAAAABAP//AAACAAAAAAABAP7/AAADAAAAAAAAAP7/AAAAAAAAAAD///7/AAAAAAAAAAD+//7/AAACAAAAAAD9//3/AAACAAAAAAD9//7/AAACAAAAAAD9////AAAAAAAAAAD9/wAAAAADAAAAAAD9/wEAAAABAAAAAAD+//3/AAABAAAAAAD///3/AAABAAAAAAAAAP3/AAADAAAAAAABAP3/AAAAAAAAAAACAP3/AAAAAAAAAAACAP7/AAACAAAAAAACAP//AAABAAAAAAACAAAAAAACAAAAAAACAAEAAAAAAAAAAAACAAIAAAABAAAAAAABAAIAAAABAAAAAAAAAAIAAAAAAAAAAAD//wIAAAAAAAAAAAD+/wIAAAADAAAAAAD9/wIAAAACAAAAAAA=")
+tile_map_data = PackedByteArray("AAD//wEAAAABAAAAAAAAAAEAAAAAAAAAAAABAAEAAAADAAAAAAABAAAAAAABAAAAAAAAAAAAAAACAAAAAAD//wAAAAADAAAAAAD+/wAAAAACAAAAAAD+////AAABAAAAAAD/////AAADAAAAAAAAAP//AAABAAAAAAABAP//AAAAAAIAAAAAAP7/AAADAAAAAAD///7/AAADAAAAAAD+//7/AAAAAAAAAAD9////AAABAAAAAAD9/wEAAAAAAAIAAAD///3/AAABAAIAAAACAAAAAAABAAIAAAACAAEAAAADAAIAAAABAAIAAAADAAIAAAAAAAIAAAACAAAAAAD//wIAAAAAAA4AAAD//wMAAAAAABIAAAABAAMAAAAAAA4AAAD9//7/AAABAAAAAAD+//3/AAADAAIAAAACAAIAAAACAAIAAAAAAAMAAAAAABAAAAD9/wAAAAACAAAAAAD+/wEAAAABAAAAAAAAAP3/AAACAAIAAAABAP7/AAAAAAIAAAACAP//AAABABYAAAABAP3/AAABABYAAAD+/wIAAAAAABIAAAD+/wMAAAAAAA4AAAD9/wIAAAAAAA4AAAD8/wAAAAADAAIAAAD8////AAAAAAIAAAD8//7/AAABAAIAAAD8/wEAAAAAABQAAAD9//3/AAACAAIAAAACAP7/AAAAABYAAAD///z/AAAAAAIAAAD8/wIAAAAAAA4AAAACAAMAAAAAABQAAAACAP3/AAADABYAAAADAP//AAAAABYAAAADAP7/AAABABYAAAAAAPz/AAADABYAAAAAAPv/AAAAABYAAAD///v/AAADABYAAAD7////AAAAABgAAAD7//7/AAAFABgAAAD7//3/AAADABgAAAD8//3/AAAEABgAAAD8//z/AAAEABgAAAD9//v/AAADABgAAAD+//v/AAAAABgAAAD9//z/AAADABgAAAD+//z/AAADABgAAAD7/wAAAAAEABgAAAD7/wEAAAAFABgAAAADAAAAAAAAABYAAAADAAEAAAAAABYAAAADAAIAAAAAABIAAAADAAMAAAAAAA4AAAABAPz/AAAAABYAAAA=")
 
 [node name="Cursor" parent="World/TileMaps/BuildingManager" instance=ExtResource("22_u47y0")]
 script = ExtResource("20_jpd2v")

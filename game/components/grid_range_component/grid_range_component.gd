@@ -48,3 +48,6 @@ func get_square_tiles() -> Array[Vector2i]:
 			tiles.append(Vector2i(x, y))
 	
 	return tiles
+
+func increase_range(amount: int) -> void:
+	range += amount

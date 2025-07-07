@@ -9,9 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bkuuj58b1syaq" path="res://ui/screen_ui/save_and_load_menu/load_menu/load_menu.tscn" id="4_17o5s"]
 [ext_resource type="PackedScene" uid="uid://bexvvsxohs5xm" path="res://ui/screen_ui/save_and_load_menu/new_world_menu/new_world_menu.tscn" id="7_w6yb4"]
 [ext_resource type="PackedScene" uid="uid://btlr24f4nrt14" path="res://ui/screen_ui/confirmation_menu/confirmation_menu.tscn" id="8_j5ru3"]
-[ext_resource type="PackedScene" uid="uid://ctcfj84w32fdo" path="res://ui/screen_ui/shop_menu/shop_menu.tscn" id="8_jtxun"]
 [ext_resource type="PackedScene" uid="uid://cclbsu58ct2ku" path="res://ui/screen_ui/almanac_menu/almanac_menu.tscn" id="9_irruo"]
 [ext_resource type="PackedScene" uid="uid://c4lpy1xm6ny0k" path="res://scene_loader/black_screen.tscn" id="9_nacs8"]
+[ext_resource type="PackedScene" uid="uid://d4ed1exxflnd0" path="res://ui/screen_ui/research_menu/research_menu.tscn" id="9_yebrt"]
 [ext_resource type="PackedScene" uid="uid://d6jmaok0ivmi" path="res://ui/screen_ui/pause_menu/settings_menu/keybinds_menu/keybinds_menu.tscn" id="10_yebrt"]
 
 [node name="ScreenUI" type="CanvasLayer"]
@@ -100,11 +100,6 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
-[node name="ShopMenu" parent="CenteredMenu" instance=ExtResource("8_jtxun")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
-
 [node name="AlmanacMenu" parent="CenteredMenu" instance=ExtResource("9_irruo")]
 unique_name_in_owner = true
 visible = false
@@ -116,6 +111,11 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
+
+[node name="ResearchMenu" parent="CenteredMenu" instance=ExtResource("9_yebrt")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
 
 [node name="KeybindingDimmer" type="ColorRect" parent="."]
 unique_name_in_owner = true
@@ -187,3 +187,6 @@ layer = 128
 [node name="GameCursor" parent="CursorLayer" instance=ExtResource("2_2e8l5")]
 z_index = 4096
 z_as_relative = false
+
+[node name="MenuLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true

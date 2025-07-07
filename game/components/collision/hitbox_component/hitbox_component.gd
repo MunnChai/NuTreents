@@ -22,6 +22,9 @@ func _on_area_entered(area: Area2D) -> void:
 		var entity: Node2D = area.owner
 		hit_entity.emit(entity)
 
+func increase_damage(amount: float) -> void:
+	damage += amount
+
 func set_damage(new_damage: float) -> void:
 	damage = new_damage
 

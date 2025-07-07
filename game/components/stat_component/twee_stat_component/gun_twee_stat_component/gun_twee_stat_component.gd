@@ -3,13 +3,7 @@ extends TweeStatComponent
 
 @export var projectile_spawner_component: ProjectileSpawnerComponent
 @export var action_timer: Timer
-@export var attack_range_component: GridRangeComponent
-
-func _ready() -> void:
-	actor = get_parent()
-	
-	_get_components()
-	set_stats_from_resource()
+@export var attack_range_component: GridRangeComponent 
 
 func _get_components() -> void:
 	super._get_components()

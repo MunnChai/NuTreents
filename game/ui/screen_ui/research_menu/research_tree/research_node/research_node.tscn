@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://bir2nauxjr10w"]
+
+[ext_resource type="Texture2D" uid="uid://db5xvjk5l5xb3" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node_textures/research_node_locked.png" id="1_1mvbl"]
+[ext_resource type="Script" uid="uid://cw781nakochuc" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node.gd" id="1_5p24h"]
+[ext_resource type="Texture2D" uid="uid://chvnh26sacn53" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node_textures/research_node_unlockable.png" id="4_c1dk7"]
+[ext_resource type="Texture2D" uid="uid://dlwhsba3ufbjf" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node_textures/research_node_unlocked.png" id="5_ex55h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_20flq"]
+
+[node name="ResearchNode" type="PanelContainer"]
+modulate = Color(0.392157, 0.392157, 0.392157, 1)
+custom_minimum_size = Vector2(64, 64)
+offset_right = 64.0
+offset_bottom = 64.0
+pivot_offset = Vector2(32, 32)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_20flq")
+script = ExtResource("1_5p24h")
+locked_icon = ExtResource("1_1mvbl")
+unlockable_icon = ExtResource("4_c1dk7")
+unlocked_icon = ExtResource("5_ex55h")
+
+[node name="Background" type="NinePatchRect" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("1_1mvbl")
+patch_margin_left = 12
+patch_margin_top = 12
+patch_margin_right = 12
+patch_margin_bottom = 12
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
+step = 0.0
+fill_mode = 4
+texture_under = ExtResource("4_c1dk7")
+texture_progress = ExtResource("5_ex55h")
+
+[node name="Icon" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="HiddenButton" type="TextureButton" parent="."]
+layout_mode = 2
+
+[connection signal="button_down" from="HiddenButton" to="." method="_on_mouse_pressed"]
+[connection signal="button_up" from="HiddenButton" to="." method="_on_mouse_released"]
+[connection signal="focus_entered" from="HiddenButton" to="." method="_on_focus_entered"]
+[connection signal="focus_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="focus_exited" from="HiddenButton" to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HiddenButton" to="." method="_on_mouse_exited"]

@@ -115,12 +115,6 @@ func add_tree(twee: Node2D, pos: Vector2i) -> void:
 	if is_twee(pos):
 		return
 	
-	#var occupied_positions = twee.get_occupied_positions()
-	#
-	#for p: Vector2i in occupied_positions:
-		#if is_twee(p):
-			#return
-	
 	# Forest stuff...
 	var f_id: int = find_forest(pos)
 	forest_map[pos] = f_id

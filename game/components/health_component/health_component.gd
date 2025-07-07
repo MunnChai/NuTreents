@@ -15,6 +15,11 @@ func _ready() -> void:
 	current_health = max_health
 
 
+func increase_max_health(amount: float, increase_current_health: bool = true) -> void:
+	max_health += amount
+	
+	if increase_current_health:
+		current_health += amount
 
 func set_max_health(health: float) -> void:
 	max_health = health
