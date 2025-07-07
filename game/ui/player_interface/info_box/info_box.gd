@@ -116,18 +116,22 @@ func show_content_for_tree(tree_stat: TreeStatResource):
 func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_factory: bool = false) -> void:
 	var world_pos = Global.terrain_map.map_to_local(pos)
 	var fog_pos = Global.fog_map.local_to_map(world_pos)
-
+	
+	## EARLY TERMINATION FOR FOG
 	if (Global.fog_map.is_tile_foggy(fog_pos)):
 		rich_text.text = ""
 		return
 	
+	## IF ID IS PRESENT
 	if (name_dictionary.has(id)):
-		var content = "[i]" + name_dictionary[id] + "[/i]";
+		var content = "[i]" + name_dictionary[id] + "[/i]" ## NAME
 		content += "\n"
-		content += "[color=d9863e]" + desc_dictionary[id]
+		content += "[color=d9863e]" + desc_dictionary[id] ## DESCRIPTION
 		rich_text.text = content
 		
-		rich_text.text += "\n"
+		rich_text.text += "\n" ## Gap
+		
+		## PROPERTIES
 		
 		var enemy = EnemyManager.instance.get_enemy_at(pos)
 		var structure: Node2D = null
@@ -176,7 +180,7 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			
 			if Components.get_component(structure, WaterProductionComponent).is_water_adjacent():
 				rich_text.text += "\n"
-				rich_text.text += "[color=6be1e3]" + tr(&"INFO_WATER_BOOST")
+				rich_text.text += "[color=6be1e3]" + tr(&"INFO_WATER_BOOST") ## TODO: More detail?
 				
 			if is_instance_valid(WeatherManager.instance) and WeatherManager.instance.is_raining():
 				rich_text.text += "\n"

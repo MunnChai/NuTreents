@@ -26,7 +26,7 @@ NOTIF_TECH_POINTS,Earned {num} tech points!,TODO (num}
 NOTIF_TECH_POINT_AVAILABLE,You have {num} tech point available,TODO {num}
 NOTIF_TECH_POINTS_AVAILABLE,You have {num} tech points available,TODO {num}
 NOTIF_TECH_UNLOCK,Researched {tech_name}!,TODO {tech_name}!
-INFO_NUTREENTS_TO_VERB,- COSTS {cost} NUTREENTS TO {verb} -,TODO {verb} {cost}
+INFO_NUTREENTS_TO_VERB,COSTS {cost} NUTREENTS TO {verb},TODO {verb} {cost}
 INFO_DAMAGE,{value} DAMAGE,TODO
 INFO_RANGE,{value} RANGE,TODO
 INFO_HP,{value} HP,TODO

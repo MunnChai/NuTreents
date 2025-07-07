@@ -43,7 +43,7 @@ func _process(delta: float) -> void:
 			if playing_day:
 				playing_day = false
 				transition_to_night()
-			update_night_track()
+			update_night_track(delta)
 			has_transitioned = false
 		elif clock.get_curr_day_sec() > clock.HALF_DAY_SECONDS * AmbientLighting.PERCENT_EVENING_THRESHOLD:
 			## EVENING
@@ -89,26 +89,27 @@ func transition_to_night():
 func update_day_track() -> void:
 	pass
 
-func update_night_track() -> void:
+func update_night_track(delta: float) -> void:
 	if not audio_stream_player.playing or audio_stream_player.stream_paused:
 		return
 	
 	if audio_stream_player.get_stream_playback() == null:
 		return
 	
-	if get_tree().get_nodes_in_group("enemies").size() >= 5:
+	MusicIntensity.set_target_intensity(get_tree().get_nodes_in_group("enemies").size())
+	MusicIntensity.update(delta)
+	
+	if MusicIntensity.get_intensity() >= 4.5:
 		if current_vibe != Vibe.INTENSE_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("intense")
 			current_vibe = Vibe.INTENSE_NIGHT
 		# audio_stream_player["parameters/switch_to_clip"] = "intense"
-	elif get_tree().get_nodes_in_group("enemies").size() >= 1:
-		print("MILD")
+	elif MusicIntensity.get_intensity() >= 0.5:
 		if current_vibe != Vibe.MILD_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("mild")
 			current_vibe = Vibe.MILD_NIGHT
 			# audio_stream_player["parameters/switch_to_clip"] = "mild"
 	else:
-		print("CALM")
 		if current_vibe != Vibe.CALM_NIGHT:
 			audio_stream_player.get_stream_playback().switch_to_clip_by_name("calm")
 			current_vibe = Vibe.CALM_NIGHT

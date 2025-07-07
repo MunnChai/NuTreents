@@ -17,21 +17,25 @@ func _ready() -> void:
 		dict.set(sound.id, sound)
 
 func get_sound(id: StringName) -> SoundResource:
+	if not dict.has(id):
+		print("WARNING! Attempting to play sound \"{id}\", but it is not registered. Did you make a typo?".format({ "id": id }))
 	return dict.get(id)
 
 func play_oneshot(id: StringName, global_pos: Vector2) -> void:
 	var audio_player := start_player(id, global_pos)
 	
-	await audio_player.finished
+	if audio_player:
+		await audio_player.finished
 	
-	audio_player.queue_free()
+		audio_player.queue_free()
 
 func play_global_oneshot(id: StringName) -> void:
 	var audio_player := start_global_player(id)
 	
-	await audio_player.finished
+	if audio_player:
+		await audio_player.finished
 	
-	audio_player.queue_free()
+		audio_player.queue_free()
 
 const DEFAULT_ATTENUATION := 8.0
 
@@ -39,7 +43,7 @@ const SOUND_PLAYER = preload("./sound_player.tscn")
 func start_player(id: StringName, global_pos: Vector2) -> AudioStreamPlayer2D:
 	var sound := get_sound(id)
 	if not sound:
-		return
+		return null
 	
 	var stream := sound.get_random_audio_stream()
 	
@@ -61,7 +65,7 @@ func start_player(id: StringName, global_pos: Vector2) -> AudioStreamPlayer2D:
 func start_global_player(id: StringName, linear_volume: float = 0.7) -> AudioStreamPlayer:
 	var sound := get_sound(id)
 	if not sound:
-		return
+		return null
 	
 	var stream := sound.get_random_audio_stream()
 	
