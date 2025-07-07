@@ -93,13 +93,13 @@ func pause_game():
 	var filter := AudioEffectLowPassFilter.new()
 	filter.cutoff_hz = 800.0
 	AudioServer.add_bus_effect(AudioServer.get_bus_index("Music"), filter, 0)
-	NutreentsDiscordRPC.update_details("Shopping for saplings")
+	NutreentsDiscordRPC.instance.update_details("Shopping for saplings")
 	show()
 	back_button.grab_focus()
 
 func unpause_game():
 	Global.unpause_game()
-	NutreentsDiscordRPC.update_details("Growing a forest")
+	NutreentsDiscordRPC.instance.update_details("Growing a forest")
 	if AudioServer.get_bus_effect_count(AudioServer.get_bus_index("Music")) != 0:
 		AudioServer.remove_bus_effect(AudioServer.get_bus_index("Music"), 0)
 	hide()
