@@ -88,7 +88,7 @@ var is_paused := false
 func _ready() -> void:
 	game_state = GameState.MAIN_MENU
 	
-	NutreentsDiscordRPC.start()
+	NutreentsDiscordRPC.instance.start()
 	
 	# For randomness upon first opening the game
 	set_seed(int(Time.get_unix_time_from_system()))

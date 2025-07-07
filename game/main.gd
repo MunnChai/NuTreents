@@ -7,7 +7,7 @@ func _ready():
 	
 	Global.update_globals()
 	Global.game_state = Global.GameState.PLAYING
-	NutreentsDiscordRPC.update_details("Growing a forest")
+	NutreentsDiscordRPC.instance.update_details("Growing a forest")
 	
 	if session_data.is_empty():
 		call_deferred("create_new_world")
@@ -24,8 +24,6 @@ func create_new_world() -> void:
 	
 	TreeManager.start_game()
 	
-	ScreenUI.shop_menu.reset_shop_cards()
-	
 	# Save metadata and session data together, so we don't end up with one without the other in a save file
 	SessionData.call_deferred("create_new_session_data", Global.get_metadata())
 	SessionData.call_deferred("save_session_data", Global.session_id)
@@ -35,6 +33,10 @@ func create_new_world() -> void:
 	AlmanacInfo.add_tree(Global.TreeType.DEFAULT_TREE)
 	AlmanacInfo.add_tree(Global.TreeType.WATER_TREE)
 	AlmanacInfo.add_tree(Global.TreeType.GUN_TREE)
+	print("new world trees", AlmanacInfo.get_trees())
+	
+	ResearchTree.instance.reset_unlocked_nodes()
+	ResearchTree.instance.set_tech_points(0)
 
 func load_world(session_data: Dictionary) -> void:
 	# Set seed before world generation, for (hopefully) deterministic map gen
@@ -76,31 +78,28 @@ func load_world(session_data: Dictionary) -> void:
 		if (tree_resource.type == Global.TreeType.MOTHER_TREE):
 			var mother_twee = TreeManager.get_twee(pos)
 			var health_component: HealthComponent = Components.get_component(mother_twee, HealthComponent)
-			health_component.set_current_health(tree_resource.hp)
+			health_component.call_deferred("set_current_health", tree_resource.hp)
 			continue
 		
 		var tree: Node2D = TreeRegistry.get_new_twee(tree_resource.type)
 		TreeManager.place_tree(tree, pos)
 		
 		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
-		tree_behaviour_component.apply_data_resource(tree_resource)
+		tree_behaviour_component.call_deferred("apply_data_resource", tree_resource)
 	
 	# Load enemies
 	EnemyManager.instance.load_enemies_from(session_data["enemy_map"])
 	EnemyManager.instance.enemy_spawn_timer = session_data["enemy_spawn_timer"]
 	
 	# Add unlocked cards to tree menu
-	TreeMenu.instance.remove_all_tree_cards()
 	for tree_type: Global.TreeType in session_data["purchased_cards"]:
 		TreeMenu.instance.add_tree_card(tree_type)
-		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
-	
-	#ScreenUI.shop_menu.reset_shop_cards() # Reset the state of the shop menu first
-	#ScreenUI.shop_menu.purchased_cards = session_data["purchased_cards"]
-	#for tree_type: Global.TreeType in ScreenUI.shop_menu.purchased_cards:
-		#TreeMenu.instance.add_tree_card(tree_type)
-		#ScreenUI.shop_menu.disable_card_of_type(tree_type)
 	
 	# Add almanac info
 	AlmanacInfo.set_trees(session_data["almanac_trees"])
 	AlmanacInfo.set_enemies(session_data["almanac_enemies"])
+	
+	# Set unlocked research nodes
+	ResearchTree.instance.reset_unlocked_nodes()
+	ResearchTree.instance.set_unlocked_nodes(session_data["unlocked_research"])
+	ResearchTree.instance.set_tech_points(session_data["num_tech_points"])

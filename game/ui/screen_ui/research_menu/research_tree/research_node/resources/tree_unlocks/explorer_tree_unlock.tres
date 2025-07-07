@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://t4maddpa35f"]
+
+[ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://structures/trees/icons/explorer_tree.png" id="1_sjmqb"]
+[ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/research_node_resource.gd" id="2_a85wk"]
+
+[resource]
+script = ExtResource("2_a85wk")
+display_name = "Explorer Tree"
+id = "explorer_tree"
+icon = ExtResource("1_sjmqb")
+tech_point_cost = 1
+tree_type = 5
+description = "Unlock the Explorer Tree."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

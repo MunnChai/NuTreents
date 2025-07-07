@@ -1,7 +1,7 @@
-class_name NutreentsDiscordRPC
-extends Node
+class_name DiscordObject
+extends AbstractDiscordObject
 
-static func start() -> void:
+func start() -> void:
 	# Application ID
 	DiscordRPC.app_id = 1361572959990579280
 	# this is boolean if everything worked
@@ -25,6 +25,6 @@ static func start() -> void:
 	 # Always refresh after changing the values!
 	DiscordRPC.refresh() 
 
-static func update_details(details: String) -> void:
+func update_details(details: String) -> void:
 	DiscordRPC.details = details
 	DiscordRPC.refresh()

@@ -106,6 +106,12 @@ func save_session_data(save_num: int = 1):
 	var unlocked_cards: Array = TreeMenu.instance.get_unlocked_tree_types()
 	config.set_value(SECTION_SESSION, "purchased_cards", unlocked_cards)
 	
+	# Save num tech points
+	var num_tech_points = ResearchTree.instance.get_num_tech_points()
+	config.set_value(SECTION_SESSION, "num_tech_points", num_tech_points)
+	var unlocked_research: Array = ResearchTree.instance.get_unlocked_node_ids()
+	config.set_value(SECTION_SESSION, "unlocked_research", unlocked_research)
+	
 	create_save_directory()
 	
 	err = config.save(full_path)
@@ -191,8 +197,17 @@ func load_session_data(save_num: int = 1) -> Dictionary:
 	var structure_map = config.get_value(SECTION_SESSION, "structure_map", {})
 	session_data["structure_map"] = structure_map
 	
+	# Get unlocked cards
 	var unlocked_cards = config.get_value(SECTION_SESSION, "purchased_cards", [])
 	session_data["purchased_cards"] = unlocked_cards
+	
+	# Get research tree stuff
+	var num_tech_points = config.get_value(SECTION_SESSION, "num_tech_points", 0)
+	session_data["num_tech_points"] = num_tech_points
+	var unlocked_research: Array = config.get_value(SECTION_SESSION, "unlocked_research", ["research"])
+	session_data["unlocked_research"] = unlocked_research
+	
+	
 	
 	return session_data
 

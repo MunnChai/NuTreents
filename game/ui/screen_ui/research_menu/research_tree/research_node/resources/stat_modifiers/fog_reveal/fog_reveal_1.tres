@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FogRevealResearchResource" load_steps=2 format=3 uid="uid://dndds7q1jjdax"]
+
+[ext_resource type="Script" uid="uid://da7rr1hu3csl3" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/fog_reveal/fog_reveal_research_resource.gd" id="1_v53gk"]
+
+[resource]
+script = ExtResource("1_v53gk")
+fog_range_increase = 1
+display_name = "Fog Dispersers"
+id = "fog_reveal_1"
+tech_point_cost = 1
+tree_type = 0
+description = "Planted trees reveal fog 1 tile further."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"
