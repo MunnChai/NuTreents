@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="FireResistResearchResource" load_steps=2 format=3 uid="uid://d2lqg5ieym5qe"]
+
+[ext_resource type="Script" uid="uid://egxdv0lq5bjm" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/fire_resist/fire_resist_research_resource.gd" id="1_lwcw6"]
+
+[resource]
+script = ExtResource("1_lwcw6")
+fire_damage_decrease = 2
+display_name = "Fire Resistance"
+id = "fire_resist_1"
+tech_point_cost = 1
+tree_type = 0
+description = "All trees take 2 less damage from fires."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"

@@ -22,7 +22,7 @@ func get_water_production() -> float:
 	
 	return water_production * get_rain_multiplier()
 
-func add_water_production(amount: float) -> float:
+func increase_water_production(amount: float) -> float:
 	water_production += amount
 	
 	return water_production
