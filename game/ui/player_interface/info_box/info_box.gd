@@ -170,16 +170,21 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			
 			rich_text.text += "\n"
 			
-			## TODO:
-			# Dehydrated
-			# Water boost
-			# Mortar tree armed
-			# Damage of spiky tree
+			if Components.get_component(structure, TweeBehaviourComponent).is_dehydrated:
+				rich_text.text += "\n"
+				rich_text.text += "[color=ab5012]" + tr(&"INFO_DEHYDRATED")
 			
-			#if (TreeManager.get_twee(pos).is_dehydrated):
-				#rich_text.text += "\n[color=ab5012]DEHYDRATED[/color]"
-			#if (previously_factory):
-				#rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
+			if Components.get_component(structure, WaterProductionComponent).is_water_adjacent():
+				rich_text.text += "\n"
+				rich_text.text += "[color=6be1e3]" + tr(&"INFO_WATER_BOOST")
+				
+			if is_instance_valid(WeatherManager.instance) and WeatherManager.instance.is_raining():
+				rich_text.text += "\n"
+				rich_text.text += "[color=6be1e3]" + tr(&"INFO_RAIN_BOOST")
+			
+			# MORTAR TREE: PRIMED TODO
+			# ON FIRE: TODO
+			
 		var destructable_component: DestructableComponent = Components.get_component(structure, DestructableComponent)
 		if destructable_component and not tree_stat_component:
 			rich_text.text +="\n"
