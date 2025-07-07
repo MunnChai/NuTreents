@@ -66,6 +66,7 @@ func start_global_player(id: StringName, linear_volume: float = 0.7) -> AudioStr
 	var stream := sound.get_random_audio_stream()
 	
 	var audio_player = AudioStreamPlayer.new()
+	audio_player.process_mode = Node.PROCESS_MODE_ALWAYS
 	add_child(audio_player)
 	audio_player.stream = stream
 	audio_player.pitch_scale = 1.0 + randf_range(-sound.pitch_variation_range, sound.pitch_variation_range)
