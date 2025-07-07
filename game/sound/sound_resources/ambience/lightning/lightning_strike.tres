@@ -1,11 +1,12 @@
 [gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://loyewd75gy30"]
 
-[ext_resource type="AudioStream" uid="uid://ejo0ondh1di3" path="res://sound/sfx/ambience/lightning_strike_01.ogg" id="1_p1qt3"]
-[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="2_3472c"]
+[ext_resource type="AudioStream" uid="uid://c15egm8maeh85" path="res://sound/sfx/ambience/lightning_strike_02.ogg" id="1_q1pfe"]
+[ext_resource type="Script" path="res://sound/sound_resource.gd" id="2_3472c"]
 
 [resource]
 script = ExtResource("2_3472c")
 id = &"lightning_strike"
-pitch_variation_range = 0.3
-audio_streams = Array[AudioStream]([ExtResource("1_p1qt3")])
+linear_volume = 2.0
+pitch_variation_range = 0.5
+audio_streams = Array[AudioStream]([ExtResource("1_q1pfe")])
 metadata/_custom_type_script = "uid://b84fa1ld5p0fc"
