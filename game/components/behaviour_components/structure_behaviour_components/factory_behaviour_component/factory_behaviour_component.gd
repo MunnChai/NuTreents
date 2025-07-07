@@ -28,6 +28,8 @@ func _connect_signals() -> void:
 
 func _on_destroyed() -> void:
 	ResearchTree.instance.add_tech_points(1)
+	SoundManager.play_oneshot(&"upgrade", global_position)
+	
 	var tech_point_token = TECH_POINT_TOKEN.instantiate()
 	Global.fog_map.add_child(tech_point_token)
 	tech_point_token.global_position = global_position
