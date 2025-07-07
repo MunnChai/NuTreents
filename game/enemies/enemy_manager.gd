@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
 		current_wave = 0
-		#kill_all_enemies()
+		kill_all_enemies()
 
 func get_curr_day() -> int:
 	return Global.clock.get_curr_day()
