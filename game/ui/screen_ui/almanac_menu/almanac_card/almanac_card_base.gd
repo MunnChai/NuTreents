@@ -28,7 +28,7 @@ func _on_mouse_pressed():
 	if not is_hovering:
 		return
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	TweenUtil.scale_to(self, Vector2(0.9, 0.9), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 
 func _on_mouse_released():
@@ -50,7 +50,7 @@ func _on_mouse_entered():
 	if is_selected:
 		return
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	TweenUtil.scale_to(self, Vector2(1.1, 1.1), 0.3, Tween.TransitionType.TRANS_EXPO, Tween.EaseType.EASE_OUT)
 
 func _on_mouse_exited():

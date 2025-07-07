@@ -65,7 +65,7 @@ func return_to(previous_menu: ScreenMenu) -> void:
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 
 func switch_effect() -> void:
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	
 	if is_open:
 		scale = Vector2(1.1, 1.1)
@@ -74,7 +74,7 @@ func switch_effect() -> void:
 func switch_to(section_type: SectionType) -> void:
 	section = section_type
 	
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	
 	if is_open:
 		scale = Vector2(1.1, 1.1)
@@ -109,7 +109,7 @@ func _on_controls_button_pressed() -> void:
 	switch_to(SectionType.CONTROLS)
 
 func _on_button_focused() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 
 
 func _on_rebind_button_pressed() -> void:

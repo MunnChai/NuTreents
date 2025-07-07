@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://casj8k0ngdefc"]
+
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="1_dl2ce"]
+[ext_resource type="AudioStream" uid="uid://c82lm8mfowgcs" path="res://sound/sfx/ambience/wind_loop.wav" id="1_i7etl"]
+
+[resource]
+script = ExtResource("1_dl2ce")
+id = &"wind_loop"
+pitch_variation_range = 0.3
+audio_streams = Array[AudioStream]([ExtResource("1_i7etl")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

@@ -43,6 +43,7 @@ Settings="*res://settings/settings.gd"
 TreeManager="*res://structures/trees/twee_manager.gd"
 TreeRegistry="*res://structures/trees/registry/twee_registry.tscn"
 SfxManager="*res://sound/sfx/AudioPlayers/sfx_manager.gd"
+SoundManager="*res://sound/sound_manager.gd"
 PopupManager="*res://ui/popup_manager/popup_manager.gd"
 ScreenUI="*res://ui/screen_ui/screen_ui.tscn"
 SceneLoader="*res://scene_loader/scene_loader.gd"
@@ -54,6 +55,7 @@ EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
 DebugConsole="*res://addons/debug_console/debug_console_global.gd"
 AlmanacInfo="*res://ui/almanac_info/almanac_info.gd"
 SetPieceRegistry="*res://world/proc_gen/set_pieces/set_piece_registry.gd"
+DiscordObjectAutoload="*res://discord_wrapper/discord_object_autoload.gd"
 
 [display]
 
@@ -63,6 +65,7 @@ window/stretch/mode="viewport"
 
 movie_writer/movie_file="/Users/felixrl/Felix/Projects/310-Game Development/GodotWildJam/GodotWildJam79/Recordings/movie.avi"
 movie_writer/fps=24
+export/convert_text_resources_to_binary=false
 
 [editor_plugins]
 

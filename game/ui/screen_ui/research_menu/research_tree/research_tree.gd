@@ -42,7 +42,7 @@ func try_unlock(research_node: ResearchNode) -> void:
 		update_unlockable_nodes()
 		unlock_success.emit(research_node)
 	else:
-		SfxManager.play_sound_effect("ui_fail")
+		SoundManager.play_global_oneshot(&"ui_fail")
 		unlock_failed.emit(research_node)
 
 #region APPLYING RESEARCH

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c3lgxtly6kyx"]
 
-[ext_resource type="AudioStream" uid="uid://ej180lonihlu" path="res://sound/sfx/intro_jingle.wav" id="1_rrjjd"]
+[ext_resource type="AudioStream" uid="uid://ej180lonihlu" path="res://sound/sfx/jingles/intro_jingle.wav" id="1_rrjjd"]
 
 [node name="SplashWind" type="AudioStreamPlayer"]
 stream = ExtResource("1_rrjjd")

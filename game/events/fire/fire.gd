@@ -15,8 +15,15 @@ signal extinguished ## Was put out by an external force
 var lifetime_countdown := 0.0 ## Time until the cold
 var is_extinguished := false ## The end of days is here
 
+var audio: AudioStreamPlayer2D
+
 func _ready() -> void:
-	pass
+	audio = SoundManager.start_player(&"fire_burn", global_position)
+
+func _exit_tree() -> void:
+	if audio:
+		audio.stop()
+		audio.queue_free()
 
 ## Manual extinguishing, prevent destruction!
 func extinguish() -> void:

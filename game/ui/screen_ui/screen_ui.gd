@@ -5,7 +5,7 @@ extends CanvasLayer
 
 ## ---
 
-@onready var menu_layer = %MenuLayer
+#@onready var menu_layer = %MenuLayer
 
 @onready var pause_menu: PauseMenu = %PauseMenu
 @onready var settings_menu: SettingsMenu = %SettingsMenu
@@ -30,8 +30,8 @@ var menu_stack: Array[ScreenMenu] = []
 ## Opens the ScreenUI if it is not open
 func add_menu(menu: ScreenMenu) -> void:
 	menu_stack.push_back(menu)
-	if menu.get_parent() == null:
-		menu_layer.add_child(menu)
+	#if menu.get_parent() == null:
+		#menu_layer.add_child(menu)
 	if not is_open:
 		open()
 	if menu.has_method("open"):
@@ -60,6 +60,8 @@ func terminate_stack() -> void:
 	close()
 ## Returns the menu that is currently at the top of the stack
 func get_active_menu() -> ScreenMenu:
+	if menu_stack.is_empty():
+		return
 	return menu_stack.back()
 ## Returns the menu that is second highest in the stack,
 ## or null if there is none

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://c7iotxnaw5mws"]
+
+[ext_resource type="AudioStream" uid="uid://beg6lkfe736xw" path="res://sound/sfx/ui/ui_fail.wav" id="1_pmemd"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="1_tsc7x"]
+
+[resource]
+script = ExtResource("1_tsc7x")
+id = &"ui_fail"
+linear_volume = 1.0
+pitch_variation_range = 0.4
+attenuation_override = -1.0
+audio_streams = Array[AudioStream]([ExtResource("1_pmemd")])
+metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

@@ -39,21 +39,21 @@ func _on_master_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(master_idx, linear_to_db(value))
 	_update_slider_label(value, master_slider)
 	if !init:
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")
 		save_audio_settings()
 
 func _on_music_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(music_idx, linear_to_db(value))
 	_update_slider_label(value, music_slider)
 	if !init:
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")
 		save_audio_settings()
 
 func _on_sfx_slider_value_changed(value: float) -> void:
 	AudioServer.set_bus_volume_db(sfx_idx, linear_to_db(value))
 	_update_slider_label(value, sfx_slider)
 	if !init:
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")
 		save_audio_settings()
 
 func _update_slider_label(value: float, slider: HSlider) -> void:

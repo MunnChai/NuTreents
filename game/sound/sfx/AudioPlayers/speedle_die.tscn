@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://48exd6gotk11"]
 
-[ext_resource type="AudioStream" uid="uid://cljk34rmtdwry" path="res://sound/sfx/speedle_die.wav" id="1_5rm6o"]
+[ext_resource type="AudioStream" uid="uid://cljk34rmtdwry" path="res://sound/sfx/enemies/speedle_die.wav" id="1_5rm6o"]
 
 [node name="SpeedleDie" type="AudioStreamPlayer"]
 stream = ExtResource("1_5rm6o")

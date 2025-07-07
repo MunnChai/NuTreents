@@ -30,6 +30,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	$InfoBoxDetector.detect(iso_position)
+	
+	global_position = Global.terrain_map.map_to_local(iso_position)
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	attempted_already = false

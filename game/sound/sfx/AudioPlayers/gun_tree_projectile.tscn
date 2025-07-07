@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cn6blvry1wb76"]
 
-[ext_resource type="AudioStream" uid="uid://bxmm3j6ask6qa" path="res://sound/sfx/gun_tree_projectile.wav" id="1_sjgcl"]
+[ext_resource type="AudioStream" uid="uid://bxmm3j6ask6qa" path="res://sound/sfx/trees/gun_tree_projectile.wav" id="1_sjgcl"]
 
 [node name="GunTreeProjectile" type="AudioStreamPlayer"]
 stream = ExtResource("1_sjgcl")
