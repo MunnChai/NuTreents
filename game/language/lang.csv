@@ -23,5 +23,6 @@ NOTIF_TECH_TREE_PLANTED,Technology planted...,TODO
 NOTIF_TECH_TREE_GROW,Technology improved!,TODO
 NOTIF_TECH_POINT,Earned {num} tech point!,TODO (num}
 NOTIF_TECH_POINTS,Earned {num} tech points!,TODO (num}
-NOTIF_TECH_POINTS_AVAILABLE,You have {num} tech points available,TODO
+NOTIF_TECH_POINT_AVAILABLE,You have {num} tech point available,TODO {num}
+NOTIF_TECH_POINTS_AVAILABLE,You have {num} tech points available,TODO {num}
 NOTIF_TECH_UNLOCK,Unlocked {tech_name}!,TODO {tech_name}!

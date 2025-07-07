@@ -29,5 +29,9 @@ func _on_message_change(old_message: String, new_message: String) -> void:
 	text = new_message
 
 func _on_meta_clicked(meta: Variant) -> void:
-	if meta == "goto":
-		Camera.instance.core_position = Global.terrain_map.map_to_local(notification.properties.get("position"))
+	SoundManager.play_global_oneshot(&"ui_click")
+	match meta:
+		"goto":
+			Camera.instance.core_position = Global.terrain_map.map_to_local(notification.properties.get("position"))
+		"tech":
+			ScreenUI.add_menu(ScreenUI.research_menu)
