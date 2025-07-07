@@ -88,6 +88,7 @@ func get_hover_flag() -> HoverFlag:
 	
 	## OK, there is a possibility of an entity here
 	var entity = MapUtility.get_entity_at(p)
+
 	if entity:
 		var obstruction_component: ObstructionComponent = Components.get_component(entity, ObstructionComponent)
 		if obstruction_component and obstruction_component.is_obstructing:

@@ -6,7 +6,7 @@ const MAIN: PackedScene = preload("res://main.tscn")
 
 func _ready():
 	Global.game_state = Global.GameState.MAIN_MENU
-	NutreentsDiscordRPC.update_details("Navigating menus")
+	NutreentsDiscordRPC.instance.update_details("Navigating menus")
 	
 	start_button.pressed.connect(show_load_screen)
 

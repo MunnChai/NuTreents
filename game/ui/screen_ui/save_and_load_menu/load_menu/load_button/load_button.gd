@@ -77,10 +77,10 @@ func _open_new_world_menu() -> void:
 		ScreenUI.new_world_menu.current_session_id = save_num
 
 func load_game(save_num: int, session_data: Dictionary) -> void:
-	Global.session_id = save_num
 	SoundManager.play_global_oneshot(&"ui_click")
 	if Global.game_state == Global.GameState.PLAYING:
 		await _prompt_for_loading_world()
+	Global.session_id = save_num
 	SceneLoader.transition_to_game(session_data)
 
 func _on_delete_pressed() -> void:

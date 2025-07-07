@@ -8,5 +8,6 @@ script = ExtResource("2_24lfc")
 id = &"tree_pump"
 linear_volume = 0.1
 pitch_variation_range = 0.5
+attenuation_override = -1.0
 audio_streams = Array[AudioStream]([ExtResource("1_4bjeh")])
 metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

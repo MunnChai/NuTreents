@@ -1,0 +1,142 @@
+[gd_scene load_steps=14 format=3 uid="uid://cr7mehptvupy8"]
+
+[ext_resource type="Script" uid="uid://d2toeiiddlobk" path="res://ui/screen_ui/research_menu/research_tree/research_tree.gd" id="1_av127"]
+[ext_resource type="PackedScene" uid="uid://bir2nauxjr10w" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node.tscn" id="2_2tbkv"]
+[ext_resource type="Resource" uid="uid://dndds7q1jjdax" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/fog_reveal/fog_reveal_1.tres" id="3_7ku5u"]
+[ext_resource type="Resource" uid="uid://bq5wqy6dllvrw" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/starting_node.tres" id="3_av127"]
+[ext_resource type="Resource" uid="uid://t4maddpa35f" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/tree_unlocks/explorer_tree_unlock.tres" id="3_x6503"]
+[ext_resource type="Resource" uid="uid://bikpqinwijxv5" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/damage/damage_1.tres" id="4_2tbkv"]
+[ext_resource type="Resource" uid="uid://ddju3aygjbv7c" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/water_production/water_production_1.tres" id="4_ccsu5"]
+[ext_resource type="Resource" uid="uid://d2lqg5ieym5qe" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/fire_resist/fire_resist_1.tres" id="4_qfnyx"]
+[ext_resource type="Resource" uid="uid://cyu6q8bml23lg" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/health/health_1.tres" id="5_tswv8"]
+[ext_resource type="Resource" uid="uid://b15rei1mf1c8h" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/attack_range/attack_range_1.tres" id="6_qncw5"]
+[ext_resource type="Resource" uid="uid://cgwkp3mwlvufu" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/tree_unlocks/tall_tree_unlock.tres" id="9_45mi0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_302ec"]
+bg_color = Color(0, 0, 0, 0.592157)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2tbkv"]
+
+[node name="ResearchTree" type="PanelContainer"]
+clip_contents = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_302ec")
+script = ExtResource("1_av127")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+
+[node name="Row-4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row-4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="Row-3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row-3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="Row-2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="ExplorerTree" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("3_x6503")
+required_nodes = [NodePath("../../Row-1/FogReveal1")]
+
+[node name="FireResist1" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("4_qfnyx")
+required_nodes = [NodePath("../../Row-1/WaterProduction1")]
+
+[node name="Row-1" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="FogReveal1" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("3_7ku5u")
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="WaterProduction1" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("4_ccsu5")
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="Row0" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="RootNode" parent="VBoxContainer/Row0" instance=ExtResource("2_2tbkv")]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 1)
+layout_mode = 2
+state = 2
+research_resource = ExtResource("3_av127")
+
+[node name="Row1" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Damage1" parent="VBoxContainer/Row1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("4_2tbkv")
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="Health1" parent="VBoxContainer/Row1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("5_tswv8")
+required_nodes = [NodePath("../../Row0/RootNode")]
+
+[node name="Row2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Range1" parent="VBoxContainer/Row2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("6_qncw5")
+required_nodes = [NodePath("../../Row1/Damage1")]
+
+[node name="TallTree" parent="VBoxContainer/Row2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+layout_mode = 2
+research_resource = ExtResource("9_45mi0")
+required_nodes = [NodePath("../../Row1/Health1")]
+
+[node name="Row3" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="Row4" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 255
+alignment = 1
+
+[node name="Filler" type="PanelContainer" parent="VBoxContainer/Row4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")

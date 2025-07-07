@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://jhq2ds0cjvkm"]
 
 [ext_resource type="AudioStream" uid="uid://bhyeqp4weu6f6" path="res://sound/sfx/enemies/bomb_explode_02.ogg" id="1_acgei"]
-[ext_resource type="Script" path="res://sound/sound_resource.gd" id="5_yqqv6"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="5_yqqv6"]
 
 [resource]
 script = ExtResource("5_yqqv6")
 id = &"bomb_explode"
 linear_volume = 1.5
 pitch_variation_range = 0.4
+attenuation_override = -1.0
 audio_streams = Array[AudioStream]([ExtResource("1_acgei")])
 metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://dcfkumbjj0th"]
 
-[ext_resource type="Script" path="res://sound/sound_resource.gd" id="1_lropr"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="1_lropr"]
 [ext_resource type="AudioStream" uid="uid://b85wfbodbeqof" path="res://sound/sfx/ui/ui_pages.wav" id="1_wt2ex"]
 
 [resource]
@@ -8,5 +8,6 @@ script = ExtResource("1_lropr")
 id = &"ui_pages"
 linear_volume = 1.0
 pitch_variation_range = 0.4
+attenuation_override = -1.0
 audio_streams = Array[AudioStream]([ExtResource("1_wt2ex")])
 metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

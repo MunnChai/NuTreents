@@ -122,12 +122,12 @@ layout_mode = 2
 theme = ExtResource("10_kxjjr")
 text = "ALMANAC"
 
-[node name="ShopButton" type="Button" parent="MenuButtons/HBoxContainer"]
+[node name="ResearchButton" type="Button" parent="MenuButtons/HBoxContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 theme = ExtResource("10_kxjjr")
-text = "SHOP"
+text = "RESEARCH"
 
 [node name="TechMenu" parent="." instance=ExtResource("9_bi8hs")]
 visible = false

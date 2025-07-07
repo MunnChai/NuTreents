@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://bq5wqy6dllvrw"]
+
+[ext_resource type="Texture2D" uid="uid://i38yc501bg6g" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/icon_test.png" id="1_qjt38"]
+[ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/research_node_resource.gd" id="2_ywvv2"]
+
+[resource]
+script = ExtResource("2_ywvv2")
+display_name = "Research"
+id = "research"
+icon = ExtResource("1_qjt38")
+tech_point_cost = 0
+description = "Unlock new skills through the research tree."
+metadata/_custom_type_script = "uid://vcwsq4ujmer2"
