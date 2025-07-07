@@ -49,7 +49,7 @@ func perform_action() -> void:
 		spawn_projectile(target_enemy_pos)
 
 func spawn_projectile(target_pos: Vector2i) -> void:
-	var bullet = spawner_component.spawn_node()
+	var bullet = spawner_component.spawn_node(Vector2(0, 0), null, Global.fog_map)
 	
 	var position_component: GridPositionComponent = Components.get_component(bullet, GridPositionComponent)
 	position_component.init_pos(grid_position_component.get_pos())
