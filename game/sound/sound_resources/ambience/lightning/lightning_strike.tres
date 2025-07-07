@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_3472c")
 id = &"lightning_strike"
-linear_volume = 2.0
+linear_volume = 1.2
 pitch_variation_range = 0.5
 attenuation_override = 1.0
 audio_streams = Array[AudioStream]([ExtResource("1_q1pfe")])

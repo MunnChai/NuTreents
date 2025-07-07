@@ -22,11 +22,13 @@ bg_color = Color(0, 0, 0, 0.592157)
 clip_contents = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_302ec")
 script = ExtResource("1_av127")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 40
 alignment = 1
 
