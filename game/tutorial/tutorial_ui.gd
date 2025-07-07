@@ -52,7 +52,7 @@ func _on_first_tree_placed(tree: Node2D):
 	TreeManager.tree_placed.disconnect(_on_first_tree_placed)
 
 func _on_continue_button_pressed():
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	if (current_animation == TutorialAnimation.END_TUTORIAL):
 		SceneLoader.transition_to_game()
@@ -97,7 +97,7 @@ func get_animation_name(index: int) -> StringName:
 
 
 func skip_tutorial() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	SceneLoader.transition_to_game()
 
 #region InputControls

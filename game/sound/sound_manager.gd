@@ -26,6 +26,13 @@ func play_oneshot(id: StringName, global_pos: Vector2) -> void:
 	
 	audio_player.queue_free()
 
+func play_global_oneshot(id: StringName) -> void:
+	var audio_player := start_global_player(id)
+	
+	await audio_player.finished
+	
+	audio_player.queue_free()
+
 const DEFAULT_ATTENUATION := 8.0
 
 const SOUND_PLAYER = preload("./sound_player.tscn")
@@ -47,6 +54,23 @@ func start_player(id: StringName, global_pos: Vector2) -> AudioStreamPlayer2D:
 	audio_player.base_volume = sound.linear_volume
 	audio_player.bus = "SFX"
 	audio_player.update_attributes()
+	audio_player.play()
+	
+	return audio_player
+
+func start_global_player(id: StringName, linear_volume: float = 0.7) -> AudioStreamPlayer:
+	var sound := get_sound(id)
+	if not sound:
+		return
+	
+	var stream := sound.get_random_audio_stream()
+	
+	var audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	audio_player.stream = stream
+	audio_player.pitch_scale = 1.0 + randf_range(-sound.pitch_variation_range, sound.pitch_variation_range)
+	audio_player.volume_linear = linear_volume
+	audio_player.bus = "SFX"
 	audio_player.play()
 	
 	return audio_player

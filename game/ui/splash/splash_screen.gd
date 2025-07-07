@@ -100,7 +100,7 @@ func skip_to_main_menu(play_sound: bool = false):
 	already_skipping = true
 	allow_skip = false
 	if play_sound:
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")
 	
 	#TweenUtil.fade(%TreeIcon, 0.0, 0.15)
 	#TweenUtil.fade(%Wordmark, 0.0, 0.15)

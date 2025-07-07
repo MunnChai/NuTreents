@@ -22,19 +22,19 @@ func _ready() -> void:
 	back_button.pressed.connect(_back_pressed)
 
 func _accept_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.exit_menu()
 	accepted.emit()
 	choice_made.emit(true)
 
 func _decline_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.exit_menu()
 	declined.emit()
 	choice_made.emit(false)
 
 func _back_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.exit_menu()
 
 ## SCREEN MENU IMPLEMENTATION

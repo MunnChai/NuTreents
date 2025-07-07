@@ -30,7 +30,7 @@ func open(previous_menu: ScreenMenu) -> void:
 	show()
 	refresh()
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	## ANIMATION
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
@@ -94,7 +94,7 @@ func get_load_button(save_num: int):
 	return get_load_buttons()[save_num - 1]
 
 func _on_back_button_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.exit_menu()
 
 func _exit_tree():

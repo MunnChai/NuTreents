@@ -78,13 +78,13 @@ func _open_new_world_menu() -> void:
 
 func load_game(save_num: int, session_data: Dictionary) -> void:
 	Global.session_id = save_num
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	if Global.game_state == Global.GameState.PLAYING:
 		await _prompt_for_loading_world()
 	SceneLoader.transition_to_game(session_data)
 
 func _on_delete_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	prompt_for_deletion()
 
 func prompt_for_deletion() -> void:

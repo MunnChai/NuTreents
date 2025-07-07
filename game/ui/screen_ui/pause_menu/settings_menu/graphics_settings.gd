@@ -46,7 +46,7 @@ func set_window_mode(index: int) -> void:
 		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func _on_window_option_button_item_selected(index: int) -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	set_window_mode(index)
 	
@@ -59,4 +59,4 @@ func _on_gui_scale_slider_drag_ended(value_changed: bool) -> void:
 
 func _on_gui_scale_slider_value_changed(value: float) -> void:
 	if !init:
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")

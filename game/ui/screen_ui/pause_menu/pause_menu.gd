@@ -109,13 +109,13 @@ func unpause_game() -> void:
 const SETTINGS_MENU = preload("res://ui/screen_ui/pause_menu/settings_menu/settings_menu.tscn")
 
 func _on_resume_button_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.terminate_stack()
 
 func _on_settings_button_pressed() -> void:
 	settings_button_pressed.emit()
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	if ScreenUI.settings_menu.is_open:
 		ScreenUI.exit_menu()
@@ -126,7 +126,7 @@ func _on_settings_button_pressed() -> void:
 
 func _on_save_button_pressed() -> void:
 	save_button_pressed.emit()
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	# --- IMPLEMENTATION ---
 	# Call the save function from the SessionData singleton, using the current
@@ -153,7 +153,7 @@ func _on_load_button_pressed() -> void:
 	if ScreenUI.get_active_menu() == ScreenUI.settings_menu:
 		ScreenUI.exit_menu()
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	ScreenUI.add_menu(ScreenUI.load_menu)
 	
@@ -166,7 +166,7 @@ func _finish_close_for_load() -> void:
 
 func _on_main_menu_button_pressed() -> void:
 	main_menu_button_pressed.emit()
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	await _prompt_for_save_and_quit()
 	SceneLoader.transition_to_main_menu()
 
@@ -184,14 +184,14 @@ func _on_save_and_quit_choice(choice: bool) -> void:
 
 func _on_quit_game_button_pressed() -> void:
 	quit_to_desktop_pressed.emit()
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	await _prompt_for_save_and_quit()
 	get_tree().quit()
 
 func _on_enabled_button_focus() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 
 func _on_disabled_button_focus() -> void:
-	SfxManager.play_sound_effect("ui_fail")
+	SoundManager.play_global_oneshot(&"ui_click")
 
 #endregion

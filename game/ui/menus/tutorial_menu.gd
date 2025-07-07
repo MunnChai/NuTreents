@@ -9,7 +9,7 @@ func _on_trees_pressed() -> void:
 	
 	_update_animation_player()
 	set_visibility(true, false, false)
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 
 func _on_technology_pressed() -> void:
 	SfxManager.play_sound_effect("ui_fail")

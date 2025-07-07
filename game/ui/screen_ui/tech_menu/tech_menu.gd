@@ -26,7 +26,7 @@ var is_currently_animating := false
 var is_mouse_inside := false
 
 func open() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	## ANIMATION
 	TweenUtil.pop_delta(container, Vector2(0, -0.05), 0.3)

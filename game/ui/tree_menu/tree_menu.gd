@@ -56,13 +56,13 @@ func get_unlocked_tree_types() -> Array[Global.TreeType]:
 func next_tree() -> void:
 	currently_selected_tree += 1
 	currently_selected_tree = currently_selected_tree % tree_order.size()
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	#InfoBox.get_instance().show_content_for_tree(node_order[currently_selected_tree].tree_stat)
 
 func previous_tree() -> void:
 	currently_selected_tree -= 1
 	currently_selected_tree = currently_selected_tree % tree_order.size()
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	#InfoBox.get_instance().show_content_for_tree(node_order[currently_selected_tree].tree_stat)
 
 

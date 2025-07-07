@@ -15,7 +15,7 @@ func open(previous_menu: ScreenMenu) -> void:
 	position = starting_position
 	show()
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	## ANIMATION
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
@@ -75,7 +75,7 @@ func switch_off_rebinding_mode() -> void:
 
 
 func _on_back_button_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.exit_menu()
 
 #endregion
@@ -83,7 +83,7 @@ func _on_back_button_pressed() -> void:
 #region RESET TO DEFAULTS
 
 func _on_reset_button_pressed() -> void:
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	#TweenUtil.pop_delta(%TabContainer, Vector2(0.15, 0.15), 0.2)
 	await _prompt_for_reset()
 
@@ -103,9 +103,9 @@ func _on_reset_choice(choice: bool) -> void:
 		for child in %KeybindContainer.get_children():
 			if child is KeybindLine:
 				child.reset_value()
-				SfxManager.play_sound_effect("ui_pages")
+				SoundManager.play_global_oneshot(&"ui_pages")
 		TweenUtil.pop_delta(%TabContainer, Vector2(0.15, 0.15), 0.2)
 	else:
-		SfxManager.play_sound_effect("ui_click")
+		SoundManager.play_global_oneshot(&"ui_click")
 
 #endregion

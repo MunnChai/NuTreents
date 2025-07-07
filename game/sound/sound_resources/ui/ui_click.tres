@@ -1,12 +1,13 @@
 [gd_resource type="Resource" script_class="SoundResource" load_steps=3 format=3 uid="uid://uvfrji68esu6"]
 
-[ext_resource type="AudioStream" uid="uid://bpmegyfnhkx2m" path="res://sound/sfx/ui/click.wav" id="1_cem3o"]
-[ext_resource type="Script" path="res://sound/sound_resource.gd" id="1_sgyhw"]
+[ext_resource type="AudioStream" uid="uid://upxpwc6xkf7q" path="res://sound/sfx/ui/tic_toc_click.wav" id="1_cem3o"]
+[ext_resource type="Script" uid="uid://b84fa1ld5p0fc" path="res://sound/sound_resource.gd" id="1_sgyhw"]
 
 [resource]
 script = ExtResource("1_sgyhw")
 id = &"ui_click"
 linear_volume = 1.0
-pitch_variation_range = 0.4
+pitch_variation_range = 0.1
+attenuation_override = -1.0
 audio_streams = Array[AudioStream]([ExtResource("1_cem3o")])
 metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

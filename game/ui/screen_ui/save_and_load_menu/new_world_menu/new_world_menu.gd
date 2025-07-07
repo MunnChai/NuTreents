@@ -21,7 +21,7 @@ var current_world_size: Global.WorldSize = DEFAULT_WORLD_SIZE
 
 func _ready() -> void:
 	world_name.focus_entered.connect(func(): 
-		SfxManager.play_sound_effect("ui_click"))
+		SoundManager.play_global_oneshot(&"ui_click"))
 	world_name.text_changed.connect(check_valid_world_name)
 	
 	_connect_button_signals()
@@ -40,7 +40,7 @@ func _connect_button_signals():
 
 func _on_world_size_button_pressed(world_size: Global.WorldSize):
 	select_world_size(world_size)
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 
 func select_world_size(world_size: Global.WorldSize):
 	var i = 1
@@ -167,7 +167,7 @@ func open(previous_menu: ScreenMenu) -> void:
 	TweenUtil.fade(self, 1, 0.2)
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 	
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	select_world_size(DEFAULT_WORLD_SIZE)
 	create_button.disabled = false
@@ -197,7 +197,7 @@ func check_valid_world_name(new_text: String):
 
 func create_new_world() -> void:
 	
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	
 	# Disable button to prevent repeated presses
 	create_button.disabled = true

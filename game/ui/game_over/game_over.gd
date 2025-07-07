@@ -7,11 +7,11 @@ func _ready():
 	Global.game_state = Global.GameState.GAME_OVER
 
 func return_to_main_menu():
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	SceneLoader.transition_to_main_menu()
 
 func retry():
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	
 	# --- BUG FIX ---
 	# Instead of loading a new, empty game session, we now explicitly reload the

@@ -13,9 +13,9 @@ func _connect_button_signals():
 	almanac_button.pressed.connect(_on_almanac_button_pressed)
 
 func _on_shop_button_pressed():
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.add_menu(ScreenUI.shop_menu)
 
 func _on_almanac_button_pressed():
-	SfxManager.play_sound_effect("ui_click")
+	SoundManager.play_global_oneshot(&"ui_click")
 	ScreenUI.add_menu(ScreenUI.almanac_menu)

@@ -6,6 +6,8 @@
 [resource]
 script = ExtResource("2_tvcfp")
 id = &"silkspitter_attack"
+linear_volume = 1.0
 pitch_variation_range = 0.3
+attenuation_override = -1.0
 audio_streams = Array[AudioStream]([ExtResource("1_wfshc")])
 metadata/_custom_type_script = "uid://b84fa1ld5p0fc"

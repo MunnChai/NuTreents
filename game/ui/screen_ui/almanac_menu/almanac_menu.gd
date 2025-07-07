@@ -78,7 +78,7 @@ func show_card_details(card: AlmanacCardBase):
 	details.set_card(card)
 
 func open(previous_menu: ScreenMenu):
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	pause_game()
 	TweenUtil.pop_delta(self, Vector2(-0.3, 0.3), 0.3)
 	position = position + Vector2.DOWN * 100.0
@@ -87,7 +87,7 @@ func open(previous_menu: ScreenMenu):
 	update_menu(tabs.current_tab)
 
 func close(next_menu: ScreenMenu):
-	SfxManager.play_sound_effect("ui_pages")
+	SoundManager.play_global_oneshot(&"ui_pages")
 	TweenUtil.pop_delta(self, Vector2(-0.1, 0.1), 0.3)
 	TweenUtil.whoosh(self, position + Vector2.DOWN * 100.0, 0.4)
 	TweenUtil.fade(self, 0.0, 0.1).finished.connect(_finish_close)
