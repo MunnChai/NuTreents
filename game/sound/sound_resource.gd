@@ -6,6 +6,7 @@ extends Resource
 @export var id: StringName
 @export var linear_volume: float = 1.0
 @export var pitch_variation_range: float = 0.3
+@export var attenuation_override: float = -1.0
 @export var audio_streams: Array[AudioStream]
 
 func get_audio_stream(index: int = 0) -> AudioStream:

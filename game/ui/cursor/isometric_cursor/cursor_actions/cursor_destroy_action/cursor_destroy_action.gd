@@ -53,7 +53,7 @@ func try_destroy_structure(structure: Node2D, p: Vector2i) -> void:
 		return
 	
 	## Huh... it's indestructable?
-	SfxManager.play_sound_effect("ui_fail")
+	SoundManager.play_oneshot(&"ui_fail", structure_map.map_to_local(p))
 	PopupManager.create_popup(tr(&"WARN_INDESTRUCTIBLE"), structure_map.map_to_local(p))
 
 func try_destroy_tree(tree: Node2D, p: Vector2i) -> void:
@@ -62,7 +62,7 @@ func try_destroy_tree(tree: Node2D, p: Vector2i) -> void:
 	## MOTHER TREE CHECK PREVENTION
 	if Components.get_component(tree, TweeStatComponent).type == Global.TreeType.MOTHER_TREE:
 		PopupManager.create_popup(tr(&"WARN_MOTHER_TREE_REMOVAL"), structure_map.map_to_local(p))
-		SfxManager.play_sound_effect("ui_fail")
+		SoundManager.play_oneshot(&"ui_fail", structure_map.map_to_local(p))
 		return
 	
 	var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
@@ -76,7 +76,7 @@ func try_destroy_destructable(structure: Node2D, p: Vector2i) -> void:
 	## COST GATE
 	var cost: float = destructable_component.get_cost()
 	if not TreeManager.enough_n(cost):
-		SfxManager.play_sound_effect("ui_fail")
+		SoundManager.play_oneshot(&"ui_fail", structure_map.map_to_local(p))
 		PopupManager.create_popup(tr(&"WARN_NOT_ENOUGH_NUTREENTS"), structure_map.map_to_local(p))
 		return
 	TreeManager.consume_n(cost)
@@ -97,7 +97,7 @@ func try_destroy_destructable(structure: Node2D, p: Vector2i) -> void:
 			PopupManager.create_popup(tr(&"SUCCESS_BUILDING_REMOVAL"), structure_map.map_to_local(p))
 	
 	## JUICE
-	SfxManager.play_sound_effect("concrete_break")
+	SoundManager.play_oneshot(&"concrete_break", structure_map.map_to_local(p))
 
 #endregion
 
@@ -127,7 +127,7 @@ func try_destroy_tile(p: Vector2i) -> void:
 	
 	## COST CHECK
 	if not TreeManager.enough_n(cost):
-		SfxManager.play_sound_effect("ui_fail")
+		SoundManager.play_oneshot(&"ui_fail", structure_map.map_to_local(p))
 		PopupManager.create_popup(tr(&"WARN_NOT_ENOUGH_NUTREENTS"), structure_map.map_to_local(p))
 		return
 	TreeManager.consume_n(cost)
@@ -142,10 +142,10 @@ func try_destroy_tile(p: Vector2i) -> void:
 	## OK, now let's do the JUICE
 	match tile_type:
 		TerrainMap.TileType.CITY:
-			SfxManager.play_sound_effect("concrete_break")
+			SoundManager.play_oneshot(&"concrete_break", structure_map.map_to_local(p))
 			PopupManager.create_popup(tr(&"SUCCESS_CONCRETE_REMOVAL"), structure_map.map_to_local(p))
 		TerrainMap.TileType.ROAD:
-			SfxManager.play_sound_effect("concrete_break")
+			SoundManager.play_oneshot(&"concrete_break", structure_map.map_to_local(p))
 			PopupManager.create_popup(tr(&"SUCCESS_ROAD_REMOVAL"), structure_map.map_to_local(p))
 
 #endregion

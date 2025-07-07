@@ -23,6 +23,9 @@ var core_position: Vector2
 
 static var instance: Camera
 
+func get_percent_zoom() -> float:
+	return (current_zoom_index / float(FIXED_ZOOM_SIZES.size() - 1))
+
 func _ready() -> void:
 	instance = self
 	zoom = Vector2(1, 1) * FIXED_ZOOM_SIZES[current_zoom_index]
