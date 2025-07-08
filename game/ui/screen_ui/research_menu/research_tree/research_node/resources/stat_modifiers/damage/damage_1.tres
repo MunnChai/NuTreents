@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="DamageResearchResource" load_steps=2 format=3 uid="uid://bikpqinwijxv5"]
+[gd_resource type="Resource" script_class="DamageResearchResource" load_steps=3 format=3 uid="uid://bikpqinwijxv5"]
 
+[ext_resource type="Texture2D" uid="uid://cqqdqi5ymf314" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/damage_1.png" id="1_h8shl"]
 [ext_resource type="Script" uid="uid://dxyyjgu70cupg" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/damage/damage_research_resource.gd" id="2_6mw71"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("2_6mw71")
 damage_increase = 1
 display_name = "Dangerous Trees"
 id = "damage_1"
+icon = ExtResource("1_h8shl")
 tech_point_cost = 1
 tree_type = 0
 description = "Increase all tree's damage by 1."

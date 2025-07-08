@@ -54,10 +54,10 @@ layout_mode = 2
 theme_override_constants/separation = 255
 alignment = 1
 
-[node name="ExplorerTree" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+[node name="FogReveal1" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
-research_resource = ExtResource("3_x6503")
-required_nodes = [NodePath("../../Row-1/FogReveal1")]
+research_resource = ExtResource("3_7ku5u")
+required_nodes = [NodePath("../../Row-1/ExplorerTree")]
 
 [node name="FireResist1" parent="VBoxContainer/Row-2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
@@ -69,9 +69,9 @@ layout_mode = 2
 theme_override_constants/separation = 255
 alignment = 1
 
-[node name="FogReveal1" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+[node name="ExplorerTree" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
-research_resource = ExtResource("3_7ku5u")
+research_resource = ExtResource("3_x6503")
 required_nodes = [NodePath("../../Row0/RootNode")]
 
 [node name="WaterProduction1" parent="VBoxContainer/Row-1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
@@ -101,9 +101,9 @@ layout_mode = 2
 research_resource = ExtResource("4_2tbkv")
 required_nodes = [NodePath("../../Row0/RootNode")]
 
-[node name="Health1" parent="VBoxContainer/Row1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+[node name="TallTree" parent="VBoxContainer/Row1" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
-research_resource = ExtResource("5_tswv8")
+research_resource = ExtResource("9_45mi0")
 required_nodes = [NodePath("../../Row0/RootNode")]
 
 [node name="Row2" type="HBoxContainer" parent="VBoxContainer"]
@@ -116,10 +116,10 @@ layout_mode = 2
 research_resource = ExtResource("6_qncw5")
 required_nodes = [NodePath("../../Row1/Damage1")]
 
-[node name="TallTree" parent="VBoxContainer/Row2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
+[node name="Health1" parent="VBoxContainer/Row2" node_paths=PackedStringArray("required_nodes") instance=ExtResource("2_2tbkv")]
 layout_mode = 2
-research_resource = ExtResource("9_45mi0")
-required_nodes = [NodePath("../../Row1/Health1")]
+research_resource = ExtResource("5_tswv8")
+required_nodes = [NodePath("../../Row1/TallTree")]
 
 [node name="Row3" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
