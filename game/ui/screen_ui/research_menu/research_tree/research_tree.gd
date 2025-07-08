@@ -37,10 +37,14 @@ func _connect_signals() -> void:
 ## Try to unlock the given research node. Will succeed if the current num_tech_points > the node's cost
 func try_unlock(research_node: ResearchNode) -> void:
 	if num_tech_points >= research_node.research_resource.tech_point_cost:
+		var notification = Notification.new(&"unlock", '[color=6be1e3]' + tr(&"NOTIF_TECH_UNLOCK").format({ "tech_name": research_node.research_resource.display_name.to_upper() }), { "priority": 3, "time_remaining": 3.0 });
+		NotificationLog.instance.add_notification(notification)
+		
 		research_node.unlock_research_node()
 		num_tech_points -= research_node.research_resource.tech_point_cost
 		update_unlockable_nodes()
 		unlock_success.emit(research_node)
+		SoundManager.play_global_oneshot(&"upgrade")
 	else:
 		SoundManager.play_global_oneshot(&"ui_fail")
 		unlock_failed.emit(research_node)
@@ -171,8 +175,24 @@ func get_root_node() -> ResearchNode:
 
 #region Tech Points
 
+static var point_notification: Notification
+
 func add_tech_points(amount: int) -> void:
 	num_tech_points += amount
+	
+	if amount != 0:
+		if not point_notification or point_notification.is_removed:
+			point_notification = Notification.new(&"tech_point_earn", '[color=6be1e3]' + get_correct_plural_for_notif(amount), { "priority": 3, "time_remaining": 3.0, "amount": amount });
+			NotificationLog.instance.add_notification(point_notification)
+		else:
+			var new_amount = amount + point_notification.properties.get("amount", 0)
+			point_notification.set_message('[color=6be1e3]' + get_correct_plural_for_notif(new_amount))
+
+func get_correct_plural_for_notif(total: int) -> String:
+	if total == 1:
+		return tr(&"NOTIF_TECH_POINT").format({ "num": total })
+	else:
+		return tr(&"NOTIF_TECH_POINTS").format({ "num": total })
 
 func set_tech_points(amount: int) -> void:
 	num_tech_points = amount

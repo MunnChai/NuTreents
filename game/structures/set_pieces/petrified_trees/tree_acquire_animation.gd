@@ -57,4 +57,5 @@ func play_acquire_animation() -> void:
 	tween.finished.connect(queue_free)
 
 func add_tree_card_to_menu(type: Global.TreeType) -> void:
+	SoundManager.play_oneshot(&"upgrade", global_position)
 	TreeMenu.instance.add_tree_card(type)

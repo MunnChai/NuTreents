@@ -13,6 +13,7 @@ custom_minimum_size = Vector2(64, 64)
 offset_right = 64.0
 offset_bottom = 64.0
 pivot_offset = Vector2(32, 32)
+mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_20flq")
 script = ExtResource("1_5p24h")
 locked_icon = ExtResource("1_1mvbl")
@@ -44,9 +45,11 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 
 [node name="HiddenButton" type="TextureButton" parent="."]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 
 [connection signal="button_down" from="HiddenButton" to="." method="_on_mouse_pressed"]
 [connection signal="button_up" from="HiddenButton" to="." method="_on_mouse_released"]

@@ -32,8 +32,9 @@ func set_current_health(health: float) -> void:
 	current_health = health
 	if current_health <= 0:
 		current_health = 0
-		is_dead = true
-		died.emit()
+		if not is_dead: ## Make sure not to repeatedly die!
+			is_dead = true
+			died.emit()
 	else:
 		is_dead = false
 

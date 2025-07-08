@@ -81,6 +81,8 @@ func try_destroy_destructable(structure: Node2D, p: Vector2i) -> void:
 		return
 	TreeManager.consume_n(cost)
 	
+	PopupManager.create_popup("-" + str(int(cost)), structure_map.map_to_local(p), Color("c1cf6abc"), Color("261e3abc"), Vector2(0, 100))
+	
 	destructable_component.destroy()
 	
 	## TYPE CHECK for CONFIRMATION MESSAGE
@@ -131,6 +133,8 @@ func try_destroy_tile(p: Vector2i) -> void:
 		PopupManager.create_popup(tr(&"WARN_NOT_ENOUGH_NUTREENTS"), structure_map.map_to_local(p))
 		return
 	TreeManager.consume_n(cost)
+	
+	PopupManager.create_popup("-" + str(int(cost)), structure_map.map_to_local(p), Color("c1cf6abc"), Color("261e3abc"), Vector2(0, 100))
 	
 	terrain_map.set_cell_type(p, terrain_map.TileType.DIRT)
 	

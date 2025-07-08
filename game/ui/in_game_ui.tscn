@@ -93,11 +93,13 @@ script = ExtResource("9_2ct0b")
 
 [node name="WaterOverlayButton" type="Button" parent="OverlayButtons"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("10_kxjjr")
 text = "WATER VIEW"
 
 [node name="HealthOverlayButton2" type="Button" parent="OverlayButtons"]
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("10_kxjjr")
 text = "HEALTH VIEW"
 
@@ -119,6 +121,7 @@ offset_bottom = 40.0
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("10_kxjjr")
 text = "ALMANAC"
 
@@ -126,6 +129,7 @@ text = "ALMANAC"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
+mouse_default_cursor_shape = 2
 theme = ExtResource("10_kxjjr")
 text = "RESEARCH"
 

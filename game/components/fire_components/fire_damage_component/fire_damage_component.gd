@@ -3,6 +3,8 @@ extends Node2D
 
 ## DEALS DAMAGE EVERY FIRE TICK
 
+signal damage_tick
+
 @export var flammable_component: FlammableComponent
 @export var health_component: HealthComponent
 @export var damage_amount: float = 3.0
@@ -16,6 +18,7 @@ func _ready() -> void:
 func _on_tick() -> void:
 	if health_component:
 		health_component.subtract_health(damage_amount)
+		damage_tick.emit()
 
 func increase_damage(amount: float) -> void:
 	damage_amount += amount

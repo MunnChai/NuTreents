@@ -28,6 +28,9 @@ var clamp_to_camera_bounds := true ## Clamp to camera bounds
 
 static var instance: UICursor
 
+func pop() -> void:
+	TweenUtil.pop_delta(%CursorIcon, Vector2(0.3, 0.3), 0.3)
+
 func _ready() -> void:
 	instance = self
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
