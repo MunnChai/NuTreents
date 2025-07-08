@@ -281,9 +281,9 @@ func load_enemies_from(enemy_map: Dictionary):
 
 #region DifficultyFunctions
 
-const BASE_NUM_WAVES: int = 1
-const NUM_WAVES_INCREASE_PER_DAY: float = 0.4 # New wave every 3 days
-const MAX_WAVES: int = 15
+const BASE_NUM_WAVES: int = 2
+const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # New wave every 2 days
+const MAX_WAVES: int = 10
 
 const BASE_POINTS: int = 5
 const POINTS_INCREASE_PER_DAY: int = 12.5
