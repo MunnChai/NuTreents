@@ -217,7 +217,8 @@ func kill_all_enemies():
 	for enemy: Node2D in get_enemies():
 		if is_instance_valid(enemy):
 			var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
-			enemy_health_component.set_current_health(0)
+			if not enemy_health_component.is_dead:
+				enemy_health_component.set_current_health(0)
 
 func get_enemies() -> Array:
 	return get_tree().get_nodes_in_group("enemies")
