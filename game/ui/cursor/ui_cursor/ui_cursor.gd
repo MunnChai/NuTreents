@@ -34,6 +34,10 @@ func pop() -> void:
 func _ready() -> void:
 	instance = self
 	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	
+	DebugConsole.register("toggle_cursor", func(args: PackedStringArray):
+		visible = !visible
+		, "Toggles cursor visibility")
 
 func _process(delta: float) -> void:
 	_update_cursor_position()

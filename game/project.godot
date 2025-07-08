@@ -40,6 +40,7 @@ general/default_playback_type.web=0
 
 DiscordObjectAutoload="*res://discord_wrapper/discord_object_autoload.gd"
 Global="*res://global.gd"
+DebugConsole="*res://addons/debug_console/debug_console_global.gd"
 Settings="*res://settings/settings.gd"
 TreeManager="*res://structures/trees/twee_manager.gd"
 TreeRegistry="*res://structures/trees/registry/twee_registry.tscn"
@@ -53,7 +54,6 @@ StructureRegistry="*res://structures/registry/structure_registry.tscn"
 WorldSettings="*res://world/world_settings/world_settings.tscn"
 MapUtility="*res://world/map_utility.gd"
 EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
-DebugConsole="*res://addons/debug_console/debug_console_global.gd"
 AlmanacInfo="*res://ui/almanac_info/almanac_info.gd"
 SetPieceRegistry="*res://world/proc_gen/set_pieces/set_piece_registry.gd"
 
