@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cr7mehptvupy8"]
+[gd_scene load_steps=15 format=3 uid="uid://cr7mehptvupy8"]
 
 [ext_resource type="Script" uid="uid://d2toeiiddlobk" path="res://ui/screen_ui/research_menu/research_tree/research_tree.gd" id="1_av127"]
 [ext_resource type="PackedScene" uid="uid://bir2nauxjr10w" path="res://ui/screen_ui/research_menu/research_tree/research_node/research_node.tscn" id="2_2tbkv"]
@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://cyu6q8bml23lg" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/health/health_1.tres" id="5_tswv8"]
 [ext_resource type="Resource" uid="uid://b15rei1mf1c8h" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/attack_range/attack_range_1.tres" id="6_qncw5"]
 [ext_resource type="Resource" uid="uid://cgwkp3mwlvufu" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/tree_unlocks/tall_tree_unlock.tres" id="9_45mi0"]
+[ext_resource type="Script" uid="uid://hhdleu3qfhp8" path="res://ui/screen_ui/research_menu/research_tree/research_tree_notifier.gd" id="12_x8df3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_302ec"]
 bg_color = Color(0, 0, 0, 0.592157)
@@ -21,11 +22,13 @@ bg_color = Color(0, 0, 0, 0.592157)
 clip_contents = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_302ec")
 script = ExtResource("1_av127")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 40
 alignment = 1
 
@@ -140,3 +143,6 @@ alignment = 1
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_2tbkv")
+
+[node name="ResearchTreeNotifier" type="Node" parent="."]
+script = ExtResource("12_x8df3")

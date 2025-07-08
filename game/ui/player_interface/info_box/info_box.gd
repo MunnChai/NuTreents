@@ -49,23 +49,23 @@ var tile_name_dictionary = {
 # --- FIX: Added newlines to long descriptions for better formatting ---
 var desc_dictionary = {
 	"default_tree": "We have all seen a default tree\nsometime in our lives.",
-	"mother_tree": "The source of all trees.\nProtect it with your life.",
-	"gun_tree": "A sandbox tree.\nFought in the Great War.\nShoots at anything that moves.",
-	"explorer_tree": "A bubbly maple.\nReaches far to adjacent lands.",
+	"mother_tree": "The source of all trees.\n[color=ffdda9]Protect it with your life.[/color]",
+	"gun_tree": "A sandbox tree.\nFought in the Great War.\n[color=ffdda9]Shoots at anything that moves.[/color]",
+	"explorer_tree": "A bubbly maple.\n[color=ffdda9]Reaches far to adjacent lands.[/color]",
 	"tech_tree": "For all your technology needs.",
 	"water_tree": "Dredges up them aquifers,\nfor your forest's convenience.",
-	"tall_tree": "Sharp and sturdy.\nIt'll take more than a few bugs\nto chop this one.",
+	"tall_tree": "[color=ffdda9]Sharp and sturdy.[/color]\nIt'll take more than a few bugs\nto chop this one.",
 	"slowing_tree": "A close relative to the gun tree. \nSomehow survived growing up\nin the Arctic.",
 	"mortar_tree": "It was enlisted for the Great War, \nbut was too scared to go near\nthe frontline.",
-	"spiky_tree": "A prickly tree with sharp branches. \nHurts anything that touches it.",
-	"icy_tree": "Cold and sharp. Its branches\nfreeze anything that touches it.",
-	"fire_tree": "It shoots fiery hot seeds\nat enemies.",
-	"sprinkler_tree": "Protects nearby trees from\nblazing fires.",
+	"spiky_tree": "A prickly tree with sharp branches. \n[color=ffdda9]Hurts anything that touches it.[/color]",
+	"icy_tree": "Cold and sharp. [color=ffdda9]Its branches\nfreeze anything that touches it.[/color]",
+	"fire_tree": "[color=ffdda9]It shoots fiery hot seeds\nat enemies.[/color]",
+	"sprinkler_tree": "[color=ffdda9]Protects nearby trees from\nblazing fires.[/color]",
 	
-	"city_building": "The last signs of human civilization.\nYou'll have to remove it to plant.",
-	"factory": "Despite its abandoned state, the\nmachinery in this factory is still\nfunctional. It might be worth looting.",
+	"city_building": "The last signs of human civilization.\n[color=ffdda9]You'll have to remove it to plant.[/color]",
+	"factory": "Despite its abandoned state, the\nmachinery in this factory is still\nfunctional. [color=6be1e3]It might be worth looting.[/color]",
 	"factory_remains": "What if you planted a\nTech Tree here?",
-	"petrified_tree": "A tree made of stone.\nCould you save it somehow?",
+	"petrified_tree": "A tree made of stone.\n[color=ffdda9]Could you save it somehow?[/color]",
 	
 	"speedle": "A mutant arthropod dead-set on\ndestroying any and all trees\nin its path.",
 	"silk_spitter": "A mutant caterpillar that spits\nsilken bullets at any trees\nin its line of sight.",
@@ -77,12 +77,12 @@ var desc_dictionary = {
 	
 	TerrainMap.TileType.DIRT: "Good old dirt. Nothing special.",
 	TerrainMap.TileType.GRASS: "Fertile grasslands, ripe for trees.",
-	TerrainMap.TileType.CITY: "Cold, hard asphalt.\nYou'll have to remove it to plant.",
-	TerrainMap.TileType.WATER: "Hydrates your nearby trees.\nDon't fall in, though.",
-	TerrainMap.TileType.ROAD: "Well-worn tar.\nYou'll have to remove it to plant.",
+	TerrainMap.TileType.CITY: "Cold, hard asphalt.\n[color=ffdda9]You'll have to remove it to plant.[/color]",
+	TerrainMap.TileType.WATER: "[color=ffdda9]Hydrates your nearby trees.[/color]\nDon't fall in, though.",
+	TerrainMap.TileType.ROAD: "Well-worn tar.\n[color=ffdda9]You'll have to remove it to plant.[/color]",
 	TerrainMap.TileType.SAND: "Coarse and rough and irritating\nand it gets everywhere.",
 	TerrainMap.TileType.SNOW: "A soft blanket of snow.",
-	TerrainMap.TileType.ICE: "Frozen. No place for roots."
+	TerrainMap.TileType.ICE: "Frozen. [color=ffdda9]No place for roots.[/color]"
 }
 
 func _ready():
@@ -116,18 +116,22 @@ func show_content_for_tree(tree_stat: TreeStatResource):
 func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_factory: bool = false) -> void:
 	var world_pos = Global.terrain_map.map_to_local(pos)
 	var fog_pos = Global.fog_map.local_to_map(world_pos)
-
+	
+	## EARLY TERMINATION FOR FOG
 	if (Global.fog_map.is_tile_foggy(fog_pos)):
 		rich_text.text = ""
 		return
 	
+	## IF ID IS PRESENT
 	if (name_dictionary.has(id)):
-		var content = "[i]" + name_dictionary[id] + "[/i]";
+		var content = "[i]" + name_dictionary[id] + "[/i]" ## NAME
 		content += "\n"
-		content += "[color=d9863e]" + desc_dictionary[id]
+		content += "[color=d9863e]" + desc_dictionary[id] ## DESCRIPTION
 		rich_text.text = content
 		
-		rich_text.text += "\n"
+		rich_text.text += "\n" ## Gap
+		
+		## PROPERTIES
 		
 		var enemy = EnemyManager.instance.get_enemy_at(pos)
 		var structure: Node2D = null
@@ -136,30 +140,73 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 		
 		var tree_stat_component: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
 		if tree_stat_component:
+			## HP
 			rich_text.text +="\n"
-			rich_text.text += "HP: " + str(Components.get_component(structure, HealthComponent).get_current_health())
-			rich_text.text += "\nNET WATER: " + str(Components.get_component(structure, WaterProductionComponent).get_water_production()) + "/s"
-			rich_text.text += "\nNET NUTRIENTS: " + str(Components.get_component(structure, NutreentProductionComponent).get_nutreent_production()) + "/s"
+			rich_text.text += tr(&"INFO_HP").format({ "value": str(Components.get_component(structure, HealthComponent).get_current_health())})
+			
+			## WATER
+			var water: float = Components.get_component(structure, WaterProductionComponent).get_water_production()
+			if water != 0:
+				rich_text.text +="\n"
+				if water > 0:
+					rich_text.text += tr(&"INFO_WATER_GAIN").format({ "value": str(water) })
+				elif water < 0:
+					rich_text.text += tr(&"INFO_WATER_LOSS").format({ "value": str(water) })
+			
+			var nutreents: float = Components.get_component(structure, NutreentProductionComponent).get_nutreent_production()
+			if nutreents != 0:
+				rich_text.text +="\n"
+				rich_text.text += tr(&"INFO_NUTREENTS").format({ "value": str(nutreents)})
+			
+			var hitbox = Components.get_component(structure, HitboxComponent)
+			if hitbox:
+				var damage: float = hitbox.damage
+				if damage != 0:
+					rich_text.text +="\n"
+					rich_text.text += tr(&"INFO_CONTACT_DAMAGE").format({ "value": str(damage)})
+			
+			var projectile_spawner = Components.get_component(structure, ProjectileSpawnerComponent)
+			if projectile_spawner:
+				var damage: float = projectile_spawner.damage
+				if damage != 0:
+					rich_text.text +="\n"
+					rich_text.text += tr(&"INFO_RANGED_DAMAGE").format({ "value": str(damage)})
 			
 			rich_text.text += "\n"
 			
-			#if (TreeManager.get_twee(pos).is_dehydrated):
-				#rich_text.text += "\n[color=ab5012]DEHYDRATED[/color]"
-			#if (previously_factory):
-				#rich_text.text += "\n[color=6cb3b4]INDUSTRIAL[/color]"
+			if Components.get_component(structure, TweeBehaviourComponent).is_dehydrated:
+				rich_text.text += "\n"
+				rich_text.text += "[color=ab5012]" + tr(&"INFO_DEHYDRATED")
+			
+			if Components.get_component(structure, WaterProductionComponent).is_water_adjacent():
+				rich_text.text += "\n"
+				rich_text.text += "[color=6be1e3]" + tr(&"INFO_WATER_BOOST") ## TODO: More detail?
+				
+			if is_instance_valid(WeatherManager.instance) and WeatherManager.instance.is_raining():
+				rich_text.text += "\n"
+				rich_text.text += "[color=6be1e3]" + tr(&"INFO_RAIN_BOOST")
+			
+			# MORTAR TREE: PRIMED TODO
+			# ON FIRE: TODO
+			
 		var destructable_component: DestructableComponent = Components.get_component(structure, DestructableComponent)
 		if destructable_component and not tree_stat_component:
 			rich_text.text +="\n"
-			rich_text.text += "Nutrients needed to destroy: " + str(destructable_component.get_cost())
+			rich_text.text += tr(&"INFO_NUTREENTS_TO_VERB").format({ "cost": str(int(destructable_component.get_cost())), "verb": "DESTROY"})
 		elif (enemy != null):
 			rich_text.text +="\n"
 			
 			var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
-			rich_text.text += "HP: " + str(health_component.current_health)
+			rich_text.text += tr(&"INFO_HP").format({ "value": str(health_component.current_health)})
+			rich_text.text +="\n"
 			
 			var stat_component: EnemyStatComponent = Components.get_component(enemy, EnemyStatComponent)
-			rich_text.text += "\nDAMAGE: " + str(stat_component.stat_resource.attack_damage)
-			rich_text.text += "\nRANGE: " + str(stat_component.stat_resource.attack_range)
+
+			rich_text.text += tr(&"INFO_DAMAGE").format({ "value": str(stat_component.stat_resource.attack_damage)})
+			rich_text.text +="\n"
+			
+			rich_text.text += tr(&"INFO_RANGE").format({ "value": str(stat_component.stat_resource.attack_range)})
+			rich_text.text +="\n"
 	else:
 		if (tile_name_dictionary.has(tile_type)):
 			var content = "[i]" + tile_name_dictionary[tile_type] + "[/i]";
@@ -175,10 +222,12 @@ func show_content_for(pos: Vector2i, id: String, tile_type: int, previously_fact
 			var structure_map = Global.structure_map
 			if (tile_type == TerrainMap.TileType.ROAD):
 				rich_text.text += "\n"
-				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_ROAD_TILE)
+				var cost := str(int(structure_map.COST_TO_REMOVE_ROAD_TILE))
+				rich_text.text += tr(&"INFO_NUTREENTS_TO_VERB").format({ "cost": cost, "verb": "DESTROY"})
 			elif (tile_type == TerrainMap.TileType.CITY):
 				rich_text.text += "\n"
-				rich_text.text += "Nutrients needed to destroy: " + str(structure_map.COST_TO_REMOVE_CITY_TILE)
+				var cost := str(int(structure_map.COST_TO_REMOVE_CITY_TILE))
+				rich_text.text += tr(&"INFO_NUTREENTS_TO_VERB").format({ "cost": cost, "verb": "DESTROY"})
 
 func _process(delta: float) -> void:
 	if not rich_text.text.is_empty():
