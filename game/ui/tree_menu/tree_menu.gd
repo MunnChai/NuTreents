@@ -38,6 +38,11 @@ static var instance: TreeMenu # Psuedo-singleton reference
 
 func _ready() -> void:
 	instance = self
+	
+	DebugConsole.register("unlock_all_trees", func(args: PackedStringArray):
+		for type: Global.TreeType in tree_order:
+			add_tree_card(type)
+		, "Unlocks every tree type")
 
 func get_currently_selected_tree_type() -> Global.TreeType:
 	return tree_order[currently_selected_tree]
