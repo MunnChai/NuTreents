@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4r20eam5ua8m"
-path="res://.godot/imported/City_Decor_1.png-be500d7b5454b4e3ed0675b180b11349.ctex"
+uid="uid://bpq6hi3fycc1m"
+path="res://.godot/imported/fog_reveal_1.png-589c65ec3164457c960c1604d5c7d158.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/decor/City_Decor_1.png"
-dest_files=["res://.godot/imported/City_Decor_1.png-be500d7b5454b4e3ed0675b180b11349.ctex"]
+source_file="res://ui/screen_ui/research_menu/research_tree/research_node/icons/fog_reveal_1.png"
+dest_files=["res://.godot/imported/fog_reveal_1.png-589c65ec3164457c960c1604d5c7d158.ctex"]
 
 [params]
 

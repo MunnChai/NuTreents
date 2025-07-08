@@ -9,12 +9,7 @@ func tile_has_structure(map_pos: Vector2i) -> bool:
 	return false
 
 func tile_has_enemy(map_pos: Vector2i) -> bool:
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
-		if grid_position_component.get_pos() == map_pos:
-			return true
-	
-	return false
+	return EnemyManager.instance.get_enemy_at(map_pos) != null
 
 func is_tile_accessible(map_position: Vector2i) -> bool:
 	var surrounding_directions := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
@@ -41,10 +36,9 @@ func get_entity_at(map_pos: Vector2i) -> Node2D:
 		return structure
 	
 	# Check enemies
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		var grid_position_component = Components.get_component(enemy, GridPositionComponent)
-		if grid_position_component.get_pos() == map_pos:
-			return enemy
+	var enemy: Node2D = EnemyManager.instance.get_enemy_at(map_pos)
+	if enemy != null:
+		return enemy
 	
 	return null
 

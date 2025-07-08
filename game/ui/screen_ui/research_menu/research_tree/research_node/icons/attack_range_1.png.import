@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4r20eam5ua8m"
-path="res://.godot/imported/City_Decor_1.png-be500d7b5454b4e3ed0675b180b11349.ctex"
+uid="uid://fdnxcfqhsova"
+path="res://.godot/imported/attack_range_1.png-b2b34be09e257a9b493cb3448ffd1c79.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/decor/City_Decor_1.png"
-dest_files=["res://.godot/imported/City_Decor_1.png-be500d7b5454b4e3ed0675b180b11349.ctex"]
+source_file="res://ui/screen_ui/research_menu/research_tree/research_node/icons/attack_range_1.png"
+dest_files=["res://.godot/imported/attack_range_1.png-b2b34be09e257a9b493cb3448ffd1c79.ctex"]
 
 [params]
 

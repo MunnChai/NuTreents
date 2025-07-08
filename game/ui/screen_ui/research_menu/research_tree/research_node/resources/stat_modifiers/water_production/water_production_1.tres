@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="WaterProductionResearchResource" load_steps=2 format=3 uid="uid://ddju3aygjbv7c"]
+[gd_resource type="Resource" script_class="WaterProductionResearchResource" load_steps=3 format=3 uid="uid://ddju3aygjbv7c"]
 
+[ext_resource type="Texture2D" uid="uid://17vft8h4lweu" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/water_production_1.png" id="1_l35op"]
 [ext_resource type="Script" uid="uid://d0ogdw3iiceu2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/water_production/water_production_research_resource.gd" id="1_ok6m8"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_ok6m8")
 water_production_increase = 2
 display_name = "Hydrophilic Roots"
 id = "water_production_1"
+icon = ExtResource("1_l35op")
 tech_point_cost = 1
 tree_type = 0
 description = "All trees that produce water increase their water production by 2."

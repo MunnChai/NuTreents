@@ -88,6 +88,12 @@ func start_game():
 	grid_position_component.init_occupied_positions(mother_tree_positions)
 	
 	resource_timer.start()
+	
+	DebugConsole.register("immortal", func(args: PackedStringArray):
+		var health_component: HealthComponent = Components.get_component(mother_tree, HealthComponent)
+		health_component.set_max_health(100000000000)
+		health_component.set_current_health(100000000000)
+		, "Gives mother tree lots of health")
 
 ## Returns the twee at the given position, null if there is none
 func get_twee(pos: Vector2i) -> Node2D:

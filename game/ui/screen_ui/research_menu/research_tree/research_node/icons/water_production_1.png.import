@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4r20eam5ua8m"
-path="res://.godot/imported/City_Decor_1.png-be500d7b5454b4e3ed0675b180b11349.ctex"
+uid="uid://17vft8h4lweu"
+path="res://.godot/imported/water_production_1.png-ea43ffaa6343d2f7fb743c6872ffcd87.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/proc_gen/decor/City_Decor_1.png"
-dest_files=["res://.godot/imported/City_Decor_1.png-be500d7b5454b4e3ed0675b180b11349.ctex"]
+source_file="res://ui/screen_ui/research_menu/research_tree/research_node/icons/water_production_1.png"
+dest_files=["res://.godot/imported/water_production_1.png-ea43ffaa6343d2f7fb743c6872ffcd87.ctex"]
 
 [params]
 

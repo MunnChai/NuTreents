@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="AttackResearchResource" load_steps=2 format=3 uid="uid://b15rei1mf1c8h"]
+[gd_resource type="Resource" script_class="AttackResearchResource" load_steps=3 format=3 uid="uid://b15rei1mf1c8h"]
 
+[ext_resource type="Texture2D" uid="uid://fdnxcfqhsova" path="res://ui/screen_ui/research_menu/research_tree/research_node/icons/attack_range_1.png" id="1_e5xa4"]
 [ext_resource type="Script" uid="uid://dkq4pa53xugix" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/stat_modifiers/attack_range/attack_range_research_resource.gd" id="1_gek0i"]
 
 [resource]
@@ -7,6 +8,7 @@ script = ExtResource("1_gek0i")
 range_increase = 1
 display_name = "Long Range Seeds"
 id = "attack_range_1"
+icon = ExtResource("1_e5xa4")
 tech_point_cost = 1
 tree_type = 0
 description = "All gun trees have their attack range increased by 1."

@@ -112,7 +112,7 @@ stat_resource = ExtResource("2_mkqlk")
 [node name="EnemyAnimationComponent" parent="." instance=ExtResource("19_d1gdh")]
 
 [node name="SoundEmitterComponent" parent="." instance=ExtResource("20_syol5")]
-sound_effect_name = "silk_spitter"
+sound_effect_name = "silkspitter_attack"
 
 [node name="FireComponents" type="Node2D" parent="."]
 

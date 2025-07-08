@@ -6,6 +6,9 @@ extends Node
 
 static var instance
 
+## A map of positions to every enemy on that position
+var enemy_map: Dictionary[Vector2i, Array]
+
 var enemy_spawn_timer: float = 0
 var current_wave = 0
 
@@ -14,6 +17,14 @@ var day_one_unique_scenario: bool = false
 
 func _ready() -> void:
 	instance = self
+	
+	DebugConsole.register("spawn_enemies", func(args: PackedStringArray):
+		spawn_enemy_wave()
+		, "Spawns a wave of enemies")
+	
+	DebugConsole.register("clear_enemies", func(args: PackedStringArray):
+		kill_all_enemies()
+		, "Kills all enemies")
 
 func start_game():
 	enemy_spawn_timer = 0
@@ -22,10 +33,10 @@ func _input(event: InputEvent) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
 		return
 	
-	if (Input.is_action_just_pressed("debug_button")):
-		var terrain_map = get_tree().get_first_node_in_group("terrain_map")
-		var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
-		spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
+	#if (Input.is_action_just_pressed("debug_button")):
+		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
+		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
+		#spawn_enemy(Global.EnemyType.values().pick_random(), map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):
@@ -46,6 +57,7 @@ func _process(delta: float) -> void:
 			spawn_enemy_wave()
 			enemy_spawn_timer = get_enemy_spawn_interval()
 	else: # DAY TIME
+		enemy_spawn_timer = 10 ## Next time night comes, spawn enemies 10 seconds after night time
 		current_wave = 0
 		kill_all_enemies()
 
@@ -179,33 +191,85 @@ func find_target_tree(trees_to_avoid: Array[Node2D] = []) -> Node2D:
 func spawn_enemy(enemy_type: Global.EnemyType, map_coords: Vector2i) -> Node2D:
 	AlmanacInfo.add_enemy(enemy_type)
 	var enemy_node: Node2D = EnemyRegistry.get_new_enemy(enemy_type)
-	var terrain_map: TerrainMap = Global.terrain_map
-	var world_pos: Vector2 = terrain_map.map_to_local(map_coords)
-	var enemy_map = get_tree().get_first_node_in_group("enemy_map")
-	enemy_map.add_child(enemy_node)
+	var world_pos: Vector2 = Global.terrain_map.map_to_local(map_coords)
+	var enemy_map_node = get_tree().get_first_node_in_group("enemy_map")
+	enemy_map_node.add_child(enemy_node)
 	enemy_node.global_position = world_pos
+	
 	var position_component: GridPositionComponent = Components.get_component(enemy_node, GridPositionComponent)
 	position_component.init_pos(map_coords)
+	
+	var grid_movement_component: GridMovementComponent = Components.get_component(enemy_node, GridMovementComponent)
+	grid_movement_component.moved.connect(_on_enemy_moved)
+	
+	var health_component: HealthComponent = Components.get_component(enemy_node, HealthComponent)
+	health_component.died.connect(_on_enemy_died.bind(enemy_node))
+	
+	if not enemy_map.has(map_coords):
+		enemy_map[map_coords] = []
+	
+	var enemies = enemy_map[map_coords]
+	enemies.push_back(enemy_node)
+	
 	return enemy_node
 
 func kill_all_enemies():
 	for enemy: Node2D in get_enemies():
 		if is_instance_valid(enemy):
 			var enemy_health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
-			enemy_health_component.set_current_health(0)
+			if not enemy_health_component.is_dead:
+				enemy_health_component.set_current_health(0)
 
 func get_enemies() -> Array:
 	return get_tree().get_nodes_in_group("enemies")
 
-func get_enemy_at(pos: Vector2i):
-	for enemy in get_enemies():
-		if not is_instance_valid(enemy): continue
+func get_enemy_at(pos: Vector2i) -> Node2D:
+	if not enemy_map.has(pos):
+		return
+	
+	var enemies: Array = enemy_map[pos]
+	if enemies.is_empty():
+		return null
+	
+	for enemy: Node2D in enemies:
 		var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
-		if health_component.is_dead: continue
-		var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
-		if grid_position_component.get_pos() == pos:
+		if not health_component.is_dead: 
 			return enemy
+	
 	return null
+
+	#for enemy in get_enemies():
+		#if not is_instance_valid(enemy): continue
+		#var health_component: HealthComponent = Components.get_component(enemy, HealthComponent)
+		#if health_component.is_dead: continue
+		#var grid_position_component: GridPositionComponent = Components.get_component(enemy, GridPositionComponent)
+		#if grid_position_component.get_pos() == pos:
+			#return enemy
+	#return null
+
+
+## When an enemy moves, remove them from the previous position and add them to the new position in the enemy_map
+func _on_enemy_moved(enemy_node: Node2D, from: Vector2i, to: Vector2i) -> void:
+	if not enemy_map.has(from):
+		enemy_map[from] = []
+	
+	var prev_pos_enemies: Array = enemy_map[from]
+	if prev_pos_enemies.has(enemy_node):
+		prev_pos_enemies.erase(enemy_node)
+	
+	if not enemy_map.has(to):
+		enemy_map[to] = []
+	
+	var new_pos_enemies: Array = enemy_map[to]
+	if not new_pos_enemies.has(enemy_node):
+		new_pos_enemies.append(enemy_node)
+
+func _on_enemy_died(enemy_node: Node2D) -> void:
+	var position_component: GridPositionComponent = Components.get_component(enemy_node, GridPositionComponent)
+	var map_coords: Vector2i = position_component.get_pos()
+	var enemies: Array = enemy_map[map_coords]
+	if enemies.has(enemy_node):
+		enemies.erase(enemy_node)
 
 #region SaveAndLoad
 func load_enemies_from(enemy_map: Dictionary):
@@ -218,14 +282,14 @@ func load_enemies_from(enemy_map: Dictionary):
 
 #region DifficultyFunctions
 
-const BASE_NUM_WAVES: int = 1
-const NUM_WAVES_INCREASE_PER_DAY: float = 0.5
-const MAX_WAVES: int = 15
+const BASE_NUM_WAVES: int = 2
+const NUM_WAVES_INCREASE_PER_DAY: float = 0.5 # New wave every 2 days
+const MAX_WAVES: int = 10
 
 const BASE_POINTS: int = 5
-const POINTS_INCREASE_PER_DAY: int = 15
+const POINTS_INCREASE_PER_DAY: int = 12.5
 # NEW: A cap on the total points ensures the late-game is stable.
-const MAX_POINTS_PER_NIGHT: int = 1000 # This can be adjusted for game balance.
+const MAX_POINTS_PER_NIGHT: int = 5000 # This can be adjusted for game balance.
 
 # Functions for calculating difficulty based on the given day
 func get_points_per_wave(day: int = get_curr_day()) -> int:
@@ -235,6 +299,8 @@ func get_points_per_wave(day: int = get_curr_day()) -> int:
 	var total_points_for_night = BASE_POINTS + (day - 1) * POINTS_INCREASE_PER_DAY
 	var capped_points = min(total_points_for_night, MAX_POINTS_PER_NIGHT)
 	var num_waves = get_num_waves(day)
+	
+	return capped_points
 	# Prevent division by zero if there are no waves
 	return capped_points / num_waves if num_waves > 0 else capped_points
 
