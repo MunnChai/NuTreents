@@ -17,18 +17,19 @@ const TREE_CARD = preload("res://ui/tree_menu/tree_card/tree_card.tscn")
 var starting_min_size = custom_minimum_size
 
 ## Tree types of cards, in the order that they are placed on the bar
-var tree_order = [Global.TreeType.DEFAULT_TREE,
-	Global.TreeType.EXPLORER_TREE,
-	Global.TreeType.TALL_TREE,
+var tree_order = [
+	Global.TreeType.DEFAULT_TREE,
 	Global.TreeType.WATER_TREE,
 	Global.TreeType.GUN_TREE,
-	Global.TreeType.TECH_TREE,
 	Global.TreeType.SLOWING_TREE,
+	Global.TreeType.FIRE_TREE,
 	Global.TreeType.MORTAR_TREE,
+	Global.TreeType.TALL_TREE,
 	Global.TreeType.SPIKY_TREE,
 	Global.TreeType.ICY_TREE,
-	Global.TreeType.FIRE_TREE,
+	Global.TreeType.EXPLORER_TREE,
 	Global.TreeType.SPRINKLER_TREE,
+	Global.TreeType.TECH_TREE,
 	]
 ## Index of the currently selected tree
 var currently_selected_tree = 0
@@ -43,6 +44,10 @@ func get_currently_selected_tree_type() -> Global.TreeType:
 	return tree_order[currently_selected_tree]
 
 func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
+	if currently_selected_tree == tree_order.find(tree_type):
+		currently_selected_tree = -1
+		return
+	
 	currently_selected_tree = tree_order.find(tree_type)
 
 func get_unlocked_tree_types() -> Array[Global.TreeType]:

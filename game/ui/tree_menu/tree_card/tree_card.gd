@@ -43,8 +43,8 @@ func _process(delta: float) -> void:
 	_update_card_image_offset(delta)
 
 func _detect_and_handle_selection() -> void:
-	## Not selected, highlighted, and clicked -> Select this tree type
-	if is_highlighted and not is_selected and Input.is_action_just_pressed("lmb"):
+	## Highlighted, and clicked -> Toggle this tree type
+	if is_highlighted and Input.is_action_just_pressed("lmb"):
 		TreeMenu.instance.set_currently_selected_tree_type(tree_type)
 		SoundManager.play_global_oneshot(&"ui_click")
 
