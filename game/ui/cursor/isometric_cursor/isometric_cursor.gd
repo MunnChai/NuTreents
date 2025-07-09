@@ -141,6 +141,10 @@ func return_to_default_state() -> void:
 	current_state = default_state
 
 func enter_state(state: CursorState) -> void:
+	# Do not transition to the same state
+	if current_state == state:
+		return
+	
 	# Exit old action
 	var current_action = cursor_state_dict[current_state]
 	current_action.exit(self)
