@@ -37,6 +37,7 @@ func _input(event: InputEvent) -> void:
 		#var terrain_map = get_tree().get_first_node_in_group("terrain_map")
 		#var map_coord = terrain_map.local_to_map(terrain_map.get_local_mouse_position()) # one HELL of a line
 		#spawn_enemy(Global.EnemyType.values().pick_random(), map_coord)
+		#spawn_enemy(Global.EnemyType.SPEEDLE, map_coord)
 
 func _process(delta: float) -> void:
 	if (Global.game_state != Global.GameState.PLAYING):

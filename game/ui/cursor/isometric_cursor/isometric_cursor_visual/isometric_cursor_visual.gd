@@ -27,6 +27,10 @@ var is_process_enabled: bool = true
 
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
+	
+	DebugConsole.register("toggle_iso_cursor", func(args: PackedStringArray):
+		visible = !visible
+		, "Toggles isometric cursor visibility (the highlight and wooden arrow)")
 
 func _process(delta: float) -> void:
 	if not is_process_enabled:
