@@ -31,6 +31,7 @@ var tree_order = [
 	Global.TreeType.SPRINKLER_TREE,
 	Global.TreeType.TECH_TREE,
 	]
+
 ## Index of the currently selected tree
 var currently_selected_tree = 0
 var is_selecting_tree := true ## Am I selecting a tree, or are we not selecting anything?
@@ -87,6 +88,7 @@ func add_tree_card(tree_type: Global.TreeType):
 	new_card.tree_type = tree_type
 	
 	tree_card_container.add_child(new_card)
+	tree_card_container.move_child(new_card, tree_order.find(tree_type))
 	
 	var notification = Notification.new(&"unlock", '[color=e09420]' + tr(&"NOTIF_UNLOCK").format({ "tree_name": TreeRegistry.get_twee_stat(tree_type).name.to_upper() }), { "priority": 3, "time_remaining": 3.0 });
 	NotificationLog.instance.add_notification(notification)
