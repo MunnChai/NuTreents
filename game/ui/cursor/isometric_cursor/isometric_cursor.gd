@@ -24,7 +24,7 @@ signal disabled
 #@export var primary_action: CursorAction
 #@export var secondary_action: CursorAction
 
-@export var default_action: CursorAction
+@export var default_state: CursorState
 @export var cursor_state_dict: Dictionary[CursorState, CursorAction]
 
 var is_enabled := true
@@ -34,7 +34,7 @@ var attempted_already := false ## Has the primary action already been attempted 
 
 static var instance: IsometricCursor
 
-var current_action: CursorAction
+var current_state: CursorState
 
 func _ready() -> void:
 	instance = self # Assuming only one cursor!
@@ -42,12 +42,15 @@ func _ready() -> void:
 	set_iso_position(Global.ORIGIN)
 	just_moved.connect(_on_just_moved)
 	
-	current_action = default_action
+	enter_state(default_state)
 
 func _process(delta: float) -> void:
 	$InfoBoxDetector.detect(iso_position)
 	
 	global_position = Global.terrain_map.map_to_local(iso_position)
+	
+	if Input.is_action_just_pressed("debug_button"):
+		enter_state(CursorState.DESTROY)
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	attempted_already = false
@@ -123,21 +126,31 @@ func get_hover_flag() -> HoverFlag:
 
 func return_to_default_state() -> void:
 	# Do not leave the default state
-	if current_action == default_action:
+	if current_state == default_state:
 		return
 	
+	# Exit old action
+	var current_action = cursor_state_dict[current_state]
 	current_action.exit(self)
-	current_action = default_action
+	
+	# Enter default action
+	var default_action = cursor_state_dict[default_state]
 	default_action.enter(self)
+	
+	# Set current state
+	current_state = default_state
 
 func enter_state(state: CursorState) -> void:
-	var action: CursorAction = cursor_state_dict[state]
+	# Exit old action
+	var current_action = cursor_state_dict[current_state]
+	current_action.exit(self)
 	
-	if current_action:
-		current_action.exit(self)
+	# Enter new action
+	var new_action: CursorAction = cursor_state_dict[state]
+	new_action.enter(self)
 	
-	current_action = action
-	action.enter(self)
+	# Set current state
+	current_state = state
 
 ## PRIMARY ACTION
 ## Delegate to primary action
@@ -146,11 +159,13 @@ func try_do_primary_action() -> void:
 		return
 	attempted_already = true
 	
+	var current_action = cursor_state_dict[current_state]
 	current_action.execute_primary_action(self)
 
 ## SECONDARY ACTION
 ## Delegate to secondary action
 func try_do_secondary_action() -> void:
+	var current_action = cursor_state_dict[current_state]
 	current_action.execute_secondary_action(self)
 
 func do_water_bucket_from_god() -> void:

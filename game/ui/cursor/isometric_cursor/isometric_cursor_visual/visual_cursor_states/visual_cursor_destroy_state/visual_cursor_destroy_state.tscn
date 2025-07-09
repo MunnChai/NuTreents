@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6tp5vtd60pup"]
+
+[ext_resource type="Script" uid="uid://d2q5yqdlkycf" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_destroy_state/visual_cursor_destroy_state.gd" id="1_57kfw"]
+
+[node name="VisualCursorDestroyState" type="Node"]
+script = ExtResource("1_57kfw")

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://baknhxcd2oevh"]
+
+[ext_resource type="Script" uid="uid://dcivcpcf8mg77" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_plant_state/visual_cursor_plant_state.gd" id="1_i77g4"]
+
+[node name="VisualCursorPlantState" type="Node"]
+script = ExtResource("1_i77g4")

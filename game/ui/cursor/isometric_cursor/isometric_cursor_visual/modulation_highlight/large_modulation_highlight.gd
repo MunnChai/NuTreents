@@ -79,3 +79,11 @@ func set_color(color: Color) -> void:
 	canvas_group.modulate = color
 
 #endregion
+
+#region ENABLE/DISABLE
+
+func enable() -> void:
+	visible = true
+
+func disable() -> void:
+	visible = false

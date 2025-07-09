@@ -1,0 +1,2 @@
+class_name VisualCursorExtinguishState
+extends VisualCursorState

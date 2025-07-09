@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5xlk6t5x52el"]
+
+[ext_resource type="Script" uid="uid://s0ppr5hg5qls" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_select_state/visual_cursor_select_state.gd" id="1_1crcm"]
+
+[node name="VisualCursorSelectState" type="Node"]
+script = ExtResource("1_1crcm")
