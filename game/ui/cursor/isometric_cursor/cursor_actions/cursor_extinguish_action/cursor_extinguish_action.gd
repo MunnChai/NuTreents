@@ -7,7 +7,7 @@ extends CursorAction
 @export var ignite_instead := false
 
 ## PUT OUT FIRE in a square
-func execute(cursor: IsometricCursor) -> void:
+func execute_primary_action(cursor: IsometricCursor) -> void:
 	var iso_position := cursor.iso_position
 	for x: int in range(iso_position.x - square_size / 2.0, iso_position.x + square_size / 2.0):
 		for y: int in range(iso_position.y - square_size / 2.0, iso_position.y + square_size / 2.0):

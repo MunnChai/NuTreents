@@ -46,9 +46,14 @@ func get_currently_selected_tree_type() -> Global.TreeType:
 func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
 	if currently_selected_tree == tree_order.find(tree_type):
 		currently_selected_tree = -1
+		IsometricCursor.instance.return_to_default_state()
 		return
 	
 	currently_selected_tree = tree_order.find(tree_type)
+	IsometricCursor.instance.enter_state(IsometricCursor.CursorState.PLANT)
+
+func deselect_currently_selected_tree_type() -> void:
+	currently_selected_tree = -1
 
 func get_unlocked_tree_types() -> Array[Global.TreeType]:
 	var tree_types: Array[Global.TreeType]

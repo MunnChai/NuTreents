@@ -8,7 +8,7 @@ extends CursorAction
 ## - Destroying buildings
 ## - Destroying concrete
 ## - Un-petrifying trees
-func execute(cursor: IsometricCursor) -> void:
+func execute_primary_action(cursor: IsometricCursor) -> void:
 	var p: Vector2i = cursor.iso_position
 	var structure_map := Global.structure_map
 	
