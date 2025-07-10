@@ -286,19 +286,20 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_bottom = 38
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/UI/TreeMenu/MarginContainer"]
+[node name="TreeCardContainer" type="HBoxContainer" parent="UI/UI/TreeMenu/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 alignment = 1
 
-[node name="DefaultTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+[node name="DefaultTreeCard" parent="UI/UI/TreeMenu/MarginContainer/TreeCardContainer" instance=ExtResource("13_u47y0")]
 layout_mode = 2
 tree_type = 1
 
-[node name="WaterTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+[node name="WaterTreeCard" parent="UI/UI/TreeMenu/MarginContainer/TreeCardContainer" instance=ExtResource("13_u47y0")]
 layout_mode = 2
 tree_type = 3
 
-[node name="GunTreeCard" parent="UI/UI/TreeMenu/MarginContainer/HBoxContainer" instance=ExtResource("13_u47y0")]
+[node name="GunTreeCard" parent="UI/UI/TreeMenu/MarginContainer/TreeCardContainer" instance=ExtResource("13_u47y0")]
 layout_mode = 2
 tree_type = 2
 
@@ -382,16 +383,30 @@ script = ExtResource("4_3e0vf")
 z_index = -5
 tile_map_data = PackedByteArray("AAD//wEAAAABAAAAAAAAAAEAAAAAAAAAAAABAAEAAAADAAAAAAABAAAAAAABAAAAAAAAAAAAAAACAAAAAAD//wAAAAADAAAAAAD+/wAAAAACAAAAAAD+////AAABAAAAAAD/////AAADAAAAAAAAAP//AAABAAAAAAABAP//AAAAAAIAAAAAAP7/AAADAAAAAAD///7/AAADAAAAAAD+//7/AAAAAAAAAAD9////AAABAAAAAAD9/wEAAAAAAAIAAAD///3/AAABAAIAAAACAAAAAAABAAIAAAACAAEAAAADAAIAAAABAAIAAAADAAIAAAAAAAIAAAACAAAAAAD//wIAAAAAAA4AAAD//wMAAAAAABIAAAABAAMAAAAAAA4AAAD9//7/AAABAAAAAAD+//3/AAADAAIAAAACAAIAAAACAAIAAAAAAAMAAAAAABAAAAD9/wAAAAACAAAAAAD+/wEAAAABAAAAAAAAAP3/AAACAAIAAAABAP7/AAAAAAIAAAACAP//AAABABYAAAABAP3/AAABABYAAAD+/wIAAAAAABIAAAD+/wMAAAAAAA4AAAD9/wIAAAAAAA4AAAD8/wAAAAADAAIAAAD8////AAAAAAIAAAD8//7/AAABAAIAAAD8/wEAAAAAABQAAAD9//3/AAACAAIAAAACAP7/AAAAABYAAAD///z/AAAAAAIAAAD8/wIAAAAAAA4AAAACAAMAAAAAABQAAAACAP3/AAADABYAAAADAP//AAAAABYAAAADAP7/AAABABYAAAAAAPz/AAADABYAAAAAAPv/AAAAABYAAAD///v/AAADABYAAAD7////AAAAABgAAAD7//7/AAAFABgAAAD7//3/AAADABgAAAD8//3/AAAEABgAAAD8//z/AAAEABgAAAD9//v/AAADABgAAAD+//v/AAAAABgAAAD9//z/AAADABgAAAD+//z/AAADABgAAAD7/wAAAAAEABgAAAD7/wEAAAAFABgAAAADAAAAAAAAABYAAAADAAEAAAAAABYAAAADAAIAAAAAABIAAAADAAMAAAAAAA4AAAABAPz/AAAAABYAAAA=")
 
-[node name="Cursor" parent="World/TileMaps/BuildingManager" instance=ExtResource("22_u47y0")]
+[node name="Cursor" parent="World/TileMaps/BuildingManager" node_paths=PackedStringArray("cursor_state_dict") instance=ExtResource("22_u47y0")]
 script = ExtResource("20_jpd2v")
+cursor_state_dict = {
+0: NodePath("States/CursorSelectAction"),
+1: NodePath("States/CursorPlantAction"),
+2: NodePath("States/CursorDestroyAction"),
+3: NodePath("States/CursorExtinguishAction")
+}
 
-[node name="VisualCursor" parent="World/TileMaps/BuildingManager" node_paths=PackedStringArray("cursor") instance=ExtResource("23_jpd2v")]
+[node name="VisualCursor" parent="World/TileMaps/BuildingManager" node_paths=PackedStringArray("cursor", "cursor_state_dict") instance=ExtResource("23_jpd2v")]
 cursor = NodePath("../Cursor")
+cursor_state_dict = {
+0: NodePath("States/VisualCursorSelectState"),
+1: NodePath("States/VisualCursorPlantState"),
+2: NodePath("States/VisualCursorDestroyState"),
+3: NodePath("States/VisualCursorExtinguishState")
+}
 
 [node name="BuildingLayer" parent="World/TileMaps/BuildingManager" instance=ExtResource("7_lvqxb")]
+z_index = 1
 y_sort_enabled = true
 
 [node name="EnemyLayer" type="Node2D" parent="World/TileMaps/BuildingManager" groups=["enemy_map"]]
+z_index = 1
 y_sort_enabled = true
 script = ExtResource("23_dpu50")
 
