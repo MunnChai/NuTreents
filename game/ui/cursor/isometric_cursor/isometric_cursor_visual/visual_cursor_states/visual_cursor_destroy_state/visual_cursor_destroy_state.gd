@@ -1,6 +1,15 @@
 class_name VisualCursorDestroyState
 extends VisualCursorState
 
+var destructible_tiles_highlight: LargeModulationHighlight
+
+## Get 2 new large modulation highlights, one for the plantable tiles, one for grid ranges
+func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	destructible_tiles_highlight = visual_cursor.get_large_highlight()
+
+func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	visual_cursor.reset_highlight_pool()
+
 ## Change visual details based on what is highlighted...
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	var terrain_map = Global.terrain_map
@@ -9,6 +18,9 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 	
 	## Highlight the tile at iso position
 	visual_cursor.highlight_tile_at(iso_position)
+	
+	## Highlight destructible tiles
+	highlight_destructible_tiles(cursor)
 	
 	var flag := cursor.get_hover_flag()
 	
@@ -60,3 +72,21 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 						visual_cursor.set_arrow_bobbing(false)
 		_:
 			pass ## How did we get here?
+
+func highlight_destructible_tiles(cursor: IsometricCursor) -> void:
+	destructible_tiles_highlight._reset_pool()
+	
+	var reachable_tiles: Array[Vector2i] = TreeManager.get_reachable_tree_placement_positions(true)
+	var destructible_tiles: Array[Vector2i] = []
+	for iso_pos: Vector2i in reachable_tiles:
+		var structure: Node2D = Global.structure_map.get_building_node(iso_pos)
+		var destructible: DestructableComponent = Components.get_component(structure, DestructableComponent)
+		if destructible:
+			destructible_tiles.append(iso_pos)
+			continue
+		var twee_stat: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
+		if twee_stat:
+			destructible_tiles.append(iso_pos)
+	
+	destructible_tiles_highlight.highlight_tiles_at(destructible_tiles)
+	destructible_tiles_highlight.set_color(IsometricCursorVisual.RED)
