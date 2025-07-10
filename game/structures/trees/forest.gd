@@ -88,8 +88,9 @@ func update_water_maintenance(delta: float) -> float:
 		
 		# --- BUG FIX ---
 		# Added a safety check to ensure WeatherManager.instance is valid before using it.
-		if is_instance_valid(WeatherManager.instance) and WeatherManager.instance.is_raining():
-			final_production *= WeatherManager.RAIN_WATER_PRODUCTION_MULTIPLIER
+		#if is_instance_valid(WeatherManager.instance) and WeatherManager.instance.is_raining():
+			#pass
+			#final_production *= WeatherManager.RAIN_WATER_PRODUCTION_MULTIPLIER
 			
 		net_water_change += (final_production - final_consumption)
 	
