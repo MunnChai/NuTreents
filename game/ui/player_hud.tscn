@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cxej40hx3cxdc"]
+[gd_scene load_steps=18 format=3 uid="uid://cxej40hx3cxdc"]
 
 [ext_resource type="Script" uid="uid://d0b8om0fnadtd" path="res://ui/player_hud.gd" id="1_of0jw"]
 [ext_resource type="PackedScene" uid="uid://b1f0pb7wkyn1" path="res://ui/resource_indicator/resource_indicator.tscn" id="3_hrmpd"]
@@ -15,6 +15,7 @@
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="10_kxjjr"]
 [ext_resource type="PackedScene" uid="uid://d3poa2n2ryxpv" path="res://ui/info_box/hover_info_box/hover_info_box.tscn" id="13_x7jpl"]
 [ext_resource type="PackedScene" uid="uid://cj8rykw3ejjax" path="res://ui/notification_log/notification_log.tscn" id="14_wplf5"]
+[ext_resource type="Script" uid="uid://dsw6cnjnv2woi" path="res://ui/fps_counter.gd" id="16_tuu6u"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_anucx"]
 shader = ExtResource("4_6i6ec")
@@ -161,6 +162,16 @@ offset_right = -100.0
 offset_bottom = 251.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 306.0
+offset_top = 5.0
+offset_right = 905.0
+offset_bottom = 114.0
+theme = ExtResource("10_kxjjr")
+theme_override_font_sizes/normal_font_size = 32
+text = "FPS:100"
+script = ExtResource("16_tuu6u")
 
 [connection signal="pressed" from="OverlayButtons/WaterOverlayButton" to="OverlayButtons" method="_on_water_overlay_pressed"]
 [connection signal="pressed" from="OverlayButtons/HealthOverlayButton2" to="OverlayButtons" method="_on_health_overlay_pressed"]

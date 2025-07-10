@@ -109,6 +109,12 @@ func _spawn_mother_tree() -> void:
 		health_component.set_max_health(100000000000)
 		health_component.set_current_health(100000000000)
 		, "Gives mother tree lots of health")
+	
+	DebugConsole.register("fill_trees", func(args: PackedStringArray):
+		for pos: Vector2i in terrain_map.get_used_cells():
+			var default: Node2D = TreeRegistry.get_new_twee(Global.TreeType.DEFAULT_TREE)
+			add_tree(default, pos)
+		, "Gives mother tree lots of health")
 
 ## Returns the twee at the given position, null if there is none
 func get_twee(pos: Vector2i) -> Node2D:
@@ -183,14 +189,10 @@ func remove_tree(p: Vector2i) -> void:
 #region PROCESSING
 
 func _process(delta: float) -> void:
-	#nutreents_gain = get_nutrient_gain(delta)
-	#nutreents += nutreents_gain * delta # Nutreents/second * time 
-	#update_water_maintenance(delta)
 	pass
 
 # Occurs once per second
 func get_resources(tick_rate: float = RESOURCE_TICK_RATE) -> void:
-	return
 	nutreents_gain = get_nutrient_gain(tick_rate)
 	nutreents += nutreents_gain * tick_rate
 	update_water_maintenance(tick_rate)
