@@ -9,7 +9,7 @@ static func is_instanced() -> bool:
 
 func _ready() -> void:
 	instance = self
-	layers.set(0, $MetaballLayer)
+	#layers.set(0, $MetaballLayer)
 
 func _process(delta: float) -> void:
 	if copy_camera:
@@ -29,10 +29,9 @@ func add_new_layer(id: int) -> MetaballLayer:
 	var layer := METABALL_LAYER.instantiate()
 	add_child(layer)
 	layer.position = Vector2.ZERO
-	layer.set_color(colors[id % colors.size()])
+	#layer.set_color(colors[id % colors.size()])
 	layer.id = id
 	layers.set(id, layer)
-	print(id)
 	return layer
 
 func get_layer_or_create(id: int) -> MetaballLayer:

@@ -1,10 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://cx2vb14t8m4ya"]
+[gd_scene load_steps=2 format=3 uid="uid://cx2vb14t8m4ya"]
 
 [ext_resource type="Script" uid="uid://dwawqkis57ee7" path="res://overlays/metaball_overlay/metaball_overlay.gd" id="1_rw8g3"]
-[ext_resource type="PackedScene" uid="uid://h0tjy628kibu" path="res://overlays/metaball_overlay/metaball_layer/metaball_layer.tscn" id="2_s8asf"]
 
 [node name="MetaballOverlay" type="Node2D"]
 script = ExtResource("1_rw8g3")
 colors = PackedColorArray(0.160784, 0.505882, 1, 0.560784, 0.883761, 0.272466, 0.407138, 0.560784, 0.489535, 0.574565, 0, 0.560784, 0.766004, 0.434014, 0, 0.560784, 0.755105, 0.147702, 1, 0.560784)
-
-[node name="MetaballLayer" parent="." instance=ExtResource("2_s8asf")]

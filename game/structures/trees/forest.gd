@@ -132,6 +132,16 @@ func update_water_maintenance(delta: float) -> float:
 	water += net_water_change * delta
 	water = max(water, 0)
 	water_gain = net_water_change
+	
+	var gain = clamp(water_gain, WaterOverlay.UNHEALTHY_WATER_GAIN, WaterOverlay.HEALTHY_WATER_GAIN) / (WaterOverlay.HEALTHY_WATER_GAIN - WaterOverlay.UNHEALTHY_WATER_GAIN)
+	var color = lerp(WaterOverlay.UNHEALTHY_COLOR, WaterOverlay.HEALTHY_COLOR, gain)
+	
+	if water_gain < 0:
+		color = WaterOverlay.DEHYDRATED_COLOR
+	
+	if MetaballOverlay.is_instanced():
+		MetaballOverlay.instance.get_layer_or_create(id - 1).set_color(color)
+	
 	return net_water_change
 
 ## add the given tree to this forest
