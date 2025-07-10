@@ -56,7 +56,7 @@ func _update_metaballs() -> void:
 	
 	for pos: Vector2i in grid_position_component.get_occupied_positions():
 		if MetaballOverlay.is_instanced():
-			metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos), forest))
+			metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos), forest - 1))
 
 func _remove_metaballs() -> void:
 	for metaball: IsometricMetaball in metaballs:
@@ -151,10 +151,9 @@ func remove() -> void:
 	death_sound_emitter_component.play_sound_effect()
 	tree_animation_component.play_death_animation()
 	
-	_remove_metaballs()
-	
 	await tree_animation_component.death_finished
 	
+	_remove_metaballs()
 	TreeManager.remove_tree(grid_position_component.get_pos())
 	actor.queue_free()
 

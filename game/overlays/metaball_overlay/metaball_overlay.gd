@@ -30,7 +30,9 @@ func add_new_layer(id: int) -> MetaballLayer:
 	add_child(layer)
 	layer.position = Vector2.ZERO
 	layer.set_color(colors[id % colors.size()])
+	layer.id = id
 	layers.set(id, layer)
+	print(id)
 	return layer
 
 func get_layer_or_create(id: int) -> MetaballLayer:
