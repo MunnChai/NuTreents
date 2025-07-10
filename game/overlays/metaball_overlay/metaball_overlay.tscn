@@ -1,45 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx2vb14t8m4ya"]
+[gd_scene load_steps=3 format=3 uid="uid://cx2vb14t8m4ya"]
 
 [ext_resource type="Script" uid="uid://dwawqkis57ee7" path="res://overlays/metaball_overlay/metaball_overlay.gd" id="1_rw8g3"]
-[ext_resource type="Shader" uid="uid://kjlcxlfpcsqu" path="res://overlays/metaball_overlay/shaders/metaball_texture.gdshader" id="2_4wyii"]
-[ext_resource type="PackedScene" uid="uid://rbvudxeu005y" path="res://overlays/metaball_overlay/metaball_world/metaball_world.tscn" id="3_njc6o"]
-
-[sub_resource type="Gradient" id="Gradient_ehcto"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0.426471, 0.492647)
-colors = PackedColorArray(0, 0, 0, 0, 0.160338, 0.50735, 1, 0.560784)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_wiv42"]
-gradient = SubResource("Gradient_ehcto")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ehcto"]
-shader = ExtResource("2_4wyii")
-shader_parameter/gradient = SubResource("GradientTexture1D_wiv42")
+[ext_resource type="PackedScene" uid="uid://h0tjy628kibu" path="res://overlays/metaball_overlay/metaball_layer/metaball_layer.tscn" id="2_s8asf"]
 
 [node name="MetaballOverlay" type="Node2D"]
 script = ExtResource("1_rw8g3")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-material = SubResource("ShaderMaterial_ehcto")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -324.0
-offset_right = 576.0
-offset_bottom = 324.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-handle_input_locally = false
-mesh_lod_threshold = 0.0
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="MetaballWorld" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_njc6o")]
-unique_name_in_owner = true
+[node name="MetaballLayer" parent="." instance=ExtResource("2_s8asf")]

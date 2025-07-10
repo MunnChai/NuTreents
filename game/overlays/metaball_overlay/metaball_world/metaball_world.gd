@@ -13,7 +13,6 @@ extends Node2D
 
 const ISOMETRIC_METABALL = preload("./metaballs/isometric_metaball.tscn")
 func add_metaball(pos: Vector2) -> IsometricMetaball:
-	print("HI")
 	var new_ball := ISOMETRIC_METABALL.instantiate()
 	add_child(new_ball)
 	new_ball.global_position = pos

@@ -50,9 +50,14 @@ func _ready():
 	call_deferred("_setup_metaballs")
 
 func _setup_metaballs() -> void:
-	for pos: Vector2i in grid_position_component.get_occupied_positions():
-		if MetaballOverlay.is_instanced():
-			metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos)))
+	if randf() > 0.5:
+		for pos: Vector2i in grid_position_component.get_occupied_positions():
+			if MetaballOverlay.is_instanced():
+				metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos)))
+	else:
+		for pos: Vector2i in grid_position_component.get_occupied_positions():
+			if MetaballOverlay.is_instanced():
+				metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos), 1))
 
 #region Components and Signals
 
