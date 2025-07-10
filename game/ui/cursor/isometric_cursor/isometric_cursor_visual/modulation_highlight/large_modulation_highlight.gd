@@ -9,6 +9,10 @@ const MODULATION_HIGHLIGHT = preload("modulation_highlight.tscn")
 
 @onready var canvas_group = $CanvasGroup
 
+func _process(delta: float) -> void:
+	# Munn: Updating screen space outline to match camera zoom
+	canvas_group.material.set_shader_parameter("camera_zoom", Global.camera.zoom)
+
 #region MODULATION POOL
 
 ## A pool of the current individual tile modulation highlights
@@ -54,9 +58,6 @@ func highlight_tile_at(iso_position: Vector2i) -> void:
 	## TILE:
 	else:
 		_highlight_empty_tile_at(iso_position)
-	
-	# Munn: Updating screen space outline to match camera zoom
-	canvas_group.material.set_shader_parameter("camera_zoom", Global.camera.zoom)
 
 ## Highlights the given tiles
 func highlight_tiles_at(iso_positions: Array[Vector2i]) -> void:

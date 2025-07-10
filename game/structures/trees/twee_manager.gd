@@ -15,6 +15,9 @@ var forest_map: Dictionary[Vector2i, int] # {pos, id}
 ## Mapping between position and twees
 var tree_map: Dictionary[Vector2i, Node2D]
 var forest_count: int
+## Mapping between position and whether it is reachable (you can place a tree there/destroy stuff), which includes tree positions
+## If the position is IN THIS DICTIONARY, THEN IT IS REACHABLE. This is effectively a set, the boolean 
+var reachable_tiles: Dictionary[Vector2i, bool]
 
 ## Amount of nutreents the player has
 var nutreents: float = 0
@@ -72,7 +75,15 @@ func start_game():
 	structure_map = Global.structure_map
 	terrain_map = Global.terrain_map
 	
-	## SPAWN THE MOTHER TREE
+	## Recalculate reachable positions upon placing or removing a tree
+	tree_placed.connect(_recalculate_reachable_positions.unbind(1))
+	tree_removed.connect(_recalculate_reachable_positions.unbind(1))
+	
+	resource_timer.start()
+	
+	_spawn_mother_tree()
+
+func _spawn_mother_tree() -> void:
 	var mother_tree: Node2D = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
 	
 	var mother_tree_positions: Array[Vector2i] = [ 
@@ -86,8 +97,6 @@ func start_game():
 	
 	var grid_position_component = Components.get_component(mother_tree, GridPositionComponent)
 	grid_position_component.init_occupied_positions(mother_tree_positions)
-	
-	resource_timer.start()
 	
 	DebugConsole.register("immortal", func(args: PackedStringArray):
 		var health_component: HealthComponent = Components.get_component(mother_tree, HealthComponent)
@@ -135,6 +144,7 @@ func add_tree(twee: Node2D, pos: Vector2i) -> void:
 	
 	# Signal!
 	tree_placed.emit(twee)
+	print("Added")
  
 ## Remove the given twee at the position
 ## If there is no tree there, does nothing 
@@ -433,10 +443,22 @@ func is_reachable(pos: Vector2i, include_trees: bool = false):
 	return get_reachable_tree_placement_positions(include_trees).has(pos)
 
 func get_reachable_tree_placement_positions(include_trees: bool = false) -> Array[Vector2i]:
+	if include_trees:
+		return reachable_tiles.keys()
+	
 	var allowed_positions: Array[Vector2i] = []
 	
-	var tree_map = get_tree_map()
+	for pos: Vector2i in reachable_tiles.keys():
+		if not tree_map.has(pos):
+			allowed_positions.append(pos)
 	
+	return allowed_positions
+
+## Recalculates the reachable_tiles map
+func _recalculate_reachable_positions() -> void:
+	reachable_tiles.clear()
+	
+	var tree_map = get_tree_map()
 	for pos in tree_map.keys():
 		var tree: Node2D = tree_map.get(pos)
 		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
@@ -444,11 +466,8 @@ func get_reachable_tree_placement_positions(include_trees: bool = false) -> Arra
 		for offset in grid_range_component.get_tiles_in_range():
 			var new_pos = pos + offset
 			if not tree_map.has(new_pos):
-				allowed_positions.append(pos + offset)
+				reachable_tiles[new_pos] = false
 		
-		if (include_trees):
-			allowed_positions.append(pos)
-	
-	return allowed_positions
+		reachable_tiles[pos] = false
 
 #endregion

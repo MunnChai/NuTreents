@@ -7,9 +7,11 @@ var tree_range_highlight: LargeModulationHighlight
 ## Get 2 new large modulation highlights, one for the plantable tiles, one for grid ranges
 func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	plantable_tiles_highlight = visual_cursor.get_large_highlight()
+	#visual_cursor.set_highlight_visible(false)
 
 func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	visual_cursor.reset_highlight_pool()
+	#visual_cursor.set_highlight_visible(true)
 
 
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
@@ -19,6 +21,7 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 	
 	## Highlight the tile at iso position
 	visual_cursor.highlight_tile_at(iso_position)
+	
 	
 	## Highlight plantable tiles
 	highlight_plantable_tiles(cursor)

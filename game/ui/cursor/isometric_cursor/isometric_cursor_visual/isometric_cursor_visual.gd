@@ -20,7 +20,7 @@ const RED := Color("ff578681")
 
 @onready var large_modulation_highlight: LargeModulationHighlight = %LargeModulationHighlight
 @onready var wooden_arrow: CursorWoodenArrow = %WoodenArrow
-@onready var extra_highlights: Node2D = $ExtraHighlights
+@onready var extra_highlights: Node = $ExtraHighlights
 
 var is_process_enabled: bool = true
 var current_state: IsometricCursor.CursorState

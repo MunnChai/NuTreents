@@ -1,6 +1,12 @@
 class_name VisualCursorSelectState
 extends VisualCursorState
 
+func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	pass
+
+func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	pass
+
 ## Change visual details based on what is highlighted...
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	var terrain_map = Global.terrain_map
