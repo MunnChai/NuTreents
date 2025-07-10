@@ -18,9 +18,13 @@ func set_water_production(new_production: float) -> void:
 
 func get_water_production() -> float:
 	if is_water_adjacent():
-		return max(0, water_production * ADJACENT_WATER_MULTIPLIER)
+		return max(0, water_production * ADJACENT_WATER_MULTIPLIER * get_rain_multiplier())
 	
-	return water_production * get_rain_multiplier()
+	# ONLY MULTIPLY IF WATER IS POSITIVE
+	if water_production >= 0:
+		return water_production * get_rain_multiplier()
+	
+	return water_production
 
 func increase_water_production(amount: float) -> float:
 	water_production += amount
