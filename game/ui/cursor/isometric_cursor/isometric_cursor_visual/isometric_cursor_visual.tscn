@@ -84,8 +84,10 @@ cursor_state_dict = {
 
 [node name="LargeModulationHighlight" parent="." instance=ExtResource("2_g1r7s")]
 unique_name_in_owner = true
+top_level = true
 
 [node name="ExtraHighlights" type="Node2D" parent="."]
+top_level = true
 
 [node name="Hologram" type="Sprite2D" parent="."]
 visible = false

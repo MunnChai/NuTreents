@@ -44,17 +44,17 @@ func _process(delta: float) -> void:
 	var new_state: IsometricCursor.CursorState = cursor.current_state
 	if current_state != new_state:
 		enter_state(new_state)
+
+func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
+	update_adjacent_tile_transparencies(old_pos, new_pos)
 	
 	var visual_state: VisualCursorState = cursor_state_dict[current_state]
 	visual_state.update(cursor, self)
 
-func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
-	update_adjacent_tile_transparencies()
-
 # Updates the building map to make buildings in front of the currently hovered tile transparent
-func update_adjacent_tile_transparencies() -> void:
+func update_adjacent_tile_transparencies(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	var building_map: BuildingMap = Global.structure_map
-	building_map.update_transparencies_around(cursor.iso_position)
+	building_map.update_transparencies_around(old_pos, new_pos)
 
 #region STATE MACHINE
 

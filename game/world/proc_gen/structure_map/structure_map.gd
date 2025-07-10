@@ -97,32 +97,48 @@ const TWEEN_TIME = 0.2
 const ADJACENT_TILE_REACH = 1
 const TRANSPARENCY_ALPHA = 0.3
 ## Updates the transparencies of relevant tiles based on the given position
-func update_transparencies_around(map_pos: Vector2i) -> void:
+func update_transparencies_around(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	var selected_structure = null
-	if does_structure_exist(map_pos):
-		selected_structure = tile_scene_map[map_pos]
+	if does_structure_exist(new_pos):
+		selected_structure = tile_scene_map[new_pos]
 	
 	var adjacent_coords = []
 	var adjacent_structures = []
 	var offsets = [
+		Vector2i.ZERO,
 		Vector2i.DOWN, Vector2i.RIGHT, Vector2i.DOWN + Vector2i.RIGHT,
 		2 * Vector2i.DOWN + 1 * Vector2i.RIGHT,
 		1 * Vector2i.DOWN + 2 * Vector2i.RIGHT,
 		2 * Vector2i.DOWN + 2 * Vector2i.RIGHT,
 	]
 	
-	for offset in offsets:
-		var adj_pos: Vector2i = map_pos + offset
-		if adj_pos == map_pos:
-			continue
-		if does_structure_exist(adj_pos):
-			adjacent_coords.append(adj_pos)
-			adjacent_structures.append(tile_scene_map[adj_pos])
+	var old_positions: Array[Vector2i] = []
+	var new_positions: Array[Vector2i] = []
 	
-	for key in tile_scene_map:
-		var node: Node2D = tile_scene_map[key]
+	# Get new positions
+	for offset in offsets:
+		var pos: Vector2i = new_pos + offset
+		new_positions.append(pos)
+	
+	# Get old positions
+	for offset in offsets:
+		var pos: Vector2i = old_pos + offset
+		if pos in new_positions:
+			continue
 		
-		if (not key in adjacent_coords and not node in adjacent_structures) or selected_structure == node:
+		old_positions.append(pos)
+	
+	for pos: Vector2i in old_positions:
+		var node: Node2D = get_building_node(pos)
+		if is_instance_valid(node):
+			var tween: Tween = get_tree().create_tween()
+			tween.tween_property(node, "modulate", Color(node.modulate, 1.0), TWEEN_TIME)
+	
+	for pos: Vector2i in new_positions:
+		var node: Node2D = get_building_node(pos)
+		if not is_instance_valid(node):
+			continue
+		if node == selected_structure:
 			var tween: Tween = get_tree().create_tween()
 			tween.tween_property(node, "modulate", Color(node.modulate, 1.0), TWEEN_TIME)
 		else:
