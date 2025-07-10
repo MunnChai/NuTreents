@@ -52,6 +52,10 @@ func _ready() -> void:
 	resource_timer.one_shot = false
 	resource_timer.wait_time = RESOURCE_TICK_RATE
 	resource_timer.timeout.connect(get_resources)
+	
+	## Recalculate reachable positions upon placing or removing a tree
+	tree_placed.connect(_recalculate_reachable_positions.unbind(1))
+	tree_removed.connect(_recalculate_reachable_positions.unbind(1))
 
 ## Start the game with a blank slate
 func start_game():
@@ -64,6 +68,12 @@ func start_game():
 		nutreents += 1000000000
 		, "Gives you a lot of nutreents")
 	
+	DebugConsole.register("water", func(args: PackedStringArray):
+		for tree: Node2D in tree_map.values():
+			var water_production: WaterProductionComponent = Components.get_component(tree, WaterProductionComponent)
+			water_production.set_water_production(1000000)
+		, "Gives you a near infinite amount of water")
+	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
 	forest_map.clear()
@@ -74,10 +84,6 @@ func start_game():
 	fog_map = Global.fog_map
 	structure_map = Global.structure_map
 	terrain_map = Global.terrain_map
-	
-	## Recalculate reachable positions upon placing or removing a tree
-	tree_placed.connect(_recalculate_reachable_positions.unbind(1))
-	tree_removed.connect(_recalculate_reachable_positions.unbind(1))
 	
 	resource_timer.start()
 	
@@ -184,6 +190,7 @@ func _process(delta: float) -> void:
 
 # Occurs once per second
 func get_resources(tick_rate: float = RESOURCE_TICK_RATE) -> void:
+	return
 	nutreents_gain = get_nutrient_gain(tick_rate)
 	nutreents += nutreents_gain * tick_rate
 	update_water_maintenance(tick_rate)

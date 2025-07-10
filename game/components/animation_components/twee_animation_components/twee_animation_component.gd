@@ -20,6 +20,8 @@ const GREEN_TREE_DIE = preload("res://structures/trees/scenes/death/green_tree_d
 @export_group("Components")
 @export var animation_player: AnimationPlayer
 @export var sprite_2d: Sprite2D
+@export var grid_position_component: GridPositionComponent
+@export var twee_behaviour_component: TweeBehaviourComponent
 
 var actor: Node2D
 
@@ -46,6 +48,10 @@ func _get_components() -> void:
 		animation_player = Components.get_component(actor, AnimationPlayer)
 	if not sprite_2d:
 		sprite_2d = Components.get_component(actor, Sprite2D)
+	if not grid_position_component:
+		grid_position_component = Components.get_component(actor, GridPositionComponent)
+	if not twee_behaviour_component:
+		twee_behaviour_component = Components.get_component(actor, TweeBehaviourComponent)
 
 ## NOTHING to SMALL
 func play_grow_small_animation():
@@ -135,9 +141,7 @@ func _update_shader(delta: float) -> void:
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("flash_amount", flash_amount)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("shake_amount", shake_amount)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("modulate", actor.modulate)
-	var grid_position_component: GridPositionComponent = Components.get_component(actor, GridPositionComponent)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("pos", grid_position_component.get_pos())
-	var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(actor, TweeBehaviourComponent)
 	(sprite_2d.get_material() as ShaderMaterial).set_shader_parameter("tint_amount", 1.0 if twee_behaviour_component.is_dehydrated else 0.0)
 
 	# UV OFFSET FOR TRUNK DIFFERS BY LOCATION ON SHEET (Short and tall)
