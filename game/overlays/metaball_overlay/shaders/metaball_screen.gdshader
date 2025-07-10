@@ -1,6 +1,9 @@
 shader_type canvas_item;
 render_mode unshaded;
 
+// SCREEN TEXTURE METABALL SHADER
+// Based on https://github.com/latenitecali/godot-metaball/blob/master/metaball.shader
+
 uniform sampler2D SCREEN_TEXTURE: hint_screen_texture;
 uniform int blurSize : hint_range(0,45) = 45;
 

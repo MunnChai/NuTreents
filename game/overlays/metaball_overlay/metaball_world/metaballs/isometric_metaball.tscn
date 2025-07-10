@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://8t8pq2jsjpk7"]
+
+[ext_resource type="Texture2D" uid="uid://byuu3fnk637vh" path="res://overlays/metaball_overlay/art/gradient_linear.png" id="1_db6bu"]
+[ext_resource type="Script" uid="uid://dcw3xb2xiwr5s" path="res://overlays/metaball_overlay/metaball_world/metaballs/isometric_metaball.gd" id="1_kenl0"]
+
+[sub_resource type="Curve" id="Curve_db6bu"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_kenl0"]
+_data = [Vector2(0, 0.526464), 0.0, 0.0, 0, 0, Vector2(0.998239, 0.538061), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_nccl5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_c28bd"]
+curve_x = SubResource("Curve_db6bu")
+curve_y = SubResource("Curve_kenl0")
+curve_z = SubResource("Curve_nccl5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eyakf"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_max = 30.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -8.1
+radial_accel_max = 4.99
+damping_min = 15.0
+damping_max = 15.0
+attractor_interaction_enabled = false
+scale_min = 0.05
+scale_max = 0.25
+scale_curve = SubResource("CurveXYZTexture_c28bd")
+
+[node name="IsometricMetaball" type="Node2D"]
+script = ExtResource("1_kenl0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.25)
+texture = ExtResource("1_db6bu")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+texture = ExtResource("1_db6bu")
+lifetime = 7.0
+process_material = SubResource("ParticleProcessMaterial_eyakf")

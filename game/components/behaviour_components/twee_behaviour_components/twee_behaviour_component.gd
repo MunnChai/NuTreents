@@ -35,18 +35,24 @@ var water_damage_time := 0.0
 
 const DEHYDRATION_DAMAGE = 2
 
+var metaballs: Array[IsometricMetaball] = []
+
 func _ready():
 	actor = get_parent()
 	
 	_get_components()
-	
-	MetaballWorld.add_metaball(global_position)
 	
 	# Randomize water damage time
 	water_damage_time += RandomNumberGenerator.new().randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
 	
 	call_deferred("_set_stats")
 	call_deferred("_connect_component_signals")
+	call_deferred("_setup_metaballs")
+
+func _setup_metaballs() -> void:
+	for pos: Vector2i in grid_position_component.get_occupied_positions():
+		if MetaballOverlay.is_instanced():
+			metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos)))
 
 #region Components and Signals
 
@@ -135,6 +141,9 @@ func die():
 func remove() -> void:
 	death_sound_emitter_component.play_sound_effect()
 	tree_animation_component.play_death_animation()
+	
+	for metaball: IsometricMetaball in metaballs:
+		metaball.remove()
 	
 	await tree_animation_component.death_finished
 	

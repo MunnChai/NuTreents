@@ -53,8 +53,8 @@ mouse_default_cursor_shape = 2
 
 [connection signal="button_down" from="HiddenButton" to="." method="_on_mouse_pressed"]
 [connection signal="button_up" from="HiddenButton" to="." method="_on_mouse_released"]
-[connection signal="focus_entered" from="HiddenButton" to="." method="_on_focus_entered"]
 [connection signal="focus_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
+[connection signal="focus_entered" from="HiddenButton" to="." method="_on_focus_entered"]
 [connection signal="focus_exited" from="HiddenButton" to="." method="_on_mouse_exited"]
 [connection signal="mouse_entered" from="HiddenButton" to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="HiddenButton" to="." method="_on_mouse_exited"]

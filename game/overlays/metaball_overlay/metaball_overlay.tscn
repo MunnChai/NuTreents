@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://cx2vb14t8m4ya"]
 
-[ext_resource type="PackedScene" uid="uid://rbvudxeu005y" path="res://overlays/metaballs_overlay/metaball_world.tscn" id="1_ehcto"]
-[ext_resource type="Shader" uid="uid://kjlcxlfpcsqu" path="res://overlays/metaballs_overlay/metaball_texture.gdshader" id="1_rlmef"]
-[ext_resource type="Script" uid="uid://dwawqkis57ee7" path="res://overlays/metaballs_overlay/metaballs_overlay.gd" id="1_wiv42"]
+[ext_resource type="Script" uid="uid://dwawqkis57ee7" path="res://overlays/metaball_overlay/metaball_overlay.gd" id="1_rw8g3"]
+[ext_resource type="Shader" uid="uid://kjlcxlfpcsqu" path="res://overlays/metaball_overlay/shaders/metaball_texture.gdshader" id="2_4wyii"]
+[ext_resource type="PackedScene" uid="uid://rbvudxeu005y" path="res://overlays/metaball_overlay/metaball_world/metaball_world.tscn" id="3_njc6o"]
 
 [sub_resource type="Gradient" id="Gradient_ehcto"]
 interpolation_mode = 1
@@ -13,11 +13,11 @@ colors = PackedColorArray(0, 0, 0, 0, 0.160338, 0.50735, 1, 0.560784)
 gradient = SubResource("Gradient_ehcto")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ehcto"]
-shader = ExtResource("1_rlmef")
+shader = ExtResource("2_4wyii")
 shader_parameter/gradient = SubResource("GradientTexture1D_wiv42")
 
-[node name="MetaballsOverlay" type="Node2D"]
-script = ExtResource("1_wiv42")
+[node name="MetaballOverlay" type="Node2D"]
+script = ExtResource("1_rw8g3")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("ShaderMaterial_ehcto")
@@ -41,4 +41,5 @@ mesh_lod_threshold = 0.0
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
-[node name="MetaballWorld" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_ehcto")]
+[node name="MetaballWorld" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_njc6o")]
+unique_name_in_owner = true
