@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c63p5poae6fy"]
+[gd_scene load_steps=37 format=3 uid="uid://c63p5poae6fy"]
 
 [ext_resource type="PackedScene" uid="uid://dmci56ftp4fgl" path="res://components/petrified_component/petrified_component.tscn" id="1_2eard"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="1_8pq07"]
@@ -34,14 +34,14 @@ particles_anim_loop = true
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_vtvom"]
+[sub_resource type="CurveTexture" id="CurveTexture_vlw12"]
 curve = SubResource("Curve_2eard")
 
 [sub_resource type="Curve" id="Curve_ydc1q"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_unuhy"]
+[sub_resource type="CurveTexture" id="CurveTexture_mtnra"]
 texture_mode = 1
 curve = SubResource("Curve_ydc1q")
 
@@ -50,14 +50,14 @@ _limits = [0.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_wfxg5"]
+[sub_resource type="CurveTexture" id="CurveTexture_l700e"]
 curve = SubResource("Curve_7axg8")
 
 [sub_resource type="Curve" id="Curve_ql4vy"]
 _data = [Vector2(0, 0.767857), 0.0, 0.0, 0, 0, Vector2(0.498069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.704545), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_kqu8f"]
+[sub_resource type="CurveTexture" id="CurveTexture_vl21j"]
 curve = SubResource("Curve_ql4vy")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fkif1"]
@@ -66,11 +66,41 @@ particle_flag_disable_z = true
 emission_shape = 3
 emission_box_extents = Vector3(12, 12, 1)
 gravity = Vector3(0, 4.9, 0)
-scale_curve = SubResource("CurveTexture_kqu8f")
-alpha_curve = SubResource("CurveTexture_vtvom")
-anim_speed_curve = SubResource("CurveTexture_wfxg5")
+scale_curve = SubResource("CurveTexture_vl21j")
+alpha_curve = SubResource("CurveTexture_vlw12")
+anim_speed_curve = SubResource("CurveTexture_l700e")
 anim_offset_max = 1.0
-anim_offset_curve = SubResource("CurveTexture_unuhy")
+anim_offset_curve = SubResource("CurveTexture_mtnra")
+
+[sub_resource type="Curve" id="Curve_8bje8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vtvom"]
+curve = SubResource("Curve_8bje8")
+
+[sub_resource type="Curve" id="Curve_ueu45"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_unuhy"]
+texture_mode = 1
+curve = SubResource("Curve_ueu45")
+
+[sub_resource type="Curve" id="Curve_wj5dk"]
+_limits = [0.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wfxg5"]
+curve = SubResource("Curve_wj5dk")
+
+[sub_resource type="Curve" id="Curve_why00"]
+_data = [Vector2(0, 0.767857), 0.0, 0.0, 0, 0, Vector2(0.498069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.704545), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kqu8f"]
+curve = SubResource("Curve_why00")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f3b27"]
 lifetime_randomness = 0.1

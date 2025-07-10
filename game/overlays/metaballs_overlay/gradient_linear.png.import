@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw37ytuqi38ns"
-path="res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"
+uid="uid://byuu3fnk637vh"
+path="res://.godot/imported/gradient_linear.png-71f4e8d0b7f3b40d44e44f7fc708545b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://world/fog_tile_1.png"
-dest_files=["res://.godot/imported/fog_tile_1.png-b32adc26a35a4ada4aff7a3e372e32ba.ctex"]
+source_file="res://overlays/metaballs_overlay/gradient_linear.png"
+dest_files=["res://.godot/imported/gradient_linear.png-71f4e8d0b7f3b40d44e44f7fc708545b.ctex"]
 
 [params]
 

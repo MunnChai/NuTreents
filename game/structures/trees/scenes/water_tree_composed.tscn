@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=42 format=3 uid="uid://b5hdmb6e3u31i"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_it1uo"]
 [ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="27_it1uo"]
 [ext_resource type="PackedScene" uid="uid://cys3ffyh8822h" path="res://components/sound_loop_component/sound_loop_component.tscn" id="28_no8lf"]
+[ext_resource type="Texture2D" uid="uid://kpgxwoahjesf" path="res://structures/set_pieces/petrified_trees/petrified_particles.png" id="29_a7fsm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -48,6 +49,55 @@ shader_parameter/outline_width = 1
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_23jrq"]
 resource_local_to_scene = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v5ey4"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Curve" id="Curve_8bje8"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.513514, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vtvom"]
+curve = SubResource("Curve_8bje8")
+
+[sub_resource type="Curve" id="Curve_ueu45"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_unuhy"]
+texture_mode = 1
+curve = SubResource("Curve_ueu45")
+
+[sub_resource type="Curve" id="Curve_wj5dk"]
+_limits = [0.0, 200.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_wfxg5"]
+curve = SubResource("Curve_wj5dk")
+
+[sub_resource type="Curve" id="Curve_why00"]
+_data = [Vector2(0, 0.767857), 0.0, 0.0, 0, 0, Vector2(0.498069, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.704545), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kqu8f"]
+curve = SubResource("Curve_why00")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a7fsm"]
+lifetime_randomness = 0.1
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(12, 12, 1)
+gravity = Vector3(0, 4.9, 0)
+scale_curve = SubResource("CurveTexture_kqu8f")
+color = Color(0.490196, 0.92549, 0.945098, 1)
+alpha_curve = SubResource("CurveTexture_vtvom")
+anim_speed_curve = SubResource("CurveTexture_wfxg5")
+anim_offset_max = 1.0
+anim_offset_curve = SubResource("CurveTexture_unuhy")
 
 [node name="WaterTreeComposed" type="Node2D"]
 
@@ -153,5 +203,15 @@ grid_pos = NodePath("../GridPositionComponent")
 [node name="SoundLoopComponent" parent="." node_paths=PackedStringArray("grid_position") instance=ExtResource("28_no8lf")]
 grid_position = NodePath("../GridPositionComponent")
 sound_id = &"tree_pump"
+
+[node name="WaterParticles" type="GPUParticles2D" parent="."]
+modulate = Color(0.920995, 0.920995, 0.920995, 1)
+material = SubResource("CanvasItemMaterial_v5ey4")
+position = Vector2(0, -16)
+amount = 3
+texture = ExtResource("29_a7fsm")
+lifetime = 2.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_a7fsm")
 
 [editable path="HurtboxComponent"]

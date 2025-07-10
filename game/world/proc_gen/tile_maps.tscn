@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bxd4072sdpptn"]
+[gd_scene load_steps=16 format=3 uid="uid://bxd4072sdpptn"]
 
 [ext_resource type="Script" uid="uid://hso34fixdouo" path="res://world/proc_gen/tile_manager.gd" id="1_56hbk"]
 [ext_resource type="PackedScene" uid="uid://c8ibupddw5xou" path="res://world/proc_gen/terrain_map/terrain_map.tscn" id="2_u0b2m"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://uf3j0muxm4jw" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/isometric_cursor_visual.tscn" id="4_0rry4"]
 [ext_resource type="PackedScene" uid="uid://c6pwdyturydv6" path="res://world/proc_gen/structure_map/structure_map.tscn" id="4_y6m8q"]
 [ext_resource type="Script" uid="uid://c53k2a5nmrorb" path="res://world/proc_gen/fog_map.gd" id="5_1bgfd"]
+[ext_resource type="PackedScene" uid="uid://cx2vb14t8m4ya" path="res://overlays/metaballs_overlay/metaballs_overlay.tscn" id="5_5fvau"]
 [ext_resource type="Texture2D" uid="uid://c2vbw8v7hqbe0" path="res://world/Fog_Tiles_1.png" id="5_118ts"]
 [ext_resource type="Script" uid="uid://fbge5fbxmgmi" path="res://enemies/enemy_manager.gd" id="6_gwmkj"]
 [ext_resource type="Texture2D" uid="uid://dm2ft8dsj6hxq" path="res://ui/player_interface/info_box/nine_tile_menu.png" id="8_jvuq2"]
@@ -101,6 +102,9 @@ z_index = -5
 
 [node name="VisualCursor" parent="BuildingManager" node_paths=PackedStringArray("cursor") instance=ExtResource("4_0rry4")]
 cursor = NodePath("../IsometricCursor")
+
+[node name="MetaballsOverlay" parent="BuildingManager" instance=ExtResource("5_5fvau")]
+z_index = -1
 
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
 z_index = 5

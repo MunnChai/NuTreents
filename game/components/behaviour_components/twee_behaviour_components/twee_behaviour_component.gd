@@ -40,6 +40,8 @@ func _ready():
 	
 	_get_components()
 	
+	MetaballWorld.add_metaball(global_position)
+	
 	# Randomize water damage time
 	water_damage_time += RandomNumberGenerator.new().randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
 	
