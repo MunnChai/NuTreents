@@ -85,6 +85,12 @@ func update_water_maintenance(delta: float) -> float:
 		
 		var final_production = base_production * water_prod_mod * temp_prod_mod
 		var final_consumption = base_consumption * water_cons_mod * temp_cons_mod
+		
+		# --- BUG FIX ---
+		# Added a safety check to ensure WeatherManager.instance is valid before using it.
+		if is_instance_valid(WeatherManager.instance) and WeatherManager.instance.is_raining():
+			final_production *= WeatherManager.RAIN_WATER_PRODUCTION_MULTIPLIER
+			
 		net_water_change += (final_production - final_consumption)
 	
 	for key in keys_to_remove:
@@ -112,17 +118,13 @@ func update_water_maintenance(delta: float) -> float:
 
 	## HANDLE showing notification for dehydrated forests
 	if is_forest_dehydrated and could_be_visibly_dehydrated:
-		# --- BUG FIX ---
-		# Check if the notification instance is valid before accessing its properties.
 		if not is_instance_valid(notification) or notification.is_removed:
-			# Add a safety check for the NotificationLog singleton before using it.
 			if is_instance_valid(NotificationLog.instance):
 				notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
 				NotificationLog.instance.add_notification(notification)
 		elif is_instance_valid(notification):
 			notification.properties["time_remaining"] = 1.0
 	else:
-		# Check if the notification instance is valid before trying to remove it.
 		if is_instance_valid(notification):
 			notification.remove()
 
