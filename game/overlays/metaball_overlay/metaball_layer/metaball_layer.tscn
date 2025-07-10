@@ -6,7 +6,7 @@
 
 [sub_resource type="Gradient" id="Gradient_ehcto"]
 interpolation_mode = 1
-offsets = PackedFloat32Array(0.426471, 0.492647)
+offsets = PackedFloat32Array(0.426471, 0.505882)
 colors = PackedColorArray(0, 0, 0, 0, 0.160338, 0.50735, 1, 0.560784)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_wiv42"]
@@ -16,6 +16,7 @@ gradient = SubResource("Gradient_ehcto")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ehcto"]
 resource_local_to_scene = true
 shader = ExtResource("1_x5s5u")
+shader_parameter/override_color = Color(0.160784, 0.505882, 1, 0.560784)
 shader_parameter/gradient = SubResource("GradientTexture1D_wiv42")
 
 [node name="MetaballLayer" type="Node2D"]

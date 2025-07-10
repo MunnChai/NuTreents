@@ -30,3 +30,6 @@ func remove() -> void:
 	await tween.finished
 	
 	queue_free()
+
+func set_override(r: float) -> void:
+	modulate.r = r

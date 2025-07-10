@@ -117,6 +117,11 @@ func _set_stats() -> void:
 #endregion
 
 func _process(delta: float) -> void:
+	if water_production_component.is_water_adjacent():
+		if not metaballs.is_empty():
+			for metaball: IsometricMetaball in metaballs:
+				metaball.set_override(1.0)
+	
 	if is_dehydrated:
 		grow_timer.paused = true
 		

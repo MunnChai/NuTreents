@@ -43,6 +43,7 @@ scale_max = 0.25
 scale_curve = SubResource("CurveXYZTexture_c28bd")
 
 [node name="IsometricMetaball" type="Node2D"]
+modulate = Color(0, 1, 1, 1)
 script = ExtResource("1_kenl0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
