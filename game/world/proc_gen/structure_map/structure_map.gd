@@ -104,15 +104,20 @@ func update_transparencies_around(map_pos: Vector2i) -> void:
 	
 	var adjacent_coords = []
 	var adjacent_structures = []
+	var offsets = [
+		Vector2i.DOWN, Vector2i.RIGHT, Vector2i.DOWN + Vector2i.RIGHT,
+		2 * Vector2i.DOWN + 1 * Vector2i.RIGHT,
+		1 * Vector2i.DOWN + 2 * Vector2i.RIGHT,
+		2 * Vector2i.DOWN + 2 * Vector2i.RIGHT,
+	]
 	
-	for x in range(map_pos.x, map_pos.x + ADJACENT_TILE_REACH + 1):
-		for y in range(map_pos.y, map_pos.y + ADJACENT_TILE_REACH + 1):
-			var adj_pos = Vector2i(x, y)
-			if adj_pos == map_pos:
-				continue
-			if does_structure_exist(adj_pos):
-				adjacent_coords.append(adj_pos)
-				adjacent_structures.append(tile_scene_map[adj_pos])
+	for offset in offsets:
+		var adj_pos: Vector2i = map_pos + offset
+		if adj_pos == map_pos:
+			continue
+		if does_structure_exist(adj_pos):
+			adjacent_coords.append(adj_pos)
+			adjacent_structures.append(tile_scene_map[adj_pos])
 	
 	for key in tile_scene_map:
 		var node: Node2D = tile_scene_map[key]

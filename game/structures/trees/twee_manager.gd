@@ -156,7 +156,6 @@ func add_tree(twee: Node2D, pos: Vector2i) -> void:
 	
 	# Signal!
 	tree_placed.emit(twee)
-	print("Added")
  
 ## Remove the given twee at the position
 ## If there is no tree there, does nothing 

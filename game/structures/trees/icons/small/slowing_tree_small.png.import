@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kst7eisiiq22"
-path="res://.godot/imported/sprinkler_tree.png-009f479c06aab9987913e14b5c004016.ctex"
+uid="uid://dacj8d6sunss0"
+path="res://.godot/imported/slowing_tree_small.png-4cef4d785e78d3691faf1ae35a69778e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/trees/icons/sprinkler_tree.png"
-dest_files=["res://.godot/imported/sprinkler_tree.png-009f479c06aab9987913e14b5c004016.ctex"]
+source_file="res://structures/trees/icons/small/slowing_tree_small.png"
+dest_files=["res://.godot/imported/slowing_tree_small.png-4cef4d785e78d3691faf1ae35a69778e.ctex"]
 
 [params]
 

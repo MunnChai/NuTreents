@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://b1uf1mwjycuxb"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=4 format=3 uid="uid://b1uf1mwjycuxb"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_oogaa"]
-[ext_resource type="Texture2D" uid="uid://cmfge0lgov2bj" path="res://structures/trees/icons/slowing_tree.png" id="2_oogaa"]
+[ext_resource type="Texture2D" uid="uid://cmfge0lgov2bj" path="res://structures/trees/icons/large/slowing_tree.png" id="2_efedq"]
+[ext_resource type="Texture2D" uid="uid://dacj8d6sunss0" path="res://structures/trees/icons/small/slowing_tree_small.png" id="3_mv62h"]
 
 [resource]
 script = ExtResource("1_oogaa")
 name = "Slowing Tree"
 id = "slowing_tree"
 description = "Slows the baddies"
-tree_icon = ExtResource("2_oogaa")
+tree_icon = ExtResource("2_efedq")
+tree_icon_small = ExtResource("3_mv62h")
 hp = 10
 max_water = 0
 gain = Vector3(0, 0, 0)

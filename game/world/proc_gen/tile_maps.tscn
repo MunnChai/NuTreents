@@ -91,6 +91,7 @@ sources/0 = SubResource("TileSetAtlasSource_118ts")
 [node name="TileMaps" type="Node2D"]
 
 [node name="BuildingManager" type="Node2D" parent="." groups=["tile_manager"]]
+y_sort_enabled = true
 script = ExtResource("1_56hbk")
 
 [node name="GroundLayer" parent="BuildingManager" instance=ExtResource("2_u0b2m")]
@@ -120,9 +121,11 @@ tile_set = SubResource("TileSet_1bgfd")
 script = ExtResource("5_1bgfd")
 
 [node name="BuildingLayer" parent="BuildingManager" instance=ExtResource("4_y6m8q")]
+z_index = 1
 y_sort_enabled = true
 
 [node name="EnemyLayer" type="Node2D" parent="BuildingManager" groups=["enemy_map"]]
+z_index = 1
 y_sort_enabled = true
 script = ExtResource("6_gwmkj")
 

@@ -1,13 +1,20 @@
-[gd_scene load_steps=17 format=3 uid="uid://uf3j0muxm4jw"]
+[gd_scene load_steps=19 format=3 uid="uid://uf3j0muxm4jw"]
 
 [ext_resource type="Script" uid="uid://jr8ypmglkdhx" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/isometric_cursor_visual.gd" id="1_u3n5w"]
 [ext_resource type="PackedScene" uid="uid://d1hdqqs20ewit" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/modulation_highlight/large_modulation_highlight.tscn" id="2_g1r7s"]
+[ext_resource type="Shader" uid="uid://dbjvht35kvwgs" path="res://components/outline_component/outline.gdshader" id="3_vm8ax"]
 [ext_resource type="Texture2D" uid="uid://bm0baq3q3jrlx" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/wooden_arrow/wooden_arrow_sheet.png" id="4_5x7va"]
 [ext_resource type="Script" uid="uid://dym6xbwe0vfcn" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/wooden_arrow/wooden_arrow.gd" id="5_8u83s"]
 [ext_resource type="PackedScene" uid="uid://b6tp5vtd60pup" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_destroy_state/visual_cursor_destroy_state.tscn" id="5_wbapv"]
 [ext_resource type="PackedScene" uid="uid://djcd7kfaqs7h2" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_extinguish_state/visual_cursor_extinguish_state.tscn" id="6_vm8ax"]
 [ext_resource type="PackedScene" uid="uid://baknhxcd2oevh" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_plant_state/visual_cursor_plant_state.tscn" id="7_jssra"]
 [ext_resource type="PackedScene" uid="uid://c5xlk6t5x52el" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_select_state/visual_cursor_select_state.tscn" id="8_66kca"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jssra"]
+shader = ExtResource("3_vm8ax")
+shader_parameter/outline_width = 1
+shader_parameter/outline_alpha = 1.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v6v85"]
 atlas = ExtResource("4_5x7va")
@@ -79,6 +86,12 @@ cursor_state_dict = {
 unique_name_in_owner = true
 
 [node name="ExtraHighlights" type="Node2D" parent="."]
+
+[node name="Hologram" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 0.341176, 0.52549, 0.505882)
+z_index = 2
+material = SubResource("ShaderMaterial_jssra")
 
 [node name="WoodenArrow" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

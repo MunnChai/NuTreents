@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://bluynlpf58mkf"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=4 format=3 uid="uid://bluynlpf58mkf"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_pvc8c"]
-[ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://structures/trees/icons/explorer_tree.png" id="2_n8y6g"]
+[ext_resource type="Texture2D" uid="uid://d2br2sycflyfa" path="res://structures/trees/icons/large/explorer_tree.png" id="2_s5g4l"]
+[ext_resource type="Texture2D" uid="uid://b6yjymvnjduvo" path="res://structures/trees/icons/small/explorer_tree_small.png" id="3_w4f78"]
 
 [resource]
 script = ExtResource("1_pvc8c")
 name = "Explorer Tree"
 id = "explorer_tree"
 description = "Has +1 square placement range"
-tree_icon = ExtResource("2_n8y6g")
+tree_icon = ExtResource("2_s5g4l")
+tree_icon_small = ExtResource("3_w4f78")
 hp = 10
 max_water = 2
 gain = Vector3(0, 0, 0)

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bi1ikd5mwxfe7"
-path="res://.godot/imported/fire_tree.png-3b08614c02d1ffef88507f9dcbc3b25e.ctex"
+uid="uid://dexcrdfmurf6c"
+path="res://.godot/imported/icy_tree.png-df1d5a1c67cc38ec70f9e16832243382.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/trees/icons/fire_tree.png"
-dest_files=["res://.godot/imported/fire_tree.png-3b08614c02d1ffef88507f9dcbc3b25e.ctex"]
+source_file="res://structures/trees/icons/large/icy_tree.png"
+dest_files=["res://.godot/imported/icy_tree.png-df1d5a1c67cc38ec70f9e16832243382.ctex"]
 
 [params]
 

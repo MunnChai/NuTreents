@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmfge0lgov2bj"
-path="res://.godot/imported/slowing_tree.png-c6c7d56218be14ecc84269b7b5408761.ctex"
+uid="uid://b8pc5lfc136u1"
+path="res://.godot/imported/gun_tree.png-399a1b407c9d32169697ae2c0eb66f48.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://structures/trees/icons/slowing_tree.png"
-dest_files=["res://.godot/imported/slowing_tree.png-c6c7d56218be14ecc84269b7b5408761.ctex"]
+source_file="res://structures/trees/icons/large/gun_tree.png"
+dest_files=["res://.godot/imported/gun_tree.png-399a1b407c9d32169697ae2c0eb66f48.ctex"]
 
 [params]
 

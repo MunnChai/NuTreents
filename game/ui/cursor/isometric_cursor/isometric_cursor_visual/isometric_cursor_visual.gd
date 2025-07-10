@@ -21,6 +21,7 @@ const RED := Color("ff578681")
 @onready var large_modulation_highlight: LargeModulationHighlight = %LargeModulationHighlight
 @onready var wooden_arrow: CursorWoodenArrow = %WoodenArrow
 @onready var extra_highlights: Node = $ExtraHighlights
+@onready var hologram: Sprite2D = $Hologram
 
 var is_process_enabled: bool = true
 var current_state: IsometricCursor.CursorState
@@ -118,6 +119,23 @@ func get_large_highlight() -> LargeModulationHighlight:
 
 #endregion
 
+#region HOLOGRAM
+
+func set_hologram_texture(texture: Texture2D) -> void:
+	hologram.texture = texture
+
+func set_hologram_offset(offset: Vector2) -> void:
+	hologram.offset = offset
+
+func set_hologram_visible(value: bool) -> void:
+	hologram.visible = value
+
+func set_hologram_modulate(color: Color, custom_alpha: float = -1) -> void:
+	hologram.modulate = color
+	if custom_alpha >= 0:
+		hologram.modulate.a = custom_alpha
+
+#endregion
 
 #region ARROW POSITION & HEIGHT
 
