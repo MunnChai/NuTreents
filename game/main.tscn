@@ -41,6 +41,7 @@ night_color = Color(0.220747, 0.405964, 0.660919, 1)
 [node name="Camera" parent="World" groups=["camera"] instance=ExtResource("7_4c57u")]
 
 [node name="Rain" parent="World/Camera" instance=ExtResource("8_efxa6")]
+z_index = 1
 position = Vector2(0, -484)
 
 [node name="Music" parent="World" instance=ExtResource("3_1bvp3")]

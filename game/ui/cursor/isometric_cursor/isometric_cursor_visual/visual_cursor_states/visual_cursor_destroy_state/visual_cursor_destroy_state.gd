@@ -80,13 +80,14 @@ func highlight_destructible_tiles(cursor: IsometricCursor) -> void:
 	var destructible_tiles: Array[Vector2i] = []
 	for iso_pos: Vector2i in reachable_tiles:
 		var structure: Node2D = Global.structure_map.get_building_node(iso_pos)
+		var twee_stat: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
+		if twee_stat:
+			destructible_tiles.append(iso_pos)
+			continue
 		var destructible: DestructableComponent = Components.get_component(structure, DestructableComponent)
 		if destructible:
 			destructible_tiles.append(iso_pos)
 			continue
-		var twee_stat: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
-		if twee_stat:
-			destructible_tiles.append(iso_pos)
 	
 	destructible_tiles_highlight.highlight_tiles_at(destructible_tiles)
 	destructible_tiles_highlight.set_color(IsometricCursorVisual.RED)
