@@ -5,8 +5,9 @@
 [ext_resource type="Script" uid="uid://dwawqkis57ee7" path="res://overlays/metaballs_overlay/metaballs_overlay.gd" id="1_wiv42"]
 
 [sub_resource type="Gradient" id="Gradient_ehcto"]
-offsets = PackedFloat32Array(0.367647, 0.463235)
-colors = PackedColorArray(0, 0, 0, 0, 0.272252, 0.469134, 0.74078, 0.505882)
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.426471, 0.492647)
+colors = PackedColorArray(0, 0, 0, 0, 0.160338, 0.50735, 1, 0.560784)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_wiv42"]
 gradient = SubResource("Gradient_ehcto")

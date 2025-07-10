@@ -87,7 +87,7 @@ func _process(delta: float) -> void:
 	else:
 		global_position = core_position
 	
-	MetaballWorld.set_camera_global_position(global_position)
+	#MetaballWorld.set_camera_global_position(global_position)
 	MetaballWorld.set_camera_zoom(zoom)
 
 const TILE_SIZE := Vector2i(32, 16) 
