@@ -36,7 +36,11 @@ static var instance: IsometricCursor
 
 var current_state: CursorState
 
-var currently_selected_entity: Node2D
+var currently_selected_entity: Node2D:
+	set(new_entity):
+		var old_entity = currently_selected_entity
+		currently_selected_entity = new_entity
+		selected_entity_changed.emit(old_entity, new_entity)
 
 signal selected_entity_changed(old_entity: Node2D, new_entity: Node2D)
 
@@ -53,8 +57,8 @@ func _process(delta: float) -> void:
 	
 	global_position = Global.terrain_map.map_to_local(iso_position)
 	
-	if Input.is_action_just_pressed("debug_button"):
-		enter_state(CursorState.DESTROY)
+	var current_action: CursorAction = cursor_state_dict[current_state]
+	current_action.update(self, delta)
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	attempted_already = false
@@ -178,17 +182,16 @@ func try_do_secondary_action() -> void:
 func do_water_bucket_from_god() -> void:
 	$CursorExtinguishAction.execute(self)
 
+func get_current_state() -> CursorState:
+	return current_state
+
 #endregion
 
 # Munn: Having this here feels wrong
 #region ENTITY SELECTION
 
 func set_selected_entity(new_entity: Node2D) -> void:
-	var old_entity = currently_selected_entity
-	
 	currently_selected_entity = new_entity
-	
-	selected_entity_changed.emit(old_entity, new_entity)
 
 func get_selected_entity() -> Node2D:
 	return currently_selected_entity

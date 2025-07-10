@@ -95,7 +95,7 @@ bounce_amount = 8.0
 
 [node name="ObstructionComponent" parent="." instance=ExtResource("15_uamxa")]
 
-[node name="GridRangeComponent" parent="." instance=ExtResource("16_p4b84")]
+[node name="AttackRangeComponent" parent="." instance=ExtResource("16_p4b84")]
 range = 1
 
 [node name="TargetingComponent" parent="." instance=ExtResource("17_bol68")]

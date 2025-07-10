@@ -2,20 +2,19 @@ class_name VisualCursorSelectState
 extends VisualCursorState
 
 var selected_highlight: LargeModulationHighlight
-var attack_range_indicator: LargeModulationHighlight
+var attack_range_highlight: LargeModulationHighlight
 
 func _ready() -> void:
 	IsometricCursor.instance.selected_entity_changed.connect(_on_selected_entity_changed)
 
 func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	selected_highlight = visual_cursor.get_large_highlight()
-	attack_range_indicator = visual_cursor.get_large_highlight()
+	attack_range_highlight = visual_cursor.get_large_highlight()
 
 func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	selected_highlight.disable()
-	attack_range_indicator.disable()
+	attack_range_highlight.disable()
 	visual_cursor.reset_highlight_pool()
-	print("Exiting!")
 
 ## Change visual details based on what is highlighted...
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
@@ -62,6 +61,7 @@ func _update_selected_entity(cursor: IsometricCursor, visual_cursor: IsometricCu
 	
 	if not is_instance_valid(entity):
 		selected_highlight.disable()
+		attack_range_highlight.disable()
 		return
 	
 	selected_highlight.enable()
@@ -72,18 +72,18 @@ func _update_selected_entity(cursor: IsometricCursor, visual_cursor: IsometricCu
 	
 	var attack_range: GridRangeComponent = Components.get_component(entity, GridRangeComponent, "AttackRangeComponent")
 	if attack_range:
-		_show_attack_range_indicator(grid_pos, attack_range, visual_cursor)
+		_show_attack_range_highlight(grid_pos, attack_range, visual_cursor)
 	else:
-		_hide_attack_range_indicator()
+		_hide_attack_range_highlight()
 
-func _show_attack_range_indicator(grid_position: GridPositionComponent, attack_range: GridRangeComponent, visual_cursor: IsometricCursorVisual) -> void:
-	attack_range_indicator.enable()
+func _show_attack_range_highlight(grid_position: GridPositionComponent, attack_range: GridRangeComponent, visual_cursor: IsometricCursorVisual) -> void:
+	attack_range_highlight.enable()
 	var range_tiles = attack_range.get_tiles_in_range().map(
 		func(pos: Vector2i):
 			return pos + grid_position.get_pos()
 	)
-	attack_range_indicator.highlight_tiles_at(range_tiles)
-	attack_range_indicator.set_color(IsometricCursorVisual.RED)
+	attack_range_highlight.highlight_tiles_at(range_tiles)
+	attack_range_highlight.set_color(IsometricCursorVisual.RED)
 	#
 	#for iso_pos: Vector2i in range_tiles:
 		#var structure: Node2D = MapUtility.get_structure_at(iso_pos)
@@ -94,11 +94,11 @@ func _show_attack_range_indicator(grid_position: GridPositionComponent, attack_r
 		#var tween: Tween = get_tree().create_tween()
 		#tween.tween_property(structure, "modulate", Color(structure.modulate, 0.3), 0.2)
 
-func _hide_attack_range_indicator() -> void:
-	attack_range_indicator.disable()
+func _hide_attack_range_highlight() -> void:
+	attack_range_highlight.disable()
 
 func _on_selected_entity_changed(old_entity: Node2D, new_entity: Node2D) -> void:
 	if is_instance_valid(old_entity):
 		var grid_pos: GridPositionComponent = Components.get_component(old_entity, GridPositionComponent)
 		_hide_structure_outline(grid_pos.get_pos())
-		_hide_attack_range_indicator()
+		_hide_attack_range_highlight()

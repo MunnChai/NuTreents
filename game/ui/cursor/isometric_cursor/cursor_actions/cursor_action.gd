@@ -16,3 +16,6 @@ func enter(cursor: IsometricCursor) -> void:
 
 func exit(cursor: IsometricCursor) -> void:
 	pass
+
+func update(cursor: IsometricCursor, delta: float) -> void:
+	pass
