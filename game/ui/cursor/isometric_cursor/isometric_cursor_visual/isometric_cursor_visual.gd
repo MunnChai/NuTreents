@@ -9,9 +9,7 @@ extends Marker2D
 ## - Sending request to update transparencies
 ## - Structure outlines
 
-# Structures where the arrow should "bob" up and down on them,
-# if they happen to be in range...
-const BOBBING_BUILDING_IDS = ["city_building", "factory", "factory_remains", "petrified_tree"]
+const LARGE_MODULATION_HIGHLIGHT = preload("modulation_highlight/large_modulation_highlight.tscn")
 
 const YELLOW := Color("ca910081")
 const BLUE := Color("3fd7ff81")
@@ -22,8 +20,10 @@ const RED := Color("ff578681")
 
 @onready var large_modulation_highlight: LargeModulationHighlight = %LargeModulationHighlight
 @onready var wooden_arrow: CursorWoodenArrow = %WoodenArrow
+@onready var extra_highlights: Node2D = $ExtraHighlights
 
 var is_process_enabled: bool = true
+var current_state: IsometricCursor.CursorState
 
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
@@ -39,7 +39,10 @@ func _process(delta: float) -> void:
 	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
 	
 	# Get current state and update visual state to match
-	var current_state: IsometricCursor.CursorState = cursor.current_state
+	var new_state: IsometricCursor.CursorState = cursor.current_state
+	if current_state != new_state:
+		enter_state(new_state)
+	
 	var visual_state: VisualCursorState = cursor_state_dict[current_state]
 	visual_state.update(cursor, self)
 
@@ -50,6 +53,25 @@ func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 func update_adjacent_tile_transparencies() -> void:
 	var building_map: BuildingMap = Global.structure_map
 	building_map.update_transparencies_around(cursor.iso_position)
+
+#region STATE MACHINE
+
+func enter_state(new_state: IsometricCursor.CursorState) -> void:
+	if current_state == new_state:
+		return
+	
+	# Exit old action
+	var current_visual_state: VisualCursorState = cursor_state_dict[current_state]
+	current_visual_state.exit(cursor, self)
+	
+	# Enter new action
+	var new_visual_state: VisualCursorState = cursor_state_dict[new_state]
+	new_visual_state.enter(cursor, self)
+	
+	# Set current state
+	current_state = new_state
+
+#endregion
 
 #region MODULATE HIGHLIGHT
 
@@ -66,6 +88,36 @@ func set_highlight_visible(value: bool) -> void:
 		large_modulation_highlight.disable()
 
 #endregion
+
+#region EXTRA MODULATIONS POOL
+
+## A pool of the current individual tile modulation highlights
+var large_highlight_pool: Array[Node2D] = []
+var next_available := 0 ## The next index of a tile that is not currently used
+func reset_highlight_pool():
+	for highlight: Node2D in large_highlight_pool:
+		highlight.hide()
+	next_available = 0
+
+## Get the next available unused modulation tile
+## If none remain, instantiate a new one!
+func get_large_highlight() -> LargeModulationHighlight:
+	var get_index = next_available
+	next_available += 1
+	
+	if large_highlight_pool.size() <= get_index:
+		## Don't have another one...
+		## Create one!
+		var new_highlight = LARGE_MODULATION_HIGHLIGHT.instantiate()
+		extra_highlights.add_child(new_highlight)
+		large_highlight_pool.append(new_highlight)
+	
+	var highlight = large_highlight_pool[get_index]
+	highlight.show()
+	return highlight
+
+#endregion
+
 
 #region ARROW POSITION & HEIGHT
 

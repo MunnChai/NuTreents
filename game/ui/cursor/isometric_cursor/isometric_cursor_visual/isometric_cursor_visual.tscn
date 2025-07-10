@@ -78,6 +78,8 @@ cursor_state_dict = {
 [node name="LargeModulationHighlight" parent="." instance=ExtResource("2_g1r7s")]
 unique_name_in_owner = true
 
+[node name="ExtraHighlights" type="Node2D" parent="."]
+
 [node name="WoodenArrow" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 modulate = Color(1, 1, 1, 0.588235)

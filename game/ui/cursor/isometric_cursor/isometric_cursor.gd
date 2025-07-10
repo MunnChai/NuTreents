@@ -87,8 +87,7 @@ enum HoverFlag {
 
 ## Supplies one of the above HoverFlags
 ## based on the context of where the cursor is hovering...
-func get_hover_flag() -> HoverFlag:
-	var p := iso_position
+func get_hover_flag(p: Vector2i = iso_position) -> HoverFlag:
 	var terrain_map := Global.terrain_map
 	var structure_map := Global.structure_map
 	var fog_map := Global.fog_map

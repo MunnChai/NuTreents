@@ -1,6 +1,17 @@
 class_name VisualCursorPlantState
 extends VisualCursorState
 
+var plantable_tiles_highlight: LargeModulationHighlight
+var tree_range_highlight: LargeModulationHighlight
+
+## Get 2 new large modulation highlights, one for the plantable tiles, one for grid ranges
+func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	plantable_tiles_highlight = visual_cursor.get_large_highlight()
+
+func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	visual_cursor.reset_highlight_pool()
+
+
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	var terrain_map = Global.terrain_map
 	var structure_map = Global.structure_map
@@ -8,6 +19,9 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 	
 	## Highlight the tile at iso position
 	visual_cursor.highlight_tile_at(iso_position)
+	
+	## Highlight plantable tiles
+	highlight_plantable_tiles(cursor)
 	
 	var flag := cursor.get_hover_flag()
 	match flag:
@@ -30,3 +44,16 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 				visual_cursor.set_arrow_bobbing(false)
 		_:
 			pass ## How did we get here?
+
+func highlight_plantable_tiles(cursor: IsometricCursor) -> void:
+	plantable_tiles_highlight._reset_pool()
+	
+	var plantable_tiles = TreeManager.get_reachable_tree_placement_positions(false)
+	var to_remove: Array[Vector2i] = []
+	for iso_pos: Vector2i in plantable_tiles:
+		if cursor.get_hover_flag(iso_pos) != IsometricCursor.HoverFlag.OK_FOR_PLANTING:
+			to_remove.append(iso_pos)
+	for iso_pos: Vector2i in to_remove:
+		plantable_tiles.erase(iso_pos)
+	plantable_tiles_highlight.highlight_tiles_at(plantable_tiles)
+	plantable_tiles_highlight.set_color(IsometricCursorVisual.BLUE)

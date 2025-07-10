@@ -91,16 +91,27 @@ sources/0 = SubResource("TileSetAtlasSource_118ts")
 [node name="TileMaps" type="Node2D"]
 
 [node name="BuildingManager" type="Node2D" parent="." groups=["tile_manager"]]
-y_sort_enabled = true
 script = ExtResource("1_56hbk")
 
 [node name="GroundLayer" parent="BuildingManager" instance=ExtResource("2_u0b2m")]
 z_index = -5
 
-[node name="IsometricCursor" parent="BuildingManager" instance=ExtResource("3_gwmkj")]
+[node name="IsometricCursor" parent="BuildingManager" node_paths=PackedStringArray("cursor_state_dict") instance=ExtResource("3_gwmkj")]
+cursor_state_dict = {
+0: NodePath("States/CursorSelectAction"),
+1: NodePath("States/CursorPlantAction"),
+2: NodePath("States/CursorDestroyAction"),
+3: NodePath("States/CursorExtinguishAction")
+}
 
-[node name="VisualCursor" parent="BuildingManager" node_paths=PackedStringArray("cursor") instance=ExtResource("4_0rry4")]
+[node name="VisualCursor" parent="BuildingManager" node_paths=PackedStringArray("cursor", "cursor_state_dict") instance=ExtResource("4_0rry4")]
 cursor = NodePath("../IsometricCursor")
+cursor_state_dict = {
+0: NodePath("States/VisualCursorSelectState"),
+1: NodePath("States/VisualCursorPlantState"),
+2: NodePath("States/VisualCursorDestroyState"),
+3: NodePath("States/VisualCursorExtinguishState")
+}
 
 [node name="FogLayer" type="TileMapLayer" parent="BuildingManager" groups=["fog_map"]]
 z_index = 5

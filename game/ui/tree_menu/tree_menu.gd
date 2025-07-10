@@ -33,7 +33,7 @@ var tree_order = [
 	]
 
 ## Index of the currently selected tree
-var currently_selected_tree = 0
+var currently_selected_tree = -1
 var is_selecting_tree := true ## Am I selecting a tree, or are we not selecting anything?
 
 static var instance: TreeMenu # Psuedo-singleton reference

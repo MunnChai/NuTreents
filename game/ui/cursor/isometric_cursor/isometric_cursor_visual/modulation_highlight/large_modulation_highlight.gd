@@ -58,6 +58,12 @@ func highlight_tile_at(iso_position: Vector2i) -> void:
 	# Munn: Updating screen space outline to match camera zoom
 	canvas_group.material.set_shader_parameter("camera_zoom", Global.camera.zoom)
 
+## Highlights the given tiles
+func highlight_tiles_at(iso_positions: Array[Vector2i]) -> void:
+	for iso_position: Vector2i in iso_positions:
+		var highlight = _get_next_highlight()
+		highlight.global_position = Global.structure_map.map_to_local(iso_position)
+
 ## Highlight only the one tile at the iso position
 func _highlight_empty_tile_at(iso_position: Vector2i) -> void:
 	var highlight = _get_next_highlight()
@@ -66,9 +72,9 @@ func _highlight_empty_tile_at(iso_position: Vector2i) -> void:
 ## Highlight all tiles occupied by a GridPositionComponent
 func _highlight_grid_position_component(grid_pos: GridPositionComponent) -> void:
 	var positions := grid_pos.get_occupied_positions()
-	for position: Vector2i in positions:
+	for iso_position: Vector2i in positions:
 		var highlight = _get_next_highlight()
-		highlight.global_position = Global.structure_map.map_to_local(position)
+		highlight.global_position = Global.structure_map.map_to_local(iso_position)
 
 #endregion
 

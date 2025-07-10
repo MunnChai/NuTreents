@@ -16,6 +16,16 @@ func update(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> vo
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	print("WARNING! _update_visuals called on VisualCursorState base class or a derived class that has not overridden its _update_visuals function")
 
+#region ENTER/EXIT
+
+func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	pass
+
+func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	pass
+
+#endregion
+
 #region ARROW POSITION/HEIGHT
 
 ## Default arrow position update
