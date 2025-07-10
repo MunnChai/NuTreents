@@ -64,6 +64,9 @@ func execute_primary_action(cursor: IsometricCursor) -> void:
 		
 		UICursor.instance.pop()
 
+func execute_secondary_action(cursor: IsometricCursor) -> void:
+	IsometricCursor.instance.return_to_default_state()
+
 ## Returns the tree on success
 ## null otherwise
 func try_plant_tree(type: Global.TreeType, p: Vector2i) -> Node2D:

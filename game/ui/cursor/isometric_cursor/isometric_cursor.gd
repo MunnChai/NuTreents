@@ -36,6 +36,10 @@ static var instance: IsometricCursor
 
 var current_state: CursorState
 
+var currently_selected_entity: Node2D
+
+signal selected_entity_changed(old_entity: Node2D, new_entity: Node2D)
+
 func _ready() -> void:
 	instance = self # Assuming only one cursor!
 	
@@ -173,5 +177,20 @@ func try_do_secondary_action() -> void:
 
 func do_water_bucket_from_god() -> void:
 	$CursorExtinguishAction.execute(self)
+
+#endregion
+
+# Munn: Having this here feels wrong
+#region ENTITY SELECTION
+
+func set_selected_entity(new_entity: Node2D) -> void:
+	var old_entity = currently_selected_entity
+	
+	currently_selected_entity = new_entity
+	
+	selected_entity_changed.emit(old_entity, new_entity)
+
+func get_selected_entity() -> Node2D:
+	return currently_selected_entity
 
 #endregion

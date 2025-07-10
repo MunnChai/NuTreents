@@ -24,7 +24,8 @@ const RED := Color("ff578681")
 @onready var hologram: Sprite2D = $Hologram
 
 var is_process_enabled: bool = true
-var current_state: IsometricCursor.CursorState
+# Set default to out of bounds to allow for "enter" to be called
+var current_state: IsometricCursor.CursorState = -1
 
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
@@ -62,8 +63,9 @@ func enter_state(new_state: IsometricCursor.CursorState) -> void:
 		return
 	
 	# Exit old action
-	var current_visual_state: VisualCursorState = cursor_state_dict[current_state]
-	current_visual_state.exit(cursor, self)
+	if current_state in IsometricCursor.CursorState.values():
+		var current_visual_state: VisualCursorState = cursor_state_dict[current_state]
+		current_visual_state.exit(cursor, self)
 	
 	# Enter new action
 	var new_visual_state: VisualCursorState = cursor_state_dict[new_state]

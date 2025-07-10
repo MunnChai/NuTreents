@@ -7,4 +7,6 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if visible:
-		text = "FPS: " + str(Engine.get_frames_per_second()) + "\nNumTrees: " + str(TreeManager.get_tree_map().size())
+		text = "FPS: " + str(Engine.get_frames_per_second()) + \
+		"\nNumTrees: " + str(TreeManager.get_tree_map().size()) + \
+		"\n" + str(IsometricCursor.instance.currently_selected_entity)

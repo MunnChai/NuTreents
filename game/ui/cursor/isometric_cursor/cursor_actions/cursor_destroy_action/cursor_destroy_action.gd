@@ -36,6 +36,9 @@ func execute_primary_action(cursor: IsometricCursor) -> void:
 	## DESTROY TILE
 	try_destroy_tile(p)
 
+func execute_secondary_action(cursor: IsometricCursor) -> void:
+	IsometricCursor.instance.return_to_default_state()
+
 #region DESTROY STRUCTURE
 
 func try_destroy_structure(structure: Node2D, p: Vector2i) -> void:

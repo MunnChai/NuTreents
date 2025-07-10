@@ -60,7 +60,8 @@ func highlight_tile_at(iso_position: Vector2i) -> void:
 		_highlight_empty_tile_at(iso_position)
 
 ## Highlights the given tiles
-func highlight_tiles_at(iso_positions: Array[Vector2i]) -> void:
+func highlight_tiles_at(iso_positions: Array) -> void:
+	_reset_pool()
 	for iso_position: Vector2i in iso_positions:
 		var highlight = _get_next_highlight()
 		highlight.global_position = Global.structure_map.map_to_local(iso_position)
@@ -94,3 +95,4 @@ func enable() -> void:
 
 func disable() -> void:
 	visible = false
+	_reset_pool()
