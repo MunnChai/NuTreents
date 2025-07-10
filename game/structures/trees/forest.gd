@@ -8,6 +8,7 @@ var id: int
 var empty: bool
 
 var water_gain: float
+var notification: Notification
 
 func _init(i: int):
 	water = 0
@@ -46,8 +47,6 @@ func get_nutrient_gain() -> float:
 				nutrient_sum += nutreent_production_component.get_nutreent_production()
 	return nutrient_sum
 
-var notification: Notification
-
 func update_water_maintenance(delta: float) -> float:
 	var net_water_change: float = 0.0
 
@@ -55,12 +54,9 @@ func update_water_maintenance(delta: float) -> float:
 	for pos in trees.keys():
 		var tree_node = trees.get(pos)
 		
-		# --- FIX 1: Safety Check ---
-		# This check is crucial. If the tree node was deleted, we mark its
-		# position for removal from our dictionary to prevent future errors.
 		if not is_instance_valid(tree_node):
 			keys_to_remove.append(pos)
-			continue # Skip to the next tree
+			continue
 
 		var water_production_component: WaterProductionComponent = Components.get_component(tree_node, WaterProductionComponent)
 		if not water_production_component:
@@ -91,8 +87,6 @@ func update_water_maintenance(delta: float) -> float:
 		var final_consumption = base_consumption * water_cons_mod * temp_cons_mod
 		net_water_change += (final_production - final_consumption)
 	
-	# --- FIX 2: Clean up dangling references ---
-	# Remove all the invalid trees we found from our dictionary.
 	for key in keys_to_remove:
 		trees.erase(key)
 
@@ -103,14 +97,13 @@ func update_water_maintenance(delta: float) -> float:
 	for pos in trees.keys():
 		var tree_node = trees.get(pos)
 		if not is_instance_valid(tree_node):
-			continue # Add safety check to the second loop as well
+			continue
 		
 		var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(tree_node, TweeBehaviourComponent)
 		var water_comp: WaterProductionComponent = Components.get_component(tree_node, WaterProductionComponent)
 		
 		if not water_comp.is_water_adjacent():
 			could_be_visibly_dehydrated = true
-
 		
 		if not is_forest_dehydrated or water_comp.is_water_adjacent():
 			if twee_behaviour_component: twee_behaviour_component.is_dehydrated = false
@@ -119,13 +112,18 @@ func update_water_maintenance(delta: float) -> float:
 
 	## HANDLE showing notification for dehydrated forests
 	if is_forest_dehydrated and could_be_visibly_dehydrated:
-		if not notification or notification.is_removed:
-			notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
-			NotificationLog.instance.add_notification(notification)
-		else:
+		# --- BUG FIX ---
+		# Check if the notification instance is valid before accessing its properties.
+		if not is_instance_valid(notification) or notification.is_removed:
+			# Add a safety check for the NotificationLog singleton before using it.
+			if is_instance_valid(NotificationLog.instance):
+				notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
+				NotificationLog.instance.add_notification(notification)
+		elif is_instance_valid(notification):
 			notification.properties["time_remaining"] = 1.0
 	else:
-		if notification:
+		# Check if the notification instance is valid before trying to remove it.
+		if is_instance_valid(notification):
 			notification.remove()
 
 	water += net_water_change * delta

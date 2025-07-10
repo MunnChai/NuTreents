@@ -1,148 +1,144 @@
-@tool
+class_name InputHandler
 extends Node
 
-const TablesPluginEditorViewClass := preload("res://addons/resources_spreadsheet_view/editor_view.gd")
-const TablesPluginSelectionManagerClass := preload("res://addons/resources_spreadsheet_view/main_screen/selection_manager.gd")
-const TextEditingUtilsClass := preload("res://addons/resources_spreadsheet_view/text_editing_utils.gd")
+## Handles device detection and propogation of certain inputs into the game
 
-@onready var editor_view : TablesPluginEditorViewClass = get_parent()
-@onready var selection : TablesPluginSelectionManagerClass = get_node("../SelectionManager")
+# The @export variables are no longer needed, as we will now use the OverlayManager.
+# @export var health_view_panel: Control
+# @export var water_view_panel: Control
+
+const FAST_FORWARD_SCALE = 2.5
+
+func _input(event: InputEvent) -> void:
+	_update_device_type(event)
+
+#region ACTUAL INPUT LOGIC
+
+func _process(delta: float) -> void:
+	_update_cursor(delta)
+
+	# --- Fast Forward Logic ---
+	if Input.is_action_pressed("fast_forward"):
+		Engine.time_scale = FAST_FORWARD_SCALE
+	elif Input.is_action_just_released("fast_forward"):
+		Engine.time_scale = 1.0
+
+## Updates the cursor/virtual cursor POSITION based on input type...
+func _update_cursor(delta: float) -> void:
+	if current_device_type == DeviceType.KEYBOARD_MOUSE:
+		if is_instance_valid(IsometricCursor.instance) and is_instance_valid(Global.terrain_map):
+			IsometricCursor.instance.move_to(Global.terrain_map.get_local_mouse_position())
+		if is_instance_valid(VirtualCursor.instance):
+			VirtualCursor.instance.hide()
+	
+	if current_device_type == DeviceType.CONTROLLER:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		var cursor_move_direction = Input.get_vector("cursor_left", "cursor_right", "cursor_up", "cursor_down")
+		if is_instance_valid(VirtualCursor.instance):
+			VirtualCursor.instance.offset_position += cursor_move_direction * Settings.get_setting_or_default("virtual_cursor_speed", 50.0) * TimeUtil.unscaled_delta(delta)
+			VirtualCursor.instance.show()
+		if is_instance_valid(IsometricCursor.instance) and is_instance_valid(VirtualCursor.instance):
+			IsometricCursor.instance.move_to(VirtualCursor.instance.global_position)
+
+func _unhandled_input(event: InputEvent) -> void:
+	# Game is not in playing mode...
+	if (Global.game_state != Global.GameState.PLAYING):
+		return
+		
+	# --- View Toggle Logic (Using OverlayManager) ---
+	if event.is_action_pressed("toggle_health_view"):
+		_toggle_overlay(OverlayManager.OverlayType.HEALTH_OVERLAY)
+		get_viewport().set_input_as_handled()
+
+	if event.is_action_pressed("toggle_water_view"):
+		_toggle_overlay(OverlayManager.OverlayType.WATER_OVERLAY)
+		get_viewport().set_input_as_handled()
 
 
-func _on_cell_gui_input(event : InputEvent, cell_node : Control):
-	var cell := selection.get_cell_node_position(cell_node)
-	if event is InputEventMouseButton:
-		editor_view.grab_focus()
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			if !cell in selection.edited_cells:
-				selection.deselect_all_cells()
-				selection.select_cell(cell)
-
-			selection.rightclick_cells()
-
-		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			if event.is_command_or_control_pressed():
-				if cell in selection.edited_cells:
-					selection.deselect_cell(cell)
-
-				else:
-					selection.select_cell(cell)
-
-			elif Input.is_key_pressed(KEY_SHIFT):
-				selection.select_cells_to(cell)
-
-			else:
-				selection.deselect_all_cells()
-				selection.select_cell(cell)
-
-
-func _gui_input(event : InputEvent):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_RIGHT and event.is_pressed():
-			selection.rightclick_cells()
-
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			editor_view.grab_focus()
-			if !event.pressed:
-				selection.deselect_all_cells()
-
-
-func _input(event : InputEvent):
-	if !event is InputEventKey or !event.pressed:
+	# Mother tree is dead...
+	if (TreeManager.is_mother_dead()):
 		return
 	
-	if !editor_view.has_focus() or selection.edited_cells.size() == 0:
-		return
-
-	if event.keycode == KEY_CTRL or event.keycode == KEY_SHIFT or event.keycode == KEY_META:
-		# Modifier keys do not get processed.
+	if not is_instance_valid(IsometricCursor.instance):
 		return
 	
-	# Ctrl + Z (before, and instead of, committing the action!)
-	if event.is_command_or_control_pressed():
-		if event.keycode == KEY_Z or event.keycode == KEY_Y:
+	if Input.is_action_pressed("lmb"): # We want press and hold to work...
+		if not IsometricCursor.instance.can_interact():
 			return
-
-	_key_specific_action(event)
-	editor_view.grab_focus()
-	editor_view.editor_interface.get_resource_filesystem().scan()
-
-
-func _key_specific_action(event : InputEvent):
-	var column := selection.get_cell_column(selection.edited_cells[0])
-	var ctrl_pressed : bool = event.is_command_or_control_pressed()
-
-	# BETWEEN-CELL NAVIGATION
-	var grid_move_offset := (10 if ctrl_pressed else 1)
-	if event.keycode == KEY_UP:
-		_move_selection_on_grid(0, -grid_move_offset)
-
-	elif event.keycode == KEY_DOWN:
-		_move_selection_on_grid(0, +grid_move_offset)
-
-	elif Input.is_key_pressed(KEY_SHIFT) and event.keycode == KEY_TAB:
-		_move_selection_on_grid(-grid_move_offset, 0)
+		IsometricCursor.instance.try_do_primary_action()
+	else:
+		IsometricCursor.instance.attempted_already = false
 	
-	elif event.keycode == KEY_TAB:
-		_move_selection_on_grid(+grid_move_offset, 0)
-
-	elif ctrl_pressed and event.keycode == KEY_C:
-		TextEditingUtilsClass.multi_copy(selection.edited_cells_text)
-		get_viewport().set_input_as_handled()
-
-	# Ctrl + V
-	elif ctrl_pressed and event.keycode == KEY_V and editor_view.columns[column] != "resource_path":
-		selection.clipboard_paste()
-		get_viewport().set_input_as_handled()
-
-	# TEXT CARET MOVEMENT
-	var caret_move_offset := TextEditingUtilsClass.get_caret_movement_from_key(event.keycode)
-	if TextEditingUtilsClass.multi_move_caret(caret_move_offset, selection.edited_cells_text, selection.edit_cursor_positions, ctrl_pressed):
-		selection.queue_redraw()
-		return
-
-	# The following actions do not work on non-editable cells.
-	if !selection.column_editors[column].is_text() or editor_view.columns[column] == "resource_path":
-		return
+	if event.is_action_pressed("rmb"): # Only deal with on click
+		if not IsometricCursor.instance.can_interact():
+			return
+		IsometricCursor.instance.try_do_secondary_action()
 	
-	# ERASING
-	elif event.keycode == KEY_BACKSPACE:
-		editor_view.set_edited_cells_values_text(TextEditingUtilsClass.multi_erase_left(
-			selection.edited_cells_text, selection.edit_cursor_positions, ctrl_pressed
-		))
+	## Controller reset to centre of screen...
+	if Input.is_action_just_pressed("reset_cursor"):
+		if is_instance_valid(VirtualCursor.instance):
+			VirtualCursor.instance.offset_position = Vector2.ZERO
+	
+	if Input.is_action_just_pressed("water_bucket"):
+		if is_instance_valid(IsometricCursor.instance):
+			IsometricCursor.instance.do_water_bucket_from_god()
 
-	elif event.keycode == KEY_DELETE:
-		editor_view.set_edited_cells_values_text(TextEditingUtilsClass.multi_erase_right(
-			selection.edited_cells_text, selection.edit_cursor_positions, ctrl_pressed
-		))
-		get_viewport().set_input_as_handled()
+# This new helper function contains the logic for toggling overlays.
+func _toggle_overlay(overlay_type: OverlayManager.OverlayType) -> void:
+	if not is_instance_valid(OverlayManager.instance):
+		return
+		
+	var om = OverlayManager.instance
+	
+	# If the overlay we want to toggle is already the current one, hide it.
+	if om.current_overlay == om.overlays[overlay_type]:
+		om.hide_overlay()
+	# Otherwise, show the new overlay (which will automatically hide any other one).
+	else:
+		om.show_overlay(overlay_type)
 
-	# And finally, text typing.
-	elif event.keycode == KEY_ENTER:
-		editor_view.set_edited_cells_values_text(TextEditingUtilsClass.multi_input(
-			"\n", selection.edited_cells_text, selection.edit_cursor_positions
-		))
+#endregion
 
-	elif event.unicode != 0 and event.unicode != 127:
-		editor_view.set_edited_cells_values_text(TextEditingUtilsClass.multi_input(
-			char(event.unicode), selection.edited_cells_text, selection.edit_cursor_positions
-		))
+#region DEVICE TYPE
 
-	selection.queue_redraw()
+signal device_type_changed(new_device_type: DeviceType)
 
+enum DeviceType {
+	UNKNOWN,
+	KEYBOARD_MOUSE,
+	CONTROLLER,
+}
 
-func _move_selection_on_grid(move_h : int, move_v : int):
-	var selected_cells := selection.edited_cells.duplicate()
-	var num_columns := editor_view.columns.size()
-	var num_rows := editor_view.rows.size()
-	var new_child_pos := Vector2i(0, 0)
-	for i in selected_cells.size():
-		new_child_pos = Vector2i(
-			clamp(selected_cells[i].x + move_h, 0, num_columns - 1),
-			clamp(selected_cells[i].y + move_v, 0, num_rows - 1),
-		)
-		selected_cells[i] = new_child_pos
+static var current_device_type: DeviceType = DeviceType.KEYBOARD_MOUSE
+static func is_using_controller() -> bool:
+	return current_device_type == DeviceType.CONTROLLER
+static func is_using_keyboard() -> bool:
+	return current_device_type == DeviceType.KEYBOARD_MOUSE
 
-	editor_view.grab_focus()
-	selection.deselect_all_cells()
-	selection.select_cells(selected_cells)
+func _update_device_type(event: InputEvent) -> void:
+	var old_device_type = current_device_type
+	current_device_type = get_device_type(event)
+	if old_device_type != current_device_type:
+		device_type_changed.emit(current_device_type)
+
+## Checks for determing the specific event type
+func is_key_event(event: InputEvent) -> bool:
+	return (event is InputEventKey)
+func is_mouse_event(event: InputEvent) -> bool:
+	return (event is InputEventMouse or
+		event is InputEventMouseMotion or
+		event is InputEventMouseButton)
+func is_controller_button_event(event: InputEvent) -> bool:
+	return (event is InputEventJoypadButton)
+func is_joystick_event(event: InputEvent) -> bool:
+	return (event is InputEventJoypadMotion)
+
+## Deduce the DeviceType based on the input event...
+func get_device_type(event: InputEvent) -> DeviceType:
+	if is_key_event(event) or is_mouse_event(event):
+		return DeviceType.KEYBOARD_MOUSE
+	if is_controller_button_event(event) or is_joystick_event(event):
+		return DeviceType.CONTROLLER
+	return DeviceType.UNKNOWN
+
+#endreg
