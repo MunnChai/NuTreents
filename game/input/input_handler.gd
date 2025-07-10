@@ -18,10 +18,12 @@ func _process(delta: float) -> void:
 	_update_cursor(delta)
 
 	# --- Fast Forward Logic ---
+	# This robust logic prevents the fast-forward from getting stuck.
 	if Input.is_action_pressed("fast_forward"):
 		Engine.time_scale = FAST_FORWARD_SCALE
-	elif Input.is_action_just_released("fast_forward"):
-		Engine.time_scale = 1.0
+	else:
+		if Engine.time_scale != 1.0:
+			Engine.time_scale = 1.0
 
 ## Updates the cursor/virtual cursor POSITION based on input type...
 func _update_cursor(delta: float) -> void:
@@ -39,6 +41,7 @@ func _update_cursor(delta: float) -> void:
 			VirtualCursor.instance.show()
 		if is_instance_valid(IsometricCursor.instance) and is_instance_valid(VirtualCursor.instance):
 			IsometricCursor.instance.move_to(VirtualCursor.instance.global_position)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Game is not in playing mode...
@@ -62,17 +65,21 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_instance_valid(IsometricCursor.instance):
 		return
 	
+	# --- BUG FIX ---
+	# Changed the function calls from "try_do_..." to "do_..." to match the
+	# correct function names in the isometric_cursor.gd script.
 	if Input.is_action_pressed("lmb"): # We want press and hold to work...
 		if not IsometricCursor.instance.can_interact():
 			return
-		IsometricCursor.instance.try_do_primary_action()
+		IsometricCursor.instance.do_primary_action()
 	else:
 		IsometricCursor.instance.attempted_already = false
 	
-	if event.is_action_pressed("rmb"): # Only deal with on click
+	# Also fixed the check for 'rmb' to use the global Input singleton.
+	if Input.is_action_just_pressed("rmb"): # Only deal with on click
 		if not IsometricCursor.instance.can_interact():
 			return
-		IsometricCursor.instance.try_do_secondary_action()
+		IsometricCursor.instance.do_secondary_action()
 	
 	## Controller reset to centre of screen...
 	if Input.is_action_just_pressed("reset_cursor"):
@@ -141,4 +148,4 @@ func get_device_type(event: InputEvent) -> DeviceType:
 		return DeviceType.CONTROLLER
 	return DeviceType.UNKNOWN
 
-#endreg
+#endregion
