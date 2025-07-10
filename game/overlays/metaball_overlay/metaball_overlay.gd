@@ -21,13 +21,15 @@ func add_metaball(pos: Vector2, layer_id: int = 0) -> IsometricMetaball:
 	var layer := get_layer_or_create(layer_id)
 	return layer.add_metaball(pos)
 
+@export var colors: PackedColorArray
+
 const METABALL_LAYER = preload("./metaball_layer/metaball_layer.tscn")
 var layers: Dictionary[int, MetaballLayer] = {}
 func add_new_layer(id: int) -> MetaballLayer:
 	var layer := METABALL_LAYER.instantiate()
 	add_child(layer)
 	layer.position = Vector2.ZERO
-	layer.set_color(Color.RED)
+	layer.set_color(colors[id % colors.size()])
 	layers.set(id, layer)
 	return layer
 

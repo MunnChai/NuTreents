@@ -47,17 +47,21 @@ func _ready():
 	
 	call_deferred("_set_stats")
 	call_deferred("_connect_component_signals")
-	call_deferred("_setup_metaballs")
+	call_deferred("_update_metaballs")
 
-func _setup_metaballs() -> void:
-	if randf() > 0.5:
-		for pos: Vector2i in grid_position_component.get_occupied_positions():
-			if MetaballOverlay.is_instanced():
-				metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos)))
-	else:
-		for pos: Vector2i in grid_position_component.get_occupied_positions():
-			if MetaballOverlay.is_instanced():
-				metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos), 1))
+var past_first_time := false
+func _update_metaballs() -> void:
+	_remove_metaballs()
+	past_first_time = true
+	
+	for pos: Vector2i in grid_position_component.get_occupied_positions():
+		if MetaballOverlay.is_instanced():
+			metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos), forest))
+
+func _remove_metaballs() -> void:
+	for metaball: IsometricMetaball in metaballs:
+		metaball.remove()
+	metaballs.clear()
 
 #region Components and Signals
 
@@ -147,8 +151,7 @@ func remove() -> void:
 	death_sound_emitter_component.play_sound_effect()
 	tree_animation_component.play_death_animation()
 	
-	for metaball: IsometricMetaball in metaballs:
-		metaball.remove()
+	_remove_metaballs()
 	
 	await tree_animation_component.death_finished
 	
@@ -182,3 +185,5 @@ func apply_data_resource(tree_resource: Resource):
 # For forests...
 func set_forest(f: int):
 	forest = f
+	if past_first_time:
+		_update_metaballs()

@@ -241,7 +241,7 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 		if forests_to_merge.has(tree_id):
 			var tree: Node2D = tree_map[pos]
 			var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
-			tree_behaviour_component.forest = forest_id
+			tree_behaviour_component.set_forest(forest_id)
 			
 			# Add to forest
 			new_forest.trees[pos] = tree
@@ -375,7 +375,7 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 		#if (pos == Global.ORIGIN):
 			#continue
 		var tree_behaviour_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent)
-		tree_behaviour_component.forest = id
+		tree_behaviour_component.set_forest(id)
 		forest_map[pos] = id
 		
 		# add this to new forest
