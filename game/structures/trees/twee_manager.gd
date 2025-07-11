@@ -78,6 +78,7 @@ func start_game():
 	forests.clear()
 	forest_map.clear()
 	tree_map.clear()
+	reachable_tiles.clear()
 	forest_count = 0
 	
 	# Ensure map references are correct and up to date
@@ -479,8 +480,6 @@ func _on_tree_placed(tree: Node2D) -> void:
 				reachable_tiles[iso_pos] += 1
 			else:
 				reachable_tiles[iso_pos] = 1
-	
-	print("Added a tree: ", positions)
 
 func _on_tree_removed(tree: Node2D) -> void:
 	var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
