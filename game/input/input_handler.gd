@@ -82,6 +82,25 @@ func _unhandled_input(event: InputEvent) -> void:
 	if Input.is_action_just_pressed("water_bucket"):
 		if is_instance_valid(IsometricCursor.instance):
 			IsometricCursor.instance.do_water_bucket_from_god()
+	
+	if Input.is_action_just_pressed("toggle_destroy_action"):
+		if is_instance_valid(IsometricCursor.instance):
+			if IsometricCursor.instance.get_current_state() == IsometricCursor.CursorState.DESTROY:
+				IsometricCursor.instance.return_to_default_state()
+			else:
+				IsometricCursor.instance.enter_state(IsometricCursor.CursorState.DESTROY)
+	
+	## Handle num keys
+	if event is InputEventKey and event.is_pressed():
+		var unicode = event.unicode
+		if (unicode >= 48 and unicode <= 57): # 0-9
+			var index = unicode - 49
+			if unicode == 48:
+				index = 9
+			
+			var tree_type: Global.TreeType = TreeMenu.instance.get_tree_type_at(index)
+			TreeMenu.instance.set_currently_selected_tree_type(tree_type)
+	
 
 # This new helper function contains the logic for toggling overlays.
 func _toggle_overlay(overlay_type: OverlayManager.OverlayType) -> void:

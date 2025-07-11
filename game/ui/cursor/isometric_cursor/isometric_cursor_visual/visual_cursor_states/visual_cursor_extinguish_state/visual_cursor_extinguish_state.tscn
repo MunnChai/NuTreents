@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://djcd7kfaqs7h2"]
+
+[ext_resource type="Script" uid="uid://hcxbnp8jqmf7" path="res://ui/cursor/isometric_cursor/isometric_cursor_visual/visual_cursor_states/visual_cursor_extinguish_state/visual_cursor_extinguish_state.gd" id="1_okbss"]
+
+[node name="VisualCursorExtinguishState" type="Node"]
+script = ExtResource("1_okbss")

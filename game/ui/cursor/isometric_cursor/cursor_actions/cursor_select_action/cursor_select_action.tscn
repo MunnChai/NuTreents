@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://g4fny8x2rvf2"]
+
+[ext_resource type="Script" uid="uid://dqaheqot13hru" path="res://ui/cursor/isometric_cursor/cursor_actions/cursor_select_action/cursor_select_action.gd" id="1_k5nq8"]
+
+[node name="CursorSelectAction" type="Node"]
+script = ExtResource("1_k5nq8")

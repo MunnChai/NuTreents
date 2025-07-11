@@ -7,6 +7,7 @@ extends StatResource
 
 @export_group("TreeCard")
 @export var tree_icon: Texture2D
+@export var tree_icon_small: Texture2D
 @export var special_card_background_override: Texture2D
 
 @export_group("PrimaryTreeStats")

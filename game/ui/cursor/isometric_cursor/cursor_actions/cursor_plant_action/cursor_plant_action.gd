@@ -5,7 +5,7 @@ extends CursorAction
 
 ## Perform LEFT MOUSE BUTTON action
 ## - Planting trees on empty/valid tiles
-func execute(cursor: IsometricCursor) -> void:
+func execute_primary_action(cursor: IsometricCursor) -> void:
 	var p: Vector2i = cursor.iso_position
 	var terrain_map := Global.terrain_map
 	var structure_map := Global.structure_map
@@ -64,6 +64,9 @@ func execute(cursor: IsometricCursor) -> void:
 		
 		UICursor.instance.pop()
 
+func execute_secondary_action(cursor: IsometricCursor) -> void:
+	IsometricCursor.instance.return_to_default_state()
+
 ## Returns the tree on success
 ## null otherwise
 func try_plant_tree(type: Global.TreeType, p: Vector2i) -> Node2D:
@@ -108,3 +111,6 @@ func try_plant_tree(type: Global.TreeType, p: Vector2i) -> Node2D:
 	PopupManager.create_popup("-" + str(int(tree_stat_component.stat_resource.cost_to_purchase)), structure_map.map_to_local(p), Color("c1cf6abc"), Color("261e3abc"), Vector2(0, 100))
 	
 	return tree
+
+func exit(cursor: IsometricCursor) -> void:
+	TreeMenu.instance.deselect_currently_selected_tree_type()

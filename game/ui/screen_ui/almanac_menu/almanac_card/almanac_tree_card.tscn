@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bro7uo2viqqx3" path="res://ui/screen_ui/elements/panel_container_wrapper.tscn" id="1_h13lq"]
 [ext_resource type="Script" uid="uid://dgxvel4din2rf" path="res://ui/screen_ui/almanac_menu/almanac_card/almanac_tree_card.gd" id="2_qv6ok"]
 [ext_resource type="Theme" uid="uid://b6tppincjordy" path="res://ui/main_ui_theme.tres" id="3_16ow6"]
-[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/default_tree.png" id="4_2bgpf"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/large/default_tree.png" id="4_2bgpf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k1dll"]
 atlas = ExtResource("4_2bgpf")

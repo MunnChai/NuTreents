@@ -1,0 +1,12 @@
+NuTREEnts v<no version> by SI Interactive
+DebugConsole v0.0.2 | Debug Log
+Dumped at 2025-07-10T12:49:12 | Maximum 1000 entries before cutoff
+-- BEGIN LOG --
+NuTREEnts v<no version> by SI Interactive
+DebugConsole v0.0.2 by felixrl
+Debugging started at 2025-07-10T12:49:08
+
+For a list of commands, type cmdlist or help.
+F3 shortcut pressed
+Dumping log to res://addons/debug_console/log/debug_log_2025-07-10_0.txt...
+-- END LOG --
