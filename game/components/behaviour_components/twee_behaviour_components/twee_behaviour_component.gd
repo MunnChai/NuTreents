@@ -27,7 +27,6 @@ var marked_for_removal: bool
 
 var is_large := false
 
-# Munn: This should probably be refactored out... but it's annoying to 
 var is_dehydrated := false
 const BASE_WATER_RANGE = 1
 const WATER_DAMAGE_DELAY = 3.0
@@ -76,20 +75,33 @@ func _get_components() -> void:
 		death_sound_emitter_component = Components.get_component(actor, SoundEmitterComponent, "DeathSoundEmitterComponent")
 
 func _connect_component_signals():
-	hurtbox_component.hit_taken.connect(health_component.subtract_health)
+	# --- REFACTORED ---
+	# The hurtbox now calls a local function, which then calls the HealthComponent
+	# with the correct damage source information.
+	hurtbox_component.hit_taken.connect(_on_hit_taken)
 	
-	health_component.health_subtracted.connect(damage_sound_emitter_component.play_sound_effect.unbind(1))
-	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
-	health_component.health_subtracted.connect(tree_animation_component.play_damage_animation.unbind(1))
+	# The other components now connect to the new 'damaged' signal.
+	# We use .unbind() to discard the extra arguments they don't need.
+	health_component.damaged.connect(damage_sound_emitter_component.play_sound_effect.unbind(1).unbind(1))
+	health_component.damaged.connect(popup_emitter_component.popup_number.unbind(1).unbind(1))
+	health_component.damaged.connect(tree_animation_component.play_damage_animation.unbind(1).unbind(1))
 	health_component.died.connect(die)
 	
 	if grow_timer:
 		grow_timer.timeout.connect(upgrade_tree)
 		grow_timer.one_shot = true
 		
-		await get_tree().process_frame # Await, stat_component can set grow_timer time
-		 
+		await get_tree().process_frame
+		
 		grow_timer.start()
+
+# --- NEW FUNCTION ---
+# This function intercepts the hit, finds the damage source, and passes it along.
+func _on_hit_taken(damage: float, hitbox: HitboxComponent) -> void:
+	var source = null
+	if is_instance_valid(hitbox):
+		source = hitbox.get_owner()
+	health_component.subtract_health(damage, source)
 
 func _set_stats() -> void:
 	if is_large:
@@ -104,7 +116,8 @@ func _process(delta: float) -> void:
 		grow_timer.paused = true
 		
 		while (water_damage_time > WATER_DAMAGE_DELAY):
-			health_component.subtract_health(DEHYDRATION_DAMAGE)
+			# Dehydration damage has no source, so we pass null.
+			health_component.subtract_health(DEHYDRATION_DAMAGE, null)
 			water_damage_time -= RandomNumberGenerator.new().randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
 		water_damage_time += delta
 	else:
