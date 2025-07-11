@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ResearchNodeResource" load_steps=3 format=3 uid="uid://cgwkp3mwlvufu"]
 
-[ext_resource type="Texture2D" uid="uid://cicss6euv30fe" path="res://structures/trees/icons/tall_tree.png" id="1_jt5ow"]
+[ext_resource type="Texture2D" uid="uid://cicss6euv30fe" path="res://structures/trees/icons/large/tall_tree.png" id="1_jt5ow"]
 [ext_resource type="Script" uid="uid://vcwsq4ujmer2" path="res://ui/screen_ui/research_menu/research_tree/research_node/resources/research_node_resource.gd" id="2_uqm38"]
 
 [resource]

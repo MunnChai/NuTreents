@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://dxvn1hldmfxi1"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=4 format=3 uid="uid://dxvn1hldmfxi1"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_7vlul"]
-[ext_resource type="Texture2D" uid="uid://cemj3fv64h5p" path="res://structures/trees/icons/spiky_tree.png" id="2_7vlul"]
+[ext_resource type="Texture2D" uid="uid://cemj3fv64h5p" path="res://structures/trees/icons/large/spiky_tree.png" id="2_3sswq"]
+[ext_resource type="Texture2D" uid="uid://bnt2x5b87hxtc" path="res://structures/trees/icons/small/spiky_tree_small.png" id="3_44stt"]
 
 [resource]
 script = ExtResource("1_7vlul")
 name = "Spiky Tree"
 id = "spiky_tree"
 description = "Do not touch!"
-tree_icon = ExtResource("2_7vlul")
+tree_icon = ExtResource("2_3sswq")
+tree_icon_small = ExtResource("3_44stt")
 hp = 15
 max_water = 3
 gain = Vector3(0, 0, 0)

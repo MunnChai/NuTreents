@@ -5,5 +5,17 @@ extends Node
 
 ## OVERRIDE THIS
 ## Execute this action
-func execute(cursor: IsometricCursor) -> void:
-	print("WARNING! execute called on CursorAction base class or a derived class that has not overridden its execute function")
+func execute_primary_action(cursor: IsometricCursor) -> void:
+	print("WARNING! execute_primary_action called on CursorAction base class or a derived class that has not overridden its execute function")
+
+func execute_secondary_action(cursor: IsometricCursor) -> void:
+	print("WARNING! execute_secondary_action called on CursorAction base class or a derived class that has not overridden its execute function")
+
+func enter(cursor: IsometricCursor) -> void:
+	pass
+
+func exit(cursor: IsometricCursor) -> void:
+	pass
+
+func update(cursor: IsometricCursor, delta: float) -> void:
+	pass

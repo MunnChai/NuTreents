@@ -9,24 +9,30 @@ extends Marker2D
 ## - Sending request to update transparencies
 ## - Structure outlines
 
-# Structures where the arrow should "bob" up and down on them,
-# if they happen to be in range...
-const BOBBING_BUILDING_IDS = ["city_building", "factory", "factory_remains", "petrified_tree"]
+const LARGE_MODULATION_HIGHLIGHT = preload("modulation_highlight/large_modulation_highlight.tscn")
 
 const YELLOW := Color("ca910081")
 const BLUE := Color("3fd7ff81")
 const RED := Color("ff578681")
 
 @export var cursor: IsometricCursor
+@export var cursor_state_dict: Dictionary[IsometricCursor.CursorState, VisualCursorState]
 
 @onready var large_modulation_highlight: LargeModulationHighlight = %LargeModulationHighlight
 @onready var wooden_arrow: CursorWoodenArrow = %WoodenArrow
+@onready var extra_highlights: Node = $ExtraHighlights
+@onready var hologram: Sprite2D = $Hologram
 
-var previous_position: Vector2i
 var is_process_enabled: bool = true
+# Set default to out of bounds to allow for "enter" to be called
+var current_state: IsometricCursor.CursorState = -1
 
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
+	
+	DebugConsole.register("toggle_iso_cursor", func(args: PackedStringArray):
+		visible = !visible
+		, "Toggles isometric cursor visibility (the highlight and wooden arrow)")
 
 func _process(delta: float) -> void:
 	if not is_process_enabled:
@@ -34,218 +40,120 @@ func _process(delta: float) -> void:
 	
 	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
 	
-	_update_arrow_position()
-	_update_arrow_height(cursor.iso_position)
-	_update_structure_outline(cursor.iso_position)
-	_update_visuals(delta)
+	# Get current state and update visual state to match
+	var new_state: IsometricCursor.CursorState = cursor.current_state
+	if current_state != new_state:
+		enter_state(new_state)
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
-	update_adjacent_tile_transparencies()
+	update_adjacent_tile_transparencies(old_pos, new_pos)
+	
+	var visual_state: VisualCursorState = cursor_state_dict[current_state]
+	visual_state.update(cursor, self)
 
 # Updates the building map to make buildings in front of the currently hovered tile transparent
-func update_adjacent_tile_transparencies() -> void:
+func update_adjacent_tile_transparencies(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	var building_map: BuildingMap = Global.structure_map
-	building_map.update_transparencies_around(cursor.iso_position)
+	building_map.update_transparencies_around(old_pos, new_pos)
+
+#region STATE MACHINE
+
+func enter_state(new_state: IsometricCursor.CursorState) -> void:
+	if current_state == new_state:
+		return
+	
+	# Exit old action
+	if current_state in IsometricCursor.CursorState.values():
+		var current_visual_state: VisualCursorState = cursor_state_dict[current_state]
+		current_visual_state.exit(cursor, self)
+	
+	# Enter new action
+	var new_visual_state: VisualCursorState = cursor_state_dict[new_state]
+	new_visual_state.enter(cursor, self)
+	
+	# Set current state
+	current_state = new_state
+
+#endregion
+
+#region MODULATE HIGHLIGHT
+
+func highlight_tile_at(iso_position: Vector2i) -> void:
+	large_modulation_highlight.highlight_tile_at(iso_position)
+
+func set_highlight_modulate(color: Color) -> void:
+	large_modulation_highlight.set_color(color)
+
+func set_highlight_visible(value: bool) -> void:
+	if value:
+		large_modulation_highlight.enable()
+	else:
+		large_modulation_highlight.disable()
+
+#endregion
+
+#region EXTRA MODULATIONS POOL
+
+## A pool of the current individual tile modulation highlights
+var large_highlight_pool: Array[Node2D] = []
+var next_available := 0 ## The next index of a tile that is not currently used
+func reset_highlight_pool():
+	for highlight: Node2D in large_highlight_pool:
+		highlight.hide()
+	next_available = 0
+
+## Get the next available unused modulation tile
+## If none remain, instantiate a new one!
+func get_large_highlight() -> LargeModulationHighlight:
+	var get_index = next_available
+	next_available += 1
+	
+	if large_highlight_pool.size() <= get_index:
+		## Don't have another one...
+		## Create one!
+		var new_highlight = LARGE_MODULATION_HIGHLIGHT.instantiate()
+		extra_highlights.add_child(new_highlight)
+		large_highlight_pool.append(new_highlight)
+	
+	var highlight = large_highlight_pool[get_index]
+	highlight.show()
+	return highlight
+
+#endregion
+
+#region HOLOGRAM
+
+func set_hologram_texture(texture: Texture2D) -> void:
+	hologram.texture = texture
+
+func set_hologram_offset(offset: Vector2) -> void:
+	hologram.offset = offset
+
+func set_hologram_visible(value: bool) -> void:
+	hologram.visible = value
+
+func set_hologram_modulate(color: Color, custom_alpha: float = -1) -> void:
+	hologram.modulate = color
+	if custom_alpha >= 0:
+		hologram.modulate.a = custom_alpha
+
+#endregion
 
 #region ARROW POSITION & HEIGHT
 
-func _update_arrow_position() -> void:
-	var building: Node2D = Global.structure_map.get_building_node(cursor.iso_position)
-	
-	## BUILDING:
-	if building != null and Components.has_component(building, GridPositionComponent):
-		var position_component: GridPositionComponent = Components.get_component(building, GridPositionComponent)
-		var positions := position_component.get_occupied_positions()
-		var average_pos := Vector2.ZERO
-		var sum := 0
-		for pos: Vector2i in positions:
-			var smooth_pos := Global.structure_map.map_to_local(pos)
-			average_pos += smooth_pos
-			sum += 1
-		average_pos /= sum
-		wooden_arrow.set_cursor_position(average_pos)
-	## TILE:
-	else:
-		wooden_arrow.set_cursor_position(global_position)
+func set_arrow_position(new_position: Vector2) -> void:
+	wooden_arrow.set_cursor_position(new_position)
 
-## SET THE ARROW HEIGHT BASED ON WHAT IS ON THIS TILE...
-func _update_arrow_height(iso_position: Vector2i) -> void:
-	var structure_map = Global.structure_map
-	var building_node = structure_map.get_building_node(iso_position)
-	
-	if building_node == null:
-		_set_arrow_height(CursorWoodenArrow.ArrowHeight.LOW)
-	else:
-		var visual_arrow_component: VisualArrowComponent = Components.get_component(building_node, VisualArrowComponent)
-		if visual_arrow_component:
-			_set_arrow_height(visual_arrow_component.get_arrow_cursor_height(), visual_arrow_component.get_custom_height())
-		else:
-			_set_arrow_height(CursorWoodenArrow.ArrowHeight.LOW)
+func set_arrow_height(value: CursorWoodenArrow.ArrowHeight, custom_height: float = 0.0) -> void:
+	wooden_arrow.set_height(value, custom_height)
 
-#endregion
-
-#region ENABLE/DISABLE
-
-var is_enabled := false
-func enable() -> void:
-	if is_enabled:
-		return
-	is_enabled = true
-	show()
-	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
-	wooden_arrow.set_cursor_position(global_position)
-	_set_arrow_visible(true)
-
-func disable() -> void:
-	if not is_enabled:
-		return
-	is_enabled = false
-	hide()
-	_set_arrow_visible(false)
-
-#endregion
-
-#region VISUAL BASED ON HOVER STATE
-
-## Change visual details based on what is highlighted...
-func _update_visuals(delta: float) -> void:
-	var terrain_map = Global.terrain_map
-	var structure_map = Global.structure_map
-	var iso_position = cursor.iso_position
-	
-	## OK, SO WE MOVED
-	large_modulation_highlight.highlight_tile_at(iso_position)
-	
-	var flag := cursor.get_hover_flag()
-	
-	## GENERAL HOVER CRITERIA
-	match flag:
-		IsometricCursor.HoverFlag.VOID:
-			disable()
-		IsometricCursor.HoverFlag.TOO_FAR_AWAY:
-			enable()
-			_set_highlight_modulate(RED)
-			_set_arrow_visible(false)
-			_set_arrow_bobbing(false)
-		IsometricCursor.HoverFlag.OCCUPIED:
-			## CHECK: What is OCCUPIED?
-			# We are highlighting an existing tree
-			if TreeManager.is_twee(iso_position):
-				enable()
-				_set_highlight_modulate(YELLOW)
-				_set_arrow_visible(true)
-				_set_arrow_bobbing(false)
-			else:
-				## We are highlighting something that can be bobbed
-				var building_node = structure_map.get_building_node(iso_position)
-				if Components.has_component(building_node, TooltipIdentifierComponent):
-					enable()
-					var id = Components.get_component(building_node, TooltipIdentifierComponent)
-					if id.get_id() in BOBBING_BUILDING_IDS:
-						var destructable: DestructableComponent = Components.get_component(building_node, DestructableComponent)
-						if destructable: ## Huh, we need destructable verification
-							if TreeManager.enough_n(destructable.get_cost()):
-								_set_highlight_modulate(YELLOW)
-								_set_arrow_visible(true)
-								_set_arrow_bobbing(true)
-							else:
-								_set_highlight_modulate(YELLOW)
-								_set_arrow_visible(true)
-								_set_arrow_bobbing(false)
-						else:
-							_set_highlight_modulate(YELLOW)
-							_set_arrow_visible(true)
-							_set_arrow_bobbing(true)
-					else:
-						_set_highlight_modulate(YELLOW)
-						_set_arrow_visible(true)
-						_set_arrow_bobbing(false)
-				else:
-					var enemy = EnemyManager.instance.get_enemy_at(iso_position)
-					## We are highlighting an enemy
-					if enemy:
-						_set_highlight_modulate(RED)
-						_set_arrow_visible(true)
-						_set_arrow_bobbing(false)
-					else:
-						disable()
-		IsometricCursor.HoverFlag.NOT_FERTILE:
-			if terrain_map.is_concrete(iso_position):
-				enable()
-				_set_highlight_modulate(YELLOW)
-				_set_arrow_visible(true)
-				_set_arrow_bobbing(true)
-				match terrain_map.get_tile_biome(iso_position):
-					TerrainMap.TileType.CITY:
-						if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_CITY_TILE):
-							_set_arrow_bobbing(false)
-					TerrainMap.TileType.ROAD:
-						if not TreeManager.enough_n(structure_map.COST_TO_REMOVE_ROAD_TILE):
-							_set_arrow_bobbing(false)
-			else:
-				enable()
-				_set_highlight_modulate(RED)
-				_set_arrow_visible(false)
-				_set_arrow_bobbing(false)
-		IsometricCursor.HoverFlag.OK_FOR_PLANTING:
-			# Fertile ground!
-			if terrain_map.is_fertile(iso_position):
-				enable()
-				if _can_plant_on_tile():
-					if _has_enough_n_to_plant():
-						_set_highlight_modulate(BLUE)
-						_set_arrow_bobbing(true)
-					else:
-						_set_highlight_modulate(YELLOW)
-						_set_arrow_bobbing(false)
-				else:
-					_set_highlight_modulate(YELLOW)
-					_set_arrow_bobbing(false)
-				_set_arrow_visible(true)
-		_:
-			pass ## How did we get here?
-
-## Tile validation?
-func _can_plant_on_tile() -> bool:
-	var type := TreeMenu.instance.get_currently_selected_tree_type()
-	
-	## TILE VALIDATION
-	var structure_map := Global.structure_map
-	var p := cursor.iso_position
-	match type:
-		Global.TreeType.TECH_TREE: ## Tech Trees must be planted on Factory Remains
-			if not structure_map.tile_scene_map.has(p):
-				return false
-			elif not Components.has_component(structure_map.tile_scene_map[p], FactoryRemainsBehaviourComponent):
-				return false
-		_: ## All other trees cannot be planted on Factory Remains
-			if structure_map.tile_scene_map.has(p) and Components.has_component(structure_map.tile_scene_map[p], FactoryRemainsBehaviourComponent):
-				return false
-	
-	return true
-
-## Enough nutreents?
-func _has_enough_n_to_plant() -> bool:
-	var type := TreeMenu.instance.get_currently_selected_tree_type()
-	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(type)
-	if tree_stat == null:
-		return false
-	## COST VALIDATION
-	return TreeManager.enough_n(tree_stat.cost_to_purchase)
-
-func _set_highlight_modulate(color: Color) -> void:
-	large_modulation_highlight.set_color(color)
-
-func _set_arrow_visible(value: bool) -> void:
+func set_arrow_visible(value: bool) -> void:
 	if value:
 		wooden_arrow.enable()
 	else:
 		wooden_arrow.disable()
 
-func _set_arrow_height(value: CursorWoodenArrow.ArrowHeight, custom_height: float = 0.0) -> void:
-	wooden_arrow.set_height(value, custom_height)
-
-func _set_arrow_bobbing(value: bool) -> void:
+func set_arrow_bobbing(value: bool) -> void:
 	if value and not wooden_arrow.is_playing():
 		wooden_arrow.play()
 	elif not value and wooden_arrow.is_playing():
@@ -253,33 +161,16 @@ func _set_arrow_bobbing(value: bool) -> void:
 
 #endregion
 
-#region STRUCTURE OUTLINE
+#region ENABLE/DISABLE
 
-## SHOW/HIDE STRUCTURE OUTLINE AT POSITION
-func _update_structure_outline(iso_position: Vector2i) -> void:
-	## REMOVE PREVIOUS
-	if previous_position != iso_position:
-		_hide_structure_outline(previous_position)
-	previous_position = iso_position
-	
-	var structure_map = Global.structure_map
-	var building_node = structure_map.get_building_node(iso_position)
-	
-	if building_node:
-		_show_structure_outline(iso_position)
+func enable() -> void:
+	show()
+	global_position = Global.terrain_map.map_to_local(cursor.iso_position)
+	set_arrow_position(global_position)
+	set_arrow_visible(true)
 
-func _show_structure_outline(iso_position: Vector2i):
-	var entity: Node2D = MapUtility.get_entity_at(iso_position)
-	if entity and Components.has_component(entity, OutlineComponent):
-		var outline_component = Components.get_component(entity, OutlineComponent)
-		outline_component.show_outline()
-		return
-
-func _hide_structure_outline(iso_position: Vector2i):
-	var entity: Node2D = MapUtility.get_entity_at(iso_position)
-	if entity and Components.has_component(entity, OutlineComponent):
-		var outline_component = Components.get_component(entity, OutlineComponent)
-		outline_component.hide_outline()
-		return
+func disable() -> void:
+	hide()
+	set_arrow_visible(false)
 
 #endregion

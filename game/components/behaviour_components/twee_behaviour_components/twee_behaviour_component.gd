@@ -26,6 +26,7 @@ var forest: int # forest id
 var marked_for_removal: bool
 
 var is_large := false
+var is_removed := false
 
 # Munn: This should probably be refactored out... but it's annoying to 
 var is_dehydrated := false
@@ -153,6 +154,7 @@ func die():
 
 ## Frees self, and calls TreeManager.remove_tree() to remove self from tree_map, structure_map, forests, etc.
 func remove() -> void:
+	is_removed = true
 	death_sound_emitter_component.play_sound_effect()
 	tree_animation_component.play_death_animation()
 	

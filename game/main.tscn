@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bxd4072sdpptn" path="res://world/proc_gen/tile_maps.tscn" id="1_0xm2m"]
 [ext_resource type="Script" uid="uid://clltcgyhrsp74" path="res://main.gd" id="1_lquwl"]
-[ext_resource type="PackedScene" uid="uid://cxej40hx3cxdc" path="res://ui/in_game_ui.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://cxej40hx3cxdc" path="res://ui/player_hud.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://bbjvqrb1081re" path="res://world/lighting/ambient_lighting.tscn" id="2_h2yge"]
 [ext_resource type="PackedScene" uid="uid://c8v43r30xkvjw" path="res://sound/music/music.tscn" id="3_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://c5ab514k8x8dc" path="res://overlays/overlays.tscn" id="3_kek77"]
@@ -23,7 +23,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 1
 
-[node name="UI" parent="UI" instance=ExtResource("2_0xm2m")]
+[node name="PlayerHUD" parent="UI" instance=ExtResource("2_0xm2m")]
 
 [node name="World" type="Node2D" parent="."]
 
@@ -41,6 +41,7 @@ night_color = Color(0.220747, 0.405964, 0.660919, 1)
 [node name="Camera" parent="World" groups=["camera"] instance=ExtResource("7_4c57u")]
 
 [node name="Rain" parent="World/Camera" instance=ExtResource("8_efxa6")]
+z_index = 1
 position = Vector2(0, -484)
 
 [node name="Music" parent="World" instance=ExtResource("3_1bvp3")]

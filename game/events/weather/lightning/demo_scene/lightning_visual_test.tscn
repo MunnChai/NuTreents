@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dys60lbvywfle"]
 
-[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://ui/tree_menu/icons/default_tree.png" id="1_5q8ot"]
+[ext_resource type="Texture2D" uid="uid://cfmwrqmgxvuq6" path="res://structures/trees/icons/large/default_tree.png" id="1_5q8ot"]
 [ext_resource type="Script" uid="uid://dquiei8vlq5kx" path="res://events/weather/lightning/demo_scene/lightning_visual_test.gd" id="1_o8nfq"]
 [ext_resource type="PackedScene" uid="uid://dhgtwthtou6ex" path="res://events/weather/lightning/lightning.tscn" id="1_qmcdu"]
 [ext_resource type="PackedScene" uid="uid://dykyagfq57yc5" path="res://events/weather/rain/rain.tscn" id="4_lek1x"]

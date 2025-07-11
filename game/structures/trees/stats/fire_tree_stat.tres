@@ -1,14 +1,16 @@
-[gd_resource type="Resource" script_class="TreeStatResource" load_steps=3 format=3 uid="uid://dko4e0loc2odk"]
+[gd_resource type="Resource" script_class="TreeStatResource" load_steps=4 format=3 uid="uid://dko4e0loc2odk"]
 
 [ext_resource type="Script" uid="uid://cmqpyvo3bas1d" path="res://structures/trees/stats/tree_stat_resource.gd" id="1_1erbw"]
-[ext_resource type="Texture2D" uid="uid://bi1ikd5mwxfe7" path="res://structures/trees/icons/fire_tree.png" id="2_1erbw"]
+[ext_resource type="Texture2D" uid="uid://bi1ikd5mwxfe7" path="res://structures/trees/icons/large/fire_tree.png" id="2_rfqvp"]
+[ext_resource type="Texture2D" uid="uid://djt0xmlymaf6l" path="res://structures/trees/icons/small/fire_tree_small.png" id="3_jssbj"]
 
 [resource]
 script = ExtResource("1_1erbw")
 name = "Fire Tree"
 id = "fire_tree"
 description = "Lights bugs on fire"
-tree_icon = ExtResource("2_1erbw")
+tree_icon = ExtResource("2_rfqvp")
+tree_icon_small = ExtResource("3_jssbj")
 hp = 10
 max_water = 0
 gain = Vector3(0, 0, 0)

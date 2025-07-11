@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cwjv0sky3ejlo" path="res://world/proc_gen/set_pieces/set_piece_base.tscn" id="1_6ifap"]
 [ext_resource type="PackedScene" uid="uid://c63p5poae6fy" path="res://structures/set_pieces/petrified_trees/petrified_tree.tscn" id="2_raqcf"]
 [ext_resource type="Shader" uid="uid://b6jownrlae5xn" path="res://structures/set_pieces/petrified_trees/petrified_tree.gdshader" id="3_c3ned"]
-[ext_resource type="Texture2D" uid="uid://dexcrdfmurf6c" path="res://structures/trees/icons/icy_tree.png" id="4_6ifap"]
+[ext_resource type="Texture2D" uid="uid://dexcrdfmurf6c" path="res://structures/trees/icons/large/icy_tree.png" id="4_6ifap"]
 [ext_resource type="PackedScene" uid="uid://ftuwvgqjc6ym" path="res://structures/decor/decor_composed.tscn" id="5_3liqj"]
 [ext_resource type="Texture2D" uid="uid://cwkrka44uhq85" path="res://structures/decor/world_decor_sheet.png" id="6_j0ujk"]
 [ext_resource type="PackedScene" uid="uid://cct4xj35n0jg3" path="res://components/petrified_component/petrified_decor_component/petrified_decor_component.tscn" id="7_raqcf"]

@@ -2,7 +2,7 @@ extends Node
 class_name TweeManager
 
 signal tree_placed(new_tree: Node2D)
-signal tree_removed(pos: Vector2i)
+signal tree_removed(removed_tree: Node2D)
 
 var fog_map: FogMap
 var structure_map: BuildingMap
@@ -15,6 +15,9 @@ var forest_map: Dictionary[Vector2i, int] # {pos, id}
 ## Mapping between position and twees
 var tree_map: Dictionary[Vector2i, Node2D]
 var forest_count: int
+## Mapping between position and whether it is reachable (you can place a tree there/destroy stuff), which includes tree positions
+## If the position is IN THIS DICTIONARY, THEN IT IS REACHABLE. This is effectively a set, the boolean 
+var reachable_tiles: Dictionary[Vector2i, int]
 
 ## Amount of nutreents the player has
 var nutreents: float = 0
@@ -49,6 +52,10 @@ func _ready() -> void:
 	resource_timer.one_shot = false
 	resource_timer.wait_time = RESOURCE_TICK_RATE
 	resource_timer.timeout.connect(get_resources)
+	
+	## Recalculate reachable positions upon placing or removing a tree
+	tree_placed.connect(_on_tree_placed)
+	tree_removed.connect(_on_tree_removed)
 
 ## Start the game with a blank slate
 func start_game():
@@ -61,10 +68,17 @@ func start_game():
 		nutreents += 1000000000
 		, "Gives you a lot of nutreents")
 	
+	DebugConsole.register("water", func(args: PackedStringArray):
+		for tree: Node2D in tree_map.values():
+			var water_production: WaterProductionComponent = Components.get_component(tree, WaterProductionComponent)
+			water_production.set_water_production(1000000)
+		, "Gives you a near infinite amount of water")
+	
 	# Make sure all of these are cleared at a new game...
 	forests.clear()
 	forest_map.clear()
 	tree_map.clear()
+	reachable_tiles.clear()
 	forest_count = 0
 	
 	# Ensure map references are correct and up to date
@@ -72,7 +86,17 @@ func start_game():
 	structure_map = Global.structure_map
 	terrain_map = Global.terrain_map
 	
-	## SPAWN THE MOTHER TREE
+	resource_timer.start()
+	
+	_spawn_mother_tree()
+	
+	DebugConsole.register("fill_trees", func(args: PackedStringArray):
+		for pos: Vector2i in terrain_map.get_used_cells():
+			var default: Node2D = TreeRegistry.get_new_twee(Global.TreeType.DEFAULT_TREE)
+			add_tree(default, pos)
+		, "Adds a default tree to every tile on the map")
+
+func _spawn_mother_tree() -> void:
 	var mother_tree: Node2D = TreeRegistry.get_new_twee(Global.TreeType.MOTHER_TREE)
 	
 	var mother_tree_positions: Array[Vector2i] = [ 
@@ -87,7 +111,7 @@ func start_game():
 	var grid_position_component = Components.get_component(mother_tree, GridPositionComponent)
 	grid_position_component.init_occupied_positions(mother_tree_positions)
 	
-	resource_timer.start()
+	_on_tree_placed(mother_tree) # MANUAL CALL TO UPDATE REACHABLE TILES
 	
 	DebugConsole.register("immortal", func(args: PackedStringArray):
 		var health_component: HealthComponent = Components.get_component(mother_tree, HealthComponent)
@@ -149,6 +173,10 @@ func remove_tree(p: Vector2i) -> void:
 	var f_id = forest_map[p]
 	var f: Forest = forests[f_id]
 	var tree: Node2D = f.trees[p]
+	
+	# Signal!
+	tree_removed.emit(tree)
+	
 	forest_map.erase(p)
 	f.remove_tree(p) # Assume remove_tree will free object correctly
 	forest_check(p, f_id)
@@ -159,17 +187,13 @@ func remove_tree(p: Vector2i) -> void:
 	# Fog...
 	# TODO: Put fog back?
 	
-	# Signal!
-	tree_removed.emit(p)
+	
 
 #endregion
 
 #region PROCESSING
 
 func _process(delta: float) -> void:
-	#nutreents_gain = get_nutrient_gain(delta)
-	#nutreents += nutreents_gain * delta # Nutreents/second * time 
-	#update_water_maintenance(delta)
 	pass
 
 # Occurs once per second
@@ -433,22 +457,58 @@ func is_reachable(pos: Vector2i, include_trees: bool = false):
 	return get_reachable_tree_placement_positions(include_trees).has(pos)
 
 func get_reachable_tree_placement_positions(include_trees: bool = false) -> Array[Vector2i]:
+	if include_trees:
+		return reachable_tiles.keys()
+	
 	var allowed_positions: Array[Vector2i] = []
 	
-	var tree_map = get_tree_map()
-	
-	for pos in tree_map.keys():
-		var tree: Node2D = tree_map.get(pos)
-		var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
-		
-		for offset in grid_range_component.get_tiles_in_range():
-			var new_pos = pos + offset
-			if not tree_map.has(new_pos):
-				allowed_positions.append(pos + offset)
-		
-		if (include_trees):
+	for pos: Vector2i in reachable_tiles.keys():
+		if not tree_map.has(pos):
 			allowed_positions.append(pos)
 	
 	return allowed_positions
+
+func _on_tree_placed(tree: Node2D) -> void:
+	var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
+	var grid_position_component: GridPositionComponent = Components.get_component(tree, GridPositionComponent)
+	var positions: Array = grid_position_component.get_occupied_positions()
+	for pos: Vector2i in positions:
+		for offset: Vector2i in grid_range_component.get_tiles_in_range():
+			var iso_pos: Vector2i = pos + offset
+			
+			if reachable_tiles.has(iso_pos):
+				reachable_tiles[iso_pos] += 1
+			else:
+				reachable_tiles[iso_pos] = 1
+
+func _on_tree_removed(tree: Node2D) -> void:
+	var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
+	var grid_position_component: GridPositionComponent = Components.get_component(tree, GridPositionComponent)
+	var positions: Array = grid_position_component.get_occupied_positions()
+	for pos: Vector2i in positions:
+		for offset: Vector2i in grid_range_component.get_tiles_in_range():
+			var iso_pos: Vector2i = pos + offset
+			
+			if reachable_tiles.has(iso_pos):
+				reachable_tiles[iso_pos] -= 1
+				
+				if reachable_tiles[iso_pos] <= 0:
+					reachable_tiles.erase(iso_pos)
+
+## Recalculates the reachable_tiles map
+#func _recalculate_reachable_positions() -> void:
+	#reachable_tiles.clear()
+	#
+	#var tree_map = get_tree_map()
+	#for pos in tree_map.keys():
+		#var tree: Node2D = tree_map.get(pos)
+		#var grid_range_component: GridRangeComponent = Components.get_component(tree, GridRangeComponent, "GridRangeComponent")
+		#
+		#for offset in grid_range_component.get_tiles_in_range():
+			#var new_pos = pos + offset
+			#if not tree_map.has(new_pos):
+				#reachable_tiles[new_pos] = false
+		#
+		#reachable_tiles[pos] = false
 
 #endregion
