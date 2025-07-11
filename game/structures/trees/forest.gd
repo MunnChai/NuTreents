@@ -7,6 +7,7 @@ var water: float
 var id: int
 var empty: bool
 
+var water_capacity: float = 0.0
 var water_gain: float
 var notification: Notification
 
@@ -130,7 +131,7 @@ func update_water_maintenance(delta: float) -> float:
 			notification.remove()
 
 	water += net_water_change * delta
-	water = max(water, 0)
+	water = clamp(water, 0, water_capacity)
 	water_gain = net_water_change
 	
 	var gain = clamp(water_gain, WaterOverlay.UNHEALTHY_WATER_GAIN, WaterOverlay.HEALTHY_WATER_GAIN) / (WaterOverlay.HEALTHY_WATER_GAIN - WaterOverlay.UNHEALTHY_WATER_GAIN)
@@ -155,6 +156,7 @@ func add_tree(p: Vector2i, t: Node2D):
 func add_tree_to_set(t: Node2D):
 	if not tree_set.has(t):
 		tree_set.append(t)
+		add_tree_capacity(t)
 
 func remove_tree_from_set(t: Node2D):
 	tree_set.erase(t)
@@ -200,3 +202,40 @@ func print_forest():
 	for key in trees.keys():
 		print("Tree: ", key)
 	print()
+
+#region WATER CAPACITY
+
+## Add a tree, hook change signal, add current capacity
+func add_tree_capacity(tree: Node2D) -> void:
+	var capacity: WaterCapacityComponent = Components.get_component(tree, WaterCapacityComponent)
+	if not capacity:
+		return
+	
+	capacity.capacity_changed.connect(_on_tree_capacity_changed)
+	water_capacity += capacity.get_capacity()
+
+## Capacity changed, add the difference
+func _on_tree_capacity_changed(old: float, new: float) -> void:
+	water_capacity -= old
+	water_capacity += new
+
+## Remove a tree, disconnect change signal, remove capacity
+func remove_tree_capacity(tree: Node2D) -> void:
+	var capacity: WaterCapacityComponent = Components.get_component(tree, WaterCapacityComponent)
+	if not capacity:
+		return
+	
+	capacity.capacity_changed.disconnect(_on_tree_capacity_changed)
+	water_capacity -= capacity.get_capacity()
+
+## Disconnect/clear all tree capacities, set our total to zero, and then add them back...
+func recompute_entire_capacity() -> void:
+	for tree: Node2D in tree_set:
+		remove_tree_capacity(tree)
+	
+	water_capacity = 0.0
+	
+	for tree: Node2D in tree_set:
+		add_tree_capacity(tree)
+
+#endregion

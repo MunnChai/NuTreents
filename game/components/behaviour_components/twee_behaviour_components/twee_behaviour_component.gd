@@ -8,6 +8,7 @@ signal grew_up
 @export var health_component: HealthComponent
 @export var nutreent_production_component: NutreentProductionComponent
 @export var water_production_component: WaterProductionComponent
+@export var water_capacity_component: WaterCapacityComponent
 @export var grid_range_component: GridRangeComponent
 @export var grid_position_component: GridPositionComponent
 @export var hurtbox_component: HurtboxComponent
@@ -73,6 +74,8 @@ func _get_components() -> void:
 		nutreent_production_component = Components.get_component(actor, NutreentProductionComponent)
 	if not water_production_component:
 		water_production_component = Components.get_component(actor, WaterProductionComponent)
+	if not water_capacity_component:
+		water_capacity_component = Components.get_component(actor, WaterCapacityComponent)
 	if not grid_range_component:
 		grid_range_component = Components.get_component(actor, GridRangeComponent, "GridRangeComponent")
 	if not grid_position_component:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://db827hwo1u53j"]
+[gd_scene load_steps=33 format=3 uid="uid://db827hwo1u53j"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_a1lvg"]
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="1_v3cq2"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="26_t1t24"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="27_3rd2a"]
 [ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="28_3rd2a"]
+[ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="29_hj1bn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sxeaf"]
 resource_local_to_scene = true
@@ -154,6 +155,8 @@ twee = NodePath("../TreeBehaviourComponent")
 [node name="FireNotifierComponent" parent="." node_paths=PackedStringArray("flammable", "grid_pos") instance=ExtResource("28_3rd2a")]
 flammable = NodePath("../FireComponents/FlammableComponent")
 grid_pos = NodePath("../GridPositionComponent")
+
+[node name="WaterCapacityComponent" parent="." instance=ExtResource("29_hj1bn")]
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]

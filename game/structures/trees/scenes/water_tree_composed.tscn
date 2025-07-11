@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://b5hdmb6e3u31i"]
+[gd_scene load_steps=32 format=3 uid="uid://b5hdmb6e3u31i"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_ylnla"]
 [ext_resource type="Resource" uid="uid://jg475yfi2sl7" path="res://structures/trees/stats/water_tree_stat.tres" id="2_xdp86"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_it1uo"]
 [ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="27_it1uo"]
 [ext_resource type="PackedScene" uid="uid://cys3ffyh8822h" path="res://components/sound_loop_component/sound_loop_component.tscn" id="28_no8lf"]
+[ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="29_ya7fu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -153,5 +154,7 @@ grid_pos = NodePath("../GridPositionComponent")
 [node name="SoundLoopComponent" parent="." node_paths=PackedStringArray("grid_position") instance=ExtResource("28_no8lf")]
 grid_position = NodePath("../GridPositionComponent")
 sound_id = &"tree_pump"
+
+[node name="WaterCapacityComponent" parent="." instance=ExtResource("29_ya7fu")]
 
 [editable path="HurtboxComponent"]

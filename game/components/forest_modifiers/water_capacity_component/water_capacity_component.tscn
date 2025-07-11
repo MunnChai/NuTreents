@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://db52yndcidfkc"]
+
+[ext_resource type="Script" uid="uid://yaol0dn5r0mh" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.gd" id="1_bl8rt"]
+
+[node name="WaterCapacityComponent" type="Node"]
+script = ExtResource("1_bl8rt")

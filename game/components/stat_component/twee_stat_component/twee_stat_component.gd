@@ -7,6 +7,7 @@ extends StatComponent
 @export var tooltip_identifier_component: TooltipIdentifierComponent
 @export var health_component: HealthComponent
 @export var water_production_component: WaterProductionComponent
+@export var water_capacity_component: WaterCapacityComponent
 @export var nutreent_production_component: NutreentProductionComponent
 @export var grow_timer: Timer
 
@@ -30,6 +31,8 @@ func _get_components() -> void:
 		health_component = Components.get_component(actor, HealthComponent)
 	if not water_production_component:
 		water_production_component = Components.get_component(actor, WaterProductionComponent)
+	if not water_capacity_component:
+		water_capacity_component = Components.get_component(actor, WaterCapacityComponent)
 	if not nutreent_production_component:
 		nutreent_production_component = Components.get_component(actor, NutreentProductionComponent)
 	if not grow_timer:
@@ -39,6 +42,7 @@ func set_stats_from_resource(resource: StatResource = stat_resource) -> void:
 	tooltip_identifier_component.set_id(resource.id)
 	health_component.set_max_health(resource.hp)
 	water_production_component.set_water_production(resource.gain.y - resource.maint)
+	water_capacity_component.set_capacity(resource.max_water)
 	nutreent_production_component.set_nutreent_production(resource.gain.x)
 	if grow_timer:
 		grow_timer.wait_time = resource.time_to_grow
@@ -56,6 +60,7 @@ func set_upgraded_stats_from_resource(resource: StatResource = stat_resource) ->
 	tooltip_identifier_component.set_id(resource.id)
 	health_component.set_max_health(resource.hp_2)
 	water_production_component.set_water_production(resource.gain_2.y - resource.maint_2)
+	water_capacity_component.set_capacity(resource.max_water_2)
 	nutreent_production_component.set_nutreent_production(resource.gain_2.x)
 	
 	if attack_damage_node:

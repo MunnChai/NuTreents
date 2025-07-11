@@ -34,11 +34,11 @@ func update_ui():
 		var highlighted_forest := TreeManager.get_forest_at(IsometricCursor.instance.iso_position)
 		if highlighted_forest != null:
 			if highlighted_forest.water_gain == 0:
-				water_label.text = str(int(highlighted_forest.water))
+				water_label.text = str(int(highlighted_forest.water)) + "/" + str(int(highlighted_forest.water_capacity))
 			elif highlighted_forest.water_gain < 0:
-				water_label.text = "[color=ff5671][shake rate=50.0 level=10 connected=1]" + str(int(highlighted_forest.water)) + " (" + _get_pos(highlighted_forest.water_gain) + str(int(highlighted_forest.water_gain)) + "/s)" 
+				water_label.text = "[color=ff5671][shake rate=50.0 level=10 connected=1]" + str(int(highlighted_forest.water)) + "/" + str(int(highlighted_forest.water_capacity)) + " (" + _get_pos(highlighted_forest.water_gain) + str(int(highlighted_forest.water_gain)) + "/s)" 
 			else:
-				water_label.text = str(int(highlighted_forest.water)) + " (" + _get_pos(highlighted_forest.water_gain) + str(int(highlighted_forest.water_gain)) + "/s)"
+				water_label.text = str(int(highlighted_forest.water)) + "/" + str(int(highlighted_forest.water_capacity)) + " (" + _get_pos(highlighted_forest.water_gain) + str(int(highlighted_forest.water_gain)) + "/s)"
 		else:
 			water_label.text = ""
 	else:

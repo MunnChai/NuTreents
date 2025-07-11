@@ -254,8 +254,11 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 	# Create a new forest
 	var new_forest = Forest.new(forest_id)
 	
+	var new_water := 0.0
+	
 	# Remove old forests
 	for id: int in forests_to_merge:
+		new_water += forests.get(id).water
 		forests.erase(id)
 	
 	# For every tree, if it is one of the adjacent trees' forests, add them to the new forest
@@ -276,6 +279,8 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 	
 	# Add new forest to trees
 	forests[forest_id] = new_forest
+	
+	new_forest.water = new_water
 	
 	return forest_id
 
@@ -385,6 +390,10 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 	# remove tree from old forest
 	var old_f: Forest = forests[old_id]
 	
+	var old_water: float = old_f.water
+	var old_capacity: float = old_f.water_capacity
+	var percent := 0.0
+	
 	# update forests
 	var forest: Forest = Forest.new(id)
 	forests[id] = forest
@@ -402,9 +411,17 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 		tree_behaviour_component.set_forest(id)
 		forest_map[pos] = id
 		
+		## Add the percent that this water capacity was of the original forest
+		var capacity_component: WaterCapacityComponent = Components.get_component(tree, WaterCapacityComponent)
+		percent += capacity_component.get_percent_of_total_capacity(old_capacity)
+		
 		# add this to new forest
 		forest.trees[pos] = tree
 		forest.add_tree_to_set(tree)
+	
+	## The new forest is the capacity percent of the old water
+	forest.water = old_water * percent
+	
 	return forest
 
 ## returns a connected tree set
