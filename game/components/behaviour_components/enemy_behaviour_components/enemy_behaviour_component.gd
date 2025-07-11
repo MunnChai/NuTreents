@@ -72,10 +72,11 @@ func _get_components() -> void:
 
 
 func _connect_component_signals() -> void:
-	hurtbox_component.hit_taken.connect(health_component.subtract_health)
+	# This connection can remain for damage from external sources (like player attacks).
 	hurtbox_component.hit_taken.connect(enemy_animation_component.play_hurt_animation.unbind(1))
 	
-	health_component.health_subtracted.connect(popup_emitter_component.popup_number)
+	# The popup emitter should now listen to the new 'damaged' signal.
+	health_component.damaged.connect(popup_emitter_component.popup_number.unbind(1).unbind(1))
 	health_component.died.connect(die)
 	health_component.died.connect(enemy_animation_component.play_death)
 	health_component.died.connect(death_sound_emitter_component.play_sound_effect)
@@ -87,8 +88,26 @@ func _connect_component_signals() -> void:
 	action_timer.start()
 	
 	pathfinding_component.max_tiles_traversed.connect(_on_pathfinding_max_path_traversed)
+	
+	# --- REFACTORED: Connect to the hitbox to intercept damage events ---
+	# This assumes your HitboxComponent has a "hit_landed(hurtbox)" signal.
+	if hitbox_component and hitbox_component.has_signal("hit_landed"):
+		hitbox_component.hit_landed.connect(_on_hit_landed)
 
 #endregion
+
+# --- NEW FUNCTION ---
+## Called when this enemy's hitbox successfully hits a hurtbox.
+func _on_hit_landed(hurtbox: HurtboxComponent) -> void:
+	if not is_instance_valid(hurtbox): return
+
+	var target_entity = hurtbox.get_parent()
+	if Components.has_component(target_entity, HealthComponent):
+		var target_health_comp = Components.get_component(target_entity, HealthComponent)
+		var my_damage = enemy_stat_component.stat_resource.attack_damage
+		
+		# Call subtract_health and pass this enemy (actor) as the source.
+		target_health_comp.subtract_health(my_damage, actor)
 
 
 ## The main enemy behaviour function. This is called every time action_timer finishes
@@ -113,14 +132,14 @@ func perform_action() -> void:
 	
 	move(target_pos)
 
-# Munn: These could maybe be turned into states instead...? 
+# Munn: These could maybe be turned into states instead...?
 #region Actions
 
 func attack_tree(target_pos: Vector2i) -> void:
+	# This function initiates the attack animation/movement. The actual damage
+	# is now handled by the _on_hit_landed function via signals.
 	grid_movement_component.move_to_and_back(target_pos)
 	
-	
-
 func move(target_pos: Vector2i) -> void:
 	var current_pos: Vector2i = grid_position_component.get_pos()
 	
@@ -159,8 +178,9 @@ func move(target_pos: Vector2i) -> void:
 func die():
 	hurtbox_component.set_deferred("monitorable", false)
 	hurtbox_component.monitoring = false
-	hitbox_component.set_deferred("monitorable", false)
-	hitbox_component.monitoring = false
+	if is_instance_valid(hitbox_component):
+		hitbox_component.set_deferred("monitorable", false)
+		hitbox_component.monitoring = false
 	
 	status_holder_component.remove_all_status_effects()
 	status_holder_component.disable()
