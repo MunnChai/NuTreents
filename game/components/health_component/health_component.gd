@@ -5,13 +5,13 @@ extends Node2D
 var current_health: float
 var is_dead: bool = false
 
-# Cooldown to prevent spamming damage notifications for the same entity.
-var _can_show_damage_popup: bool = true
-const DAMAGE_POPUP_COOLDOWN: float = 3.0
-
 signal died()
 signal health_added(amount: float)
-signal health_subtracted(amount: float)
+
+## NEW: A more descriptive signal that provides all necessary context.
+## Emitted whenever health is subtracted, passing the amount, the damage source,
+## and the owner of this component.
+signal damaged(amount: float, source: Node, owner: Node2D)
 
 func _ready() -> void:
 	current_health = max_health
@@ -54,21 +54,9 @@ func add_health(amount: float) -> float:
 
 func subtract_health(amount: float, source: Node = null) -> float:
 	current_health -= amount
-	health_subtracted.emit(amount)
 	
-	# --- Notification Logic ---
-	var owner = get_parent()
-	# Check if the damage source is a valid enemy.
-	var is_damage_from_enemy = is_instance_valid(source) and Components.has_component(source, EnemyStatComponent)
-
-	if is_damage_from_enemy:
-		# Check if the owner is a non-Mother Tree.
-		if Components.has_component(owner, TweeStatComponent):
-			var stat_comp = Components.get_component(owner, TweeStatComponent)
-			if stat_comp.type != Global.TreeType.MOTHER_TREE:
-				# If it is, and the cooldown has passed, show a popup.
-				if _can_show_damage_popup:
-					_show_damage_notification(owner)
+	# The component's only job is to emit a signal with the relevant info.
+	damaged.emit(amount, source, get_parent())
 	
 	if current_health <= 0:
 		current_health = 0
@@ -76,15 +64,3 @@ func subtract_health(amount: float, source: Node = null) -> float:
 		died.emit()
 	
 	return current_health
-
-## Shows the damage popup and starts the cooldown timer.
-func _show_damage_notification(tree_node: Node2D) -> void:
-	_can_show_damage_popup = false
-	if is_instance_valid(PopupManager):
-		PopupManager.create_popup("Tree Under Attack!", tree_node.global_position, Color.CRIMSON)
-	
-	# Start a timer to re-enable popups for this tree after the cooldown.
-	get_tree().create_timer(DAMAGE_POPUP_COOLDOWN).timeout.connect(
-		func():
-			_can_show_damage_popup = true
-	)
