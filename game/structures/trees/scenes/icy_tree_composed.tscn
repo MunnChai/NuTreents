@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://6anyotc045yo"]
+[gd_scene load_steps=37 format=3 uid="uid://6anyotc045yo"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_f23sx"]
 [ext_resource type="PackedScene" uid="uid://bp8k7164r5661" path="res://components/behaviour_components/twee_behaviour_components/twee_behaviour_component.tscn" id="2_m4g31"]
@@ -32,6 +32,7 @@
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="30_vxw8c"]
 [ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="31_vxw8c"]
 [ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="32_k160g"]
+[ext_resource type="PackedScene" uid="uid://cixkmh6iudrji" path="res://components/dehydration_component/dehydration_component.tscn" id="33_svcsy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sxeaf"]
 resource_local_to_scene = true
@@ -163,6 +164,8 @@ flammable = NodePath("../FireComponents/FlammableComponent")
 grid_pos = NodePath("../GridPositionComponent")
 
 [node name="WaterCapacityComponent" parent="." instance=ExtResource("32_k160g")]
+
+[node name="DehydrationComponent" parent="." instance=ExtResource("33_svcsy")]
 
 [editable path="HurtboxComponent"]
 [editable path="HitboxComponent"]

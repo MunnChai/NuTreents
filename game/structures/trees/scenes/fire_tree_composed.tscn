@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://oiasrq8h2ugd"]
+[gd_scene load_steps=31 format=3 uid="uid://oiasrq8h2ugd"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_xtndx"]
 [ext_resource type="PackedScene" uid="uid://2acjuseqlsik" path="res://components/forest_modifiers/water_production_component/water_production_component.tscn" id="2_ugbo4"]
@@ -27,6 +27,7 @@
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="25_xtndx"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_ugbo4"]
 [ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="27_ugbo4"]
+[ext_resource type="PackedScene" uid="uid://cixkmh6iudrji" path="res://components/dehydration_component/dehydration_component.tscn" id="28_6vq3b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -141,5 +142,8 @@ visual_arrow = NodePath("../VisualArrowComponent")
 twee = NodePath("../GunTweeBehaviourComponent")
 
 [node name="WaterCapacityComponent" parent="." instance=ExtResource("27_ugbo4")]
+
+[node name="DehydrationComponent" parent="." instance=ExtResource("28_6vq3b")]
+dehydration_damage = 1
 
 [editable path="HurtboxComponent"]

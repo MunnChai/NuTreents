@@ -9,6 +9,8 @@ var empty: bool
 
 var water_capacity: float = 0.0
 var water_gain: float
+var dehydration_event: DehydrationEvent
+
 var notification: Notification
 
 func _init(i: int):
@@ -99,27 +101,33 @@ func update_water_maintenance(delta: float) -> float:
 		trees.erase(key)
 
 	var is_forest_dehydrated: bool = (water + net_water_change * delta) < 0
-	
 	var could_be_visibly_dehydrated: bool = false
-	
 	for pos in trees.keys():
 		var tree_node = trees.get(pos)
 		if not is_instance_valid(tree_node):
 			continue
 		
-		var twee_behaviour_component: TweeBehaviourComponent = Components.get_component(tree_node, TweeBehaviourComponent)
 		var water_comp: WaterProductionComponent = Components.get_component(tree_node, WaterProductionComponent)
 		
 		if not water_comp.is_water_adjacent():
 			could_be_visibly_dehydrated = true
-		
-		if not is_forest_dehydrated or water_comp.is_water_adjacent():
-			if twee_behaviour_component: twee_behaviour_component.is_dehydrated = false
-		else:
-			if twee_behaviour_component: twee_behaviour_component.is_dehydrated = true
 
-	## HANDLE showing notification for dehydrated forests
+	## ---
+	## PROCESSING DEHYDRATION EVENT
 	if is_forest_dehydrated and could_be_visibly_dehydrated:
+		if not dehydration_event:
+			dehydration_event = DehydrationEvent.new(self)
+	else:
+		if dehydration_event:
+			dehydration_event.end_event()
+			dehydration_event = null # RefCounted will free for us, right?
+	if dehydration_event:
+		dehydration_event.update(delta)
+	## ---
+
+	## ---
+	## HANDLE showing notification for dehydrated forests
+	if dehydration_event:
 		if not is_instance_valid(notification) or notification.is_removed:
 			if is_instance_valid(NotificationLog.instance):
 				notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
@@ -129,19 +137,24 @@ func update_water_maintenance(delta: float) -> float:
 	else:
 		if is_instance_valid(notification):
 			notification.remove()
+	## ---
 
+	## ---
+	## APPLYING WATER GAIN/LOSS
 	water += net_water_change * delta
 	water = clamp(water, 0, water_capacity)
 	water_gain = net_water_change
+	## ---
 	
+	## ---
+	## UPDATING METABALLS COLOR
 	var gain = clamp(water_gain, WaterOverlay.UNHEALTHY_WATER_GAIN, WaterOverlay.HEALTHY_WATER_GAIN) / (WaterOverlay.HEALTHY_WATER_GAIN - WaterOverlay.UNHEALTHY_WATER_GAIN)
 	var color = lerp(WaterOverlay.UNHEALTHY_COLOR, WaterOverlay.HEALTHY_COLOR, gain)
-	
 	if water_gain < 0:
 		color = WaterOverlay.DEHYDRATED_COLOR
-	
 	if MetaballOverlay.is_instanced():
 		MetaballOverlay.instance.get_layer_or_create(id - 1).set_color(color)
+	## ---
 	
 	return net_water_change
 

@@ -32,10 +32,6 @@ var is_removed := false
 # Munn: This should probably be refactored out... but it's annoying to 
 var is_dehydrated := false
 const BASE_WATER_RANGE = 1
-const WATER_DAMAGE_DELAY = 3.0
-var water_damage_time := 0.0
-
-const DEHYDRATION_DAMAGE = 2
 
 var metaballs: Array[IsometricMetaball] = []
 
@@ -43,9 +39,6 @@ func _ready():
 	actor = get_parent()
 	
 	_get_components()
-	
-	# Randomize water damage time
-	water_damage_time += RandomNumberGenerator.new().randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
 	
 	call_deferred("_set_stats")
 	call_deferred("_connect_component_signals")
@@ -125,16 +118,6 @@ func _process(delta: float) -> void:
 		if not metaballs.is_empty():
 			for metaball: IsometricMetaball in metaballs:
 				metaball.set_override(1.0)
-	
-	if is_dehydrated:
-		grow_timer.paused = true
-		
-		while (water_damage_time > WATER_DAMAGE_DELAY):
-			health_component.subtract_health(DEHYDRATION_DAMAGE)
-			water_damage_time -= RandomNumberGenerator.new().randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
-		water_damage_time += delta
-	else:
-		grow_timer.paused = false
 
 #region StateModifiers
 

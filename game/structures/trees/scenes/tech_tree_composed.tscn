@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dookr1yus2k36"]
+[gd_scene load_steps=28 format=3 uid="uid://dookr1yus2k36"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_p0rwt"]
 [ext_resource type="Resource" uid="uid://cak861fnyx3xa" path="res://structures/trees/stats/tech_tree_stat.tres" id="2_2577w"]
@@ -24,6 +24,7 @@
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="22_0whc8"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="23_awd2e"]
 [ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="24_awd2e"]
+[ext_resource type="PackedScene" uid="uid://cixkmh6iudrji" path="res://components/dehydration_component/dehydration_component.tscn" id="25_hovjm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jnssm"]
 resource_local_to_scene = true
@@ -119,5 +120,7 @@ visual_arrow = NodePath("../VisualArrowComponent")
 twee = NodePath("../TechTweeBehaviourComponent")
 
 [node name="WaterCapacityComponent" parent="." instance=ExtResource("24_awd2e")]
+
+[node name="DehydrationComponent" parent="." instance=ExtResource("25_hovjm")]
 
 [editable path="HurtboxComponent"]

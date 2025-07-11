@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://dlob0axb1wkq0"]
+[gd_scene load_steps=32 format=3 uid="uid://dlob0axb1wkq0"]
 
 [ext_resource type="PackedScene" uid="uid://bbxyjr2pq7agj" path="res://components/shadow_component/shadow_component.tscn" id="1_nqrql"]
 [ext_resource type="Resource" uid="uid://dsgufqnv7s65n" path="res://structures/trees/stats/tall_tree_stat.tres" id="2_eywws"]
@@ -28,6 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="26_hwjlj"]
 [ext_resource type="PackedScene" uid="uid://bugvhh3abyvjb" path="res://components/fire_components/fire_notifier_component/fire_notifier_component.tscn" id="27_hwjlj"]
 [ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="28_cu8ms"]
+[ext_resource type="PackedScene" uid="uid://cixkmh6iudrji" path="res://components/dehydration_component/dehydration_component.tscn" id="29_neanf"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j4fxg"]
 resource_local_to_scene = true
@@ -140,5 +141,7 @@ flammable = NodePath("../FireComponents/FlammableComponent")
 grid_pos = NodePath("../GridPositionComponent")
 
 [node name="WaterCapacityComponent" parent="." instance=ExtResource("28_cu8ms")]
+
+[node name="DehydrationComponent" parent="." instance=ExtResource("29_neanf")]
 
 [editable path="HurtboxComponent"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cixkmh6iudrji"]
+
+[ext_resource type="Script" uid="uid://b0v5wadycvxpi" path="res://components/dehydration_component/dehydration_component.gd" id="1_2qsqb"]
+
+[node name="DehydrationComponent" type="Node"]
+script = ExtResource("1_2qsqb")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://btc8w4mfmtrb1"]
+[gd_scene load_steps=25 format=3 uid="uid://btc8w4mfmtrb1"]
 
 [ext_resource type="Shader" uid="uid://dyq8veu2iequj" path="res://structures/trees/shaders/tree_damage.gdshader" id="1_r0oyg"]
 [ext_resource type="Resource" uid="uid://ll6klr2ec2b8" path="res://structures/trees/stats/mother_tree_stat.tres" id="2_7namq"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://dssskr60jcyxt" path="res://components/visual_arrow_component/visual_arrow_component.tscn" id="19_s42kc"]
 [ext_resource type="PackedScene" uid="uid://ddg8ke7v2mqsi" path="res://components/visual_arrow_component/twee_arrow_height_component/twee_arrow_height_component.tscn" id="20_nsnki"]
 [ext_resource type="PackedScene" uid="uid://db52yndcidfkc" path="res://components/forest_modifiers/water_capacity_component/water_capacity_component.tscn" id="21_nsnki"]
+[ext_resource type="PackedScene" uid="uid://cixkmh6iudrji" path="res://components/dehydration_component/dehydration_component.tscn" id="22_0qva2"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_higsx"]
 shader = ExtResource("1_r0oyg")
@@ -109,5 +110,7 @@ visual_arrow = NodePath("../VisualArrowComponent")
 twee = NodePath("../MotherTweeBehaviourComponent")
 
 [node name="WaterCapacityComponent" parent="." instance=ExtResource("21_nsnki")]
+
+[node name="DehydrationComponent" parent="." instance=ExtResource("22_0qva2")]
 
 [editable path="HurtboxComponent"]
