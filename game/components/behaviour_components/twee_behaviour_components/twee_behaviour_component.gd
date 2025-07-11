@@ -82,9 +82,9 @@ func _connect_component_signals():
 	
 	# The other components now connect to the new 'damaged' signal.
 	# We use .unbind() to discard the extra arguments they don't need.
-	health_component.damaged.connect(damage_sound_emitter_component.play_sound_effect.unbind(1).unbind(1))
-	health_component.damaged.connect(popup_emitter_component.popup_number.unbind(1).unbind(1))
-	health_component.damaged.connect(tree_animation_component.play_damage_animation.unbind(1).unbind(1))
+	health_component.damaged.connect(damage_sound_emitter_component.play_sound_effect.unbind(3))
+	health_component.damaged.connect(popup_emitter_component.popup_number.unbind(2))
+	health_component.damaged.connect(tree_animation_component.play_damage_animation.unbind(3))
 	health_component.died.connect(die)
 	
 	if grow_timer:

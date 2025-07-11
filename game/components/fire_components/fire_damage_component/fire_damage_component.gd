@@ -19,15 +19,9 @@ func _ready() -> void:
 
 func _on_tick() -> void:
 	if not is_instance_valid(health_component): return
-
-	var owner = get_parent()
+	
 	var final_damage = damage_amount
-
-	if Components.has_component(owner, TweeStatComponent):
-		var stat_comp: TweeStatComponent = Components.get_component(owner, TweeStatComponent)
-		if stat_comp.type == Global.TreeType.ICY_TREE or stat_comp.type == Global.TreeType.SLOWING_TREE:
-			final_damage *= 1.5 
-
+	
 	var fire_node = flammable_component.get_fire()
 	health_component.subtract_health(final_damage, fire_node)
 	damage_tick.emit()
