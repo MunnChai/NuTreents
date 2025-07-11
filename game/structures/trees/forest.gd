@@ -1,17 +1,21 @@
-extends Node
 class_name Forest
+extends RefCounted
 
+## FOREST DATA
+var id: int
 var trees: Dictionary[Vector2i, Node2D]
 var tree_set: Array[Node2D]
-var water: float
-var id: int
 var empty: bool
 
+## FOREST WATER
+var water: float
 var water_capacity: float = 0.0
 var water_gain: float
-var dehydration_event: DehydrationEvent
 
-var notification: Notification
+## DEHYDRATION
+var is_dehydrated: bool = false
+var dehydration_amount: float = 0.0
+var dehydration_notification: Notification
 
 func _init(i: int):
 	water = 0
@@ -115,28 +119,10 @@ func update_water_maintenance(delta: float) -> float:
 	## ---
 	## PROCESSING DEHYDRATION EVENT
 	if is_forest_dehydrated and could_be_visibly_dehydrated:
-		if not dehydration_event:
-			dehydration_event = DehydrationEvent.new(self)
+		is_dehydrated = true
 	else:
-		if dehydration_event:
-			dehydration_event.end_event()
-			dehydration_event = null # RefCounted will free for us, right?
-	if dehydration_event:
-		dehydration_event.update(delta)
-	## ---
-
-	## ---
-	## HANDLE showing notification for dehydrated forests
-	if dehydration_event:
-		if not is_instance_valid(notification) or notification.is_removed:
-			if is_instance_valid(NotificationLog.instance):
-				notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
-				NotificationLog.instance.add_notification(notification)
-		elif is_instance_valid(notification):
-			notification.properties["time_remaining"] = 1.0
-	else:
-		if is_instance_valid(notification):
-			notification.remove()
+		is_dehydrated = false
+	_update_dehydration(delta)
 	## ---
 
 	## ---
@@ -146,17 +132,18 @@ func update_water_maintenance(delta: float) -> float:
 	water_gain = net_water_change
 	## ---
 	
+	return net_water_change
+
+func update_visuals() -> void:
 	## ---
 	## UPDATING METABALLS COLOR
-	var gain = clamp(water_gain, WaterOverlay.UNHEALTHY_WATER_GAIN, WaterOverlay.HEALTHY_WATER_GAIN) / (WaterOverlay.HEALTHY_WATER_GAIN - WaterOverlay.UNHEALTHY_WATER_GAIN)
-	var color = lerp(WaterOverlay.UNHEALTHY_COLOR, WaterOverlay.HEALTHY_COLOR, gain)
+	var percent_of_max := water / water_capacity
+	var color = lerp(WaterOverlay.UNHEALTHY_COLOR, WaterOverlay.HEALTHY_COLOR, percent_of_max)
 	if water_gain < 0:
 		color = WaterOverlay.DEHYDRATED_COLOR
 	if MetaballOverlay.is_instanced():
 		MetaballOverlay.instance.get_layer_or_create(id - 1).set_color(color)
 	## ---
-	
-	return net_water_change
 
 ## add the given tree to this forest
 func add_tree(p: Vector2i, t: Node2D):
@@ -250,5 +237,57 @@ func recompute_entire_capacity() -> void:
 	
 	for tree: Node2D in tree_set:
 		add_tree_capacity(tree)
+
+#endregion
+
+#region DEHYDRATION
+
+func _update_dehydration(delta: float) -> void:
+	## ---
+	## HANDLE showing notification for dehydrated forests
+	if is_dehydrated:
+		if not is_instance_valid(dehydration_notification) or dehydration_notification.is_removed:
+			if is_instance_valid(NotificationLog.instance):
+				dehydration_notification = Notification.new(&"dehydration", '[color=ff5671][url="goto"]' + tr(&"NOTIF_DEHYDRATED") + '[/url]', { "priority": 10, "time_remaining": 1.0, "position": get_average_pos() });
+				NotificationLog.instance.add_notification(dehydration_notification)
+		elif is_instance_valid(dehydration_notification):
+			dehydration_notification.properties["time_remaining"] = 1.0
+	else:
+		if is_instance_valid(dehydration_notification):
+			dehydration_notification.remove()
+	## ---
+	
+	if is_dehydrated:
+		dehydration_amount += delta
+		_apply_dehydration_effects()
+	else:
+		dehydration_amount -= delta
+		_unapply_dehydration_effects()
+
+const SMALL_TREE_DAMAGE_TIME := 30.0
+const LARGE_TREE_DAMAGE_TIME := 60.0
+func _apply_dehydration_effects() -> void:
+	for tree: Node2D in tree_set:
+		var twee_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent, "", false)
+		var dehydration_component: DehydrationComponent = Components.get_component(tree, DehydrationComponent, "", false)
+		
+		dehydration_component.is_dehydrated = true
+		
+		## TODO: Distance
+		## TODO: Small trees, most recently planted/longest time remaining in growth
+		
+		if dehydration_amount > SMALL_TREE_DAMAGE_TIME:
+			if not twee_component.is_large:
+				dehydration_component.is_taking_damage = true
+		
+		if dehydration_amount > LARGE_TREE_DAMAGE_TIME:
+			dehydration_component.is_taking_damage = true
+
+func _unapply_dehydration_effects() -> void:
+	for tree: Node2D in tree_set:
+		if tree:
+			var dehydration_component: DehydrationComponent = Components.get_component(tree, DehydrationComponent, "", false)
+			dehydration_component.is_dehydrated = false
+			dehydration_component.is_taking_damage = false
 
 #endregion

@@ -23,7 +23,21 @@ signal grew_up
 var actor: Node2D
 
 ## State variables
-var forest: int # forest id
+
+## FOREST
+var forest: int = -999 # forest id
+func set_forest(f: int):
+	var old_f := forest
+	forest = f
+	
+	if old_f == -999:
+		# Inital forest assignment
+		pass
+	else:
+		# Forest change
+		if metaballs_spawned:
+			_update_metaballs()
+
 var marked_for_removal: bool
 
 var is_large := false
@@ -42,21 +56,32 @@ func _ready():
 	
 	call_deferred("_set_stats")
 	call_deferred("_connect_component_signals")
-	call_deferred("_update_metaballs")
+	call_deferred("_spawn_metaballs") # Call deferred to ensure occupied positions and initial forest
 
-var past_first_time := false
-func _update_metaballs() -> void:
-	_remove_metaballs()
-	past_first_time = true
-	
+#region WATER METABALL LOGIC
+
+var metaballs_spawned := false
+
+func _spawn_metaballs() -> void:
 	for pos: Vector2i in grid_position_component.get_occupied_positions():
 		if MetaballOverlay.is_instanced():
 			metaballs.append(MetaballOverlay.instance.add_metaball(Global.structure_map.map_to_local(pos), forest - 1))
+	metaballs_spawned = true
+
+func _update_metaballs() -> void:
+	if not metaballs_spawned:
+		_spawn_metaballs()
+	
+	## Move metaballs
+	for metaball: IsometricMetaball in metaballs:
+		MetaballOverlay.instance.move_metaball(metaball, forest - 1)
 
 func _remove_metaballs() -> void:
 	for metaball: IsometricMetaball in metaballs:
 		metaball.remove()
 	metaballs.clear()
+
+#endregion
 
 #region Components and Signals
 
@@ -173,9 +198,3 @@ func apply_data_resource(tree_resource: Resource):
 		if flammable:
 			flammable.ignite()
 			flammable.get_fire().start_lifetime(tree_resource.remaining_fire_lifetime)
-
-# For forests...
-func set_forest(f: int):
-	forest = f
-	if past_first_time:
-		_update_metaballs()

@@ -30,6 +30,9 @@ func _process(delta: float) -> void:
 	if not twee_behaviour_component or not health_component or not twee_behaviour_component.grow_timer:
 		return
 	
+	if twee_behaviour_component.water_production_component.is_water_adjacent():
+		return
+	
 	if is_dehydrated:
 		twee_behaviour_component.grow_timer.paused = true
 		twee_behaviour_component.is_dehydrated = true

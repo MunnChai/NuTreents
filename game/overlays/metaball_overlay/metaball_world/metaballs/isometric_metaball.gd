@@ -16,8 +16,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	elapsed_time += delta
 	
-	var shift := Vector2(sin(elapsed_time * frequency_multipliers[0]) * 2.0 * amplitude_multipliers[0], sin(elapsed_time * frequency_multipliers[1]) * 2.0 * amplitude_multipliers[1])
-	position = origin + shift
+	#var shift := Vector2(sin(elapsed_time * frequency_multipliers[0]) * 2.0 * amplitude_multipliers[0], sin(elapsed_time * frequency_multipliers[1]) * 2.0 * amplitude_multipliers[1])
+	#position = origin + shift
 
 var is_removed := false
 

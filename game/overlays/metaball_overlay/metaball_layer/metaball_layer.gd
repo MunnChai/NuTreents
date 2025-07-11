@@ -1,6 +1,8 @@
 class_name MetaballLayer
 extends Node2D
 
+signal removed
+
 @onready var world: MetaballWorld = %MetaballWorld
 
 var id: int = -1
@@ -12,6 +14,13 @@ func _ready() -> void:
 
 func add_metaball(pos: Vector2) -> IsometricMetaball:
 	return world.add_metaball(pos)
+
+func move_metaball(metaball: IsometricMetaball) -> void:
+	world.move_metaball(metaball)
+
+func _process(delta: float) -> void:
+	## TODO: Removing empty layers
+	pass
 
 @export var my_color: Color
 func set_color(color: Color) -> void:

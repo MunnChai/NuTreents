@@ -194,7 +194,12 @@ func remove_tree(p: Vector2i) -> void:
 #region PROCESSING
 
 func _process(delta: float) -> void:
-	pass
+	DebugConsole.register("orphan", func (args: PackedStringArray): 
+		self.print_orphan_nodes()
+	)
+	
+	for forest_id: int in forests:
+		forests[forest_id].update_visuals()
 
 # Occurs once per second
 func get_resources(tick_rate: float = RESOURCE_TICK_RATE) -> void:
@@ -225,7 +230,8 @@ func update_water_maintenance(delta: float) -> float:
 func find_forest(p: Vector2i) -> int:
 	if (forest_map.has(p)):
 		return forest_map[p]
-	# TODO: find forest adjacent to p
+	
+	# find forest adjacent to p
 	var adjacent_forests: Array[int] = []
 	var directions = [Vector2i(-1, 0), Vector2i(1, 0), Vector2i(0, -1), Vector2i(0, 1)]
 	for dir in directions:
@@ -244,27 +250,25 @@ func find_forest(p: Vector2i) -> int:
 	if (adjacent_forests.size() == 1):
 		return adjacent_forests[0]
 	
-	# TODO: if there are forest(s) near p, merge them together into new forest and assign p to that forest
+	# if there are forest(s) near p, merge them together into new forest and assign p to that forest
 	return merge_forests_brute_force(adjacent_forests)
 
 # Returns the forest id
 func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 	var forest_id: = forests_to_merge[0]
 	
-	# Create a new forest
+	## Create a new forest
 	var new_forest = Forest.new(forest_id)
 	
 	var new_water := 0.0
 	
-	var dehydration_events: Array[DehydrationEvent] = []
+	var dehydration_amount := 0.0
 	
 	# Remove old forests
 	for id: int in forests_to_merge:
-		new_water += forests.get(id).water
-		var dehydration_event: DehydrationEvent = forests.get(id).dehydration_event
-		if dehydration_event:
-			dehydration_events.append(dehydration_event)
-			dehydration_event.end_event()
+		var f: Forest = forests.get(id)
+		new_water += f.water
+		dehydration_amount = max(dehydration_amount, f.dehydration_amount)
 		forests.erase(id)
 	
 	# For every tree, if it is one of the adjacent trees' forests, add them to the new forest
@@ -287,15 +291,11 @@ func merge_forests_brute_force(forests_to_merge: Array[int]) -> int:
 	forests[forest_id] = new_forest
 	
 	new_forest.water = new_water
-	
-	var dehydration_time := 0.0
-	for event: DehydrationEvent in dehydration_events:
-		if event.get_elapsed_time() > dehydration_time:
-			dehydration_time = event.get_elapsed_time()
-	new_forest.dehydration_event = DehydrationEvent.new(new_forest, dehydration_time)
+	new_forest.dehydration_amount = dehydration_amount
 	
 	return forest_id
 
+## UNUSED
 ## use divide-and-conquer to merge a set of Forests
 ## only used pseudocode before let's see if actually works
 func merge_forests(list: Array[int]) -> Array[int]:
@@ -318,6 +318,7 @@ func merge_forests(list: Array[int]) -> Array[int]:
 		# merge right forest into the left
 		return merge_two_forests(right, left)
 
+## UNUSED
 ## merge two Forests
 func merge_two_forests(small: Array[int], big: Array[int]) -> Array[int]:
 	if (small[0] == big[0]):
@@ -406,9 +407,7 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 	var old_capacity: float = old_f.water_capacity
 	var percent := 0.0
 	
-	var old_dehydration_event: DehydrationEvent = old_f.dehydration_event
-	if old_dehydration_event:
-		old_dehydration_event.end_event()
+	var old_dehydration_amount: float = old_f.dehydration_amount
 	
 	# update forests
 	var forest: Forest = Forest.new(id)
@@ -439,8 +438,7 @@ func new_forest_tada(trees: Array[Vector2i], id: int, old_id: int) -> Forest:
 	forest.water = old_water * percent
 	
 	## The new forest has a dehydration event based on the duration of the old one
-	if old_dehydration_event:
-		forest.dehydration_event = DehydrationEvent.new(forest, old_dehydration_event.get_elapsed_time())
+	forest.dehydration_amount = old_dehydration_amount
 	
 	return forest
 

@@ -9,7 +9,6 @@ static func is_instanced() -> bool:
 
 func _ready() -> void:
 	instance = self
-	#layers.set(0, $MetaballLayer)
 
 func _process(delta: float) -> void:
 	if copy_camera:
@@ -17,9 +16,19 @@ func _process(delta: float) -> void:
 			layer.world.copy_camera = copy_camera
 			global_position = copy_camera.global_position # Keep center on the camera that we are following
 
+## Add a new metaball at global position pos and on layer with layer_id
+## New layer will be created if it doesn't exist
+## Metaball will be returned
 func add_metaball(pos: Vector2, layer_id: int = 0) -> IsometricMetaball:
 	var layer := get_layer_or_create(layer_id)
 	return layer.add_metaball(pos)
+
+## Move the given metaball to the new layer id
+## New layer will be created if it doesn't exist
+## Metaball will be returned
+func move_metaball(metaball: IsometricMetaball, new_layer_id: int = 0) -> void:
+	var layer := get_layer_or_create(new_layer_id)
+	layer.move_metaball(metaball)
 
 @export var colors: PackedColorArray
 

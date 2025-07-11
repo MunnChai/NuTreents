@@ -11,6 +11,9 @@ extends Node2D
 @export var copy_camera: Camera2D ## The camera to copy from
 @onready var camera: Camera2D = %MetaballCamera
 
+func is_empty() -> bool:
+	return get_child_count() == 0
+
 const ISOMETRIC_METABALL = preload("./metaballs/isometric_metaball.tscn")
 func add_metaball(pos: Vector2) -> IsometricMetaball:
 	var new_ball := ISOMETRIC_METABALL.instantiate()
@@ -18,6 +21,12 @@ func add_metaball(pos: Vector2) -> IsometricMetaball:
 	new_ball.global_position = pos
 	new_ball.origin = pos
 	return new_ball
+
+func move_metaball(metaball: IsometricMetaball) -> void:
+	var metaball_global_pos := metaball.global_position
+	metaball.reparent(self, true)
+	#metaball.global_position = metaball_global_pos
+	metaball.origin = metaball.global_position
 
 func _process(delta: float) -> void:
 	if copy_camera:
