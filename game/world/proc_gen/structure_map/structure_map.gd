@@ -9,6 +9,9 @@ var non_decor_map: Dictionary[Vector2i, Node2D]
 const COST_TO_REMOVE_CITY_TILE: int = 100
 const COST_TO_REMOVE_ROAD_TILE: int = 250
 
+signal structure_added(node: Node2D)
+signal structure_removed(node: Node2D)
+
 func _ready() -> void:
 	#add_to_group("structure_map")
 	y_sort_enabled = true
@@ -50,6 +53,9 @@ func add_structure(map_coords: Vector2i, structure: Node2D, replace_existing: bo
 			var position_component = Components.get_component(structure, GridPositionComponent)
 			if position_component.occupied_positions.is_empty():
 				position_component.init_pos(map_coords)
+	
+	structure_added.emit(structure)
+	
 	return true
 
 # Remove the node at the given map coordinates
@@ -59,6 +65,8 @@ func remove_structure(map_coords: Vector2i) -> bool:
 		return false
 	
 	var object: Node2D = tile_scene_map[map_coords]
+	
+	structure_removed.emit(object)
 	
 	# Munn: kinda temp fix? twees handle freeing themselves, so we only need to free stuff like 
 	#       buildings, decor, etc.

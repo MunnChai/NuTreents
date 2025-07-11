@@ -3,6 +3,14 @@ extends VisualCursorState
 
 var destructible_tiles_highlight: LargeModulationHighlight
 
+func _ready() -> void:
+	call_deferred("_connect_destructible_tile_update")
+
+func _connect_destructible_tile_update() -> void:
+	Global.structure_map.structure_added.connect(_update_destructible_tiles.unbind(1))
+	Global.structure_map.structure_removed.connect(_update_destructible_tiles.unbind(1))
+	Global.terrain_map.changed.connect(_update_destructible_tiles)
+
 ## Get 2 new large modulation highlights, one for the plantable tiles, one for grid ranges
 func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	destructible_tiles_highlight = visual_cursor.get_large_highlight()
@@ -73,11 +81,16 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 		_:
 			pass ## How did we get here?
 
+var destructible_tiles: Array[Vector2i]
 func highlight_destructible_tiles(cursor: IsometricCursor) -> void:
 	destructible_tiles_highlight._reset_pool()
 	
+	destructible_tiles_highlight.highlight_tiles_at(destructible_tiles)
+	destructible_tiles_highlight.set_color(IsometricCursorVisual.RED)
+
+func _update_destructible_tiles() -> void:
+	destructible_tiles.clear()
 	var reachable_tiles: Array[Vector2i] = TreeManager.get_reachable_tree_placement_positions(true)
-	var destructible_tiles: Array[Vector2i] = []
 	for iso_pos: Vector2i in reachable_tiles:
 		var structure: Node2D = Global.structure_map.get_building_node(iso_pos)
 		var twee_stat: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
@@ -88,6 +101,3 @@ func highlight_destructible_tiles(cursor: IsometricCursor) -> void:
 		if destructible:
 			destructible_tiles.append(iso_pos)
 			continue
-	
-	destructible_tiles_highlight.highlight_tiles_at(destructible_tiles)
-	destructible_tiles_highlight.set_color(IsometricCursorVisual.RED)
