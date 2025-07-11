@@ -153,7 +153,7 @@ spread_tick_duration = 3.0
 
 [node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("27_22ha4")]
 flammable_component = NodePath("../FlammableComponent")
-damage_amount = 4.0
+damage_amount = 5.0
 
 [node name="VisualArrowComponent" parent="." instance=ExtResource("28_22ha4")]
 arrow_height = 1

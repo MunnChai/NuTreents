@@ -17,7 +17,7 @@ func _on_area_entered(area: Area2D) -> void:
 		return
 	
 	if area is HurtboxComponent:
-		area.hit_taken.emit(damage)
+		area.hit_taken.emit(damage, self)
 		
 		var entity: Node2D = area.owner
 		hit_entity.emit(entity)

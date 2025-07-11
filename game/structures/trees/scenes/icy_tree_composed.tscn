@@ -145,7 +145,7 @@ chance = 0.3
 
 [node name="FireDamageComponent" parent="FireComponents" node_paths=PackedStringArray("flammable_component") instance=ExtResource("25_4xc2e")]
 flammable_component = NodePath("../FlammableComponent")
-damage_amount = 4.0
+damage_amount = 5.0
 
 [node name="StatusInflictorComponent" parent="." instance=ExtResource("26_85pv0")]
 status_effect = ExtResource("27_m1ipw")
