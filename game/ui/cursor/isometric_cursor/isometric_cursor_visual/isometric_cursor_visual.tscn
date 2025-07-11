@@ -97,6 +97,7 @@ material = SubResource("ShaderMaterial_jssra")
 
 [node name="WoodenArrow" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
+top_level = true
 z_index = 25
 sprite_frames = SubResource("SpriteFrames_f33o1")
 frame_progress = 0.531519

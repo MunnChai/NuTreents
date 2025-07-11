@@ -2,6 +2,7 @@ class_name VisualCursorDestroyState
 extends VisualCursorState
 
 var destructible_tiles_highlight: LargeModulationHighlight
+var is_entered: bool = false
 
 func _ready() -> void:
 	call_deferred("_connect_destructible_tile_update")
@@ -13,10 +14,13 @@ func _connect_destructible_tile_update() -> void:
 
 ## Get 2 new large modulation highlights, one for the plantable tiles, one for grid ranges
 func enter(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	is_entered = true
 	destructible_tiles_highlight = visual_cursor.get_large_highlight()
+	_update_destructible_tiles()
 
 func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	visual_cursor.reset_highlight_pool()
+	is_entered = false
 
 ## Change visual details based on what is highlighted...
 func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
@@ -89,14 +93,18 @@ func highlight_destructible_tiles(cursor: IsometricCursor) -> void:
 	destructible_tiles_highlight.set_color(IsometricCursorVisual.RED)
 
 func _update_destructible_tiles() -> void:
+	if not is_entered: # ONLY UPDATE WHEN IN THIS STATE
+		return
+	
 	destructible_tiles.clear()
 	var reachable_tiles: Array[Vector2i] = TreeManager.get_reachable_tree_placement_positions(true)
 	for iso_pos: Vector2i in reachable_tiles:
 		var structure: Node2D = Global.structure_map.get_building_node(iso_pos)
-		var twee_stat: TweeStatComponent = Components.get_component(structure, TweeStatComponent)
-		if twee_stat:
-			destructible_tiles.append(iso_pos)
-			continue
+		var twee_behaviour: TweeBehaviourComponent = Components.get_component(structure, TweeBehaviourComponent)
+		if twee_behaviour:
+			if not twee_behaviour.is_removed:
+				destructible_tiles.append(iso_pos)
+				continue
 		var destructible: DestructableComponent = Components.get_component(structure, DestructableComponent)
 		if destructible:
 			destructible_tiles.append(iso_pos)
