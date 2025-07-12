@@ -16,14 +16,14 @@ func exit(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void
 	visual_cursor.set_hologram_offset(Vector2(0, 0))
 
 
-func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+func update(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
 	var terrain_map = Global.terrain_map
 	var structure_map = Global.structure_map
 	var iso_position = cursor.iso_position
 	
 	visual_cursor.highlight_tile_at(iso_position)
 	
-	highlight_plantable_tiles(cursor)
+	highlight_plantable_tiles(cursor, visual_cursor)
 	
 	update_hologram_texture(visual_cursor)
 	visual_cursor.set_hologram_visible(true)
@@ -59,8 +59,11 @@ func _update_visuals(cursor: IsometricCursor, visual_cursor: IsometricCursorVisu
 		_:
 			pass ## How did we get here?
 
-func highlight_plantable_tiles(cursor: IsometricCursor) -> void:
-	plantable_tiles_highlight._reset_pool()
+func highlight_plantable_tiles(cursor: IsometricCursor, visual_cursor: IsometricCursorVisual) -> void:
+	var highlight_node = visual_cursor.get_large_highlight()
+	if not is_instance_valid(highlight_node): return
+	
+	highlight_node._reset_pool()
 	
 	var plantable_tiles = TreeManager.get_reachable_tree_placement_positions(false)
 	var to_remove: Array[Vector2i] = []
@@ -69,12 +72,19 @@ func highlight_plantable_tiles(cursor: IsometricCursor) -> void:
 			to_remove.append(iso_pos)
 	for iso_pos: Vector2i in to_remove:
 		plantable_tiles.erase(iso_pos)
-	plantable_tiles_highlight.highlight_tiles_at(plantable_tiles)
-	plantable_tiles_highlight.set_color(IsometricCursorVisual.BLUE)
+	highlight_node.highlight_tiles_at(plantable_tiles)
+	highlight_node.set_color(IsometricCursorVisual.BLUE)
 
 func update_hologram_texture(visual_cursor: IsometricCursorVisual) -> void:
 	var tree_type: Global.TreeType = TreeMenu.instance.get_currently_selected_tree_type()
 	var tree_stat: TreeStatResource = TreeRegistry.get_twee_stat(tree_type)
+	
+	# --- BUG FIX ---
+	# Added a check to ensure tree_stat is not null before trying to access its properties.
+	# If it is null (meaning no tree is selected), hide the hologram.
+	if tree_stat == null:
+		visual_cursor.set_hologram_visible(false)
+		return
 	
 	visual_cursor.set_hologram_texture(tree_stat.tree_icon_small)
 
