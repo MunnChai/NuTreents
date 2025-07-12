@@ -30,15 +30,9 @@ var current_state: IsometricCursor.CursorState = -1
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
 	
-	# --- BUG FIX ---
-	# Connect to signals from other game systems. When they emit,
-	# we force the cursor's visuals to update immediately.
-	# This fixes the highlight and hologram getting "stuck".
 	if is_instance_valid(TreeMenu.instance):
 		TreeMenu.instance.selection_changed.connect(force_visual_update)
 	if is_instance_valid(TreeManager):
-		# We need to use unbind(1) because the tree_placed signal sends an argument
-		# that our force_visual_update function doesn't need.
 		TreeManager.tree_placed.connect(force_visual_update.unbind(1))
 	
 	DebugConsole.register("toggle_iso_cursor", func(args: PackedStringArray):
@@ -60,7 +54,6 @@ func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	update_adjacent_tile_transparencies(old_pos, new_pos)
 	force_visual_update()
 
-# --- NEW FUNCTION ---
 ## Can be called from anywhere to force the cursor's visuals to refresh.
 func force_visual_update() -> void:
 	# Use call_deferred to ensure the update happens safely on the next idle frame,
