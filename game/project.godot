@@ -56,6 +56,7 @@ MapUtility="*res://world/map_utility.gd"
 EnemyRegistry="*res://enemies/registry/enemy_registry.tscn"
 AlmanacInfo="*res://ui/almanac_info/almanac_info.gd"
 SetPieceRegistry="*res://world/proc_gen/set_pieces/set_piece_registry.gd"
+GameEventHandler="*res://events/game_event_handler/game_event_handler.gd"
 
 [display]
 

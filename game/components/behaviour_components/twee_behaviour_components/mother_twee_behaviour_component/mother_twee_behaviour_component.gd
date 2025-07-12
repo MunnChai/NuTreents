@@ -4,7 +4,10 @@ extends TweeBehaviourComponent
 func _ready():
 	super._ready()
 	
-	health_component.health_subtracted.connect(take_damage)
+	# --- BUG FIX ---
+	# Changed the signal connection from the old "health_subtracted" to the
+	# new, more descriptive "damaged" signal in the HealthComponent.
+	health_component.damaged.connect(take_damage)
 
 # Override Twee "growing" functionality
 func _process(delta: float) -> void:
@@ -19,7 +22,10 @@ func die():
 
 var notification: Notification
 
-func take_damage(damage: int) -> void:
+# --- BUG FIX ---
+# Updated the function signature to match the parameters of the "damaged" signal.
+# The unused parameters are prefixed with an underscore to prevent warnings.
+func take_damage(_amount: float, _source: Node, _owner: Node2D) -> void:
 	CameraShake.instance.add_trauma(0.1)
 	
 	## NOTIFY PLAYER

@@ -45,6 +45,6 @@ func _process(delta: float) -> void:
 	
 	if is_taking_damage:
 		while (water_damage_time > WATER_DAMAGE_DELAY):
-			health_component.subtract_health(dehydration_damage)
+			health_component.subtract_health(dehydration_damage, null)
 			water_damage_time -= randf_range(WATER_DAMAGE_DELAY, WATER_DAMAGE_DELAY * 2)
 		water_damage_time += delta
