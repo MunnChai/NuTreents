@@ -5,18 +5,16 @@ extends Control
 ## The "hotbar" menu of trees at the bottom of the screen
 ## ---
 
-## TODO:
-## - Select using num keys in 1234567890 order
-## - Remove/load cards from the selection options
-## - Different tabs
-
 const TREE_CARD = preload("res://ui/tree_menu/tree_card/tree_card.tscn")
 
 @onready var tree_card_container = %TreeCardContainer
 
+## NEW: Emitted whenever the currently selected tree changes.
+## This allows other nodes, like the cursor, to react to selection changes.
+signal selection_changed
+
 var starting_min_size = custom_minimum_size
 
-## Tree types of cards, in the order that they are placed on the bar
 var tree_order = [
 	Global.TreeType.DEFAULT_TREE,
 	Global.TreeType.WATER_TREE,
@@ -30,13 +28,12 @@ var tree_order = [
 	Global.TreeType.EXPLORER_TREE,
 	Global.TreeType.SPRINKLER_TREE,
 	Global.TreeType.TECH_TREE,
-	]
+]
 
-## Index of the currently selected tree
 var currently_selected_tree = -1
-var is_selecting_tree := true ## Am I selecting a tree, or are we not selecting anything?
+var is_selecting_tree := true
 
-static var instance: TreeMenu # Psuedo-singleton reference
+static var instance: TreeMenu
 
 func _ready() -> void:
 	instance = self
@@ -47,12 +44,15 @@ func _ready() -> void:
 		, "Unlocks every tree type")
 
 func get_currently_selected_tree_type() -> Global.TreeType:
+	if currently_selected_tree == -1:
+		return -1 # Return an invalid type if nothing is selected
 	return tree_order[currently_selected_tree]
 
 func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
 	if currently_selected_tree == tree_order.find(tree_type):
 		currently_selected_tree = -1
 		IsometricCursor.instance.return_to_default_state()
+		selection_changed.emit() # Emit signal on deselect
 		return
 	
 	if not tree_type in get_unlocked_tree_types():
@@ -60,9 +60,11 @@ func set_currently_selected_tree_type(tree_type: Global.TreeType) -> void:
 	
 	currently_selected_tree = tree_order.find(tree_type)
 	IsometricCursor.instance.enter_state(IsometricCursor.CursorState.PLANT)
+	selection_changed.emit() # Emit signal on new selection
 
 func deselect_currently_selected_tree_type() -> void:
 	currently_selected_tree = -1
+	selection_changed.emit()
 
 func get_unlocked_tree_types() -> Array[Global.TreeType]:
 	var tree_types: Array[Global.TreeType]
@@ -84,17 +86,15 @@ func next_tree() -> void:
 	currently_selected_tree += 1
 	currently_selected_tree = currently_selected_tree % tree_order.size()
 	SoundManager.play_global_oneshot(&"ui_click")
-	#InfoBox.get_instance().show_content_for_tree(node_order[currently_selected_tree].tree_stat)
+	selection_changed.emit() # Emit signal on change
 
 func previous_tree() -> void:
 	currently_selected_tree -= 1
 	currently_selected_tree = currently_selected_tree % tree_order.size()
 	SoundManager.play_global_oneshot(&"ui_click")
-	#InfoBox.get_instance().show_content_for_tree(node_order[currently_selected_tree].tree_stat)
-
+	selection_changed.emit() # Emit signal on change
 
 func add_tree_card(tree_type: Global.TreeType):
-	# DONT DO DUPLICATE CARDS
 	for tree_card: TreeCard in tree_card_container.get_children():
 		if tree_card.tree_type == tree_type:
 			return
@@ -107,7 +107,8 @@ func add_tree_card(tree_type: Global.TreeType):
 	tree_card_container.move_child(new_card, tree_order.find(tree_type))
 	
 	var notification = Notification.new(&"unlock", '[color=e09420]' + tr(&"NOTIF_UNLOCK").format({ "tree_name": TreeRegistry.get_twee_stat(tree_type).name.to_upper() }), { "priority": 3, "time_remaining": 3.0 });
-	NotificationLog.instance.add_notification(notification)
+	if is_instance_valid(NotificationLog.instance):
+		NotificationLog.instance.add_notification(notification)
 
 func remove_all_tree_cards() -> void:
 	for tree_card: TreeCard in tree_card_container.get_children():

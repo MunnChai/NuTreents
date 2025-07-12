@@ -9,7 +9,7 @@ extends Marker2D
 ## - Sending request to update transparencies
 ## - Structure outlines
 
-const LARGE_MODULATION_HIGHLIGHT = preload("modulation_highlight/large_modulation_highlight.tscn")
+const LARGE_MODULATION_HIGHLIGHT = preload("res://ui/cursor/isometric_cursor/isometric_cursor_visual/modulation_highlight/large_modulation_highlight.tscn")
 
 const YELLOW := Color("ca910081")
 const BLUE := Color("3fd7ff81")
@@ -30,6 +30,11 @@ var current_state: IsometricCursor.CursorState = -1
 func _ready() -> void:
 	cursor.just_moved.connect(_on_just_moved)
 	
+	if is_instance_valid(TreeMenu.instance):
+		TreeMenu.instance.selection_changed.connect(force_visual_update)
+	if is_instance_valid(TreeManager):
+		TreeManager.tree_placed.connect(force_visual_update.unbind(1))
+	
 	DebugConsole.register("toggle_iso_cursor", func(args: PackedStringArray):
 		visible = !visible
 		, "Toggles isometric cursor visibility (the highlight and wooden arrow)")
@@ -47,7 +52,17 @@ func _process(delta: float) -> void:
 
 func _on_just_moved(old_pos: Vector2i, new_pos: Vector2i) -> void:
 	update_adjacent_tile_transparencies(old_pos, new_pos)
-	
+	force_visual_update()
+
+## Can be called from anywhere to force the cursor's visuals to refresh.
+func force_visual_update() -> void:
+	# Use call_deferred to ensure the update happens safely on the next idle frame,
+	# after any other state changes have been fully processed.
+	call_deferred("_update_now")
+
+func _update_now() -> void:
+	if not current_state in cursor_state_dict:
+		return
 	var visual_state: VisualCursorState = cursor_state_dict[current_state]
 	visual_state.update(cursor, self)
 
@@ -63,13 +78,14 @@ func enter_state(new_state: IsometricCursor.CursorState) -> void:
 		return
 	
 	# Exit old action
-	if current_state in IsometricCursor.CursorState.values():
+	if current_state in cursor_state_dict:
 		var current_visual_state: VisualCursorState = cursor_state_dict[current_state]
 		current_visual_state.exit(cursor, self)
 	
 	# Enter new action
-	var new_visual_state: VisualCursorState = cursor_state_dict[new_state]
-	new_visual_state.enter(cursor, self)
+	if new_state in cursor_state_dict:
+		var new_visual_state: VisualCursorState = cursor_state_dict[new_state]
+		new_visual_state.enter(cursor, self)
 	
 	# Set current state
 	current_state = new_state
