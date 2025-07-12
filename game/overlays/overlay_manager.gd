@@ -32,7 +32,7 @@ func show_overlay(overlay_type: OverlayType):
 	
 	current_overlay = overlay
 	
-	screen_darken.visible = true
+	#screen_darken.visible = true
 
 func hide_overlay():
 	if (!current_overlay):
@@ -41,4 +41,4 @@ func hide_overlay():
 	current_overlay.hide_overlay()
 	current_overlay = null
 	
-	screen_darken.visible = false
+	#screen_darken.visible = false

@@ -139,7 +139,7 @@ func _set_stats() -> void:
 #endregion
 
 func _process(delta: float) -> void:
-	if water_production_component.is_water_adjacent():
+	if water_production_component.is_water_adjacent() or water_production_component.is_producing_water():
 		if not metaballs.is_empty():
 			for metaball: IsometricMetaball in metaballs:
 				metaball.set_override(1.0)

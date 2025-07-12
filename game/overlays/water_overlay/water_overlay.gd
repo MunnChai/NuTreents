@@ -56,3 +56,11 @@ func update_highlights() -> void:
 		var net_water = water_production_component.get_water_production()
 		
 		highlight.set_label_number(net_water)
+
+func show_overlay() -> void:
+	MetaballOverlay.instance.z_index = 1000
+	super.show_overlay()
+
+func hide_overlay() -> void:
+	MetaballOverlay.instance.reset_z_index()
+	super.hide_overlay()

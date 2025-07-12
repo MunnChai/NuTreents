@@ -44,6 +44,7 @@ _data = {
 }
 
 [node name="WaterHighlight" type="Sprite2D"]
+self_modulate = Color(1, 1, 1, 0.223529)
 texture = ExtResource("1_cxk47")
 hframes = 8
 script = ExtResource("2_aart4")

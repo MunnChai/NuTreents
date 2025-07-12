@@ -122,7 +122,6 @@ func update_water_maintenance(delta: float) -> float:
 		is_dehydrated = true
 	else:
 		is_dehydrated = false
-	_update_dehydration(delta)
 	## ---
 
 	## ---
@@ -139,7 +138,7 @@ func update_visuals() -> void:
 	## UPDATING METABALLS COLOR
 	var percent_of_max := water / water_capacity
 	var color = lerp(WaterOverlay.UNHEALTHY_COLOR, WaterOverlay.HEALTHY_COLOR, percent_of_max)
-	if water_gain < 0:
+	if percent_of_max == 0:
 		color = WaterOverlay.DEHYDRATED_COLOR
 	if MetaballOverlay.is_instanced():
 		MetaballOverlay.instance.get_layer_or_create(id - 1).set_color(color)
@@ -241,8 +240,7 @@ func recompute_entire_capacity() -> void:
 #endregion
 
 #region DEHYDRATION
-
-func _update_dehydration(delta: float) -> void:
+func update_dehydration(delta: float) -> void:
 	## ---
 	## HANDLE showing notification for dehydrated forests
 	if is_dehydrated:
@@ -268,6 +266,9 @@ const SMALL_TREE_DAMAGE_TIME := 30.0
 const LARGE_TREE_DAMAGE_TIME := 60.0
 func _apply_dehydration_effects() -> void:
 	for tree: Node2D in tree_set:
+		if not is_instance_valid(tree):
+			continue
+		
 		var twee_component: TweeBehaviourComponent = Components.get_component(tree, TweeBehaviourComponent, "", false)
 		var dehydration_component: DehydrationComponent = Components.get_component(tree, DehydrationComponent, "", false)
 		

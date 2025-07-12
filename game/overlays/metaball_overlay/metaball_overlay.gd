@@ -7,6 +7,8 @@ static func is_instanced() -> bool:
 
 @export var copy_camera: Camera2D
 
+@onready var original_z_index := z_index
+
 func _ready() -> void:
 	instance = self
 
@@ -47,3 +49,6 @@ func get_layer_or_create(id: int) -> MetaballLayer:
 	if layers.has(id):
 		return layers.get(id)
 	return add_new_layer(id)
+
+func reset_z_index() -> void:
+	z_index = original_z_index

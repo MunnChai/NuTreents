@@ -47,6 +47,9 @@ func is_water_adjacent() -> bool:
 	
 	return false
 
+func is_producing_water() -> bool:
+	return water_production > 0.0
+
 func get_rain_multiplier() -> float:
 	if is_instance_valid(WeatherManager.instance):
 		if WeatherManager.instance.is_raining():

@@ -199,7 +199,9 @@ func _process(delta: float) -> void:
 	)
 	
 	for forest_id: int in forests:
-		forests[forest_id].update_visuals()
+		var f := forests[forest_id]
+		f.update_dehydration(delta)
+		f.update_visuals()
 
 # Occurs once per second
 func get_resources(tick_rate: float = RESOURCE_TICK_RATE) -> void:
@@ -456,7 +458,7 @@ func find_group(p: Vector2i) -> Array[Vector2i]:
 			group.append(t)
 			to_visit.append_array(find_neighbours(t))
 	return group
-	
+
 ## returns an array containing all adjacent trees of given p
 func find_neighbours(p: Vector2i) -> Array[Vector2i]:
 	var tree_groups: Array[Vector2i]
